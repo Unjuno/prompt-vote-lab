@@ -14,7 +14,7 @@ import random
 import shutil
 import subprocess
 import tempfile
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -75,6 +75,18 @@ def append(path: Path, text: str) -> None:
     path.write_text(path.read_text(encoding="utf-8") + text, encoding="utf-8")
 
 
+def remove_baseline_language(html: str) -> str:
+    replacements = [
+        ("20-vote gate", "baseline gate"),
+        ("20 virtual votes", "baseline votes"),
+        ("virtual votes baseline", "baseline marker"),
+        ("20", "twenty"),
+    ]
+    for old, new in replacements:
+        html = html.replace(old, new)
+    return html
+
+
 def mutate(repo: Path, name: str) -> None:
     if name == "external_script":
         p = repo / "lab" / "index.html"
@@ -113,7 +125,7 @@ def mutate(repo: Path, name: str) -> None:
         return
     if name == "remove_baseline_text":
         p = repo / "index.html"
-        p.write_text(p.read_text(encoding="utf-8").replace("20 virtual votes", "twenty baseline votes"), encoding="utf-8")
+        p.write_text(remove_baseline_language(p.read_text(encoding="utf-8")), encoding="utf-8")
         return
     if name == "affirmative_paid_merge":
         p = repo / "index.html"
