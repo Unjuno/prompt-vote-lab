@@ -4,100 +4,416 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt Vote Lab</title>
-  <meta name="description" content="Prompt Vote Lab is a public experiment where people propose prompts, vote with GitHub reactions, and a constrained AI coding agent implements selected prompts in a static lab.">
+  <meta name="description" content="Prompt Vote Lab is a public experiment where voted prompts pass a 20-vote gate before a constrained AI coding agent can open a lab PR.">
   <style>
     :root {
       color-scheme: light;
-      --bg: #f6f7f2;
-      --ink: #141513;
-      --muted: #5d625b;
-      --panel: #fffffb;
-      --line: #dde0d7;
-      --accent: #2747e8;
-      --accent-dark: #14278c;
-      --accent-soft: #e9edff;
-      --green: #167448;
-      --amber: #835400;
-      --shadow: 0 22px 70px rgba(25, 28, 38, 0.10);
-      --soft-shadow: 0 10px 30px rgba(25, 28, 38, 0.07);
+      --bg: #f4f2eb;
+      --ink: #11110f;
+      --muted: #5f625c;
+      --panel: #fffdf7;
+      --line: #ded9ca;
+      --accent: #2838e8;
+      --accent-dark: #132183;
+      --accent-soft: #e8ebff;
+      --danger: #9b3100;
+      --paper: #fff8d9;
+      --shadow: 0 26px 80px rgba(23, 24, 30, 0.12);
+      --soft-shadow: 0 12px 34px rgba(23, 24, 30, 0.08);
       --radius: 28px;
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 12% -8%, rgba(39, 71, 232, 0.17), transparent 32rem),
-        radial-gradient(circle at 86% 4%, rgba(22, 116, 72, 0.10), transparent 28rem),
-        linear-gradient(180deg, #fbfcf8 0%, var(--bg) 55%, #fff 100%);
+        radial-gradient(circle at 10% -10%, rgba(40, 56, 232, 0.18), transparent 31rem),
+        radial-gradient(circle at 86% 6%, rgba(155, 49, 0, 0.10), transparent 27rem),
+        linear-gradient(180deg, #fffdf8 0%, var(--bg) 54%, #fff 100%);
       color: var(--ink);
     }
 
     a { color: var(--accent-dark); }
 
-    .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 72px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
-    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 950; letter-spacing: -0.045em; text-decoration: none; }
-    .mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 12px; background: var(--ink); color: #fff; font-size: 0.78rem; }
-    .nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
-    .nav a { padding: 8px 10px; border-radius: 999px; color: var(--muted); font-size: 0.92rem; font-weight: 800; text-decoration: none; }
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 72px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 950;
+      letter-spacing: -0.045em;
+      text-decoration: none;
+    }
+
+    .mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.78rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .nav a {
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
     .nav a:hover { background: var(--accent-soft); color: var(--accent-dark); }
 
-    .hero { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(310px, 0.88fr); gap: 34px; align-items: center; padding: 68px 0 36px; }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { max-width: 800px; margin-bottom: 20px; font-size: clamp(3.4rem, 8vw, 6.8rem); line-height: 0.90; letter-spacing: -0.09em; }
-    h2 { margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 3.05rem); line-height: 1; letter-spacing: -0.065em; }
-    h3 { margin-bottom: 8px; font-size: 1.08rem; letter-spacing: -0.03em; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 36px;
+      align-items: center;
+      min-height: 640px;
+      padding: 34px 0 34px;
+    }
 
-    .eyebrow { display: inline-flex; align-items: center; margin: 0 0 14px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 251, 0.72); color: var(--accent-dark); font-size: 0.76rem; font-weight: 950; letter-spacing: 0.09em; text-transform: uppercase; }
-    .lead { max-width: 760px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.28rem); line-height: 1.72; }
-    .actions, .link-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 20px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--accent-dark); font-weight: 950; text-decoration: none; box-shadow: var(--soft-shadow); }
-    .button.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
-    .button.ghost { background: transparent; box-shadow: none; color: var(--muted); }
+    h1,
+    h2,
+    h3,
+    p { margin-top: 0; }
 
-    .hero-card, .panel, .card, .step, .metric { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 251, 0.92); box-shadow: var(--shadow); }
-    .hero-card { position: relative; overflow: hidden; padding: 24px; background: radial-gradient(circle at top right, rgba(39, 71, 232, 0.24), transparent 13rem), linear-gradient(135deg, rgba(233, 237, 255, 0.98), rgba(255, 255, 251, 0.92)), var(--panel); }
-    .hero-card::after { content: "20"; position: absolute; right: -22px; bottom: -38px; color: rgba(39, 71, 232, 0.08); font-size: 11rem; font-weight: 1000; letter-spacing: -0.12em; line-height: 1; pointer-events: none; }
-    .gate { position: relative; display: grid; gap: 14px; z-index: 1; }
-    .gate-title { margin-bottom: 8px; font-size: clamp(1.7rem, 4vw, 3.2rem); line-height: 0.96; letter-spacing: -0.08em; }
-    .gate-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: center; margin: 16px 0; }
-    .gate-node { min-height: 92px; padding: 14px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255, 255, 255, 0.82); box-shadow: var(--soft-shadow); }
-    .gate-node strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 1.02rem; }
-    .gate-node p { margin: 0; font-size: 0.92rem; }
-    .gate-node.threshold { border-color: rgba(39, 71, 232, 0.24); background: #fff; text-align: center; }
-    .threshold-number { display: block; color: var(--accent); font-size: 3.7rem; font-weight: 1000; line-height: 0.86; letter-spacing: -0.10em; }
-    .arrow { color: var(--accent-dark); font-weight: 1000; opacity: 0.72; }
-    .quick-list { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
-    .quick-list li { padding: 12px 14px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, 0.78); }
+    h1 {
+      max-width: 840px;
+      margin-bottom: 20px;
+      font-size: clamp(3.55rem, 8.6vw, 7.4rem);
+      line-height: 0.88;
+      letter-spacing: -0.095em;
+    }
 
-    .hero-card p, .panel p, .card p, .step p, .metric p, li { color: var(--muted); line-height: 1.66; }
-    .panel { margin-top: 24px; padding: clamp(22px, 4vw, 36px); }
-    .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr); gap: 22px; align-items: start; }
-    .card, .step, .metric { padding: 18px; box-shadow: var(--soft-shadow); border-radius: 20px; background: var(--panel); }
-    .muted-box { padding: 18px; border: 1px solid rgba(131, 84, 0, 0.22); border-radius: 20px; background: #fff8e6; color: var(--amber); font-weight: 820; line-height: 1.62; }
+    h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.85rem, 4vw, 3.3rem);
+      line-height: 0.98;
+      letter-spacing: -0.068em;
+    }
 
-    .steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 20px; counter-reset: step; }
-    .step { position: relative; padding-top: 48px; }
-    .step::before { counter-increment: step; content: counter(step); position: absolute; top: 16px; left: 18px; display: grid; width: 24px; height: 24px; place-items: center; border-radius: 9px; background: var(--ink); color: #fff; font-size: 0.78rem; font-weight: 900; }
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      letter-spacing: -0.035em;
+    }
 
-    .metrics, .rules, .support-grid { display: grid; gap: 12px; margin-top: 18px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 0 14px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 247, 0.76);
+      color: var(--accent-dark);
+      font-size: 0.74rem;
+      font-weight: 950;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.26rem);
+      line-height: 1.72;
+    }
+
+    .actions,
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 21px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--accent-dark);
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .button.primary {
+      min-width: 156px;
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .button.ghost {
+      background: transparent;
+      box-shadow: none;
+      color: var(--muted);
+    }
+
+    .gate-card,
+    .panel,
+    .card,
+    .step,
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 247, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .gate-card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      min-height: 500px;
+      display: grid;
+      align-content: space-between;
+      background:
+        radial-gradient(circle at top right, rgba(40, 56, 232, 0.28), transparent 13rem),
+        linear-gradient(135deg, #fffdf7 0%, #f1f2ff 100%);
+    }
+
+    .gate-card::before {
+      content: "20";
+      position: absolute;
+      right: -30px;
+      bottom: -58px;
+      color: rgba(40, 56, 232, 0.09);
+      font-size: 14.5rem;
+      font-weight: 1000;
+      letter-spacing: -0.13em;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .gate-top,
+    .gate-bottom { position: relative; z-index: 1; }
+
+    .gate-kicker {
+      margin-bottom: 10px;
+      color: var(--danger);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .gate-number {
+      display: block;
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(6.6rem, 20vw, 11rem);
+      font-weight: 1000;
+      line-height: 0.78;
+      letter-spacing: -0.13em;
+    }
+
+    .gate-title {
+      margin: 12px 0 8px;
+      max-width: 420px;
+      font-size: clamp(1.55rem, 3vw, 2.45rem);
+      line-height: 1;
+      letter-spacing: -0.065em;
+    }
+
+    .gate-card p,
+    .panel p,
+    .card p,
+    .step p,
+    .metric p,
+    li {
+      color: var(--muted);
+      line-height: 1.66;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .flow-item {
+      padding: 13px;
+      border: 1px solid rgba(40, 56, 232, 0.16);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .flow-item strong { display: block; margin-bottom: 4px; }
+    .flow-item span { color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
+
+    .panel {
+      margin-top: 24px;
+      padding: clamp(22px, 4vw, 38px);
+    }
+
+    .statement {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .paper-note {
+      padding: 20px;
+      border: 1px solid rgba(155, 49, 0, 0.20);
+      border-radius: 22px;
+      background: var(--paper);
+      color: #674000;
+      font-weight: 840;
+      line-height: 1.62;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      min-height: 176px;
+      padding: 50px 18px 18px;
+      box-shadow: var(--soft-shadow);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 950;
+    }
+
+    .metrics,
+    .rules,
+    .support-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
     .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .rules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .support-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .metric-number { display: block; margin-bottom: 8px; color: var(--accent-dark); font-size: 2.5rem; font-weight: 950; line-height: 0.95; letter-spacing: -0.08em; }
-    .docs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-    .docs a { padding: 11px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--accent-dark); font-weight: 850; text-decoration: none; }
-    code { padding: 0.1em 0.35em; border-radius: 0.38em; background: #eceff5; color: var(--ink); }
-    footer { margin-top: 32px; color: var(--muted); font-size: 0.92rem; }
+
+    .card,
+    .metric {
+      padding: 18px;
+      box-shadow: var(--soft-shadow);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .metric-number {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent-dark);
+      font-size: 2.6rem;
+      font-weight: 1000;
+      line-height: 0.95;
+      letter-spacing: -0.09em;
+    }
+
+    .final-cta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      border-color: rgba(40, 56, 232, 0.25);
+      background: linear-gradient(135deg, #fffdf7, #ecefff);
+    }
+
+    .docs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .docs a {
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--accent-dark);
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    code {
+      padding: 0.1em 0.35em;
+      border-radius: 0.38em;
+      background: #eceff5;
+      color: var(--ink);
+    }
+
+    footer {
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
 
     @media (max-width: 980px) {
-      .hero, .split, .steps, .metrics, .rules, .support-grid { grid-template-columns: 1fr; }
-      .gate-flow { grid-template-columns: 1fr; }
-      .arrow { display: none; }
-      .hero { padding-top: 40px; }
+      .hero,
+      .statement,
+      .steps,
+      .metrics,
+      .rules,
+      .support-grid,
+      .final-cta { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 28px; }
+      .gate-card { min-height: 420px; }
+      .flow { grid-template-columns: 1fr; }
       .topbar { align-items: flex-start; flex-direction: column; }
       .nav { justify-content: flex-start; }
     }
@@ -109,119 +425,115 @@
       <a class="brand" href="./"><span class="mark">PVL</span><span>Prompt Vote Lab</span></a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="./lab/">Lab</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/issues">Issues</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/issues/new/choose">Propose</a>
         <a href="https://github.com/Unjuno/prompt-vote-lab/tree/main/docs">Docs</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab">GitHub</a>
       </nav>
     </header>
 
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Public prompt experiment</p>
-        <h1 id="page-title">Vote on the next prompt. Watch the lab change.</h1>
-        <p class="lead">Prompt Vote Lab tests whether a public prompt market can steer a constrained AI coding agent. People propose prompts, vote with GitHub reactions, and eligible winners are attempted inside a small static lab.</p>
+        <h1 id="page-title">Can a crowd steer an AI-built lab?</h1>
+        <p class="lead">
+          Submit a prompt. Vote on GitHub. If it beats the 20-vote gate, a constrained AI coding agent gets one bounded attempt to change the lab.
+        </p>
         <div class="actions" aria-label="Primary actions">
           <a class="button primary" href="./lab/">Open the lab</a>
-          <a class="button" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote on GitHub</a>
-          <a class="button ghost" href="https://github.com/Unjuno/prompt-vote-lab/issues/new/choose">Propose a prompt</a>
+          <a class="button" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote on prompts</a>
+          <a class="button ghost" href="https://github.com/Unjuno/prompt-vote-lab/issues/new/choose">Propose one</a>
         </div>
       </div>
-      <aside class="hero-card" aria-labelledby="gate-title">
-        <div class="gate">
-          <p class="eyebrow">The vote gate</p>
-          <h2 id="gate-title" class="gate-title">Prompt → 20-vote gate → agent PR</h2>
-          <div class="gate-flow" aria-label="Prompt Vote Lab flow">
-            <div class="gate-node"><strong>Prompt</strong><p>Submitted as a GitHub Issue.</p></div>
-            <div class="arrow">→</div>
-            <div class="gate-node threshold"><span class="threshold-number">20</span><p>virtual votes baseline</p></div>
-            <div class="arrow">→</div>
-            <div class="gate-node"><strong>Lab PR</strong><p>Only 3 static files can change.</p></div>
+
+      <aside class="gate-card" aria-labelledby="gate-title">
+        <div class="gate-top">
+          <p class="gate-kicker">The rule people remember</p>
+          <span class="gate-number">20</span>
+          <h2 id="gate-title" class="gate-title">virtual votes baseline</h2>
+          <p>A prompt must beat “no change this week” before the agent can touch the lab.</p>
+        </div>
+        <div class="gate-bottom">
+          <div class="flow" aria-label="Prompt Vote Lab flow">
+            <div class="flow-item"><strong>Prompt</strong><span>Submitted as an issue.</span></div>
+            <div class="flow-item"><strong>Gate</strong><span>Must beat 20.</span></div>
+            <div class="flow-item"><strong>Agent PR</strong><span>Only lab files change.</span></div>
           </div>
-          <ul class="quick-list">
-            <li>An implementation-agent attempt is used only when a prompt is eligible.</li>
-            <li>Each candidate gets one single-shot implementation attempt.</li>
-            <li>Merge is manual. Failed and rejected runs are still recorded.</li>
-          </ul>
         </div>
       </aside>
     </section>
 
-    <section class="panel split" aria-labelledby="what-title">
+    <section class="panel statement" aria-labelledby="meaning-title">
       <div>
         <p class="eyebrow">What this is</p>
-        <h2 id="what-title">A prompt market plus a constrained implementation sandbox</h2>
-        <p>Participants submit prompt candidates as GitHub Issues. Votes rank those prompts. If a real prompt beats the weekly no-change baseline, the selected prompt is given to the implementation agent, which may edit only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>.</p>
-        <p>The landing page explains the experiment. The lab is the changing implementation target. That separation keeps the public explanation stable while still allowing visible weekly changes.</p>
+        <h2 id="meaning-title">A weekly public prompt market, not a roadmap.</h2>
       </div>
-      <div class="muted-box">This is not a feature-request queue, a paid merge system, or a general-purpose web app builder. The AI agent can propose changes, but final adoption stays manual.</div>
-    </section>
-
-    <section class="panel" aria-labelledby="narrow-title">
-      <p class="eyebrow">Design choice</p>
-      <h2 id="narrow-title">The experiment is deliberately narrow</h2>
-      <p>Less surface area makes the run easier to inspect. The whole point is stable comparison: same scope, same safety boundary, visible PRs, and recorded outcomes.</p>
-      <div class="metrics">
-        <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
-        <article class="metric"><span class="metric-number">0</span><p>external runtime dependencies</p></article>
-        <article class="metric"><span class="metric-number">1</span><p>single-shot agent attempt per candidate</p></article>
-        <article class="metric"><span class="metric-number">0</span><p>automatic merges</p></article>
+      <div>
+        <p>
+          Prompt Vote Lab is an observable experiment. People vote for what the agent should try next, then the result is inspected as a gap between expectation and actual output.
+        </p>
+        <p>
+          The lab is cumulative. Each accepted change becomes the starting state for later weeks, so the experiment can become cleaner, stranger, more useful, or harder to maintain over time.
+        </p>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="loop-title">
-      <p class="eyebrow">Loop</p>
-      <h2 id="loop-title">How the experiment runs</h2>
+      <p class="eyebrow">Weekly loop</p>
+      <h2 id="loop-title">Four steps. No hidden magic.</h2>
       <div class="steps">
-        <article class="step"><h3>Propose</h3><p>Create a GitHub Issue with the exact prompt and expected visible result.</p></article>
-        <article class="step"><h3>Vote</h3><p>Use GitHub reactions. A real prompt must beat the 20-vote baseline.</p></article>
-        <article class="step"><h3>Run</h3><p>The selected prompt is given to the fixed implementation agent.</p></article>
-        <article class="step"><h3>Check</h3><p>Safety and static-site checks run before the implementation PR is proposed.</p></article>
-        <article class="step"><h3>Review</h3><p>The maintainer reviews the PR and decides merge, reject, unsafe, failed, or no-change.</p></article>
-        <article class="step"><h3>Record</h3><p>The result and expectation gap are logged for later comparison.</p></article>
+        <article class="step"><h3>Propose</h3><p>Write a concrete prompt and expected visible result as a GitHub Issue.</p></article>
+        <article class="step"><h3>Vote</h3><p>Use reactions. The prompt must beat the 20-vote no-change baseline.</p></article>
+        <article class="step"><h3>Run</h3><p>The fixed implementation agent gets one bounded attempt and opens an agent PR.</p></article>
+        <article class="step"><h3>Review</h3><p>Merge is manual. Only merged PRs become the inherited lab state.</p></article>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="safety-title">
-      <p class="eyebrow">Safety boundary</p>
-      <h2 id="safety-title">The AI is not given a blank check</h2>
-      <p>The point is not to let an agent do anything. The point is to test whether useful changes emerge under stable, reviewable constraints.</p>
+    <section class="panel" aria-labelledby="constraints-title">
+      <p class="eyebrow">Constraints</p>
+      <h2 id="constraints-title">The small box is the experiment.</h2>
+      <p>Keeping the agent inside a tiny static lab makes failures visible and comparisons easier.</p>
+      <div class="metrics">
+        <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
+        <article class="metric"><span class="metric-number">0</span><p>external runtime dependencies</p></article>
+        <article class="metric"><span class="metric-number">1</span><p>bounded agent attempt per candidate</p></article>
+        <article class="metric"><span class="metric-number">0</span><p>automatic merges</p></article>
+      </div>
       <div class="rules">
-        <article class="card"><h3>Allowed local behavior</h3><p>Static HTML, CSS, vanilla JavaScript, helper functions, local state, and JSON export/import inside the lab.</p></article>
-        <article class="card"><h3>Blocked runtime behavior</h3><p>No external scripts, CDNs, network fetches, WebSockets, cookies, iframes, eval, <code>new Function(...)</code>, or hidden trackers.</p></article>
-        <article class="card"><h3>Manual adoption</h3><p>The AI agent can open a PR. It cannot merge, buy adoption, or override review.</p></article>
+        <article class="card"><h3>Allowed</h3><p>Static HTML, CSS, vanilla JavaScript, helper functions, local state, and local JSON import/export.</p></article>
+        <article class="card"><h3>Blocked</h3><p>External scripts, CDNs, network calls, WebSockets, cookies, iframes, hidden trackers, login, and payment behavior.</p></article>
+        <article class="card"><h3>Inherited</h3><p>Only merged lab PRs become the base state for future weekly prompts.</p></article>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="support-title">
       <p class="eyebrow">Support</p>
-      <h2 id="support-title">Support can fund comparison runs</h2>
-      <p>Support is limited to opening additional comparison runs after the normal baseline rule is satisfied. It is not a request channel, maintenance contract, or paid review service.</p>
+      <h2 id="support-title">Support unlocks comparison runs only.</h2>
+      <p>Support is limited to extra comparison attempts after the normal baseline rule is satisfied. It is not a request channel, paid review, delivery promise, or merge right.</p>
       <div class="support-grid">
-        <article class="card"><h3>$5 — Rank 2 comparison</h3><p>May open an additional rank-2 comparison run when the weekly support threshold is reached.</p></article>
-        <article class="card"><h3>$10 — Rank 3 comparison</h3><p>May open rank-2 and rank-3 comparison runs when total weekly support reaches the threshold.</p></article>
+        <article class="card"><h3>$5 — Rank 2 comparison</h3><p>May open an additional rank-2 comparison run when the weekly threshold is reached.</p></article>
+        <article class="card"><h3>$10 — Rank 3 comparison</h3><p>May open rank-2 and rank-3 comparison runs when the weekly threshold is reached.</p></article>
       </div>
-      <p class="muted-box">Support does not override the no-change baseline, guarantee success, grant adoption, create a service obligation, or change review authority.</p>
       <div class="link-row">
         <a class="button" href="https://github.com/sponsors/Unjuno">Support on GitHub</a>
         <a class="button ghost" href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/support-policy.md">Read support policy</a>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="docs-title">
-      <p class="eyebrow">Reference</p>
-      <h2 id="docs-title">Read the operating rules</h2>
-      <p>Detailed explanations stay in repository docs. These links open GitHub's rendered Markdown view instead of raw text on GitHub Pages.</p>
-      <div class="docs">
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/experiment-model.md">Experiment model</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/how-to-participate.md">How to participate</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/no-change-baseline.md">No-change baseline</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/automation-map.md">Automation map</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/static-ui-v1.0.md">Static UI rule</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/single-shot-api-v1.0.md">Single-shot run rule</a>
+    <section class="panel final-cta" aria-labelledby="final-title">
+      <div>
+        <p class="eyebrow">Start here</p>
+        <h2 id="final-title">Beat the 20-vote gate.</h2>
+        <p>One remembered rule, one visible lab, one reviewable agent PR.</p>
+      </div>
+      <div class="actions" aria-label="Final actions">
+        <a class="button primary" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote now</a>
+        <a class="button ghost" href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/README.md">Read docs</a>
       </div>
     </section>
 
-    <footer><p>The <a href="./lab/">lab</a> is the changing implementation target. This landing page is the stable explanation layer.</p></footer>
+    <footer>
+      <p><a href="./lab/">Lab</a> changes over time. This page explains the gate.</p>
+    </footer>
   </main>
 </body>
 </html>
