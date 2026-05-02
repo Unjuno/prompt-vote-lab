@@ -26,7 +26,7 @@ on:
       mock_prompt:
         description: "Synthetic prompt to use for the mock implementation"
         required: true
-        default: "Mock: prove that weekly automation can select a candidate, edit lab files, pass checks, and open a PR without calling an API."
+        default: "Mock: prove that weekly automation can select a candidate, edit lab files, pass checks, and open a PR without running a paid implementation agent."
         type: string
       create_implementation_pr:
         description: "Create the mock implementation PR if the mock candidate beats the baseline"
@@ -60,7 +60,7 @@ jobs:
             --source weekly-mock-run \
             --status started \
             --week "${{ inputs.week }}" \
-            --payload-json '{"api_call_count":0,"mode":"mock"}'
+            --payload-json '{"agent_run_count":0,"mode":"mock"}'
 
       - name: Build synthetic vote artifacts
         env:
@@ -116,13 +116,13 @@ jobs:
           lines = [
               f"# Weekly mock vote summary: {week}",
               "",
-              "This is a synthetic mock vote summary. It does not read GitHub Issues and does not call any model API.",
+              "This is a synthetic mock vote summary. It does not read GitHub Issues and does not run a paid implementation agent.",
               "",
               "| Rank | Candidate | Type | Votes | Title |",
               "|---:|---|---|---:|---|",
           ]
           for c in top3:
-              candidate = "baseline" if c["issue_number"] == 0 else f"mock #{c['issue_number']}"
+              candidate = "baseline" if c["candidate_type"] == "no-change-baseline" else f"mock #{c['issue_number']}"
               lines.append(f"| {c['rank']} | {candidate} | {c['candidate_type']} | {c['vote_count']} | {c['title']} |")
           lines += [
               "",
@@ -152,7 +152,7 @@ jobs:
               "top_candidate_type": candidates[0].get("candidate_type") if candidates else "unrecorded",
               "top_candidate_votes": candidates[0].get("vote_count") if candidates else "unrecorded",
               "no_change_baseline": "${{ inputs.no_change_baseline }}",
-              "api_call_count": 0,
+              "agent_run_count": 0,
           }
           subprocess.run([
               'python', 'scripts/log_event.py',
@@ -178,7 +178,7 @@ jobs:
           git push --set-upstream origin "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
           pr_url=$(gh pr create \
             --title "Record weekly mock vote summary for ${{ inputs.week }}" \
-            --body "Adds a synthetic vote summary for mock automation testing. This PR does not call any model API." \
+            --body "Adds a synthetic vote summary for mock automation testing. This PR does not run a paid implementation agent." \
             --base main \
             --head "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}")
           echo "$pr_url" | tee .tmp/mock-summary-pr-url.txt
@@ -195,7 +195,7 @@ jobs:
             --payload-json "$(python - <<'PY'
           import json
           from pathlib import Path
-          print(json.dumps({"pr_url": Path('.tmp/mock-summary-pr-url.txt').read_text().strip()}))
+          print(json.dumps({"pr_url": Path('.tmp/mock-summary-pr-url.txt').read_text().strip(), "agent_run_count": 0}))
           PY
           )"
 
@@ -210,7 +210,7 @@ jobs:
             --status skipped \
             --week "${{ inputs.week }}" \
             --api-call-count 0 \
-            --payload-json '{"reason":"create_implementation_pr=false"}'
+            --payload-json '{"reason":"create_implementation_pr=false","agent_run_count":0}'
 
       - name: Log no eligible mock candidate
         if: ${{ inputs.create_implementation_pr }}
@@ -229,7 +229,7 @@ jobs:
                   '--status', 'completed',
                   '--week', '${{ inputs.week }}',
                   '--api-call-count', '0',
-                  '--payload-json', json.dumps({'reason': 'mock candidate did not beat baseline'}),
+                  '--payload-json', json.dumps({'reason': 'mock candidate did not beat baseline', 'agent_run_count': 0}),
               ], check=True)
           PY
 
@@ -279,6 +279,7 @@ jobs:
                   'branch': branch,
                   'votes': votes,
                   'run_reason': reason,
+                  'agent_run_count': 0,
               })
               sh(['git', 'checkout', 'main'])
               sh(['git', 'checkout', '-B', branch])
@@ -295,12 +296,13 @@ jobs:
               sh(['bash', 'scripts/static-site-check.sh'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
               if diff.returncode == 0:
-                  log_event('mock_implementation_failed', 'failed', rank, issue, {'reason': 'no_lab_changes'})
+                  log_event('mock_implementation_failed', 'failed', rank, issue, {'reason': 'no_lab_changes', 'agent_run_count': 0})
                   raise SystemExit(f'Rank {rank} produced no lab changes')
               changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
               log_event('mock_internal_checks_passed', 'completed', rank, issue, {
                   'checks': ['safety-check', 'static-site-check'],
                   'changed_files': changed,
+                  'agent_run_count': 0,
               })
               sh(['git', 'config', 'user.name', 'github-actions[bot]'])
               sh(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
@@ -311,7 +313,7 @@ jobs:
               body_path = Path(f'.tmp/mock-pr-body-rank-{rank}.md')
               summary_path = Path('.tmp/implementation-summary.md')
               body = [
-                  'Mock implementation run. This PR was created without calling any model API.',
+                  'Mock implementation run. This PR was created without running a paid implementation agent.',
                   '',
                   '## Candidate',
                   '',
@@ -321,7 +323,7 @@ jobs:
                   f'- Votes: {votes}',
                   f'- Run reason: {reason}',
                   '- Implementation model: `mock-runner`',
-                  '- API cost: 0',
+                  '- Agent-run cost: 0',
                   '- Internal checks: `safety-check` and `static-site-check` passed before PR creation',
                   '',
                   '## Selected prompt',
@@ -334,7 +336,7 @@ jobs:
                   '',
                   '## Review purpose',
                   '',
-                  'Use this PR to verify weekly selection, branch creation, lab-only edits, internal safety/static checks, and PR creation before enabling paid API runs.',
+                  'Use this PR to verify weekly selection, branch creation, lab-only edits, internal safety/static checks, and PR creation before enabling paid implementation-agent runs.',
               ]
               body_path.write_text('\n'.join(body), encoding='utf-8')
               pr_url = subprocess.check_output([
@@ -348,7 +350,7 @@ jobs:
                   'branch': branch,
                   'pr_url': pr_url,
                   'changed_files': changed,
-                  'api_call_count': 0,
+                  'agent_run_count': 0,
               })
           PY
 
@@ -366,7 +368,7 @@ jobs:
             --status "$status" \
             --week "${{ inputs.week }}" \
             --api-call-count 0 \
-            --payload-json "{\"job_status\":\"${{ job.status }}\"}"
+            --payload-json "{\"job_status\":\"${{ job.status }}\",\"agent_run_count\":0}"
 
       - name: Render event summary
         if: always()
