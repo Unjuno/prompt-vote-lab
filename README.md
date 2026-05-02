@@ -4,6 +4,8 @@ Prompt Vote Lab is a public experiment for watching a prompt market steer a cons
 
 People propose prompts, vote on them, and the selected prompt is given to an AI coding agent/Codex-style implementation run inside a small static `lab/` directory.
 
+The lab is cumulative. Each week starts from the current `main` branch state of `lab/`, not from a clean initial template.
+
 The point is not only to generate UI.
 
 The point is to observe the gap between:
@@ -17,18 +19,19 @@ what a constrained AI agent actually produced
 There is also an entertainment layer: the weekly run is meant to be watchable. The memorable object is the **20-vote gate**.
 
 ```text
-Prompt → 20-vote gate → lab PR
+Prompt → 20-vote gate → agent PR → inherited lab state
 ```
 
 ## Short explanation
 
-Prompt Vote Lab is a prompt market plus a constrained implementation sandbox.
+Prompt Vote Lab is a prompt market plus a constrained, cumulative implementation sandbox.
 
 - Participants submit prompt candidates as GitHub Issues.
 - Participants vote with 👍 reactions.
 - A virtual no-change baseline is inserted every week with 20 virtual votes.
 - If a real prompt beats the baseline, the selected prompt is passed to the implementation agent.
-- The implementation agent attempts the change in `lab/` only.
+- The implementation agent attempts the change against the current `main` version of `lab/`.
+- If merged, the result becomes the starting point for later weeks.
 - The result is reviewed, classified, and recorded.
 
 ## What this is not
@@ -41,6 +44,7 @@ Prompt Vote Lab is not:
 - a maintenance contract
 - a general-purpose web app builder
 - a guarantee that the most popular prompt will be merged
+- a weekly reset contest
 
 Support can unlock extra comparison runs. It does not buy success, adoption, merge, maintenance, review, support work, or specification control.
 
@@ -66,6 +70,20 @@ The AI agent must not edit:
 
 The lab must not use external scripts, CDNs, hidden network calls, cookies, iframes, `eval`, `new Function(...)`, login, payment, or trackers.
 
+## State inheritance
+
+Each weekly implementation attempt starts from the current `main` branch version of `lab/`.
+
+```text
+week N merged lab state
+→ week N+1 selected prompt is applied on top of that state
+→ if merged, it becomes week N+2 starting state
+```
+
+This cumulative pressure is part of the experiment. Over time, the same three files may become easier, harder, stranger, or more coherent to modify.
+
+Rejected, failed, unsafe, and unmerged comparison PRs do not become the next week's base state.
+
 ## Weekly loop
 
 1. People propose prompts as GitHub Issues.
@@ -76,11 +94,12 @@ The lab must not use external scripts, CDNs, hidden network calls, cookies, ifra
 6. If a real prompt ranks first, rank 1 is the normal weekly run candidate.
 7. Rank 2 and rank 3 may be executed as support-unlocked comparison runs.
 8. The selected prompt is given to the implementation agent.
-9. The implementation agent modifies only `lab/` and opens a PR.
+9. The implementation agent modifies only the current `main` state of `lab/` and opens a PR.
 10. Safety and static-site checks run before the PR is created by automation.
 11. `main` merge remains manual.
-12. After a terminal run state, a stronger evaluation model may classify the result and draft a report.
-13. The result is recorded.
+12. If merged, the PR becomes the future lab state.
+13. After a terminal run state, a stronger evaluation model may classify the result and draft a report.
+14. The result is recorded.
 
 ## Ranked candidates
 
@@ -91,6 +110,8 @@ Prompt Vote Lab uses ranked candidates, not a single permanent winner.
 - `rank-3`: optional support-unlocked comparison run
 
 Rank 2 and rank 3 are comparison candidates. They are not automatically promoted if rank 1 fails review.
+
+Only merged PRs affect the inherited lab state.
 
 ## No-change baseline
 
@@ -121,17 +142,19 @@ A stronger model may be used only for evaluation and blog/report writing. The ev
 
 ## Agent run policy
 
-Paid implementation runs are single-shot:
+Paid implementation runs are bounded agent attempts:
 
 ```text
-model call per candidate: 1
-SDK max_retries: 0
+agent attempt per candidate per workflow run: 1
+SDK max_retries, when an SDK is used: 0
 automatic fallback: no
 automatic retry: no
 automatic merge: no
 ```
 
 Failure is recorded as experiment data. It is not hidden by rerunning the model.
+
+Good partial progress may be continued only as an explicit, reviewable continuation run.
 
 ## Support-unlocked runs
 
@@ -151,6 +174,7 @@ See [`docs/support-policy.md`](docs/support-policy.md).
 ## Each run records
 
 - selected prompt
+- inherited lab base commit
 - vote count
 - candidate rank
 - no-change baseline result
