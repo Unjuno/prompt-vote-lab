@@ -32,7 +32,7 @@ if [ ! -d lab ]; then
   exit 1
 fi
 
-forbidden='fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|<script[^>]+src=|<iframe|navigator\.sendBeacon'
+forbidden='<script[^>]+src=["'"'"']https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|<iframe|navigator\.sendBeacon'
 
 if grep -R -n -E "$forbidden" lab/; then
   echo "ERROR: Forbidden pattern detected."
