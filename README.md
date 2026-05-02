@@ -12,6 +12,8 @@ Each run records:
 - vote count
 - candidate rank
 - selection rule
+- implementation model policy
+- evaluation model policy
 - AI execution constraints
 - PR diff
 - safety checks
@@ -44,10 +46,11 @@ The AI agent must not edit:
 3. Candidates are ranked by the vote result.
 4. Rank 1 is the normal weekly run candidate.
 5. Rank 2 and rank 3 may be executed as support-unlocked comparison runs.
-6. The AI agent modifies only `lab/` and opens a PR.
+6. The implementation model modifies only `lab/` and opens a PR.
 7. Safety checks run.
 8. The maintainer reviews and merges/rejects.
-9. The result is recorded in `runs/week-XXX.md`.
+9. A stronger evaluation model may draft analysis notes or a blog report.
+10. The result is recorded in `runs/week-XXX.md`.
 
 ## Ranked candidates
 
@@ -56,6 +59,20 @@ Prompt Vote Lab uses ranked candidates, not a single permanent winner.
 - `rank-1`: normal weekly run and default mainline candidate
 - `rank-2`: optional support-unlocked comparison run
 - `rank-3`: optional support-unlocked comparison run
+
+## Model policy
+
+Implementation model:
+
+```text
+gpt-5-nano
+```
+
+The implementation model is fixed by `rules/model-policy-v1.0.md`.
+
+All ranked candidates in the same weekly vote must use the same implementation model settings.
+
+A stronger model may be used only for evaluation and blog-writing under `rules/evaluation-model-policy-v1.0.md`. The evaluation model must not modify `lab/` and must not decide merge automatically.
 
 ## Merge policy
 
