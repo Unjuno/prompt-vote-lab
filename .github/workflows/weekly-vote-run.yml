@@ -1,0 +1,115 @@
+name: Weekly Vote Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-001"
+        required: true
+        type: string
+      support_usd:
+        description: "Manual weekly support total in USD, while Sponsors approval/API is pending"
+        required: true
+        default: "0"
+        type: string
+      create_run_packages:
+        description: "Create run-package PRs for eligible ranks"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  collect-votes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Collect prompt proposal votes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/collect_votes.py \
+            --repo "${{ github.repository }}" \
+            --week "${{ inputs.week }}" \
+            --out-dir .tmp
+
+      - name: Determine eligible ranks
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          support = float("${{ inputs.support_usd }}" or "0")
+          candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
+          eligible = []
+          for c in candidates:
+              rank = int(c['rank'])
+              if rank == 1:
+                  eligible.append(c)
+              elif rank == 2 and support >= 5:
+                  c['run_reason'] = 'support-unlocked-run'
+                  eligible.append(c)
+              elif rank == 3 and support >= 10:
+                  c['run_reason'] = 'support-unlocked-run'
+                  eligible.append(c)
+          for c in eligible:
+              if int(c['rank']) == 1:
+                  c['run_reason'] = 'normal-weekly-run'
+          Path('.tmp/eligible-candidates.json').write_text(json.dumps(eligible, indent=2), encoding='utf-8')
+          print(json.dumps(eligible, indent=2))
+          PY
+
+      - name: Write weekly vote report
+        run: |
+          mkdir -p "runs"
+          cp .tmp/weekly-vote-summary.md "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "## Manual weekly support total" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "${{ inputs.support_usd }} USD" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "## Eligible implementation ranks" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          python - <<'PY' >> "runs/${{ inputs.week }}-vote-summary.md"
+          import json
+          from pathlib import Path
+          items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+          if not items:
+              print('- unrecorded')
+          for item in items:
+              print(f"- rank {item['rank']}: issue #{item['issue_number']} ({item['run_reason']})")
+          PY
+
+      - name: Commit vote report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "weekly-vote-${{ inputs.week }}-${{ github.run_number }}"
+          git add "runs/${{ inputs.week }}-vote-summary.md"
+          git commit -m "Record vote summary for ${{ inputs.week }}"
+          git push --set-upstream origin "weekly-vote-${{ inputs.week }}-${{ github.run_number }}"
+
+      - name: Open vote summary PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create \
+            --title "Record vote summary for ${{ inputs.week }}" \
+            --body "Records the weekly vote summary and eligible ranks. This workflow does not call the OpenAI API." \
+            --base main \
+            --head "weekly-vote-${{ inputs.week }}-${{ github.run_number }}"
+
+      - name: Print eligible candidates for manual API runs
+        run: |
+          echo "Eligible candidates written to .tmp/eligible-candidates.json"
+          cat .tmp/eligible-candidates.json
+          echo "Run Codex Lab Run manually for each eligible candidate after API key setup."
