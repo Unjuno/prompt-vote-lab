@@ -6,6 +6,16 @@ This rule profile constrains AI coding-agent runs to a small static UI experimen
 
 The goal is to let the agent implement the voted prompt while keeping the blast radius small enough for public review.
 
+## Boundary principle
+
+The boundary is based on edit scope, external dependency, network behavior, and unsafe runtime behavior.
+
+It is not based on forbidding normal code structure.
+
+The agent may create ordinary JavaScript functions, helper functions, event handlers, small classes, constants, and local modules inside the existing `lab/app.js` file when that makes the implementation clearer.
+
+The forbidden item is the dynamic code constructor `new Function(...)`, not newly written helper functions.
+
 ## Editable scope
 
 The agent may edit only files under `lab/`.
@@ -38,7 +48,17 @@ The agent must not edit, create, delete, or depend on:
 
 ## JavaScript constraints
 
-JavaScript may be used only for local UI behavior.
+JavaScript may be used for local UI behavior.
+
+Allowed examples:
+
+- named functions
+- arrow functions
+- small helper functions
+- event handlers
+- DOM updates
+- local state with `localStorage` or `sessionStorage`
+- JSON export/import implemented locally
 
 Do not use:
 
@@ -47,7 +67,7 @@ Do not use:
 - `WebSocket`
 - `EventSource`
 - `eval`
-- `new Function`
+- `new Function(...)`
 - `document.cookie`
 - external scripts
 - external APIs
