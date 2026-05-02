@@ -4,6 +4,8 @@
 This script does not call model APIs. It copies the repository to temporary
 workspaces, applies weighted mutations, runs the relevant check, and reports
 whether the observed check result matched the expected result.
+
+Verification trigger: multi-fuzz.
 """
 
 from __future__ import annotations
