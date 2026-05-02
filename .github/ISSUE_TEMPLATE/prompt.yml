@@ -1,0 +1,39 @@
+name: Prompt Proposal
+description: Propose a prompt for the next constrained lab run
+title: "[Prompt]: "
+labels: ["prompt-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a prompt for the next AI-agent lab run.
+
+        Scope: the agent may edit only `lab/index.html`, `lab/style.css`, and `lab/app.js`.
+
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Voted prompt
+      description: Write the prompt you want the AI coding agent to execute.
+      placeholder: "Example: Make the lab page explain the expectation-vs-result experiment more clearly."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expectation
+    attributes:
+      label: Expected result
+      description: What do you expect to improve if this prompt is implemented?
+      placeholder: "Example: The page should become understandable within 10 seconds."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This can be prototyped with static HTML/CSS/vanilla JS.
+          required: true
+        - label: This does not require backend, login, payment, database, external API, or secrets.
+          required: true
