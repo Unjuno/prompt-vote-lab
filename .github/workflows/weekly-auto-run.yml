@@ -130,11 +130,13 @@ jobs:
 
       - name: Require implementation API key only if candidates are eligible
         env:
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
           OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
         run: |
-          if [ -z "${OPENAI_API_KEY_PRIMARY}" ] && [ -z "${OPENAI_API_KEY_IMPLEMENTATION}" ]; then
+          if [ -z "${OPENAI_API_KEY_TRAILING}" ] && [ -z "${OPENAI_API_KEY_PRIMARY}" ] && [ -z "${OPENAI_API_KEY_IMPLEMENTATION}" ]; then
             echo "Eligible candidates exist, but no implementation API key is configured."
+            echo "Preferred secret name: OPENAI_API_KEY_"
             exit 1
           fi
 
@@ -145,13 +147,14 @@ jobs:
 
       - name: Create implementation PRs for eligible candidates
         env:
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
           OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
           IMPLEMENTATION_MODEL: gpt-5-nano
           MAX_OUTPUT_TOKENS: "12000"
           GH_TOKEN: ${{ github.token }}
         run: |
-          export OPENAI_API_KEY="${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}"
+          export OPENAI_API_KEY_="${OPENAI_API_KEY_TRAILING:-${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}}"
           python - <<'PY'
           import json
           import subprocess
@@ -189,6 +192,7 @@ jobs:
                   '--run-reason', reason,
               ])
               sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
+              sh(['bash', 'scripts/static-site-check.sh'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
               if diff.returncode == 0:
                   raise SystemExit(f'Rank {rank} produced no lab changes')
@@ -212,6 +216,8 @@ jobs:
                   f'- Run reason: {reason}',
                   '- Implementation model: `gpt-5-nano`',
                   '- Model policy: `rules/model-policy-v1.0.md`',
+                  '- API secret: `OPENAI_API_KEY_` preferred',
+                  '- Internal checks: `safety-check` and `static-site-check` passed before PR creation',
                   '- Created by: `Weekly Auto Run`',
                   '',
                   '## Selected prompt',
