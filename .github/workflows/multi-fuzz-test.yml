@@ -1,0 +1,59 @@
+name: Multi-Fuzz Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: "Random seed"
+        required: true
+        default: "0"
+        type: string
+      trials:
+        description: "Number of trials, 1-250"
+        required: true
+        default: "25"
+        type: string
+      fail_on_disagreement:
+        description: "Fail workflow if expected/observed disagreement occurs"
+        required: true
+        default: true
+        type: boolean
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "scripts/multi_fuzz.py"
+      - "scripts/safety-check.sh"
+      - "scripts/static-site-check.sh"
+      - ".github/workflows/multi-fuzz-test.yml"
+      - "rules/multi-fuzz-testing-v1.0.md"
+
+permissions:
+  contents: read
+
+jobs:
+  multi-fuzz-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run multi-fuzz test
+        run: |
+          extra=""
+          if [ "${{ inputs.fail_on_disagreement || true }}" = "true" ]; then
+            extra="--fail-on-disagreement"
+          fi
+          python scripts/multi_fuzz.py \
+            --seed "${{ inputs.seed || '0' }}" \
+            --trials "${{ inputs.trials || '25' }}" \
+            --out-dir .tmp/multi-fuzz \
+            $extra
+
+      - name: Upload multi-fuzz artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: multi-fuzz-results
+          path: .tmp/multi-fuzz/
