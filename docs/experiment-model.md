@@ -1,29 +1,44 @@
 # Experiment model
 
-Prompt Vote Lab is a public experiment about prompt selection, constrained AI-agent implementation, cumulative UI change, and expectation-gap analysis.
+Prompt Vote Lab is a public prompt game and experiment about prompt selection, reputation, constrained AI-agent implementation, cumulative UI change, and expectation-gap analysis.
 
 ## One-line explanation
 
-People propose and vote on prompts. The selected prompt is given to a fixed implementation agent/Codex-style run inside the current static lab. The project records whether the result matched what people expected.
+Players submit prompts, vote on prompts, and learn whether the winning prompt survives a fixed implementation agent/Codex-style run inside the current static lab.
+
+A prompt can win votes and still fail.
 
 ## What this is
 
 Prompt Vote Lab is not a normal product roadmap.
 
-It is an observable experiment with six layers:
+It is a competitive prompt game with experimental measurement.
 
-1. Participation layer: people submit prompt candidates as GitHub Issues.
-2. Vote layer: people rank prompt candidates with GitHub reactions.
-3. Baseline layer: a virtual no-change candidate is inserted each week.
-4. State layer: the current merged `lab/` state is inherited from previous weeks.
-5. Implementation layer: the selected prompt is attempted by a fixed AI coding agent inside the static `lab/` files.
-6. Evaluation layer: the result is classified and reported.
+The game has seven layers:
 
-There is also an entertainment layer. The weekly run is meant to be watchable: a public prompt tries to pass the **20-vote gate**, then the constrained lab changes or fails visibly.
+1. Player layer: people submit prompt candidates as GitHub Issues.
+2. Persuasion layer: players try to make other players trust their prompt.
+3. Vote layer: players rank prompt candidates with GitHub reactions.
+4. Baseline layer: a virtual no-change candidate is inserted each week.
+5. State layer: the current merged `lab/` state is inherited from previous weeks.
+6. Implementation layer: the selected prompt is attempted by a fixed AI coding agent inside the static `lab/` files.
+7. Memory layer: players use past outcomes to decide which authors, prompt styles, and promises deserve future trust.
+
+There is also an entertainment layer. The weekly round is meant to be watchable: a public prompt tries to pass the **20-vote gate**, then the constrained lab changes, fails, overbuilds, underbuilds, or refuses to move.
 
 ```text
-Prompt → 20-vote gate → agent PR → inherited lab state
+Prompt → 20-vote gate → agent PR → public outcome → reputation memory
 ```
+
+## What counts as winning
+
+Winning the vote is not the same as winning the round.
+
+A prompt wins attention when it gets votes.
+
+A prompt wins trust only if the resulting agent PR is useful, reviewable, and compatible with the inherited lab state.
+
+Bad outcomes should matter. If a prompt author repeatedly makes flashy promises that produce weak or unmergeable results, voters should rationally become less willing to support that style later.
 
 ## What this is not
 
@@ -54,7 +69,7 @@ Initial baseline:
 
 If no real prompt beats this baseline, the week produces no implementation-agent attempt.
 
-This prevents low-interest weeks from spending model-run budget and review time.
+This prevents low-interest weeks from spending model-run budget and review time. It also makes the vote game harder: doing nothing is always a competitor.
 
 ## Why the lab state is inherited
 
@@ -68,7 +83,7 @@ week N merged lab state
 
 This cumulative pressure is intentional.
 
-Over time, the same three files may become easier, harder, stranger, more coherent, or more fragile to modify. That trajectory is part of the experiment.
+Over time, the same three files may become easier, harder, stranger, more coherent, or more fragile to modify. That trajectory is part of the game and the experiment.
 
 Rejected, failed, unsafe, and unmerged comparison PRs do not become the next week's base state.
 
@@ -84,7 +99,7 @@ The agent may create ordinary helper functions inside `lab/app.js`.
 
 The constraint is intentional.
 
-As experiments accumulate, the three files become harder to modify cleanly. That rising difficulty is part of what the project observes.
+As rounds accumulate, the three files become harder to modify cleanly. That rising difficulty is part of what the project observes.
 
 ## Why the implementation condition is fixed
 
@@ -112,3 +127,5 @@ Allowed expectation-gap labels include:
 - Rejected
 
 The classification describes the gap between the public prompt expectation and the actual implementation outcome.
+
+These labels also feed the reputation game: they help players remember which prompt styles deserved trust.
