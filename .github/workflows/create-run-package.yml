@@ -1,0 +1,87 @@
+name: Create Run Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-001"
+        required: true
+        type: string
+      issue_number:
+        description: "Winning prompt issue number"
+        required: false
+        type: string
+      voted_prompt:
+        description: "Winning voted prompt"
+        required: true
+        type: string
+      vote_count:
+        description: "Vote count"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-run-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create branch
+        run: |
+          git checkout -b "run-package-${{ inputs.week }}"
+
+      - name: Create run prompt package
+        run: |
+          mkdir -p run-packages
+          cat > "run-packages/${{ inputs.week }}.md" <<'EOF'
+          # Prompt Vote Lab Run Package
+
+          ## Week
+
+          ${{ inputs.week }}
+
+          ## Winning issue
+
+          #${{ inputs.issue_number }}
+
+          ## Vote count
+
+          ${{ inputs.vote_count }}
+
+          ## Rule profile
+
+          Use `rules/static-ui-v1.0.md`.
+
+          ## Voted prompt
+
+          ${{ inputs.voted_prompt }}
+
+          ## Required implementation behavior
+
+          - Edit only `lab/`.
+          - Use only HTML, CSS, and vanilla JavaScript.
+          - Do not change rules, workflows, docs, README, LICENSE, or run logs.
+          - Open a pull request for review.
+          EOF
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add run-packages/
+          git commit -m "Create run package for ${{ inputs.week }}"
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create \
+            --title "Create run package for ${{ inputs.week }}" \
+            --body "This PR creates a run package for the selected voted prompt. It does not run the AI agent automatically." \
+            --base main \
+            --head "run-package-${{ inputs.week }}"
