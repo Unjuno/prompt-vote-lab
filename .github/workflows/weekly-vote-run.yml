@@ -8,20 +8,28 @@ on:
         required: true
         type: string
       support_usd:
-        description: "Manual weekly support total in USD, while Sponsors approval/API is pending"
+        description: "Manual weekly support total in USD, while Sponsors approval is pending"
         required: true
         default: "0"
         type: string
-      create_run_packages:
-        description: "Create run-package PRs for eligible ranks"
+      run_implementation:
+        description: "Call the paid implementation API for eligible ranks"
         required: true
         default: false
         type: boolean
+      confirm_paid_api_run:
+        description: "Type RUN_GPT5_NANO to confirm paid API runs when run_implementation is true"
+        required: false
+        type: string
 
 permissions:
   contents: write
   pull-requests: write
   issues: read
+
+concurrency:
+  group: weekly-vote-${{ inputs.week }}
+  cancel-in-progress: false
 
 jobs:
   collect-votes:
@@ -45,7 +53,6 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          import os
           from pathlib import Path
 
           support = float("${{ inputs.support_usd }}" or "0")
@@ -54,6 +61,7 @@ jobs:
           for c in candidates:
               rank = int(c['rank'])
               if rank == 1:
+                  c['run_reason'] = 'normal-weekly-run'
                   eligible.append(c)
               elif rank == 2 and support >= 5:
                   c['run_reason'] = 'support-unlocked-run'
@@ -61,9 +69,6 @@ jobs:
               elif rank == 3 and support >= 10:
                   c['run_reason'] = 'support-unlocked-run'
                   eligible.append(c)
-          for c in eligible:
-              if int(c['rank']) == 1:
-                  c['run_reason'] = 'normal-weekly-run'
           Path('.tmp/eligible-candidates.json').write_text(json.dumps(eligible, indent=2), encoding='utf-8')
           print(json.dumps(eligible, indent=2))
           PY
@@ -104,12 +109,145 @@ jobs:
         run: |
           gh pr create \
             --title "Record vote summary for ${{ inputs.week }}" \
-            --body "Records the weekly vote summary and eligible ranks. This workflow does not call the OpenAI API." \
+            --body "Records the weekly vote summary and eligible ranks." \
             --base main \
             --head "weekly-vote-${{ inputs.week }}-${{ github.run_number }}"
 
-      - name: Print eligible candidates for manual API runs
+      - name: Upload candidate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-candidates-${{ inputs.week }}
+          path: |
+            .tmp/weekly-candidates.json
+            .tmp/eligible-candidates.json
+            .tmp/weekly-vote-summary.md
+
+  implementation-runs:
+    needs: collect-votes
+    if: ${{ inputs.run_implementation }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require explicit paid-run confirmation
         run: |
-          echo "Eligible candidates written to .tmp/eligible-candidates.json"
-          cat .tmp/eligible-candidates.json
-          echo "Run Codex Lab Run manually for each eligible candidate after API key setup."
+          if [ "${{ inputs.confirm_paid_api_run }}" != "RUN_GPT5_NANO" ]; then
+            echo "Refusing to call the API. Set confirm_paid_api_run to RUN_GPT5_NANO."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download candidate artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: weekly-candidates-${{ inputs.week }}
+          path: .tmp
+
+      - name: Require OpenAI API key
+        env:
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+        run: |
+          if [ -z "${OPENAI_API_KEY_PRIMARY}" ] && [ -z "${OPENAI_API_KEY_IMPLEMENTATION}" ]; then
+            echo "No implementation API key found. Add OPENAI_API_KEY or OPENAI_IMPLEMENTATION_API_KEY."
+            exit 1
+          fi
+
+      - name: Install Python dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install openai
+
+      - name: Create implementation PRs for eligible candidates
+        env:
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+          IMPLEMENTATION_MODEL: gpt-5-nano
+          MAX_OUTPUT_TOKENS: "12000"
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          export OPENAI_API_KEY="${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}"
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          week = "${{ inputs.week }}"
+          run_number = "${{ github.run_number }}"
+          candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+          if not candidates:
+              raise SystemExit('No eligible candidates to implement')
+
+          def sh(cmd):
+              print('+', ' '.join(cmd))
+              subprocess.run(cmd, check=True)
+
+          for item in candidates:
+              rank = str(item['rank'])
+              branch = f"codex-lab-{week}-rank-{rank}-{run_number}"
+              issue = str(item['issue_number'])
+              votes = str(item['vote_count'])
+              prompt = item['body']
+              reason = item.get('run_reason', 'normal-weekly-run')
+
+              sh(['git', 'checkout', 'main'])
+              sh(['git', 'checkout', '-B', branch])
+              sh([
+                  'python', 'scripts/openai_lab_run.py',
+                  '--week', week,
+                  '--candidate-rank', rank,
+                  '--issue-number', issue,
+                  '--voted-prompt', prompt,
+                  '--vote-count', votes,
+                  '--run-reason', reason,
+              ])
+              sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
+              diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
+              if diff.returncode == 0:
+                  raise SystemExit(f'Rank {rank} produced no lab changes')
+              sh(['git', 'config', 'user.name', 'github-actions[bot]'])
+              sh(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
+              sh(['git', 'add', 'lab/'])
+              sh(['git', 'commit', '-m', f'Run gpt-5-nano lab experiment for {week} rank {rank}'])
+              sh(['git', 'push', '--set-upstream', 'origin', branch])
+
+              body_path = Path(f'.tmp/pr-body-rank-{rank}.md')
+              summary_path = Path('.tmp/implementation-summary.md')
+              body = [
+                  'Implements the selected ranked prompt candidate with the fixed implementation model.',
+                  '',
+                  '## Candidate',
+                  '',
+                  f'- Week: {week}',
+                  f'- Rank: {rank}',
+                  f'- Issue: #{issue}',
+                  f'- Votes: {votes}',
+                  f'- Run reason: {reason}',
+                  '- Implementation model: `gpt-5-nano`',
+                  '- Model policy: `rules/model-policy-v1.0.md`',
+                  '- Paid API run confirmation: recorded by Weekly Vote Run',
+                  '',
+                  '## Selected prompt',
+                  '',
+                  prompt,
+                  '',
+                  '## Implementation summary',
+                  '',
+                  summary_path.read_text() if summary_path.exists() else 'Implementation summary was not written.',
+                  '',
+                  '## Merge policy',
+                  '',
+                  'Rank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates.',
+              ]
+              body_path.write_text('\n'.join(body), encoding='utf-8')
+              sh([
+                  'gh', 'pr', 'create',
+                  '--title', f'Codex lab run for {week} rank {rank}',
+                  '--body-file', str(body_path),
+                  '--base', 'main',
+                  '--head', branch,
+              ])
+          PY
