@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -46,16 +47,33 @@ def github_get(url: str, token: str) -> Any:
         return json.loads(res.read().decode("utf-8"))
 
 
+def extract_section(body: str, heading: str) -> str:
+    """Extract a GitHub issue-form section by heading text.
+
+    GitHub issue forms render textarea labels as Markdown headings, usually
+    `### Heading`, but older hand-written issues may use `## Heading`.
+    """
+    if not body:
+        return ""
+    pattern = re.compile(
+        rf"^#{{2,6}}\s+{re.escape(heading)}\s*$\n(?P<content>.*?)(?=^#{{2,6}}\s+|\Z)",
+        re.IGNORECASE | re.MULTILINE | re.DOTALL,
+    )
+    match = pattern.search(body)
+    if not match:
+        return ""
+    content = match.group("content").strip()
+    return content.replace("_No response_", "").strip()
+
+
 def extract_voted_prompt(body: str, fallback: str) -> str:
     if not body:
         return fallback
-    marker = "## Voted prompt"
-    if marker not in body:
-        return fallback
-    after = body.split(marker, 1)[1].strip()
-    if "## " in after:
-        after = after.split("## ", 1)[0].strip()
-    return after or fallback
+    for heading in ["Voted prompt", "Prompt", "Exact prompt"]:
+        section = extract_section(body, heading)
+        if section:
+            return section
+    return fallback
 
 
 def collect(repo: str, token: str, no_change_baseline: int) -> list[Candidate]:
@@ -71,7 +89,7 @@ def collect(repo: str, token: str, no_change_baseline: int) -> list[Candidate]:
             title="[Baseline]: No change this week",
             url="",
             vote_count=no_change_baseline,
-            body="No implementation run this week. The prompt market must beat the weekly no-change baseline.",
+            body="No implementation run this week. The prompt game must beat the weekly no-change baseline.",
             candidate_type="no-change-baseline",
         )
     ]
