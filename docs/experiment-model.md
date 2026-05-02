@@ -1,10 +1,10 @@
 # Experiment model
 
-Prompt Vote Lab is a public experiment about prompt selection, constrained AI implementation, and expectation-gap analysis.
+Prompt Vote Lab is a public experiment about prompt selection, constrained AI-agent implementation, and expectation-gap analysis.
 
 ## One-line explanation
 
-People propose and vote on prompts. A fixed low-cost implementation model edits a constrained static lab. The project records whether the result matched what people expected.
+People propose and vote on prompts. The selected prompt is given to a fixed implementation agent/Codex-style run inside a constrained static lab. The project records whether the result matched what people expected.
 
 ## What this is
 
@@ -15,8 +15,14 @@ It is an observable experiment with five layers:
 1. Participation layer: people submit prompt candidates as GitHub Issues.
 2. Vote layer: people rank prompt candidates with GitHub reactions.
 3. Baseline layer: a virtual no-change candidate is inserted each week.
-4. Implementation layer: a fixed model edits only the static `lab/` files.
+4. Implementation layer: the selected prompt is attempted by a fixed AI coding agent inside the static `lab/` files.
 5. Evaluation layer: the result is classified and reported.
+
+There is also an entertainment layer. The weekly run is meant to be watchable: a public prompt tries to pass the **20-vote gate**, then the constrained lab changes or fails visibly.
+
+```text
+Prompt → 20-vote gate → agent PR
+```
 
 ## What this is not
 
@@ -24,6 +30,8 @@ Prompt Vote Lab is not:
 
 - a direct feature-request queue
 - a paid specification market
+- a paid review service
+- a maintenance contract
 - a guarantee that the most popular prompt will be merged
 - a general-purpose web app builder
 - a backend, database, login, or payment experiment
@@ -42,23 +50,25 @@ Initial baseline:
 20 virtual votes
 ```
 
-If no real prompt beats this baseline, the week produces no implementation run.
+If no real prompt beats this baseline, the week produces no implementation-agent attempt.
 
-This prevents low-interest weeks from spending API budget and review time.
+This prevents low-interest weeks from spending model-run budget and review time.
 
 ## Why the implementation scope is small
 
-The implementation model may edit only:
+The implementation agent may edit only:
 
 - `lab/index.html`
 - `lab/style.css`
 - `lab/app.js`
 
+The agent may create ordinary helper functions inside `lab/app.js`.
+
 The constraint is intentional.
 
 As experiments accumulate, the three files become harder to modify cleanly. That rising difficulty is part of what the project observes.
 
-## Why the model is fixed
+## Why the implementation condition is fixed
 
 Prompt candidates should be compared under the same implementation condition.
 
