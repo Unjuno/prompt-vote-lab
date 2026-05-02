@@ -35,8 +35,14 @@ if grep -n -E "<script[^>]+src=['\"]https?://" index.html; then
 fi
 
 # The changing lab is the implementation target and must be strict.
-if grep -R -n -E "<script[^>]+src=['\"]https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|navigator\.sendBeacon" lab/; then
+if grep -R -n -E "<script[^>]+src=['\"]https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|document\.cookie|navigator\.sendBeacon" lab/; then
   echo "ERROR: forbidden network/script pattern detected in lab implementation files."
+  exit 1
+fi
+
+# Controlled new Function is allowed, but obvious dynamic-source patterns are blocked.
+if grep -R -n -E "new Function\s*\([^)]*(user|input|textarea|location|hash|search|params|localStorage|sessionStorage|indexedDB|imported|json|body|prompt|innerText|textContent|value)" lab/; then
+  echo "ERROR: new Function appears to use dynamic or user-controlled input."
   exit 1
 fi
 
