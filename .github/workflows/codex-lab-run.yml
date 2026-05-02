@@ -7,22 +7,36 @@ on:
         description: "Week label, for example week-001"
         required: true
         type: string
+      candidate_rank:
+        description: "Candidate rank, for example 1, 2, or 3"
+        required: true
+        default: "1"
+        type: string
       issue_number:
-        description: "Winning prompt issue number"
+        description: "Selected prompt issue number"
         required: true
         type: string
       voted_prompt:
-        description: "Winning voted prompt"
+        description: "Selected voted prompt"
         required: true
         type: string
       vote_count:
-        description: "Vote count"
+        description: "Vote count for this candidate"
         required: false
+        type: string
+      run_reason:
+        description: "normal-weekly-run or support-unlocked-run"
+        required: false
+        default: "normal-weekly-run"
         type: string
 
 permissions:
   contents: write
   pull-requests: write
+
+concurrency:
+  group: codex-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}
+  cancel-in-progress: false
 
 jobs:
   codex-lab-run:
@@ -44,53 +58,88 @@ jobs:
 
       - name: Create branch
         run: |
-          git checkout -b "codex-lab-${{ inputs.week }}"
+          git checkout -b "codex-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
 
-      - name: Build agent instruction
+      - name: Install Python dependency
         run: |
-          cat rules/static-ui-v1.0.md > /tmp/codex_prompt.md
-          cat >> /tmp/codex_prompt.md <<'EOF'
+          python -m pip install --upgrade pip
+          python -m pip install openai
 
-          # Voted Prompt
-
-          Issue: #${{ inputs.issue_number }}
-          Votes: ${{ inputs.vote_count }}
-
-          ${{ inputs.voted_prompt }}
-
-          # Required behavior
-
-          Implement the voted prompt only within `lab/`.
-          After editing, summarize changed files, manual test steps, and ignored unsafe parts.
-          EOF
-
-      - name: Install Codex CLI placeholder
+      - name: Run implementation model
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IMPLEMENTATION_MODEL: gpt-5-nano
+          MAX_OUTPUT_TOKENS: "12000"
         run: |
-          echo "This workflow is a guarded skeleton."
-          echo "Replace this step with the current Codex CLI or OpenAI Codex GitHub Action invocation."
-          echo "Prompt prepared at /tmp/codex_prompt.md."
-          cat /tmp/codex_prompt.md
-          exit 1
+          python scripts/openai_lab_run.py \
+            --week "${{ inputs.week }}" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --voted-prompt "${{ inputs.voted_prompt }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --run-reason "${{ inputs.run_reason }}"
 
       - name: Run safety check
-        if: always()
-        run: bash scripts/safety-check.sh origin/${{ github.base_ref || 'main' }} HEAD
+        run: bash scripts/safety-check.sh origin/main HEAD
+
+      - name: Fail if implementation made no lab changes
+        run: |
+          if git diff --quiet -- lab/; then
+            echo "Implementation completed but did not modify lab/."
+            exit 1
+          fi
 
       - name: Commit changes
-        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add lab/
-          git commit -m "Run Codex lab experiment for ${{ inputs.week }}"
+          git commit -m "Run gpt-5-nano lab experiment for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}"
+
+      - name: Push branch
+        run: |
+          git push --set-upstream origin "codex-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
 
       - name: Open pull request
-        if: success()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          body_file=".tmp/pr-body.md"
+          mkdir -p .tmp
+          cat > "$body_file" <<'EOF'
+          Implements the selected ranked prompt candidate with the fixed implementation model.
+
+          ## Candidate
+
+          - Week: ${{ inputs.week }}
+          - Rank: ${{ inputs.candidate_rank }}
+          - Issue: #${{ inputs.issue_number }}
+          - Votes: ${{ inputs.vote_count }}
+          - Run reason: ${{ inputs.run_reason }}
+          - Implementation model: `gpt-5-nano`
+          - Model policy: `rules/model-policy-v1.0.md`
+
+          ## Selected prompt
+
+          ${{ inputs.voted_prompt }}
+
+          ## Implementation summary
+
+          EOF
+          if [ -f .tmp/implementation-summary.md ]; then
+            cat .tmp/implementation-summary.md >> "$body_file"
+          else
+            echo "Implementation summary was not written." >> "$body_file"
+          fi
+          cat >> "$body_file" <<'EOF'
+
+          ## Merge policy
+
+          Rank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates.
+          EOF
+
           gh pr create \
-            --title "Codex lab run for ${{ inputs.week }}" \
-            --body "Implements the selected prompt from #${{ inputs.issue_number }}. Result votes are advisory; maintainer decides whether to merge." \
+            --title "Codex lab run for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}" \
+            --body-file "$body_file" \
             --base main \
-            --head "codex-lab-${{ inputs.week }}"
+            --head "codex-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
