@@ -12,6 +12,11 @@ on:
         required: true
         default: "0"
         type: string
+      no_change_baseline:
+        description: "Virtual no-change baseline votes inserted every week"
+        required: true
+        default: "20"
+        type: string
       run_implementation:
         description: "Call the paid implementation API for eligible ranks"
         required: true
@@ -47,7 +52,8 @@ jobs:
           python scripts/collect_votes.py \
             --repo "${{ github.repository }}" \
             --week "${{ inputs.week }}" \
-            --out-dir .tmp
+            --out-dir .tmp \
+            --no-change-baseline "${{ inputs.no_change_baseline }}"
 
       - name: Determine eligible ranks
         run: |
@@ -59,6 +65,8 @@ jobs:
           candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
           eligible = []
           for c in candidates:
+              if c.get('candidate_type') == 'no-change-baseline':
+                  continue
               rank = int(c['rank'])
               if rank == 1:
                   c['run_reason'] = 'normal-weekly-run'
@@ -82,6 +90,10 @@ jobs:
           echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
           echo "${{ inputs.support_usd }} USD" >> "runs/${{ inputs.week }}-vote-summary.md"
           echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "## No-change baseline" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "${{ inputs.no_change_baseline }} virtual votes" >> "runs/${{ inputs.week }}-vote-summary.md"
+          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
           echo "## Eligible implementation ranks" >> "runs/${{ inputs.week }}-vote-summary.md"
           echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
           python - <<'PY' >> "runs/${{ inputs.week }}-vote-summary.md"
@@ -89,7 +101,7 @@ jobs:
           from pathlib import Path
           items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not items:
-              print('- unrecorded')
+              print('- no implementation run: no prompt beat the no-change baseline')
           for item in items:
               print(f"- rank {item['rank']}: issue #{item['issue_number']} ({item['run_reason']})")
           PY
@@ -109,7 +121,7 @@ jobs:
         run: |
           gh pr create \
             --title "Record vote summary for ${{ inputs.week }}" \
-            --body "Records the weekly vote summary and eligible ranks." \
+            --body "Records the weekly vote summary, no-change baseline, and eligible ranks." \
             --base main \
             --head "weekly-vote-${{ inputs.week }}-${{ github.run_number }}"
 
@@ -145,6 +157,17 @@ jobs:
           name: weekly-candidates-${{ inputs.week }}
           path: .tmp
 
+      - name: Stop if no prompt beat the baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+          if not items:
+              print('No eligible prompt candidates. No API call will be made.')
+              raise SystemExit(0)
+          PY
+
       - name: Require OpenAI API key
         env:
           OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
@@ -171,7 +194,6 @@ jobs:
           export OPENAI_API_KEY="${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}"
           python - <<'PY'
           import json
-          import os
           import subprocess
           from pathlib import Path
 
@@ -179,7 +201,8 @@ jobs:
           run_number = "${{ github.run_number }}"
           candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not candidates:
-              raise SystemExit('No eligible candidates to implement')
+              print('No eligible candidates to implement')
+              raise SystemExit(0)
 
           def sh(cmd):
               print('+', ' '.join(cmd))
