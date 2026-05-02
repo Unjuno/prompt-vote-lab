@@ -119,7 +119,7 @@
       <div>
         <p class="eyebrow">Public prompt experiment</p>
         <h1 id="page-title">Vote on the next prompt. Watch the lab change.</h1>
-        <p class="lead">Prompt Vote Lab tests whether a public prompt market can guide a constrained AI coding run. People propose prompts, vote with GitHub reactions, and eligible winners are implemented inside a small static lab.</p>
+        <p class="lead">Prompt Vote Lab tests whether a public prompt market can steer a constrained AI coding agent. People propose prompts, vote with GitHub reactions, and eligible winners are attempted inside a small static lab.</p>
         <div class="actions" aria-label="Primary actions">
           <a class="button primary" href="./lab/">Open the lab</a>
           <a class="button" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote on GitHub</a>
@@ -129,16 +129,16 @@
       <aside class="hero-card" aria-labelledby="gate-title">
         <div class="gate">
           <p class="eyebrow">The vote gate</p>
-          <h2 id="gate-title" class="gate-title">Prompt → 20-vote gate → lab PR</h2>
+          <h2 id="gate-title" class="gate-title">Prompt → 20-vote gate → agent PR</h2>
           <div class="gate-flow" aria-label="Prompt Vote Lab flow">
             <div class="gate-node"><strong>Prompt</strong><p>Submitted as a GitHub Issue.</p></div>
             <div class="arrow">→</div>
             <div class="gate-node threshold"><span class="threshold-number">20</span><p>virtual votes baseline</p></div>
             <div class="arrow">→</div>
-            <div class="gate-node"><strong>Lab</strong><p>Only 3 static files can change.</p></div>
+            <div class="gate-node"><strong>Lab PR</strong><p>Only 3 static files can change.</p></div>
           </div>
           <ul class="quick-list">
-            <li>API budget is spent only when a prompt is eligible.</li>
+            <li>An implementation-agent attempt is used only when a prompt is eligible.</li>
             <li>Each candidate gets one single-shot implementation attempt.</li>
             <li>Merge is manual. Failed and rejected runs are still recorded.</li>
           </ul>
@@ -150,10 +150,10 @@
       <div>
         <p class="eyebrow">What this is</p>
         <h2 id="what-title">A prompt market plus a constrained implementation sandbox</h2>
-        <p>Participants submit prompt candidates as GitHub Issues. Votes rank those prompts. If a real prompt beats the weekly no-change baseline, the implementation model edits only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>.</p>
+        <p>Participants submit prompt candidates as GitHub Issues. Votes rank those prompts. If a real prompt beats the weekly no-change baseline, the selected prompt is given to the implementation agent, which may edit only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>.</p>
         <p>The landing page explains the experiment. The lab is the changing implementation target. That separation keeps the public explanation stable while still allowing visible weekly changes.</p>
       </div>
-      <div class="muted-box">This is not a feature-request queue, a paid merge system, or a general-purpose web app builder. The AI can propose changes, but final adoption stays manual.</div>
+      <div class="muted-box">This is not a feature-request queue, a paid merge system, or a general-purpose web app builder. The AI agent can propose changes, but final adoption stays manual.</div>
     </section>
 
     <section class="panel" aria-labelledby="narrow-title">
@@ -163,7 +163,7 @@
       <div class="metrics">
         <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
         <article class="metric"><span class="metric-number">0</span><p>external runtime dependencies</p></article>
-        <article class="metric"><span class="metric-number">1</span><p>single-shot API attempt per candidate</p></article>
+        <article class="metric"><span class="metric-number">1</span><p>single-shot agent attempt per candidate</p></article>
         <article class="metric"><span class="metric-number">0</span><p>automatic merges</p></article>
       </div>
     </section>
@@ -174,7 +174,7 @@
       <div class="steps">
         <article class="step"><h3>Propose</h3><p>Create a GitHub Issue with the exact prompt and expected visible result.</p></article>
         <article class="step"><h3>Vote</h3><p>Use GitHub reactions. A real prompt must beat the 20-vote baseline.</p></article>
-        <article class="step"><h3>Run</h3><p>The fixed implementation model edits only the static lab files.</p></article>
+        <article class="step"><h3>Run</h3><p>The selected prompt is given to the fixed implementation agent.</p></article>
         <article class="step"><h3>Check</h3><p>Safety and static-site checks run before the implementation PR is proposed.</p></article>
         <article class="step"><h3>Review</h3><p>The maintainer reviews the PR and decides merge, reject, unsafe, failed, or no-change.</p></article>
         <article class="step"><h3>Record</h3><p>The result and expectation gap are logged for later comparison.</p></article>
@@ -188,7 +188,7 @@
       <div class="rules">
         <article class="card"><h3>Allowed local behavior</h3><p>Static HTML, CSS, vanilla JavaScript, helper functions, local state, and JSON export/import inside the lab.</p></article>
         <article class="card"><h3>Blocked runtime behavior</h3><p>No external scripts, CDNs, network fetches, WebSockets, cookies, iframes, eval, <code>new Function(...)</code>, or hidden trackers.</p></article>
-        <article class="card"><h3>Manual adoption</h3><p>The AI can open a PR. It cannot merge, buy adoption, or override review.</p></article>
+        <article class="card"><h3>Manual adoption</h3><p>The AI agent can open a PR. It cannot merge, buy adoption, or override review.</p></article>
       </div>
     </section>
 
@@ -217,7 +217,7 @@
         <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/no-change-baseline.md">No-change baseline</a>
         <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/automation-map.md">Automation map</a>
         <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/static-ui-v1.0.md">Static UI rule</a>
-        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/single-shot-api-v1.0.md">Single-shot API rule</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/single-shot-api-v1.0.md">Single-shot run rule</a>
       </div>
     </section>
 
