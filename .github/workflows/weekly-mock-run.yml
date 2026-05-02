@@ -52,18 +52,35 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Log workflow start
+        run: |
+          python scripts/log_event.py \
+            --out .tmp/events.jsonl \
+            --event-type weekly_mock_started \
+            --source weekly-mock-run \
+            --status started \
+            --week "${{ inputs.week }}" \
+            --payload-json '{"api_call_count":0,"mode":"mock"}'
+
       - name: Build synthetic vote artifacts
+        env:
+          WEEK: ${{ inputs.week }}
+          NO_CHANGE_BASELINE: ${{ inputs.no_change_baseline }}
+          MOCK_ISSUE_NUMBER: ${{ inputs.mock_issue_number }}
+          MOCK_VOTE_COUNT: ${{ inputs.mock_vote_count }}
+          MOCK_PROMPT: ${{ inputs.mock_prompt }}
         run: |
           mkdir -p .tmp runs
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
-          week = "${{ inputs.week }}"
-          baseline = int("${{ inputs.no_change_baseline }}")
-          mock_votes = int("${{ inputs.mock_vote_count }}")
-          mock_issue = "${{ inputs.mock_issue_number }}"
-          mock_prompt = "${{ inputs.mock_prompt }}"
+          week = os.environ["WEEK"]
+          baseline = int(os.environ["NO_CHANGE_BASELINE"])
+          mock_votes = int(os.environ["MOCK_VOTE_COUNT"])
+          mock_issue = os.environ["MOCK_ISSUE_NUMBER"]
+          mock_prompt = os.environ["MOCK_PROMPT"]
 
           candidates = [
               {
@@ -121,6 +138,34 @@ jobs:
           print(json.dumps(top3, indent=2))
           PY
 
+      - name: Log synthetic vote result
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
+          eligible = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+          payload = {
+              "candidate_count": len(candidates),
+              "eligible_count": len(eligible),
+              "top_candidate_type": candidates[0].get("candidate_type") if candidates else "unrecorded",
+              "top_candidate_votes": candidates[0].get("vote_count") if candidates else "unrecorded",
+              "no_change_baseline": "${{ inputs.no_change_baseline }}",
+              "api_call_count": 0,
+          }
+          subprocess.run([
+              'python', 'scripts/log_event.py',
+              '--out', '.tmp/events.jsonl',
+              '--event-type', 'mock_vote_summary',
+              '--source', 'weekly-mock-run',
+              '--status', 'completed',
+              '--week', '${{ inputs.week }}',
+              '--api-call-count', '0',
+              '--payload-json', json.dumps(payload),
+          ], check=True)
+          PY
+
       - name: Commit mock vote summary PR
         env:
           GH_TOKEN: ${{ github.token }}
@@ -131,26 +176,61 @@ jobs:
           git add "runs/${{ inputs.week }}-mock-vote-summary.md"
           git commit -m "Record weekly mock vote summary for ${{ inputs.week }}"
           git push --set-upstream origin "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
-          gh pr create \
+          pr_url=$(gh pr create \
             --title "Record weekly mock vote summary for ${{ inputs.week }}" \
             --body "Adds a synthetic vote summary for mock automation testing. This PR does not call any model API." \
             --base main \
-            --head "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
+            --head "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}")
+          echo "$pr_url" | tee .tmp/mock-summary-pr-url.txt
+
+      - name: Log mock vote summary PR
+        run: |
+          python scripts/log_event.py \
+            --out .tmp/events.jsonl \
+            --event-type mock_vote_summary_pr_created \
+            --source weekly-mock-run \
+            --status completed \
+            --week "${{ inputs.week }}" \
+            --api-call-count 0 \
+            --payload-json "$(python - <<'PY'
+          import json
+          from pathlib import Path
+          print(json.dumps({"pr_url": Path('.tmp/mock-summary-pr-url.txt').read_text().strip()}))
+          PY
+          )"
 
       - name: Stop before mock implementation if disabled
         if: ${{ !inputs.create_implementation_pr }}
-        run: echo "Mock implementation PR creation disabled."
+        run: |
+          echo "Mock implementation PR creation disabled."
+          python scripts/log_event.py \
+            --out .tmp/events.jsonl \
+            --event-type mock_implementation_skipped \
+            --source weekly-mock-run \
+            --status skipped \
+            --week "${{ inputs.week }}" \
+            --api-call-count 0 \
+            --payload-json '{"reason":"create_implementation_pr=false"}'
 
-      - name: Stop if no eligible mock candidate
+      - name: Log no eligible mock candidate
         if: ${{ inputs.create_implementation_pr }}
         run: |
           python - <<'PY'
           import json
+          import subprocess
           from pathlib import Path
           items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not items:
-              print('No eligible mock candidate. No implementation PR will be created.')
-              raise SystemExit(0)
+              subprocess.run([
+                  'python', 'scripts/log_event.py',
+                  '--out', '.tmp/events.jsonl',
+                  '--event-type', 'mock_no_eligible_candidate',
+                  '--source', 'weekly-mock-run',
+                  '--status', 'completed',
+                  '--week', '${{ inputs.week }}',
+                  '--api-call-count', '0',
+                  '--payload-json', json.dumps({'reason': 'mock candidate did not beat baseline'}),
+              ], check=True)
           PY
 
       - name: Create mock implementation PRs
@@ -171,6 +251,22 @@ jobs:
               print('+', ' '.join(cmd))
               subprocess.run(cmd, check=True)
 
+          def log_event(event_type, status, rank='', issue='', payload=None):
+              subprocess.run([
+                  'python', 'scripts/log_event.py',
+                  '--out', '.tmp/events.jsonl',
+                  '--event-type', event_type,
+                  '--source', 'weekly-mock-run',
+                  '--status', status,
+                  '--week', week,
+                  '--candidate-rank', str(rank),
+                  '--issue-number', str(issue),
+                  '--model', 'mock-runner',
+                  '--api-call-count', '0',
+                  '--sdk-max-retries', '0',
+                  '--payload-json', json.dumps(payload or {}),
+              ], check=True)
+
           for item in candidates:
               rank = str(item['rank'])
               branch = f"mock-lab-{week}-rank-{rank}-{run_number}"
@@ -179,6 +275,11 @@ jobs:
               prompt = item['body']
               reason = item.get('run_reason', 'mock-run')
 
+              log_event('mock_implementation_started', 'started', rank, issue, {
+                  'branch': branch,
+                  'votes': votes,
+                  'run_reason': reason,
+              })
               sh(['git', 'checkout', 'main'])
               sh(['git', 'checkout', '-B', branch])
               sh([
@@ -193,7 +294,9 @@ jobs:
               sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
               if diff.returncode == 0:
+                  log_event('mock_implementation_failed', 'failed', rank, issue, {'reason': 'no_lab_changes'})
                   raise SystemExit(f'Rank {rank} produced no lab changes')
+              changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
               sh(['git', 'config', 'user.name', 'github-actions[bot]'])
               sh(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
               sh(['git', 'add', 'lab/'])
@@ -228,11 +331,55 @@ jobs:
                   'Use this PR to verify weekly selection, branch creation, lab-only edits, safety checks, and PR creation before enabling paid API runs.',
               ]
               body_path.write_text('\n'.join(body), encoding='utf-8')
-              sh([
+              pr_url = subprocess.check_output([
                   'gh', 'pr', 'create',
                   '--title', f'Mock lab run for {week} rank {rank}',
                   '--body-file', str(body_path),
                   '--base', 'main',
                   '--head', branch,
-              ])
+              ], text=True).strip()
+              log_event('mock_implementation_pr_created', 'completed', rank, issue, {
+                  'branch': branch,
+                  'pr_url': pr_url,
+                  'changed_files': changed,
+                  'api_call_count': 0,
+              })
           PY
+
+      - name: Log workflow completion
+        if: always()
+        run: |
+          status="completed"
+          if [ "${{ job.status }}" != "success" ]; then
+            status="failed"
+          fi
+          python scripts/log_event.py \
+            --out .tmp/events.jsonl \
+            --event-type weekly_mock_completed \
+            --source weekly-mock-run \
+            --status "$status" \
+            --week "${{ inputs.week }}" \
+            --api-call-count 0 \
+            --payload-json "{\"job_status\":\"${{ job.status }}\"}"
+
+      - name: Render event summary
+        if: always()
+        run: |
+          python scripts/summarize_events.py \
+            --in .tmp/events.jsonl \
+            --out .tmp/events-summary.md \
+            --title "Weekly Mock Run event summary"
+
+      - name: Upload weekly mock artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weekly-mock-run-logs
+          path: |
+            .tmp/events.jsonl
+            .tmp/events-summary.md
+            .tmp/weekly-candidates.json
+            .tmp/eligible-candidates.json
+            .tmp/mock-summary-pr-url.txt
+            .tmp/mock-pr-body-rank-*.md
+            .tmp/implementation-summary.md
