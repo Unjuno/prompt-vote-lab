@@ -1,38 +1,42 @@
 # Prompt Vote Lab
 
-Prompt Vote Lab is a public experiment for watching a prompt market steer a constrained AI coding agent.
+Prompt Vote Lab is a public prompt game and experiment.
 
-People propose prompts, vote on them, and the selected prompt is given to an AI coding agent/Codex-style implementation run inside a small static `lab/` directory.
+Players compete by writing prompts that other players are willing to trust. If a prompt beats the weekly no-change baseline, a constrained AI coding agent gets one bounded attempt to apply it to the current `lab/` state.
 
-The lab is cumulative. Each week starts from the current `main` branch state of `lab/`, not from a clean initial template.
+A popular prompt can still fail.
 
-The point is not only to generate UI.
-
-The point is to observe the gap between:
+The game is not only about getting votes. It is about earning trust by proposing prompts that survive implementation.
 
 ```text
-what people expected from a prompt
-vs.
-what a constrained AI agent actually produced
-```
-
-There is also an entertainment layer: the weekly run is meant to be watchable. The memorable object is the **20-vote gate**.
-
-```text
-Prompt → 20-vote gate → agent PR → inherited lab state
+Prompt → 20-vote gate → agent PR → public outcome → reputation memory
 ```
 
 ## Short explanation
 
-Prompt Vote Lab is a prompt market plus a constrained, cumulative implementation sandbox.
+Prompt Vote Lab is a competitive prompt market plus a constrained, cumulative implementation sandbox.
 
-- Participants submit prompt candidates as GitHub Issues.
-- Participants vote with 👍 reactions.
+- Players submit prompt candidates as GitHub Issues.
+- Players vote with 👍 reactions.
 - A virtual no-change baseline is inserted every week with 20 virtual votes.
 - If a real prompt beats the baseline, the selected prompt is passed to the implementation agent.
 - The implementation agent attempts the change against the current `main` version of `lab/`.
 - If merged, the result becomes the starting point for later weeks.
-- The result is reviewed, classified, and recorded.
+- The result is reviewed, classified, and remembered.
+
+## What players compete on
+
+Players are not merely competing to write the most attractive prompt.
+
+They compete on judgment:
+
+- Can the prompt persuade other players?
+- Can the agent actually implement it inside the small lab?
+- Does the result improve the inherited lab state?
+- Did the prompt overpromise?
+- Should players trust the same author, style, or promise next week?
+
+Votes create attention. Outcomes create or destroy trust.
 
 ## What this is not
 
@@ -46,7 +50,7 @@ Prompt Vote Lab is not:
 - a guarantee that the most popular prompt will be merged
 - a weekly reset contest
 
-Support can unlock extra comparison runs. It does not buy success, adoption, merge, maintenance, review, support work, or specification control.
+Support can unlock extra comparison runs. It does not buy votes, success, adoption, merge, maintenance, review, support work, delivery, or specification control.
 
 ## Current scope
 
@@ -80,14 +84,14 @@ week N merged lab state
 → if merged, it becomes week N+2 starting state
 ```
 
-This cumulative pressure is part of the experiment. Over time, the same three files may become easier, harder, stranger, or more coherent to modify.
+This cumulative pressure is part of the game and the experiment. Over time, the same three files may become easier, harder, stranger, or more coherent to modify.
 
 Rejected, failed, unsafe, and unmerged comparison PRs do not become the next week's base state.
 
 ## Weekly loop
 
-1. People propose prompts as GitHub Issues.
-2. People vote with GitHub reactions.
+1. Players submit prompts as GitHub Issues.
+2. Players vote with GitHub reactions.
 3. A virtual no-change baseline is inserted with 20 virtual votes.
 4. Candidates are ranked by vote count.
 5. If the no-change baseline ranks first, no implementation run is created.
@@ -99,7 +103,7 @@ Rejected, failed, unsafe, and unmerged comparison PRs do not become the next wee
 11. `main` merge remains manual.
 12. If merged, the PR becomes the future lab state.
 13. After a terminal run state, a stronger evaluation model may classify the result and draft a report.
-14. The result is recorded.
+14. The result is recorded and can influence future trust.
 
 ## Ranked candidates
 
@@ -152,7 +156,7 @@ automatic retry: no
 automatic merge: no
 ```
 
-Failure is recorded as experiment data. It is not hidden by rerunning the model.
+Failure is recorded as game data. It is not hidden by rerunning the model.
 
 Good partial progress may be continued only as an explicit, reviewable continuation run.
 
@@ -186,6 +190,14 @@ See [`docs/support-policy.md`](docs/support-policy.md).
 - merge/reject/failure decision
 - expectation-gap classification, when evaluated
 
+## Current reputation status
+
+Reputation is currently social memory, not an automated score.
+
+The repository records outcomes, but the workflow does not yet compute author scores, trust scores, or automatic penalties.
+
+Players should use public outcomes to decide what to support next.
+
 ## Documentation
 
 Start with [`docs/README.md`](docs/README.md).
@@ -193,7 +205,7 @@ Start with [`docs/README.md`](docs/README.md).
 Key documents:
 
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
-- [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to propose, vote, and review
+- [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
 - [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
 - [`docs/automation-map.md`](docs/automation-map.md) — automation boundary
