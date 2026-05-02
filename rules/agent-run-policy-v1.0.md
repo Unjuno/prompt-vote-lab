@@ -15,8 +15,23 @@ The project votes on a prompt candidate.
 If the prompt passes the 20-vote gate, that prompt may be given to a constrained implementation agent.
 
 ```text
-Prompt → 20-vote gate → agent PR
+Prompt → 20-vote gate → agent PR → inherited lab state
 ```
+
+## Inherited lab state
+
+Implementation attempts are cumulative.
+
+Each weekly attempt starts from the current `main` branch version of `lab/`, including previously merged lab changes.
+
+```text
+current main lab state
+→ selected prompt is applied
+→ implementation PR is opened
+→ if merged, that result becomes the next base state
+```
+
+Rejected, failed, unsafe, and unmerged comparison PRs do not become the next base state.
 
 ## One attempt, not infinite retry
 
@@ -91,4 +106,4 @@ The agent may:
 
 The goal is not to suppress good prompts.
 
-The goal is to separate valuable continuation from unbounded spending, hidden retries, and unsafe behavior.
+The goal is to separate valuable continuation from unbounded spending, hidden retries, unsafe behavior, and accidental resets of the cumulative lab state.
