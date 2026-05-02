@@ -66,3 +66,7 @@ These outputs should normally be workflow artifacts, not committed as canonical 
 Single exception tests are necessary but brittle.
 
 Weighted random testing helps discover combinations and assumptions that fixed test cases miss.
+
+## Verification note
+
+This harmless note is used to exercise the multi-fuzz workflow.
