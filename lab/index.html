@@ -22,6 +22,20 @@
       </div>
     </section>
 
+    <section class="panel baseline-panel" aria-labelledby="baseline-title">
+      <div>
+        <p class="eyebrow">Weekly threshold</p>
+        <h2 id="baseline-title">A prompt must beat the no-change baseline</h2>
+        <p>
+          Every weekly vote includes a virtual candidate with 20 votes: <strong>No change this week</strong>. If that baseline ranks first, the workflow records the vote summary but does not create implementation PRs or spend API budget.
+        </p>
+      </div>
+      <div class="baseline-meter" aria-label="No-change baseline">
+        <span class="baseline-number">20</span>
+        <span class="baseline-label">virtual votes</span>
+      </div>
+    </section>
+
     <section class="panel" aria-labelledby="participate-title">
       <h2 id="participate-title">Participate</h2>
       <p>
@@ -34,7 +48,7 @@
         </article>
         <article>
           <strong>2. Vote</strong>
-          <p>Use 👍 reactions on prompt proposal issues. Votes rank the candidates for the weekly run.</p>
+          <p>Use 👍 reactions on prompt proposal issues. A real prompt must beat the 20-vote no-change baseline to trigger implementation.</p>
         </article>
         <article>
           <strong>3. Review</strong>
@@ -49,7 +63,7 @@
           <p class="eyebrow">Support-unlocked runs</p>
           <h2 id="support-title">Support can unlock extra comparison runs</h2>
           <p>
-            The rank-1 prompt is the normal weekly implementation candidate. Support may unlock rank-2 and rank-3 as additional comparison runs for the current weekly vote.
+            The rank-1 prompt is the normal weekly implementation candidate after the no-change baseline is beaten. Support may unlock rank-2 and rank-3 as additional comparison runs for the current weekly vote.
           </p>
         </div>
         <a class="button-link primary" href="https://github.com/sponsors/Unjuno">Support on GitHub</a>
@@ -72,7 +86,7 @@
         </article>
       </div>
       <p class="fine-print">
-        Support funds additional experiment runs only. It does not guarantee success, adoption, merge, or control over the specification.
+        Support funds additional experiment runs only. It does not override the no-change baseline and does not guarantee success, adoption, merge, or control over the specification.
       </p>
     </section>
 
@@ -105,8 +119,8 @@
       <ol class="steps">
         <li><span>1</span><strong>Propose</strong><p>Submit a prompt as a GitHub issue.</p></li>
         <li><span>2</span><strong>Vote</strong><p>Use reactions to express collective expectation.</p></li>
-        <li><span>3</span><strong>Run</strong><p>The model edits only this static lab UI.</p></li>
-        <li><span>4</span><strong>Review</strong><p>The maintainer merges, rejects, or revises.</p></li>
+        <li><span>3</span><strong>Filter</strong><p>Run only if a real prompt beats the no-change baseline.</p></li>
+        <li><span>4</span><strong>Run</strong><p>The model edits only this static lab UI.</p></li>
         <li><span>5</span><strong>Analyze</strong><p>We classify the expectation gap.</p></li>
       </ol>
     </section>
