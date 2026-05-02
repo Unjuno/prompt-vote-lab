@@ -53,3 +53,7 @@ GitHub rendered views show the documents as readable Markdown.
 ```
 
 Do not collapse these layers unless a future policy deliberately changes the experiment model.
+
+## Verification note
+
+This line is only for checking repository workflows.
