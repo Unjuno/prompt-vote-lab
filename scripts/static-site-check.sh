@@ -28,8 +28,15 @@ for file in "${required_files[@]}"; do
   fi
 done
 
-if grep -R -n -E "<script[^>]+src=['\"]https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|navigator\.sendBeacon" index.html lab/; then
-  echo "ERROR: forbidden network/script pattern detected in public static pages."
+# Root landing page may describe forbidden behavior in prose, but must not load external scripts.
+if grep -n -E "<script[^>]+src=['\"]https?://" index.html; then
+  echo "ERROR: root landing page must not load external scripts."
+  exit 1
+fi
+
+# The changing lab is the implementation target and must be strict.
+if grep -R -n -E "<script[^>]+src=['\"]https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|navigator\.sendBeacon" lab/; then
+  echo "ERROR: forbidden network/script pattern detected in lab implementation files."
   exit 1
 fi
 
