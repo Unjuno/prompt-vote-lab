@@ -40,8 +40,10 @@ if ! grep -q "20 virtual votes" index.html; then
   exit 1
 fi
 
-if grep -R -n -i -E "support (buys|purchases|grants).*merge|paid merge system|buy.*merge rights" index.html README.md docs/ rules/; then
-  echo "ERROR: public docs must not describe support as buying merge or adoption."
+# Detect affirmative claims that support buys control. Do not fail on negative safety statements
+# such as "not a paid merge system" or "does not guarantee merge".
+if grep -R -n -i -E "\bsupport (buys|purchases|grants)\b.*\b(merge|adoption|specification control|control)\b|\bsupporters (get|receive|gain)\b.*\b(merge|adoption|specification control|control)\b|\b(buy|buys|purchase|purchases)\b.*\bmerge rights\b" index.html README.md docs/ rules/; then
+  echo "ERROR: public docs must not describe support as buying merge, adoption, or control."
   exit 1
 fi
 
