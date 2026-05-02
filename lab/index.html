@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Vote Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Public vibe coding experiment</p>
+      <h1 id="page-title">Prompt Vote Lab</h1>
+      <p class="lead">
+        People vote on prompts. An AI coding agent implements the winning prompt.
+        We review the PR and record the gap between expectation and result.
+      </p>
+    </section>
+
+    <section class="panel" aria-labelledby="loop-title">
+      <h2 id="loop-title">Experiment loop</h2>
+      <ol class="steps">
+        <li><span>1</span><strong>Propose</strong><p>Submit a prompt as a GitHub issue.</p></li>
+        <li><span>2</span><strong>Vote</strong><p>Use reactions to express collective expectation.</p></li>
+        <li><span>3</span><strong>Run</strong><p>The agent edits only this static lab UI.</p></li>
+        <li><span>4</span><strong>Review</strong><p>The maintainer merges, rejects, or revises.</p></li>
+        <li><span>5</span><strong>Analyze</strong><p>We classify the expectation gap.</p></li>
+      </ol>
+    </section>
+
+    <section class="panel grid" aria-labelledby="status-title">
+      <div>
+        <h2 id="status-title">Current target</h2>
+        <p>
+          This page is intentionally small. The AI agent may modify only
+          <code>index.html</code>, <code>style.css</code>, and <code>app.js</code>
+          inside <code>lab/</code>.
+        </p>
+      </div>
+      <div class="demo-card">
+        <h3>Result review labels</h3>
+        <p id="demo-output">No run has been reviewed yet.</p>
+        <button id="demo-button" type="button">Show labels</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
