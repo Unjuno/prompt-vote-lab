@@ -8,10 +8,14 @@ on:
         required: true
         type: string
       candidate_rank:
-        description: "Candidate rank, for example 1, 2, or 3"
+        description: "Candidate rank"
         required: true
         default: "1"
-        type: string
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
       issue_number:
         description: "Selected prompt issue number"
         required: true
@@ -25,9 +29,16 @@ on:
         required: false
         type: string
       run_reason:
-        description: "normal-weekly-run or support-unlocked-run"
+        description: "Run reason"
         required: false
         default: "normal-weekly-run"
+        type: choice
+        options:
+          - normal-weekly-run
+          - support-unlocked-run
+      confirm_paid_api_run:
+        description: "Type RUN_GPT5_NANO to confirm this paid API run"
+        required: true
         type: string
 
 permissions:
@@ -42,6 +53,13 @@ jobs:
   codex-lab-run:
     runs-on: ubuntu-latest
     steps:
+      - name: Require explicit paid-run confirmation
+        run: |
+          if [ "${{ inputs.confirm_paid_api_run }}" != "RUN_GPT5_NANO" ]; then
+            echo "Refusing to call the API. Set confirm_paid_api_run to RUN_GPT5_NANO."
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -49,10 +67,11 @@ jobs:
 
       - name: Require OpenAI API key
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
         run: |
-          if [ -z "${OPENAI_API_KEY}" ]; then
-            echo "OPENAI_API_KEY is not set. Add it in Settings > Secrets and variables > Actions."
+          if [ -z "${OPENAI_API_KEY_PRIMARY}" ] && [ -z "${OPENAI_API_KEY_IMPLEMENTATION}" ]; then
+            echo "No implementation API key found. Add OPENAI_API_KEY or OPENAI_IMPLEMENTATION_API_KEY in Settings > Secrets and variables > Actions."
             exit 1
           fi
 
@@ -67,10 +86,12 @@ jobs:
 
       - name: Run implementation model
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
           IMPLEMENTATION_MODEL: gpt-5-nano
           MAX_OUTPUT_TOKENS: "12000"
         run: |
+          export OPENAI_API_KEY="${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}"
           python scripts/openai_lab_run.py \
             --week "${{ inputs.week }}" \
             --candidate-rank "${{ inputs.candidate_rank }}" \
@@ -118,6 +139,7 @@ jobs:
           - Run reason: ${{ inputs.run_reason }}
           - Implementation model: `gpt-5-nano`
           - Model policy: `rules/model-policy-v1.0.md`
+          - Paid API run confirmation: recorded
 
           ## Selected prompt
 
