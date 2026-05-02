@@ -13,9 +13,57 @@
       <p class="eyebrow">Public vibe coding experiment</p>
       <h1 id="page-title">Prompt Vote Lab</h1>
       <p class="lead">
-        People vote on prompts. An AI coding agent implements the winning prompt.
-        We review the PR and record the gap between expectation and result.
+        People propose and vote on prompts in GitHub Issues. A fixed low-cost implementation model edits this constrained lab UI, and we record the gap between expected and actual results.
       </p>
+      <div class="hero-actions" aria-label="Primary actions">
+        <a class="button-link primary" href="https://github.com/Unjuno/prompt-vote-lab/issues/new/choose">Propose a prompt</a>
+        <a class="button-link" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+is%3Aopen+label%3Aprompt-proposal">Vote on prompts</a>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="participate-title">
+      <h2 id="participate-title">Participate</h2>
+      <p>
+        Prompt submission and voting happen on GitHub. This static page does not store submissions or votes directly; it shows the experiment, current candidates, run process, and reviewed outcomes.
+      </p>
+      <div class="participation-grid">
+        <article>
+          <strong>1. Propose</strong>
+          <p>Create a GitHub issue with the prompt you want the implementation model to run.</p>
+        </article>
+        <article>
+          <strong>2. Vote</strong>
+          <p>Use 👍 reactions on prompt proposal issues. Votes rank the candidates for the weekly run.</p>
+        </article>
+        <article>
+          <strong>3. Review</strong>
+          <p>Compare the PR, safety check, and expectation-gap result after implementation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="candidates-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="candidates-title">Current prompt candidates</h2>
+          <p>These initial candidates are tracked as GitHub issues. Vote with 👍 on the issue page.</p>
+        </div>
+        <a class="text-link" href="https://github.com/Unjuno/prompt-vote-lab/issues">View all issues</a>
+      </div>
+      <ol class="candidate-list">
+        <li>
+          <span class="rank">#1</span>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/1">Make the lab page explain the experiment clearly</a>
+        </li>
+        <li>
+          <span class="rank">#2</span>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/2">Add expected-vs-actual comparison cards</a>
+        </li>
+        <li>
+          <span class="rank">#3</span>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/3">Show weekly runs as a timeline</a>
+        </li>
+      </ol>
     </section>
 
     <section class="panel" aria-labelledby="loop-title">
@@ -23,7 +71,7 @@
       <ol class="steps">
         <li><span>1</span><strong>Propose</strong><p>Submit a prompt as a GitHub issue.</p></li>
         <li><span>2</span><strong>Vote</strong><p>Use reactions to express collective expectation.</p></li>
-        <li><span>3</span><strong>Run</strong><p>The agent edits only this static lab UI.</p></li>
+        <li><span>3</span><strong>Run</strong><p>The model edits only this static lab UI.</p></li>
         <li><span>4</span><strong>Review</strong><p>The maintainer merges, rejects, or revises.</p></li>
         <li><span>5</span><strong>Analyze</strong><p>We classify the expectation gap.</p></li>
       </ol>
@@ -33,9 +81,9 @@
       <div>
         <h2 id="status-title">Current target</h2>
         <p>
-          This page is intentionally small. The AI agent may modify only
+          This page is intentionally constrained. The implementation model may modify only
           <code>index.html</code>, <code>style.css</code>, and <code>app.js</code>
-          inside <code>lab/</code>.
+          inside <code>lab/</code>. Complexity accumulation inside these three files is part of the experiment.
         </p>
       </div>
       <div class="demo-card">
