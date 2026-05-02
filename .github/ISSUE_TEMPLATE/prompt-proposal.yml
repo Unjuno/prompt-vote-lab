@@ -1,0 +1,62 @@
+name: Prompt proposal
+description: Submit a prompt for the next Prompt Vote Lab round.
+title: "[Prompt]: "
+labels:
+  - prompt-proposal
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prompt Vote Lab is a prompt game.
+
+        You are not just requesting a feature. You are asking other players to trust your prompt enough to spend the next bounded agent attempt.
+
+        A popular prompt can still fail. Write carefully.
+
+  - type: textarea
+    id: voted-prompt
+    attributes:
+      label: Voted prompt
+      description: The exact prompt that should be given to the implementation agent if this proposal wins.
+      placeholder: "Add a visible round-history panel to the lab page that shows the selected prompt, vote count, result label, and merge state."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-visible-result
+    attributes:
+      label: Expected visible result
+      description: What should players be able to see after the agent attempt?
+      placeholder: "The lab page shows a clear round-history section with one example row and explanatory empty-state text."
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-trust-this
+    attributes:
+      label: Why should players trust this prompt?
+      description: Explain why this prompt is worth the next agent attempt.
+      placeholder: "It is small, visible, fits the three-file lab, and improves future review of prompt outcomes."
+    validations:
+      required: true
+
+  - type: textarea
+    id: inherited-lab-fit
+    attributes:
+      label: Fit with current inherited lab state
+      description: Explain how this should apply to the current lab, not a clean reset.
+      placeholder: "It should extend the existing landing/lab explanation without replacing the whole page."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope-check
+    attributes:
+      label: Scope check
+      options:
+        - label: This prompt can be attempted using only `lab/index.html`, `lab/style.css`, and `lab/app.js`.
+          required: true
+        - label: This prompt does not require external scripts, CDNs, network calls, cookies, login, payment, or backend storage.
+          required: true
+        - label: I understand that votes do not guarantee merge and that bad outcomes can reduce future trust in this prompt style.
+          required: true
