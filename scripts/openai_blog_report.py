@@ -25,6 +25,14 @@ ROOT = Path(__file__).resolve().parents[1]
 MAX_REPORT_INPUT_CHARS = int(os.getenv("MAX_REPORT_INPUT_CHARS", "80000"))
 
 
+def resolve_openai_api_key() -> str:
+    key = os.getenv("OPENAI_API_KEY_") or os.getenv("OPENAI_API_KEY")
+    if not key:
+        print("OPENAI_API_KEY_ is not set. Fallback OPENAI_API_KEY is also not set.", file=sys.stderr)
+        raise SystemExit(2)
+    return key
+
+
 def read_optional(path: Path) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else "unrecorded"
 
@@ -79,9 +87,7 @@ def main() -> int:
     parser.add_argument("--write-hn-draft", action="store_true")
     args = parser.parse_args()
 
-    if not os.getenv("OPENAI_API_KEY"):
-        print("OPENAI_API_KEY is not set", file=sys.stderr)
-        return 2
+    api_key = resolve_openai_api_key()
 
     if args.max_output_tokens > 6000:
         print("max_output_tokens above 6000 is not allowed for report runs", file=sys.stderr)
@@ -93,7 +99,7 @@ def main() -> int:
     input_json = json.dumps(input_data, indent=2, ensure_ascii=False)
     enforce_input_budget(report_prompt + "\n" + input_json)
 
-    client = OpenAI(max_retries=0, timeout=120.0)
+    client = OpenAI(api_key=api_key, max_retries=0, timeout=120.0)
     response = client.responses.create(
         model=args.model,
         input=[
