@@ -4,13 +4,21 @@ This directory contains the stable public explanation layer for Prompt Vote Lab.
 
 The landing page should stay short. Details belong here.
 
+Prompt Vote Lab is a prompt game and experiment. Players compete by writing prompts that other players trust enough to spend a bounded implementation-agent attempt.
+
 ## Start here
 
-1. [Experiment model](./experiment-model.md) — what the project is and what it is not.
-2. [How to participate](./how-to-participate.md) — how to propose prompts, vote, and review results.
-3. [No-change baseline](./no-change-baseline.md) — why every week starts with 20 virtual votes for no change.
+1. [Experiment model](./experiment-model.md) — the prompt game, experiment layers, reputation memory, and boundaries.
+2. [How to participate](./how-to-participate.md) — how to submit prompts, vote, review outcomes, and update trust.
+3. [No-change baseline](./no-change-baseline.md) — why every week starts with 20 virtual votes for doing nothing.
 4. [Automation map](./automation-map.md) — what is automated, what is manual, and how workflow boundaries are drawn.
 5. [Support policy](./support-policy.md) — what support can fund and what it cannot buy.
+
+## Current reputation status
+
+Reputation is currently social memory, not an automated score.
+
+The repository records outcomes. Workflows do not yet compute player rankings, trust scores, author scores, or penalties.
 
 ## Rule documents
 
@@ -22,7 +30,7 @@ Important rules:
 - [`agent-run-policy-v1.0.md`](../rules/agent-run-policy-v1.0.md) — one bounded agent attempt, explicit continuation, no hidden retries.
 - [`event-logging-v1.0.md`](../rules/event-logging-v1.0.md) — JSONL and Markdown logging policy.
 - [`support-unlocked-runs-v1.1.md`](../rules/support-unlocked-runs-v1.1.md) — $5/$10 comparison-run thresholds.
-- [`mock-testing-v1.0.md`](../rules/mock-testing-v1.0.md) — API-free mock testing.
+- [`mock-testing-v1.0.md`](../rules/mock-testing-v1.0.md) — agent-free mock testing.
 - [`exception-testing-v1.0.md`](../rules/exception-testing-v1.0.md) — failure-path tests.
 - [`multi-fuzz-testing-v1.0.md`](../rules/multi-fuzz-testing-v1.0.md) — weighted random boundary testing.
 
@@ -52,4 +60,4 @@ GitHub rendered views show the documents as readable Markdown.
 /runs/ = recorded run history
 ```
 
-Do not collapse these layers unless a future policy deliberately changes the experiment model.
+Do not collapse these layers unless a future policy deliberately changes the game model.
