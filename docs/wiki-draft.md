@@ -10,7 +10,7 @@ The repository should keep canonical rules and implementation documents in `docs
 
 Prompt Vote Lab is a public experiment for observing how voted prompts behave when implemented by a constrained AI coding agent.
 
-Participants propose prompts as GitHub Issues, vote with 👍 reactions, and review the resulting implementation PRs and reports.
+Participants propose prompts as GitHub Issues, vote with 👍 reactions, and review the resulting agent PRs and reports.
 
 Key links:
 
@@ -36,17 +36,29 @@ Each week includes real prompt candidates plus a virtual no-change baseline.
 No-change baseline: 20 virtual votes
 ```
 
-If the baseline ranks first, no implementation run is created.
+If the baseline ranks first, no implementation-agent attempt is created.
+
+### Inherited lab state
+
+The lab is cumulative.
+
+Each weekly agent run starts from the current merged `main` version of `lab/`, not from a clean template.
+
+```text
+merged lab state
+→ next selected prompt
+→ agent PR
+→ future lab state if merged
+```
 
 ### Support model
 
-Support may open additional comparison runs.
+Support may open additional comparison runs for the current weekly vote.
 
 - 5 USD: Support Rank 2 Comparison Run
 - 10 USD: Support Rank 3 Comparison Run
-- 20 USD: Support the Experiment
 
-Support does not guarantee success, adoption, merge, or specification control.
+Support does not guarantee success, adoption, merge, service, delivery, review, or specification control.
 
 ### Automation boundary
 
@@ -54,7 +66,7 @@ Automated:
 
 - vote collection
 - eligibility calculation
-- implementation PR creation
+- implementation-agent PR creation
 - safety check
 - report creation
 
