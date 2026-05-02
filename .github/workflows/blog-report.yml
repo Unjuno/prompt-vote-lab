@@ -118,10 +118,13 @@ jobs:
 
       - name: Require evaluation API key
         env:
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
           OPENAI_API_KEY_EVAL: ${{ secrets.OPENAI_EVAL_API_KEY }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          if [ -z "${OPENAI_API_KEY_EVAL}" ]; then
-            echo "OPENAI_EVAL_API_KEY is not set. Add it in Settings > Secrets and variables > Actions."
+          if [ -z "${OPENAI_API_KEY_TRAILING}" ] && [ -z "${OPENAI_API_KEY_EVAL}" ] && [ -z "${OPENAI_API_KEY_PRIMARY}" ]; then
+            echo "No evaluation API key is configured."
+            echo "Preferred secret name: OPENAI_API_KEY_"
             exit 1
           fi
 
@@ -136,10 +139,13 @@ jobs:
 
       - name: Generate blog report
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_EVAL_API_KEY }}
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
+          OPENAI_API_KEY_EVAL: ${{ secrets.OPENAI_EVAL_API_KEY }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
           EVALUATION_MODEL: gpt-5
           EVAL_MAX_OUTPUT_TOKENS: "6000"
         run: |
+          export OPENAI_API_KEY_="${OPENAI_API_KEY_TRAILING:-${OPENAI_API_KEY_EVAL:-$OPENAI_API_KEY_PRIMARY}}"
           extra=""
           if [ "${{ inputs.write_hn_draft }}" = "true" ]; then
             extra="--write-hn-draft"
