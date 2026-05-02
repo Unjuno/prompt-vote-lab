@@ -56,10 +56,46 @@ h1 {
 }
 
 .lead {
-  max-width: 720px;
+  max-width: 760px;
   color: var(--muted);
   font-size: clamp(1.1rem, 2vw, 1.35rem);
   line-height: 1.7;
+}
+
+.hero-actions,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button-link,
+.text-link {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(20, 30, 55, 0.08);
+}
+
+.button-link.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.text-link {
+  white-space: nowrap;
 }
 
 .panel {
@@ -76,6 +112,92 @@ h1 {
   grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
   gap: 24px;
   align-items: stretch;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.participation-grid,
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.participation-grid article,
+.support-grid article,
+.candidate-list li {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+}
+
+.participation-grid strong,
+.support-grid strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.threshold {
+  display: inline-grid;
+  min-width: 58px;
+  height: 42px;
+  margin-bottom: 14px;
+  padding: 0 12px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.fine-print {
+  margin: 18px 0 0;
+  font-size: 0.92rem;
+}
+
+.candidate-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.candidate-list li {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.candidate-list a {
+  color: var(--fg);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.candidate-list a:hover,
+.button-link:hover,
+.text-link:hover {
+  text-decoration: underline;
+}
+
+.rank {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 900;
 }
 
 .steps {
@@ -146,15 +268,27 @@ button {
   cursor: pointer;
 }
 
-button:focus-visible {
+button:focus-visible,
+a:focus-visible {
   outline: 3px solid #7d91ff;
   outline-offset: 3px;
 }
 
 @media (max-width: 860px) {
   .grid,
-  .steps {
+  .steps,
+  .participation-grid,
+  .support-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading .button-link,
+  .section-heading .text-link {
+    margin-top: 12px;
   }
 
   .hero {
