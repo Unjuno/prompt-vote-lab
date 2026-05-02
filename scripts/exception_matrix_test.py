@@ -51,6 +51,18 @@ def copy_repo() -> Path:
     return tmp
 
 
+def remove_baseline_language(html: str) -> str:
+    replacements = [
+        ("20-vote gate", "baseline gate"),
+        ("20 virtual votes", "baseline votes"),
+        ("virtual votes baseline", "baseline marker"),
+        ("20", "twenty"),
+    ]
+    for old, new in replacements:
+        html = html.replace(old, new)
+    return html
+
+
 def mutate(repo: Path, mutation: str) -> None:
     if mutation == "outside_lab_change":
         (repo / "README.md").write_text((repo / "README.md").read_text(encoding="utf-8") + "\nunsafe outside lab mutation\n", encoding="utf-8")
@@ -82,8 +94,7 @@ def mutate(repo: Path, mutation: str) -> None:
         return
     if mutation == "remove_baseline_text":
         html = (repo / "index.html").read_text(encoding="utf-8")
-        html = html.replace("20 virtual votes", "twenty baseline votes")
-        (repo / "index.html").write_text(html, encoding="utf-8")
+        (repo / "index.html").write_text(remove_baseline_language(html), encoding="utf-8")
         return
     if mutation == "affirmative_paid_merge":
         html = (repo / "index.html").read_text(encoding="utf-8")
