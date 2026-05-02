@@ -3,6 +3,9 @@
 
 This script uses GitHub's API through the GITHUB_TOKEN available in Actions.
 It writes a markdown summary and a JSON artifact under .tmp/.
+
+A virtual no-change baseline candidate is inserted every week so low-vote weeks
+produce no implementation run by default.
 """
 
 from __future__ import annotations
@@ -26,6 +29,7 @@ class Candidate:
     url: str
     vote_count: int
     body: str
+    candidate_type: str
 
 
 def github_get(url: str, token: str) -> Any:
@@ -54,13 +58,24 @@ def extract_voted_prompt(body: str, fallback: str) -> str:
     return after or fallback
 
 
-def collect(repo: str, token: str) -> list[Candidate]:
+def collect(repo: str, token: str, no_change_baseline: int) -> list[Candidate]:
     query = quote(f"repo:{repo} is:issue is:open label:prompt-proposal")
     search_url = f"https://api.github.com/search/issues?q={query}&sort=reactions&order=desc&per_page=50"
     data = github_get(search_url, token)
     issues = data.get("items", [])
 
-    candidates: list[Candidate] = []
+    candidates: list[Candidate] = [
+        Candidate(
+            rank=0,
+            issue_number=0,
+            title="[Baseline]: No change this week",
+            url="",
+            vote_count=no_change_baseline,
+            body="No implementation run this week. The prompt market must beat the weekly no-change baseline.",
+            candidate_type="no-change-baseline",
+        )
+    ]
+
     for item in issues:
         reactions = item.get("reactions") or {}
         plus_one = int(reactions.get("+1") or 0)
@@ -72,6 +87,7 @@ def collect(repo: str, token: str) -> list[Candidate]:
                 url=str(item.get("html_url") or ""),
                 vote_count=plus_one,
                 body=extract_voted_prompt(str(item.get("body") or ""), str(item.get("title") or "unrecorded")),
+                candidate_type="prompt-proposal",
             )
         )
 
@@ -81,7 +97,13 @@ def collect(repo: str, token: str) -> list[Candidate]:
     return candidates
 
 
-def write_outputs(candidates: list[Candidate], week: str, out_dir: Path) -> None:
+def issue_cell(candidate: Candidate) -> str:
+    if candidate.issue_number == 0:
+        return "baseline"
+    return f"[#{candidate.issue_number}]({candidate.url})"
+
+
+def write_outputs(candidates: list[Candidate], week: str, out_dir: Path, no_change_baseline: int) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     top3 = candidates[:3]
     (out_dir / "weekly-candidates.json").write_text(
@@ -93,16 +115,18 @@ def write_outputs(candidates: list[Candidate], week: str, out_dir: Path) -> None
         f"# Weekly vote summary: {week}",
         "",
         "Votes are counted from 👍 reactions on open `prompt-proposal` issues.",
+        f"A virtual no-change baseline candidate is inserted every week with {no_change_baseline} votes.",
+        "If the baseline ranks first, no implementation run should be created.",
         "",
-        "| Rank | Issue | 👍 votes | Title |",
-        "|---:|---:|---:|---|",
+        "| Rank | Candidate | Type | 👍 votes | Title |",
+        "|---:|---|---|---:|---|",
     ]
     for candidate in top3:
         lines.append(
-            f"| {candidate.rank} | [#{candidate.issue_number}]({candidate.url}) | {candidate.vote_count} | {candidate.title} |"
+            f"| {candidate.rank} | {issue_cell(candidate)} | {candidate.candidate_type} | {candidate.vote_count} | {candidate.title} |"
         )
     if not top3:
-        lines.append("| unrecorded | unrecorded | unrecorded | No candidates found |")
+        lines.append("| unrecorded | unrecorded | unrecorded | unrecorded | No candidates found |")
     lines.append("")
     (out_dir / "weekly-vote-summary.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -112,6 +136,7 @@ def main() -> int:
     parser.add_argument("--repo", required=True)
     parser.add_argument("--week", required=True)
     parser.add_argument("--out-dir", default=".tmp")
+    parser.add_argument("--no-change-baseline", type=int, default=20)
     args = parser.parse_args()
 
     token = os.getenv("GITHUB_TOKEN")
@@ -119,9 +144,14 @@ def main() -> int:
         print("GITHUB_TOKEN is not set", file=sys.stderr)
         return 2
 
-    candidates = collect(args.repo, token)
-    write_outputs(candidates, args.week, Path(args.out_dir))
-    print(f"Collected {len(candidates)} prompt candidates")
+    if args.no_change_baseline < 0:
+        print("no-change baseline must be non-negative", file=sys.stderr)
+        return 2
+
+    candidates = collect(args.repo, token, args.no_change_baseline)
+    write_outputs(candidates, args.week, Path(args.out_dir), args.no_change_baseline)
+    real_count = sum(1 for c in candidates if c.candidate_type == "prompt-proposal")
+    print(f"Collected {real_count} prompt candidates plus no-change baseline={args.no_change_baseline}")
     return 0
 
 
