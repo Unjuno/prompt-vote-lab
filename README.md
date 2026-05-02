@@ -48,8 +48,8 @@ The AI agent must not edit:
 5. Rank 2 and rank 3 may be executed as support-unlocked comparison runs.
 6. The implementation model modifies only `lab/` and opens a PR.
 7. Safety checks run.
-8. The maintainer reviews and merges/rejects.
-9. A stronger evaluation model may draft analysis notes or a blog report.
+8. `main` merge remains manual.
+9. After a terminal run state, a stronger evaluation model may classify the result and publish a blog report.
 10. The result is recorded in `runs/week-XXX.md`.
 
 ## Ranked candidates
@@ -72,7 +72,7 @@ The implementation model is fixed by `rules/model-policy-v1.0.md`.
 
 All ranked candidates in the same weekly vote must use the same implementation model settings.
 
-A stronger model may be used only for evaluation and blog-writing under `rules/evaluation-model-policy-v1.0.md`. The evaluation model must not modify `lab/` and must not decide merge automatically.
+A stronger model may be used only for evaluation and blog-writing under `rules/evaluation-model-policy-v1.0.md`. The evaluation model must not modify `lab/`.
 
 ## Merge policy
 
