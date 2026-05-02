@@ -1,0 +1,92 @@
+name: Terminal State Report
+
+on:
+  pull_request:
+    types: [labeled, closed]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  terminal-state-report:
+    if: >
+      contains(github.event.pull_request.labels.*.name, 'pvl:merged') ||
+      contains(github.event.pull_request.labels.*.name, 'pvl:rejected') ||
+      contains(github.event.pull_request.labels.*.name, 'pvl:unsafe') ||
+      contains(github.event.pull_request.labels.*.name, 'pvl:failed') ||
+      contains(github.event.pull_request.labels.*.name, 'pvl:no-change') ||
+      github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Capture PR data
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_LABELS_JSON: ${{ toJson(github.event.pull_request.labels) }}
+        run: |
+          mkdir -p .tmp
+          printf '%s' "$PR_BODY" > .tmp/pr-body.md
+          printf '%s' "$PR_LABELS_JSON" > .tmp/pr-labels.json
+          python scripts/extract_pr_metadata.py \
+            --body-file .tmp/pr-body.md \
+            --labels-json "$(cat .tmp/pr-labels.json)" \
+            --out .tmp/pr-metadata.json
+
+      - name: Normalize merged state
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('.tmp/pr-metadata.json').read_text())
+          if "${{ github.event.pull_request.merged }}" == "true":
+              data["terminal_state"] = "merged"
+          Path('.tmp/pr-metadata.json').write_text(json.dumps(data, indent=2), encoding='utf-8')
+          print(json.dumps(data, indent=2))
+          PY
+
+      - name: Write deterministic terminal report
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          data = json.loads(Path('.tmp/pr-metadata.json').read_text())
+          state = data.get('terminal_state') or 'unrecorded'
+          if state == 'unrecorded':
+              raise SystemExit('No terminal state label or merge state was recorded')
+          subprocess.run([
+              'python', 'scripts/write_terminal_report.py',
+              '--week', data.get('week', 'unrecorded'),
+              '--candidate-rank', data.get('candidate_rank', 'unrecorded'),
+              '--issue-number', data.get('issue_number', 'unrecorded'),
+              '--vote-count', data.get('vote_count', 'unrecorded'),
+              '--prompt', data.get('selected_prompt', 'unrecorded'),
+              '--pr', '${{ github.event.pull_request.html_url }}',
+              '--state', state,
+              '--safety', 'unrecorded',
+              '--changed-files', '${{ github.event.pull_request.changed_files }} files',
+              '--notes', 'Generated from PR terminal-state event.',
+          ], check=True)
+          PY
+
+      - name: Commit report to report branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="terminal-report-pr-${{ github.event.pull_request.number }}-${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add docs/reports/
+          git commit -m "Write terminal report for PR #${{ github.event.pull_request.number }}"
+          git push --set-upstream origin "$branch"
+          gh pr create \
+            --title "Write terminal report for PR #${{ github.event.pull_request.number }}" \
+            --body "Adds a deterministic terminal report for PR #${{ github.event.pull_request.number }}. This workflow does not call the OpenAI API." \
+            --base main \
+            --head "$branch"
