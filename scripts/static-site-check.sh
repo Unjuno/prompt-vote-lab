@@ -48,8 +48,14 @@ if ! grep -q "agent PR" index.html; then
   exit 1
 fi
 
-if grep -R -n -i -E "\$20|20 USD|Support the Experiment|general support tier|General support|workflow maintenance|maintenance contract" README.md index.html docs/ rules/; then
+if grep -R -n -i -E "\$20|20 USD|Support the Experiment|general support tier|General support|workflow maintenance" README.md index.html docs/ rules/; then
   echo "ERROR: obsolete or service-like support language detected."
+  exit 1
+fi
+
+# Detect affirmative service-like claims without failing on explicit negative boundary statements.
+if grep -R -n -i -E "\bsupport (creates|includes|provides|guarantees)\b.*\b(maintenance|review|support work|delivery|service)\b|\bsupporters (get|receive|gain)\b.*\b(maintenance|review|support work|delivery|service)\b" README.md index.html docs/ rules/; then
+  echo "ERROR: support must not be described as buying maintenance, review, service, or delivery."
   exit 1
 fi
 
