@@ -1,0 +1,25 @@
+name: Static Site Check
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "index.html"
+      - "lab/**"
+      - "docs/**"
+      - "rules/**"
+      - "scripts/static-site-check.sh"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-site-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run static site check
+        run: bash scripts/static-site-check.sh
