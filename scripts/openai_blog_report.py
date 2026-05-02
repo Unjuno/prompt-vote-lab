@@ -2,6 +2,12 @@
 """Generate a Prompt Vote Lab blog report with OpenAI Responses API.
 
 This script writes Markdown reports only. It never modifies lab/.
+
+Paid model policy:
+- one report API call
+- optional second HN-draft API call only when explicitly requested
+- SDK retries disabled
+- no automatic fallback
 """
 
 from __future__ import annotations
@@ -16,6 +22,7 @@ from openai import OpenAI
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_REPORT_INPUT_CHARS = int(os.getenv("MAX_REPORT_INPUT_CHARS", "80000"))
 
 
 def read_optional(path: Path) -> str:
@@ -39,6 +46,14 @@ def build_input(args: argparse.Namespace) -> dict[str, str]:
         "reviewer_notes": args.reviewer_notes,
         "run_log": read_optional(ROOT / args.run_log_path) if args.run_log_path else "unrecorded",
     }
+
+
+def enforce_input_budget(text: str) -> None:
+    if len(text) > MAX_REPORT_INPUT_CHARS:
+        raise SystemExit(
+            f"Report input is too large: {len(text)} chars > {MAX_REPORT_INPUT_CHARS}. "
+            "Refusing to call the evaluation API."
+        )
 
 
 def main() -> int:
@@ -68,11 +83,17 @@ def main() -> int:
         print("OPENAI_API_KEY is not set", file=sys.stderr)
         return 2
 
+    if args.max_output_tokens > 6000:
+        print("max_output_tokens above 6000 is not allowed for report runs", file=sys.stderr)
+        return 2
+
     report_prompt = read_optional(ROOT / "prompts" / "blog-report-v1.0.md")
     hn_prompt = read_optional(ROOT / "prompts" / "hn-draft-v1.0.md")
     input_data = build_input(args)
+    input_json = json.dumps(input_data, indent=2, ensure_ascii=False)
+    enforce_input_budget(report_prompt + "\n" + input_json)
 
-    client = OpenAI()
+    client = OpenAI(max_retries=0, timeout=120.0)
     response = client.responses.create(
         model=args.model,
         input=[
@@ -82,7 +103,7 @@ def main() -> int:
             },
             {
                 "role": "user",
-                "content": json.dumps(input_data, indent=2, ensure_ascii=False),
+                "content": input_json,
             },
         ],
         max_output_tokens=args.max_output_tokens,
@@ -95,6 +116,8 @@ def main() -> int:
     print(f"Wrote {report_path.relative_to(ROOT)}")
 
     if args.write_hn_draft:
+        hn_input = "## Weekly report\n\n" + response.output_text + "\n\n## Recorded data\n\n" + input_json
+        enforce_input_budget(hn_prompt + "\n" + hn_input)
         hn_response = client.responses.create(
             model=args.model,
             input=[
@@ -104,7 +127,7 @@ def main() -> int:
                 },
                 {
                     "role": "user",
-                    "content": "## Weekly report\n\n" + response.output_text + "\n\n## Recorded data\n\n" + json.dumps(input_data, indent=2, ensure_ascii=False),
+                    "content": hn_input,
                 },
             ],
             max_output_tokens=min(args.max_output_tokens, 2500),
