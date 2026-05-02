@@ -2,6 +2,8 @@
 
 Prompt Vote Lab includes a virtual no-change candidate in every weekly vote.
 
+It is the game's default opponent.
+
 ## Baseline
 
 ```text
@@ -11,28 +13,31 @@ Prompt Vote Lab includes a virtual no-change candidate in every weekly vote.
 
 ## Rule
 
-If the no-change baseline ranks first, no implementation run is created for that week.
+If the no-change baseline ranks first, no implementation-agent attempt is created for that week.
 
-Only real `prompt-proposal` issues can create implementation runs.
+Only real `prompt-proposal` issues can create implementation-agent attempts.
 
 ## Why this exists
 
-The baseline prevents weak or low-interest prompt votes from triggering AI implementation work.
+The baseline makes doing nothing a competitor.
 
-It protects:
+A prompt should not receive an agent attempt merely because it exists. It has to persuade players that it is better than preserving the current lab state.
 
-- API budget
+The baseline protects:
+
+- implementation-agent budget
 - review time
-- experiment quality
-- public signal quality
+- game signal quality
+- public trust in the vote
+- the inherited lab state
 
 ## Example
 
 | Candidate | Votes | Result |
 |---|---:|---|
 | No change baseline | 20 | wins |
-| Issue #1 | 7 | not implemented |
-| Issue #2 | 5 | not implemented |
+| Issue #1 | 7 | not attempted |
+| Issue #2 | 5 | not attempted |
 
 Result:
 
@@ -59,3 +64,9 @@ Issue #1 becomes the normal weekly implementation candidate.
 Support does not override the no-change baseline.
 
 Support only opens additional comparison runs among real prompt candidates that remain eligible after the baseline is inserted.
+
+## Reputation interaction
+
+Reputation is not currently computed automatically.
+
+However, players should remember which prompt styles repeatedly beat the baseline and still failed, and which prompts actually improved the lab.
