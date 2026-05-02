@@ -27,8 +27,7 @@ Editable files:
 For all candidates in the same weekly vote, use the same:
 
 - model
-- temperature
-- top_p
+- sampling policy
 - max output budget
 - active rules
 - editable file scope
@@ -39,11 +38,13 @@ For all candidates in the same weekly vote, use the same:
 
 ```text
 model: gpt-5-nano
-temperature: 0.2
-top_p: 1.0
+temperature_policy: model-default
+top_p_policy: model-default
 max_output_tokens: 12000
 retry_count: 0
 ```
+
+The implementation runner records the temperature and top_p policies as `model-default` rather than passing unsupported or unstable sampling overrides.
 
 ## Ranked candidates
 
