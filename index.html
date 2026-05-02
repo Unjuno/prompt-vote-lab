@@ -4,22 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt Vote Lab</title>
-  <meta name="description" content="Prompt Vote Lab is a public experiment where people vote on prompts and a constrained AI coding run changes a small static lab.">
+  <meta name="description" content="Prompt Vote Lab is a public experiment where people propose prompts, vote with GitHub reactions, and a constrained AI coding agent implements selected prompts in a static lab.">
   <style>
     :root {
       color-scheme: light;
-      --bg: #f4f5f1;
-      --ink: #111211;
-      --muted: #62665f;
-      --card: #fffffb;
-      --line: #dcded6;
-      --accent: #2647e8;
-      --accent-ink: #14288f;
-      --soft: #e8edff;
-      --ok: #176f43;
-      --warn: #835400;
-      --shadow: 0 18px 60px rgba(30, 34, 44, 0.10);
-      --radius: 26px;
+      --bg: #f6f7f2;
+      --ink: #141513;
+      --muted: #5d625b;
+      --panel: #fffffb;
+      --line: #dde0d7;
+      --accent: #2747e8;
+      --accent-dark: #14278c;
+      --accent-soft: #e9edff;
+      --green: #167448;
+      --amber: #835400;
+      --shadow: 0 22px 70px rgba(25, 28, 38, 0.10);
+      --soft-shadow: 0 10px 30px rgba(25, 28, 38, 0.07);
+      --radius: 28px;
     }
 
     * { box-sizing: border-box; }
@@ -28,17 +29,18 @@
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at 80% 0%, rgba(38, 71, 232, 0.14), transparent 34rem),
-        linear-gradient(180deg, #fbfbf8 0%, var(--bg) 58%, #fff 100%);
+        radial-gradient(circle at 12% -8%, rgba(39, 71, 232, 0.17), transparent 32rem),
+        radial-gradient(circle at 86% 4%, rgba(22, 116, 72, 0.10), transparent 28rem),
+        linear-gradient(180deg, #fbfcf8 0%, var(--bg) 55%, #fff 100%);
       color: var(--ink);
     }
 
-    a { color: var(--accent-ink); }
+    a { color: var(--accent-dark); }
 
     .shell {
-      width: min(1060px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 24px 0 64px;
+      padding: 24px 0 72px;
     }
 
     .topbar {
@@ -46,7 +48,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 10px 0;
+      padding: 12px 0;
     }
 
     .brand {
@@ -54,9 +56,9 @@
       align-items: center;
       gap: 10px;
       color: var(--ink);
-      font-weight: 900;
+      font-weight: 950;
+      letter-spacing: -0.045em;
       text-decoration: none;
-      letter-spacing: -0.04em;
     }
 
     .mark {
@@ -86,15 +88,14 @@
       text-decoration: none;
     }
 
-    .nav a:hover { background: var(--soft); color: var(--accent-ink); }
+    .nav a:hover { background: var(--accent-soft); color: var(--accent-dark); }
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-      gap: 30px;
+      grid-template-columns: minmax(0, 1.12fr) minmax(310px, 0.88fr);
+      gap: 34px;
       align-items: center;
-      min-height: 620px;
-      padding: 58px 0 34px;
+      padding: 68px 0 36px;
     }
 
     h1,
@@ -103,40 +104,46 @@
     p { margin-top: 0; }
 
     h1 {
-      max-width: 740px;
-      margin-bottom: 22px;
-      font-size: clamp(3.3rem, 8vw, 6.9rem);
-      line-height: 0.88;
+      max-width: 800px;
+      margin-bottom: 20px;
+      font-size: clamp(3.4rem, 8vw, 6.8rem);
+      line-height: 0.90;
       letter-spacing: -0.09em;
     }
 
     h2 {
-      margin-bottom: 14px;
-      font-size: clamp(1.7rem, 4vw, 3rem);
-      line-height: 1.02;
-      letter-spacing: -0.06em;
+      margin-bottom: 12px;
+      font-size: clamp(1.8rem, 4vw, 3.05rem);
+      line-height: 1;
+      letter-spacing: -0.065em;
     }
 
     h3 {
-      margin-bottom: 6px;
-      font-size: 1.02rem;
+      margin-bottom: 8px;
+      font-size: 1.08rem;
       letter-spacing: -0.03em;
     }
 
     .eyebrow {
+      display: inline-flex;
+      align-items: center;
       margin: 0 0 14px;
-      color: var(--accent-ink);
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 251, 0.72);
+      color: var(--accent-dark);
       font-size: 0.76rem;
       font-weight: 950;
-      letter-spacing: 0.10em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
     .lead {
-      max-width: 690px;
+      max-width: 760px;
       color: var(--muted);
       font-size: clamp(1.08rem, 2vw, 1.28rem);
-      line-height: 1.68;
+      line-height: 1.72;
     }
 
     .actions,
@@ -144,7 +151,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 26px;
     }
 
     .button {
@@ -155,11 +162,11 @@
       padding: 0 20px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--card);
-      color: var(--accent-ink);
+      background: var(--panel);
+      color: var(--accent-dark);
       font-weight: 950;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(30, 34, 44, 0.08);
+      box-shadow: var(--soft-shadow);
     }
 
     .button.primary {
@@ -176,8 +183,9 @@
 
     .hero-card,
     .panel,
+    .card,
     .step,
-    .rule {
+    .metric {
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255, 255, 251, 0.92);
@@ -186,35 +194,38 @@
 
     .hero-card {
       padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(233, 237, 255, 0.96), rgba(255, 255, 251, 0.9)),
+        var(--panel);
     }
 
-    .score {
+    .baseline-score {
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 18px;
       align-items: center;
-      padding: 20px;
+      padding: 18px;
+      border: 1px solid rgba(39, 71, 232, 0.18);
       border-radius: 22px;
-      background: var(--soft);
-      border: 1px solid rgba(38, 71, 232, 0.16);
+      background: #fff;
     }
 
-    .score strong {
+    .baseline-score strong {
       display: block;
       color: var(--accent);
       font-size: clamp(4rem, 10vw, 6rem);
-      line-height: 0.85;
-      letter-spacing: -0.08em;
+      line-height: 0.86;
+      letter-spacing: -0.09em;
     }
 
-    .score p,
     .hero-card p,
     .panel p,
+    .card p,
     .step p,
-    .rule p,
+    .metric p,
     li {
       color: var(--muted);
-      line-height: 1.62;
+      line-height: 1.66;
     }
 
     .quick-list {
@@ -229,29 +240,56 @@
       padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 16px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.78);
     }
 
     .panel {
-      margin-top: 22px;
-      padding: clamp(22px, 4vw, 34px);
+      margin-top: 24px;
+      padding: clamp(22px, 4vw, 36px);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card,
+    .step,
+    .metric {
+      padding: 18px;
+      box-shadow: var(--soft-shadow);
+      border-radius: 20px;
+      background: var(--panel);
+    }
+
+    .muted-box {
+      padding: 18px;
+      border: 1px solid rgba(131, 84, 0, 0.22);
+      border-radius: 20px;
+      background: #fff8e6;
+      color: var(--amber);
+      font-weight: 820;
+      line-height: 1.62;
     }
 
     .steps {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 12px;
       margin-top: 20px;
+      counter-reset: step;
     }
 
     .step {
       position: relative;
-      padding: 46px 18px 18px;
-      box-shadow: 0 10px 30px rgba(30, 34, 44, 0.07);
+      padding-top: 48px;
     }
 
     .step::before {
-      content: attr(data-step);
+      counter-increment: step;
+      content: counter(step);
       position: absolute;
       top: 16px;
       left: 18px;
@@ -266,31 +304,26 @@
       font-weight: 900;
     }
 
-    .rules {
+    .metrics,
+    .rules,
+    .support-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
       margin-top: 18px;
     }
 
-    .rule {
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(30, 34, 44, 0.07);
-    }
+    .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .rules { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .support-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-    .rule strong {
+    .metric-number {
       display: block;
       margin-bottom: 8px;
-    }
-
-    .support-note {
-      margin-top: 16px;
-      padding: 14px 16px;
-      border: 1px solid rgba(131, 84, 0, 0.22);
-      border-radius: 18px;
-      background: #fff8e6;
-      color: var(--warn);
-      font-weight: 800;
+      color: var(--accent-dark);
+      font-size: 2.5rem;
+      font-weight: 950;
+      line-height: 0.95;
+      letter-spacing: -0.08em;
     }
 
     .docs {
@@ -304,8 +337,8 @@
       padding: 11px 13px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--card);
-      color: var(--accent-ink);
+      background: var(--panel);
+      color: var(--accent-dark);
       font-weight: 850;
       text-decoration: none;
     }
@@ -318,16 +351,19 @@
     }
 
     footer {
-      margin-top: 30px;
+      margin-top: 32px;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    @media (max-width: 900px) {
-      .hero { min-height: 0; padding-top: 38px; }
+    @media (max-width: 980px) {
       .hero,
+      .split,
       .steps,
-      .rules { grid-template-columns: 1fr; }
+      .metrics,
+      .rules,
+      .support-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 40px; }
       .topbar { align-items: flex-start; flex-direction: column; }
       .nav { justify-content: flex-start; }
     }
@@ -340,7 +376,7 @@
       <nav class="nav" aria-label="Primary navigation">
         <a href="./lab/">Lab</a>
         <a href="https://github.com/Unjuno/prompt-vote-lab/issues">Issues</a>
-        <a href="./docs/experiment-model.md">Docs</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/tree/main/docs">Docs</a>
         <a href="https://github.com/Unjuno/prompt-vote-lab">GitHub</a>
       </nav>
     </header>
@@ -348,9 +384,9 @@
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Public prompt experiment</p>
-        <h1 id="page-title">Vote for a prompt. Let the lab try it.</h1>
+        <h1 id="page-title">Vote on the next prompt. Watch the lab change.</h1>
         <p class="lead">
-          People propose prompts. The community votes. If a prompt beats the weekly no-change baseline, a constrained AI coding run changes only the static lab.
+          Prompt Vote Lab tests whether a public prompt market can guide a constrained AI coding run. People propose prompts, vote with GitHub reactions, and eligible winners are implemented inside a small static lab.
         </p>
         <div class="actions" aria-label="Primary actions">
           <a class="button primary" href="./lab/">Open the lab</a>
@@ -361,62 +397,99 @@
 
       <aside class="hero-card" aria-labelledby="baseline-title">
         <p class="eyebrow">Execution threshold</p>
-        <div class="score">
+        <div class="baseline-score">
           <strong>20</strong>
-          <p id="baseline-title"><b>virtual votes</b><br>No change this week starts with 20 virtual votes. A real prompt must beat it.</p>
+          <p id="baseline-title"><b>virtual votes</b><br>No change this week starts with 20 virtual votes. A real prompt must beat it before an implementation run happens.</p>
         </div>
         <ul class="quick-list">
           <li>API budget is spent only when a prompt is eligible.</li>
           <li>Each candidate gets one single-shot implementation attempt.</li>
-          <li>Merge is manual after review.</li>
+          <li>Merge is manual. Failed and rejected runs are still recorded.</li>
         </ul>
       </aside>
     </section>
 
-    <section class="panel" aria-labelledby="flow-title">
-      <p class="eyebrow">The loop</p>
-      <h2 id="flow-title">One path, four steps</h2>
-      <div class="steps">
-        <article class="step" data-step="1"><h3>Propose</h3><p>Create a GitHub Issue with the prompt and expected visible result.</p></article>
-        <article class="step" data-step="2"><h3>Vote</h3><p>Use GitHub reactions. The prompt must outrank the no-change baseline.</p></article>
-        <article class="step" data-step="3"><h3>Run</h3><p>The selected prompt is attempted inside <code>lab/</code> only.</p></article>
-        <article class="step" data-step="4"><h3>Review</h3><p>The generated PR is checked, reviewed, merged, rejected, or recorded as failed.</p></article>
+    <section class="panel split" aria-labelledby="what-title">
+      <div>
+        <p class="eyebrow">What this is</p>
+        <h2 id="what-title">A prompt market plus a constrained implementation sandbox</h2>
+        <p>
+          Participants submit prompt candidates as GitHub Issues. Votes rank those prompts. If a real prompt beats the weekly no-change baseline, the implementation model edits only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>.
+        </p>
+        <p>
+          The landing page explains the experiment. The lab is the changing implementation target. That separation keeps the public explanation stable while still allowing visible weekly changes.
+        </p>
+      </div>
+      <div class="muted-box">
+        This is not a feature-request queue, a paid merge system, or a general-purpose web app builder. The AI can propose changes, but final adoption stays manual.
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="scope-title">
+    <section class="panel" aria-labelledby="narrow-title">
+      <p class="eyebrow">Design choice</p>
+      <h2 id="narrow-title">The experiment is deliberately narrow</h2>
+      <p>Less surface area makes the run easier to inspect. The whole point is stable comparison: same scope, same safety boundary, visible PRs, and recorded outcomes.</p>
+      <div class="metrics">
+        <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
+        <article class="metric"><span class="metric-number">0</span><p>external runtime dependencies</p></article>
+        <article class="metric"><span class="metric-number">1</span><p>single-shot API attempt per candidate</p></article>
+        <article class="metric"><span class="metric-number">0</span><p>automatic merges</p></article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="loop-title">
+      <p class="eyebrow">Loop</p>
+      <h2 id="loop-title">How the experiment runs</h2>
+      <div class="steps">
+        <article class="step"><h3>Propose</h3><p>Create a GitHub Issue with the exact prompt and expected visible result.</p></article>
+        <article class="step"><h3>Vote</h3><p>Use GitHub reactions. A real prompt must beat the 20-vote baseline.</p></article>
+        <article class="step"><h3>Run</h3><p>The fixed implementation model edits only the static lab files.</p></article>
+        <article class="step"><h3>Check</h3><p>Safety and static-site checks run before the implementation PR is proposed.</p></article>
+        <article class="step"><h3>Review</h3><p>The maintainer reviews the PR and decides merge, reject, unsafe, failed, or no-change.</p></article>
+        <article class="step"><h3>Record</h3><p>The result and expectation gap are logged for later comparison.</p></article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="safety-title">
       <p class="eyebrow">Safety boundary</p>
-      <h2 id="scope-title">Small enough to inspect</h2>
+      <h2 id="safety-title">The AI is not given a blank check</h2>
+      <p>The point is not to let an agent do anything. The point is to test whether useful changes emerge under stable, reviewable constraints.</p>
       <div class="rules">
-        <article class="rule"><strong>3 editable files</strong><p>Implementation runs may edit only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>.</p></article>
-        <article class="rule"><strong>No external runtime</strong><p>No CDNs, external scripts, network fetches, cookies, iframes, eval, or hidden trackers.</p></article>
-        <article class="rule"><strong>No automatic merge</strong><p>The AI can propose a PR. It cannot decide final adoption.</p></article>
+        <article class="card"><h3>Allowed local behavior</h3><p>Static HTML, CSS, vanilla JavaScript, local state, and JSON export/import inside the lab.</p></article>
+        <article class="card"><h3>Blocked runtime behavior</h3><p>No external scripts, CDNs, network fetches, WebSockets, cookies, iframes, eval, or hidden trackers.</p></article>
+        <article class="card"><h3>Manual adoption</h3><p>The AI can open a PR. It cannot merge, buy adoption, or override review.</p></article>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="support-title">
       <p class="eyebrow">Support</p>
-      <h2 id="support-title">Support funds comparison, not control</h2>
-      <p>
-        Support can help fund extra comparison runs and reporting. It does not override votes, bypass the 20 virtual votes baseline, or buy merge rights.
-      </p>
+      <h2 id="support-title">Support can fund comparison runs</h2>
+      <p>Support helps cover API costs, reporting, failed-run analysis, rule maintenance, and comparison experiments.</p>
+      <div class="support-grid">
+        <article class="card"><h3>$5 — Rank 2 comparison</h3><p>May open an additional rank-2 comparison run when the weekly support threshold is reached.</p></article>
+        <article class="card"><h3>$10 — Rank 3 comparison</h3><p>May open rank-2 and rank-3 comparison runs when total weekly support reaches the threshold.</p></article>
+        <article class="card"><h3>$20 — Experiment support</h3><p>General support for API costs, reports, failed-run analysis, rules, and workflow maintenance.</p></article>
+      </div>
+      <p class="muted-box">Support does not override the no-change baseline, guarantee success, grant adoption, or change review authority.</p>
       <div class="link-row">
         <a class="button" href="https://github.com/sponsors/Unjuno">Support on GitHub</a>
-        <a class="button ghost" href="./docs/support-policy.md">Read support policy</a>
+        <a class="button ghost" href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/support-policy.md">Read support policy</a>
       </div>
-      <p class="support-note">Support does not guarantee success, adoption, merge, or specification control.</p>
     </section>
 
     <section class="panel" aria-labelledby="docs-title">
       <p class="eyebrow">Reference</p>
-      <h2 id="docs-title">Read the rules</h2>
-      <p>Detailed explanations stay in repository docs so this landing page stays short.</p>
+      <h2 id="docs-title">Read the operating rules</h2>
+      <p>
+        Detailed explanations stay in repository docs. These links open GitHub's rendered Markdown view instead of raw text on GitHub Pages.
+      </p>
       <div class="docs">
-        <a href="./docs/experiment-model.md">Experiment model</a>
-        <a href="./docs/how-to-participate.md">How to participate</a>
-        <a href="./docs/no-change-baseline.md">No-change baseline</a>
-        <a href="./docs/automation-map.md">Automation map</a>
-        <a href="./rules/single-shot-api-v1.0.md">Single-shot API rule</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/experiment-model.md">Experiment model</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/how-to-participate.md">How to participate</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/no-change-baseline.md">No-change baseline</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/automation-map.md">Automation map</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/static-ui-v1.0.md">Static UI rule</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/rules/single-shot-api-v1.0.md">Single-shot API rule</a>
       </div>
     </section>
 
