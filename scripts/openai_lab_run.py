@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
-"""Run a constrained Prompt Vote Lab implementation with OpenAI Responses API.
+"""Run a constrained Prompt Vote Lab implementation-agent attempt.
+
+This script currently uses the OpenAI Responses API as the backend for the
+implementation agent, but the public experiment concept is an agent run:
+
+Prompt → 20-vote gate → agent PR → inherited lab state
 
 This script intentionally writes only:
 - lab/index.html
 - lab/style.css
 - lab/app.js
 
-Paid model policy:
-- one API call per candidate
+Agent-run policy:
+- one bounded implementation-agent attempt per candidate per workflow run
 - SDK retries disabled
 - no automatic fallback
+- no automatic merge
 """
 
 from __future__ import annotations
@@ -58,7 +64,7 @@ SCHEMA = {
 def resolve_openai_api_key() -> str:
     key = os.getenv("OPENAI_API_KEY_") or os.getenv("OPENAI_API_KEY")
     if not key:
-        print("OPENAI_API_KEY_ is not set. Fallback OPENAI_API_KEY is also not set.", file=sys.stderr)
+        print("Implementation-agent backend secret is not set.", file=sys.stderr)
         raise SystemExit(2)
     return key
 
@@ -75,7 +81,7 @@ def enforce_prompt_budget(prompt: str) -> None:
     if len(prompt) > MAX_PROMPT_CHARS:
         raise SystemExit(
             f"Implementation prompt is too large: {len(prompt)} chars > {MAX_PROMPT_CHARS}. "
-            "Refusing to call the API."
+            "Refusing to start the implementation-agent attempt."
         )
 
 
@@ -83,6 +89,7 @@ def build_prompt(args: argparse.Namespace) -> str:
     rules = []
     for rel in [
         "rules/static-ui-v1.0.md",
+        "rules/agent-run-policy-v1.0.md",
         "rules/model-policy-v1.0.md",
         "rules/merge-policy-v1.0.md",
         "rules/operational-decisions-v1.1.md",
@@ -98,12 +105,13 @@ def build_prompt(args: argparse.Namespace) -> str:
 
     prompt = "\n\n".join(
         [
-            "You are the implementation model for Prompt Vote Lab.",
+            "You are the implementation agent for Prompt Vote Lab.",
             "Modify exactly these three lab files and return their full replacement contents as JSON.",
-            "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, or trackers.",
+            "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, new Function, or trackers.",
             "Preserve the static-only GitHub Pages design. Prefer small, readable changes.",
             "The experiment intentionally keeps complexity inside three files.",
-            "This is a single-shot run. Do not ask for a retry or another pass.",
+            "This is one bounded implementation-agent attempt. Do not ask for a hidden retry or another pass.",
+            "The current lab files are the inherited lab state from the main branch.",
             "## Run metadata",
             f"week: {args.week}",
             f"candidate_rank: {args.candidate_rank}",
@@ -118,7 +126,7 @@ def build_prompt(args: argparse.Namespace) -> str:
             args.voted_prompt,
             "## Active rules",
             "\n\n".join(rules),
-            "## Current lab files",
+            "## Current inherited lab files",
             "\n\n".join(lab_snapshot),
             "## Output requirement",
             "Return valid structured JSON only. Include full contents for index_html, style_css, and app_js.",
@@ -146,7 +154,7 @@ def main() -> int:
     api_key = resolve_openai_api_key()
 
     if args.max_output_tokens > 12000:
-        print("max_output_tokens above 12000 is not allowed for implementation runs", file=sys.stderr)
+        print("max_output_tokens above 12000 is not allowed for implementation-agent attempts", file=sys.stderr)
         return 2
 
     prompt = build_prompt(args)
@@ -157,7 +165,7 @@ def main() -> int:
         input=[
             {
                 "role": "developer",
-                "content": "You are a constrained code-generation worker. Return only the requested structured output. This is a single-shot call.",
+                "content": "You are a constrained code-generation worker. Return only the requested structured output. This is one bounded implementation-agent attempt.",
             },
             {"role": "user", "content": prompt},
         ],
@@ -175,7 +183,7 @@ def main() -> int:
     try:
         data = json.loads(response.output_text)
     except json.JSONDecodeError as exc:
-        print("Model did not return valid JSON", file=sys.stderr)
+        print("Implementation agent did not return valid JSON", file=sys.stderr)
         print(response.output_text, file=sys.stderr)
         raise exc
 
@@ -188,12 +196,12 @@ def main() -> int:
     summary_path = ROOT / args.summary_out
     summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary = [
-        f"# Implementation summary for {args.week} rank {args.candidate_rank}",
+        f"# Implementation-agent summary for {args.week} rank {args.candidate_rank}",
         "",
         f"- model: `{args.model}`",
+        "- agent_attempts: 1",
         "- sdk_max_retries: 0",
         "- sdk_timeout_seconds: 120",
-        "- api_key_env: `OPENAI_API_KEY_` preferred, `OPENAI_API_KEY` fallback",
         f"- temperature_policy: {args.temperature_policy}",
         f"- top_p_policy: {args.top_p_policy}",
         f"- max_output_tokens: {args.max_output_tokens}",
@@ -217,7 +225,7 @@ def main() -> int:
         summary.append(f"- {step}")
     summary_path.write_text("\n".join(summary) + "\n", encoding="utf-8")
 
-    print(f"Wrote lab files using {args.model}")
+    print(f"Wrote lab files using implementation model {args.model}")
     return 0
 
 
