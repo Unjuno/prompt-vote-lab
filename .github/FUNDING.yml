@@ -1,0 +1,6 @@
+# Funding configuration for Prompt Vote Lab
+# This enables GitHub's Sponsor button when GitHub Sponsors is available for the account.
+
+github: [Unjuno]
+custom:
+  - https://github.com/sponsors/Unjuno
