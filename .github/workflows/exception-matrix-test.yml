@@ -1,0 +1,29 @@
+name: Exception Matrix Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "scripts/safety-check.sh"
+      - "scripts/static-site-check.sh"
+      - "scripts/exception_matrix_test.py"
+      - ".github/workflows/exception-matrix-test.yml"
+      - "rules/exception-testing-v1.0.md"
+      - "rules/local-state-v1.0.md"
+      - "rules/no-external-resources-v1.0.md"
+
+permissions:
+  contents: read
+
+jobs:
+  exception-matrix-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run exception matrix
+        run: python scripts/exception_matrix_test.py
