@@ -7,6 +7,7 @@ and static-site checks fail or pass as expected. It does not call any model API.
 
 from __future__ import annotations
 
+import argparse
 import json
 import shutil
 import subprocess
@@ -104,7 +105,29 @@ def run_check(repo: Path, check: str) -> subprocess.CompletedProcess[str]:
     raise ValueError(f"unknown check: {check}")
 
 
+def write_markdown(results: list[dict], path: Path) -> None:
+    total = len(results)
+    ok_count = sum(1 for r in results if r["ok"])
+    lines = [
+        "# Exception matrix summary",
+        "",
+        f"- cases: {total}",
+        f"- expected-observed agreements: {ok_count}",
+        f"- disagreements: {total - ok_count}",
+        "",
+        "| Case | Check | Expected | Actual | OK |",
+        "|---|---|---|---|---|",
+    ]
+    for r in results:
+        lines.append(f"| {r['name']} | {r['check']} | {r['expected']} | {r['actual']} | {r['ok']} |")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--out-dir", default=".tmp/exception-matrix")
+    args = parser.parse_args()
+
     cases = [
         Case("safety_blocks_outside_lab", "fail", "safety", "outside_lab_change"),
         Case("safety_blocks_external_script", "fail", "safety", "external_script"),
@@ -129,11 +152,18 @@ def main() -> int:
                 "name": case.name,
                 "expected": case.expected,
                 "actual": actual,
+                "check": case.check,
+                "mutation": case.mutation,
                 "ok": ok,
                 "output_tail": proc.stdout[-1200:],
             })
         finally:
             shutil.rmtree(repo, ignore_errors=True)
+
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "exception-matrix.json").write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    write_markdown(results, out_dir / "exception-matrix.md")
 
     print(json.dumps(results, indent=2, ensure_ascii=False))
     failures = [r for r in results if not r["ok"]]
