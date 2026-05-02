@@ -15,6 +15,7 @@ required_files=(
   "rules/static-ui-v1.0.md"
   "rules/initial-lab-state-v1.0.md"
   "rules/no-change-baseline-v1.0.md"
+  "rules/public-site-v1.0.md"
 )
 
 for file in "${required_files[@]}"; do
@@ -34,13 +35,13 @@ if ! grep -q "href=\"./lab/\"" index.html; then
   exit 1
 fi
 
-if ! grep -q "Awaiting first accepted prompt run" lab/index.html; then
-  echo "ERROR: initial lab page should remain a minimal experiment target before the first accepted run."
+if ! grep -q "20 virtual votes" index.html; then
+  echo "ERROR: landing page must explain the 20-vote no-change baseline."
   exit 1
 fi
 
-if ! grep -q "20 virtual votes" index.html; then
-  echo "ERROR: landing page must explain the 20-vote no-change baseline."
+if grep -R -n -E "Support .*guarantee|guarantee .*merge|buy.*merge|paid merge" index.html README.md docs/ rules/; then
+  echo "ERROR: public docs must not describe support as buying merge or adoption."
   exit 1
 fi
 
