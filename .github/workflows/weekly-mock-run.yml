@@ -292,11 +292,16 @@ jobs:
                   '--run-reason', reason,
               ])
               sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
+              sh(['bash', 'scripts/static-site-check.sh'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
               if diff.returncode == 0:
                   log_event('mock_implementation_failed', 'failed', rank, issue, {'reason': 'no_lab_changes'})
                   raise SystemExit(f'Rank {rank} produced no lab changes')
               changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
+              log_event('mock_internal_checks_passed', 'completed', rank, issue, {
+                  'checks': ['safety-check', 'static-site-check'],
+                  'changed_files': changed,
+              })
               sh(['git', 'config', 'user.name', 'github-actions[bot]'])
               sh(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
               sh(['git', 'add', 'lab/'])
@@ -317,6 +322,7 @@ jobs:
                   f'- Run reason: {reason}',
                   '- Implementation model: `mock-runner`',
                   '- API cost: 0',
+                  '- Internal checks: `safety-check` and `static-site-check` passed before PR creation',
                   '',
                   '## Selected prompt',
                   '',
@@ -328,7 +334,7 @@ jobs:
                   '',
                   '## Review purpose',
                   '',
-                  'Use this PR to verify weekly selection, branch creation, lab-only edits, safety checks, and PR creation before enabling paid API runs.',
+                  'Use this PR to verify weekly selection, branch creation, lab-only edits, internal safety/static checks, and PR creation before enabling paid API runs.',
               ]
               body_path.write_text('\n'.join(body), encoding='utf-8')
               pr_url = subprocess.check_output([
