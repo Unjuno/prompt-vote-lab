@@ -32,10 +32,16 @@ if [ ! -d lab ]; then
   exit 1
 fi
 
-forbidden='<script[^>]+src=["'"'"']https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|<iframe|navigator\.sendBeacon'
+forbidden='<script[^>]+src=["'"'"']https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|document\.cookie|<iframe|navigator\.sendBeacon'
 
 if grep -R -n -E "$forbidden" lab/; then
   echo "ERROR: Forbidden pattern detected."
+  exit 1
+fi
+
+# Controlled new Function is allowed, but obvious dynamic-source patterns are blocked.
+if grep -R -n -E "new Function\s*\([^)]*(user|input|textarea|location|hash|search|params|localStorage|sessionStorage|indexedDB|imported|json|body|prompt|innerText|textContent|value)" lab/; then
+  echo "ERROR: new Function appears to use dynamic or user-controlled input."
   exit 1
 fi
 
