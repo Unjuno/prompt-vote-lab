@@ -45,13 +45,18 @@ if ! grep -q "href=\"./lab/\"" index.html; then
   exit 1
 fi
 
-if ! grep -q -E "20-vote gate|20 virtual votes|virtual votes baseline" index.html; then
+if ! grep -qi -E "20-vote gate|20 virtual votes|virtual votes baseline|votes against doing nothing" index.html; then
   echo "ERROR: landing page must explain the 20-vote no-change baseline."
   exit 1
 fi
 
-if ! grep -q "agent PR" index.html; then
+if ! grep -qi -E "agent PR|Agent PR" index.html; then
   echo "ERROR: landing page should describe the public concept as an agent PR, not an API-first flow."
+  exit 1
+fi
+
+if ! grep -qi -E "prompt game|Competitive prompt game|game loop|Risk trust|reputation|trust" index.html; then
+  echo "ERROR: landing page must frame the project as a prompt game, not only as an experiment."
   exit 1
 fi
 
