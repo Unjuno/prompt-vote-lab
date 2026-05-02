@@ -55,8 +55,15 @@ if ! grep -q "agent PR" index.html; then
   exit 1
 fi
 
-if grep -R -n -i -E "\$20|20 USD|Support the Experiment|general support tier|General support|workflow maintenance" README.md index.html docs/ rules/; then
+# Hard-block removed support tiers and service-like positive framing.
+# Negative boundary statements such as "There is no general support tier" are allowed.
+if grep -R -n -i -E "\$20|20 USD|Support the Experiment|workflow maintenance" README.md index.html docs/ rules/; then
   echo "ERROR: obsolete or service-like support language detected."
+  exit 1
+fi
+
+if grep -R -n -i -E "\b(general support tier|general support|support tier)\b.*\b(includes|provides|guarantees|covers|funds|buys|purchases|grants)\b" README.md index.html docs/ rules/; then
+  echo "ERROR: general support must not be described as an active offered tier or service."
   exit 1
 fi
 
