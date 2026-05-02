@@ -4,11 +4,18 @@ set -euo pipefail
 BASE_REF="${1:-origin/main}"
 HEAD_REF="${2:-HEAD}"
 
+: > changed_files.txt
+
 if git rev-parse --verify "$BASE_REF" >/dev/null 2>&1; then
-  git diff --name-only "$BASE_REF...$HEAD_REF" > changed_files.txt
+  git diff --name-only "$BASE_REF...$HEAD_REF" >> changed_files.txt || true
+  git diff --name-only "$BASE_REF" "$HEAD_REF" >> changed_files.txt || true
 else
-  git diff --name-only > changed_files.txt
+  git diff --name-only >> changed_files.txt || true
 fi
+
+git diff --name-only >> changed_files.txt || true
+git diff --name-only --cached >> changed_files.txt || true
+sort -u changed_files.txt -o changed_files.txt
 
 echo "Changed files:"
 cat changed_files.txt || true
