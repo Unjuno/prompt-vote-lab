@@ -24,7 +24,7 @@ Support applies to the current weekly vote only.
 
 Old weekly candidates are not automatically reopened.
 
-Support does not create a request channel, maintenance contract, paid review obligation, or delivery promise.
+Support does not create a request channel, paid review obligation, delivery promise, support obligation, merge right, or specification-control right.
 
 ## No-change baseline interaction
 
@@ -37,6 +37,7 @@ Additional comparison runs can only happen after the weekly candidate set has pa
 All support-unlocked runs still follow:
 
 - static UI rules
+- agent-run policy
 - fixed implementation model policy
 - safety checks
 - PR-only implementation flow
