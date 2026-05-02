@@ -7,12 +7,15 @@ required_files=(
   "lab/style.css"
   "lab/app.js"
   "README.md"
+  "docs/README.md"
   "docs/experiment-model.md"
   "docs/how-to-participate.md"
   "docs/no-change-baseline.md"
   "docs/support-policy.md"
   "docs/automation-map.md"
   "rules/static-ui-v1.0.md"
+  "rules/agent-run-policy-v1.0.md"
+  "rules/support-unlocked-runs-v1.1.md"
   "rules/initial-lab-state-v1.0.md"
   "rules/no-change-baseline-v1.0.md"
   "rules/public-site-v1.0.md"
@@ -37,6 +40,16 @@ fi
 
 if ! grep -q "20 virtual votes" index.html; then
   echo "ERROR: landing page must explain the 20-vote no-change baseline."
+  exit 1
+fi
+
+if ! grep -q "agent PR" index.html; then
+  echo "ERROR: landing page should describe the public concept as an agent PR, not an API-first flow."
+  exit 1
+fi
+
+if grep -R -n -i -E "\$20|20 USD|Support the Experiment|general support tier|General support|workflow maintenance|maintenance contract" README.md index.html docs/ rules/; then
+  echo "ERROR: obsolete or service-like support language detected."
   exit 1
 fi
 
