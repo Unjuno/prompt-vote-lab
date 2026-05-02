@@ -1,0 +1,20 @@
+name: GitHub Pages Smoke Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  pages-smoke-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check published Pages URLs
+        run: |
+          python scripts/pages-smoke-check.py --base-url "https://unjuno.github.io/prompt-vote-lab"
