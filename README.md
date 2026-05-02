@@ -86,16 +86,17 @@ See `rules/merge-policy-v1.0.md`.
 
 ## Support-unlocked runs
 
-Support may unlock additional comparison runs for rank 2 and rank 3 during the weekly run window.
+Support may open additional comparison runs for rank 2 and rank 3 during the weekly run window.
 
-Initial thresholds:
+Recommended one-time support tiers:
 
-- rank 2 unlock: 5 USD weekly support
-- rank 3 unlock: 10 USD total weekly support
+- 5 USD: Support Rank 2 Comparison Run
+- 10 USD: Support Rank 3 Comparison Run
+- 20 USD: Support the Experiment
 
-Support unlocks additional experiment runs only. It does not guarantee merge, does not grant specification control, and does not bypass safety checks.
+Support contributes to additional experiment runs and project operation. It does not guarantee success, adoption, merge, or specification control.
 
-See `rules/support-unlocked-runs-v1.0.md`.
+See `rules/support-unlocked-runs-v1.1.md`.
 
 ## GitHub Pages
 
