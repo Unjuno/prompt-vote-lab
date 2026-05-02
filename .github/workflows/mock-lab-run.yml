@@ -1,0 +1,139 @@
+name: Mock Lab Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-001"
+        required: true
+        default: "week-mock-001"
+        type: string
+      candidate_rank:
+        description: "Candidate rank"
+        required: true
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+      issue_number:
+        description: "Selected prompt issue number"
+        required: true
+        default: "0"
+        type: string
+      voted_prompt:
+        description: "Prompt text to render in the mock output"
+        required: true
+        default: "Mock: prove that the workflow can edit lab files and open a safe PR."
+        type: string
+      vote_count:
+        description: "Vote count for this candidate"
+        required: false
+        default: "mock"
+        type: string
+      run_reason:
+        description: "Run reason"
+        required: false
+        default: "mock-run"
+        type: choice
+        options:
+          - mock-run
+          - normal-weekly-run
+          - support-unlocked-run
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: mock-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}
+  cancel-in-progress: false
+
+jobs:
+  mock-lab-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create branch
+        run: |
+          git checkout -b "mock-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
+
+      - name: Run mock implementation
+        run: |
+          python scripts/mock_lab_run.py \
+            --week "${{ inputs.week }}" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --voted-prompt "${{ inputs.voted_prompt }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --run-reason "${{ inputs.run_reason }}"
+
+      - name: Run safety check
+        run: bash scripts/safety-check.sh origin/main HEAD
+
+      - name: Fail if mock made no lab changes
+        run: |
+          if git diff --quiet -- lab/; then
+            echo "Mock completed but did not modify lab/."
+            exit 1
+          fi
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lab/
+          git commit -m "Run mock lab experiment for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}"
+
+      - name: Push branch
+        run: |
+          git push --set-upstream origin "mock-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body_file=".tmp/pr-body.md"
+          mkdir -p .tmp
+          cat > "$body_file" <<'EOF'
+          Mock implementation run. This PR was created without calling the OpenAI API.
+
+          ## Candidate
+
+          - Week: ${{ inputs.week }}
+          - Rank: ${{ inputs.candidate_rank }}
+          - Issue: #${{ inputs.issue_number }}
+          - Votes: ${{ inputs.vote_count }}
+          - Run reason: ${{ inputs.run_reason }}
+          - Implementation model: `mock-runner`
+          - API cost: 0
+
+          ## Selected prompt
+
+          ${{ inputs.voted_prompt }}
+
+          ## Implementation summary
+
+          EOF
+          if [ -f .tmp/implementation-summary.md ]; then
+            cat .tmp/implementation-summary.md >> "$body_file"
+          else
+            echo "Implementation summary was not written." >> "$body_file"
+          fi
+          cat >> "$body_file" <<'EOF'
+
+          ## Review purpose
+
+          Use this PR to verify branch creation, lab-only changes, safety checks, and PR creation before enabling paid API runs.
+          EOF
+
+          gh pr create \
+            --title "Mock lab run for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}" \
+            --body-file "$body_file" \
+            --base main \
+            --head "mock-lab-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
