@@ -1,0 +1,20 @@
+name: Setup Labels
+
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  setup-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create or update Prompt Vote Lab labels
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/create_pr_labels.py
