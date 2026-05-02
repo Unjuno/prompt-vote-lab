@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Unjuno/prompt-vote-lab/schemas/blog-report-input.schema.json",
+  "title": "Prompt Vote Lab Blog Report Input",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "week": { "type": "string" },
+    "candidate_rank": { "type": "string" },
+    "issue_number": { "type": "string" },
+    "vote_count": { "type": "string" },
+    "no_change_baseline": { "type": "string" },
+    "support_usd": { "type": "string" },
+    "selected_prompt": { "type": "string" },
+    "expected_result": { "type": "string" },
+    "implementation_pr": { "type": "string" },
+    "terminal_state": {
+      "type": "string",
+      "enum": ["merged", "rejected", "unsafe", "failed", "no-change", "unrecorded"]
+    },
+    "safety_result": { "type": "string" },
+    "changed_files": { "type": "string" },
+    "reviewer_notes": { "type": "string" },
+    "run_log": { "type": "string" }
+  },
+  "required": [
+    "week",
+    "candidate_rank",
+    "issue_number",
+    "vote_count",
+    "no_change_baseline",
+    "support_usd",
+    "selected_prompt",
+    "expected_result",
+    "implementation_pr",
+    "terminal_state",
+    "safety_result",
+    "changed_files",
+    "reviewer_notes",
+    "run_log"
+  ]
+}
