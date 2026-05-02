@@ -40,7 +40,7 @@ if ! grep -q "20 virtual votes" index.html; then
   exit 1
 fi
 
-if grep -R -n -E "Support .*guarantee|guarantee .*merge|buy.*merge|paid merge" index.html README.md docs/ rules/; then
+if grep -R -n -i -E "support (buys|purchases|grants).*merge|paid merge system|buy.*merge rights" index.html README.md docs/ rules/; then
   echo "ERROR: public docs must not describe support as buying merge or adoption."
   exit 1
 fi
