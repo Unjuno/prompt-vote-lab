@@ -30,10 +30,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Create branch
         run: |
-          git checkout -b "run-package-${{ inputs.week }}"
+          git checkout -b "run-package-${{ inputs.week }}-${{ github.run_number }}"
 
       - name: Create run prompt package
         run: |
@@ -76,6 +78,10 @@ jobs:
           git add run-packages/
           git commit -m "Create run package for ${{ inputs.week }}"
 
+      - name: Push branch
+        run: |
+          git push --set-upstream origin "run-package-${{ inputs.week }}-${{ github.run_number }}"
+
       - name: Open pull request
         env:
           GH_TOKEN: ${{ github.token }}
@@ -84,4 +90,4 @@ jobs:
             --title "Create run package for ${{ inputs.week }}" \
             --body "This PR creates a run package for the selected voted prompt. It does not run the AI agent automatically." \
             --base main \
-            --head "run-package-${{ inputs.week }}"
+            --head "run-package-${{ inputs.week }}-${{ github.run_number }}"
