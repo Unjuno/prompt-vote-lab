@@ -1,0 +1,238 @@
+name: Weekly Mock Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-mock-001"
+        required: true
+        default: "week-mock-001"
+        type: string
+      no_change_baseline:
+        description: "Virtual no-change baseline votes"
+        required: true
+        default: "20"
+        type: string
+      mock_issue_number:
+        description: "Synthetic issue number for mock candidate"
+        required: true
+        default: "0"
+        type: string
+      mock_vote_count:
+        description: "Synthetic vote count for mock candidate"
+        required: true
+        default: "21"
+        type: string
+      mock_prompt:
+        description: "Synthetic prompt to use for the mock implementation"
+        required: true
+        default: "Mock: prove that weekly automation can select a candidate, edit lab files, pass checks, and open a PR without calling an API."
+        type: string
+      create_implementation_pr:
+        description: "Create the mock implementation PR if the mock candidate beats the baseline"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+concurrency:
+  group: weekly-mock-${{ inputs.week }}
+  cancel-in-progress: false
+
+jobs:
+  weekly-mock-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build synthetic vote artifacts
+        run: |
+          mkdir -p .tmp runs
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          week = "${{ inputs.week }}"
+          baseline = int("${{ inputs.no_change_baseline }}")
+          mock_votes = int("${{ inputs.mock_vote_count }}")
+          mock_issue = "${{ inputs.mock_issue_number }}"
+          mock_prompt = "${{ inputs.mock_prompt }}"
+
+          candidates = [
+              {
+                  "rank": 0,
+                  "issue_number": 0,
+                  "title": "[Baseline]: No change this week",
+                  "url": "",
+                  "vote_count": baseline,
+                  "body": "No implementation run this week. The prompt market must beat the weekly no-change baseline.",
+                  "candidate_type": "no-change-baseline",
+              },
+              {
+                  "rank": 0,
+                  "issue_number": int(mock_issue),
+                  "title": "[Mock]: weekly automation plumbing test",
+                  "url": "",
+                  "vote_count": mock_votes,
+                  "body": mock_prompt,
+                  "candidate_type": "prompt-proposal",
+              },
+          ]
+          candidates.sort(key=lambda c: (-int(c["vote_count"]), int(c["issue_number"])))
+          for i, c in enumerate(candidates, start=1):
+              c["rank"] = i
+
+          top3 = candidates[:3]
+          Path('.tmp/weekly-candidates.json').write_text(json.dumps(top3, indent=2), encoding='utf-8')
+          eligible = [c for c in top3 if c["candidate_type"] == "prompt-proposal" and int(c["rank"]) == 1]
+          for c in eligible:
+              c["run_reason"] = "mock-run"
+          Path('.tmp/eligible-candidates.json').write_text(json.dumps(eligible, indent=2), encoding='utf-8')
+
+          lines = [
+              f"# Weekly mock vote summary: {week}",
+              "",
+              "This is a synthetic mock vote summary. It does not read GitHub Issues and does not call any model API.",
+              "",
+              "| Rank | Candidate | Type | Votes | Title |",
+              "|---:|---|---|---:|---|",
+          ]
+          for c in top3:
+              candidate = "baseline" if c["issue_number"] == 0 else f"mock #{c['issue_number']}"
+              lines.append(f"| {c['rank']} | {candidate} | {c['candidate_type']} | {c['vote_count']} | {c['title']} |")
+          lines += [
+              "",
+              "## Eligible implementation ranks",
+              "",
+          ]
+          if eligible:
+              for c in eligible:
+                  lines.append(f"- rank {c['rank']}: mock issue #{c['issue_number']} ({c['run_reason']})")
+          else:
+              lines.append("- no implementation run: mock candidate did not beat the no-change baseline")
+          Path(f"runs/{week}-mock-vote-summary.md").write_text("\n".join(lines) + "\n", encoding='utf-8')
+          print(json.dumps(top3, indent=2))
+          PY
+
+      - name: Commit mock vote summary PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
+          git add "runs/${{ inputs.week }}-mock-vote-summary.md"
+          git commit -m "Record weekly mock vote summary for ${{ inputs.week }}"
+          git push --set-upstream origin "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
+          gh pr create \
+            --title "Record weekly mock vote summary for ${{ inputs.week }}" \
+            --body "Adds a synthetic vote summary for mock automation testing. This PR does not call any model API." \
+            --base main \
+            --head "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
+
+      - name: Stop before mock implementation if disabled
+        if: ${{ !inputs.create_implementation_pr }}
+        run: echo "Mock implementation PR creation disabled."
+
+      - name: Stop if no eligible mock candidate
+        if: ${{ inputs.create_implementation_pr }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+          if not items:
+              print('No eligible mock candidate. No implementation PR will be created.')
+              raise SystemExit(0)
+          PY
+
+      - name: Create mock implementation PRs
+        if: ${{ inputs.create_implementation_pr }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          week = "${{ inputs.week }}"
+          run_number = "${{ github.run_number }}"
+          candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
+
+          def sh(cmd):
+              print('+', ' '.join(cmd))
+              subprocess.run(cmd, check=True)
+
+          for item in candidates:
+              rank = str(item['rank'])
+              branch = f"mock-lab-{week}-rank-{rank}-{run_number}"
+              issue = str(item['issue_number'])
+              votes = str(item['vote_count'])
+              prompt = item['body']
+              reason = item.get('run_reason', 'mock-run')
+
+              sh(['git', 'checkout', 'main'])
+              sh(['git', 'checkout', '-B', branch])
+              sh([
+                  'python', 'scripts/mock_lab_run.py',
+                  '--week', week,
+                  '--candidate-rank', rank,
+                  '--issue-number', issue,
+                  '--voted-prompt', prompt,
+                  '--vote-count', votes,
+                  '--run-reason', reason,
+              ])
+              sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
+              diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
+              if diff.returncode == 0:
+                  raise SystemExit(f'Rank {rank} produced no lab changes')
+              sh(['git', 'config', 'user.name', 'github-actions[bot]'])
+              sh(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
+              sh(['git', 'add', 'lab/'])
+              sh(['git', 'commit', '-m', f'Run mock lab experiment for {week} rank {rank}'])
+              sh(['git', 'push', '--set-upstream', 'origin', branch])
+
+              body_path = Path(f'.tmp/mock-pr-body-rank-{rank}.md')
+              summary_path = Path('.tmp/implementation-summary.md')
+              body = [
+                  'Mock implementation run. This PR was created without calling any model API.',
+                  '',
+                  '## Candidate',
+                  '',
+                  f'- Week: {week}',
+                  f'- Rank: {rank}',
+                  f'- Issue: #{issue}',
+                  f'- Votes: {votes}',
+                  f'- Run reason: {reason}',
+                  '- Implementation model: `mock-runner`',
+                  '- API cost: 0',
+                  '',
+                  '## Selected prompt',
+                  '',
+                  prompt,
+                  '',
+                  '## Implementation summary',
+                  '',
+                  summary_path.read_text() if summary_path.exists() else 'Implementation summary was not written.',
+                  '',
+                  '## Review purpose',
+                  '',
+                  'Use this PR to verify weekly selection, branch creation, lab-only edits, safety checks, and PR creation before enabling paid API runs.',
+              ]
+              body_path.write_text('\n'.join(body), encoding='utf-8')
+              sh([
+                  'gh', 'pr', 'create',
+                  '--title', f'Mock lab run for {week} rank {rank}',
+                  '--body-file', str(body_path),
+                  '--base', 'main',
+                  '--head', branch,
+              ])
+          PY
