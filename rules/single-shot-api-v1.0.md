@@ -1,63 +1,29 @@
 # single-shot-api-v1.0
 
-## Purpose
+This file is kept for compatibility with existing workflow references.
 
-Prompt Vote Lab must not burn tokens through hidden retries, repeated agent loops, or unbounded workflow reruns.
+The public concept is now defined as an agent-run policy, not an API-first policy.
 
-Each implementation attempt should be a single paid model call per candidate.
+Use:
 
-## Implementation run rule
+- [`agent-run-policy-v1.0.md`](./agent-run-policy-v1.0.md)
 
-For each eligible candidate:
+## Compatibility summary
 
-```text
-maximum model calls: 1
-SDK retries: 0
-manual retry: not automatic
-workflow retry: not automatic
-```
-
-If the model call fails, the run fails closed and should be recorded as failed.
-
-Do not automatically retry with:
-
-- the same model
-- a stronger model
-- modified prompt text
-- larger output budget
-- a new branch
-
-## Evaluation/blog run rule
-
-Blog/report generation should also be single-shot by default.
-
-If Hacker News draft generation is enabled, it is a separate optional model call and must be visible in workflow inputs.
-
-## Required guards
-
-Paid API workflows must use:
-
-- explicit confirmation input for manual paid runs
-- `max_retries=0` in the OpenAI SDK client
-- job-level timeout
-- bounded `max_output_tokens`
-- prompt/input length checks
-- no automatic fallback model
-
-## Failure behavior
-
-On API failure:
+When an implementation agent is backed by a paid model API, the low-level safeguards remain:
 
 ```text
-FAIL workflow
-NO automatic retry
-NO automatic fallback
-NO merge
-record failure if terminal-state reporting is enabled
+model/API calls per candidate per automated attempt: 1
+SDK max_retries: 0
+automatic retry: no
+automatic fallback model: no
+automatic merge: no
 ```
 
-## Rationale
+The higher-level rule is:
 
-The project should pay for one controlled attempt, not an unbounded repair loop.
+```text
+one bounded agent attempt per candidate per workflow run
+```
 
-A failed implementation is useful experimental data. It should not be hidden by automatic retries.
+Continuation is allowed only as an explicit, reviewable follow-up run under `agent-run-policy-v1.0.md`.
