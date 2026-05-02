@@ -19,36 +19,5 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List changed files
-        run: |
-          git diff --name-only origin/${{ github.base_ref }}...HEAD | tee changed_files.txt
-
-      - name: Fail if files outside lab changed
-        run: |
-          if [ ! -s changed_files.txt ]; then
-            echo "No changed files detected."
-            exit 0
-          fi
-
-          if grep -v '^lab/' changed_files.txt | grep .; then
-            echo "Found changes outside lab/."
-            exit 1
-          fi
-
-      - name: Check forbidden JavaScript and HTML patterns
-        run: |
-          if [ ! -d lab ]; then
-            echo "lab/ does not exist."
-            exit 1
-          fi
-
-          forbidden='<script[^>]+src=["'"'"']https?://|fetch\(|XMLHttpRequest|WebSocket|EventSource|eval\(|new Function|document\.cookie|<iframe|navigator\.sendBeacon'
-
-          if grep -R -n -E "$forbidden" lab/; then
-            echo "Forbidden pattern detected."
-            exit 1
-          fi
-
-      - name: Report
-        run: |
-          echo "Safety check passed."
+      - name: Run shared safety check
+        run: bash scripts/safety-check.sh origin/${{ github.base_ref }} HEAD
