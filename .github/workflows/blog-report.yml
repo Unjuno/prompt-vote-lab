@@ -1,0 +1,180 @@
+name: Blog Report
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-001"
+        required: true
+        type: string
+      candidate_rank:
+        description: "Candidate rank"
+        required: true
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+      issue_number:
+        description: "Selected prompt issue number"
+        required: false
+        default: "unrecorded"
+        type: string
+      vote_count:
+        description: "Vote count"
+        required: false
+        default: "unrecorded"
+        type: string
+      no_change_baseline:
+        description: "No-change baseline votes"
+        required: false
+        default: "20"
+        type: string
+      support_usd:
+        description: "Weekly support total in USD"
+        required: false
+        default: "0"
+        type: string
+      selected_prompt:
+        description: "Selected prompt"
+        required: false
+        default: "unrecorded"
+        type: string
+      expected_result:
+        description: "Expected result"
+        required: false
+        default: "unrecorded"
+        type: string
+      implementation_pr:
+        description: "Implementation PR URL or number"
+        required: false
+        default: "unrecorded"
+        type: string
+      terminal_state:
+        description: "Terminal run state"
+        required: true
+        type: choice
+        options:
+          - merged
+          - rejected
+          - unsafe
+          - failed
+          - no-change
+          - unrecorded
+      safety_result:
+        description: "Safety-check result"
+        required: false
+        default: "unrecorded"
+        type: string
+      changed_files:
+        description: "Changed files summary"
+        required: false
+        default: "unrecorded"
+        type: string
+      reviewer_notes:
+        description: "Reviewer notes"
+        required: false
+        default: "unrecorded"
+        type: string
+      run_log_path:
+        description: "Optional run log path, for example runs/week-001.md"
+        required: false
+        default: ""
+        type: string
+      write_hn_draft:
+        description: "Also create a Hacker News draft"
+        required: true
+        default: false
+        type: boolean
+      confirm_paid_eval_run:
+        description: "Type RUN_EVAL_MODEL to confirm this paid evaluation/blog run"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: blog-report-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}
+  cancel-in-progress: false
+
+jobs:
+  blog-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require explicit paid evaluation confirmation
+        run: |
+          if [ "${{ inputs.confirm_paid_eval_run }}" != "RUN_EVAL_MODEL" ]; then
+            echo "Refusing to call the evaluation API. Set confirm_paid_eval_run to RUN_EVAL_MODEL."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require evaluation API key
+        env:
+          OPENAI_API_KEY_EVAL: ${{ secrets.OPENAI_EVAL_API_KEY }}
+        run: |
+          if [ -z "${OPENAI_API_KEY_EVAL}" ]; then
+            echo "OPENAI_EVAL_API_KEY is not set. Add it in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Install Python dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install openai
+
+      - name: Create branch
+        run: |
+          git checkout -b "blog-report-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
+
+      - name: Generate blog report
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_EVAL_API_KEY }}
+          EVALUATION_MODEL: gpt-5
+          EVAL_MAX_OUTPUT_TOKENS: "6000"
+        run: |
+          extra=""
+          if [ "${{ inputs.write_hn_draft }}" = "true" ]; then
+            extra="--write-hn-draft"
+          fi
+          python scripts/openai_blog_report.py \
+            --week "${{ inputs.week }}" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --no-change-baseline "${{ inputs.no_change_baseline }}" \
+            --support-usd "${{ inputs.support_usd }}" \
+            --selected-prompt "${{ inputs.selected_prompt }}" \
+            --expected-result "${{ inputs.expected_result }}" \
+            --implementation-pr "${{ inputs.implementation_pr }}" \
+            --terminal-state "${{ inputs.terminal_state }}" \
+            --safety-result "${{ inputs.safety_result }}" \
+            --changed-files "${{ inputs.changed_files }}" \
+            --reviewer-notes "${{ inputs.reviewer_notes }}" \
+            --run-log-path "${{ inputs.run_log_path }}" \
+            $extra
+
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/blog/ docs/hn-drafts/ || true
+          git commit -m "Write blog report for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}"
+          git push --set-upstream origin "blog-report-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
+
+      - name: Open report PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create \
+            --title "Write blog report for ${{ inputs.week }} rank ${{ inputs.candidate_rank }}" \
+            --body "Adds an evaluation-model blog report. This PR does not modify lab/." \
+            --base main \
+            --head "blog-report-${{ inputs.week }}-rank-${{ inputs.candidate_rank }}-${{ github.run_number }}"
