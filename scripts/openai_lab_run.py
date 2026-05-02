@@ -55,6 +55,14 @@ SCHEMA = {
 }
 
 
+def resolve_openai_api_key() -> str:
+    key = os.getenv("OPENAI_API_KEY_") or os.getenv("OPENAI_API_KEY")
+    if not key:
+        print("OPENAI_API_KEY_ is not set. Fallback OPENAI_API_KEY is also not set.", file=sys.stderr)
+        raise SystemExit(2)
+    return key
+
+
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
@@ -135,16 +143,14 @@ def main() -> int:
     parser.add_argument("--summary-out", default=".tmp/implementation-summary.md")
     args = parser.parse_args()
 
-    if not os.getenv("OPENAI_API_KEY"):
-        print("OPENAI_API_KEY is not set", file=sys.stderr)
-        return 2
+    api_key = resolve_openai_api_key()
 
     if args.max_output_tokens > 12000:
         print("max_output_tokens above 12000 is not allowed for implementation runs", file=sys.stderr)
         return 2
 
     prompt = build_prompt(args)
-    client = OpenAI(max_retries=0, timeout=120.0)
+    client = OpenAI(api_key=api_key, max_retries=0, timeout=120.0)
 
     response = client.responses.create(
         model=args.model,
@@ -187,6 +193,7 @@ def main() -> int:
         f"- model: `{args.model}`",
         "- sdk_max_retries: 0",
         "- sdk_timeout_seconds: 120",
+        "- api_key_env: `OPENAI_API_KEY_` preferred, `OPENAI_API_KEY` fallback",
         f"- temperature_policy: {args.temperature_policy}",
         f"- top_p_policy: {args.top_p_policy}",
         f"- max_output_tokens: {args.max_output_tokens}",
