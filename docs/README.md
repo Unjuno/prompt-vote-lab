@@ -19,11 +19,17 @@ Operational rules live in [`../rules/`](../rules/).
 Important rules:
 
 - [`static-ui-v1.0.md`](../rules/static-ui-v1.0.md) — lab edit scope and runtime restrictions.
-- [`single-shot-api-v1.0.md`](../rules/single-shot-api-v1.0.md) — one model call per candidate, no hidden retries.
+- [`agent-run-policy-v1.0.md`](../rules/agent-run-policy-v1.0.md) — one bounded agent attempt, explicit continuation, no hidden retries.
 - [`event-logging-v1.0.md`](../rules/event-logging-v1.0.md) — JSONL and Markdown logging policy.
+- [`support-unlocked-runs-v1.1.md`](../rules/support-unlocked-runs-v1.1.md) — $5/$10 comparison-run thresholds.
 - [`mock-testing-v1.0.md`](../rules/mock-testing-v1.0.md) — API-free mock testing.
 - [`exception-testing-v1.0.md`](../rules/exception-testing-v1.0.md) — failure-path tests.
 - [`multi-fuzz-testing-v1.0.md`](../rules/multi-fuzz-testing-v1.0.md) — weighted random boundary testing.
+
+Compatibility note:
+
+- [`single-shot-api-v1.0.md`](../rules/single-shot-api-v1.0.md) remains as a low-level compatibility rule for workflows backed by a paid model API.
+- Public explanations should prefer "agent run" over "API call".
 
 ## Public page policy
 
