@@ -55,3 +55,7 @@ Exception tests must not call OpenAI or any other paid model API.
 The workflow should be trusted only after both success paths and failure paths are tested.
 
 A system that succeeds on a happy path but fails open on exceptions is not safe enough for autonomous weekly operation.
+
+## Verification note
+
+This harmless note is used to exercise repository checks.
