@@ -5,6 +5,11 @@ This script intentionally writes only:
 - lab/index.html
 - lab/style.css
 - lab/app.js
+
+Paid model policy:
+- one API call per candidate
+- SDK retries disabled
+- no automatic fallback
 """
 
 from __future__ import annotations
@@ -24,6 +29,8 @@ LAB_FILES = {
     "style_css": ROOT / "lab" / "style.css",
     "app_js": ROOT / "lab" / "app.js",
 }
+
+MAX_PROMPT_CHARS = int(os.getenv("MAX_IMPLEMENTATION_PROMPT_CHARS", "120000"))
 
 
 SCHEMA = {
@@ -56,6 +63,14 @@ def read_optional(path: Path) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else "unrecorded"
 
 
+def enforce_prompt_budget(prompt: str) -> None:
+    if len(prompt) > MAX_PROMPT_CHARS:
+        raise SystemExit(
+            f"Implementation prompt is too large: {len(prompt)} chars > {MAX_PROMPT_CHARS}. "
+            "Refusing to call the API."
+        )
+
+
 def build_prompt(args: argparse.Namespace) -> str:
     rules = []
     for rel in [
@@ -63,6 +78,9 @@ def build_prompt(args: argparse.Namespace) -> str:
         "rules/model-policy-v1.0.md",
         "rules/merge-policy-v1.0.md",
         "rules/operational-decisions-v1.1.md",
+        "rules/no-external-resources-v1.0.md",
+        "rules/local-data-store-v1.0.md",
+        "rules/single-shot-api-v1.0.md",
     ]:
         rules.append(f"# {rel}\n\n{read_optional(ROOT / rel)}")
 
@@ -70,13 +88,14 @@ def build_prompt(args: argparse.Namespace) -> str:
     for name, path in LAB_FILES.items():
         lab_snapshot.append(f"# {path.relative_to(ROOT)}\n\n```\n{read(path)}\n```")
 
-    return "\n\n".join(
+    prompt = "\n\n".join(
         [
             "You are the implementation model for Prompt Vote Lab.",
             "Modify exactly these three lab files and return their full replacement contents as JSON.",
             "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, or trackers.",
             "Preserve the static-only GitHub Pages design. Prefer small, readable changes.",
             "The experiment intentionally keeps complexity inside three files.",
+            "This is a single-shot run. Do not ask for a retry or another pass.",
             "## Run metadata",
             f"week: {args.week}",
             f"candidate_rank: {args.candidate_rank}",
@@ -97,6 +116,8 @@ def build_prompt(args: argparse.Namespace) -> str:
             "Return valid structured JSON only. Include full contents for index_html, style_css, and app_js.",
         ]
     )
+    enforce_prompt_budget(prompt)
+    return prompt
 
 
 def main() -> int:
@@ -118,15 +139,19 @@ def main() -> int:
         print("OPENAI_API_KEY is not set", file=sys.stderr)
         return 2
 
+    if args.max_output_tokens > 12000:
+        print("max_output_tokens above 12000 is not allowed for implementation runs", file=sys.stderr)
+        return 2
+
     prompt = build_prompt(args)
-    client = OpenAI()
+    client = OpenAI(max_retries=0, timeout=120.0)
 
     response = client.responses.create(
         model=args.model,
         input=[
             {
                 "role": "developer",
-                "content": "You are a constrained code-generation worker. Return only the requested structured output.",
+                "content": "You are a constrained code-generation worker. Return only the requested structured output. This is a single-shot call.",
             },
             {"role": "user", "content": prompt},
         ],
@@ -160,9 +185,12 @@ def main() -> int:
         f"# Implementation summary for {args.week} rank {args.candidate_rank}",
         "",
         f"- model: `{args.model}`",
+        "- sdk_max_retries: 0",
+        "- sdk_timeout_seconds: 120",
         f"- temperature_policy: {args.temperature_policy}",
         f"- top_p_policy: {args.top_p_policy}",
         f"- max_output_tokens: {args.max_output_tokens}",
+        f"- prompt_chars: {len(prompt)}",
         f"- issue: #{args.issue_number}",
         f"- votes: {args.vote_count}",
         f"- run_reason: {args.run_reason}",
