@@ -56,23 +56,28 @@ jobs:
 
           support = float(os.environ.get('SUPPORT_USD') or '0')
           candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
+          baseline_won = any(
+              c.get('candidate_type') == 'no-change-baseline' and int(c.get('rank', 0)) == 1
+              for c in candidates
+          )
           eligible = []
-          for c in candidates:
-              if c.get('candidate_type') == 'no-change-baseline':
-                  continue
-              rank = int(c['rank'])
-              if rank == 1:
-                  c['run_reason'] = 'normal-weekly-run'
-                  eligible.append(c)
-              elif rank == 2 and support >= 5:
-                  c['run_reason'] = 'support-unlocked-run'
-                  eligible.append(c)
-              elif rank == 3 and support >= 10:
-                  c['run_reason'] = 'support-unlocked-run'
-                  eligible.append(c)
+          if not baseline_won:
+              for c in candidates:
+                  if c.get('candidate_type') == 'no-change-baseline':
+                      continue
+                  rank = int(c['rank'])
+                  if rank == 1:
+                      c['run_reason'] = 'normal-weekly-run'
+                      eligible.append(c)
+                  elif rank == 2 and support >= 5:
+                      c['run_reason'] = 'support-unlocked-run'
+                      eligible.append(c)
+                  elif rank == 3 and support >= 10:
+                      c['run_reason'] = 'support-unlocked-run'
+                      eligible.append(c)
           Path('.tmp/eligible-candidates.json').write_text(json.dumps(eligible, indent=2), encoding='utf-8')
           Path('.tmp/has-eligible.txt').write_text('true' if eligible else 'false', encoding='utf-8')
-          print(json.dumps(eligible, indent=2))
+          print(json.dumps({'baseline_won': baseline_won, 'eligible': eligible}, indent=2))
           PY
 
       - name: Export eligibility flag
