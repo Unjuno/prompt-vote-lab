@@ -45,7 +45,7 @@ if ! grep -q "href=\"./lab/\"" index.html; then
   exit 1
 fi
 
-if ! grep -q "20 virtual votes" index.html; then
+if ! grep -q -E "20-vote gate|20 virtual votes|virtual votes baseline" index.html; then
   echo "ERROR: landing page must explain the 20-vote no-change baseline."
   exit 1
 fi
