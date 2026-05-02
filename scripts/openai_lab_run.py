@@ -107,7 +107,8 @@ def build_prompt(args: argparse.Namespace) -> str:
         [
             "You are the implementation agent for Prompt Vote Lab.",
             "Modify exactly these three lab files and return their full replacement contents as JSON.",
-            "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, new Function, or trackers.",
+            "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, or trackers.",
+            "Controlled new Function(...) is allowed only when the function body is fixed by repository code and not assembled from user input, URL data, localStorage, sessionStorage, IndexedDB, imported JSON, GitHub Issue text, or any external source.",
             "Preserve the static-only GitHub Pages design. Prefer small, readable changes.",
             "The experiment intentionally keeps complexity inside three files.",
             "This is one bounded implementation-agent attempt. Do not ask for a hidden retry or another pass.",
