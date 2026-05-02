@@ -193,39 +193,90 @@
     }
 
     .hero-card {
+      position: relative;
+      overflow: hidden;
       padding: 24px;
       background:
-        linear-gradient(135deg, rgba(233, 237, 255, 0.96), rgba(255, 255, 251, 0.9)),
+        radial-gradient(circle at top right, rgba(39, 71, 232, 0.24), transparent 13rem),
+        linear-gradient(135deg, rgba(233, 237, 255, 0.98), rgba(255, 255, 251, 0.92)),
         var(--panel);
     }
 
-    .baseline-score {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 18px;
-      align-items: center;
-      padding: 18px;
-      border: 1px solid rgba(39, 71, 232, 0.18);
-      border-radius: 22px;
-      background: #fff;
+    .hero-card::after {
+      content: "20";
+      position: absolute;
+      right: -22px;
+      bottom: -38px;
+      color: rgba(39, 71, 232, 0.08);
+      font-size: 11rem;
+      font-weight: 1000;
+      letter-spacing: -0.12em;
+      line-height: 1;
+      pointer-events: none;
     }
 
-    .baseline-score strong {
+    .gate {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      z-index: 1;
+    }
+
+    .gate-title {
+      margin-bottom: 8px;
+      font-size: clamp(1.7rem, 4vw, 3.2rem);
+      line-height: 0.96;
+      letter-spacing: -0.08em;
+    }
+
+    .gate-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 16px 0;
+    }
+
+    .gate-node {
+      min-height: 92px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .gate-node strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+      font-size: 1.02rem;
+    }
+
+    .gate-node p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
+
+    .gate-node.threshold {
+      border-color: rgba(39, 71, 232, 0.24);
+      background: #fff;
+      text-align: center;
+    }
+
+    .threshold-number {
       display: block;
       color: var(--accent);
-      font-size: clamp(4rem, 10vw, 6rem);
+      font-size: 3.7rem;
+      font-weight: 1000;
       line-height: 0.86;
-      letter-spacing: -0.09em;
+      letter-spacing: -0.10em;
     }
 
-    .hero-card p,
-    .panel p,
-    .card p,
-    .step p,
-    .metric p,
-    li {
-      color: var(--muted);
-      line-height: 1.66;
+    .arrow {
+      color: var(--accent-dark);
+      font-weight: 1000;
+      opacity: 0.72;
     }
 
     .quick-list {
@@ -241,6 +292,16 @@
       border: 1px solid var(--line);
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.78);
+    }
+
+    .hero-card p,
+    .panel p,
+    .card p,
+    .step p,
+    .metric p,
+    li {
+      color: var(--muted);
+      line-height: 1.66;
     }
 
     .panel {
@@ -363,6 +424,8 @@
       .metrics,
       .rules,
       .support-grid { grid-template-columns: 1fr; }
+      .gate-flow { grid-template-columns: 1fr; }
+      .arrow { display: none; }
       .hero { padding-top: 40px; }
       .topbar { align-items: flex-start; flex-direction: column; }
       .nav { justify-content: flex-start; }
@@ -395,17 +458,23 @@
         </div>
       </div>
 
-      <aside class="hero-card" aria-labelledby="baseline-title">
-        <p class="eyebrow">Execution threshold</p>
-        <div class="baseline-score">
-          <strong>20</strong>
-          <p id="baseline-title"><b>virtual votes</b><br>No change this week starts with 20 virtual votes. A real prompt must beat it before an implementation run happens.</p>
+      <aside class="hero-card" aria-labelledby="gate-title">
+        <div class="gate">
+          <p class="eyebrow">The vote gate</p>
+          <h2 id="gate-title" class="gate-title">Prompt → 20-vote gate → lab PR</h2>
+          <div class="gate-flow" aria-label="Prompt Vote Lab flow">
+            <div class="gate-node"><strong>Prompt</strong><p>Submitted as a GitHub Issue.</p></div>
+            <div class="arrow">→</div>
+            <div class="gate-node threshold"><span class="threshold-number">20</span><p>virtual votes baseline</p></div>
+            <div class="arrow">→</div>
+            <div class="gate-node"><strong>Lab</strong><p>Only 3 static files can change.</p></div>
+          </div>
+          <ul class="quick-list">
+            <li>API budget is spent only when a prompt is eligible.</li>
+            <li>Each candidate gets one single-shot implementation attempt.</li>
+            <li>Merge is manual. Failed and rejected runs are still recorded.</li>
+          </ul>
         </div>
-        <ul class="quick-list">
-          <li>API budget is spent only when a prompt is eligible.</li>
-          <li>Each candidate gets one single-shot implementation attempt.</li>
-          <li>Merge is manual. Failed and rejected runs are still recorded.</li>
-        </ul>
       </aside>
     </section>
 
@@ -455,8 +524,8 @@
       <h2 id="safety-title">The AI is not given a blank check</h2>
       <p>The point is not to let an agent do anything. The point is to test whether useful changes emerge under stable, reviewable constraints.</p>
       <div class="rules">
-        <article class="card"><h3>Allowed local behavior</h3><p>Static HTML, CSS, vanilla JavaScript, local state, and JSON export/import inside the lab.</p></article>
-        <article class="card"><h3>Blocked runtime behavior</h3><p>No external scripts, CDNs, network fetches, WebSockets, cookies, iframes, eval, or hidden trackers.</p></article>
+        <article class="card"><h3>Allowed local behavior</h3><p>Static HTML, CSS, vanilla JavaScript, helper functions, local state, and JSON export/import inside the lab.</p></article>
+        <article class="card"><h3>Blocked runtime behavior</h3><p>No external scripts, CDNs, network fetches, WebSockets, cookies, iframes, eval, <code>new Function(...)</code>, or hidden trackers.</p></article>
         <article class="card"><h3>Manual adoption</h3><p>The AI can open a PR. It cannot merge, buy adoption, or override review.</p></article>
       </div>
     </section>
