@@ -83,6 +83,10 @@ def build_prompt(args: argparse.Namespace) -> str:
             f"issue_number: {args.issue_number}",
             f"vote_count: {args.vote_count}",
             f"run_reason: {args.run_reason}",
+            f"model: {args.model}",
+            f"temperature_policy: {args.temperature_policy}",
+            f"top_p_policy: {args.top_p_policy}",
+            f"max_output_tokens: {args.max_output_tokens}",
             "## Selected prompt",
             args.voted_prompt,
             "## Active rules",
@@ -105,6 +109,8 @@ def main() -> int:
     parser.add_argument("--run-reason", default="normal-weekly-run")
     parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5-nano"))
     parser.add_argument("--max-output-tokens", type=int, default=int(os.getenv("MAX_OUTPUT_TOKENS", "12000")))
+    parser.add_argument("--temperature-policy", default=os.getenv("TEMPERATURE_POLICY", "model-default"))
+    parser.add_argument("--top-p-policy", default=os.getenv("TOP_P_POLICY", "model-default"))
     parser.add_argument("--summary-out", default=".tmp/implementation-summary.md")
     args = parser.parse_args()
 
@@ -154,6 +160,9 @@ def main() -> int:
         f"# Implementation summary for {args.week} rank {args.candidate_rank}",
         "",
         f"- model: `{args.model}`",
+        f"- temperature_policy: {args.temperature_policy}",
+        f"- top_p_policy: {args.top_p_policy}",
+        f"- max_output_tokens: {args.max_output_tokens}",
         f"- issue: #{args.issue_number}",
         f"- votes: {args.vote_count}",
         f"- run_reason: {args.run_reason}",
