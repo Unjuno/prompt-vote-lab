@@ -29,6 +29,8 @@ The workflow can draft `runs/<week>-report.md` from explicit inputs and reposito
 
 It does not publish externally and does not compute automated trust ratings.
 
+Verification note: this line exists only to trigger report-draft checks.
+
 ## Rule documents
 
 Operational rules live in [`../rules/`](../rules/).
