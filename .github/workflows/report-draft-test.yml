@@ -1,0 +1,26 @@
+name: Report Draft Test
+
+on:
+  pull_request:
+    paths:
+      - "scripts/draft_weekly_report.py"
+      - "scripts/test_draft_weekly_report.py"
+      - ".github/workflows/report-draft-test.yml"
+      - ".github/workflows/weekly-report-draft.yml"
+      - "docs/report-policy.md"
+      - "rules/report-generation-v1.0.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  report-draft-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run report draft smoke tests
+        run: |
+          python scripts/test_draft_weekly_report.py
