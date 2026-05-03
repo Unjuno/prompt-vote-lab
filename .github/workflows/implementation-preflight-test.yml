@@ -1,0 +1,26 @@
+name: Implementation Preflight Test
+
+on:
+  pull_request:
+    paths:
+      - "scripts/preflight_implementation_agent.py"
+      - "scripts/test_preflight_implementation_agent.py"
+      - ".github/workflows/implementation-preflight-test.yml"
+      - ".github/workflows/weekly-auto-run.yml"
+      - "rules/agent-run-policy-v1.0.md"
+      - "rules/static-ui-v1.0.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  implementation-preflight-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run implementation preflight smoke tests
+        run: |
+          python scripts/test_preflight_implementation_agent.py
