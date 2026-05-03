@@ -1,0 +1,24 @@
+name: Select Eligible Test
+
+on:
+  pull_request:
+    paths:
+      - "scripts/select_eligible.py"
+      - "scripts/test_select_eligible.py"
+      - ".github/workflows/select-eligible-test.yml"
+      - ".github/workflows/weekly-auto-run.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  select-eligible-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run eligible selector smoke tests
+        run: |
+          python scripts/test_select_eligible.py
