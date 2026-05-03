@@ -172,16 +172,17 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          safe_week=$(printf '%s' "${{ inputs.week }}" | tr -c 'A-Za-z0-9._-' '-')
+          safe_week=$(printf '%s' "$PVL_WEEK" | tr -c 'A-Za-z0-9._-' '-')
           branch="report-draft-${safe_week}-${{ github.run_number }}"
+          report_path="runs/${PVL_WEEK}-report.md"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add "runs/${{ inputs.week }}-report.md"
-          git commit -m "Draft weekly report for ${{ inputs.week }}"
+          git add "$report_path"
+          git commit -m "Draft weekly report for ${PVL_WEEK}"
           git push --set-upstream origin "$branch"
           gh pr create \
-            --title "Draft weekly report for ${{ inputs.week }}" \
+            --title "Draft weekly report for ${PVL_WEEK}" \
             --body "Creates a model-free weekly report draft. This PR does not publish externally and does not compute automated trust ratings." \
             --base main \
             --head "$branch"
