@@ -2,6 +2,7 @@
 """Smoke tests for scripts/draft_weekly_report.py.
 
 No network calls. No model calls.
+Verification trigger: report-draft-test.
 """
 
 from __future__ import annotations
