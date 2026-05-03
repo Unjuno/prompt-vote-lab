@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import re
 from pathlib import Path
 
 
@@ -24,6 +25,24 @@ ALLOWED_GAPS = {
     "Rejected",
     "Unknown",
 }
+SAFE_WEEK_RE = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
+
+
+def validate_week(value: str) -> str:
+    value = value.strip()
+    if not SAFE_WEEK_RE.fullmatch(value):
+        raise SystemExit("week must contain only letters, numbers, dots, underscores, and hyphens")
+    return value
+
+
+def resolve_repo_path(value: str) -> Path:
+    rel = value.strip()
+    if not rel:
+        raise ValueError("empty path")
+    path = (ROOT / rel).resolve()
+    if ROOT.resolve() not in path.parents and path != ROOT.resolve():
+        raise SystemExit(f"path escapes repository root: {rel}")
+    return path
 
 
 def read_optional(path: Path) -> str:
@@ -63,26 +82,33 @@ def main() -> int:
     parser.add_argument("--out", default="")
     args = parser.parse_args()
 
+    week = validate_week(args.week)
     gap = normalize_gap(args.expectation_gap)
-    out_path = ROOT / (args.out or f"runs/{args.week}-report.md")
+
+    if args.out:
+        out_path = resolve_repo_path(args.out)
+        if not str(out_path.relative_to(ROOT)).startswith("runs/"):
+            raise SystemExit("report output must be under runs/")
+    else:
+        out_path = ROOT / f"runs/{week}-report.md"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    vote_summary_text = read_optional(ROOT / args.vote_summary) if args.vote_summary else "unrecorded"
-    implementation_summary_text = read_optional(ROOT / args.implementation_summary) if args.implementation_summary else "unrecorded"
-    reputation_memory = args.reputation_memory.strip() or "No automated reputation score is computed. Players should use this public outcome as qualitative memory for future votes."
+    vote_summary_text = read_optional(resolve_repo_path(args.vote_summary)) if args.vote_summary else "unrecorded"
+    implementation_summary_text = read_optional(resolve_repo_path(args.implementation_summary)) if args.implementation_summary else "unrecorded"
+    reputation_memory = args.reputation_memory.strip() or "No automated trust rating is computed. Players should use this public outcome as qualitative memory for future votes."
 
     now = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
 
     lines = [
-        f"# Weekly Prompt Game Report: {args.week}",
+        f"# Weekly Prompt Game Report: {week}",
         "",
         "This is a model-free draft report generated from explicit workflow inputs and repository files.",
         "",
-        "It is not an automatic final judgment and it does not compute player reputation scores.",
+        "It is not an automatic final judgment and it does not compute automated trust ratings.",
         "",
         "## Round summary",
         "",
-        f"- Week: {bullet_value(args.week)}",
+        f"- Week: {bullet_value(week)}",
         f"- Generated at: {now}",
         f"- No-change baseline: {bullet_value(args.baseline_votes)} virtual votes",
         f"- Selected candidate rank: {bullet_value(args.candidate_rank)}",
