@@ -130,6 +130,23 @@ jobs:
             exit 1
           fi
 
+      - name: Preflight implementation-agent run
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}
+        env:
+          OPENAI_API_KEY_: ${{ secrets.OPENAI_API_KEY_ }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_IMPLEMENTATION_API_KEY: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+          IMPLEMENTATION_MODEL: gpt-5-nano
+          MAX_OUTPUT_TOKENS: "12000"
+          SDK_MAX_RETRIES: "0"
+        run: |
+          python scripts/preflight_implementation_agent.py \
+            --eligible .tmp/eligible-candidates.json \
+            --model "$IMPLEMENTATION_MODEL" \
+            --max-output-tokens "$MAX_OUTPUT_TOKENS" \
+            --sdk-max-retries "$SDK_MAX_RETRIES" \
+            --api-call-limit-per-candidate 1
+
       - name: Install Python dependency
         if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}
         run: |
