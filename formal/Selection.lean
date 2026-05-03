@@ -2,6 +2,8 @@ import Std
 
 namespace PromptVoteLab
 
+-- Formal model for the closed selection core used by scripts/select_eligible.py.
+
 inductive CandidateType where
   | baseline
   | prompt
