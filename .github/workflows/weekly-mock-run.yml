@@ -89,7 +89,7 @@ jobs:
                   "title": "[Baseline]: No change this week",
                   "url": "",
                   "vote_count": baseline,
-                  "body": "No implementation run this week. The prompt market must beat the weekly no-change baseline.",
+                  "body": "No implementation run this week. The prompt game must beat the weekly no-change baseline.",
                   "candidate_type": "no-change-baseline",
               },
               {
