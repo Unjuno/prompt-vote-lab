@@ -36,10 +36,13 @@ MUTATIONS = [
     Mutation("cookie_write", "unsafe_runtime", 10, "safety", "fail"),
     Mutation("eval_call", "unsafe_runtime", 10, "safety", "fail"),
     Mutation("iframe_embed", "unsafe_runtime", 8, "safety", "fail"),
+    Mutation("dynamic_new_function", "unsafe_runtime", 10, "safety", "fail"),
     Mutation("outside_lab_change", "scope_escape", 12, "safety", "fail"),
     Mutation("local_storage", "allowed_local_state", 10, "safety", "pass"),
     Mutation("session_storage", "allowed_local_state", 6, "safety", "pass"),
+    Mutation("indexed_db", "allowed_local_state", 7, "safety", "pass"),
     Mutation("json_export_button", "allowed_local_state", 5, "safety", "pass"),
+    Mutation("fixed_new_function", "allowed_local_dynamic", 7, "safety", "pass"),
     Mutation("remove_lab_link", "public_site_breakage", 8, "static", "fail"),
     Mutation("remove_baseline_text", "public_site_breakage", 8, "static", "fail"),
     Mutation("affirmative_paid_merge", "bad_support_claim", 8, "static", "fail"),
@@ -107,6 +110,9 @@ def mutate(repo: Path, name: str) -> None:
         text = p.read_text(encoding="utf-8").replace("</main>", "<iframe src=\"about:blank\"></iframe>\n</main>")
         p.write_text(text, encoding="utf-8")
         return
+    if name == "dynamic_new_function":
+        append(repo / "lab" / "app.js", "\nconst userExpression = document.querySelector('textarea')?.value || '';\nconst pvlUnsafeFn = new Function(userExpression);\n")
+        return
     if name == "outside_lab_change":
         append(repo / "README.md", "\nImplementation-like outside-lab mutation.\n")
         return
@@ -116,8 +122,14 @@ def mutate(repo: Path, name: str) -> None:
     if name == "session_storage":
         append(repo / "lab" / "app.js", "\nsessionStorage.setItem('pvl:fuzz', 'ok');\n")
         return
+    if name == "indexed_db":
+        append(repo / "lab" / "app.js", "\nconst pvlDbOpenRequest = indexedDB.open('pvl-local-fuzz', 1);\n")
+        return
     if name == "json_export_button":
         append(repo / "lab" / "app.js", "\nconst pvlBlob = new Blob([JSON.stringify({ok:true})], {type: 'application/json'});\n")
+        return
+    if name == "fixed_new_function":
+        append(repo / "lab" / "app.js", "\nconst pvlScore = new Function('votes', 'baseline', 'return Math.max(0, votes - baseline);');\n")
         return
     if name == "remove_lab_link":
         p = repo / "index.html"
