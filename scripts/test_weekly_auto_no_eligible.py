@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Smoke test for the weekly auto no-eligible selection case."""
+"""Smoke test for the weekly auto no-eligible selection case.
+
+Verification trigger: no-eligible selector guard.
+"""
 
 from __future__ import annotations
 
