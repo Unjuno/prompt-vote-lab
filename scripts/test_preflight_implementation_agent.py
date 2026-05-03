@@ -2,6 +2,7 @@
 """Smoke tests for scripts/preflight_implementation_agent.py.
 
 No network calls. No model calls.
+Verification trigger: implementation-preflight-test.
 """
 
 from __future__ import annotations
