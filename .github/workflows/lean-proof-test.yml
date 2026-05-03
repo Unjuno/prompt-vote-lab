@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "formal/**/*.lean"
+      - "lean-toolchain"
       - ".github/workflows/lean-proof-test.yml"
   workflow_dispatch:
 
