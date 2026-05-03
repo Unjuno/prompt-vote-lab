@@ -87,6 +87,21 @@ def mutate(repo: Path, mutation: str) -> None:
         js += "\nlocalStorage.setItem('pvl:test', 'ok');\n"
         (repo / "lab/app.js").write_text(js, encoding="utf-8")
         return
+    if mutation == "indexed_db":
+        js = (repo / "lab/app.js").read_text(encoding="utf-8")
+        js += "\nconst pvlDbOpenRequest = indexedDB.open('pvl-local-test', 1);\n"
+        (repo / "lab/app.js").write_text(js, encoding="utf-8")
+        return
+    if mutation == "fixed_new_function":
+        js = (repo / "lab/app.js").read_text(encoding="utf-8")
+        js += "\nconst pvlScore = new Function('votes', 'baseline', 'return Math.max(0, votes - baseline);');\n"
+        (repo / "lab/app.js").write_text(js, encoding="utf-8")
+        return
+    if mutation == "dynamic_new_function":
+        js = (repo / "lab/app.js").read_text(encoding="utf-8")
+        js += "\nconst userText = document.querySelector('textarea')?.value || '';\nconst pvlUnsafe = new Function(userText);\n"
+        (repo / "lab/app.js").write_text(js, encoding="utf-8")
+        return
     if mutation == "remove_lab_link":
         html = (repo / "index.html").read_text(encoding="utf-8")
         html = html.replace('href="./lab/"', 'href="./"')
@@ -145,6 +160,9 @@ def main() -> int:
         Case("safety_blocks_fetch", "fail", "safety", "fetch_call"),
         Case("safety_blocks_cookie", "fail", "safety", "cookie_use"),
         Case("safety_allows_local_storage", "pass", "safety", "local_storage"),
+        Case("safety_allows_indexed_db", "pass", "safety", "indexed_db"),
+        Case("safety_allows_fixed_new_function", "pass", "safety", "fixed_new_function"),
+        Case("safety_blocks_dynamic_new_function", "fail", "safety", "dynamic_new_function"),
         Case("static_blocks_missing_lab_link", "fail", "static", "remove_lab_link"),
         Case("static_blocks_missing_baseline_text", "fail", "static", "remove_baseline_text"),
         Case("static_blocks_affirmative_paid_merge", "fail", "static", "affirmative_paid_merge"),
