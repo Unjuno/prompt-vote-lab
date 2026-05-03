@@ -1,0 +1,28 @@
+name: Lean Proof Test
+
+on:
+  pull_request:
+    paths:
+      - "formal/**/*.lean"
+      - ".github/workflows/lean-proof-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-proof-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Lean
+        uses: leanprover/lean-action@v1
+        with:
+          use-github-cache: true
+          auto-config: false
+
+      - name: Check selection proof
+        run: |
+          lean formal/Selection.lean
