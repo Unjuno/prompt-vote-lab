@@ -95,33 +95,52 @@ jobs:
           fetch-depth: 0
 
       - name: Export report inputs
+        env:
+          INPUT_WEEK: ${{ inputs.week }}
+          INPUT_SELECTED_PROMPT: ${{ inputs.selected_prompt }}
+          INPUT_ISSUE_NUMBER: ${{ inputs.issue_number }}
+          INPUT_PR_NUMBER: ${{ inputs.pr_number }}
+          INPUT_CANDIDATE_RANK: ${{ inputs.candidate_rank }}
+          INPUT_VOTE_COUNT: ${{ inputs.vote_count }}
+          INPUT_BASELINE_VOTES: ${{ inputs.baseline_votes }}
+          INPUT_OUTCOME: ${{ inputs.outcome }}
+          INPUT_EXPECTATION_GAP: ${{ inputs.expectation_gap }}
+          INPUT_RUN_REASON: ${{ inputs.run_reason }}
+          INPUT_REPUTATION_MEMORY: ${{ inputs.reputation_memory }}
+          INPUT_VOTE_SUMMARY_PATH: ${{ inputs.vote_summary_path }}
+          INPUT_IMPLEMENTATION_SUMMARY_PATH: ${{ inputs.implementation_summary_path }}
         run: |
-          cat > .tmp-report-env.py <<'PY'
+          python - <<'PY'
           import os
           from pathlib import Path
 
-          pairs = {
-              'PVL_WEEK': '''${{ inputs.week }}''',
-              'PVL_SELECTED_PROMPT': '''${{ inputs.selected_prompt }}''',
-              'PVL_ISSUE_NUMBER': '''${{ inputs.issue_number }}''',
-              'PVL_PR_NUMBER': '''${{ inputs.pr_number }}''',
-              'PVL_CANDIDATE_RANK': '''${{ inputs.candidate_rank }}''',
-              'PVL_VOTE_COUNT': '''${{ inputs.vote_count }}''',
-              'PVL_BASELINE_VOTES': '''${{ inputs.baseline_votes }}''',
-              'PVL_OUTCOME': '''${{ inputs.outcome }}''',
-              'PVL_EXPECTATION_GAP': '''${{ inputs.expectation_gap }}''',
-              'PVL_RUN_REASON': '''${{ inputs.run_reason }}''',
-              'PVL_REPUTATION_MEMORY': '''${{ inputs.reputation_memory }}''',
-              'PVL_VOTE_SUMMARY_PATH': '''${{ inputs.vote_summary_path }}''',
-              'PVL_IMPLEMENTATION_SUMMARY_PATH': '''${{ inputs.implementation_summary_path }}''',
+          mapping = {
+              'PVL_WEEK': 'INPUT_WEEK',
+              'PVL_SELECTED_PROMPT': 'INPUT_SELECTED_PROMPT',
+              'PVL_ISSUE_NUMBER': 'INPUT_ISSUE_NUMBER',
+              'PVL_PR_NUMBER': 'INPUT_PR_NUMBER',
+              'PVL_CANDIDATE_RANK': 'INPUT_CANDIDATE_RANK',
+              'PVL_VOTE_COUNT': 'INPUT_VOTE_COUNT',
+              'PVL_BASELINE_VOTES': 'INPUT_BASELINE_VOTES',
+              'PVL_OUTCOME': 'INPUT_OUTCOME',
+              'PVL_EXPECTATION_GAP': 'INPUT_EXPECTATION_GAP',
+              'PVL_RUN_REASON': 'INPUT_RUN_REASON',
+              'PVL_REPUTATION_MEMORY': 'INPUT_REPUTATION_MEMORY',
+              'PVL_VOTE_SUMMARY_PATH': 'INPUT_VOTE_SUMMARY_PATH',
+              'PVL_IMPLEMENTATION_SUMMARY_PATH': 'INPUT_IMPLEMENTATION_SUMMARY_PATH',
           }
+
           lines = []
-          for key, value in pairs.items():
-              escaped = value.replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D')
-              lines.append(f'{key}={escaped}')
+          for target, source in mapping.items():
+              value = os.environ.get(source, '')
+              delimiter = f'EOF_{target}'
+              while delimiter in value:
+                  delimiter += '_X'
+              lines.append(f'{target}<<{delimiter}')
+              lines.append(value)
+              lines.append(delimiter)
           Path(os.environ['GITHUB_ENV']).write_text('\n'.join(lines) + '\n', encoding='utf-8')
           PY
-          python .tmp-report-env.py
 
       - name: Draft report
         run: |
@@ -153,7 +172,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch="report-draft-${{ inputs.week }}-${{ github.run_number }}"
+          safe_week=$(printf '%s' "${{ inputs.week }}" | tr -c 'A-Za-z0-9._-' '-')
+          branch="report-draft-${safe_week}-${{ github.run_number }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
