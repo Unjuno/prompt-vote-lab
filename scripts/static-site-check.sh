@@ -12,9 +12,11 @@ required_files=(
   "docs/how-to-participate.md"
   "docs/no-change-baseline.md"
   "docs/support-policy.md"
+  "docs/report-policy.md"
   "docs/automation-map.md"
   "rules/static-ui-v1.0.md"
   "rules/agent-run-policy-v1.0.md"
+  "rules/report-generation-v1.0.md"
   "rules/support-unlocked-runs-v1.1.md"
   "rules/initial-lab-state-v1.0.md"
   "rules/no-change-baseline-v1.0.md"
@@ -63,6 +65,11 @@ fi
 
 if ! grep -qi -E "prompt game|Competitive prompt game|game loop|Risk trust|reputation|trust" index.html; then
   echo "ERROR: landing page must frame the project as a prompt game, not only as an experiment."
+  exit 1
+fi
+
+if ! grep -qi -E "report policy|weekly report draft|model-free" docs/README.md; then
+  echo "ERROR: docs index must expose the model-free report draft policy."
   exit 1
 fi
 
