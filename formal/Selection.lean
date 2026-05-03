@@ -2,6 +2,8 @@ import Std
 
 namespace PromptVoteLab
 
+-- Verification trigger: Lean toolchain configured.
+
 inductive CandidateType where
   | baseline
   | prompt
