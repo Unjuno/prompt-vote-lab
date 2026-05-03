@@ -1,0 +1,24 @@
+name: Collect Votes Test
+
+on:
+  pull_request:
+    paths:
+      - "scripts/collect_votes.py"
+      - "scripts/test_collect_votes.py"
+      - ".github/workflows/collect-votes-test.yml"
+      - ".github/ISSUE_TEMPLATE/prompt-proposal.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect-votes-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run collect votes smoke tests
+        run: |
+          python scripts/test_collect_votes.py
