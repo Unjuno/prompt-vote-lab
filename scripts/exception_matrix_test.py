@@ -3,6 +3,8 @@
 
 This script mutates a temporary copy of the repository and verifies that safety
 and static-site checks fail or pass as expected. It does not call any model API.
+
+Verification trigger: baseline mutation fix.
 """
 
 from __future__ import annotations
