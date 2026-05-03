@@ -88,7 +88,8 @@ The agent must not:
 - perform hidden network calls
 - use cookies or trackers
 - add login or payment behavior
-- use `eval` or `new Function(...)`
+- use `eval`
+- use `new Function(...)` with user input, URL data, stored local data, imported JSON, GitHub Issue text, or any external source
 - merge its own PR
 - weaken safety rules to pass itself
 
@@ -98,9 +99,12 @@ The agent may:
 
 - create ordinary helper functions inside `lab/app.js`
 - reorganize local JavaScript for clarity
-- use local state
+- use local state with `localStorage`, `sessionStorage`, or `IndexedDB`
 - implement JSON export/import locally
+- use controlled `new Function(...)` only when the function body is fixed by repository-authored code and small enough to review
 - create a static UI prototype for otherwise unsupported ideas
+
+Prefer ordinary functions when they are sufficient.
 
 ## Rationale
 
