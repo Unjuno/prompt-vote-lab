@@ -5,6 +5,7 @@ on:
     paths:
       - "scripts/select_eligible.py"
       - "scripts/test_select_eligible.py"
+      - "scripts/test_weekly_auto_no_eligible.py"
       - ".github/workflows/select-eligible-test.yml"
       - ".github/workflows/weekly-auto-run.yml"
   workflow_dispatch:
@@ -22,3 +23,4 @@ jobs:
       - name: Run eligible selector smoke tests
         run: |
           python scripts/test_select_eligible.py
+          python scripts/test_weekly_auto_no_eligible.py
