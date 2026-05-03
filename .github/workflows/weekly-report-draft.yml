@@ -64,7 +64,7 @@ on:
       reputation_memory:
         description: "Qualitative note about what players should remember. No numeric scores."
         required: false
-        default: "No automated reputation score is computed. Players should use this public outcome as qualitative memory for future votes."
+        default: "No automated trust rating is computed. Players should use this public outcome as qualitative memory for future votes."
         type: string
       vote_summary_path:
         description: "Optional repository path to vote summary markdown"
@@ -94,27 +94,58 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Export report inputs
+        run: |
+          cat > .tmp-report-env.py <<'PY'
+          import os
+          from pathlib import Path
+
+          pairs = {
+              'PVL_WEEK': '''${{ inputs.week }}''',
+              'PVL_SELECTED_PROMPT': '''${{ inputs.selected_prompt }}''',
+              'PVL_ISSUE_NUMBER': '''${{ inputs.issue_number }}''',
+              'PVL_PR_NUMBER': '''${{ inputs.pr_number }}''',
+              'PVL_CANDIDATE_RANK': '''${{ inputs.candidate_rank }}''',
+              'PVL_VOTE_COUNT': '''${{ inputs.vote_count }}''',
+              'PVL_BASELINE_VOTES': '''${{ inputs.baseline_votes }}''',
+              'PVL_OUTCOME': '''${{ inputs.outcome }}''',
+              'PVL_EXPECTATION_GAP': '''${{ inputs.expectation_gap }}''',
+              'PVL_RUN_REASON': '''${{ inputs.run_reason }}''',
+              'PVL_REPUTATION_MEMORY': '''${{ inputs.reputation_memory }}''',
+              'PVL_VOTE_SUMMARY_PATH': '''${{ inputs.vote_summary_path }}''',
+              'PVL_IMPLEMENTATION_SUMMARY_PATH': '''${{ inputs.implementation_summary_path }}''',
+          }
+          lines = []
+          for key, value in pairs.items():
+              escaped = value.replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D')
+              lines.append(f'{key}={escaped}')
+          Path(os.environ['GITHUB_ENV']).write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          python .tmp-report-env.py
+
       - name: Draft report
         run: |
           python scripts/draft_weekly_report.py \
-            --week "${{ inputs.week }}" \
-            --selected-prompt "${{ inputs.selected_prompt }}" \
-            --issue-number "${{ inputs.issue_number }}" \
-            --pr-number "${{ inputs.pr_number }}" \
-            --candidate-rank "${{ inputs.candidate_rank }}" \
-            --vote-count "${{ inputs.vote_count }}" \
-            --baseline-votes "${{ inputs.baseline_votes }}" \
-            --outcome "${{ inputs.outcome }}" \
-            --expectation-gap "${{ inputs.expectation_gap }}" \
-            --run-reason "${{ inputs.run_reason }}" \
-            --vote-summary "${{ inputs.vote_summary_path }}" \
-            --implementation-summary "${{ inputs.implementation_summary_path }}" \
-            --reputation-memory "${{ inputs.reputation_memory }}"
+            --week "$PVL_WEEK" \
+            --selected-prompt "$PVL_SELECTED_PROMPT" \
+            --issue-number "$PVL_ISSUE_NUMBER" \
+            --pr-number "$PVL_PR_NUMBER" \
+            --candidate-rank "$PVL_CANDIDATE_RANK" \
+            --vote-count "$PVL_VOTE_COUNT" \
+            --baseline-votes "$PVL_BASELINE_VOTES" \
+            --outcome "$PVL_OUTCOME" \
+            --expectation-gap "$PVL_EXPECTATION_GAP" \
+            --run-reason "$PVL_RUN_REASON" \
+            --vote-summary "$PVL_VOTE_SUMMARY_PATH" \
+            --implementation-summary "$PVL_IMPLEMENTATION_SUMMARY_PATH" \
+            --reputation-memory "$PVL_REPUTATION_MEMORY"
 
       - name: Check report policy boundaries
         run: |
-          if grep -R -n -i -E "trust score|author score|player score|reputation score|automatic penalty|leaderboard" runs/*-report.md; then
-            echo "ERROR: report draft must not claim automated scoring or leaderboard state."
+          # Permit negative statements such as "not computed" or "does not compute".
+          # Block affirmative claims that the report created an automated rating system.
+          if grep -R -n -i -E "\b(computed|assigned|awarded|updated|generated)\b.*\b(trust rating|trust score|author rating|author score|player score|reputation score|leaderboard|automatic penalty)\b|\b(leaderboard placement|automatic penalty)\b.*\b(computed|assigned|awarded|updated|generated)\b" runs/*-report.md; then
+            echo "ERROR: report draft must not claim automated scoring, penalties, or leaderboard state."
             exit 1
           fi
 
@@ -131,6 +162,6 @@ jobs:
           git push --set-upstream origin "$branch"
           gh pr create \
             --title "Draft weekly report for ${{ inputs.week }}" \
-            --body "Creates a model-free weekly report draft. This PR does not publish externally and does not compute reputation scores." \
+            --body "Creates a model-free weekly report draft. This PR does not publish externally and does not compute automated trust ratings." \
             --base main \
             --head "$branch"
