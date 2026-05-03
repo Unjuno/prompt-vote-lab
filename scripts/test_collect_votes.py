@@ -2,6 +2,7 @@
 """Smoke tests for scripts/collect_votes.py.
 
 No network calls. No GitHub API calls.
+Verification trigger: collect-votes-test.
 """
 
 from __future__ import annotations
