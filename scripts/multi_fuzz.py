@@ -83,6 +83,7 @@ def remove_baseline_language(html: str) -> str:
         ("20-vote gate", "baseline gate"),
         ("20 virtual votes", "baseline votes"),
         ("virtual votes baseline", "baseline marker"),
+        ("votes against doing nothing", "votes against the default"),
         ("20", "twenty"),
     ]
     for old, new in replacements:
