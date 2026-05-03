@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       week:
-        description: "Week label, for example week-mock-001"
+        description: "Week label. Leave default to auto-resolve to week-mock-<run_number>."
         required: true
-        default: "week-mock-001"
+        default: "week-mock-auto"
         type: string
       no_change_baseline:
         description: "Virtual no-change baseline votes"
@@ -40,7 +40,7 @@ permissions:
   issues: read
 
 concurrency:
-  group: weekly-mock-${{ inputs.week }}
+  group: weekly-mock-${{ github.run_number }}
   cancel-in-progress: false
 
 jobs:
@@ -52,6 +52,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Resolve mock week label
+        env:
+          RAW_WEEK: ${{ inputs.week }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          raw = (os.environ.get('RAW_WEEK') or '').strip()
+          if raw in {'', 'week-mock-001', 'week-mock-auto'}:
+              week = f"week-mock-{os.environ['RUN_NUMBER']}"
+          else:
+              week = raw
+          if not re.fullmatch(r'[A-Za-z0-9._-]{1,80}', week):
+              raise SystemExit(f'Unsafe mock week label: {week!r}')
+          Path(os.environ['GITHUB_ENV']).write_text(f'MOCK_WEEK={week}\n', encoding='utf-8')
+          print(f'Resolved mock week: {week}')
+          PY
+
       - name: Log workflow start
         run: |
           python scripts/log_event.py \
@@ -59,12 +80,12 @@ jobs:
             --event-type weekly_mock_started \
             --source weekly-mock-run \
             --status started \
-            --week "${{ inputs.week }}" \
+            --week "$MOCK_WEEK" \
             --payload-json '{"agent_run_count":0,"mode":"mock"}'
 
       - name: Build synthetic vote artifacts
         env:
-          WEEK: ${{ inputs.week }}
+          WEEK: ${{ env.MOCK_WEEK }}
           NO_CHANGE_BASELINE: ${{ inputs.no_change_baseline }}
           MOCK_ISSUE_NUMBER: ${{ inputs.mock_issue_number }}
           MOCK_VOTE_COUNT: ${{ inputs.mock_vote_count }}
@@ -142,6 +163,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import os
           import subprocess
           from pathlib import Path
           candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
@@ -160,7 +182,7 @@ jobs:
               '--event-type', 'mock_vote_summary',
               '--source', 'weekly-mock-run',
               '--status', 'completed',
-              '--week', '${{ inputs.week }}',
+              '--week', os.environ['MOCK_WEEK'],
               '--api-call-count', '0',
               '--payload-json', json.dumps(payload),
           ], check=True)
@@ -172,15 +194,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
-          git add "runs/${{ inputs.week }}-mock-vote-summary.md"
-          git commit -m "Record weekly mock vote summary for ${{ inputs.week }}"
-          git push --set-upstream origin "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}"
+          branch="weekly-mock-summary-${MOCK_WEEK}-${{ github.run_number }}"
+          git checkout -b "$branch"
+          git add "runs/${MOCK_WEEK}-mock-vote-summary.md"
+          git commit -m "Record weekly mock vote summary for ${MOCK_WEEK}"
+          git push --set-upstream origin "$branch"
           pr_url=$(gh pr create \
-            --title "Record weekly mock vote summary for ${{ inputs.week }}" \
+            --title "Record weekly mock vote summary for ${MOCK_WEEK}" \
             --body "Adds a synthetic vote summary for mock automation testing. This PR does not run a paid implementation agent." \
             --base main \
-            --head "weekly-mock-summary-${{ inputs.week }}-${{ github.run_number }}")
+            --head "$branch")
           echo "$pr_url" | tee .tmp/mock-summary-pr-url.txt
 
       - name: Log mock vote summary PR
@@ -190,7 +213,7 @@ jobs:
             --event-type mock_vote_summary_pr_created \
             --source weekly-mock-run \
             --status completed \
-            --week "${{ inputs.week }}" \
+            --week "$MOCK_WEEK" \
             --api-call-count 0 \
             --payload-json "$(python - <<'PY'
           import json
@@ -208,7 +231,7 @@ jobs:
             --event-type mock_implementation_skipped \
             --source weekly-mock-run \
             --status skipped \
-            --week "${{ inputs.week }}" \
+            --week "$MOCK_WEEK" \
             --api-call-count 0 \
             --payload-json '{"reason":"create_implementation_pr=false","agent_run_count":0}'
 
@@ -217,6 +240,7 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import os
           import subprocess
           from pathlib import Path
           items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
@@ -227,7 +251,7 @@ jobs:
                   '--event-type', 'mock_no_eligible_candidate',
                   '--source', 'weekly-mock-run',
                   '--status', 'completed',
-                  '--week', '${{ inputs.week }}',
+                  '--week', os.environ['MOCK_WEEK'],
                   '--api-call-count', '0',
                   '--payload-json', json.dumps({'reason': 'mock candidate did not beat baseline', 'agent_run_count': 0}),
               ], check=True)
@@ -240,10 +264,11 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import os
           import subprocess
           from pathlib import Path
 
-          week = "${{ inputs.week }}"
+          week = os.environ['MOCK_WEEK']
           run_number = "${{ github.run_number }}"
           candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
 
@@ -366,7 +391,7 @@ jobs:
             --event-type weekly_mock_completed \
             --source weekly-mock-run \
             --status "$status" \
-            --week "${{ inputs.week }}" \
+            --week "$MOCK_WEEK" \
             --api-call-count 0 \
             --payload-json "{\"job_status\":\"${{ job.status }}\",\"agent_run_count\":0}"
 
