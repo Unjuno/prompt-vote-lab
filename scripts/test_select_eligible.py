@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Smoke tests for scripts/select_eligible.py."""
+"""Smoke tests for scripts/select_eligible.py.
+
+Verification trigger: select-eligible-test.
+"""
 
 from __future__ import annotations
 
