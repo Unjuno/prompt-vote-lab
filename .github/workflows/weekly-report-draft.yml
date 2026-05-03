@@ -1,0 +1,136 @@
+name: Weekly Report Draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week label, for example week-2026-W18"
+        required: true
+        type: string
+      selected_prompt:
+        description: "Selected prompt text or short candidate description"
+        required: true
+        type: string
+      issue_number:
+        description: "Related prompt issue number"
+        required: false
+        default: "unrecorded"
+        type: string
+      pr_number:
+        description: "Related implementation PR number"
+        required: false
+        default: "unrecorded"
+        type: string
+      candidate_rank:
+        description: "Candidate rank"
+        required: false
+        default: "unrecorded"
+        type: string
+      vote_count:
+        description: "Selected candidate vote count"
+        required: false
+        default: "unrecorded"
+        type: string
+      baseline_votes:
+        description: "No-change baseline votes"
+        required: false
+        default: "20"
+        type: string
+      outcome:
+        description: "Outcome, for example merged, rejected, failed, unsafe, partial, no-change"
+        required: false
+        default: "Unknown"
+        type: string
+      expectation_gap:
+        description: "Hit, Partial, Misread, Overbuild, Underbuild, Rule conflict, Unsafe, Rejected, or Unknown"
+        required: false
+        default: "Unknown"
+        type: choice
+        options:
+          - Hit
+          - Partial
+          - Misread
+          - Overbuild
+          - Underbuild
+          - Rule conflict
+          - Unsafe
+          - Rejected
+          - Unknown
+      run_reason:
+        description: "normal-weekly-run, support-unlocked-run, no-change, manual-review, etc."
+        required: false
+        default: "manual-report-draft"
+        type: string
+      reputation_memory:
+        description: "Qualitative note about what players should remember. No numeric scores."
+        required: false
+        default: "No automated reputation score is computed. Players should use this public outcome as qualitative memory for future votes."
+        type: string
+      vote_summary_path:
+        description: "Optional repository path to vote summary markdown"
+        required: false
+        default: ""
+        type: string
+      implementation_summary_path:
+        description: "Optional repository path to implementation summary markdown"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-report-draft-${{ inputs.week }}
+  cancel-in-progress: false
+
+jobs:
+  draft-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Draft report
+        run: |
+          python scripts/draft_weekly_report.py \
+            --week "${{ inputs.week }}" \
+            --selected-prompt "${{ inputs.selected_prompt }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --pr-number "${{ inputs.pr_number }}" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --baseline-votes "${{ inputs.baseline_votes }}" \
+            --outcome "${{ inputs.outcome }}" \
+            --expectation-gap "${{ inputs.expectation_gap }}" \
+            --run-reason "${{ inputs.run_reason }}" \
+            --vote-summary "${{ inputs.vote_summary_path }}" \
+            --implementation-summary "${{ inputs.implementation_summary_path }}" \
+            --reputation-memory "${{ inputs.reputation_memory }}"
+
+      - name: Check report policy boundaries
+        run: |
+          if grep -R -n -i -E "trust score|author score|player score|reputation score|automatic penalty|leaderboard" runs/*-report.md; then
+            echo "ERROR: report draft must not claim automated scoring or leaderboard state."
+            exit 1
+          fi
+
+      - name: Create report draft PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="report-draft-${{ inputs.week }}-${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add "runs/${{ inputs.week }}-report.md"
+          git commit -m "Draft weekly report for ${{ inputs.week }}"
+          git push --set-upstream origin "$branch"
+          gh pr create \
+            --title "Draft weekly report for ${{ inputs.week }}" \
+            --body "Creates a model-free weekly report draft. This PR does not publish externally and does not compute reputation scores." \
+            --base main \
+            --head "$branch"
