@@ -49,36 +49,12 @@ jobs:
 
       - name: Determine eligible ranks
         run: |
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          support = float(os.environ.get('SUPPORT_USD') or '0')
-          candidates = json.loads(Path('.tmp/weekly-candidates.json').read_text())
-          baseline_won = any(
-              c.get('candidate_type') == 'no-change-baseline' and int(c.get('rank', 0)) == 1
-              for c in candidates
-          )
-          eligible = []
-          if not baseline_won:
-              for c in candidates:
-                  if c.get('candidate_type') == 'no-change-baseline':
-                      continue
-                  rank = int(c['rank'])
-                  if rank == 1:
-                      c['run_reason'] = 'normal-weekly-run'
-                      eligible.append(c)
-                  elif rank == 2 and support >= 5:
-                      c['run_reason'] = 'support-unlocked-run'
-                      eligible.append(c)
-                  elif rank == 3 and support >= 10:
-                      c['run_reason'] = 'support-unlocked-run'
-                      eligible.append(c)
-          Path('.tmp/eligible-candidates.json').write_text(json.dumps(eligible, indent=2), encoding='utf-8')
-          Path('.tmp/has-eligible.txt').write_text('true' if eligible else 'false', encoding='utf-8')
-          print(json.dumps({'baseline_won': baseline_won, 'eligible': eligible}, indent=2))
-          PY
+          python scripts/select_eligible.py \
+            --candidates .tmp/weekly-candidates.json \
+            --support-usd "$SUPPORT_USD" \
+            --out .tmp/eligible-candidates.json \
+            --flag .tmp/has-eligible.txt \
+            --meta .tmp/selection-meta.json
 
       - name: Export eligibility flag
         id: eligibility
@@ -112,6 +88,12 @@ jobs:
           for item in items:
               print(f"- rank {item['rank']}: issue #{item['issue_number']} ({item['run_reason']})")
           PY
+            echo ""
+            echo "## Selection metadata"
+            echo ""
+            echo '```json'
+            cat .tmp/selection-meta.json
+            echo '```'
           } >> "runs/${RUN_WEEK}-vote-summary.md"
 
       - name: Commit vote summary PR
