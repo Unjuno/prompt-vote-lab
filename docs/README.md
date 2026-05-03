@@ -13,12 +13,21 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 3. [No-change baseline](./no-change-baseline.md) — why every week starts with 20 virtual votes for doing nothing.
 4. [Automation map](./automation-map.md) — what is automated, what is manual, and how workflow boundaries are drawn.
 5. [Support policy](./support-policy.md) — what support can fund and what it cannot buy.
+6. [Report policy](./report-policy.md) — how weekly report drafts preserve public game memory.
 
 ## Current reputation status
 
 Reputation is currently social memory, not an automated score.
 
 The repository records outcomes. Workflows do not yet compute player rankings, trust scores, author scores, or penalties.
+
+## Report status
+
+Report generation is currently model-free.
+
+The workflow can draft `runs/<week>-report.md` from explicit inputs and repository files, then open a reviewable PR.
+
+It does not publish externally and does not compute automated trust ratings.
 
 ## Rule documents
 
@@ -28,6 +37,7 @@ Important rules:
 
 - [`static-ui-v1.0.md`](../rules/static-ui-v1.0.md) — lab edit scope and runtime restrictions.
 - [`agent-run-policy-v1.0.md`](../rules/agent-run-policy-v1.0.md) — one bounded agent attempt, explicit continuation, no hidden retries.
+- [`report-generation-v1.0.md`](../rules/report-generation-v1.0.md) — model-free weekly report draft boundaries.
 - [`event-logging-v1.0.md`](../rules/event-logging-v1.0.md) — JSONL and Markdown logging policy.
 - [`support-unlocked-runs-v1.1.md`](../rules/support-unlocked-runs-v1.1.md) — $5/$10 comparison-run thresholds.
 - [`mock-testing-v1.0.md`](../rules/mock-testing-v1.0.md) — agent-free mock testing.
