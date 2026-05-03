@@ -2,7 +2,7 @@ import Std
 
 namespace PromptVoteLab
 
--- Verification trigger: Lean toolchain configured.
+-- Verification trigger: Lean workflow no longer requires Lake.
 
 inductive CandidateType where
   | baseline
