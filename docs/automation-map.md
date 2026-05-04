@@ -5,11 +5,11 @@ This document maps Prompt Vote Lab automation boundaries.
 ## Core boundary
 
 ```text
-/      = stable public explanation page
-/lab/  = changing implementation target
-/docs/ = human-readable explanation
+/       = stable public explanation page
+/lab/   = changing implementation target
+/docs/  = human-readable explanation
 /rules/ = operational constraints
-/runs/ = recorded run history
+/runs/  = recorded run history
 ```
 
 The implementation model may edit only:
@@ -35,9 +35,11 @@ The project may automate:
 - multi-fuzz boundary tests
 - internal safety and static-site checks before implementation PR creation
 - implementation PR creation
-- vote summary PR creation
+- vote snapshot artifact creation
+- weekly run-log draft creation
+- weekly metrics summary artifact creation
 - event log artifact creation
-- blog/report draft PR creation
+- HN/blog/report draft artifact creation
 
 ## Not automated
 
@@ -57,7 +59,10 @@ The project must not automate:
 |---|---|---|---:|
 | `setup-labels.yml` | implemented | Create project labels | 0 |
 | `safety-check.yml` | implemented | Check lab PRs when PR-triggered checks run | 0 |
-| `static-site-check.yml` | implemented | Check public page structure and support wording | 0 |
+| `static-site-check.yml` | implemented | Check public page structure, support wording, and lab smoke expectations | 0 |
+| `lab-pr-scope-check.yml` | implemented | Prevent lab implementation PRs from mixing lab and non-lab files | 0 |
+| `script-check.yml` | implemented | Check scripts, offline workflow smoke tests, and lab scope guard tests | 0 |
+| `evidence-pipeline-dry-run.yml` | implemented | Manually generate snapshot, run log, weekly summary, and HN draft as artifact | 0 |
 | `exception-matrix-test.yml` | implemented | Test known pass/fail boundary cases | 0 |
 | `multi-fuzz-test.yml` | implemented | Run weighted random boundary mutations | 0 |
 | `weekly-mock-run.yml` | implemented | Test weekly selection and PR creation without model API calls | 0 |
@@ -78,6 +83,35 @@ bash scripts/safety-check.sh origin/main HEAD
 bash scripts/static-site-check.sh
 ```
 
+For lab implementation PR review, a separate PR-triggered guard also checks:
+
+```text
+bash scripts/check-lab-pr-scope.sh
+```
+
+## Evidence dry-run flow
+
+`evidence-pipeline-dry-run.yml` is manual and API-free except for GitHub issue/reaction reads when `source=live`.
+
+It generates artifacts under:
+
+```text
+tmp/evidence/
+```
+
+Expected artifact paths:
+
+```text
+tmp/evidence/data/snapshots/week-<week_id>.json
+tmp/evidence/logs/aggregation/week-<week_id>.jsonl
+tmp/evidence/runs/week-<week_id>.md
+tmp/evidence/reports/summary/weekly-metrics.json
+tmp/evidence/reports/summary/weekly-metrics.md
+tmp/evidence/reports/hn/week-<week_id>.md
+```
+
+The dry-run workflow must not commit generated evidence files.
+
 ## Data flow
 
 ```text
@@ -85,14 +119,31 @@ GitHub Issues
 → GitHub reactions
 → vote collection
 → no-change baseline comparison
-→ eligible candidate list
-→ implementation attempt, if eligible
+→ weekly snapshot
+→ weekly run-log draft
+→ weekly metrics summary
+→ HN/report draft
+→ artifact review
+→ implementation attempt, if eligible and explicitly run
 → internal safety/static checks
 → implementation PR
 → maintainer review
 → terminal state label
 → run/report record
 ```
+
+## Metrics summary data
+
+Weekly summary generation may aggregate:
+
+- candidate count trend
+- unique author count trend
+- total vote trend
+- unique voter trend when available
+- top prompt vote-share trend
+- selected/no-run counts
+
+The summary must use aggregate metrics only. It must not store voter login lists.
 
 ## Paid API policy
 
