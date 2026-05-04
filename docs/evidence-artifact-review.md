@@ -8,8 +8,8 @@ Use it after running:
 Actions
 → Evidence Pipeline Dry Run
 → Run workflow
-→ source: fixture
-→ week_id: dry-run-001
+→ source: fixture or live
+→ week_id: <week_id>
 ```
 
 Do not treat a successful workflow run as sufficient evidence. The artifact must be inspected.
@@ -35,6 +35,22 @@ tmp/evidence/reports/hn/week-<week_id>.md
 ```
 
 If any file is missing, the dry run is not acceptable.
+
+## Fast CLI check
+
+After downloading and extracting the artifact so that `tmp/evidence/` exists locally, run:
+
+```bash
+node scripts/validate-evidence-artifact.mjs tmp/evidence <week_id>
+```
+
+Example:
+
+```bash
+node scripts/validate-evidence-artifact.mjs tmp/evidence dry-run-001
+```
+
+The CLI check does not replace human review. It catches missing files, schema mismatches, missing sections, missing baseline data, and identity-like voter fields.
 
 ## Review order
 
