@@ -1,0 +1,116 @@
+name: Evidence Pipeline Dry Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: "Dry-run week id."
+        required: false
+        default: "dry-run-001"
+        type: string
+      snapshot_at:
+        description: "Optional explicit snapshot timestamp. Leave empty to use current time."
+        required: false
+        type: string
+      site_url:
+        description: "Submission URL candidate for HN draft."
+        required: false
+        default: "https://unjuno.github.io/prompt-vote-lab/"
+        type: string
+      source:
+        description: "Use fixture for deterministic smoke data, or live for repository issues."
+        required: false
+        default: "fixture"
+        type: choice
+        options:
+          - "fixture"
+          - "live"
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  evidence-pipeline-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate snapshot and run log
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROMPT_LABEL: prompt-proposal
+          CUTOFF_TIMEZONE: Asia/Tokyo
+          NO_CHANGE_BASELINE: 5
+          REQUIRED_MARGIN: 2
+          MINIMUM_TOTAL_VOTES: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
+          SOURCE="${{ github.event.inputs.source || 'fixture' }}"
+          SNAPSHOT_AT_INPUT="${{ github.event.inputs.snapshot_at || '' }}"
+
+          export WEEK_ID
+          export SNAPSHOT_AT="$SNAPSHOT_AT_INPUT"
+          export SNAPSHOT_OUTPUT="tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
+          export AGGREGATION_LOG_OUTPUT="tmp/evidence/logs/aggregation/week-${WEEK_ID}.jsonl"
+          export RUN_LOG_OUTPUT="tmp/evidence/runs/week-${WEEK_ID}.md"
+          export ALLOW_SNAPSHOT_OVERWRITE="true"
+
+          if [ "$SOURCE" = "fixture" ]; then
+            export SNAPSHOT_FIXTURE="tests/fixtures/prompt-candidates.json"
+          fi
+
+          node scripts/create-weekly-snapshot.mjs
+
+      - name: Generate HN draft from generated snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
+          SITE_URL="${{ github.event.inputs.site_url || 'https://unjuno.github.io/prompt-vote-lab/' }}"
+
+          export WEEK_ID
+          export SNAPSHOT_INPUT="tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
+          export RUN_LOG_INPUT="tmp/evidence/runs/week-${WEEK_ID}.md"
+          export HN_DRAFT_OUTPUT="tmp/evidence/reports/hn/week-${WEEK_ID}.md"
+          export SITE_URL
+          export REPO_URL="https://github.com/Unjuno/prompt-vote-lab"
+
+          node scripts/create-hn-draft.mjs
+
+      - name: Verify dry-run outputs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
+
+          test -s "tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
+          test -s "tmp/evidence/logs/aggregation/week-${WEEK_ID}.jsonl"
+          test -s "tmp/evidence/runs/week-${WEEK_ID}.md"
+          test -s "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
+
+          node -e "const fs=require('fs'); const p='tmp/evidence/data/snapshots/week-${WEEK_ID}.json'; const s=JSON.parse(fs.readFileSync(p,'utf8')); if (!Array.isArray(s.top_prompts)) throw new Error('top_prompts missing'); if (s.top_prompts.length > 3) throw new Error('too many top prompts'); console.log(JSON.stringify({decision:s.decision, selected_issue:s.selected_issue, total_votes:s.total_votes}, null, 2));"
+
+          grep -q "Do-not-post checklist" "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
+
+      - name: Show generated file tree
+        run: find tmp/evidence -type f -maxdepth 5 | sort
+
+      - name: Upload evidence pipeline dry-run artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-pipeline-dry-run
+          path: tmp/evidence/**
+          if-no-files-found: error
+          retention-days: 7
