@@ -11,6 +11,14 @@ on:
         description: "Submission URL candidate."
         required: false
         type: string
+      commit_changes:
+        description: "Commit generated HN draft. Default is false for manual dry-run safety."
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 permissions:
   contents: write
@@ -34,7 +42,13 @@ jobs:
           REPO_URL: https://github.com/Unjuno/prompt-vote-lab
         run: node scripts/create-hn-draft.mjs
 
+      - name: Show generated diff
+        run: |
+          git status --short
+          git diff -- reports/hn || true
+
       - name: Commit HN draft
+        if: github.event.inputs.commit_changes == 'true'
         run: |
           if git diff --quiet -- reports/hn; then
             echo "No HN draft changes."
