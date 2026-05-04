@@ -4,6 +4,7 @@
   --fg: #191919;
   --muted: #6a6a6a;
   --line: #deded8;
+  --panel: #ffffff;
 }
 
 * {
@@ -21,11 +22,36 @@ body {
 }
 
 .lab-root {
-  width: min(640px, calc(100% - 32px));
-  padding: 48px;
+  width: min(760px, calc(100% - 32px));
+  padding: clamp(28px, 6vw, 48px);
   border: 1px dashed var(--line);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.55);
+}
+
+.lab-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.lab-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--fg);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lab-links a:hover {
+  text-decoration: underline;
 }
 
 .status {
@@ -44,11 +70,37 @@ h1 {
   letter-spacing: -0.07em;
 }
 
+h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+}
+
 .note,
-noscript {
+noscript,
+.lab-card p,
+.lab-card li {
   margin: 0;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.lab-card {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.lab-card ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.lab-card a {
+  color: var(--fg);
+  font-weight: 700;
 }
 
 noscript {
