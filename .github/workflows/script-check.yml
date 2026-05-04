@@ -1,0 +1,37 @@
+name: Script Check
+
+on:
+  pull_request:
+    paths:
+      - "scripts/**/*.mjs"
+      - ".github/workflows/script-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  node-syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check JavaScript module syntax
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(scripts/*.mjs scripts/**/*.mjs)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No .mjs scripts found."
+            exit 0
+          fi
+          for file in "${files[@]}"; do
+            echo "Checking $file"
+            node --check "$file"
+          done
