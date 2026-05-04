@@ -39,7 +39,10 @@ run_case() {
   "$mutate_fn" "$repo_dir"
 
   set +e
-  BASE_REF=main HEAD_REF=HEAD bash "$repo_dir/scripts/check-lab-pr-scope.sh" >"$repo_dir/out.log" 2>"$repo_dir/err.log"
+  (
+    cd "$repo_dir"
+    BASE_REF=main HEAD_REF=HEAD bash scripts/check-lab-pr-scope.sh
+  ) >"$repo_dir/out.log" 2>"$repo_dir/err.log"
   local status=$?
   set -e
 
