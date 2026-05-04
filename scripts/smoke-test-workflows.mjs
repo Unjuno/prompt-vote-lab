@@ -65,7 +65,7 @@ run('node', ['scripts/create-hn-draft.mjs'], {
 assertExists(hnDraftPath);
 const draft = await readFile(hnDraftPath, 'utf8');
 assertIncludes(draft, 'HN Draft: Week smoke-001', 'HN draft title');
-assertIncludes(draft, 'do-not-post', 'HN do-not-post section');
+assertIncludes(draft, 'Do-not-post checklist', 'HN do-not-post section');
 assertIncludes(draft, 'Run log still contains unrecorded fields.', 'HN blocker for incomplete run log');
 
 console.log('Offline workflow smoke test passed.');
