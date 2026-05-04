@@ -11,6 +11,7 @@ const week = process.env.WEEK_ID || inferWeekId();
 const cutoffTimezone = process.env.CUTOFF_TIMEZONE || 'Asia/Tokyo';
 const snapshotAt = process.env.SNAPSHOT_AT || new Date().toISOString();
 const allowSnapshotOverwrite = process.env.ALLOW_SNAPSHOT_OVERWRITE === 'true';
+const snapshotFixture = process.env.SNAPSHOT_FIXTURE || '';
 
 const noChangeBaseline = Number(process.env.NO_CHANGE_BASELINE || 5);
 const requiredMargin = Number(process.env.REQUIRED_MARGIN || 2);
@@ -20,20 +21,20 @@ const snapshotPath = process.env.SNAPSHOT_OUTPUT || `data/snapshots/week-${week}
 const aggregationLogPath = process.env.AGGREGATION_LOG_OUTPUT || `logs/aggregation/week-${week}.jsonl`;
 const runLogPath = process.env.RUN_LOG_OUTPUT || `runs/week-${week}.md`;
 
-if (!token) {
-  throw new Error('GITHUB_TOKEN is required.');
+if (!token && !snapshotFixture) {
+  throw new Error('GITHUB_TOKEN is required unless SNAPSHOT_FIXTURE is provided.');
 }
 
 if (existsSync(snapshotPath) && !allowSnapshotOverwrite) {
   throw new Error(`${snapshotPath} already exists. Refusing to overwrite an existing weekly snapshot.`);
 }
 
-const headers = {
+const headers = token ? {
   Accept: 'application/vnd.github+json',
   Authorization: `Bearer ${token}`,
   'X-GitHub-Api-Version': '2022-11-28',
   'User-Agent': 'prompt-vote-lab-weekly-snapshot'
-};
+} : null;
 
 function inferWeekId() {
   const now = new Date();
@@ -83,6 +84,18 @@ function candidateRecord(issue, votes) {
     url: issue.html_url,
     created_at: issue.created_at,
     updated_at: issue.updated_at
+  };
+}
+
+function fixtureCandidateRecord(candidate) {
+  return {
+    issue: Number(candidate.issue),
+    title: String(candidate.title || '').replace(/^\[Prompt\]:\s*/i, '').trim(),
+    author: candidate.author || 'unknown',
+    votes: Number(candidate.votes || 0),
+    url: candidate.url || `https://github.com/${repository}/issues/${candidate.issue}`,
+    created_at: candidate.created_at || null,
+    updated_at: candidate.updated_at || null
   };
 }
 
@@ -157,24 +170,36 @@ function escapePipes(value) {
   return String(value).replace(/\|/g, '\\|');
 }
 
+async function loadCandidates() {
+  if (snapshotFixture) {
+    const fixture = JSON.parse(await readFile(snapshotFixture, 'utf8'));
+    if (!Array.isArray(fixture.candidates)) {
+      throw new Error('SNAPSHOT_FIXTURE must contain a candidates array.');
+    }
+    return fixture.candidates.map(fixtureCandidateRecord);
+  }
+
+  const issues = await paginate(`/repos/${repository}/issues?state=open&labels=${encodeURIComponent(promptLabel)}`);
+  const promptIssues = issues.filter((issue) => !issue.pull_request);
+  const rawCandidates = [];
+  for (const issue of promptIssues) {
+    const votes = await plusOneVotes(issue.number);
+    rawCandidates.push(candidateRecord(issue, votes));
+  }
+  return rawCandidates;
+}
+
 const startedAt = new Date().toISOString();
 await appendJsonl(aggregationLogPath, {
   event: 'weekly_snapshot_started',
   week,
   repository,
   prompt_label: promptLabel,
+  fixture: Boolean(snapshotFixture),
   started_at: startedAt
 });
 
-const issues = await paginate(`/repos/${repository}/issues?state=open&labels=${encodeURIComponent(promptLabel)}`);
-const promptIssues = issues.filter((issue) => !issue.pull_request);
-
-const rawCandidates = [];
-for (const issue of promptIssues) {
-  const votes = await plusOneVotes(issue.number);
-  rawCandidates.push(candidateRecord(issue, votes));
-}
-
+const rawCandidates = await loadCandidates();
 const allCandidates = sortCandidates(rawCandidates);
 const topPrompts = allCandidates.slice(0, 3).map((candidate, index) => ({
   rank: index + 1,
@@ -190,7 +215,7 @@ const snapshot = {
   week,
   snapshot_at: snapshotAt,
   cutoff_timezone: cutoffTimezone,
-  source: 'github-issues-reactions',
+  source: snapshotFixture ? 'fixture' : 'github-issues-reactions',
   repository,
   snapshot_path: snapshotPath,
   selection_rule: {
@@ -226,6 +251,7 @@ await appendJsonl(aggregationLogPath, {
   top_prompt_votes: topPromptVotes,
   decision,
   selected_issue: selectedIssue,
+  fixture: Boolean(snapshotFixture),
   started_at: startedAt,
   finished_at: new Date().toISOString()
 });
