@@ -44,7 +44,7 @@ assertExists(aggregationLogPath);
 assertExists(runLogPath);
 
 const snapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
-assertEqual(snapshot.schema_version, 'snapshot-v1.1', 'snapshot schema version');
+assertEqual(snapshot.schema_version, 'snapshot-v1.2', 'snapshot schema version');
 assertEqual(snapshot.source, 'fixture', 'snapshot source');
 assertEqual(snapshot.decision, 'selected', 'snapshot decision');
 assertEqual(snapshot.decision_reason, 'top_prompt_beat_no_change_baseline', 'snapshot decision reason');
@@ -55,16 +55,29 @@ assertEqual(snapshot.selection_rule.no_change_baseline, 20, 'no-change baseline'
 assertEqual(snapshot.selection_rule.required_margin, 1, 'required margin');
 assertEqual(snapshot.no_change_baseline_candidate.title, '[Baseline]: No change this week', 'baseline title');
 assertEqual(snapshot.no_change_baseline_candidate.votes, 20, 'baseline votes');
+assertEqual(snapshot.no_change_baseline_candidate.voter_count, 0, 'baseline voter count');
 assertEqual(snapshot.no_change_baseline_candidate.virtual, true, 'baseline virtual flag');
+assertEqual(snapshot.metrics.candidate_count, 4, 'metrics candidate count');
+assertEqual(snapshot.metrics.unique_author_count, 4, 'metrics unique author count');
+assertEqual(snapshot.metrics.total_votes, 52, 'metrics total votes');
+assertEqual(snapshot.metrics.top_prompt_votes, 24, 'metrics top prompt votes');
+assertEqual(snapshot.metrics.unique_voter_count, null, 'metrics unique voter count unavailable for fixture');
+assertEqual(snapshot.metrics.unique_voter_count_available, false, 'metrics unique voter availability');
+assertEqual(snapshot.metrics.average_votes_per_candidate, 13, 'metrics average votes per candidate');
+assertEqual(snapshot.metrics.top_prompt_vote_share, 0.4615, 'metrics top prompt vote share');
 assertEqual(snapshot.ranked_candidates_with_baseline.length, 5, 'ranked candidates with baseline count');
 assertEqual(snapshot.ranked_candidates_with_baseline[0].issue, 3, 'ranked baseline table rank 1 issue');
 assertEqual(snapshot.ranked_candidates_with_baseline[1].virtual, true, 'ranked baseline table rank 2 baseline');
 assertEqual(snapshot.top_prompts.length, 3, 'top prompt count');
 assertEqual(snapshot.top_prompts[0].issue, 3, 'rank 1 issue');
+assertEqual(snapshot.top_prompts[0].voter_count, 24, 'rank 1 voter count');
 assertEqual(snapshot.top_prompts[1].issue, 2, 'rank 2 tie-break issue');
 assertEqual(snapshot.top_prompts[2].issue, 4, 'rank 3 tie-break issue');
+assertEqual(snapshot.all_candidates.some((candidate) => Object.hasOwn(candidate, '_voter_logins')), false, 'snapshot must not expose voter logins');
 
 const runLog = await readFile(runLogPath, 'utf8');
+assertIncludes(runLog, 'Participation Metrics', 'run log metrics section');
+assertIncludes(runLog, 'Unique voter count: unavailable', 'run log unique voter unavailable note');
 assertIncludes(runLog, 'Ranked Candidates With Baseline', 'run log baseline table heading');
 assertIncludes(runLog, '[Baseline]: No change this week', 'run log baseline row');
 assertIncludes(runLog, 'Decision reason: `top_prompt_beat_no_change_baseline`', 'run log decision reason');
