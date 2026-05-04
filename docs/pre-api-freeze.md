@@ -24,24 +24,41 @@ Only verification, documentation, and guardrail fixes are allowed.
 
 All of these must pass before the first real canary run.
 
-| Gate | Required result |
-|---|---|
-| Static Site Check | PASS |
-| Safety Check | PASS |
-| Exception Matrix Test | PASS |
-| Multi-Fuzz Test | PASS |
-| Collect Votes Test | PASS |
-| Select Eligible Test | PASS |
-| Weekly Auto no-eligible selector test | PASS |
-| Implementation Preflight Test | PASS |
-| Lean Proof Test | PASS |
-| Weekly Report Draft workflow | PASS, report PR only |
-| Weekly Mock Run workflow | PASS, summary PR + mock implementation PR only |
-| Weekly Auto Run no-eligible workflow | PASS, summary PR only |
+| Gate | Required result | Current evidence |
+|---|---|---|
+| Static Site Check | PASS | CI |
+| Safety Check | PASS | CI |
+| Exception Matrix Test | PASS | CI |
+| Multi-Fuzz Test | PASS | CI |
+| Collect Votes Test | PASS | CI |
+| Select Eligible Test | PASS | CI |
+| Weekly Auto no-eligible selector test | PASS | CI |
+| Implementation Preflight Test | PASS | CI |
+| Lean Proof Test | PASS | CI |
+| Weekly Report Draft workflow | PASS, report PR only | completed before canary |
+| Weekly Mock Run workflow | PASS, summary PR + mock implementation PR only | completed before canary |
+| Weekly Auto Run no-eligible workflow | PASS, summary PR only | PR #81 |
+| Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | not yet verified |
 
 ## Real API canary entry condition
 
-A real implementation-agent canary is allowed only after the no-eligible production workflow path proves that it does not request secrets, install API dependencies, run preflight, or call the model when no prompt beats the baseline.
+A real implementation-agent canary is allowed only after:
+
+```text
+Weekly Auto Run no-eligible path has produced only a summary PR
+Evidence Pipeline Dry Run source=live has produced reviewable artifacts
+the live artifact review passes docs/evidence-artifact-review.md
+```
+
+The no-eligible production path was verified in PR #81:
+
+```text
+changed file: runs/week-2026-W19-vote-summary.md
+baseline_won: true
+eligible_count: 0
+eligible_ranks: []
+implementation PR created: no
+```
 
 ## Canary constraints
 
