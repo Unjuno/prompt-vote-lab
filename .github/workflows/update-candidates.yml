@@ -38,17 +38,17 @@ jobs:
           NO_CHANGE_BASELINE: 5
           REQUIRED_MARGIN: 2
           MINIMUM_TOTAL_VOTES: 5
-          CANDIDATE_OUTPUT: lab/candidates.js
+          CANDIDATE_OUTPUT: data/prompt-candidates.js
         run: node scripts/update-candidates.mjs
 
       - name: Commit generated candidate data
         run: |
-          if git diff --quiet -- lab/candidates.js; then
+          if git diff --quiet -- data/prompt-candidates.js; then
             echo "No candidate data changes."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lab/candidates.js
+          git add data/prompt-candidates.js
           git commit -m "Update prompt candidate data"
           git push
