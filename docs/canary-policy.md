@@ -97,19 +97,62 @@ UNSAFE
 UNCERTAIN
 ```
 
+## Partial continuation decision
+
+`PARTIAL` does not mean retry.
+
+`PARTIAL` means the first run produced useful progress but did not complete the requested change.
+
+Default decision for `PARTIAL` is:
+
+```text
+STOP
+```
+
+A continuation is allowed only if every condition below is true:
+
+```text
+original PR changes lab/ only
+safety-check PASS
+static-site-check PASS
+diff is small enough for manual review
+no forbidden runtime pattern is introduced
+no workflow/rule/doc file is changed
+no hidden retry occurred
+no fallback model occurred
+no second API call already occurred
+the exact next instruction is written before the continuation run
+human reviewer explicitly approves continuation
+```
+
+Continuation must be recorded as a separate run or PR.
+
+Continuation must keep the same hard limits:
+
+```text
+model: gpt-5-nano
+attempts: 1
+SDK max_retries: 0
+fallback model: none
+automatic merge: no
+```
+
+## Forced stop outcomes
+
+These outcomes always stop:
+
+```text
+FAIL
+UNSAFE
+UNCERTAIN
+```
+
+Do not continue from these labels.
+
 ## Continuation rule
 
 A continuation is not a retry.
 
-A continuation may be considered only if:
-
-```text
-the first canary produced useful partial progress
-the PR changed lab/ only
-safety-check passed
-static-site-check passed
-the next step is explicit
-human review approves a second run
-```
+A continuation is a manually approved second bounded run after a `PARTIAL` result that satisfies all strict continuation conditions.
 
 Otherwise, stop.
