@@ -82,6 +82,24 @@ jobs:
 
           node scripts/create-snapshot-summary.mjs
 
+      - name: Generate public briefing
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
+          SITE_URL="${{ github.event.inputs.site_url || 'https://unjuno.github.io/prompt-vote-lab/' }}"
+
+          export WEEK_ID
+          export SNAPSHOT_INPUT="tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
+          export SUMMARY_INPUT="tmp/evidence/reports/summary/weekly-metrics.json"
+          export RUN_LOG_INPUT="tmp/evidence/runs/week-${WEEK_ID}.md"
+          export BRIEFING_OUTPUT="tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
+          export SITE_URL
+          export REPO_URL="https://github.com/Unjuno/prompt-vote-lab"
+
+          node scripts/create-public-briefing.mjs
+
       - name: Generate HN draft from generated snapshot
         shell: bash
         run: |
@@ -111,6 +129,7 @@ jobs:
           test -s "tmp/evidence/runs/week-${WEEK_ID}.md"
           test -s "tmp/evidence/reports/summary/weekly-metrics.json"
           test -s "tmp/evidence/reports/summary/weekly-metrics.md"
+          test -s "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
           test -s "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
 
           node -e "const fs=require('fs'); const p='tmp/evidence/data/snapshots/week-${WEEK_ID}.json'; const s=JSON.parse(fs.readFileSync(p,'utf8')); if (!Array.isArray(s.top_prompts)) throw new Error('top_prompts missing'); if (s.top_prompts.length > 3) throw new Error('too many top prompts'); if (!s.metrics) throw new Error('metrics missing'); console.log(JSON.stringify({decision:s.decision, selected_issue:s.selected_issue, total_votes:s.total_votes, candidate_count:s.metrics.candidate_count}, null, 2));"
@@ -118,6 +137,9 @@ jobs:
           node -e "const fs=require('fs'); const p='tmp/evidence/reports/summary/weekly-metrics.json'; const s=JSON.parse(fs.readFileSync(p,'utf8')); if (s.schema_version !== 'snapshot-summary-v1.0') throw new Error('unexpected summary schema'); if (s.week_count < 1) throw new Error('summary has no weeks'); console.log(JSON.stringify({week_count:s.week_count, selected_count:s.selected_count, no_run_count:s.no_run_count}, null, 2));"
 
           grep -q "Weekly Metrics Summary" "tmp/evidence/reports/summary/weekly-metrics.md"
+          grep -q "Prompt Vote Lab Briefing" "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
+          grep -q "## Observe" "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
+          grep -q "## Act" "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
           grep -q "Do-not-post checklist" "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
 
       - name: Show generated file tree

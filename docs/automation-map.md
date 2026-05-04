@@ -38,6 +38,7 @@ The project may automate:
 - vote snapshot artifact creation
 - weekly run-log draft creation
 - weekly metrics summary artifact creation
+- weekly public briefing draft artifact creation
 - event log artifact creation
 - HN/blog/report draft artifact creation
 
@@ -62,7 +63,7 @@ The project must not automate:
 | `static-site-check.yml` | implemented | Check public page structure, support wording, and lab smoke expectations | 0 |
 | `lab-pr-scope-check.yml` | implemented | Prevent lab implementation PRs from mixing lab and non-lab files | 0 |
 | `script-check.yml` | implemented | Check scripts, offline workflow smoke tests, and lab scope guard tests | 0 |
-| `evidence-pipeline-dry-run.yml` | implemented | Manually generate snapshot, run log, weekly summary, and HN draft as artifact | 0 |
+| `evidence-pipeline-dry-run.yml` | implemented | Manually generate snapshot, run log, weekly summary, public briefing, and HN draft as artifact | 0 |
 | `exception-matrix-test.yml` | implemented | Test known pass/fail boundary cases | 0 |
 | `multi-fuzz-test.yml` | implemented | Run weighted random boundary mutations | 0 |
 | `weekly-mock-run.yml` | implemented | Test weekly selection and PR creation without model API calls | 0 |
@@ -107,6 +108,7 @@ tmp/evidence/logs/aggregation/week-<week_id>.jsonl
 tmp/evidence/runs/week-<week_id>.md
 tmp/evidence/reports/summary/weekly-metrics.json
 tmp/evidence/reports/summary/weekly-metrics.md
+tmp/evidence/reports/briefings/week-<week_id>.md
 tmp/evidence/reports/hn/week-<week_id>.md
 ```
 
@@ -122,6 +124,7 @@ GitHub Issues
 → weekly snapshot
 → weekly run-log draft
 → weekly metrics summary
+→ public weekly briefing draft
 → HN/report draft
 → artifact review
 → implementation attempt, if eligible and explicitly run
@@ -131,6 +134,18 @@ GitHub Issues
 → terminal state label
 → run/report record
 ```
+
+## Public briefing data
+
+Weekly public briefing generation may summarize:
+
+- observed vote and candidate metrics
+- interpretation of the current week
+- selected/no-run decision
+- next participant action
+- links for submit and vote actions
+
+The briefing is a draft artifact. It must not auto-post externally. It must not store voter login lists.
 
 ## Metrics summary data
 
