@@ -15,7 +15,7 @@ structure Candidate where
   deriving DecidableEq, Repr
 
 def baselineWon (candidates : List Candidate) : Bool :=
-  candidates.any (fun c => c.type == CandidateType.baseline && c.rank == 1)
+  candidates.any (fun c => c.ctype == CandidateType.baseline && c.rank == 1)
 
 def eligibleOne (support : Nat) (c : Candidate) : Option Candidate :=
   match c.ctype, c.rank with
