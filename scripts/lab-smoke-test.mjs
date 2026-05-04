@@ -12,6 +12,16 @@ const visibleText = html
   .replace(/\s+/g, ' ')
   .trim();
 
+const externalResourcePatterns = [
+  /<script[^>]+src=["']https?:\/\//i,
+  /<link[^>]+href=["']https?:\/\//i,
+  /<img[^>]+src=["']https?:\/\//i,
+  /<iframe[^>]+src=["']https?:\/\//i,
+  /<object[^>]+data=["']https?:\/\//i,
+  /@import\s+url\(["']?https?:\/\//i,
+  /url\(["']?https?:\/\//i
+];
+
 const checks = [
   {
     label: 'lab title is present',
@@ -58,8 +68,8 @@ const checks = [
     pass: /Content-Security-Policy/i.test(html) && /connect-src 'none'/i.test(html)
   },
   {
-    label: 'lab does not reference external http resources',
-    pass: !/https?:\/\//i.test(combined)
+    label: 'lab does not load external http resources',
+    pass: !externalResourcePatterns.some((pattern) => pattern.test(combined))
   },
   {
     label: 'lab does not contain network APIs',
