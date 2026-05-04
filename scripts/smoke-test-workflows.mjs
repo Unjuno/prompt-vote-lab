@@ -32,6 +32,27 @@ function run(command, args, env) {
   if (result.stderr) process.stderr.write(result.stderr);
 }
 
+function runExpectFailure(command, args, env, expectedText) {
+  const result = spawnSync(command, args, {
+    env: { ...process.env, ...env },
+    encoding: 'utf8',
+    stdio: 'pipe'
+  });
+
+  if (result.status === 0) {
+    console.error(result.stdout);
+    console.error(result.stderr);
+    throw new Error(`${command} ${args.join(' ')} should have failed`);
+  }
+
+  const combined = `${result.stdout}\n${result.stderr}`;
+  if (!combined.includes(expectedText)) {
+    console.error(result.stdout);
+    console.error(result.stderr);
+    throw new Error(`Expected failure text missing: ${expectedText}`);
+  }
+}
+
 run('node', ['scripts/create-weekly-snapshot.mjs'], {
   SNAPSHOT_FIXTURE: 'tests/fixtures/prompt-candidates.json',
   WEEK_ID: week,
@@ -142,6 +163,46 @@ assertEqual(summary.weeks.some((record) => Object.hasOwn(record, '_voter_logins'
 const summaryMarkdown = await readFile(summaryMarkdownPath, 'utf8');
 assertIncludes(summaryMarkdown, 'Weekly Metrics Summary', 'summary markdown title');
 assertIncludes(summaryMarkdown, '| smoke-002 | selected | 5 | 5 | 60 | 48 | 0.5 | 3 |', 'summary markdown latest row');
+
+const emptySnapshotDir = `${testRoot}/bad/empty`;
+await mkdir(emptySnapshotDir, { recursive: true });
+runExpectFailure('node', ['scripts/create-snapshot-summary.mjs'], {
+  SNAPSHOT_DIR: emptySnapshotDir,
+  SUMMARY_OUTPUT: `${testRoot}/bad/empty-summary.json`,
+  SUMMARY_MARKDOWN_OUTPUT: `${testRoot}/bad/empty-summary.md`
+}, 'No weekly snapshot files found');
+
+const duplicateSnapshotDir = `${testRoot}/bad/duplicate`;
+await mkdir(duplicateSnapshotDir, { recursive: true });
+await writeFile(`${duplicateSnapshotDir}/week-a.json`, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
+await writeFile(`${duplicateSnapshotDir}/week-b.json`, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
+runExpectFailure('node', ['scripts/create-snapshot-summary.mjs'], {
+  SNAPSHOT_DIR: duplicateSnapshotDir,
+  SUMMARY_OUTPUT: `${testRoot}/bad/duplicate-summary.json`,
+  SUMMARY_MARKDOWN_OUTPUT: `${testRoot}/bad/duplicate-summary.md`
+}, 'duplicate week');
+
+const identitySnapshotDir = `${testRoot}/bad/identity`;
+await mkdir(identitySnapshotDir, { recursive: true });
+const identitySnapshot = structuredClone(snapshot);
+identitySnapshot.metrics.voter_logins = ['example-user'];
+await writeFile(`${identitySnapshotDir}/week-identity.json`, `${JSON.stringify(identitySnapshot, null, 2)}\n`, 'utf8');
+runExpectFailure('node', ['scripts/create-snapshot-summary.mjs'], {
+  SNAPSHOT_DIR: identitySnapshotDir,
+  SUMMARY_OUTPUT: `${testRoot}/bad/identity-summary.json`,
+  SUMMARY_MARKDOWN_OUTPUT: `${testRoot}/bad/identity-summary.md`
+}, 'forbidden key');
+
+const mismatchSnapshotDir = `${testRoot}/bad/mismatch`;
+await mkdir(mismatchSnapshotDir, { recursive: true });
+const mismatchSnapshot = structuredClone(snapshot);
+mismatchSnapshot.metrics.candidate_count = 999;
+await writeFile(`${mismatchSnapshotDir}/week-mismatch.json`, `${JSON.stringify(mismatchSnapshot, null, 2)}\n`, 'utf8');
+runExpectFailure('node', ['scripts/create-snapshot-summary.mjs'], {
+  SNAPSHOT_DIR: mismatchSnapshotDir,
+  SUMMARY_OUTPUT: `${testRoot}/bad/mismatch-summary.json`,
+  SUMMARY_MARKDOWN_OUTPUT: `${testRoot}/bad/mismatch-summary.md`
+}, 'metrics.candidate_count must match');
 
 run('node', ['scripts/create-hn-draft.mjs'], {
   WEEK_ID: week,
