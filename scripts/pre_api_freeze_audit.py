@@ -31,6 +31,8 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "no hidden retry",
         "no fallback model",
         "Weekly Auto Run no-eligible workflow",
+        "Evidence Pipeline Dry Run with `source=live`",
+        "PR #81",
         "gpt-5-nano",
         "workflow attempts to auto-merge",
     ],
@@ -50,9 +52,11 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "workflow attempts auto-merge",
     ],
     "docs/current-features.md": [
+        "no-eligible production workflow path: verified",
         "real implementation-agent canary: not yet executed",
         "production autonomy: not complete",
-        "Run one final no-eligible workflow test before any paid implementation-agent canary.",
+        "Evidence Pipeline Dry Run",
+        "source=live",
     ],
     "docs/weekly-ops-doctrine.md": [
         "Observe → Orient → Decide → Act → Record → Improve",
