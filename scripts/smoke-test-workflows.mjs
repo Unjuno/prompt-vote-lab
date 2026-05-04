@@ -1,14 +1,17 @@
 #!/usr/bin/env node
-import { readFile, rm } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 
 const testRoot = 'tmp/smoke';
 const week = 'smoke-001';
-const snapshotPath = `${testRoot}/data/snapshots/week-${week}.json`;
+const snapshotDir = `${testRoot}/data/snapshots`;
+const snapshotPath = `${snapshotDir}/week-${week}.json`;
 const aggregationLogPath = `${testRoot}/logs/aggregation/week-${week}.jsonl`;
 const runLogPath = `${testRoot}/runs/week-${week}.md`;
 const hnDraftPath = `${testRoot}/reports/hn/week-${week}.md`;
+const summaryPath = `${testRoot}/reports/summary/weekly-metrics.json`;
+const summaryMarkdownPath = `${testRoot}/reports/summary/weekly-metrics.md`;
 
 await rm(testRoot, { recursive: true, force: true });
 
@@ -81,6 +84,64 @@ assertIncludes(runLog, 'Unique voter count: unavailable', 'run log unique voter 
 assertIncludes(runLog, 'Ranked Candidates With Baseline', 'run log baseline table heading');
 assertIncludes(runLog, '[Baseline]: No change this week', 'run log baseline row');
 assertIncludes(runLog, 'Decision reason: `top_prompt_beat_no_change_baseline`', 'run log decision reason');
+
+await mkdir(snapshotDir, { recursive: true });
+const secondSnapshot = structuredClone(snapshot);
+secondSnapshot.week = 'smoke-002';
+secondSnapshot.snapshot_at = '2026-05-18T00:00:00+09:00';
+secondSnapshot.snapshot_path = `${snapshotDir}/week-smoke-002.json`;
+secondSnapshot.metrics = {
+  ...secondSnapshot.metrics,
+  candidate_count: 5,
+  unique_author_count: 5,
+  total_votes: 60,
+  top_prompt_votes: 30,
+  unique_voter_count: 48,
+  unique_voter_count_available: true,
+  average_votes_per_candidate: 12,
+  top_prompt_vote_share: 0.5
+};
+secondSnapshot.total_votes = 60;
+secondSnapshot.top_prompt_votes = 30;
+secondSnapshot.top_prompts[0].votes = 30;
+secondSnapshot.top_prompts[0].voter_count = 30;
+secondSnapshot.all_candidates.push({
+  issue: 5,
+  title: 'Add a public metrics summary',
+  author: 'example-epsilon',
+  votes: 8,
+  voter_count: 8,
+  url: 'https://github.com/Unjuno/prompt-vote-lab/issues/5',
+  created_at: '2026-05-08T00:00:00Z',
+  updated_at: '2026-05-08T00:00:00Z'
+});
+await writeFile(`${snapshotDir}/week-smoke-002.json`, `${JSON.stringify(secondSnapshot, null, 2)}\n`, 'utf8');
+
+run('node', ['scripts/create-snapshot-summary.mjs'], {
+  SNAPSHOT_DIR: snapshotDir,
+  SUMMARY_OUTPUT: summaryPath,
+  SUMMARY_MARKDOWN_OUTPUT: summaryMarkdownPath
+});
+
+assertExists(summaryPath);
+assertExists(summaryMarkdownPath);
+const summary = JSON.parse(await readFile(summaryPath, 'utf8'));
+assertEqual(summary.schema_version, 'snapshot-summary-v1.0', 'summary schema version');
+assertEqual(summary.week_count, 2, 'summary week count');
+assertEqual(summary.selected_count, 2, 'summary selected count');
+assertEqual(summary.no_run_count, 0, 'summary no-run count');
+assertEqual(summary.latest_week.week, 'smoke-002', 'summary latest week');
+assertEqual(summary.latest_delta.total_votes, 8, 'summary total votes delta');
+assertEqual(summary.latest_delta.candidate_count, 1, 'summary candidate count delta');
+assertEqual(summary.latest_delta.unique_voter_count, null, 'summary unique voter delta unavailable when previous is null');
+assertEqual(summary.trend.total_votes, 'up', 'summary total votes trend');
+assertEqual(summary.trend.candidate_count, 'up', 'summary candidate count trend');
+assertEqual(summary.trend.unique_author_count, 'up', 'summary unique author trend');
+assertEqual(summary.trend.unique_voter_count, 'insufficient_data', 'summary unique voter trend');
+assertEqual(summary.weeks.some((record) => Object.hasOwn(record, '_voter_logins')), false, 'summary must not expose voter logins');
+const summaryMarkdown = await readFile(summaryMarkdownPath, 'utf8');
+assertIncludes(summaryMarkdown, 'Weekly Metrics Summary', 'summary markdown title');
+assertIncludes(summaryMarkdown, '| smoke-002 | selected | 5 | 5 | 60 | 48 | 0.5 | 3 |', 'summary markdown latest row');
 
 run('node', ['scripts/create-hn-draft.mjs'], {
   WEEK_ID: week,
