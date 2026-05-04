@@ -6,6 +6,7 @@ import path from 'node:path';
 const snapshotDir = process.env.SNAPSHOT_DIR || 'data/snapshots';
 const summaryOutput = process.env.SUMMARY_OUTPUT || 'reports/summary/weekly-metrics.json';
 const markdownOutput = process.env.SUMMARY_MARKDOWN_OUTPUT || 'reports/summary/weekly-metrics.md';
+const forbiddenKeys = new Set(['_voter_logins', 'voter_logins', 'voters', 'reaction_users']);
 
 if (!existsSync(snapshotDir)) {
   throw new Error(`Snapshot directory not found: ${snapshotDir}`);
@@ -15,11 +16,21 @@ const files = (await readdir(snapshotDir))
   .filter((file) => /^week-.+\.json$/.test(file))
   .sort();
 
+if (files.length === 0) {
+  throw new Error(`No weekly snapshot files found in ${snapshotDir}`);
+}
+
 const snapshots = [];
+const seenWeeks = new Set();
 for (const file of files) {
   const snapshotPath = path.join(snapshotDir, file);
   const snapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
-  snapshots.push(normalizeSnapshot(snapshot, snapshotPath));
+  const normalized = normalizeSnapshot(snapshot, snapshotPath);
+  if (seenWeeks.has(normalized.week)) {
+    throw new Error(`${snapshotPath}: duplicate week ${normalized.week}`);
+  }
+  seenWeeks.add(normalized.week);
+  snapshots.push(normalized);
 }
 
 const weeks = snapshots.map((snapshot) => weekRecord(snapshot));
@@ -36,6 +47,8 @@ console.log(`Wrote ${markdownOutput}`);
 console.log(`Weeks summarized: ${summary.week_count}`);
 
 function normalizeSnapshot(snapshot, snapshotPath) {
+  assertNoForbiddenKeys(snapshot, snapshotPath);
+
   const schema = String(snapshot.schema_version || '');
   if (!schema.startsWith('snapshot-v1.')) {
     throw new Error(`${snapshotPath}: unsupported schema_version ${schema || '(missing)'}`);
@@ -49,10 +62,6 @@ function normalizeSnapshot(snapshot, snapshotPath) {
     throw new Error(`${snapshotPath}: all_candidates must be an array`);
   }
 
-  if (snapshot.all_candidates.some((candidate) => Object.hasOwn(candidate, '_voter_logins'))) {
-    throw new Error(`${snapshotPath}: must not expose voter login lists`);
-  }
-
   const metrics = snapshot.metrics || deriveMetrics(snapshot);
   assertFiniteNumber(metrics.candidate_count, `${snapshotPath}: metrics.candidate_count`);
   assertFiniteNumber(metrics.unique_author_count, `${snapshotPath}: metrics.unique_author_count`);
@@ -63,6 +72,18 @@ function normalizeSnapshot(snapshot, snapshotPath) {
 
   if (metrics.unique_voter_count !== null && metrics.unique_voter_count !== undefined) {
     assertFiniteNumber(metrics.unique_voter_count, `${snapshotPath}: metrics.unique_voter_count`);
+  }
+
+  if (metrics.candidate_count !== snapshot.all_candidates.length) {
+    throw new Error(`${snapshotPath}: metrics.candidate_count must match all_candidates.length`);
+  }
+
+  if (metrics.total_votes !== Number(snapshot.total_votes ?? metrics.total_votes)) {
+    throw new Error(`${snapshotPath}: metrics.total_votes must match top-level total_votes`);
+  }
+
+  if (metrics.top_prompt_votes !== Number(snapshot.top_prompt_votes ?? metrics.top_prompt_votes)) {
+    throw new Error(`${snapshotPath}: metrics.top_prompt_votes must match top-level top_prompt_votes`);
   }
 
   return {
@@ -179,6 +200,24 @@ function summaryMarkdown(summary) {
 `| Week | Decision | Candidates | Authors | Votes | Voters | Top share | Selected |\n` +
 `|---|---|---:|---:|---:|---:|---:|---|\n` +
 `${rows}\n`;
+}
+
+function assertNoForbiddenKeys(value, location) {
+  const stack = [{ value, path: '$' }];
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (!current || current.value === null || typeof current.value !== 'object') continue;
+    if (Array.isArray(current.value)) {
+      current.value.forEach((item, index) => stack.push({ value: item, path: `${current.path}[${index}]` }));
+      continue;
+    }
+    for (const [key, child] of Object.entries(current.value)) {
+      if (forbiddenKeys.has(key)) {
+        throw new Error(`${location}: forbidden key ${current.path}.${key}`);
+      }
+      stack.push({ value: child, path: `${current.path}.${key}` });
+    }
+  }
 }
 
 function assertFiniteNumber(value, label) {
