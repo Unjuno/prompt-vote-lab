@@ -55,5 +55,8 @@ jobs:
       - name: Run offline workflow smoke test
         run: node scripts/smoke-test-workflows.mjs
 
+      - name: Run evidence artifact smoke test
+        run: node scripts/run-evidence-artifact-smoke.mjs
+
       - name: Run lab PR scope guard self-test
         run: bash scripts/test-lab-pr-scope.sh
