@@ -9,11 +9,101 @@
 </head>
 <body>
   <main class="lab-root" aria-labelledby="lab-title">
-    <p class="status">Awaiting first accepted prompt run</p>
-    <h1 id="lab-title">Prompt Vote Lab</h1>
-    <p class="note">
-      This area is the constrained implementation target. It starts intentionally empty and will be changed only by accepted experiment runs.
-    </p>
+    <section class="hero panel" aria-labelledby="lab-title">
+      <p class="status">Public prompt-to-implementation experiment</p>
+      <h1 id="lab-title">Prompt Vote Lab</h1>
+      <p class="note">
+        Participants propose prompts as GitHub issues and vote with reactions. The selected prompt is implemented by an AI coding agent inside this constrained static lab.
+      </p>
+      <div class="actions" aria-label="Participation links">
+        <a class="button primary" href="https://github.com/Unjuno/prompt-vote-lab/issues/new">Propose a prompt</a>
+        <a class="button" href="https://github.com/Unjuno/prompt-vote-lab/issues">Vote on prompts</a>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="current-week-title">
+      <div class="section-head">
+        <p class="kicker">Current week</p>
+        <h2 id="current-week-title">Week 001 status</h2>
+      </div>
+      <dl class="status-grid">
+        <div>
+          <dt>Voting layer</dt>
+          <dd>GitHub Issues and reactions</dd>
+        </div>
+        <div>
+          <dt>Selection rule</dt>
+          <dd>Top prompt needs at least 7 votes and 5 total weekly votes</dd>
+        </div>
+        <div>
+          <dt>Implementation scope</dt>
+          <dd><code>lab/index.html</code>, <code>lab/style.css</code>, <code>lab/app.js</code></dd>
+        </div>
+        <div>
+          <dt>Run result</dt>
+          <dd>Awaiting first recorded accepted prompt run</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="panel" aria-labelledby="candidates-title">
+      <div class="section-head">
+        <p class="kicker">Open prompt candidates</p>
+        <h2 id="candidates-title">Vote by reacting on GitHub</h2>
+        <p class="small-note">This static list is a display fallback. Automated vote data should live outside the AI-editable lab scope.</p>
+      </div>
+      <ul class="candidate-list">
+        <li>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/1">#1 Make the lab page explain the experiment clearly</a>
+          <p>A first-time visitor should understand the experiment within 10 seconds.</p>
+        </li>
+        <li>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/2">#2 Add expected-vs-actual comparison cards</a>
+          <p>Make the expectation gap visible instead of only showing a generated UI.</p>
+        </li>
+        <li>
+          <a href="https://github.com/Unjuno/prompt-vote-lab/issues/3">#3 Show weekly runs as a timeline</a>
+          <p>Show proposal, vote, implementation, PR review, merge or reject, and gap classification.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="timeline-title">
+      <div class="section-head">
+        <p class="kicker">Observable loop</p>
+        <h2 id="timeline-title">Weekly run timeline</h2>
+      </div>
+      <ol class="timeline">
+        <li><span>1</span><strong>Propose</strong><p>Participants submit prompts as GitHub issues.</p></li>
+        <li><span>2</span><strong>Vote</strong><p>Participants vote with GitHub reactions.</p></li>
+        <li><span>3</span><strong>Select</strong><p>The top prompt must beat the no-change threshold.</p></li>
+        <li><span>4</span><strong>Implement</strong><p>The AI coding agent edits only the allowed lab files.</p></li>
+        <li><span>5</span><strong>Review</strong><p>The maintainer checks safety, scope, and result quality.</p></li>
+        <li><span>6</span><strong>Classify</strong><p>The weekly log records the expectation gap.</p></li>
+      </ol>
+    </section>
+
+    <section class="panel comparison" aria-labelledby="comparison-title">
+      <div class="section-head">
+        <p class="kicker">Expectation gap</p>
+        <h2 id="comparison-title">Expected vs actual</h2>
+      </div>
+      <div class="compare-grid">
+        <article>
+          <h3>Expected before implementation</h3>
+          <p>Participants expect the selected prompt to improve the lab while staying inside the static UI constraints.</p>
+        </article>
+        <article>
+          <h3>Actual result after implementation</h3>
+          <p>The PR diff, safety checks, and reviewer notes determine whether the result matched the expectation.</p>
+        </article>
+        <article>
+          <h3>Classification</h3>
+          <p>Allowed labels include Hit, Partial, Misread, Overbuild, Underbuild, Rule conflict, Unsafe, and Rejected.</p>
+        </article>
+      </div>
+    </section>
+
     <noscript>This lab works without network access or external scripts.</noscript>
   </main>
 
