@@ -10,6 +10,7 @@ const promptLabel = process.env.PROMPT_LABEL || 'prompt-proposal';
 const week = process.env.WEEK_ID || inferWeekId();
 const cutoffTimezone = process.env.CUTOFF_TIMEZONE || 'Asia/Tokyo';
 const snapshotAt = process.env.SNAPSHOT_AT || new Date().toISOString();
+const allowSnapshotOverwrite = process.env.ALLOW_SNAPSHOT_OVERWRITE === 'true';
 
 const noChangeBaseline = Number(process.env.NO_CHANGE_BASELINE || 5);
 const requiredMargin = Number(process.env.REQUIRED_MARGIN || 2);
@@ -21,6 +22,10 @@ const runLogPath = process.env.RUN_LOG_OUTPUT || `runs/week-${week}.md`;
 
 if (!token) {
   throw new Error('GITHUB_TOKEN is required.');
+}
+
+if (existsSync(snapshotPath) && !allowSnapshotOverwrite) {
+  throw new Error(`${snapshotPath} already exists. Refusing to overwrite an existing weekly snapshot.`);
 }
 
 const headers = {
