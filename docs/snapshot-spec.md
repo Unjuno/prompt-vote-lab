@@ -53,6 +53,14 @@ The snapshot generator reads:
 
 The generator also inserts a virtual no-change baseline candidate.
 
+## Public-data boundary
+
+Snapshots record aggregate participation metrics.
+
+Snapshots may include issue authors because issue authorship is part of the proposal record.
+
+Snapshots must not include voter login lists. The generator may use reaction users internally to compute aggregate unique-voter counts, but the output stores counts only.
+
 ## Top prompt selection
 
 Sort real prompt candidates by:
@@ -103,11 +111,28 @@ The baseline candidate is not a GitHub issue.
 
 It exists to make `no_run` decisions explainable in the snapshot and run log.
 
+## Participation metrics
+
+The snapshot records aggregate metrics needed to evaluate participation.
+
+Metrics:
+
+- `candidate_count`: number of real prompt candidates
+- `unique_author_count`: number of distinct prompt authors among real candidates
+- `total_votes`: total `+1` reactions across real candidates
+- `top_prompt_votes`: `+1` reaction count for the top real prompt
+- `unique_voter_count`: number of distinct voters across all real candidates, or `null` when unavailable
+- `unique_voter_count_available`: whether `unique_voter_count` was computed from live reaction users
+- `average_votes_per_candidate`: total votes divided by candidate count
+- `top_prompt_vote_share`: top prompt votes divided by total votes
+
+Fixture snapshots normally set `unique_voter_count` to `null`.
+
 ## Snapshot schema
 
 ```json
 {
-  "schema_version": "snapshot-v1.1",
+  "schema_version": "snapshot-v1.2",
   "week": "001",
   "snapshot_at": "2026-05-11T00:00:00+09:00",
   "cutoff_timezone": "Asia/Tokyo",
@@ -124,10 +149,21 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
     "title": "[Baseline]: No change this week",
     "author": "system",
     "votes": 20,
+    "voter_count": 0,
     "url": null,
     "virtual": true,
     "created_at": null,
     "updated_at": null
+  },
+  "metrics": {
+    "candidate_count": 4,
+    "unique_author_count": 4,
+    "total_votes": 52,
+    "top_prompt_votes": 24,
+    "unique_voter_count": 46,
+    "unique_voter_count_available": true,
+    "average_votes_per_candidate": 13,
+    "top_prompt_vote_share": 0.4615
   },
   "total_votes": 52,
   "top_prompt_votes": 24,
@@ -141,6 +177,7 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
       "title": "Show weekly runs as a timeline",
       "author": "Unjuno",
       "votes": 24,
+      "voter_count": 24,
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3",
       "created_at": "2026-05-02T00:55:32Z",
       "updated_at": "2026-05-02T01:32:25Z",
@@ -152,6 +189,7 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
       "title": "[Baseline]: No change this week",
       "author": "system",
       "votes": 20,
+      "voter_count": 0,
       "url": null,
       "created_at": null,
       "updated_at": null,
@@ -165,6 +203,7 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
       "title": "Show weekly runs as a timeline",
       "author": "Unjuno",
       "votes": 24,
+      "voter_count": 24,
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3",
       "created_at": "2026-05-02T00:55:32Z",
       "updated_at": "2026-05-02T01:32:25Z"
@@ -176,6 +215,7 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
       "title": "Show weekly runs as a timeline",
       "author": "Unjuno",
       "votes": 24,
+      "voter_count": 24,
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3"
     }
   ]
@@ -188,6 +228,13 @@ It exists to make `no_run` decisions explainable in the snapshot and run log.
 - `top_prompts` contains only real prompt issues
 - `top_prompts` is sorted by descending votes
 - real prompt ties are resolved by ascending issue number
+- each real candidate has `votes` and `voter_count`
+- snapshots do not contain voter login lists
+- `metrics.candidate_count` equals `all_candidates.length`
+- `metrics.unique_author_count` is the number of distinct real candidate authors
+- `metrics.total_votes` equals top-level `total_votes`
+- `metrics.top_prompt_votes` equals top-level `top_prompt_votes`
+- `metrics.unique_voter_count` is either a number or `null`
 - `ranked_candidates_with_baseline` includes the virtual baseline candidate
 - `ranked_candidates_with_baseline` is sorted by descending votes
 - when the baseline and a real prompt tie at 20 votes, the baseline wins unless the prompt reaches the required margin
