@@ -1,38 +1,19 @@
-# Selection gate
+# No-change baseline
 
-Prompt Vote Lab includes a no-change baseline in the weekly selection rule.
+Prompt Vote Lab includes a virtual no-change candidate in every weekly vote.
 
-It is the game's default opponent: a prompt should not receive an implementation-agent attempt merely because it exists.
+It is the game's default opponent.
 
-## Current rule
-
-```text
-top prompt votes >= no-change baseline + required margin
-and
-total weekly votes >= minimum total votes
-```
-
-Initial values:
-
-| Parameter | Value |
-|---|---:|
-| no-change baseline | 5 |
-| required margin | 2 |
-| minimum total votes | 5 |
-
-Therefore:
+## Baseline
 
 ```text
-top prompt votes >= 7
-and
-total weekly votes >= 5
+[Baseline]: No change this week
+20 virtual votes
 ```
 
-## Result
+## Rule
 
-If the weekly gate passes, the top prompt becomes the normal implementation candidate.
-
-If the weekly gate fails, no implementation-agent attempt is created for that week.
+If the no-change baseline ranks first, no implementation-agent attempt is created for that week.
 
 Only real `prompt-proposal` issues can create implementation-agent attempts.
 
@@ -50,15 +31,13 @@ The baseline protects:
 - public trust in the vote
 - the inherited lab state
 
-## Example: gate fails
+## Example
 
 | Candidate | Votes | Result |
 |---|---:|---|
-| Issue #1 | 6 | below top-prompt threshold |
-| Issue #2 | 3 | below top-prompt threshold |
-
-Total weekly votes: 9  
-Top prompt votes: 6
+| No change baseline | 20 | wins |
+| Issue #1 | 7 | not attempted |
+| Issue #2 | 5 | not attempted |
 
 Result:
 
@@ -66,15 +45,13 @@ Result:
 No implementation PR is created.
 ```
 
-## Example: gate passes
+## Strong prompt example
 
 | Candidate | Votes | Result |
 |---|---:|---|
-| Issue #1 | 7 | rank 1 |
-| Issue #2 | 5 | rank 2 |
-
-Total weekly votes: 12  
-Top prompt votes: 7
+| Issue #1 | 24 | rank 1 |
+| No change baseline | 20 | loses |
+| Issue #2 | 12 | rank 2 |
 
 Result:
 
@@ -84,12 +61,12 @@ Issue #1 becomes the normal weekly implementation candidate.
 
 ## Support interaction
 
-Support does not override the selection gate.
+Support does not override the no-change baseline.
 
-Support only opens additional comparison runs among real prompt candidates after the weekly candidate set has passed the gate.
+Support only opens additional comparison runs among real prompt candidates that remain eligible after the baseline is inserted.
 
 ## Reputation interaction
 
 Reputation is not currently computed automatically.
 
-However, players should remember which prompt styles pass the gate and still fail, and which prompts actually improve the lab.
+However, players should remember which prompt styles repeatedly beat the baseline and still failed, and which prompts actually improved the lab.
