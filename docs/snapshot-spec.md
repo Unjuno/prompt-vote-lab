@@ -51,9 +51,11 @@ The snapshot generator reads:
 - issue created_at and updated_at
 - issue body sections when available
 
+The generator also inserts a virtual no-change baseline candidate.
+
 ## Top prompt selection
 
-Sort candidates by:
+Sort real prompt candidates by:
 
 1. higher vote count
 2. older issue number as deterministic tie-breaker
@@ -67,9 +69,9 @@ Reason: edited issues should not gain or lose rank because they were edited late
 Parameters:
 
 ```text
-no_change_baseline = 5
-required_margin = 2
-minimum_total_votes = 5
+no_change_baseline = 20
+required_margin = 1
+minimum_total_votes = 20
 ```
 
 A prompt is selected only if:
@@ -84,35 +86,85 @@ and:
 total_votes >= minimum_total_votes
 ```
 
-With the initial parameters, the top prompt must have at least 7 votes and the weekly vote must have at least 5 total votes.
+With the initial parameters, the top prompt must have at least 21 votes, and the weekly vote must have at least 20 total real prompt votes.
+
+This is equivalent to saying that a real prompt must beat the 20-vote no-change baseline.
+
+## Baseline candidate
+
+Every snapshot records this virtual candidate:
+
+```text
+[Baseline]: No change this week
+20 virtual votes
+```
+
+The baseline candidate is not a GitHub issue.
+
+It exists to make `no_run` decisions explainable in the snapshot and run log.
 
 ## Snapshot schema
 
 ```json
 {
-  "schema_version": "snapshot-v1.0",
+  "schema_version": "snapshot-v1.1",
   "week": "001",
   "snapshot_at": "2026-05-11T00:00:00+09:00",
   "cutoff_timezone": "Asia/Tokyo",
   "source": "github-issues-reactions",
   "repository": "Unjuno/prompt-vote-lab",
   "selection_rule": {
-    "rule": "selection-v1.0",
-    "no_change_baseline": 5,
-    "required_margin": 2,
-    "minimum_total_votes": 5
+    "rule": "selection-v1.1",
+    "no_change_baseline": 20,
+    "required_margin": 1,
+    "minimum_total_votes": 20
   },
-  "total_votes": 15,
-  "top_prompt_votes": 8,
+  "no_change_baseline_candidate": {
+    "issue": null,
+    "title": "[Baseline]: No change this week",
+    "author": "system",
+    "votes": 20,
+    "url": null,
+    "virtual": true,
+    "created_at": null,
+    "updated_at": null
+  },
+  "total_votes": 52,
+  "top_prompt_votes": 24,
   "decision": "selected",
+  "decision_reason": "top_prompt_beat_no_change_baseline",
   "selected_issue": 3,
+  "ranked_candidates_with_baseline": [
+    {
+      "rank": 1,
+      "issue": 3,
+      "title": "Show weekly runs as a timeline",
+      "author": "Unjuno",
+      "votes": 24,
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3",
+      "created_at": "2026-05-02T00:55:32Z",
+      "updated_at": "2026-05-02T01:32:25Z",
+      "virtual": false
+    },
+    {
+      "rank": 2,
+      "issue": null,
+      "title": "[Baseline]: No change this week",
+      "author": "system",
+      "votes": 20,
+      "url": null,
+      "created_at": null,
+      "updated_at": null,
+      "virtual": true
+    }
+  ],
   "top_prompts": [
     {
       "rank": 1,
       "issue": 3,
       "title": "Show weekly runs as a timeline",
       "author": "Unjuno",
-      "votes": 8,
+      "votes": 24,
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3",
       "created_at": "2026-05-02T00:55:32Z",
       "updated_at": "2026-05-02T01:32:25Z"
@@ -123,7 +175,7 @@ With the initial parameters, the top prompt must have at least 7 votes and the w
       "issue": 3,
       "title": "Show weekly runs as a timeline",
       "author": "Unjuno",
-      "votes": 8,
+      "votes": 24,
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/3"
     }
   ]
@@ -133,11 +185,16 @@ With the initial parameters, the top prompt must have at least 7 votes and the w
 ## Required invariants
 
 - `top_prompts.length <= 3`
+- `top_prompts` contains only real prompt issues
 - `top_prompts` is sorted by descending votes
-- ties are resolved by ascending issue number
+- real prompt ties are resolved by ascending issue number
+- `ranked_candidates_with_baseline` includes the virtual baseline candidate
+- `ranked_candidates_with_baseline` is sorted by descending votes
+- when the baseline and a real prompt tie at 20 votes, the baseline wins unless the prompt reaches the required margin
 - `top_prompt_votes` equals `top_prompts[0].votes` when `top_prompts` is non-empty
 - `selected_issue` equals `top_prompts[0].issue` when `decision = "selected"`
 - `selected_issue` is `null` when `decision = "no_run"`
+- `decision_reason` explains why the decision was selected or no-run
 - no file under `lab/` is modified by the snapshot generator
 
 ## Decision values
@@ -149,6 +206,13 @@ Allowed `decision` values:
 - `invalid`
 
 Use `invalid` only when data retrieval failed or the snapshot could not be trusted.
+
+Allowed `decision_reason` values:
+
+- `top_prompt_beat_no_change_baseline`
+- `minimum_total_votes_not_met`
+- `no_change_baseline_won_or_tied`
+- `no_run`
 
 ## Immutability policy
 
