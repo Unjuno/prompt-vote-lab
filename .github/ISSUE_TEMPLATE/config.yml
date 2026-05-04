@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Read the participant tutorial
+    url: https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/participant-tutorial.md
+    about: Learn how prompt proposals, voting, snapshots, and lab runs work.
