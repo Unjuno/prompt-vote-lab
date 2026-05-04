@@ -2,14 +2,14 @@
 
 Prompt Vote Lab is a public prompt game and experiment.
 
-Players compete by writing prompts that other players are willing to trust. If a prompt beats the weekly no-change baseline, a constrained AI coding agent gets one bounded attempt to apply it to the current `lab/` state.
+Players compete by writing prompts that other players are willing to trust. If a prompt passes the weekly selection gate, a constrained AI coding agent gets one bounded attempt to apply it to the current `lab/` state.
 
 A popular prompt can still fail.
 
 The game is not only about getting votes. It is about earning trust by proposing prompts that survive implementation.
 
 ```text
-Prompt → 20-vote gate → agent PR → public outcome → reputation memory
+Prompt → weekly vote gate → agent PR → public outcome → reputation memory
 ```
 
 ## Short explanation
@@ -18,9 +18,10 @@ Prompt Vote Lab is a competitive prompt market plus a constrained, cumulative im
 
 - Players submit prompt candidates as GitHub Issues.
 - Players vote with 👍 reactions.
-- A virtual no-change baseline is inserted every week with 20 virtual votes.
-- If a real prompt beats the baseline, the selected prompt is passed to the implementation agent.
-- The implementation agent attempts the change against the current `main` version of `lab/`.
+- A weekly selection gate decides whether a prompt receives an implementation attempt.
+- The initial gate requires the top prompt to have at least 7 votes and the week to have at least 5 total votes.
+- If no prompt passes the gate, the workflow records the vote summary but does not spend an implementation-agent attempt.
+- The implementation agent attempts the selected change against the current `main` version of `lab/`.
 - If merged, the result becomes the starting point for later weeks.
 - The result is reviewed, classified, and remembered.
 
@@ -92,10 +93,10 @@ Rejected, failed, unsafe, and unmerged comparison PRs do not become the next wee
 
 1. Players submit prompts as GitHub Issues.
 2. Players vote with GitHub reactions.
-3. A virtual no-change baseline is inserted with 20 virtual votes.
-4. Candidates are ranked by vote count.
-5. If the no-change baseline ranks first, no implementation run is created.
-6. If a real prompt ranks first, rank 1 is the normal weekly run candidate.
+3. Candidates are ranked by vote count, then by lower issue number for ties.
+4. The top prompt must pass the weekly selection gate.
+5. If no prompt passes the gate, no implementation run is created.
+6. If a real prompt passes the gate, rank 1 is the normal weekly run candidate.
 7. Rank 2 and rank 3 may be executed as support-unlocked comparison runs.
 8. The selected prompt is given to the implementation agent.
 9. The implementation agent modifies only the current `main` state of `lab/` and opens a PR.
@@ -117,16 +118,27 @@ Rank 2 and rank 3 are comparison candidates. They are not automatically promoted
 
 Only merged PRs affect the inherited lab state.
 
-## No-change baseline
+## Selection gate
 
-Every weekly vote includes a virtual candidate:
+The current weekly selection rule is:
 
 ```text
-[Baseline]: No change this week
-20 virtual votes
+top prompt votes >= no-change baseline + required margin
+and
+total weekly votes >= minimum total votes
 ```
 
-If this baseline ranks first, the workflow records the vote summary but does not create implementation PRs or spend an implementation-agent attempt.
+Initial values:
+
+| Parameter | Value |
+|---|---:|
+| no-change baseline | 5 |
+| required margin | 2 |
+| minimum total votes | 5 |
+
+Therefore, the top prompt initially needs at least 7 votes, and the weekly candidate set needs at least 5 total votes.
+
+If the gate fails, the workflow records the vote state but does not create an implementation-agent attempt.
 
 See [`docs/no-change-baseline.md`](docs/no-change-baseline.md).
 
@@ -181,7 +193,6 @@ See [`docs/support-policy.md`](docs/support-policy.md).
 - inherited lab base commit
 - vote count
 - candidate rank
-- no-change baseline result
 - selection rule
 - implementation agent/model condition
 - AI execution constraints
@@ -206,7 +217,7 @@ Key documents:
 
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
 - [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
-- [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
+- [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — selection gate explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
 - [`docs/automation-map.md`](docs/automation-map.md) — automation boundary
 
