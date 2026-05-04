@@ -13,6 +13,7 @@ required_files=(
   "docs/no-change-baseline.md"
   "docs/support-policy.md"
   "docs/report-policy.md"
+  "docs/pre-api-freeze.md"
   "docs/automation-map.md"
   "rules/static-ui-v1.0.md"
   "rules/agent-run-policy-v1.0.md"
@@ -70,6 +71,11 @@ fi
 
 if ! grep -qi -E "report policy|weekly report draft|model-free" docs/README.md; then
   echo "ERROR: docs index must expose the model-free report draft policy."
+  exit 1
+fi
+
+if ! grep -qi -E "Pre-API freeze|pre-API freeze|paid implementation-agent canary" docs/README.md; then
+  echo "ERROR: docs index must expose the pre-API freeze checklist."
   exit 1
 fi
 
