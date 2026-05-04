@@ -71,7 +71,7 @@ def mutate_missing_guard(repo: Path) -> None:
 def mutate_review_boundary(repo: Path) -> None:
     path = repo / "docs/evidence-artifact-review.md"
     text = path.read_text(encoding="utf-8")
-    text = text.replace("no voter login list appears", "generated files look plausible", 1)
+    text = text.replace("no voter login list appears", "generated files look plausible")
     path.write_text(text, encoding="utf-8")
 
 
