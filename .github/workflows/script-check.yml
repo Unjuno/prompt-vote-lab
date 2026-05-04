@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/**/*.mjs"
+      - "scripts/**/*.sh"
       - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
   workflow_dispatch:
@@ -37,5 +38,22 @@ jobs:
             node --check "$file"
           done
 
+      - name: Check shell script syntax
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(scripts/*.sh scripts/**/*.sh)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No .sh scripts found."
+            exit 0
+          fi
+          for file in "${files[@]}"; do
+            echo "Checking $file"
+            bash -n "$file"
+          done
+
       - name: Run offline workflow smoke test
         run: node scripts/smoke-test-workflows.mjs
+
+      - name: Run lab PR scope guard self-test
+        run: bash scripts/test-lab-pr-scope.sh
