@@ -12,6 +12,7 @@ const runLogPath = `${testRoot}/runs/week-${week}.md`;
 const hnDraftPath = `${testRoot}/reports/hn/week-${week}.md`;
 const summaryPath = `${testRoot}/reports/summary/weekly-metrics.json`;
 const summaryMarkdownPath = `${testRoot}/reports/summary/weekly-metrics.md`;
+const briefingPath = `${testRoot}/reports/briefings/week-${week}.md`;
 
 await rm(testRoot, { recursive: true, force: true });
 
@@ -163,6 +164,28 @@ assertEqual(summary.weeks.some((record) => Object.hasOwn(record, '_voter_logins'
 const summaryMarkdown = await readFile(summaryMarkdownPath, 'utf8');
 assertIncludes(summaryMarkdown, 'Weekly Metrics Summary', 'summary markdown title');
 assertIncludes(summaryMarkdown, '| smoke-002 | selected | 5 | 5 | 60 | 48 | 0.5 | 3 |', 'summary markdown latest row');
+
+run('node', ['scripts/create-public-briefing.mjs'], {
+  WEEK_ID: week,
+  SNAPSHOT_INPUT: snapshotPath,
+  SUMMARY_INPUT: summaryPath,
+  RUN_LOG_INPUT: runLogPath,
+  BRIEFING_OUTPUT: briefingPath,
+  SITE_URL: 'https://unjuno.github.io/prompt-vote-lab/',
+  REPO_URL: 'https://github.com/Unjuno/prompt-vote-lab'
+});
+
+assertExists(briefingPath);
+const briefing = await readFile(briefingPath, 'utf8');
+assertIncludes(briefing, 'Prompt Vote Lab Briefing: Week smoke-001', 'briefing title');
+assertIncludes(briefing, '## Observe', 'briefing observe section');
+assertIncludes(briefing, '## Orient', 'briefing orient section');
+assertIncludes(briefing, '## Decide', 'briefing decide section');
+assertIncludes(briefing, '## Act', 'briefing act section');
+assertIncludes(briefing, 'Vote:', 'briefing vote link');
+assertIncludes(briefing, 'Submit prompt:', 'briefing submit link');
+assertIncludes(briefing, 'This briefing is safe to share as a status update only after checking', 'briefing share warning');
+assertEqual(briefing.includes('voter_logins'), false, 'briefing must not expose voter login lists');
 
 const emptySnapshotDir = `${testRoot}/bad/empty`;
 await mkdir(emptySnapshotDir, { recursive: true });
