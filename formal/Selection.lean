@@ -15,7 +15,7 @@ structure Candidate where
   deriving DecidableEq, Repr
 
 def baselineWon (candidates : List Candidate) : Bool :=
-  candidates.any (fun c => c.ctype == CandidateType.baseline && c.rank == 1)
+  candidates.any (fun c => c.type == CandidateType.baseline && c.rank == 1)
 
 def eligibleOne (support : Nat) (c : Candidate) : Option Candidate :=
   match c.ctype, c.rank with
@@ -33,23 +33,22 @@ theorem baseline_won_implies_no_eligible
     (candidates : List Candidate) (support : Nat) :
     baselineWon candidates = true -> selectEligible candidates support = [] := by
   intro h
-  unfold selectEligible
-  rw [h]
+  simp [selectEligible, h]
 
 theorem baseline_not_eligible_one
     (support : Nat) (c : Candidate) :
     c.ctype = CandidateType.baseline -> eligibleOne support c = none := by
-  intro h
   cases c with
   | mk rank ctype issue =>
-      cases rank <;> simp [eligibleOne, h]
+      intro h
+      cases ctype <;> simp [eligibleOne] at h ⊢
 
 theorem other_not_eligible_one
     (support : Nat) (c : Candidate) :
     c.ctype = CandidateType.other -> eligibleOne support c = none := by
-  intro h
   cases c with
   | mk rank ctype issue =>
-      cases rank <;> simp [eligibleOne, h]
+      intro h
+      cases ctype <;> simp [eligibleOne] at h ⊢
 
 end PromptVoteLab
