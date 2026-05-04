@@ -105,7 +105,7 @@ jobs:
           grep -q "Do-not-post checklist" "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
 
       - name: Show generated file tree
-        run: find tmp/evidence -type f -maxdepth 5 | sort
+        run: find tmp/evidence -maxdepth 5 -type f | sort
 
       - name: Upload evidence pipeline dry-run artifact
         uses: actions/upload-artifact@v4
