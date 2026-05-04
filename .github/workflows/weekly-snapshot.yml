@@ -52,9 +52,9 @@ jobs:
           WEEK_ID: ${{ github.event.inputs.week_id || '' }}
           SNAPSHOT_AT: ${{ github.event.inputs.snapshot_at || '' }}
           CUTOFF_TIMEZONE: Asia/Tokyo
-          NO_CHANGE_BASELINE: 5
-          REQUIRED_MARGIN: 2
-          MINIMUM_TOTAL_VOTES: 5
+          NO_CHANGE_BASELINE: 20
+          REQUIRED_MARGIN: 1
+          MINIMUM_TOTAL_VOTES: 20
         run: node scripts/create-weekly-snapshot.mjs
 
       - name: Show generated diff
