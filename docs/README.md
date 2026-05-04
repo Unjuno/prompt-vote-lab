@@ -8,13 +8,15 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 
 ## Start here
 
-1. [Experiment model](./experiment-model.md) — the prompt game, experiment layers, reputation memory, and boundaries.
-2. [How to participate](./how-to-participate.md) — how to submit prompts, vote, review outcomes, and update trust.
-3. [No-change baseline](./no-change-baseline.md) — why every week starts with 20 virtual votes for doing nothing.
-4. [Automation map](./automation-map.md) — what is automated, what is manual, and how workflow boundaries are drawn.
-5. [Support policy](./support-policy.md) — what support can fund and what it cannot buy.
-6. [Report policy](./report-policy.md) — how weekly report drafts preserve public game memory.
-7. [Pre-API freeze checklist](./pre-api-freeze.md) — required gates before any paid implementation-agent canary.
+1. [Experiment model](./experiment-model.md) — game model and boundaries.
+2. [How to participate](./how-to-participate.md) — submit, vote, and review.
+3. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+4. [Automation map](./automation-map.md) — workflow boundaries.
+5. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+6. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+7. [Support policy](./support-policy.md) — support boundaries.
+8. [Report policy](./report-policy.md) — weekly report draft policy.
+9. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
