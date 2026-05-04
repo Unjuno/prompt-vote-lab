@@ -65,9 +65,18 @@ async function paginate(path) {
   return results;
 }
 
-async function plusOneVotes(issueNumber) {
+async function plusOneReactionSummary(issueNumber) {
   const reactions = await paginate(`/repos/${repository}/issues/${issueNumber}/reactions?content=%2B1`);
-  return reactions.filter((reaction) => reaction.content === '+1').length;
+  const plusOnes = reactions.filter((reaction) => reaction.content === '+1');
+  const voterLogins = plusOnes
+    .map((reaction) => reaction.user?.login)
+    .filter((login) => typeof login === 'string' && login.length > 0);
+
+  return {
+    votes: plusOnes.length,
+    voter_count: new Set(voterLogins).size,
+    voter_logins: voterLogins
+  };
 }
 
 function decisionFor(totalVotes, topPromptVotes) {
@@ -88,24 +97,28 @@ function decisionReasonFor(decision, totalVotes, topPromptVotes) {
   return 'no_run';
 }
 
-function candidateRecord(issue, votes) {
+function candidateRecord(issue, reactionSummary) {
   return {
     issue: issue.number,
     title: issue.title.replace(/^\[Prompt\]:\s*/i, '').trim(),
     author: issue.user?.login || 'unknown',
-    votes,
+    votes: reactionSummary.votes,
+    voter_count: reactionSummary.voter_count,
     url: issue.html_url,
     created_at: issue.created_at,
-    updated_at: issue.updated_at
+    updated_at: issue.updated_at,
+    _voter_logins: reactionSummary.voter_logins
   };
 }
 
 function fixtureCandidateRecord(candidate) {
+  const votes = Number(candidate.votes || 0);
   return {
     issue: Number(candidate.issue),
     title: String(candidate.title || '').replace(/^\[Prompt\]:\s*/i, '').trim(),
     author: candidate.author || 'unknown',
-    votes: Number(candidate.votes || 0),
+    votes,
+    voter_count: Number(candidate.voter_count ?? votes),
     url: candidate.url || `https://github.com/${repository}/issues/${candidate.issue}`,
     created_at: candidate.created_at || null,
     updated_at: candidate.updated_at || null
@@ -118,11 +131,17 @@ function baselineCandidateRecord() {
     title: '[Baseline]: No change this week',
     author: 'system',
     votes: noChangeBaseline,
+    voter_count: 0,
     url: null,
     virtual: true,
     created_at: null,
     updated_at: null
   };
+}
+
+function publicCandidate(candidate) {
+  const { _voter_logins, ...rest } = candidate;
+  return rest;
 }
 
 function sortCandidates(candidates) {
@@ -144,6 +163,26 @@ function sortCandidatesWithBaseline(candidates) {
   });
 }
 
+function buildMetrics(candidates) {
+  const authors = new Set(candidates.map((candidate) => candidate.author).filter(Boolean));
+  const voterLogins = candidates.flatMap((candidate) => candidate._voter_logins || []);
+  const uniqueVoterCount = voterLogins.length > 0 ? new Set(voterLogins).size : null;
+  const candidateCount = candidates.length;
+  const totalVotes = candidates.reduce((sum, candidate) => sum + candidate.votes, 0);
+  const topPromptVotes = sortCandidates(candidates)[0]?.votes || 0;
+
+  return {
+    candidate_count: candidateCount,
+    unique_author_count: authors.size,
+    total_votes: totalVotes,
+    top_prompt_votes: topPromptVotes,
+    unique_voter_count: uniqueVoterCount,
+    unique_voter_count_available: uniqueVoterCount !== null,
+    average_votes_per_candidate: candidateCount > 0 ? Number((totalVotes / candidateCount).toFixed(2)) : 0,
+    top_prompt_vote_share: totalVotes > 0 ? Number((topPromptVotes / totalVotes).toFixed(4)) : 0
+  };
+}
+
 async function appendJsonl(path, record) {
   await mkdir(path.split('/').slice(0, -1).join('/'), { recursive: true });
   const previous = existsSync(path) ? await readFile(path, 'utf8') : '';
@@ -153,24 +192,32 @@ async function appendJsonl(path, record) {
 function runLogMarkdown(snapshot) {
   const selected = snapshot.decision === 'selected' ? snapshot.selected_issue : 'none';
   const topRows = snapshot.top_prompts.map((prompt) => (
-    `| ${prompt.rank} | #${prompt.issue} | ${escapePipes(prompt.title)} | ${prompt.author} | ${prompt.votes} | ${prompt.url} |`
-  )).join('\n') || '| - | - | - | - | - | - |';
-  const rankedRows = snapshot.ranked_candidates_with_baseline.map((candidate) => (
-    `| ${candidate.rank} | ${candidate.issue === null ? 'baseline' : `#${candidate.issue}`} | ${escapePipes(candidate.title)} | ${candidate.author} | ${candidate.votes} | ${candidate.virtual ? 'yes' : 'no'} | ${candidate.url || '-'} |`
+    `| ${prompt.rank} | #${prompt.issue} | ${escapePipes(prompt.title)} | ${prompt.author} | ${prompt.votes} | ${prompt.voter_count} | ${prompt.url} |`
   )).join('\n') || '| - | - | - | - | - | - | - |';
+  const rankedRows = snapshot.ranked_candidates_with_baseline.map((candidate) => (
+    `| ${candidate.rank} | ${candidate.issue === null ? 'baseline' : `#${candidate.issue}`} | ${escapePipes(candidate.title)} | ${candidate.author} | ${candidate.votes} | ${candidate.voter_count} | ${candidate.virtual ? 'yes' : 'no'} | ${candidate.url || '-'} |`
+  )).join('\n') || '| - | - | - | - | - | - | - | - |';
 
   return `# Week ${snapshot.week}: Prompt Vote Lab Run\n\n` +
 `## Vote Snapshot\n\n` +
 `Snapshot: \`${snapshot.snapshot_path}\`  \n` +
 `Snapshot at: ${snapshot.snapshot_at}  \n` +
 `Cutoff timezone: ${snapshot.cutoff_timezone}\n\n` +
+`## Participation Metrics\n\n` +
+`- Candidate count: ${snapshot.metrics.candidate_count}\n` +
+`- Unique author count: ${snapshot.metrics.unique_author_count}\n` +
+`- Total real prompt votes: ${snapshot.metrics.total_votes}\n` +
+`- Top prompt votes: ${snapshot.metrics.top_prompt_votes}\n` +
+`- Unique voter count: ${snapshot.metrics.unique_voter_count_available ? snapshot.metrics.unique_voter_count : 'unavailable'}\n` +
+`- Average votes per candidate: ${snapshot.metrics.average_votes_per_candidate}\n` +
+`- Top prompt vote share: ${snapshot.metrics.top_prompt_vote_share}\n\n` +
 `## Ranked Candidates With Baseline\n\n` +
-`| Rank | Issue | Prompt | Author | Votes | Virtual | URL |\n` +
-`|---:|---|---|---|---:|---|---|\n` +
+`| Rank | Issue | Prompt | Author | Votes | Voters | Virtual | URL |\n` +
+`|---:|---|---|---|---:|---:|---|---|\n` +
 `${rankedRows}\n\n` +
 `## Top Prompts\n\n` +
-`| Rank | Issue | Prompt | Author | Votes | URL |\n` +
-`|---:|---:|---|---|---:|---|\n` +
+`| Rank | Issue | Prompt | Author | Votes | Voters | URL |\n` +
+`|---:|---:|---|---|---:|---:|---|\n` +
 `${topRows}\n\n` +
 `## Selection Rule\n\n` +
 `- Rule: \`${snapshot.selection_rule.rule}\`\n` +
@@ -230,8 +277,8 @@ async function loadCandidates() {
   const promptIssues = issues.filter((issue) => !issue.pull_request);
   const rawCandidates = [];
   for (const issue of promptIssues) {
-    const votes = await plusOneVotes(issue.number);
-    rawCandidates.push(candidateRecord(issue, votes));
+    const reactionSummary = await plusOneReactionSummary(issue.number);
+    rawCandidates.push(candidateRecord(issue, reactionSummary));
   }
   return rawCandidates;
 }
@@ -247,7 +294,8 @@ await appendJsonl(aggregationLogPath, {
 });
 
 const rawCandidates = await loadCandidates();
-const allCandidates = sortCandidates(rawCandidates);
+const allCandidatesInternal = sortCandidates(rawCandidates);
+const allCandidates = allCandidatesInternal.map(publicCandidate);
 const noChangeBaselineCandidate = baselineCandidateRecord();
 const rankedCandidatesWithBaseline = sortCandidatesWithBaseline([
   noChangeBaselineCandidate,
@@ -260,14 +308,15 @@ const topPrompts = allCandidates.slice(0, 3).map((candidate, index) => ({
   rank: index + 1,
   ...candidate
 }));
-const totalVotes = allCandidates.reduce((sum, candidate) => sum + candidate.votes, 0);
-const topPromptVotes = topPrompts[0]?.votes || 0;
+const metrics = buildMetrics(allCandidatesInternal);
+const totalVotes = metrics.total_votes;
+const topPromptVotes = metrics.top_prompt_votes;
 const decision = decisionFor(totalVotes, topPromptVotes);
 const selectedIssue = decision === 'selected' ? topPrompts[0]?.issue ?? null : null;
 const decisionReason = decisionReasonFor(decision, totalVotes, topPromptVotes);
 
 const snapshot = {
-  schema_version: 'snapshot-v1.1',
+  schema_version: 'snapshot-v1.2',
   week,
   snapshot_at: snapshotAt,
   cutoff_timezone: cutoffTimezone,
@@ -281,6 +330,7 @@ const snapshot = {
     minimum_total_votes: minimumTotalVotes
   },
   no_change_baseline_candidate: noChangeBaselineCandidate,
+  metrics,
   total_votes: totalVotes,
   top_prompt_votes: topPromptVotes,
   decision,
@@ -305,9 +355,12 @@ await appendJsonl(aggregationLogPath, {
   repository,
   snapshot_path: snapshotPath,
   run_log_path: runLogPath,
-  candidate_count: allCandidates.length,
+  candidate_count: metrics.candidate_count,
+  unique_author_count: metrics.unique_author_count,
   total_votes: totalVotes,
   top_prompt_votes: topPromptVotes,
+  unique_voter_count: metrics.unique_voter_count,
+  unique_voter_count_available: metrics.unique_voter_count_available,
   decision,
   decision_reason: decisionReason,
   selected_issue: selectedIssue,
