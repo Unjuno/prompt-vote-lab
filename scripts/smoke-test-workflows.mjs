@@ -44,17 +44,30 @@ assertExists(aggregationLogPath);
 assertExists(runLogPath);
 
 const snapshot = JSON.parse(await readFile(snapshotPath, 'utf8'));
+assertEqual(snapshot.schema_version, 'snapshot-v1.1', 'snapshot schema version');
 assertEqual(snapshot.source, 'fixture', 'snapshot source');
 assertEqual(snapshot.decision, 'selected', 'snapshot decision');
+assertEqual(snapshot.decision_reason, 'top_prompt_beat_no_change_baseline', 'snapshot decision reason');
 assertEqual(snapshot.selected_issue, 3, 'selected issue');
 assertEqual(snapshot.total_votes, 52, 'total votes');
 assertEqual(snapshot.top_prompt_votes, 24, 'top prompt votes');
 assertEqual(snapshot.selection_rule.no_change_baseline, 20, 'no-change baseline');
 assertEqual(snapshot.selection_rule.required_margin, 1, 'required margin');
+assertEqual(snapshot.no_change_baseline_candidate.title, '[Baseline]: No change this week', 'baseline title');
+assertEqual(snapshot.no_change_baseline_candidate.votes, 20, 'baseline votes');
+assertEqual(snapshot.no_change_baseline_candidate.virtual, true, 'baseline virtual flag');
+assertEqual(snapshot.ranked_candidates_with_baseline.length, 5, 'ranked candidates with baseline count');
+assertEqual(snapshot.ranked_candidates_with_baseline[0].issue, 3, 'ranked baseline table rank 1 issue');
+assertEqual(snapshot.ranked_candidates_with_baseline[1].virtual, true, 'ranked baseline table rank 2 baseline');
 assertEqual(snapshot.top_prompts.length, 3, 'top prompt count');
 assertEqual(snapshot.top_prompts[0].issue, 3, 'rank 1 issue');
 assertEqual(snapshot.top_prompts[1].issue, 2, 'rank 2 tie-break issue');
 assertEqual(snapshot.top_prompts[2].issue, 4, 'rank 3 tie-break issue');
+
+const runLog = await readFile(runLogPath, 'utf8');
+assertIncludes(runLog, 'Ranked Candidates With Baseline', 'run log baseline table heading');
+assertIncludes(runLog, '[Baseline]: No change this week', 'run log baseline row');
+assertIncludes(runLog, 'Decision reason: `top_prompt_beat_no_change_baseline`', 'run log decision reason');
 
 run('node', ['scripts/create-hn-draft.mjs'], {
   WEEK_ID: week,

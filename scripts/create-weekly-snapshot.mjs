@@ -75,6 +75,19 @@ function decisionFor(totalVotes, topPromptVotes) {
   return selected ? 'selected' : 'no_run';
 }
 
+function decisionReasonFor(decision, totalVotes, topPromptVotes) {
+  if (decision === 'selected') {
+    return 'top_prompt_beat_no_change_baseline';
+  }
+  if (totalVotes < minimumTotalVotes) {
+    return 'minimum_total_votes_not_met';
+  }
+  if (topPromptVotes < noChangeBaseline + requiredMargin) {
+    return 'no_change_baseline_won_or_tied';
+  }
+  return 'no_run';
+}
+
 function candidateRecord(issue, votes) {
   return {
     issue: issue.number,
@@ -99,9 +112,34 @@ function fixtureCandidateRecord(candidate) {
   };
 }
 
+function baselineCandidateRecord() {
+  return {
+    issue: null,
+    title: '[Baseline]: No change this week',
+    author: 'system',
+    votes: noChangeBaseline,
+    url: null,
+    virtual: true,
+    created_at: null,
+    updated_at: null
+  };
+}
+
 function sortCandidates(candidates) {
   return [...candidates].sort((a, b) => {
     if (b.votes !== a.votes) return b.votes - a.votes;
+    return a.issue - b.issue;
+  });
+}
+
+function sortCandidatesWithBaseline(candidates) {
+  return [...candidates].sort((a, b) => {
+    if (b.votes !== a.votes) return b.votes - a.votes;
+    if (a.virtual && !b.virtual) return -1;
+    if (!a.virtual && b.virtual) return 1;
+    if (a.issue === null && b.issue === null) return 0;
+    if (a.issue === null) return 1;
+    if (b.issue === null) return -1;
     return a.issue - b.issue;
   });
 }
@@ -117,12 +155,19 @@ function runLogMarkdown(snapshot) {
   const topRows = snapshot.top_prompts.map((prompt) => (
     `| ${prompt.rank} | #${prompt.issue} | ${escapePipes(prompt.title)} | ${prompt.author} | ${prompt.votes} | ${prompt.url} |`
   )).join('\n') || '| - | - | - | - | - | - |';
+  const rankedRows = snapshot.ranked_candidates_with_baseline.map((candidate) => (
+    `| ${candidate.rank} | ${candidate.issue === null ? 'baseline' : `#${candidate.issue}`} | ${escapePipes(candidate.title)} | ${candidate.author} | ${candidate.votes} | ${candidate.virtual ? 'yes' : 'no'} | ${candidate.url || '-'} |`
+  )).join('\n') || '| - | - | - | - | - | - | - |';
 
   return `# Week ${snapshot.week}: Prompt Vote Lab Run\n\n` +
 `## Vote Snapshot\n\n` +
 `Snapshot: \`${snapshot.snapshot_path}\`  \n` +
 `Snapshot at: ${snapshot.snapshot_at}  \n` +
 `Cutoff timezone: ${snapshot.cutoff_timezone}\n\n` +
+`## Ranked Candidates With Baseline\n\n` +
+`| Rank | Issue | Prompt | Author | Votes | Virtual | URL |\n` +
+`|---:|---|---|---|---:|---|---|\n` +
+`${rankedRows}\n\n` +
 `## Top Prompts\n\n` +
 `| Rank | Issue | Prompt | Author | Votes | URL |\n` +
 `|---:|---:|---|---|---:|---|\n` +
@@ -132,9 +177,11 @@ function runLogMarkdown(snapshot) {
 `- No-change baseline: ${snapshot.selection_rule.no_change_baseline}\n` +
 `- Required margin: ${snapshot.selection_rule.required_margin}\n` +
 `- Minimum total votes: ${snapshot.selection_rule.minimum_total_votes}\n` +
-`- Total votes: ${snapshot.total_votes}\n` +
-`- Top prompt votes: ${snapshot.top_prompt_votes}\n\n` +
+`- Total real prompt votes: ${snapshot.total_votes}\n` +
+`- Top prompt votes: ${snapshot.top_prompt_votes}\n` +
+`- Baseline candidate: \`${snapshot.no_change_baseline_candidate.title}\` with ${snapshot.no_change_baseline_candidate.votes} virtual votes\n\n` +
 `Decision: \`${snapshot.decision}\`  \n` +
+`Decision reason: \`${snapshot.decision_reason}\`  \n` +
 `Selected issue: ${selected}\n\n` +
 `## Agent Conditions\n\n` +
 `- Agent: unrecorded\n` +
@@ -201,6 +248,14 @@ await appendJsonl(aggregationLogPath, {
 
 const rawCandidates = await loadCandidates();
 const allCandidates = sortCandidates(rawCandidates);
+const noChangeBaselineCandidate = baselineCandidateRecord();
+const rankedCandidatesWithBaseline = sortCandidatesWithBaseline([
+  noChangeBaselineCandidate,
+  ...allCandidates.map((candidate) => ({ ...candidate, virtual: false }))
+]).map((candidate, index) => ({
+  rank: index + 1,
+  ...candidate
+}));
 const topPrompts = allCandidates.slice(0, 3).map((candidate, index) => ({
   rank: index + 1,
   ...candidate
@@ -209,9 +264,10 @@ const totalVotes = allCandidates.reduce((sum, candidate) => sum + candidate.vote
 const topPromptVotes = topPrompts[0]?.votes || 0;
 const decision = decisionFor(totalVotes, topPromptVotes);
 const selectedIssue = decision === 'selected' ? topPrompts[0]?.issue ?? null : null;
+const decisionReason = decisionReasonFor(decision, totalVotes, topPromptVotes);
 
 const snapshot = {
-  schema_version: 'snapshot-v1.0',
+  schema_version: 'snapshot-v1.1',
   week,
   snapshot_at: snapshotAt,
   cutoff_timezone: cutoffTimezone,
@@ -219,15 +275,18 @@ const snapshot = {
   repository,
   snapshot_path: snapshotPath,
   selection_rule: {
-    rule: 'selection-v1.0',
+    rule: 'selection-v1.1',
     no_change_baseline: noChangeBaseline,
     required_margin: requiredMargin,
     minimum_total_votes: minimumTotalVotes
   },
+  no_change_baseline_candidate: noChangeBaselineCandidate,
   total_votes: totalVotes,
   top_prompt_votes: topPromptVotes,
   decision,
+  decision_reason: decisionReason,
   selected_issue: selectedIssue,
+  ranked_candidates_with_baseline: rankedCandidatesWithBaseline,
   top_prompts: topPrompts,
   all_candidates: allCandidates
 };
@@ -250,6 +309,7 @@ await appendJsonl(aggregationLogPath, {
   total_votes: totalVotes,
   top_prompt_votes: topPromptVotes,
   decision,
+  decision_reason: decisionReason,
   selected_issue: selectedIssue,
   fixture: Boolean(snapshotFixture),
   started_at: startedAt,
@@ -258,4 +318,4 @@ await appendJsonl(aggregationLogPath, {
 
 console.log(`Wrote ${snapshotPath}`);
 console.log(`Ensured ${runLogPath}`);
-console.log(`Decision: ${decision}, selected issue: ${selectedIssue ?? 'none'}`);
+console.log(`Decision: ${decision}, reason: ${decisionReason}, selected issue: ${selectedIssue ?? 'none'}`);
