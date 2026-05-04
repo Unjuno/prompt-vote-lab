@@ -41,7 +41,7 @@
         </div>
         <div>
           <dt>Run result</dt>
-          <dd>Awaiting first recorded accepted prompt run</dd>
+          <dd id="run-result">Awaiting first recorded accepted prompt run</dd>
         </div>
       </dl>
     </section>
@@ -50,8 +50,9 @@
       <div class="section-head">
         <p class="kicker">Open prompt candidates</p>
         <h2 id="candidates-title">Vote by reacting on GitHub</h2>
+        <p id="candidate-meta" class="small-note">Static fallback list. Automation may replace this after the candidate updater runs.</p>
       </div>
-      <ul class="candidate-list">
+      <ul id="candidate-list" class="candidate-list">
         <li>
           <a href="https://github.com/Unjuno/prompt-vote-lab/issues/1">#1 Make the lab page explain the experiment clearly</a>
           <p>A first-time visitor should understand the experiment within 10 seconds.</p>
@@ -106,6 +107,7 @@
     <noscript>This lab works without network access or external scripts.</noscript>
   </main>
 
+  <script src="./candidates.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
