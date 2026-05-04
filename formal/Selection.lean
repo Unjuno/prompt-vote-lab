@@ -2,6 +2,8 @@ import Std
 
 namespace PromptVoteLab
 
+-- Verification trigger: proof simplification fixed.
+
 inductive CandidateType where
   | baseline
   | prompt
