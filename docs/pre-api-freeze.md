@@ -53,13 +53,17 @@ Allowed canary shape:
 Add a small visible canary panel to lab/ explaining that this is the first bounded implementation-agent test.
 ```
 
-Required canary result:
+Required canary run constraints:
 
 ```text
+model: gpt-5-nano
 one agent attempt
 one model
 no retry
 no fallback
+SDK max_retries: 0
+API call limit per candidate: 1
+max output tokens: 12000
 lab/ only
 safety-check PASS
 static-site-check PASS
