@@ -56,6 +56,7 @@ Implemented:
 - `scripts/test_weekly_auto_no_eligible.py`
 - CI for collect-votes tests
 - CI for eligible-selection tests
+- CI for weekly no-eligible selector test
 
 Current selection rule:
 
@@ -79,6 +80,14 @@ Implemented:
 - model-free weekly report draft PR
 - no-eligible summary PR path
 - implementation-agent preflight before model dependency install
+
+Verified:
+
+- Weekly Auto Run no-eligible production path created only `runs/week-2026-W19-vote-summary.md` in PR #81.
+- The recorded summary had baseline rank 1 with 20 virtual votes.
+- `eligible_count` was 0.
+- `eligible_ranks` was empty.
+- No implementation PR was created during that no-eligible run.
 
 Not implemented:
 
@@ -139,6 +148,8 @@ Implemented:
 - implementation preflight test
 - Lean proof test
 - pre-API freeze audit
+- pre-API freeze audit self-test
+- evidence artifact smoke test
 
 ## Formal proof
 
@@ -196,11 +207,12 @@ Implemented:
 - pre-API freeze checklist
 - pre-API freeze audit script
 - pre-API freeze audit CI
+- Weekly Auto Run no-eligible production path verification
 
 Current policy:
 
 ```text
-No real implementation-agent API call until all offline gates are green and the Weekly Auto Run no-eligible workflow path is confirmed.
+No real implementation-agent API call until all offline gates are green and live evidence artifacts are reviewed.
 ```
 
 ## Current release judgment
@@ -210,10 +222,11 @@ Current state:
 ```text
 MVP structure: mostly complete
 offline verification: strong
+no-eligible production workflow path: verified
 real implementation-agent canary: not yet executed
 production autonomy: not complete
 ```
 
 Operational recommendation:
 
-Run one final no-eligible workflow test before any paid implementation-agent canary.
+Run `Evidence Pipeline Dry Run` with `source=live`, review the generated artifact with `docs/evidence-artifact-review.md`, and only then consider a single low-risk paid implementation-agent canary.
