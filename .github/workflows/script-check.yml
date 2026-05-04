@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/**/*.mjs"
+      - "scripts/**/*.py"
       - "scripts/**/*.sh"
       - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
@@ -38,6 +39,17 @@ jobs:
             node --check "$file"
           done
 
+      - name: Check Python syntax
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(scripts/*.py scripts/**/*.py)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No .py scripts found."
+            exit 0
+          fi
+          python -m py_compile "${files[@]}"
+
       - name: Check shell script syntax
         shell: bash
         run: |
@@ -57,6 +69,9 @@ jobs:
 
       - name: Run evidence artifact smoke test
         run: node scripts/run-evidence-artifact-smoke.mjs
+
+      - name: Run pre-API freeze audit self-test
+        run: python scripts/test_pre_api_freeze_audit.py
 
       - name: Run lab PR scope guard self-test
         run: bash scripts/test-lab-pr-scope.sh
