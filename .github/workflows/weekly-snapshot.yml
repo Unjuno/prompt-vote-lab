@@ -1,0 +1,62 @@
+name: Weekly Vote Snapshot
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: "Week id such as 001. Leave empty to infer from current date."
+        required: false
+        type: string
+      snapshot_at:
+        description: "Optional explicit snapshot timestamp. Leave empty to use current time."
+        required: false
+        type: string
+  schedule:
+    - cron: "0 15 * * 0"
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: weekly-vote-snapshot-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  weekly-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Create weekly snapshot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROMPT_LABEL: prompt-proposal
+          WEEK_ID: ${{ github.event.inputs.week_id || '' }}
+          SNAPSHOT_AT: ${{ github.event.inputs.snapshot_at || '' }}
+          CUTOFF_TIMEZONE: Asia/Tokyo
+          NO_CHANGE_BASELINE: 5
+          REQUIRED_MARGIN: 2
+          MINIMUM_TOTAL_VOTES: 5
+        run: node scripts/create-weekly-snapshot.mjs
+
+      - name: Commit snapshot files
+        run: |
+          if git diff --quiet -- data/snapshots logs/aggregation runs; then
+            echo "No snapshot changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/snapshots logs/aggregation runs
+          git commit -m "Create weekly vote snapshot"
+          git push
