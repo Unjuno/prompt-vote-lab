@@ -25,6 +25,7 @@ init_case_repo() {
   git -C "$repo_dir" add .
   git -C "$repo_dir" commit -q -m "base"
   git -C "$repo_dir" branch -M main
+  git -C "$repo_dir" checkout -q -b case-branch
 }
 
 run_case() {
@@ -82,9 +83,9 @@ mutate_lab_and_docs() {
 
 mutate_extra_lab_file() {
   local repo_dir="$1"
-  printf 'console.log("unexpected lab file");\n' > "$repo_dir/lab/extra.js"
+  printf 'console.log("scope test extra file");\n' > "$repo_dir/lab/extra.js"
   git -C "$repo_dir" add lab/extra.js
-  git -C "$repo_dir" commit -q -m "add unexpected lab file"
+  git -C "$repo_dir" commit -q -m "add extra lab file"
 }
 
 run_case "lab-only" "pass" mutate_lab_only
