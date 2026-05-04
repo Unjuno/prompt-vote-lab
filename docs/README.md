@@ -14,6 +14,7 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 4. [Automation map](./automation-map.md) — what is automated, what is manual, and how workflow boundaries are drawn.
 5. [Support policy](./support-policy.md) — what support can fund and what it cannot buy.
 6. [Report policy](./report-policy.md) — how weekly report drafts preserve public game memory.
+7. [Pre-API freeze checklist](./pre-api-freeze.md) — required gates before any paid implementation-agent canary.
 
 ## Current reputation status
 
@@ -28,6 +29,12 @@ Report generation is currently model-free.
 The workflow can draft `runs/<week>-report.md` from explicit inputs and repository files, then open a reviewable PR.
 
 It does not publish externally and does not compute automated trust ratings.
+
+## Pre-API freeze status
+
+Paid implementation-agent runs are not considered ready until the pre-API freeze checklist is green.
+
+The project should prefer extra offline verification over debugging after paid API calls begin.
 
 ## Rule documents
 
