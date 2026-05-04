@@ -5,6 +5,8 @@ No network calls. No model calls. No GitHub API calls.
 
 This script checks that the repository contains the required offline gates before
 paid implementation-agent API use is allowed by policy.
+
+Verification trigger: pre-api-freeze-audit.
 """
 
 from __future__ import annotations
