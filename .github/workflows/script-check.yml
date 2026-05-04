@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/**/*.mjs"
+      - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
   workflow_dispatch:
 
@@ -35,3 +36,6 @@ jobs:
             echo "Checking $file"
             node --check "$file"
           done
+
+      - name: Run offline workflow smoke test
+        run: node scripts/smoke-test-workflows.mjs
