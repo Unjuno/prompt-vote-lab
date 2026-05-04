@@ -9,7 +9,7 @@ const label = process.env.PROMPT_LABEL || 'prompt-proposal';
 const noChangeBaseline = Number(process.env.NO_CHANGE_BASELINE || 5);
 const requiredMargin = Number(process.env.REQUIRED_MARGIN || 2);
 const minimumTotalVotes = Number(process.env.MINIMUM_TOTAL_VOTES || 5);
-const outputPath = process.env.CANDIDATE_OUTPUT || 'lab/candidates.js';
+const outputPath = process.env.CANDIDATE_OUTPUT || 'data/prompt-candidates.js';
 
 if (!token) {
   throw new Error('GITHUB_TOKEN is required.');
@@ -123,7 +123,10 @@ const payload = {
   candidates
 };
 
-await mkdir(outputPath.split('/').slice(0, -1).join('/'), { recursive: true });
+const outputDirectory = outputPath.split('/').slice(0, -1).join('/');
+if (outputDirectory) {
+  await mkdir(outputDirectory, { recursive: true });
+}
 await writeFile(
   outputPath,
   `window.PROMPT_VOTE_LAB_CANDIDATES = ${JSON.stringify(payload, null, 2)};\n`,
