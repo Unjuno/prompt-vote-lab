@@ -21,6 +21,7 @@ REQUIRED_FILES = [
     "scripts/create-snapshot-summary.mjs",
     "scripts/create-public-briefing.mjs",
     "scripts/run-evidence-artifact-smoke.mjs",
+    "scripts/validate-evidence-artifact.mjs",
     ".github/workflows/weekly-auto-run.yml",
     ".github/workflows/evidence-pipeline-dry-run.yml",
 ]
@@ -66,6 +67,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "docs/evidence-artifact-review.md": [
         "Evidence Pipeline Dry Run",
+        "validate-evidence-artifact.mjs",
         "snapshot-v1.2",
         "snapshot-summary-v1.0",
         "Do-not-post checklist",
@@ -99,10 +101,20 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "Do not treat it as an automated external post",
     ],
     "scripts/run-evidence-artifact-smoke.mjs": [
+        "scripts/validate-evidence-artifact.mjs",
+        "create-weekly-snapshot.mjs",
+        "create-snapshot-summary.mjs",
+        "create-public-briefing.mjs",
+        "create-hn-draft.mjs",
+    ],
+    "scripts/validate-evidence-artifact.mjs": [
         "snapshot-v1.2",
         "snapshot-summary-v1.0",
         "Prompt Vote Lab Briefing",
         "Do-not-post checklist",
+        "weekly_snapshot_started",
+        "weekly_snapshot_finished",
+        "no_change_baseline_candidate",
     ],
     ".github/workflows/weekly-auto-run.yml": [
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
