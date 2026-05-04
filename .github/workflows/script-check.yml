@@ -73,6 +73,9 @@ jobs:
       - name: Run pre-API freeze audit self-test
         run: python scripts/test_pre_api_freeze_audit.py
 
+      - name: Run validator audit test
+        run: python scripts/test_dry_run_validator_audit.py
+
       - name: Run weekly no-eligible selector test
         run: python scripts/test_weekly_auto_no_eligible.py
 
