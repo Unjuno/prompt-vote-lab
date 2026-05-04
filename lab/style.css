@@ -102,6 +102,11 @@ dd {
   font-size: clamp(1.05rem, 2vw, 1.28rem);
 }
 
+.small-note {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -192,13 +197,33 @@ code {
   padding: 18px;
 }
 
+.candidate-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
 .candidate-list a {
   display: inline-block;
-  margin-bottom: 8px;
   color: var(--accent);
   font-weight: 850;
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.18em;
+}
+
+.vote-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--fg);
+  font-size: 0.82rem;
+  font-weight: 850;
 }
 
 .candidate-list p,
@@ -278,5 +303,10 @@ noscript {
   .actions,
   .button {
     width: 100%;
+  }
+
+  .candidate-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
