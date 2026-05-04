@@ -130,6 +130,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "weekly-metrics.json",
         "week-${WEEK_ID}.md",
         "Do-not-post checklist",
+        "validate-evidence-artifact.mjs",
         "Upload evidence pipeline dry-run artifact",
     ],
 }
