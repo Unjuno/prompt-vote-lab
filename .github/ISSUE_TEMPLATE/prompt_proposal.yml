@@ -1,0 +1,61 @@
+name: Prompt proposal
+description: Propose one prompt for a future Prompt Vote Lab run.
+title: "[Prompt]: "
+labels:
+  - prompt-proposal
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit one prompt proposal per issue.
+
+        Voting uses public +1 reactions on issues with the `prompt-proposal` label.
+        Comments can explain or challenge an idea, but comments are not counted as votes.
+
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt request
+      description: What should the AI coding agent change if this prompt wins?
+      placeholder: "Add a compact run-history section to /lab/ that shows the latest accepted runs."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_result
+    attributes:
+      label: Expected visible result
+      description: What should a visitor see after the implementation?
+      placeholder: "A visitor can see the latest three accepted runs, their result labels, and links to run logs."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why this matters
+      description: Explain why this is worth spending a weekly run on.
+      placeholder: "It helps visitors understand that the lab is an observable public experiment, not just a generated page."
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints and non-goals
+      description: What should the agent avoid changing?
+      placeholder: "Do not add external network calls. Do not edit files outside lab/. Do not change voting or snapshot logic."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope_check
+    attributes:
+      label: Scope check
+      options:
+        - label: This proposal can be attempted inside the constrained lab surface.
+          required: true
+        - label: This proposal does not require secrets, login, payment, backend storage, or external services.
+          required: true
+        - label: I understand that winning the vote does not guarantee merge.
+          required: true
