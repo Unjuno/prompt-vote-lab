@@ -150,6 +150,13 @@ Implemented:
 - pre-API freeze audit
 - pre-API freeze audit self-test
 - evidence artifact smoke test
+- reusable evidence artifact validator
+
+Verified:
+
+- Evidence Pipeline Dry Run with `source=fixture` passed in Actions run `25335321720`.
+- The fixture run executed `node scripts/validate-evidence-artifact.mjs tmp/evidence "${WEEK_ID}"` successfully.
+- The fixture run uploaded artifact `evidence-pipeline-dry-run` with 7 files.
 
 ## Formal proof
 
@@ -208,6 +215,7 @@ Implemented:
 - pre-API freeze audit script
 - pre-API freeze audit CI
 - Weekly Auto Run no-eligible production path verification
+- Evidence Pipeline Dry Run fixture path verification
 
 Current policy:
 
@@ -223,6 +231,7 @@ Current state:
 MVP structure: mostly complete
 offline verification: strong
 no-eligible production workflow path: verified
+fixture evidence dry-run path: verified
 real implementation-agent canary: not yet executed
 production autonomy: not complete
 ```
