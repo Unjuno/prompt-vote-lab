@@ -141,6 +141,7 @@ jobs:
           grep -q "## Observe" "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
           grep -q "## Act" "tmp/evidence/reports/briefings/week-${WEEK_ID}.md"
           grep -q "Do-not-post checklist" "tmp/evidence/reports/hn/week-${WEEK_ID}.md"
+          node scripts/validate-evidence-artifact.mjs tmp/evidence "${WEEK_ID}"
 
       - name: Show generated file tree
         run: find tmp/evidence -maxdepth 5 -type f | sort
