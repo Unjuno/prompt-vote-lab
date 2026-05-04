@@ -47,9 +47,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROMPT_LABEL: prompt-proposal
           CUTOFF_TIMEZONE: Asia/Tokyo
-          NO_CHANGE_BASELINE: 5
-          REQUIRED_MARGIN: 2
-          MINIMUM_TOTAL_VOTES: 5
+          NO_CHANGE_BASELINE: 20
+          REQUIRED_MARGIN: 1
+          MINIMUM_TOTAL_VOTES: 20
         shell: bash
         run: |
           set -euo pipefail
