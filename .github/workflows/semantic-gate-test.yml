@@ -1,0 +1,23 @@
+name: Semantic Gate Test
+
+on:
+  pull_request:
+    paths:
+      - "scripts/semantic_gate.py"
+      - "scripts/test_semantic_gate.py"
+      - ".github/workflows/semantic-gate-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semantic-gate-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run semantic gate tests
+        run: |
+          python scripts/test_semantic_gate.py
