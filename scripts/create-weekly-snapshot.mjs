@@ -13,9 +13,9 @@ const snapshotAt = process.env.SNAPSHOT_AT || new Date().toISOString();
 const allowSnapshotOverwrite = process.env.ALLOW_SNAPSHOT_OVERWRITE === 'true';
 const snapshotFixture = process.env.SNAPSHOT_FIXTURE || '';
 
-const noChangeBaseline = Number(process.env.NO_CHANGE_BASELINE || 5);
-const requiredMargin = Number(process.env.REQUIRED_MARGIN || 2);
-const minimumTotalVotes = Number(process.env.MINIMUM_TOTAL_VOTES || 5);
+const noChangeBaseline = Number(process.env.NO_CHANGE_BASELINE || 20);
+const requiredMargin = Number(process.env.REQUIRED_MARGIN || 1);
+const minimumTotalVotes = Number(process.env.MINIMUM_TOTAL_VOTES || 20);
 
 const snapshotPath = process.env.SNAPSHOT_OUTPUT || `data/snapshots/week-${week}.json`;
 const aggregationLogPath = process.env.AGGREGATION_LOG_OUTPUT || `logs/aggregation/week-${week}.jsonl`;

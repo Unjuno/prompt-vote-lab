@@ -109,23 +109,16 @@ The human-readable run record comes from:
 runs/week-XXX.md
 ```
 
-A prompt is selected only if:
+A prompt is selected only if it beats the no-change baseline.
+
+Current baseline:
 
 ```text
-top prompt votes >= no-change baseline + required margin
-and
-total weekly votes >= minimum total votes
+[Baseline]: No change this week
+20 virtual votes
 ```
 
-Initial values:
-
-| Parameter | Value |
-|---|---:|
-| no-change baseline | 5 |
-| required margin | 2 |
-| minimum total votes | 5 |
-
-So the top prompt initially needs at least 7 votes.
+A real prompt therefore needs more votes than the 20-vote baseline to receive the normal implementation attempt.
 
 ## What `/lab/` means
 

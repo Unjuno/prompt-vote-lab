@@ -13,7 +13,7 @@ Winning attention is only the first step. A prompt still has to survive implemen
 ```text
 Submit a prompt
 → persuade other players
-→ pass the weekly selection gate
+→ beat the 20-vote gate
 → receive one bounded agent attempt
 → review the public outcome
 → update trust for the next round
@@ -80,27 +80,16 @@ Votes are treated as public trust signals, not as a binding election.
 
 A prompt with many votes receives attention. It does not receive guaranteed merge.
 
-## 4. Pass the weekly selection gate
+## 4. Beat the no-change baseline
 
-The current weekly selection rule is:
+Every week includes this virtual competitor:
 
 ```text
-top prompt votes >= no-change baseline + required margin
-and
-total weekly votes >= minimum total votes
+[Baseline]: No change this week
+20 virtual votes
 ```
 
-Initial values:
-
-| Parameter | Value |
-|---|---:|
-| no-change baseline | 5 |
-| required margin | 2 |
-| minimum total votes | 5 |
-
-Therefore, the top prompt initially needs at least 7 votes, and the week needs at least 5 total votes.
-
-If the gate fails, the lab does not move that week.
+If no real prompt beats 20, the lab does not move that week.
 
 Doing nothing is always in the game.
 

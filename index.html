@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt Vote Lab</title>
-  <meta name="description" content="Prompt Vote Lab is a public prompt game where players compete to write prompts that pass a weekly vote gate and survive a constrained AI coding agent run.">
+  <meta name="description" content="Prompt Vote Lab is a public prompt game where players compete to write prompts that beat a 20-vote baseline and survive a constrained AI coding agent run.">
   <style>
     :root {
       color-scheme: light;
@@ -61,7 +61,7 @@
 
     .gate-card, .panel, .card, .step, .metric { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 253, 247, 0.94); box-shadow: var(--shadow); }
     .gate-card { position: relative; overflow: hidden; padding: 26px; min-height: 500px; display: grid; align-content: space-between; background: radial-gradient(circle at top right, rgba(40, 56, 232, 0.28), transparent 13rem), linear-gradient(135deg, #fffdf7 0%, #f1f2ff 100%); }
-    .gate-card::before { content: "7"; position: absolute; right: -8px; bottom: -58px; color: rgba(40, 56, 232, 0.09); font-size: 14.5rem; font-weight: 1000; letter-spacing: -0.13em; line-height: 1; pointer-events: none; }
+    .gate-card::before { content: "20"; position: absolute; right: -30px; bottom: -58px; color: rgba(40, 56, 232, 0.09); font-size: 14.5rem; font-weight: 1000; letter-spacing: -0.13em; line-height: 1; pointer-events: none; }
     .gate-top, .gate-bottom { position: relative; z-index: 1; }
     .gate-kicker { margin-bottom: 10px; color: var(--danger); font-size: 0.78rem; font-weight: 950; letter-spacing: 0.11em; text-transform: uppercase; }
     .gate-number { display: block; margin: 0; color: var(--accent); font-size: clamp(6.6rem, 20vw, 11rem); font-weight: 1000; line-height: 0.78; letter-spacing: -0.13em; }
@@ -118,7 +118,7 @@
         <p class="eyebrow">Competitive prompt game</p>
         <h1 id="page-title">Write the prompt people dare to trust.</h1>
         <p class="lead">
-          Players compete by submitting prompts. The crowd votes. If a prompt passes the weekly vote gate, a constrained AI coding agent gets one bounded attempt. A popular prompt can still fail in public.
+          Players compete by submitting prompts. The crowd votes. If a prompt beats the 20-vote baseline, a constrained AI coding agent gets one bounded attempt. A popular prompt can still fail in public.
         </p>
         <div class="actions" aria-label="Primary actions">
           <a class="button primary" href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt_proposal.yml">Submit a prompt</a>
@@ -129,15 +129,15 @@
 
       <aside class="gate-card" aria-labelledby="gate-title">
         <div class="gate-top">
-          <p class="gate-kicker">The weekly gate</p>
-          <span class="gate-number">7+</span>
-          <h2 id="gate-title" class="gate-title">top-prompt votes, with at least 5 total votes</h2>
-          <p>The top prompt needs at least 7 votes, and the week needs at least 5 total votes. Miss it, the lab does not move.</p>
+          <p class="gate-kicker">The weekly boss</p>
+          <span class="gate-number">20</span>
+          <h2 id="gate-title" class="gate-title">baseline votes against doing nothing</h2>
+          <p>A real prompt must beat the 20-vote no-change baseline. Miss it, the lab does not move.</p>
         </div>
         <div class="gate-bottom">
           <div class="flow" aria-label="Prompt Vote Lab flow">
             <div class="flow-item"><strong>Submit</strong><span>Your prompt enters the board.</span></div>
-            <div class="flow-item"><strong>Win votes</strong><span>Pass the weekly gate.</span></div>
+            <div class="flow-item"><strong>Win votes</strong><span>Beat the 20-vote baseline.</span></div>
             <div class="flow-item"><strong>Risk trust</strong><span>The agent may fail.</span></div>
           </div>
         </div>
@@ -175,7 +175,7 @@
       <h2 id="score-title">Winning the vote is not the same as winning the round.</h2>
       <p>The real score is whether the prompt survives implementation without wasting the lab.</p>
       <div class="metrics">
-        <article class="metric"><span class="metric-number">7+</span><p>top-prompt votes to pass the initial gate</p></article>
+        <article class="metric"><span class="metric-number">20</span><p>baseline votes to beat</p></article>
         <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
         <article class="metric"><span class="metric-number">1</span><p>bounded agent attempt</p></article>
         <article class="metric"><span class="metric-number">∞</span><p>reputation carried forward</p></article>
