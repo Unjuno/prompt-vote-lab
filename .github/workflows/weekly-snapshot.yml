@@ -41,8 +41,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROMPT_LABEL: prompt-proposal
-          WEEK_ID: ${{ inputs.week_id }}
-          SNAPSHOT_AT: ${{ inputs.snapshot_at }}
+          WEEK_ID: ${{ github.event.inputs.week_id || '' }}
+          SNAPSHOT_AT: ${{ github.event.inputs.snapshot_at || '' }}
           CUTOFF_TIMEZONE: Asia/Tokyo
           NO_CHANGE_BASELINE: 5
           REQUIRED_MARGIN: 2
