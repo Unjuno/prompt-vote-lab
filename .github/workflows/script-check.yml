@@ -73,5 +73,8 @@ jobs:
       - name: Run pre-API freeze audit self-test
         run: python scripts/test_pre_api_freeze_audit.py
 
+      - name: Run weekly no-eligible selector test
+        run: python scripts/test_weekly_auto_no_eligible.py
+
       - name: Run lab PR scope guard self-test
         run: bash scripts/test-lab-pr-scope.sh
