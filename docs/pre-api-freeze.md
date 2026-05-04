@@ -38,6 +38,7 @@ All of these must pass before the first real canary run.
 | Weekly Report Draft workflow | PASS, report PR only | completed before canary |
 | Weekly Mock Run workflow | PASS, summary PR + mock implementation PR only | completed before canary |
 | Weekly Auto Run no-eligible workflow | PASS, summary PR only | PR #81 |
+| Evidence Pipeline Dry Run with `source=fixture` | PASS, validator and artifact upload | run `25335321720` |
 | Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | not yet verified |
 
 ## Real API canary entry condition
@@ -46,6 +47,7 @@ A real implementation-agent canary is allowed only after:
 
 ```text
 Weekly Auto Run no-eligible path has produced only a summary PR
+Evidence Pipeline Dry Run source=fixture has passed the workflow validator
 Evidence Pipeline Dry Run source=live has produced reviewable artifacts
 the live artifact review passes docs/evidence-artifact-review.md
 ```
@@ -58,6 +60,17 @@ baseline_won: true
 eligible_count: 0
 eligible_ranks: []
 implementation PR created: no
+```
+
+The fixture evidence dry-run path was verified in Actions run `25335321720`:
+
+```text
+source: fixture
+week_id: dry-run-001
+validator: PASS
+artifact: evidence-pipeline-dry-run
+artifact files: 7
+artifact id: 6790257600
 ```
 
 ## Canary constraints
