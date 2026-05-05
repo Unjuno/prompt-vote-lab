@@ -13,6 +13,7 @@ REQUIRED_FILES = [
     "docs/stop-rules.md",
     "docs/weekly-ops-doctrine.md",
     "docs/evidence-artifact-review.md",
+    "runs/evidence-review-template.md",
     "formal/Selection.lean",
     "lean-toolchain",
     "scripts/select_eligible.py",
@@ -68,10 +69,19 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "docs/evidence-artifact-review.md": [
         "Evidence Pipeline Dry Run",
         "validate-evidence-artifact.mjs",
+        "runs/evidence-review-template.md",
         "snapshot-v1.2",
         "snapshot-summary-v1.0",
         "Do-not-post checklist",
         "no voter login list appears",
+    ],
+    "runs/evidence-review-template.md": [
+        "Evidence Review Record Template",
+        "validator_result: PASS | FAIL",
+        "human_review: PASS | FAIL | UNCERTAIN",
+        "final_decision: PASS | FAIL | UNCERTAIN",
+        "Live evidence path is verified",
+        "Do not proceed to implementation-agent canary",
     ],
     "scripts/preflight_implementation_agent.py": [
         "ALLOWED_MODELS = {\"gpt-5-nano\"}",
