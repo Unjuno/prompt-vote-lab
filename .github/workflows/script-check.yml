@@ -10,6 +10,7 @@ on:
       - ".github/workflows/script-check.yml"
       - ".github/workflows/codex-first-canary-run.yml"
       - "docs/codex-runner-contract.md"
+      - "docs/canary-log-policy.md"
   workflow_dispatch:
 
 permissions:
@@ -83,6 +84,9 @@ jobs:
 
       - name: Run Codex canary contract test
         run: python scripts/test_codex_canary_contract.py
+
+      - name: Run canary log policy test
+        run: python scripts/test_canary_log_policy.py
 
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
