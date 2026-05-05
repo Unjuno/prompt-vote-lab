@@ -104,7 +104,7 @@ jobs:
           bash scripts/safety-check.sh origin/main HEAD
           bash scripts/static-site-check.sh
 
-          changed_files="$(git diff --name-only origin/main...HEAD)"
+          changed_files="$(git diff --name-only --)"
           if [ -z "$changed_files" ]; then
             echo "First canary produced no changes."
             exit 1
