@@ -11,11 +11,13 @@ mkdir -p .tmp
 
 printf '%s' "$OPENAI_API_KEY" | codex login --with-api-key
 
+prompt="$(cat .tmp/codex-first-canary-prompt.md)"
+
 codex exec \
   --cd "$PWD" \
   --model "${CODEX_MODEL:-gpt-5.1-codex}" \
   --sandbox workspace-write \
   --json \
   --output-last-message .tmp/codex-last-message.txt \
-  - < .tmp/codex-first-canary-prompt.md \
+  "$prompt" \
   > .tmp/codex-events.jsonl
