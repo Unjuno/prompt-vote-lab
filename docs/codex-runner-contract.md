@@ -28,6 +28,19 @@ Fixed values:
 
 ```text
 model: gpt-5.4-nano
+model_provider: openai
+model_reasoning_effort: medium
+model_reasoning_summary: auto
+model_verbosity: medium
+model_max_output_tokens: 5000
+temperature: unset/forbidden
+top_p: unset/forbidden
+logprobs: unset/forbidden
+seed: unset/forbidden
+web_search: disabled
+network_calls_from_generated_site: forbidden
+sandbox_mode: workspace-write
+approval_policy: never
 candidate_rank: 1
 issue_number: 0
 vote_count: 0
@@ -41,11 +54,25 @@ prompt_source: scripts/create_first_canary_candidate.py + inline workflow prompt
 manual_review_required: true
 ```
 
+Parameter interpretation:
+
+```text
+model_reasoning_effort fixes the amount of model reasoning budget.
+model_reasoning_summary fixes whether Codex asks the API for reasoning summaries.
+model_verbosity fixes answer/detail length pressure.
+model_max_output_tokens fixes the output budget ceiling for this canary.
+temperature, top_p, logprobs, and seed are intentionally unset because this canary uses a reasoning-model path, not a sampling-parameter experiment.
+```
+
 Explicitly forbidden during this canary:
 
 ```text
 changing the model
-changing temperature or sampling parameters
+changing model_reasoning_effort
+changing model_reasoning_summary
+changing model_verbosity
+changing model_max_output_tokens
+adding temperature, top_p, logprobs, seed, or other sampling controls
 adding fallback models
 adding retries
 changing the fixed prompt goal
