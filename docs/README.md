@@ -16,9 +16,10 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 6. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
 7. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
 8. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-9. [Support policy](./support-policy.md) — support boundaries.
-10. [Report policy](./report-policy.md) — weekly report draft policy.
-11. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+9. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+10. [Support policy](./support-policy.md) — support boundaries.
+11. [Report policy](./report-policy.md) — weekly report draft policy.
+12. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
