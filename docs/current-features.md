@@ -105,7 +105,7 @@ Prepared but not yet executed:
 - one implementation attempt per candidate
 - SDK retry must be 0
 - no fallback model
-- max output tokens capped at 12000
+- max output tokens capped at 5000
 - eligible candidate secret requirement
 - no-eligible path does not require implementation-agent secret
 - preflight script before API dependency install
@@ -167,6 +167,7 @@ Verified:
 Implemented:
 
 - Lean 4 model under `formal/Selection.lean`
+- Lean 4 model under `formal/Canary.lean`
 - `lean-toolchain`
 - CI workflow for Lean proof checking
 
@@ -176,11 +177,13 @@ Currently proven:
 baselineWon candidates = true -> selectEligible candidates support = []
 baseline candidate is not individually eligible
 other candidate is not individually eligible
+first canary policy satisfies the closed canary safety predicate
+safe canary implies lab-only scope, one attempt, no SDK retry, one API call, no fallback, no auto-merge, and no external publishing
 ```
 
 Scope limitation:
 
-The Lean proof models the closed selection core. It does not prove the full GitHub Actions runtime, GitHub API behavior, or model output behavior.
+The Lean proof models the closed selection and canary-policy cores. It does not prove the full GitHub Actions runtime, GitHub API behavior, or model output behavior.
 
 ## Reporting
 

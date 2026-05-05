@@ -56,7 +56,8 @@ theorem safe_canary_one_attempt
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.1
+      rcases h with ⟨⟨⟨⟨⟨h_attempts, _h_retries⟩, _h_api⟩, _h_fallback⟩, _h_auto⟩, _h_external⟩
+      exact h_attempts
 
 theorem safe_canary_no_sdk_retry
     (policy : CanaryPolicy) :
@@ -65,7 +66,8 @@ theorem safe_canary_no_sdk_retry
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.2.1
+      rcases h with ⟨⟨⟨⟨⟨_h_attempts, h_retries⟩, _h_api⟩, _h_fallback⟩, _h_auto⟩, _h_external⟩
+      exact h_retries
 
 theorem safe_canary_one_api_call
     (policy : CanaryPolicy) :
@@ -74,7 +76,8 @@ theorem safe_canary_one_api_call
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.2.2.1
+      rcases h with ⟨⟨⟨⟨⟨_h_attempts, _h_retries⟩, h_api⟩, _h_fallback⟩, _h_auto⟩, _h_external⟩
+      exact h_api
 
 theorem safe_canary_no_fallback
     (policy : CanaryPolicy) :
@@ -83,7 +86,8 @@ theorem safe_canary_no_fallback
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.2.2.2.1
+      rcases h with ⟨⟨⟨⟨⟨_h_attempts, _h_retries⟩, _h_api⟩, h_fallback⟩, _h_auto⟩, _h_external⟩
+      exact h_fallback
 
 theorem safe_canary_no_auto_merge
     (policy : CanaryPolicy) :
@@ -92,7 +96,8 @@ theorem safe_canary_no_auto_merge
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.2.2.2.2.1
+      rcases h with ⟨⟨⟨⟨⟨_h_attempts, _h_retries⟩, _h_api⟩, _h_fallback⟩, h_auto⟩, _h_external⟩
+      exact h_auto
 
 theorem safe_canary_no_external_publishing
     (policy : CanaryPolicy) :
@@ -101,6 +106,7 @@ theorem safe_canary_no_external_publishing
   cases policy with
   | mk scope attempts sdkMaxRetries apiCallsPerCandidate fallbackModel autoMerge externalPublishing =>
       cases scope <;> simp [safeCanary] at h
-      exact h.2.2.2.2.2
+      rcases h with ⟨⟨⟨⟨⟨_h_attempts, _h_retries⟩, _h_api⟩, _h_fallback⟩, _h_auto⟩, h_external⟩
+      exact h_external
 
 end PromptVoteLab
