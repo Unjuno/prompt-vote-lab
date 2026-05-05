@@ -52,6 +52,24 @@ node scripts/validate-evidence-artifact.mjs tmp/evidence dry-run-001
 
 The CLI check does not replace human review. It catches missing files, schema mismatches, missing sections, missing baseline data, and identity-like voter fields.
 
+## Review record
+
+After inspection, copy:
+
+```text
+runs/evidence-review-template.md
+```
+
+to:
+
+```text
+runs/<week_id>-evidence-review.md
+```
+
+Record the workflow run URL, artifact ID, validator result, human review result, and final decision.
+
+Do not proceed to implementation-agent canary without a PASS review record for `source=live`.
+
 ## Review order
 
 ### 1. Snapshot
