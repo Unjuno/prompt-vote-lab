@@ -15,7 +15,7 @@ jobs:
   codex-first-canary-run:
     runs-on: ubuntu-latest
     env:
-      CODEX_MODEL: gpt-5.1-codex
+      CODEX_MODEL: gpt-5.4-nano
       RUN_WEEK: first-canary-001
       CODEX_HOME: ${{ github.workspace }}/.codex-home
     steps:
