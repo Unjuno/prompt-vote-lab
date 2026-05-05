@@ -53,10 +53,38 @@ jobs:
           - Do not commit, branch, or open a PR. The workflow will do that.
           EOF
 
+      - name: Capture diagnostics baseline
+        run: |
+          mkdir -p .tmp/canary-diagnostics
+          git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
+          python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
+          import hashlib
+          import json
+          from pathlib import Path
+
+          files = ["lab/index.html", "lab/style.css", "lab/app.js"]
+          out = {}
+          for name in files:
+              path = Path(name)
+              if path.exists() and path.is_file():
+                  digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                  out[name] = {"exists": True, "sha256": digest, "size_bytes": path.stat().st_size}
+              else:
+                  out[name] = {"exists": False, "sha256": None, "size_bytes": None}
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
+
       - name: Run Codex once
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
-        run: bash scripts/run_codex_first_canary.sh
+        run: |
+          set +e
+          bash scripts/run_codex_first_canary.sh > .tmp/codex-stdout.txt 2> .tmp/codex-stderr.txt
+          rc=$?
+          echo "$rc" > .tmp/codex-exit-code.txt
+          cat .tmp/codex-stdout.txt
+          cat .tmp/codex-stderr.txt >&2
+          exit "$rc"
 
       - name: Validate changed files and checks
         run: |
@@ -73,6 +101,29 @@ jobs:
           done
           bash scripts/safety-check.sh origin/main HEAD
           bash scripts/static-site-check.sh
+
+      - name: Collect diagnostics artifact
+        if: ${{ always() }}
+        run: |
+          python scripts/collect_canary_diagnostics.py \
+            --out-dir .tmp/canary-diagnostics \
+            --canary-id first-canary-001 \
+            --model "$CODEX_MODEL" \
+            --runner-mode codex-cli-direct-write \
+            --sandbox-mode workspace-write \
+            --status "${{ job.status }}" \
+            --failure-step codex_or_validation \
+            --allowed-file lab/index.html \
+            --allowed-file lab/style.css \
+            --allowed-file lab/app.js
+
+      - name: Upload diagnostics artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-first-canary-diagnostics-${{ github.run_number }}
+          path: .tmp/canary-diagnostics
+          if-no-files-found: warn
 
       - name: Write public run log
         if: ${{ always() }}
@@ -165,6 +216,10 @@ jobs:
           ## Public run log
 
           Redacted public run log is uploaded as a workflow artifact. Raw stderr, raw Codex JSONL, raw model output, and secrets are not published.
+
+          ## Diagnostics
+
+          Internal diagnostics artifact is uploaded for prompt-design analysis.
 
           ## Merge policy
 
