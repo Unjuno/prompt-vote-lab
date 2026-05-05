@@ -1,0 +1,165 @@
+name: First Canary Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: first-canary-run
+  cancel-in-progress: false
+
+jobs:
+  first-canary-run:
+    runs-on: ubuntu-latest
+    env:
+      IMPLEMENTATION_MODEL: gpt-5-nano
+      MAX_OUTPUT_TOKENS: "5000"
+      SDK_MAX_RETRIES: "0"
+      RUN_WEEK: first-canary-001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify clean first-canary state
+        shell: bash
+        run: |
+          if [ "${IMPLEMENTATION_MODEL}" != "gpt-5-nano" ]; then
+            echo "Unexpected model: ${IMPLEMENTATION_MODEL}"
+            exit 1
+          fi
+          if [ "${MAX_OUTPUT_TOKENS}" != "5000" ]; then
+            echo "Unexpected max output tokens: ${MAX_OUTPUT_TOKENS}"
+            exit 1
+          fi
+          if [ "${SDK_MAX_RETRIES}" != "0" ]; then
+            echo "Unexpected SDK retry setting: ${SDK_MAX_RETRIES}"
+            exit 1
+          fi
+
+      - name: Create fixed first-canary candidate
+        run: python scripts/create_first_canary_candidate.py
+
+      - name: Require implementation secret
+        env:
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+        run: |
+          if [ -z "${OPENAI_API_KEY_TRAILING}" ] && [ -z "${OPENAI_API_KEY_PRIMARY}" ] && [ -z "${OPENAI_API_KEY_IMPLEMENTATION}" ]; then
+            echo "No implementation-agent secret is configured."
+            echo "Preferred secret name: OPENAI_API_KEY_"
+            exit 1
+          fi
+
+      - name: Preflight fixed first-canary run
+        env:
+          OPENAI_API_KEY_: ${{ secrets.OPENAI_API_KEY_ }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_IMPLEMENTATION_API_KEY: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+        run: |
+          python scripts/preflight_implementation_agent.py \
+            --eligible .tmp/eligible-candidates.json \
+            --model "$IMPLEMENTATION_MODEL" \
+            --max-output-tokens "$MAX_OUTPUT_TOKENS" \
+            --sdk-max-retries "$SDK_MAX_RETRIES" \
+            --api-call-limit-per-candidate 1
+
+      - name: Install Python dependency
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install openai
+
+      - name: Run fixed first canary and create PR
+        env:
+          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
+          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          export OPENAI_API_KEY_="${OPENAI_API_KEY_TRAILING:-${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}}"
+          branch="first-canary-001-${{ github.run_number }}"
+          base_sha="$(git rev-parse origin/main)"
+          prompt="$(cat .tmp/first-canary-prompt.txt)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+
+          python scripts/openai_lab_run.py \
+            --week "$RUN_WEEK" \
+            --candidate-rank 1 \
+            --issue-number 0 \
+            --voted-prompt "$prompt" \
+            --vote-count 0 \
+            --run-reason normal-weekly-run \
+            --model "$IMPLEMENTATION_MODEL" \
+            --max-output-tokens "$MAX_OUTPUT_TOKENS"
+
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "First canary produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *)
+                echo "Forbidden first-canary changed file: $file"
+                exit 1
+                ;;
+            esac
+          done
+
+          git add lab/index.html lab/style.css lab/app.js
+          git commit -m "Run fixed first canary"
+          git push --set-upstream origin "$branch"
+
+          cat > .tmp/first-canary-pr-body.md <<EOF
+          Implements the fixed first implementation-agent canary.
+
+          ## Purpose
+
+          This is execution-path verification, not product expansion.
+
+          ## Fixed prompt source
+
+          - docs/first-canary-prompt.md
+
+          ## Configuration
+
+          - Week: $RUN_WEEK
+          - Rank: 1
+          - Issue: #0
+          - Votes: 0
+          - Inherited lab base: \`$base_sha\`
+          - Implementation model: \`gpt-5-nano\`
+          - Max output tokens: \`5000\`
+          - SDK max retries: \`0\`
+          - API call limit per candidate: \`1\`
+          - Auto-merge: disabled
+
+          ## Internal checks
+
+          - safety-check passed before PR creation
+          - static-site-check passed before PR creation
+          - changed-file guard passed before PR creation
+
+          ## Merge policy
+
+          Manual review is required. Do not auto-merge.
+          EOF
+
+          gh pr create \
+            --title "Run fixed first canary" \
+            --body-file .tmp/first-canary-pr-body.md \
+            --base main \
+            --head "$branch"

@@ -22,12 +22,14 @@ REQUIRED_FILES = [
     "scripts/select_eligible.py",
     "scripts/preflight_implementation_agent.py",
     "scripts/openai_lab_run.py",
+    "scripts/create_first_canary_candidate.py",
     "scripts/create-weekly-snapshot.mjs",
     "scripts/create-snapshot-summary.mjs",
     "scripts/create-public-briefing.mjs",
     "scripts/run-evidence-artifact-smoke.mjs",
     "scripts/validate-evidence-artifact.mjs",
     ".github/workflows/weekly-auto-run.yml",
+    ".github/workflows/first-canary-run.yml",
     ".github/workflows/evidence-pipeline-dry-run.yml",
 ]
 
@@ -152,6 +154,13 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "This is one bounded implementation-agent attempt.",
         "Do not create additional files.",
     ],
+    "scripts/create_first_canary_candidate.py": [
+        "docs/first-canary-prompt.md",
+        "Fixed prompt",
+        "eligible-candidates.json",
+        "first_canary",
+        "fixed_prompt_source",
+    ],
     "scripts/create-weekly-snapshot.mjs": [
         "snapshot-v1.2",
         "no_change_baseline_candidate",
@@ -196,6 +205,22 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "python -m pip install openai",
         "gh pr create",
     ],
+    ".github/workflows/first-canary-run.yml": [
+        "workflow_dispatch",
+        "IMPLEMENTATION_MODEL: gpt-5-nano",
+        "MAX_OUTPUT_TOKENS: \"5000\"",
+        "SDK_MAX_RETRIES: \"0\"",
+        "RUN_WEEK: first-canary-001",
+        "python scripts/create_first_canary_candidate.py",
+        "python scripts/preflight_implementation_agent.py",
+        "--api-call-limit-per-candidate 1",
+        "python scripts/openai_lab_run.py",
+        "bash scripts/safety-check.sh origin/main HEAD",
+        "bash scripts/static-site-check.sh",
+        "Forbidden first-canary changed file",
+        "gh pr create",
+        "Manual review is required. Do not auto-merge.",
+    ],
     ".github/workflows/evidence-pipeline-dry-run.yml": [
         "Generate public briefing",
         "weekly-metrics.json",
@@ -208,6 +233,15 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
 
 FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
     ".github/workflows/weekly-auto-run.yml": [
+        "enable-auto-merge",
+        "gh pr merge --auto",
+        "MAX_OUTPUT_TOKENS: \"12000\"",
+        "SDK_MAX_RETRIES: \"1\"",
+        "SDK_MAX_RETRIES: \"2\"",
+        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
+        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
+    ],
+    ".github/workflows/first-canary-run.yml": [
         "enable-auto-merge",
         "gh pr merge --auto",
         "MAX_OUTPUT_TOKENS: \"12000\"",
