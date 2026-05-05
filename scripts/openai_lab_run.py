@@ -37,6 +37,7 @@ LAB_FILES = {
 }
 
 MAX_PROMPT_CHARS = int(os.getenv("MAX_IMPLEMENTATION_PROMPT_CHARS", "120000"))
+MAX_OUTPUT_TOKENS_LIMIT = 5000
 
 
 SCHEMA = {
@@ -146,7 +147,7 @@ def main() -> int:
     parser.add_argument("--vote-count", default="unrecorded")
     parser.add_argument("--run-reason", default="normal-weekly-run")
     parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5-nano"))
-    parser.add_argument("--max-output-tokens", type=int, default=int(os.getenv("MAX_OUTPUT_TOKENS", "12000")))
+    parser.add_argument("--max-output-tokens", type=int, default=int(os.getenv("MAX_OUTPUT_TOKENS", "5000")))
     parser.add_argument("--temperature-policy", default=os.getenv("TEMPERATURE_POLICY", "model-default"))
     parser.add_argument("--top-p-policy", default=os.getenv("TOP_P_POLICY", "model-default"))
     parser.add_argument("--summary-out", default=".tmp/implementation-summary.md")
@@ -154,8 +155,11 @@ def main() -> int:
 
     api_key = resolve_openai_api_key()
 
-    if args.max_output_tokens > 12000:
-        print("max_output_tokens above 12000 is not allowed for implementation-agent attempts", file=sys.stderr)
+    if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT:
+        print(
+            f"max_output_tokens above {MAX_OUTPUT_TOKENS_LIMIT} is not allowed for implementation-agent attempts",
+            file=sys.stderr,
+        )
         return 2
 
     prompt = build_prompt(args)
