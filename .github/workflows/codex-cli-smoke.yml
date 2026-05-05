@@ -1,0 +1,40 @@
+name: Codex CLI Smoke
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/codex-cli-smoke.yml"
+      - "docs/codex-runner-contract.md"
+
+permissions:
+  contents: read
+
+jobs:
+  codex-cli-smoke:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ""
+      OPENAI_API_KEY_: ""
+      OPENAI_IMPLEMENTATION_API_KEY: ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Codex CLI without running a model task
+        run: |
+          set -euo pipefail
+          npm install -g @openai/codex
+          command -v codex
+          codex --version
+
+      - name: Check Codex CLI help without API key
+        run: |
+          set -euo pipefail
+          codex --help
+          codex exec --help
