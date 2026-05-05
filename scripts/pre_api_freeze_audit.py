@@ -37,6 +37,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "Evidence Pipeline Dry Run with `source=live`",
         "PR #81",
         "gpt-5-nano",
+        "max output tokens: 5000",
         "workflow attempts to auto-merge",
     ],
     "docs/canary-policy.md": [
@@ -44,6 +45,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "attempts per candidate: 1",
         "SDK max_retries: 0",
         "fallback model: none",
+        "max_output_tokens: 5000",
         "automatic merge: no",
         "max continuation runs per candidate: 1",
     ],
@@ -98,7 +100,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "scripts/preflight_implementation_agent.py": [
         "ALLOWED_MODELS = {\"gpt-5-nano\"}",
-        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
+        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
         "if sdk_max_retries != 0",
         "api_call_limit != 1",
         "validate_env_secret(len(candidates))",
@@ -141,6 +143,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     ".github/workflows/weekly-auto-run.yml": [
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
+        "MAX_OUTPUT_TOKENS: \"5000\"",
         "SDK_MAX_RETRIES: \"0\"",
         "--api-call-limit-per-candidate 1",
         "if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}",
@@ -162,6 +165,7 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
     ".github/workflows/weekly-auto-run.yml": [
         "enable-auto-merge",
         "gh pr merge --auto",
+        "MAX_OUTPUT_TOKENS: \"12000\"",
         "SDK_MAX_RETRIES: \"1\"",
         "SDK_MAX_RETRIES: \"2\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
@@ -170,6 +174,7 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
     "scripts/preflight_implementation_agent.py": [
         "ALLOWED_MODELS = {\"gpt-5\"}",
         "ALLOWED_MODELS = {\"gpt-5-mini\"}",
+        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
         "api_call_performed\": True",
         "sdk_max_retries != 1",
     ],
