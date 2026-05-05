@@ -20,6 +20,54 @@ Rationale:
 - The experiment should test coding-agent behavior under repository constraints.
 - The runner should not force a custom patch DSL unless the experiment explicitly tests DSL-following.
 
+## Fixed canary conditions
+
+The first Codex canary is a controlled experiment. Do not change model or run parameters while debugging execution-path failures.
+
+Fixed values:
+
+```text
+model: gpt-5.4-nano
+candidate_rank: 1
+issue_number: 0
+vote_count: 0
+week: first-canary-001
+attempts_per_candidate: 1
+retry_policy: none
+fallback_policy: none
+auto_merge_policy: disabled
+allowed_changed_files: lab/index.html, lab/style.css, lab/app.js
+prompt_source: scripts/create_first_canary_candidate.py + inline workflow prompt
+manual_review_required: true
+```
+
+Explicitly forbidden during this canary:
+
+```text
+changing the model
+changing temperature or sampling parameters
+adding fallback models
+adding retries
+changing the fixed prompt goal
+expanding writable file scope
+switching to a stronger model to make the run pass
+accepting a run that changes non-lab files
+```
+
+Allowed changes while the runner is failing:
+
+```text
+fix Codex CLI argument syntax
+fix authentication plumbing
+fix stdin/prompt delivery
+fix shell quoting
+fix local diagnostic logging
+fix changed-file detection
+fix public redacted log generation
+```
+
+If a parameter must change, create a new canary ID instead of mutating `first-canary-001`.
+
 ## Required invariants
 
 The Codex runner must preserve these invariants:
