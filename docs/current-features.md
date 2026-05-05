@@ -157,6 +157,10 @@ Verified:
 - Evidence Pipeline Dry Run with `source=fixture` passed in Actions run `25335321720`.
 - The fixture run executed `node scripts/validate-evidence-artifact.mjs tmp/evidence "${WEEK_ID}"` successfully.
 - The fixture run uploaded artifact `evidence-pipeline-dry-run` with 7 files.
+- Evidence Pipeline Dry Run with `source=live` passed in Actions run `25336303653`.
+- The live run executed `node scripts/validate-evidence-artifact.mjs tmp/evidence "${WEEK_ID}"` successfully.
+- The live artifact was opened and reviewed file-by-file in `runs/dry-run-001-evidence-review.md`.
+- The live evidence review final decision is `PASS`.
 
 ## Formal proof
 
@@ -216,11 +220,12 @@ Implemented:
 - pre-API freeze audit CI
 - Weekly Auto Run no-eligible production path verification
 - Evidence Pipeline Dry Run fixture path verification
+- Evidence Pipeline Dry Run live path verification
 
 Current policy:
 
 ```text
-No real implementation-agent API call until all offline gates are green and live evidence artifacts are reviewed.
+No real implementation-agent API call until all offline gates are green and a single low-risk canary candidate is selected.
 ```
 
 ## Current release judgment
@@ -232,10 +237,11 @@ MVP structure: mostly complete
 offline verification: strong
 no-eligible production workflow path: verified
 fixture evidence dry-run path: verified
+live evidence dry-run path: verified
 real implementation-agent canary: not yet executed
 production autonomy: not complete
 ```
 
 Operational recommendation:
 
-Run `Evidence Pipeline Dry Run` with `source=live`, review the generated artifact with `docs/evidence-artifact-review.md`, and only then consider a single low-risk paid implementation-agent canary.
+Select one low-risk canary prompt and run exactly one bounded implementation-agent attempt under `docs/pre-api-freeze.md` and `docs/canary-policy.md`.
