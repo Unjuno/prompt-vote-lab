@@ -39,7 +39,7 @@ All of these must pass before the first real canary run.
 | Weekly Mock Run workflow | PASS, summary PR + mock implementation PR only | completed before canary |
 | Weekly Auto Run no-eligible workflow | PASS, summary PR only | PR #81 |
 | Evidence Pipeline Dry Run with `source=fixture` | PASS, validator and artifact upload | run `25335321720` |
-| Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | not yet verified |
+| Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | `runs/dry-run-001-evidence-review.md` |
 
 ## Real API canary entry condition
 
@@ -71,6 +71,19 @@ validator: PASS
 artifact: evidence-pipeline-dry-run
 artifact files: 7
 artifact id: 6790257600
+```
+
+The live evidence dry-run path was verified in Actions run `25336303653` and recorded in `runs/dry-run-001-evidence-review.md`:
+
+```text
+source: live
+week_id: dry-run-001
+validator: PASS
+artifact: evidence-pipeline-dry-run
+artifact files: 7
+artifact id: 6790655519
+human_review: PASS
+final_decision: PASS
 ```
 
 ## Canary constraints
