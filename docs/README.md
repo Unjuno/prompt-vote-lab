@@ -14,9 +14,10 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 4. [Automation map](./automation-map.md) — workflow boundaries.
 5. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
 6. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-7. [Support policy](./support-policy.md) — support boundaries.
-8. [Report policy](./report-policy.md) — weekly report draft policy.
-9. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+7. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+8. [Support policy](./support-policy.md) — support boundaries.
+9. [Report policy](./report-policy.md) — weekly report draft policy.
+10. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
