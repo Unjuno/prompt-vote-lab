@@ -31,6 +31,7 @@ jobs:
 
       - name: Install Codex CLI
         run: |
+          mkdir -p "$CODEX_HOME"
           npm install -g @openai/codex
           codex --version
 
@@ -60,11 +61,11 @@ jobs:
             echo "OPENAI_API_KEY_ secret is not configured."
             exit 1
           fi
+          mkdir -p "$CODEX_HOME"
           codex exec \
             --cd "$PWD" \
             --model "$CODEX_MODEL" \
             --sandbox workspace-write \
-            --ask-for-approval never \
             --json \
             --output-last-message .tmp/codex-last-message.txt \
             - < .tmp/codex-first-canary-prompt.md \
