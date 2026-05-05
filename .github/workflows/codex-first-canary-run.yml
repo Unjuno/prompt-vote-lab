@@ -69,3 +69,19 @@ jobs:
             --output-last-message .tmp/codex-last-message.txt \
             - < .tmp/codex-first-canary-prompt.md \
             > .tmp/codex-events.jsonl
+
+      - name: Validate changed files and checks
+        run: |
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "Codex produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *) echo "Forbidden changed file: $file"; exit 1 ;;
+            esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
