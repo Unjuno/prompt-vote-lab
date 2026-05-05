@@ -52,6 +52,20 @@ jobs:
           - Do not commit, branch, or open a PR. The workflow will do that.
           EOF
 
-      - name: Placeholder
+      - name: Run Codex once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
         run: |
-          echo "Codex execution step is added in a follow-up patch."
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY_ secret is not configured."
+            exit 1
+          fi
+          codex exec \
+            --cd "$PWD" \
+            --model "$CODEX_MODEL" \
+            --sandbox workspace-write \
+            --ask-for-approval never \
+            --json \
+            --output-last-message .tmp/codex-last-message.txt \
+            - < .tmp/codex-first-canary-prompt.md \
+            > .tmp/codex-events.jsonl
