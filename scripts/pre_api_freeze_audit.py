@@ -146,7 +146,8 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "scripts/openai_lab_run.py": [
         "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
         "MAX_OUTPUT_TOKENS_LIMIT = 5000",
-        "MAX_OUTPUT_TOKENS", "5000",
+        "MAX_OUTPUT_TOKENS",
+        "5000",
         "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
         "This is one bounded implementation-agent attempt.",
         "Do not create additional files.",
@@ -224,7 +225,7 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "scripts/openai_lab_run.py": [
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
-        "MAX_OUTPUT_TOKENS", "12000",
+        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
         "args.max_output_tokens > 12000",
         "max_output_tokens above 12000",
         "max_retries=1",
