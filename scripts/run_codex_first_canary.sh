@@ -16,8 +16,16 @@ prompt="$(cat .tmp/codex-first-canary-prompt.md)"
 codex exec \
   --cd "$PWD" \
   --model "${CODEX_MODEL:-gpt-5.1-codex}" \
-  --full-auto \
+  --sandbox workspace-write \
   --json \
   --output-last-message .tmp/codex-last-message.txt \
   "$prompt" \
   > .tmp/codex-events.jsonl
+
+# `codex exec` can leave the generated diff as the latest Codex output rather
+# than directly modifying the working tree. Try to apply it, then let the
+# workflow's changed-file guard decide whether the run actually produced a
+# valid lab-only diff.
+if ! codex apply > .tmp/codex-apply.log 2>&1; then
+  cat .tmp/codex-apply.log
+fi
