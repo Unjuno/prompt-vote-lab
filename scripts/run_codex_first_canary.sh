@@ -16,7 +16,7 @@ prompt="$(cat .tmp/codex-first-canary-prompt.md)"
 codex exec \
   --cd "$PWD" \
   --model "${CODEX_MODEL:-gpt-5.1-codex}" \
-  --sandbox workspace-write \
+  --full-auto \
   --json \
   --output-last-message .tmp/codex-last-message.txt \
   "$prompt" \
