@@ -16,7 +16,14 @@ jobs:
       contains(github.event.pull_request.labels.*.name, 'pvl:unsafe') ||
       contains(github.event.pull_request.labels.*.name, 'pvl:failed') ||
       contains(github.event.pull_request.labels.*.name, 'pvl:no-change') ||
-      github.event.pull_request.merged == true
+      (
+        github.event.pull_request.merged == true &&
+        contains(github.event.pull_request.body, '- Week:') &&
+        contains(github.event.pull_request.body, '- Rank:') &&
+        contains(github.event.pull_request.body, '- Issue:') &&
+        contains(github.event.pull_request.body, '- Votes:') &&
+        contains(github.event.pull_request.body, '## Selected prompt')
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,10 +50,30 @@ jobs:
           import json
           from pathlib import Path
           data = json.loads(Path('.tmp/pr-metadata.json').read_text())
-          if "${{ github.event.pull_request.merged }}" == "true":
+          if "${{ github.event.pull_request.merged }}" == "true" and data.get("terminal_state") == "unrecorded":
               data["terminal_state"] = "merged"
           Path('.tmp/pr-metadata.json').write_text(json.dumps(data, indent=2), encoding='utf-8')
           print(json.dumps(data, indent=2))
+          PY
+
+      - name: Validate terminal metadata
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('.tmp/pr-metadata.json').read_text())
+          required = [
+              'week',
+              'candidate_rank',
+              'issue_number',
+              'vote_count',
+              'selected_prompt',
+              'terminal_state',
+          ]
+          missing = [key for key in required if not data.get(key) or data.get(key) == 'unrecorded']
+          if missing:
+              raise SystemExit(f'Refusing to write terminal report with incomplete metadata: {missing}')
           PY
 
       - name: Write deterministic terminal report
@@ -57,8 +84,6 @@ jobs:
           from pathlib import Path
           data = json.loads(Path('.tmp/pr-metadata.json').read_text())
           state = data.get('terminal_state') or 'unrecorded'
-          if state == 'unrecorded':
-              raise SystemExit('No terminal state label or merge state was recorded')
           subprocess.run([
               'python', 'scripts/write_terminal_report.py',
               '--week', data.get('week', 'unrecorded'),
