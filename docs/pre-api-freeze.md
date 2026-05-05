@@ -106,7 +106,7 @@ no retry
 no fallback
 SDK max_retries: 0
 API call limit per candidate: 1
-max output tokens: 12000
+max output tokens: 5000
 lab/ only
 safety-check PASS
 static-site-check PASS
