@@ -51,6 +51,12 @@ REQUIRED = {
         "api_call_limit != 1",
         "MAX_OUTPUT_TOKENS_LIMIT = 5000",
     ],
+    "scripts/openai_lab_run.py": [
+        "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
+        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
+        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"5000\")",
+        "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
+    ],
     ".github/workflows/weekly-auto-run.yml": [
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
         "MAX_OUTPUT_TOKENS: \"5000\"",
@@ -81,6 +87,14 @@ FORBIDDEN = {
         "sdk_max_retries != 1",
         "api_call_limit != 2",
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
+    ],
+    "scripts/openai_lab_run.py": [
+        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
+        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
+        "args.max_output_tokens > 12000",
+        "max_output_tokens above 12000",
+        "max_retries=1",
+        "max_retries=2",
     ],
     ".github/workflows/weekly-auto-run.yml": [
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",

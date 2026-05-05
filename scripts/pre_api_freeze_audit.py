@@ -21,6 +21,7 @@ REQUIRED_FILES = [
     "lean-toolchain",
     "scripts/select_eligible.py",
     "scripts/preflight_implementation_agent.py",
+    "scripts/openai_lab_run.py",
     "scripts/create-weekly-snapshot.mjs",
     "scripts/create-snapshot-summary.mjs",
     "scripts/create-public-briefing.mjs",
@@ -142,6 +143,15 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "api_call_performed",
         "False",
     ],
+    "scripts/openai_lab_run.py": [
+        "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
+        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
+        "MAX_OUTPUT_TOKENS",
+        "5000",
+        "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
+        "This is one bounded implementation-agent attempt.",
+        "Do not create additional files.",
+    ],
     "scripts/create-weekly-snapshot.mjs": [
         "snapshot-v1.2",
         "no_change_baseline_candidate",
@@ -212,6 +222,14 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
         "api_call_performed\": True",
         "sdk_max_retries != 1",
+    ],
+    "scripts/openai_lab_run.py": [
+        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
+        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
+        "args.max_output_tokens > 12000",
+        "max_output_tokens above 12000",
+        "max_retries=1",
+        "max_retries=2",
     ],
 }
 
