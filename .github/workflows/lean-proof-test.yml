@@ -29,6 +29,17 @@ jobs:
         run: |
           lean --version
 
-      - name: Check selection proof
+      - name: Check all formal proofs
+        shell: bash
         run: |
-          lean formal/Selection.lean
+          set -euo pipefail
+          shopt -s nullglob
+          files=(formal/*.lean formal/**/*.lean)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Lean files found under formal/."
+            exit 1
+          fi
+          for file in "${files[@]}"; do
+            echo "Checking ${file}"
+            lean "$file"
+          done
