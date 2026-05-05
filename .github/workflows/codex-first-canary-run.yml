@@ -1,0 +1,57 @@
+name: Codex First Canary Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: codex-first-canary-run
+  cancel-in-progress: false
+
+jobs:
+  codex-first-canary-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.1-codex
+      RUN_WEEK: first-canary-001
+      CODEX_HOME: ${{ github.workspace }}/.codex-home
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Codex CLI
+        run: |
+          npm install -g @openai/codex
+          codex --version
+
+      - name: Build fixed Codex prompt
+        run: |
+          python scripts/create_first_canary_candidate.py
+          mkdir -p .tmp
+          cat > .tmp/codex-first-canary-prompt.md <<'EOF'
+          You are Codex running inside the Prompt Vote Lab repository.
+
+          Goal: add a small static canary panel inside lab/ explaining that this is the first bounded Codex implementation-agent canary.
+
+          Constraints:
+          - Edit only lab/index.html, lab/style.css, and/or lab/app.js.
+          - Keep the visible change small and reviewable.
+          - Do not edit workflows, scripts, docs, rules, formal proofs, run records, package files, or configuration files.
+          - Do not add external network calls, external scripts, cookies, analytics, login, payment behavior, dependencies, or eval.
+          - Do not change voting, selection, evidence, report, or canary policy logic.
+          - Do not commit, branch, or open a PR. The workflow will do that.
+          EOF
+
+      - name: Placeholder
+        run: |
+          echo "Codex execution step is added in a follow-up patch."
