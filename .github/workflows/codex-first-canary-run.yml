@@ -56,20 +56,7 @@ jobs:
       - name: Run Codex once
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
-        run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "OPENAI_API_KEY_ secret is not configured."
-            exit 1
-          fi
-          mkdir -p "$CODEX_HOME"
-          codex exec \
-            --cd "$PWD" \
-            --model "$CODEX_MODEL" \
-            --sandbox workspace-write \
-            --json \
-            --output-last-message .tmp/codex-last-message.txt \
-            - < .tmp/codex-first-canary-prompt.md \
-            > .tmp/codex-events.jsonl
+        run: bash scripts/run_codex_first_canary.sh
 
       - name: Validate changed files and checks
         run: |
