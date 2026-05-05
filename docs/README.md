@@ -10,14 +10,15 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 
 1. [Experiment model](./experiment-model.md) — game model and boundaries.
 2. [How to participate](./how-to-participate.md) — submit, vote, and review.
-3. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-4. [Automation map](./automation-map.md) — workflow boundaries.
-5. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-6. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-7. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-8. [Support policy](./support-policy.md) — support boundaries.
-9. [Report policy](./report-policy.md) — weekly report draft policy.
-10. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+3. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+4. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+5. [Automation map](./automation-map.md) — workflow boundaries.
+6. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+7. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+8. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+9. [Support policy](./support-policy.md) — support boundaries.
+10. [Report policy](./report-policy.md) — weekly report draft policy.
+11. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
