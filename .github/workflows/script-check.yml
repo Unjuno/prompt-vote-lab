@@ -82,6 +82,9 @@ jobs:
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
 
+      - name: Run public run log writer test
+        run: python scripts/test_write_public_run_log.py
+
       - name: Run weekly no-eligible selector test
         run: python scripts/test_weekly_auto_no_eligible.py
 

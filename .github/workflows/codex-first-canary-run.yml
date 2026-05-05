@@ -1,0 +1,190 @@
+name: Codex First Canary Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: codex-first-canary-run
+  cancel-in-progress: false
+
+jobs:
+  codex-first-canary-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.1-codex
+      RUN_WEEK: first-canary-001
+      CODEX_HOME: ${{ github.workspace }}/.codex-home
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Codex CLI
+        run: |
+          npm install -g @openai/codex
+          codex --version
+
+      - name: Build fixed Codex prompt
+        run: |
+          python scripts/create_first_canary_candidate.py
+          mkdir -p .tmp
+          cat > .tmp/codex-first-canary-prompt.md <<'EOF'
+          You are Codex running inside the Prompt Vote Lab repository.
+
+          Goal: add a small static canary panel inside lab/ explaining that this is the first bounded Codex implementation-agent canary.
+
+          Constraints:
+          - Edit only lab/index.html, lab/style.css, and/or lab/app.js.
+          - Keep the visible change small and reviewable.
+          - Do not edit workflows, scripts, docs, rules, formal proofs, run records, package files, or configuration files.
+          - Do not add external network calls, external scripts, cookies, analytics, login, payment behavior, dependencies, or eval.
+          - Do not change voting, selection, evidence, report, or canary policy logic.
+          - Do not commit, branch, or open a PR. The workflow will do that.
+          EOF
+
+      - name: Run Codex once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY_ secret is not configured."
+            exit 1
+          fi
+          codex exec \
+            --cd "$PWD" \
+            --model "$CODEX_MODEL" \
+            --sandbox workspace-write \
+            --ask-for-approval never \
+            --json \
+            --output-last-message .tmp/codex-last-message.txt \
+            - < .tmp/codex-first-canary-prompt.md \
+            > .tmp/codex-events.jsonl
+
+      - name: Validate changed files and checks
+        run: |
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "Codex produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *) echo "Forbidden changed file: $file"; exit 1 ;;
+            esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+      - name: Write public run log
+        if: ${{ always() }}
+        run: |
+          mkdir -p .tmp
+          base_sha="$(git rev-parse origin/main 2>/dev/null || echo unrecorded)"
+          changed_csv="$(git diff --name-only -- 2>/dev/null | paste -sd, -)"
+          status="passed"
+          if [ "${{ job.status }}" != "success" ]; then status="failed"; fi
+          python scripts/write_public_run_log.py \
+            --out .tmp/public-run-log.json \
+            --provider openai-codex \
+            --runner codex-cli \
+            --model "$CODEX_MODEL" \
+            --workflow "Codex First Canary Run" \
+            --run-number "${{ github.run_number }}" \
+            --week "$RUN_WEEK" \
+            --candidate-rank 1 \
+            --issue-number 0 \
+            --vote-count 0 \
+            --base-sha "$base_sha" \
+            --branch "codex-first-canary-001-${{ github.run_number }}" \
+            --attempt-count 1 \
+            --retry-policy none \
+            --fallback-policy none \
+            --auto-merge-policy disabled \
+            --status "$status" \
+            --changed-files "$changed_csv"
+
+      - name: Upload public run log
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-first-canary-public-log-${{ github.run_number }}
+          path: .tmp/public-run-log.json
+          if-no-files-found: warn
+
+      - name: Commit and create PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="codex-first-canary-001-${{ github.run_number }}"
+          base_sha="$(git rev-parse origin/main)"
+          prompt="$(cat .tmp/first-canary-prompt.txt)"
+          changed_files="$(git diff --name-only -- | paste -sd ', ' -)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add lab/index.html lab/style.css lab/app.js
+          git commit -m "Run Codex first canary"
+          git push --set-upstream origin "$branch"
+
+          cat > .tmp/codex-first-canary-pr-body.md <<EOF
+          Implements the fixed first Codex implementation-agent canary.
+
+          ## Purpose
+
+          This is execution-path verification for the Codex runner, not product expansion.
+
+          ## Configuration
+
+          - Week: $RUN_WEEK
+          - Rank: 1
+          - Issue: #0
+          - Votes: 0
+          - Inherited lab base: \`$base_sha\`
+          - Provider: \`openai-codex\`
+          - Runner: \`codex-cli\`
+          - Codex model: \`$CODEX_MODEL\`
+          - Attempts: \`1\`
+          - Retry policy: \`none\`
+          - Fallback: \`none\`
+          - Auto-merge: disabled
+
+          ## Selected prompt
+
+          $prompt
+
+          ## Changed files
+
+          $changed_files
+
+          ## Internal checks
+
+          - safety-check passed before PR creation
+          - static-site-check passed before PR creation
+          - changed-file guard passed before PR creation
+
+          ## Public run log
+
+          Redacted public run log is uploaded as a workflow artifact. Raw stderr, raw Codex JSONL, raw model output, and secrets are not published.
+
+          ## Merge policy
+
+          Manual review is required. Do not auto-merge.
+          EOF
+
+          gh pr create \
+            --title "Run Codex first canary" \
+            --body-file .tmp/codex-first-canary-pr-body.md \
+            --base main \
+            --head "$branch"
