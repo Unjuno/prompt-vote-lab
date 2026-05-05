@@ -37,7 +37,7 @@ candidate count: 1
 attempts per candidate: 1
 SDK max_retries: 0
 fallback model: none
-max_output_tokens: 12000
+max_output_tokens: 5000
 automatic merge: no
 ```
 
