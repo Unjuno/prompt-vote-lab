@@ -35,6 +35,11 @@ cat > .tmp/policy-agent-inner.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 mkdir -p /diagnostics /tmp/codex-home /tmp/npm-global /tmp/npm-cache
+export HOME=/tmp/codex-home
+export NPM_CONFIG_USERCONFIG=/tmp/npmrc
+export NPM_CONFIG_PREFIX=/tmp/npm-global
+export NPM_CONFIG_CACHE=/tmp/npm-cache
+export PATH="/tmp/npm-global/bin:$PATH"
 id > /diagnostics/container-id.txt
 find /work -maxdepth 3 -type f | sort > /diagnostics/container-visible-files-before.txt
 mount > /diagnostics/policy-container-mounts.txt
@@ -44,9 +49,6 @@ for forbidden in /work/.git /work/.github /work/scripts /work/docs /work/runs; d
 done
 node --version > /diagnostics/node-version.txt
 npm --version > /diagnostics/npm-version.txt
-npm config set prefix /tmp/npm-global
-npm config set cache /tmp/npm-cache
-export PATH="/tmp/npm-global/bin:$PATH"
 npm install -g @openai/codex > /diagnostics/npm-install-codex.txt 2> /diagnostics/npm-install-codex-stderr.txt
 codex --version > /diagnostics/codex-version.txt
 printf '%s' "$OPENAI_API_KEY" | CODEX_HOME=/tmp/codex-home codex login --with-api-key > /diagnostics/codex-login-stdout.txt 2> /diagnostics/codex-login-stderr.txt
@@ -60,9 +62,9 @@ Visible files:
 - lab/style.css
 - lab/app.js
 
-Operate on files normally inside /work. The repository root is intentionally unavailable. Edit only the visible files. Keep the change small. Do not change voting, selection, evidence, report, or canary policy logic. Do not commit, branch, or open a PR.
+Operate only inside /work. The repository root is intentionally unavailable. Edit only the visible files. Keep the change small. Do not change voting, selection, evidence, report, or canary policy logic. Do not commit, branch, or open a PR.
 
-At the end, provide a short action summary listing files inspected, files changed, unavailable paths, and files deliberately not changed. Do not include private chain-of-thought.
+At the end, provide a short action summary listing files inspected, files changed, unavailable paths, and files deliberately not changed.
 PROMPT
 prompt="$(cat /tmp/prompt.md)"
 set +e
