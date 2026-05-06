@@ -1,0 +1,213 @@
+name: Codex Offline JSON Canary Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: codex-offline-json-canary-run
+  cancel-in-progress: false
+
+jobs:
+  codex-offline-json-canary-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.4-nano
+      RUN_WEEK: first-canary-005
+      CODEX_HOME: ${{ github.workspace }}/.codex-home
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Codex CLI
+        run: |
+          mkdir -p "$CODEX_HOME"
+          npm install -g @openai/codex
+          codex --version
+
+      - name: Capture diagnostics baseline
+        run: |
+          mkdir -p .tmp/canary-diagnostics
+          git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
+          python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
+          import hashlib
+          import json
+          from pathlib import Path
+
+          files = ["lab/index.html", "lab/style.css", "lab/app.js"]
+          out = {}
+          for name in files:
+              path = Path(name)
+              if path.exists() and path.is_file():
+                  digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                  out[name] = {"exists": True, "sha256": digest, "size_bytes": path.stat().st_size}
+              else:
+                  out[name] = {"exists": False, "sha256": None, "size_bytes": None}
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
+
+      - name: Run Codex offline JSON canary once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
+        run: |
+          set +e
+          bash scripts/run_codex_offline_json_canary.sh > .tmp/codex-stdout.txt 2> .tmp/codex-stderr.txt
+          rc=$?
+          echo "$rc" > .tmp/codex-exit-code.txt
+          cat .tmp/codex-stdout.txt
+          cat .tmp/codex-stderr.txt >&2
+          exit "$rc"
+
+      - name: Validate changed files and checks
+        run: |
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "Codex produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *) echo "Forbidden changed file: $file"; exit 1 ;;
+            esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+      - name: Collect diagnostics artifact
+        if: ${{ always() }}
+        run: |
+          python scripts/collect_canary_diagnostics.py \
+            --out-dir .tmp/canary-diagnostics \
+            --canary-id first-canary-005 \
+            --model "$CODEX_MODEL" \
+            --runner-mode codex-cli-offline-json-writeback \
+            --sandbox-mode read-only-empty-context \
+            --status "${{ job.status }}" \
+            --failure-step codex_or_json_or_validation \
+            --allowed-file lab/index.html \
+            --allowed-file lab/style.css \
+            --allowed-file lab/app.js
+          if [ -f .tmp/codex-offline-output.json ]; then
+            cp .tmp/codex-offline-output.json .tmp/canary-diagnostics/codex-offline-output.json
+          fi
+
+      - name: Upload diagnostics artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-offline-json-canary-diagnostics-${{ github.run_number }}
+          path: .tmp/canary-diagnostics
+          if-no-files-found: warn
+
+      - name: Write public run log
+        if: ${{ always() }}
+        run: |
+          mkdir -p .tmp
+          base_sha="$(git rev-parse origin/main 2>/dev/null || echo unrecorded)"
+          changed_csv="$(git diff --name-only -- 2>/dev/null | paste -sd, -)"
+          status="passed"
+          if [ "${{ job.status }}" != "success" ]; then status="failed"; fi
+          python scripts/write_public_run_log.py \
+            --out .tmp/public-run-log.json \
+            --provider openai-codex \
+            --runner codex-cli-offline-json-writeback \
+            --model "$CODEX_MODEL" \
+            --workflow "Codex Offline JSON Canary Run" \
+            --run-number "${{ github.run_number }}" \
+            --week "$RUN_WEEK" \
+            --candidate-rank 1 \
+            --issue-number 0 \
+            --vote-count 0 \
+            --base-sha "$base_sha" \
+            --branch "codex-offline-json-canary-005-${{ github.run_number }}" \
+            --attempt-count 1 \
+            --retry-policy none \
+            --fallback-policy none \
+            --auto-merge-policy disabled \
+            --status "$status" \
+            --changed-files "$changed_csv"
+
+      - name: Upload public run log
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-offline-json-canary-public-log-${{ github.run_number }}
+          path: .tmp/public-run-log.json
+          if-no-files-found: warn
+
+      - name: Commit and create PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="codex-offline-json-canary-005-${{ github.run_number }}"
+          base_sha="$(git rev-parse origin/main)"
+          changed_files="$(git diff --name-only -- | paste -sd ', ' -)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add lab/index.html lab/style.css lab/app.js
+          git commit -m "Run Codex offline JSON canary"
+          git push --set-upstream origin "$branch"
+
+          cat > .tmp/codex-offline-json-canary-pr-body.md <<EOF
+          Implements the fifth Codex implementation-agent canary.
+
+          ## Purpose
+
+          This verifies offline-context JSON writeback. Codex runs in an empty temporary directory and receives only the three allowed file contents as prompt context. The workflow validates and applies only JSON-provided replacements for allowed lab files.
+
+          ## Configuration
+
+          - Week: $RUN_WEEK
+          - Rank: 1
+          - Issue: #0
+          - Votes: 0
+          - Inherited lab base: \`$base_sha\`
+          - Provider: \`openai-codex\`
+          - Runner: \`codex-cli-offline-json-writeback\`
+          - Sandbox mode: \`read-only-empty-context\`
+          - Writeback mode: \`validated JSON full-file replacement\`
+          - Codex model: \`$CODEX_MODEL\`
+          - Attempts: \`1\`
+          - Retry policy: \`none\`
+          - Fallback: \`none\`
+          - Auto-merge: disabled
+          - Final writable files: \`lab/index.html\`, \`lab/style.css\`, \`lab/app.js\`
+
+          ## Changed files
+
+          $changed_files
+
+          ## Internal checks
+
+          - JSON path/content validator passed before application
+          - changed-file guard passed before PR creation
+          - safety-check passed before PR creation
+          - static-site-check passed before PR creation
+
+          ## Diagnostics
+
+          Internal diagnostics artifact is uploaded for prompt-design analysis.
+
+          ## Merge policy
+
+          Manual review is required. Do not auto-merge.
+          EOF
+
+          gh pr create \
+            --title "Run Codex offline JSON canary" \
+            --body-file .tmp/codex-offline-json-canary-pr-body.md \
+            --base main \
+            --head "$branch"
