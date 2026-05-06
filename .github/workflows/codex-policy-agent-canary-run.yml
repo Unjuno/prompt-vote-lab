@@ -1,0 +1,187 @@
+name: Codex Policy Agent Canary Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: codex-policy-agent-canary-run
+  cancel-in-progress: false
+
+jobs:
+  codex-policy-agent-canary-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.4-nano
+      RUN_WEEK: first-canary-007
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Capture diagnostics baseline
+        run: |
+          mkdir -p .tmp/canary-diagnostics
+          git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
+          python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
+          import hashlib
+          import json
+          from pathlib import Path
+          files = ["lab/index.html", "lab/style.css", "lab/app.js"]
+          out = {}
+          for name in files:
+              p = Path(name)
+              out[name] = {"exists": p.exists(), "sha256": hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None, "size_bytes": p.stat().st_size if p.exists() else None}
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
+
+      - name: Run Codex policy-enforced agent once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
+        run: |
+          set +e
+          bash scripts/run_codex_policy_agent_canary.sh
+          rc=$?
+          echo "$rc" > .tmp/codex-exit-code.txt
+          exit "$rc"
+
+      - name: Validate changed files and checks
+        run: |
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "Codex produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *) echo "Forbidden changed file: $file"; exit 1 ;;
+            esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+      - name: Collect diagnostics artifact
+        if: ${{ always() }}
+        run: |
+          python scripts/collect_canary_diagnostics.py \
+            --out-dir .tmp/canary-diagnostics \
+            --canary-id first-canary-007 \
+            --model "$CODEX_MODEL" \
+            --runner-mode codex-cli-policy-enforced-agent-container \
+            --sandbox-mode docker-mounted-workdir-only \
+            --status "${{ job.status }}" \
+            --failure-step codex_or_policy_or_validation \
+            --allowed-file lab/index.html \
+            --allowed-file lab/style.css \
+            --allowed-file lab/app.js
+
+      - name: Upload diagnostics artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-policy-agent-canary-diagnostics-${{ github.run_number }}
+          path: .tmp/canary-diagnostics
+          if-no-files-found: warn
+
+      - name: Write public run log
+        if: ${{ always() }}
+        run: |
+          mkdir -p .tmp
+          base_sha="$(git rev-parse origin/main 2>/dev/null || echo unrecorded)"
+          changed_csv="$(git diff --name-only -- 2>/dev/null | paste -sd, -)"
+          status="passed"
+          if [ "${{ job.status }}" != "success" ]; then status="failed"; fi
+          python scripts/write_public_run_log.py \
+            --out .tmp/public-run-log.json \
+            --provider openai-codex \
+            --runner codex-cli-policy-enforced-agent-container \
+            --model "$CODEX_MODEL" \
+            --workflow "Codex Policy Agent Canary Run" \
+            --run-number "${{ github.run_number }}" \
+            --week "$RUN_WEEK" \
+            --candidate-rank 1 \
+            --issue-number 0 \
+            --vote-count 0 \
+            --base-sha "$base_sha" \
+            --branch "codex-policy-agent-canary-007-${{ github.run_number }}" \
+            --attempt-count 1 \
+            --retry-policy none \
+            --fallback-policy none \
+            --auto-merge-policy disabled \
+            --status "$status" \
+            --changed-files "$changed_csv"
+
+      - name: Upload public run log
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-policy-agent-canary-public-log-${{ github.run_number }}
+          path: .tmp/public-run-log.json
+          if-no-files-found: warn
+
+      - name: Commit and create PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="codex-policy-agent-canary-007-${{ github.run_number }}"
+          base_sha="$(git rev-parse origin/main)"
+          changed_files="$(git diff --name-only -- | paste -sd ', ' -)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add lab/index.html lab/style.css lab/app.js
+          git commit -m "Run Codex policy-enforced agent canary"
+          git push --set-upstream origin "$branch"
+          cat > .tmp/codex-policy-agent-canary-pr-body.md <<EOF
+          Implements the seventh Codex implementation-agent canary.
+
+          ## Purpose
+
+          This verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.
+
+          ## Configuration
+
+          - Week: $RUN_WEEK
+          - Rank: 1
+          - Issue: #0
+          - Votes: 0
+          - Inherited lab base: \`$base_sha\`
+          - Provider: \`openai-codex\`
+          - Runner: \`codex-cli-policy-enforced-agent-container\`
+          - Sandbox mode: \`docker-mounted-workdir-only\`
+          - Codex model: \`$CODEX_MODEL\`
+          - Attempts: \`1\`
+          - Retry policy: \`none\`
+          - Fallback: \`none\`
+          - Auto-merge: disabled
+          - Final writable files: \`lab/index.html\`, \`lab/style.css\`, \`lab/app.js\`
+
+          ## Changed files
+
+          $changed_files
+
+          ## Internal checks
+
+          - policy-enforced container runner completed before PR creation
+          - changed-file guard passed before PR creation
+          - safety-check passed before PR creation
+          - static-site-check passed before PR creation
+
+          ## Diagnostics
+
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis.
+
+          ## Merge policy
+
+          Manual review is required. Do not auto-merge.
+          EOF
+          gh pr create \
+            --title "Run Codex policy-enforced agent canary" \
+            --body-file .tmp/codex-policy-agent-canary-pr-body.md \
+            --base main \
+            --head "$branch"
