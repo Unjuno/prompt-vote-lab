@@ -34,7 +34,7 @@ EOF
 cat > .tmp/policy-agent-inner.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-mkdir -p /diagnostics /tmp/codex-home
+mkdir -p /diagnostics /tmp/codex-home /tmp/npm-global /tmp/npm-cache
 id > /diagnostics/container-id.txt
 find /work -maxdepth 3 -type f | sort > /diagnostics/container-visible-files-before.txt
 mount > /diagnostics/policy-container-mounts.txt
@@ -44,6 +44,9 @@ for forbidden in /work/.git /work/.github /work/scripts /work/docs /work/runs; d
 done
 node --version > /diagnostics/node-version.txt
 npm --version > /diagnostics/npm-version.txt
+npm config set prefix /tmp/npm-global
+npm config set cache /tmp/npm-cache
+export PATH="/tmp/npm-global/bin:$PATH"
 npm install -g @openai/codex > /diagnostics/npm-install-codex.txt 2> /diagnostics/npm-install-codex-stderr.txt
 codex --version > /diagnostics/codex-version.txt
 printf '%s' "$OPENAI_API_KEY" | CODEX_HOME=/tmp/codex-home codex login --with-api-key > /diagnostics/codex-login-stdout.txt 2> /diagnostics/codex-login-stderr.txt
@@ -75,6 +78,7 @@ chmod +x .tmp/policy-agent-inner.sh
 docker run --rm \
   --cap-drop ALL \
   --security-opt no-new-privileges \
+  --user "$(id -u):$(id -g)" \
   -e OPENAI_API_KEY="$OPENAI_API_KEY" \
   -e CODEX_MODEL="${CODEX_MODEL:-gpt-5.4-nano}" \
   -v "$work:/work:rw" \
@@ -84,6 +88,7 @@ docker run --rm \
   node:20-bookworm \
   /runner.sh > .tmp/codex-stdout.txt 2> .tmp/codex-stderr.txt
 
+chmod -R u+rwX .tmp/canary-diagnostics .tmp/policy-agent-work || true
 cp "$diag/codex-events.jsonl" .tmp/codex-events.jsonl 2>/dev/null || : > .tmp/codex-events.jsonl
 cp "$diag/codex-last-message.txt" .tmp/codex-last-message.txt 2>/dev/null || : > .tmp/codex-last-message.txt
 cp "$diag/codex-exit-code.txt" .tmp/codex-exit-code.txt 2>/dev/null || echo 1 > .tmp/codex-exit-code.txt
