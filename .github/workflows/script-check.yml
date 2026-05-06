@@ -15,6 +15,7 @@ on:
       - ".github/workflows/codex-offline-json-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
+      - "docs/current-codex-implementation-path.md"
   workflow_dispatch:
 
 permissions:
@@ -100,6 +101,9 @@ jobs:
 
       - name: Run offline JSON applier test
         run: python scripts/test_apply_codex_offline_json.py
+
+      - name: Run current Codex path doc test
+        run: python scripts/test_current_codex_path_doc.py
 
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
