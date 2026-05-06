@@ -73,7 +73,7 @@ At the end, provide a short action summary listing files inspected, files change
 PROMPT
 prompt="$(cat /codex-runtime/prompt.md)"
 set +e
-codex exec --cd /work --model "${CODEX_MODEL:-gpt-5.4-nano}" --sandbox danger-full-access --json --output-last-message /diagnostics/codex-last-message.txt "$prompt" > /diagnostics/codex-events.jsonl 2> /diagnostics/codex-stderr.txt
+codex exec --cd /work --skip-git-repo-check --model "${CODEX_MODEL:-gpt-5.4-nano}" --sandbox danger-full-access --json --output-last-message /diagnostics/codex-last-message.txt "$prompt" > /diagnostics/codex-events.jsonl 2> /diagnostics/codex-stderr.txt
 rc=$?
 set -e
 printf '%s\n' "$rc" > /diagnostics/codex-exit-code.txt
