@@ -17,11 +17,13 @@ on:
       - ".github/workflows/canary-007-policy-feasibility.yml"
       - ".github/workflows/codex-policy-agent-canary-run.yml"
       - ".github/workflows/codex-task-packet-canary-run.yml"
+      - ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
       - "docs/canary-007-policy-enforced-agent.md"
       - "docs/canary-008-selected-prompt-task-packet.md"
+      - "docs/canary-009-selected-issue-instructions.md"
   workflow_dispatch:
 
 permissions:
@@ -116,6 +118,12 @@ jobs:
 
       - name: Run task packet runner contract test
         run: python scripts/test_task_packet_runner_contract.py
+
+      - name: Run fixed Issue instruction packet generator test
+        run: python scripts/test_create_codex_issue_instruction_packet.py
+
+      - name: Run fixed Issue instruction runner contract test
+        run: python scripts/test_issue_instruction_runner_contract.py
 
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
