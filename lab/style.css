@@ -107,3 +107,18 @@ noscript {
   display: block;
   margin-top: 16px;
 }
+
+.baseline-panel {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.baseline-panel strong {
+  color: var(--fg);
+}
