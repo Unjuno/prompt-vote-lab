@@ -75,6 +75,7 @@ exit "$rc"
 EOF
 chmod +x .tmp/policy-agent-inner.sh
 
+set +e
 docker run --rm \
   --cap-drop ALL \
   --security-opt no-new-privileges \
@@ -86,12 +87,19 @@ docker run --rm \
   -v "$root/.tmp/policy-agent-inner.sh:/runner.sh:ro" \
   -w /work \
   node:20-bookworm \
-  /runner.sh > .tmp/codex-stdout.txt 2> .tmp/codex-stderr.txt
+  /runner.sh > .tmp/policy-agent-container-stdout.txt 2> .tmp/policy-agent-container-stderr.txt
+container_rc=$?
+set -e
+printf '%s\n' "$container_rc" > .tmp/policy-agent-container-exit-code.txt
+cp .tmp/policy-agent-container-stdout.txt "$diag/policy-agent-container-stdout.txt" 2>/dev/null || true
+cp .tmp/policy-agent-container-stderr.txt "$diag/policy-agent-container-stderr.txt" 2>/dev/null || true
+cp .tmp/policy-agent-container-exit-code.txt "$diag/policy-agent-container-exit-code.txt" 2>/dev/null || true
 
 chmod -R u+rwX .tmp/canary-diagnostics .tmp/policy-agent-work || true
 cp "$diag/codex-events.jsonl" .tmp/codex-events.jsonl 2>/dev/null || : > .tmp/codex-events.jsonl
 cp "$diag/codex-last-message.txt" .tmp/codex-last-message.txt 2>/dev/null || : > .tmp/codex-last-message.txt
-cp "$diag/codex-exit-code.txt" .tmp/codex-exit-code.txt 2>/dev/null || echo 1 > .tmp/codex-exit-code.txt
+cp "$diag/codex-stderr.txt" .tmp/codex-stderr.txt 2>/dev/null || cp .tmp/policy-agent-container-stderr.txt .tmp/codex-stderr.txt 2>/dev/null || : > .tmp/codex-stderr.txt
+cp "$diag/codex-exit-code.txt" .tmp/codex-exit-code.txt 2>/dev/null || printf '%s\n' "$container_rc" > .tmp/codex-exit-code.txt
 
 python - <<'PY'
 from __future__ import annotations
@@ -111,6 +119,11 @@ PY
 
 cp .tmp/policy-agent-diff-name-only.txt "$diag/policy-agent-diff-name-only.txt"
 cp .tmp/policy-agent-diff.patch "$diag/policy-agent-diff.patch"
+
+if [ "$container_rc" -ne 0 ]; then
+  cat .tmp/policy-agent-container-stderr.txt >&2
+  exit "$container_rc"
+fi
 
 : > .tmp/policy-agent-copied-files.txt
 for file in lab/index.html lab/style.css lab/app.js; do
