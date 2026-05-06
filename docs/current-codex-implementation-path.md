@@ -8,13 +8,13 @@ The current stable production-oriented implementation path remains:
 first-canary-005: offline context + JSON full-file replacement
 ```
 
-The strongest agent-boundary candidate path is now:
+The strongest implemented agent-boundary candidate path is now:
 
 ```text
-first-canary-007: policy-enforced agent container
+first-canary-008: selected prompt task packet container
 ```
 
-Do not silently replace `first-canary-005` with `first-canary-007` after only one successful 007 run. Treat 007 as the stronger candidate until repeated runs demonstrate stability.
+Do not silently replace `first-canary-005` with `first-canary-008` after one successful 008 run. Treat 008 as the stronger agent candidate until repeated runs and real selected-Issue ingestion demonstrate stability.
 
 ## Why this path is current
 
@@ -28,6 +28,7 @@ first-canary-004: read-only repository context + unified diff writeback -> FAIL
 first-canary-005: empty context + JSON full-file replacement -> PASS
 first-canary-006: isolated three-file agent-observed direct edit -> PASS
 first-canary-007: Docker-mounted workdir-only policy agent -> PASS
+first-canary-008: Docker workdir + read-only selected prompt task packet -> PASS
 ```
 
 The result means:
@@ -36,10 +37,12 @@ The result means:
 - Codex can generate useful lab changes.
 - GitHub-hosted runner workspace-write sandboxing failed through the local bwrap path.
 - Relaxed direct editing can work, but it is not the safest default.
-- Repo-context writeback still allowed Codex to attempt an internal write path.
+- Repo-context writeback still allowed Codex to attempt an internal patch/write path.
 - Offline-context JSON writeback gives the workflow control over actual file writes.
 - Agent-observed direct edit is useful for behavior analysis.
-- Policy-enforced container execution can run Codex as an agent without mounting the repository root into the agent work directory.
+- Policy-enforced container execution can run Codex as an agent without mounting the repository root.
+- Selected prompt task packets can be mounted read-only at /task while Codex edits /work/lab only.
+- The API key can be present for codex login and absent before codex exec.
 ```
 
 ## Current default
@@ -59,27 +62,39 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-## Stronger candidate path
+## Stronger agent candidate path
 
-Use `first-canary-007` for agent-style runs that need a stronger filesystem boundary.
+Use `first-canary-008` for agent-style runs that need selected prompt task-packet evidence.
 
 ```text
-runner: codex-cli-policy-enforced-agent-container
+runner: codex-cli-selected-prompt-task-packet-container
 model: gpt-5.4-nano
 attempts_per_candidate: 1
 retry_policy: none
 fallback_policy: none
 auto_merge_policy: disabled
-sandbox_mode: docker-mounted-workdir-only
-execution_mode: policy-enforced agent direct edit
+sandbox_mode: docker-workdir-plus-readonly-task-packet
+execution_mode: selected prompt task packet agent direct edit
 container_work_root: /work
+container_task_root: /task
+container_task_mount_mode: read-only
 container_runtime_root: /codex-runtime
 repo_root_mounted: false
 final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-007 is not yet the default production-oriented implementation path because it has only one successful full run and has more operational dependencies than 005, including Docker, container npm installation, Codex runtime mounting, and API access from inside the container.
+008 is not yet the default production-oriented implementation path because it has one successful full run and still uses a fixed canary prompt packet rather than a real GitHub Issue selected by the selection layer.
+
+## Next candidate
+
+The next canary should be:
+
+```text
+first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:ro
+```
+
+009 should verify Issue ingestion and instruction normalization only. It should not also introduce automatic vote-winner selection.
 
 ## How the current stable path works
 
@@ -97,20 +112,22 @@ manual_review: required
 11. A human reviews and merges manually.
 ```
 
-## How the 007 candidate path works
+## How the 008 candidate path works
 
 ```text
 1. The workflow checks out the repository.
-2. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
-3. The workflow mounts that work directory into a Docker container as /work.
-4. The workflow mounts a separate runtime directory as /codex-runtime.
-5. The repository root is not mounted into the container.
-6. Codex runs inside the container from /work with --skip-git-repo-check.
-7. Codex edits the prepared lab files as an agent.
-8. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
-9. The workflow runs changed-file guard, safety-check, and static-site-check.
-10. The workflow creates a pull request.
-11. A human reviews and merges manually.
+2. The workflow generates a selected prompt task packet.
+3. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
+4. The workflow mounts the work directory into a Docker container as /work:rw.
+5. The workflow mounts the task packet into the container as /task:ro.
+6. The workflow mounts a separate runtime directory as /codex-runtime:rw.
+7. The repository root is not mounted into the container.
+8. Codex logs in, then OPENAI_API_KEY is removed before codex exec.
+9. Codex reads /task and edits the prepared lab files under /work.
+10. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
+11. The workflow runs changed-file guard, safety-check, and static-site-check.
+12. The workflow creates a pull request.
+13. A human reviews and merges manually.
 ```
 
 ## Allowed final write scope
@@ -146,12 +163,14 @@ For 005, the boundary is the combination of:
 - manual review
 ```
 
-For 007, the boundary is the combination of:
+For 008, the boundary is the combination of:
 
 ```text
-- Docker-mounted workdir-only execution
+- Docker workdir plus read-only task packet execution
 - repository root not mounted into the agent container
+- read-only selected prompt and policy packet at /task
 - separate runtime mount at /codex-runtime
+- API key absent before codex exec
 - final copy-back limited to the three lab files
 - changed-file guard
 - safety-check
@@ -171,7 +190,7 @@ first-canary-003: isolated three-file worktree + danger-full-access -> PASS
 first-canary-006: isolated three-file agent-observed direct edit -> PASS
 ```
 
-However, these modes remain experimental because they rely on broad write capability inside the runner process. The final changed-file guard still helps, but the execution-time boundary is weaker than 007 and the mediated output boundary is less operationally stable than 005.
+However, these modes remain experimental because they rely on broad write capability inside the runner process. The final changed-file guard still helps, but the execution-time boundary is weaker than 008 and the mediated output boundary is less operationally stable than 005.
 
 ## Why first-canary-004 is not the default
 
@@ -198,7 +217,7 @@ Known residual risks for 005:
 - manual review remains mandatory
 ```
 
-Known residual risks for 007:
+Known residual risks for 008:
 
 ```text
 - only one successful full run has been observed
@@ -206,27 +225,29 @@ Known residual risks for 007:
 - network access is not narrowed to only required API endpoints
 - full file-access tracing is not yet implemented
 - container path coverage is sampled through diagnostics, not formally proven
+- the first 008 used a fixed canary prompt, not a real selected GitHub Issue
 - manual review remains mandatory
 ```
 
-## Promotion rule for 007
+## Promotion rule for 008
 
-Do not promote 007 to the standard agent path after a single success.
+Do not promote 008 to the standard agent path after a single success.
 
 Promotion condition:
 
 ```text
-007 may be promoted from candidate to standard agent path after at least 2 consecutive successful full 007 runs under the same fixed conditions, with matching policy diagnostics.
+008 may be promoted from candidate to standard agent path after at least 2 consecutive successful full 008 runs under the same fixed conditions, plus one successful fixed-Issue 009 run.
 ```
 
-A successful repeated 007 run must show:
+A successful repeated 008 run must show:
 
 ```text
 - Codex exit code 0
 - container exit code 0
 - final changed files subset of lab/index.html, lab/style.css, lab/app.js
 - repository root not mounted into the container work directory
-- container-visible work files limited to the prepared lab files plus expected runtime files
+- /task mounted read-only
+- API key absent before codex exec
 - policy-denied-access empty or explained
 - safety-check PASS
 - static-site-check PASS
@@ -244,7 +265,7 @@ The following improvements are compatible if they preserve the same canary contr
 - better diagnostics summaries
 - stronger HTML/CSS/JS static checks
 - snapshot tests for expected lab structure
-- richer 007 diagnostics summaries
+- richer 008 diagnostics summaries
 ```
 
 These can be added without changing the core protocol if they remain backward-compatible.
@@ -266,6 +287,8 @@ Use a new canary ID if any of these change:
 - patch versus JSON replacement protocol
 - container mount policy
 - repository root visibility
+- prompt input source
+- selected Issue ingestion behavior
 ```
 
 ## Current recommendation
@@ -276,10 +299,10 @@ Use this for routine production-oriented implementation:
 first-canary-005-offline-context-json-writeback
 ```
 
-Use this for agent-style implementation experiments with stronger filesystem boundary:
+Use this for agent-style implementation experiments with selected task packet evidence:
 
 ```text
-first-canary-007-policy-enforced-agent-container
+first-canary-008-selected-prompt-task-packet
 ```
 
-Run 007 again under the same fixed conditions before considering promotion.
+Design 009 as a fixed-Issue ingestion canary before attempting automatic vote-winner selection.

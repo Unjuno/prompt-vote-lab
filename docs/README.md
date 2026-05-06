@@ -18,11 +18,12 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 8. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
 9. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
 10. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-11. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007 execution paths.
+11. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
 12. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-13. [Support policy](./support-policy.md) — support boundaries.
-14. [Report policy](./report-policy.md) — weekly report draft policy.
-15. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+13. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+14. [Support policy](./support-policy.md) — support boundaries.
+15. [Report policy](./report-policy.md) — weekly report draft policy.
+16. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
