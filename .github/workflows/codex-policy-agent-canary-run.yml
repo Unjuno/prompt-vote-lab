@@ -68,6 +68,7 @@ jobs:
       - name: Collect diagnostics artifact
         if: ${{ always() }}
         run: |
+          chmod -R u+rwX .tmp 2>/dev/null || true
           python scripts/collect_canary_diagnostics.py \
             --out-dir .tmp/canary-diagnostics \
             --canary-id first-canary-007 \
