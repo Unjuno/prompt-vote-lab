@@ -2,13 +2,19 @@
 
 ## Status
 
-The current production-oriented implementation path is:
+The current stable production-oriented implementation path remains:
 
 ```text
 first-canary-005: offline context + JSON full-file replacement
 ```
 
-This path is preferred over direct repository editing for routine Prompt Vote Lab implementation runs.
+The strongest agent-boundary candidate path is now:
+
+```text
+first-canary-007: policy-enforced agent container
+```
+
+Do not silently replace `first-canary-005` with `first-canary-007` after only one successful 007 run. Treat 007 as the stronger candidate until repeated runs demonstrate stability.
 
 ## Why this path is current
 
@@ -20,6 +26,8 @@ first-canary-002: isolated three-file worktree + workspace-write -> FAIL
 first-canary-003: isolated three-file worktree + danger-full-access -> PASS
 first-canary-004: read-only repository context + unified diff writeback -> FAIL
 first-canary-005: empty context + JSON full-file replacement -> PASS
+first-canary-006: isolated three-file agent-observed direct edit -> PASS
+first-canary-007: Docker-mounted workdir-only policy agent -> PASS
 ```
 
 The result means:
@@ -30,11 +38,13 @@ The result means:
 - Relaxed direct editing can work, but it is not the safest default.
 - Repo-context writeback still allowed Codex to attempt an internal write path.
 - Offline-context JSON writeback gives the workflow control over actual file writes.
+- Agent-observed direct edit is useful for behavior analysis.
+- Policy-enforced container execution can run Codex as an agent without mounting the repository root into the agent work directory.
 ```
 
 ## Current default
 
-Use `first-canary-005` style execution for production-oriented implementation runs.
+Use `first-canary-005` style execution for routine production-oriented implementation runs.
 
 ```text
 runner: codex-cli-offline-json-writeback
@@ -49,7 +59,29 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-## How the current path works
+## Stronger candidate path
+
+Use `first-canary-007` for agent-style runs that need a stronger filesystem boundary.
+
+```text
+runner: codex-cli-policy-enforced-agent-container
+model: gpt-5.4-nano
+attempts_per_candidate: 1
+retry_policy: none
+fallback_policy: none
+auto_merge_policy: disabled
+sandbox_mode: docker-mounted-workdir-only
+execution_mode: policy-enforced agent direct edit
+container_work_root: /work
+container_runtime_root: /codex-runtime
+repo_root_mounted: false
+final_writable_files: lab/index.html, lab/style.css, lab/app.js
+manual_review: required
+```
+
+007 is not yet the default production-oriented implementation path because it has only one successful full run and has more operational dependencies than 005, including Docker, container npm installation, Codex runtime mounting, and API access from inside the container.
+
+## How the current stable path works
 
 ```text
 1. The workflow checks out the repository.
@@ -65,9 +97,25 @@ manual_review: required
 11. A human reviews and merges manually.
 ```
 
+## How the 007 candidate path works
+
+```text
+1. The workflow checks out the repository.
+2. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
+3. The workflow mounts that work directory into a Docker container as /work.
+4. The workflow mounts a separate runtime directory as /codex-runtime.
+5. The repository root is not mounted into the container.
+6. Codex runs inside the container from /work with --skip-git-repo-check.
+7. Codex edits the prepared lab files as an agent.
+8. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
+9. The workflow runs changed-file guard, safety-check, and static-site-check.
+10. The workflow creates a pull request.
+11. A human reviews and merges manually.
+```
+
 ## Allowed final write scope
 
-Only these files may be changed by the workflow-mediated writeback path:
+Only these files may be changed by the implementation paths:
 
 ```text
 lab/index.html
@@ -81,7 +129,7 @@ No other file path is a valid final output path.
 
 The safety boundary is not the model prompt alone.
 
-The boundary is the combination of:
+For 005, the boundary is the combination of:
 
 ```text
 - empty Codex execution context
@@ -98,19 +146,32 @@ The boundary is the combination of:
 - manual review
 ```
 
+For 007, the boundary is the combination of:
+
+```text
+- Docker-mounted workdir-only execution
+- repository root not mounted into the agent container
+- separate runtime mount at /codex-runtime
+- final copy-back limited to the three lab files
+- changed-file guard
+- safety-check
+- static-site-check
+- diagnostics artifact upload
+- manual review
+```
+
 Prompt instructions are still used, but they are not treated as enforcement.
 
 ## Why direct editing is not the default
 
-`first-canary-003` proved that isolated direct editing can work with relaxed sandbox mode:
+`first-canary-003` and `first-canary-006` proved that isolated direct editing can work with relaxed sandbox mode:
 
 ```text
-isolated three-file worktree + danger-full-access -> PASS
+first-canary-003: isolated three-file worktree + danger-full-access -> PASS
+first-canary-006: isolated three-file agent-observed direct edit -> PASS
 ```
 
-However, this mode should remain experimental because it relies on broad write capability inside the runner process. The final changed-file guard still helps, but the execution-time boundary is weaker than offline JSON writeback.
-
-Direct editing may still be useful for experiments that specifically evaluate Codex tool behavior, action traces, or sandbox behavior.
+However, these modes remain experimental because they rely on broad write capability inside the runner process. The final changed-file guard still helps, but the execution-time boundary is weaker than 007 and the mediated output boundary is less operationally stable than 005.
 
 ## Why first-canary-004 is not the default
 
@@ -126,9 +187,7 @@ For mediated output, provide only the required file contents and keep actual rep
 
 ## Remaining risks
 
-The current path is safer than relaxed direct editing, but not risk-free.
-
-Known residual risks:
+Known residual risks for 005:
 
 ```text
 - full-file JSON replacement can be verbose
@@ -139,17 +198,53 @@ Known residual risks:
 - manual review remains mandatory
 ```
 
-## Compatible improvements
-
-The following improvements are compatible with the current path if they preserve the same canary contract:
+Known residual risks for 007:
 
 ```text
-- stricter JSON schema validation
+- only one successful full run has been observed
+- Docker and npm installation add moving parts
+- network access is not narrowed to only required API endpoints
+- full file-access tracing is not yet implemented
+- container path coverage is sampled through diagnostics, not formally proven
+- manual review remains mandatory
+```
+
+## Promotion rule for 007
+
+Do not promote 007 to the standard agent path after a single success.
+
+Promotion condition:
+
+```text
+007 may be promoted from candidate to standard agent path after at least 2 consecutive successful full 007 runs under the same fixed conditions, with matching policy diagnostics.
+```
+
+A successful repeated 007 run must show:
+
+```text
+- Codex exit code 0
+- container exit code 0
+- final changed files subset of lab/index.html, lab/style.css, lab/app.js
+- repository root not mounted into the container work directory
+- container-visible work files limited to the prepared lab files plus expected runtime files
+- policy-denied-access empty or explained
+- safety-check PASS
+- static-site-check PASS
+- manual PR review and merge
+```
+
+## Compatible improvements
+
+The following improvements are compatible if they preserve the same canary contract:
+
+```text
+- stricter JSON schema validation for 005
 - tighter maximum size checks
 - required rationale summary in a separate JSON field
 - better diagnostics summaries
 - stronger HTML/CSS/JS static checks
 - snapshot tests for expected lab structure
+- richer 007 diagnostics summaries
 ```
 
 These can be added without changing the core protocol if they remain backward-compatible.
@@ -169,14 +264,22 @@ Use a new canary ID if any of these change:
 - writeback protocol
 - direct-edit versus mediated-writeback mode
 - patch versus JSON replacement protocol
+- container mount policy
+- repository root visibility
 ```
 
 ## Current recommendation
 
-Use this as the default implementation path:
+Use this for routine production-oriented implementation:
 
 ```text
 first-canary-005-offline-context-json-writeback
 ```
 
-Keep `first-canary-003` as an experimental direct-edit proof and `first-canary-004` as a documented negative result.
+Use this for agent-style implementation experiments with stronger filesystem boundary:
+
+```text
+first-canary-007-policy-enforced-agent-container
+```
+
+Run 007 again under the same fixed conditions before considering promotion.
