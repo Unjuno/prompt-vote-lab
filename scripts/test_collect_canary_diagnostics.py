@@ -44,10 +44,21 @@ def main() -> int:
         "lab/style.css",
     ]
 
+    assert module.normalize_status(" success ") == "success"
+    assert module.normalize_status("FAILURE") == "failure"
+
     assert module.classify_failure([], module.DEFAULT_ALLOWED_FILES, "bwrap failed", "") == "sandbox_failure"
     assert module.classify_failure([], module.DEFAULT_ALLOWED_FILES, "401 Unauthorized", "") == "auth_failure"
     assert module.classify_failure([], module.DEFAULT_ALLOWED_FILES, "", "") == "no_changes"
     assert module.classify_failure(["README.md"], module.DEFAULT_ALLOWED_FILES, "", "") == "forbidden_changed_file"
+
+    # Successful runs must not retain a failure classifier such as auth_failure
+    # merely because Codex stderr mentions authentication during a successful login.
+    status = "success"
+    failure_type = "none" if module.normalize_status(status) == "success" else module.classify_failure(
+        ["lab/index.html"], module.DEFAULT_ALLOWED_FILES, "authentication", ""
+    )
+    assert failure_type == "none"
 
     print("canary diagnostics collector test passed")
     return 0
