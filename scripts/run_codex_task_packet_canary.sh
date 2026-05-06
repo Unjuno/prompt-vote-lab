@@ -38,6 +38,8 @@ cp "$task/run-manifest.json" "$diag/task-run-manifest.json"
 cp "$task/allowed-files.json" "$diag/task-allowed-files.json"
 cp "$task/execution-policy.md" "$diag/task-execution-policy.md"
 cp "$task/selected-prompt.md" "$diag/task-selected-prompt.md"
+cp "$task/static-ui-v1.0.md" "$diag/task-static-ui-v1.0.md"
+cp "$task/agent-run-policy-v1.0.md" "$diag/task-agent-run-policy-v1.0.md"
 
 cat > "$diag/policy-allowed-paths.json" <<'EOF'
 {
