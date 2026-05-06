@@ -38,8 +38,8 @@ def main() -> int:
     forbidden_path_patch = """diff --git a/README.md b/README.md\n--- a/README.md\n+++ b/README.md\n@@ -1,1 +1,1 @@\n-old\n+new\n"""
     expect_raises(lambda: module.validate_patch_paths(forbidden_path_patch), "forbidden path")
 
-    created_file_patch = """diff --git a/dev/null b/lab/new.html\n--- /dev/null\n+++ b/lab/new.html\n@@ -0,0 +1,1 @@\n+new\n"""
-    expect_raises(lambda: module.validate_patch_paths(created_file_patch), "Creating or deleting")
+    delete_allowed_file_patch = """diff --git a/lab/index.html b/lab/index.html\n--- a/lab/index.html\n+++ /dev/null\n@@ -1,1 +0,0 @@\n-old\n"""
+    expect_raises(lambda: module.validate_patch_paths(delete_allowed_file_patch), "Creating or deleting")
 
     forbidden_content_patch = """diff --git a/lab/app.js b/lab/app.js\n--- a/lab/app.js\n+++ b/lab/app.js\n@@ -1,1 +1,1 @@\n-old\n+fetch('/x')\n"""
     expect_raises(lambda: module.validate_patch_content(forbidden_content_patch), "Forbidden patch content")
