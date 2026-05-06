@@ -1,0 +1,104 @@
+name: Canary 007 Policy Feasibility
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: canary-007-policy-feasibility
+  cancel-in-progress: false
+
+jobs:
+  policy-feasibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare isolated work directory
+        run: |
+          mkdir -p .tmp/policy-work/lab .tmp/policy-feasibility
+          cp lab/index.html .tmp/policy-work/lab/index.html
+          cp lab/style.css .tmp/policy-work/lab/style.css
+          cp lab/app.js .tmp/policy-work/lab/app.js
+          cat > .tmp/policy-feasibility/policy-allowed-paths.json <<'EOF'
+          {
+            "allowed_paths": [
+              "/work/lab/index.html",
+              "/work/lab/style.css",
+              "/work/lab/app.js"
+            ],
+            "repo_root_mounted": false
+          }
+          EOF
+
+      - name: Check Docker availability
+        run: |
+          docker version > .tmp/policy-feasibility/docker-version.txt
+          docker info > .tmp/policy-feasibility/docker-info.txt
+
+      - name: Check isolated mount behavior
+        run: |
+          docker run --rm \
+            --network none \
+            --cap-drop ALL \
+            --security-opt no-new-privileges \
+            -v "$PWD/.tmp/policy-work:/work:rw" \
+            -w /work \
+            alpine:3.20 \
+            sh -ceu '
+              echo "inside container" > /work/container-write-test.txt
+              test -f /work/lab/index.html
+              test -f /work/lab/style.css
+              test -f /work/lab/app.js
+              if test -e /work/.git; then echo "unexpected .git visible"; exit 10; fi
+              if test -e /work/.github; then echo "unexpected .github visible"; exit 11; fi
+              if test -e /work/scripts; then echo "unexpected scripts visible"; exit 12; fi
+              find /work -maxdepth 3 -type f | sort
+            ' > .tmp/policy-feasibility/container-visible-files.txt
+
+      - name: Check host strace availability
+        run: |
+          set +e
+          if command -v strace >/dev/null 2>&1; then
+            echo "strace_available=true" > .tmp/policy-feasibility/strace-status.txt
+            strace -f -e trace=file -o .tmp/policy-feasibility/file-access-trace.txt sh -c 'test -f .tmp/policy-work/lab/index.html && test ! -e .tmp/policy-work/.github'
+            echo "$?" > .tmp/policy-feasibility/strace-exit-code.txt
+          else
+            echo "strace_available=false" > .tmp/policy-feasibility/strace-status.txt
+            echo "strace not available on host" > .tmp/policy-feasibility/file-access-trace.txt
+            echo "127" > .tmp/policy-feasibility/strace-exit-code.txt
+          fi
+
+      - name: Write feasibility summary
+        if: ${{ always() }}
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+          import json
+          from pathlib import Path
+
+          root = Path('.tmp/policy-feasibility')
+          visible = (root / 'container-visible-files.txt').read_text(encoding='utf-8', errors='replace') if (root / 'container-visible-files.txt').exists() else ''
+          docker_ok = (root / 'docker-version.txt').exists()
+          strace_status = (root / 'strace-status.txt').read_text(encoding='utf-8', errors='replace').strip() if (root / 'strace-status.txt').exists() else 'missing'
+          summary = {
+              'docker_available': docker_ok,
+              'isolated_mount_has_lab_files': all(name in visible for name in ['/work/lab/index.html', '/work/lab/style.css', '/work/lab/app.js']),
+              'unexpected_repo_paths_visible': any(name in visible for name in ['/.git', '/.github', '/scripts']),
+              'strace_status': strace_status,
+              'recommendation': 'Implement full 007 only after reviewing this artifact.'
+          }
+          (root / 'feasibility-summary.json').write_text(json.dumps(summary, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload feasibility artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: canary-007-policy-feasibility-${{ github.run_number }}
+          path: .tmp/policy-feasibility
+          if-no-files-found: error
