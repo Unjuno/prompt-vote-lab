@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -91,6 +90,10 @@ def classify_failure(changed_files: list[str], allowed_files: list[str], codex_s
     return "unknown_failure"
 
 
+def normalize_status(status: str) -> str:
+    return status.strip().lower()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Collect canary diagnostics artifacts.")
     parser.add_argument("--out-dir", default=".tmp/canary-diagnostics")
@@ -151,7 +154,11 @@ def main() -> int:
     changed_files = parse_name_only(name_only)
     codex_stderr = (out_dir / "codex-stderr.txt").read_text(encoding="utf-8", errors="replace")
     codex_events = (out_dir / "codex-events.jsonl").read_text(encoding="utf-8", errors="replace")
-    failure_type = classify_failure(changed_files, allowed_files, codex_stderr, codex_events)
+    normalized_status = normalize_status(args.status)
+    if normalized_status == "success":
+        failure_type = "none"
+    else:
+        failure_type = classify_failure(changed_files, allowed_files, codex_stderr, codex_events)
 
     check_results = {
         "changed_files": changed_files,
