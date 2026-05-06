@@ -55,3 +55,19 @@ noscript {
   display: block;
   margin-top: 16px;
 }
+
+.hostile-card {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(25, 25, 25, 0.14);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hostile-card-text {
+  margin: 0;
+  color: var(--fg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
