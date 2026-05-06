@@ -13,6 +13,7 @@ on:
       - ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
       - ".github/workflows/codex-writeback-canary-run.yml"
       - ".github/workflows/codex-offline-json-canary-run.yml"
+      - ".github/workflows/codex-agent-observed-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
