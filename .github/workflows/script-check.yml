@@ -16,10 +16,12 @@ on:
       - ".github/workflows/codex-agent-observed-canary-run.yml"
       - ".github/workflows/canary-007-policy-feasibility.yml"
       - ".github/workflows/codex-policy-agent-canary-run.yml"
+      - ".github/workflows/codex-task-packet-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
       - "docs/canary-007-policy-enforced-agent.md"
+      - "docs/canary-008-selected-prompt-task-packet.md"
   workflow_dispatch:
 
 permissions:
