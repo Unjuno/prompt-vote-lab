@@ -9,6 +9,9 @@ on:
       - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
       - ".github/workflows/codex-first-canary-run.yml"
+      - ".github/workflows/codex-isolated-3file-canary-run.yml"
+      - ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
+      - ".github/workflows/codex-writeback-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
   workflow_dispatch:
@@ -90,6 +93,9 @@ jobs:
 
       - name: Run canary diagnostics collector test
         run: python scripts/test_collect_canary_diagnostics.py
+
+      - name: Run Codex writeback patch applier test
+        run: python scripts/test_apply_codex_writeback_patch.py
 
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
