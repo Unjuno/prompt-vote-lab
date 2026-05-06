@@ -10,9 +10,10 @@ mkdir -p .tmp .tmp/canary-diagnostics
 root="$PWD"
 work="$root/.tmp/policy-agent-work"
 base="$root/.tmp/policy-agent-base"
+runtime="$root/.tmp/policy-agent-runtime"
 diag="$root/.tmp/canary-diagnostics"
-rm -rf "$work" "$base"
-mkdir -p "$work/lab" "$base/lab"
+rm -rf "$work" "$base" "$runtime"
+mkdir -p "$work/lab" "$base/lab" "$runtime"
 
 cp lab/index.html "$work/lab/index.html"
 cp lab/style.css "$work/lab/style.css"
@@ -20,11 +21,12 @@ cp lab/app.js "$work/lab/app.js"
 cp lab/index.html "$base/lab/index.html"
 cp lab/style.css "$base/lab/style.css"
 cp lab/app.js "$base/lab/app.js"
-chmod -R a+rwX "$work" "$diag"
+chmod -R a+rwX "$work" "$runtime" "$diag"
 
 cat > "$diag/policy-allowed-paths.json" <<'EOF'
 {
   "container_work_root": "/work",
+  "container_runtime_root": "/codex-runtime",
   "repo_root_mounted": false,
   "allowed_container_paths": ["/work/lab/index.html", "/work/lab/style.css", "/work/lab/app.js"],
   "final_copyback_paths": ["lab/index.html", "lab/style.css", "lab/app.js"]
@@ -34,14 +36,17 @@ EOF
 cat > .tmp/policy-agent-inner.sh <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-mkdir -p /diagnostics /tmp/codex-home /tmp/npm-global /tmp/npm-cache
-export HOME=/tmp/codex-home
-export NPM_CONFIG_USERCONFIG=/tmp/npmrc
-export NPM_CONFIG_PREFIX=/tmp/npm-global
-export NPM_CONFIG_CACHE=/tmp/npm-cache
-export PATH="/tmp/npm-global/bin:$PATH"
+mkdir -p /diagnostics /codex-runtime/home /codex-runtime/codex-home /codex-runtime/npm-global /codex-runtime/npm-cache /codex-runtime/tmp
+export HOME=/codex-runtime/home
+export TMPDIR=/codex-runtime/tmp
+export NPM_CONFIG_USERCONFIG=/codex-runtime/npmrc
+export NPM_CONFIG_PREFIX=/codex-runtime/npm-global
+export NPM_CONFIG_CACHE=/codex-runtime/npm-cache
+export CODEX_HOME=/codex-runtime/codex-home
+export PATH="/codex-runtime/npm-global/bin:$PATH"
 id > /diagnostics/container-id.txt
 find /work -maxdepth 3 -type f | sort > /diagnostics/container-visible-files-before.txt
+find /codex-runtime -maxdepth 2 -type d | sort > /diagnostics/container-runtime-dirs-before.txt
 mount > /diagnostics/policy-container-mounts.txt
 : > /diagnostics/policy-denied-access.txt
 for forbidden in /work/.git /work/.github /work/scripts /work/docs /work/runs; do
@@ -51,8 +56,8 @@ node --version > /diagnostics/node-version.txt
 npm --version > /diagnostics/npm-version.txt
 npm install -g @openai/codex > /diagnostics/npm-install-codex.txt 2> /diagnostics/npm-install-codex-stderr.txt
 codex --version > /diagnostics/codex-version.txt
-printf '%s' "$OPENAI_API_KEY" | CODEX_HOME=/tmp/codex-home codex login --with-api-key > /diagnostics/codex-login-stdout.txt 2> /diagnostics/codex-login-stderr.txt
-cat > /tmp/prompt.md <<'PROMPT'
+printf '%s' "$OPENAI_API_KEY" | codex login --with-api-key > /diagnostics/codex-login-stdout.txt 2> /diagnostics/codex-login-stderr.txt
+cat > /codex-runtime/prompt.md <<'PROMPT'
 You are Codex running a policy-enforced Prompt Vote Lab canary.
 
 Goal: make a small static lab change that clearly marks this as the seventh bounded Codex implementation-agent canary.
@@ -66,13 +71,14 @@ Operate only inside /work. The repository root is intentionally unavailable. Edi
 
 At the end, provide a short action summary listing files inspected, files changed, unavailable paths, and files deliberately not changed.
 PROMPT
-prompt="$(cat /tmp/prompt.md)"
+prompt="$(cat /codex-runtime/prompt.md)"
 set +e
-CODEX_HOME=/tmp/codex-home codex exec --cd /work --model "${CODEX_MODEL:-gpt-5.4-nano}" --sandbox danger-full-access --json --output-last-message /diagnostics/codex-last-message.txt "$prompt" > /diagnostics/codex-events.jsonl 2> /diagnostics/codex-stderr.txt
+codex exec --cd /work --model "${CODEX_MODEL:-gpt-5.4-nano}" --sandbox danger-full-access --json --output-last-message /diagnostics/codex-last-message.txt "$prompt" > /diagnostics/codex-events.jsonl 2> /diagnostics/codex-stderr.txt
 rc=$?
 set -e
 printf '%s\n' "$rc" > /diagnostics/codex-exit-code.txt
 find /work -maxdepth 3 -type f | sort > /diagnostics/container-visible-files-after.txt
+find /codex-runtime -maxdepth 3 -type f | sort > /diagnostics/container-runtime-files-after.txt
 exit "$rc"
 EOF
 chmod +x .tmp/policy-agent-inner.sh
@@ -85,6 +91,7 @@ docker run --rm \
   -e OPENAI_API_KEY="$OPENAI_API_KEY" \
   -e CODEX_MODEL="${CODEX_MODEL:-gpt-5.4-nano}" \
   -v "$work:/work:rw" \
+  -v "$runtime:/codex-runtime:rw" \
   -v "$diag:/diagnostics:rw" \
   -v "$root/.tmp/policy-agent-inner.sh:/runner.sh:ro" \
   -w /work \
@@ -97,7 +104,7 @@ cp .tmp/policy-agent-container-stdout.txt "$diag/policy-agent-container-stdout.t
 cp .tmp/policy-agent-container-stderr.txt "$diag/policy-agent-container-stderr.txt" 2>/dev/null || true
 cp .tmp/policy-agent-container-exit-code.txt "$diag/policy-agent-container-exit-code.txt" 2>/dev/null || true
 
-chmod -R u+rwX .tmp/canary-diagnostics .tmp/policy-agent-work || true
+chmod -R u+rwX .tmp/canary-diagnostics .tmp/policy-agent-work .tmp/policy-agent-runtime || true
 cp "$diag/codex-events.jsonl" .tmp/codex-events.jsonl 2>/dev/null || : > .tmp/codex-events.jsonl
 cp "$diag/codex-last-message.txt" .tmp/codex-last-message.txt 2>/dev/null || : > .tmp/codex-last-message.txt
 cp "$diag/codex-stderr.txt" .tmp/codex-stderr.txt 2>/dev/null || cp .tmp/policy-agent-container-stderr.txt .tmp/codex-stderr.txt 2>/dev/null || : > .tmp/codex-stderr.txt
