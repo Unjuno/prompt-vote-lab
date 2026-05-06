@@ -20,6 +20,8 @@ REQUIRED_RUNNER_TEXT = [
     "policy-denied-access.txt",
     "task-file-hashes.json",
     "task-visible-files-container.txt",
+    "task-static-ui-v1.0.md",
+    "task-agent-run-policy-v1.0.md",
     "--skip-git-repo-check",
 ]
 
