@@ -111,6 +111,12 @@ jobs:
       - name: Run current Codex path doc test
         run: python scripts/test_current_codex_path_doc.py
 
+      - name: Run task packet generator test
+        run: python scripts/test_create_codex_task_packet.py
+
+      - name: Run task packet runner contract test
+        run: python scripts/test_task_packet_runner_contract.py
+
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
 
