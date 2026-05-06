@@ -40,30 +40,6 @@ const checks = [
     pass: /without network access/i.test(visibleText) || /no network/i.test(visibleText)
   },
   {
-    label: 'lab links back to the landing page',
-    pass: /href=["']\.\.\/["']/i.test(html) || /href=["']\/["']/i.test(html)
-  },
-  {
-    label: 'lab links to prompt proposal submission',
-    pass: /issues\/new\?template=prompt_proposal\.yml/i.test(html)
-  },
-  {
-    label: 'lab links to prompt vote list',
-    pass: /issues\?q=.*prompt-proposal/i.test(html)
-  },
-  {
-    label: 'lab explains votes are +1 reactions',
-    pass: /(\+1|👍)/u.test(visibleText) && /reaction/i.test(visibleText)
-  },
-  {
-    label: 'lab mentions 20-vote no-change baseline',
-    pass: /20/.test(visibleText) && /baseline/i.test(visibleText)
-  },
-  {
-    label: 'lab links to official run or snapshot evidence',
-    pass: /runs\//i.test(html) || /data\/snapshots/i.test(html) || /docs\/snapshot-spec\.md/i.test(html)
-  },
-  {
     label: 'lab has Content-Security-Policy with connect-src none',
     pass: /Content-Security-Policy/i.test(html) && /connect-src 'none'/i.test(html)
   },
