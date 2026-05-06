@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -24,12 +25,11 @@ REQUIRED_FILES = {
     "task-file-hashes.json",
 }
 
-FORBIDDEN_SECRET_MARKERS = [
-    "OPENAI_API_KEY=",
-    "sk-",
-    "github_pat_",
-    "ghp_",
-    "gho_",
+FORBIDDEN_SECRET_PATTERNS = [
+    re.compile(r"OPENAI_API_KEY="),
+    re.compile(r"sk-[A-Za-z0-9_-]{20,}"),
+    re.compile(r"github_pat_[A-Za-z0-9_]{20,}"),
+    re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),
 ]
 
 
@@ -140,9 +140,9 @@ def main() -> int:
                 raise SystemExit(f"Size mismatch for {name}")
 
         all_text = "\n".join(p.read_text(encoding="utf-8") for p in out.iterdir() if p.is_file())
-        for marker in FORBIDDEN_SECRET_MARKERS:
-            if marker in all_text:
-                raise SystemExit(f"Forbidden secret-like marker found: {marker}")
+        for pattern in FORBIDDEN_SECRET_PATTERNS:
+            if pattern.search(all_text):
+                raise SystemExit(f"Forbidden secret-like pattern found: {pattern.pattern}")
 
     print("fixed Issue instruction packet generator test passed")
     return 0
