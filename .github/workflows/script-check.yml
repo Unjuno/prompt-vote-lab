@@ -15,6 +15,7 @@ on:
       - ".github/workflows/codex-offline-json-canary-run.yml"
       - ".github/workflows/codex-agent-observed-canary-run.yml"
       - ".github/workflows/canary-007-policy-feasibility.yml"
+      - ".github/workflows/codex-policy-agent-canary-run.yml"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
