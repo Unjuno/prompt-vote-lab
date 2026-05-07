@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T18:00:37+00:00`
+Generated at: `2026-05-07T18:50:34+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,21 +8,22 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 9 |
-| open_issue_count | 0 |
+| issue_count | 10 |
+| open_issue_count | 1 |
 | blocked_issue_count | 2 |
-| clear_issue_count | 2 |
+| clear_issue_count | 3 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 91 |
+| merged_pr_count | 93 |
 | workflow_run_count | 100 |
-| run_record_count | 19 |
+| run_record_count | 20 |
 
 ## Recent Issues
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 191 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
 | 186 | CLOSED | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
 | 3 | CLOSED | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
@@ -37,6 +38,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 193 | MERGED | 1 | 140/0 | Record Issue 191 template-normal success |
+| 192 | MERGED | 3 | 41/19 | Run Codex fixed Issue instruction canary |
 | 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
 | 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
 | 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
@@ -65,14 +68,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 158 | MERGED | 3 | 2/217 | Reset lab to clean baseline |
 | 159 | MERGED | 1 | 188/0 | Record ninth canary success |
 | 160 | MERGED | 2 | 18/0 | Restore single-card lab baseline |
-| 163 | MERGED | 2 | 4/99 | Restore PR50 minimal lab surface |
-| 162 | MERGED | 1 | 0/24 | Relax lab smoke test for minimal surface |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25513155709 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25515579475 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25515402303 | Terminal State Report | pull_request | completed | skipped | Record Issue 191 template-normal success |
+| 25515401366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25515354616 | Lab PR Scope Check | pull_request | completed | success | Record Issue 191 template-normal success |
+| 25515112260 | Terminal State Report | pull_request | completed | skipped | Run Codex fixed Issue instruction canary |
+| 25515111285 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25514229051 | Codex Fixed Issue Instruction Canary Run | workflow_dispatch | completed | success | Codex Fixed Issue Instruction Canary Run |
+| 25514055438 | Issue Safety Scan | workflow_dispatch | completed | success | Issue Safety Scan |
+| 25513946430 | Issue Safety Scan | issues | completed | success | [Prompt]: Add a static reviewer orientation panel |
+| 25513186743 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25513155709 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25512932907 | Terminal State Report | pull_request | completed | skipped | Harden prompt proposal issue template |
 | 25512930988 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25512759209 | Lab PR Scope Check | pull_request | completed | success | Harden prompt proposal issue template |
@@ -92,16 +103,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25510983555 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25510959916 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25510621527 | Terminal State Report | pull_request | completed | skipped | Fix storage policy overblocking |
-| 25510618972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25510560880 | Script Check | pull_request | completed | success | Fix storage policy overblocking |
-| 25510560827 | Lab PR Scope Check | pull_request | completed | success | Fix storage policy overblocking |
-| 25509994668 | Terminal State Report | pull_request | completed | skipped | Record disguised unsafe gate stop and detect cookie state storage |
-| 25509993535 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25509939332 | Lab PR Scope Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
-| 25509939281 | Script Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
-| 25509842379 | Script Check | pull_request | completed | failure | Record disguised unsafe gate stop and detect cookie state storage |
-| 25509842339 | Lab PR Scope Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
-| 25509298353 | Codex Fixed Issue Instruction Canary Run | workflow_dispatch | completed | failure | Codex Fixed Issue Instruction Canary Run |
 
 ## Raw JSON
 
