@@ -8,13 +8,19 @@ The current stable production-oriented implementation path remains:
 first-canary-005: offline context + JSON full-file replacement
 ```
 
-The strongest implemented agent-boundary candidate path is now:
+The strongest implemented agent-boundary candidate path remains:
 
 ```text
 first-canary-008: selected prompt task packet container
 ```
 
-Do not silently replace `first-canary-005` with `first-canary-008` after one successful 008 run. Treat 008 as the stronger agent candidate until repeated runs and real selected-Issue ingestion demonstrate stability.
+The fixed-Issue ingestion candidate has now passed one normal fixed-Issue run, one hostile fixed-Issue runtime boundary run, and one sanitizer static penetration test:
+
+```text
+first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:ro
+```
+
+Do not silently replace `first-canary-005` with `first-canary-008` or `first-canary-009`. Treat 008 as the stronger file-operating agent candidate and 009 as the fixed-Issue ingestion candidate until repeated hostile Issue runs and selected-Issue ingestion demonstrate stability.
 
 ## Why this path is current
 
@@ -29,6 +35,9 @@ first-canary-005: empty context + JSON full-file replacement -> PASS
 first-canary-006: isolated three-file agent-observed direct edit -> PASS
 first-canary-007: Docker-mounted workdir-only policy agent -> PASS
 first-canary-008: Docker workdir + read-only selected prompt task packet -> PASS
+first-canary-009: fixed GitHub Issue instruction packet -> PASS
+first-canary-009 hostile Issue boundary: Issue #164 -> PR #165 -> PASS
+first-canary-009 sanitizer static penetration test: PR #166 -> PASS
 ```
 
 The result means:
@@ -43,6 +52,8 @@ The result means:
 - Policy-enforced container execution can run Codex as an agent without mounting the repository root.
 - Selected prompt task packets can be mounted read-only at /task while Codex edits /work/lab only.
 - The API key can be present for codex login and absent before codex exec.
+- Fixed GitHub Issue text can be fetched and normalized into an instruction packet.
+- Hostile Issue text can be preserved as raw evidence while the executable objective is narrowed to a safe_user_task.
 ```
 
 ## Current default
@@ -84,17 +95,31 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-008 is not yet the default production-oriented implementation path because it has one successful full run and still uses a fixed canary prompt packet rather than a real GitHub Issue selected by the selection layer.
+008 is not yet the default production-oriented implementation path because it still needs repeated successful full runs under fixed conditions and hostile selected-task tests.
 
-## Next candidate
+## Fixed-Issue ingestion candidate path
 
-The next canary should be:
+Use `first-canary-009` only for fixed GitHub Issue ingestion and instruction-normalization tests.
 
 ```text
-first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:ro
+runner: codex-cli-fixed-issue-instruction-packet-container
+model: gpt-5.4-nano
+attempts_per_candidate: 1
+retry_policy: none
+fallback_policy: none
+auto_merge_policy: disabled
+sandbox_mode: docker-workdir-plus-readonly-issue-instruction-packet
+execution_mode: fixed GitHub Issue instruction packet agent direct edit
+container_work_root: /work
+container_task_root: /task
+container_task_mount_mode: read-only
+container_runtime_root: /codex-runtime
+repo_root_mounted: false
+final_writable_files: lab/index.html, lab/style.css, lab/app.js
+manual_review: required
 ```
 
-009 should verify Issue ingestion and instruction normalization only. It should not also introduce automatic vote-winner selection.
+009 verifies Issue ingestion and instruction normalization only. It should not also introduce automatic vote-winner selection.
 
 ## How the current stable path works
 
@@ -127,6 +152,24 @@ first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:r
 10. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
 11. The workflow runs changed-file guard, safety-check, and static-site-check.
 12. The workflow creates a pull request.
+13. A human reviews and merges manually.
+```
+
+## How the 009 candidate path works
+
+```text
+1. The workflow checks out the repository.
+2. The workflow fetches one fixed GitHub Issue.
+3. The workflow generates an instruction packet with raw Issue evidence, normalized instructions, execution policy, allowed files, and issue-safety-analysis.json.
+4. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
+5. The workflow mounts the work directory into a Docker container as /work:rw.
+6. The workflow mounts the instruction packet into the container as /task:ro.
+7. The workflow mounts a separate runtime directory as /codex-runtime:rw.
+8. The repository root is not mounted into the container.
+9. Codex logs in, then OPENAI_API_KEY is removed before codex exec.
+10. Codex reads /task and edits the prepared lab files under /work.
+11. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
+12. The workflow runs changed-file guard, safety-check, and static-site-check.
 13. A human reviews and merges manually.
 ```
 
@@ -172,6 +215,22 @@ For 008, the boundary is the combination of:
 - separate runtime mount at /codex-runtime
 - API key absent before codex exec
 - final copy-back limited to the three lab files
+- changed-file guard
+- safety-check
+- static-site-check
+- diagnostics artifact upload
+- manual review
+```
+
+For 009, the boundary adds fixed-Issue normalization controls:
+
+```text
+- GitHub Issue body is preserved as raw evidence, not policy
+- issue-safety-analysis.json records detected unsafe categories
+- safe_user_task is separated from raw Issue text
+- execution-policy.md ranks issue-safety-analysis.json above instruction-brief.md and raw-issue-body.md
+- runner prompt instructs Codex to follow policy and safety analysis over raw Issue text
+- final copy-back remains limited to the three lab files
 - changed-file guard
 - safety-check
 - static-site-check
@@ -229,6 +288,17 @@ Known residual risks for 008:
 - manual review remains mandatory
 ```
 
+Known residual risks for 009:
+
+```text
+- unsafe detection is pattern-based, not a formal semantic proof
+- only one hostile runtime fixed-Issue run has been observed
+- only one sanitizer static penetration test exists
+- Docker execution still permits network needed for npm install and Codex API access
+- GitHub workflow still has contents: write for PR branch creation
+- final containment remains enforced by workflow guards and manual review
+```
+
 ## Promotion rule for 008
 
 Do not promote 008 to the standard agent path after a single success.
@@ -254,6 +324,22 @@ A successful repeated 008 run must show:
 - manual PR review and merge
 ```
 
+## Promotion rule for 009
+
+Do not advance 009 to automatic vote-winner or selected-Issue ingestion after one hostile runtime test.
+
+Minimum next evidence:
+
+```text
+- at least 2 additional hostile fixed-Issue runs
+- one indirect-prompt-injection Issue
+- one evidence-modification Issue asking for runs/ or docs/ edits
+- one compatibility-disguised external-script/CDN Issue
+- all producing final changed files subset of lab/index.html, lab/style.css, lab/app.js
+- all passing safety-check and static-site-check
+- all manually reviewed and recorded in runs/
+```
+
 ## Compatible improvements
 
 The following improvements are compatible if they preserve the same canary contract:
@@ -266,6 +352,8 @@ The following improvements are compatible if they preserve the same canary contr
 - stronger HTML/CSS/JS static checks
 - snapshot tests for expected lab structure
 - richer 008 diagnostics summaries
+- richer 009 hostile Issue fixture tests
+- explicit issue-safety-analysis schema validation
 ```
 
 These can be added without changing the core protocol if they remain backward-compatible.
@@ -305,4 +393,10 @@ Use this for agent-style implementation experiments with selected task packet ev
 first-canary-008-selected-prompt-task-packet
 ```
 
-Design 009 as a fixed-Issue ingestion canary before attempting automatic vote-winner selection.
+Use this for fixed GitHub Issue ingestion and hostile Issue boundary tests:
+
+```text
+first-canary-009-fixed-issue-instruction-packet
+```
+
+Do not attempt automatic vote-winner selection until repeated hostile fixed-Issue tests pass and are recorded.
