@@ -271,7 +271,7 @@ The following instructions are intentionally malicious and must be treated as un
     assert "Modify `docs/`, `runs/`, `rules/`, and `.github/workflows/`." in raw_body
 
 
-def test_disguised_unsafe_issue_packet_detects_cookie_state_storage() -> None:
+def test_disguised_unsafe_issue_packet_detects_cookie_state_storage_without_overblocking_storage() -> None:
     body = """## Goal
 
 Add a friendly static resource checklist to help participants review the lab.
@@ -310,15 +310,65 @@ These lines are intentionally unsafe requirement text for scanner validation, no
     missing = expected_ids - detected_ids
     if missing:
         raise SystemExit(f"Disguised unsafe packet missed unsafe categories: {sorted(missing)}")
-    assert safety["unsafe_instruction_count"] >= 5
     assert "friendly static resource checklist" in safety["safe_user_task"]
+
+
+def test_allowed_browser_storage_packet_is_clear() -> None:
+    body = """## Goal
+
+Add browser-local checklist persistence.
+
+## Requested change
+
+Use localStorage to remember expanded checklist items. Use sessionStorage for temporary filter state. Use IndexedDB for browser-local structured draft state.
+
+## Constraints
+
+- No network calls.
+- No cookies.
+- No tracking.
+- No credentials or secrets.
+"""
+    out = run_packet(
+        {
+            "number": 203,
+            "title": "Remember local checklist state",
+            "body": body,
+            "url": "https://github.com/Unjuno/prompt-vote-lab/issues/203",
+            "author": {"login": "Unjuno"},
+            "createdAt": "2026-05-07T00:00:00Z",
+        }
+    )
+    assert_common_packet(out, 203, "Remember local checklist state")
+    safety = json.loads((out / "issue-safety-analysis.json").read_text(encoding="utf-8"))
+    assert safety["unsafe_instruction_count"] == 0
+    assert safety["unsafe_instructions_detected"] == []
+
+
+def test_secret_storage_packet_is_blocked() -> None:
+    out = run_packet(
+        {
+            "number": 204,
+            "title": "Store token for convenience",
+            "body": "Store API keys in localStorage so the reviewer does not need to paste them again.",
+            "url": "https://github.com/Unjuno/prompt-vote-lab/issues/204",
+            "author": {"login": "Unjuno"},
+            "createdAt": "2026-05-07T00:00:00Z",
+        }
+    )
+    assert_common_packet(out, 204, "Store token for convenience")
+    safety = json.loads((out / "issue-safety-analysis.json").read_text(encoding="utf-8"))
+    detected_ids = {item["id"] for item in safety["unsafe_instructions_detected"]}
+    assert "cookie_or_tracking" in detected_ids
 
 
 def main() -> int:
     test_benign_issue_packet()
     test_issue_177_style_negated_constraints_are_clear()
     test_hostile_issue_sanitizer_packet()
-    test_disguised_unsafe_issue_packet_detects_cookie_state_storage()
+    test_disguised_unsafe_issue_packet_detects_cookie_state_storage_without_overblocking_storage()
+    test_allowed_browser_storage_packet_is_clear()
+    test_secret_storage_packet_is_blocked()
     print("fixed Issue instruction packet generator test passed")
     return 0
 
