@@ -146,6 +146,7 @@ FORBIDDEN_AS_REQUIREMENT_PATTERNS = (
     r"\bread\b",
     r"\bwrite\b",
     r"\bmodify\b",
+    r"\bupdate\b",
     r"\bcreate\b",
     r"\benable\b",
     r"\bexecute\b",
