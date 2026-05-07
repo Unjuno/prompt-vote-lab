@@ -26,6 +26,8 @@ REQUIRED_WORKFLOW_TEXT = [
     "if: ${{ inputs.dry_run != 'true' }}",
     "gh issue comment",
     "gh issue close",
+    "gh_reason = reason.replace('_', ' ')",
+    "--reason {shlex.quote(gh_reason)}",
 ]
 
 FORBIDDEN_WORKFLOW_TEXT = [
