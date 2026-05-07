@@ -13,20 +13,21 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 3. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
 4. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
 5. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-6. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-7. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-8. [Automation map](./automation-map.md) — workflow boundaries.
-9. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-10. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-11. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-12. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-13. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-14. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-15. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-16. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-17. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-18. [Report policy](./report-policy.md) — weekly report draft policy.
-19. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+6. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+7. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+8. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+9. [Automation map](./automation-map.md) — workflow boundaries.
+10. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+11. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+12. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+13. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+14. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+15. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+16. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+17. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+18. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+19. [Report policy](./report-policy.md) — weekly report draft policy.
+20. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -60,6 +61,21 @@ The export is intended for participant-side analysis of prompt outcomes, votes, 
 Fixed-Issue 009 runs also upload a redacted raw agent-run evidence bundle.
 
 The primary evidence is the allowlisted raw files in the bundle. The bundle index is a manifest only. It must not replace raw evidence with a model-written summary.
+
+## Issue lifecycle status
+
+Weekly Issues may be closed automatically after the experiment cycle is recorded.
+
+Closure requires:
+
+```text
+week:* label
+outcome:* label
+public results membership
+finalizer comment before close
+```
+
+Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
