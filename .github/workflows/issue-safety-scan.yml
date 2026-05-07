@@ -6,35 +6,71 @@ on:
       - opened
       - edited
       - reopened
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue number to rescan manually"
+        required: true
+        type: number
 
 permissions:
   contents: read
   issues: write
 
 concurrency:
-  group: issue-safety-scan-${{ github.event.issue.number }}
+  group: issue-safety-scan-${{ github.event.issue.number || inputs.issue_number }}
   cancel-in-progress: true
 
 jobs:
   issue-safety-scan:
     runs-on: ubuntu-latest
+    env:
+      ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue_number }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Scan Issue safety on submit or edit
+      - name: Prepare Issue source
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p .tmp/issue-safety-scan
-          python scripts/scan_issue_safety.py \
-            --issue-event-json "$GITHUB_EVENT_PATH" \
-            --phase issue_event \
-            --out-json .tmp/issue-safety-scan/scan.json \
-            --out-md .tmp/issue-safety-scan/comment.md
+          mkdir -p .tmp/issue-safety-scan .tmp/issue-source
+          if [ "${{ github.event_name }}" = "issues" ]; then
+            cp "$GITHUB_EVENT_PATH" .tmp/issue-source/issue-event.json
+            echo "event" > .tmp/issue-source/source-mode.txt
+          else
+            if [ -z "$ISSUE_NUMBER" ] || [ "$ISSUE_NUMBER" = "0" ]; then
+              echo "issue_number input must be positive"
+              exit 1
+            fi
+            gh issue view "$ISSUE_NUMBER" \
+              --repo "$GITHUB_REPOSITORY" \
+              --json number,title,body,url,author,createdAt,updatedAt \
+              > .tmp/issue-source/issue.raw.json
+            echo "manual" > .tmp/issue-source/source-mode.txt
+          fi
+
+      - name: Scan Issue safety
+        run: |
+          mode="$(cat .tmp/issue-source/source-mode.txt)"
+          if [ "$mode" = "event" ]; then
+            python scripts/scan_issue_safety.py \
+              --issue-event-json .tmp/issue-source/issue-event.json \
+              --phase issue_event \
+              --out-json .tmp/issue-safety-scan/scan.json \
+              --out-md .tmp/issue-safety-scan/comment.md
+          else
+            python scripts/scan_issue_safety.py \
+              --issue-json .tmp/issue-source/issue.raw.json \
+              --phase issue_event \
+              --out-json .tmp/issue-safety-scan/scan.json \
+              --out-md .tmp/issue-safety-scan/comment.md
+          fi
 
       - name: Upload scan artifact
         uses: actions/upload-artifact@v4
         with:
-          name: issue-safety-scan-${{ github.event.issue.number }}-${{ github.run_number }}
+          name: issue-safety-scan-${{ env.ISSUE_NUMBER }}-${{ github.run_number }}
           path: .tmp/issue-safety-scan
           if-no-files-found: error
 
@@ -45,4 +81,4 @@ jobs:
           bash scripts/apply_issue_safety_feedback.sh \
             --scan-json .tmp/issue-safety-scan/scan.json \
             --comment-md .tmp/issue-safety-scan/comment.md \
-            --issue-number "${{ github.event.issue.number }}"
+            --issue-number "$ISSUE_NUMBER"
