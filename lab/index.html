@@ -11,7 +11,7 @@
   <main class="lab-root" aria-labelledby="lab-title">
     <p class="status" aria-live="polite">
       <span class="pill pill--safe" aria-hidden="true">Safe</span>
-      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #183)</span>
+      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #191)</span>
     </p>
     <h1 id="lab-title">Prompt Vote Lab</h1>
     <p class="note">
@@ -23,11 +23,11 @@
       <div class="hostile-card-meta" role="status" aria-live="polite">
         <p class="meta-row">
           <span class="meta-label">current experiment state:</span>
-          <span class="meta-value">first-canary-009 • Candidate #1 • Issue #183</span>
+          <span class="meta-value">first-canary-009 • Candidate #1 • Issue #191</span>
         </p>
         <p class="meta-row">
           <span class="meta-label">next action for participants:</span>
-          <span class="meta-value">Vote on the prompt candidate for Issue #183</span>
+          <span class="meta-value">Vote on the prompt candidate for Issue #191</span>
         </p>
         <p class="meta-row">
           <span class="meta-label">Detected:</span>
@@ -50,15 +50,20 @@
       </div>
     </section>
 
-    <section class="review-card" role="note" aria-label="Checklist for reviewing a run result">
-      <h2 class="review-title">How to review a run result</h2>
-      <ul class="review-checklist">
-        <li><a class="review-link" href="#status-text">Check the selected Issue (Issue #183)</a></li>
-        <li><a class="review-link" href="#unsafe-summary">Check the safety scan result</a></li>
-        <li>Check the changed files (in the experiment PR diff)</li>
-        <li>Check the public agent run bundle (run artifacts)</li>
-        <li>Check the run record (status/logs)</li>
-      </ul>
+    <section class="review-card review-card--orientation" role="note" aria-label="Reviewer orientation panel">
+      <h2 class="review-title">Reviewer orientation: evidence review order</h2>
+      <p class="review-subtitle">Before trusting a weekly Prompt Vote Lab result, inspect evidence in this order:</p>
+      <ol class="review-order">
+        <li><a class="review-link" href="#status-text">Selected Issue (Issue #191)</a></li>
+        <li><a class="review-link" href="#unsafe-summary">Safety scan (what was flagged unsafe vs. ignored)</a></li>
+        <li>Changed files (experiment PR diff)</li>
+        <li>Public agent run bundle (run artifacts)</li>
+        <li>Run record (status/logs)</li>
+        <li>Public results snapshot (the final public summary of what the run produced)</li>
+      </ol>
+      <p class="review-experiment-note">
+        This page is a constrained static UI experiment: it performs no network calls and does not execute dynamic Codex code.
+      </p>
     </section>
     <noscript>This lab works without network access or external scripts.</noscript>
   </main>
