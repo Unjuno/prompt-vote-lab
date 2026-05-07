@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-07T17:40:25+00:00",
+  "generated_at": "2026-05-07T18:00:37+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -397,6 +397,48 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 143,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nHardens the prompt proposal Issue template so weekly candidate Issues start with clearer structure and scope boundaries.\n\n## Changes\n\nUpdates `.github/ISSUE_TEMPLATE/prompt.yml` to require:\n\n- Goal\n- Requested visible change\n- Expected result\n- Acceptance checks\n- Allowed scope confirmations\n- Disallowed scope confirmations\n\nIt also clarifies that maintainers assign operational labels such as:\n\n```text\nweek:<week_id>\nnormal-candidate\ncarryover\noutcome:*\n```\n\n## Scope boundary\n\nThe template now explicitly states:\n\n- implementation should stay within `lab/index.html`, `lab/style.css`, and `lab/app.js`\n- browser-local UI state is allowed only when it does not store credentials, tokens, secrets, tracking identifiers, or cookies\n- proposals must not require backend services, login, payment, database changes, external APIs, external scripts, network calls, cookies, credential handling, analytics, tracking, iframes, dynamic code execution, workflow/rule/doc/run-record/policy changes, branches, commits, PRs, or merge behavior\n\n## Tests\n\nAdds:\n\n```text\nscripts/test_prompt_issue_template_contract.py\n```\n\nRegisters it in Script Check and includes `.github/ISSUE_TEMPLATE/**` in the Script Check path filter.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No workflow execution behavior changes.\n- No model/API run.\n- No auto-merge.",
+      "body_length": 1342,
+      "changed_files": 3,
+      "closed_at": "2026-05-07T17:55:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-07T17:51:52Z",
+      "deletions": 14,
+      "files": [
+        {
+          "additions": 65,
+          "deletions": 14,
+          "path": ".github/ISSUE_TEMPLATE/prompt.yml"
+        },
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 74,
+          "deletions": 0,
+          "path": "scripts/test_prompt_issue_template_contract.py"
+        }
+      ],
+      "head_ref_name": "harden-prompt-template-contract",
+      "head_ref_oid": "1930f021587c1567a9578d8417ad364242dbac21",
+      "labels": [],
+      "merge_commit_oid": "3a60254a7e8384fe76d265b273714e3c708213df",
+      "merged_at": "2026-05-07T17:55:25Z",
+      "merged_by": "Unjuno",
+      "number": 190,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Harden prompt proposal issue template",
+      "updated_at": "2026-05-07T17:55:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/190"
+    },
     {
       "additions": 5,
       "author": "Unjuno",
@@ -4303,38 +4345,6 @@
       "title": "Mock lab run for week-mock-001 rank 1",
       "updated_at": "2026-05-05T02:27:48Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/15"
-    },
-    {
-      "additions": 12,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Adds a synthetic vote summary for mock automation testing. This PR does not run a paid implementation agent.",
-      "body_length": 108,
-      "changed_files": 1,
-      "closed_at": "2026-05-02T21:38:38Z",
-      "comment_count": 0,
-      "created_at": "2026-05-02T21:28:23Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 12,
-          "deletions": 0,
-          "path": "runs/week-mock-001-mock-vote-summary.md"
-        }
-      ],
-      "head_ref_name": "weekly-mock-summary-week-mock-001-4",
-      "head_ref_oid": "b3f0e494a19b3ca0c1424ec1dfcce2f175bc409b",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 16,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Record weekly mock vote summary for week-mock-001",
-      "updated_at": "2026-05-05T02:27:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/16"
     }
   ],
   "run_records": [
@@ -4465,7 +4475,7 @@
     "blocked_issue_count": 2,
     "clear_issue_count": 2,
     "issue_count": 9,
-    "merged_pr_count": 90,
+    "merged_pr_count": 91,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -4475,6 +4485,90 @@
   "workflow_runs": [
     {
       "conclusion": "",
+      "created_at": "2026-05-07T18:00:05Z",
+      "database_id": 25513155709,
+      "display_title": "Public Results Export",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "3a60254a7e8384fe76d265b273714e3c708213df",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-07T18:00:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25513155709",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-07T17:55:29Z",
+      "database_id": 25512932907,
+      "display_title": "Harden prompt proposal issue template",
+      "event": "pull_request",
+      "head_branch": "harden-prompt-template-contract",
+      "head_sha": "1930f021587c1567a9578d8417ad364242dbac21",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:55:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512932907",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-07T17:55:27Z",
+      "database_id": 25512930988,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "3a60254a7e8384fe76d265b273714e3c708213df",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:55:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512930988",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-07T17:51:56Z",
+      "database_id": 25512759209,
+      "display_title": "Harden prompt proposal issue template",
+      "event": "pull_request",
+      "head_branch": "harden-prompt-template-contract",
+      "head_sha": "1930f021587c1567a9578d8417ad364242dbac21",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:52:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512759209",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-07T17:51:56Z",
+      "database_id": 25512759205,
+      "display_title": "Harden prompt proposal issue template",
+      "event": "pull_request",
+      "head_branch": "harden-prompt-template-contract",
+      "head_sha": "1930f021587c1567a9578d8417ad364242dbac21",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:52:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512759205",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-07T17:40:28Z",
+      "database_id": 25512206284,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0708fbc874da48a970eb692f1c0912dddec8091a",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:41:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512206284",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-07T17:40:07Z",
       "database_id": 25512188468,
       "display_title": "Public Results Export",
@@ -4482,8 +4576,8 @@
       "head_branch": "main",
       "head_sha": "15daac63fd9fc437cf21e76747412914a9404fe9",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-07T17:40:14Z",
+      "status": "completed",
+      "updated_at": "2026-05-07T17:40:29Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25512188468",
       "workflow_name": "Public Results Export"
     },
@@ -5788,90 +5882,6 @@
       "updated_at": "2026-05-07T03:16:09Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25474000056",
       "workflow_name": "Codex Fixed Issue Instruction Canary Run"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-07T03:06:23Z",
-      "database_id": 25473782211,
-      "display_title": "Preserve Issue safety phase labels",
-      "event": "pull_request",
-      "head_branch": "preserve-issue-safety-phase-labels",
-      "head_sha": "57768da5d8aa6fdeee2e522f312c6f895c712b70",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-07T03:06:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473782211",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T03:06:22Z",
-      "database_id": 25473781497,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "d9d8416d47708745c5191232607a1b14d418557a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-07T03:06:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473781497",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T03:05:08Z",
-      "database_id": 25473743973,
-      "display_title": "Preserve Issue safety phase labels",
-      "event": "pull_request",
-      "head_branch": "preserve-issue-safety-phase-labels",
-      "head_sha": "57768da5d8aa6fdeee2e522f312c6f895c712b70",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T03:05:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473743973",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T03:05:08Z",
-      "database_id": 25473743964,
-      "display_title": "Preserve Issue safety phase labels",
-      "event": "pull_request",
-      "head_branch": "preserve-issue-safety-phase-labels",
-      "head_sha": "57768da5d8aa6fdeee2e522f312c6f895c712b70",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T03:05:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473743964",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-07T02:59:31Z",
-      "database_id": 25473571945,
-      "display_title": "Codex Fixed Issue Instruction Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "b0f1b1c4645efa201af5b96da058ec1e5aa1e2af",
-      "name": "Codex Fixed Issue Instruction Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-07T02:59:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473571945",
-      "workflow_name": "Codex Fixed Issue Instruction Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T02:58:55Z",
-      "database_id": 25473553859,
-      "display_title": "Issue Safety Scan",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "b0f1b1c4645efa201af5b96da058ec1e5aa1e2af",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-07T02:59:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25473553859",
-      "workflow_name": "Issue Safety Scan"
     }
   ]
 }
