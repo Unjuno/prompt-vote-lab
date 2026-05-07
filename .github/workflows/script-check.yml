@@ -7,6 +7,7 @@ on:
       - "scripts/**/*.py"
       - "scripts/**/*.sh"
       - "tests/fixtures/**"
+      - ".github/ISSUE_TEMPLATE/**"
       - ".github/workflows/script-check.yml"
       - ".github/workflows/issue-safety-scan.yml"
       - ".github/workflows/public-results-export.yml"
@@ -142,6 +143,9 @@ jobs:
 
       - name: Run weekly Issue finalizer workflow contract test
         run: python scripts/test_weekly_issue_finalizer_workflow_contract.py
+
+      - name: Run prompt issue template contract test
+        run: python scripts/test_prompt_issue_template_contract.py
 
       - name: Run task packet generator test
         run: python scripts/test_create_codex_task_packet.py

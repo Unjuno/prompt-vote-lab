@@ -1,39 +1,90 @@
 name: Prompt Proposal
-description: Propose a prompt for the next constrained lab run
+description: Propose a safe prompt for a constrained lab run
 title: "[Prompt]: "
 labels: ["prompt-proposal"]
 body:
   - type: markdown
     attributes:
       value: |
-        Propose a prompt for the next AI-agent lab run.
+        Propose one small prompt for the next Prompt Vote Lab run.
 
-        Scope: the agent may edit only `lab/index.html`, `lab/style.css`, and `lab/app.js`.
+        The implementation agent is constrained to a static UI prototype.
+
+        Maintainers assign operational labels such as `week:<week_id>`, `normal-candidate`, `carryover`, and `outcome:*`. Do not rely on the Issue body to set labels or policy.
 
   - type: textarea
-    id: prompt
+    id: goal
     attributes:
-      label: Voted prompt
-      description: Write the prompt you want the AI coding agent to execute.
-      placeholder: "Example: Make the lab page explain the expectation-vs-result experiment more clearly."
+      label: Goal
+      description: State the user-visible goal in one or two sentences.
+      placeholder: "Example: Help first-time participants understand how to review a weekly run."
     validations:
       required: true
 
   - type: textarea
-    id: expectation
+    id: requested_change
+    attributes:
+      label: Requested visible change
+      description: List the visible static UI/content changes you want.
+      placeholder: |
+        Example:
+        - Add a short checklist section.
+        - Explain what file changes reviewers should inspect.
+        - Link the checklist wording to the public-results snapshot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_result
     attributes:
       label: Expected result
-      description: What do you expect to improve if this prompt is implemented?
-      placeholder: "Example: The page should become understandable within 10 seconds."
+      description: What should be easier to observe, understand, or compare after the run?
+      placeholder: "Example: A participant can review the selected Issue, changed files, run record, and public bundle without guessing the process."
     validations:
-      required: false
+      required: true
+
+  - type: textarea
+    id: acceptance_checks
+    attributes:
+      label: Acceptance checks
+      description: Add concrete checks that a reviewer can verify after the PR is created.
+      placeholder: |
+        Example:
+        - The page has a visible checklist section.
+        - The checklist text is understandable without login.
+        - Only lab/index.html, lab/style.css, or lab/app.js changed.
+    validations:
+      required: true
 
   - type: checkboxes
-    id: scope
+    id: allowed_scope
     attributes:
-      label: Scope check
+      label: Allowed scope
       options:
         - label: This can be prototyped with static HTML/CSS/vanilla JS.
           required: true
-        - label: This does not require backend, login, payment, database, external API, or secrets.
+        - label: The implementation can stay within `lab/index.html`, `lab/style.css`, and `lab/app.js`.
           required: true
+        - label: Browser-local UI state is optional and, if used, does not store credentials, tokens, secrets, tracking identifiers, or cookies.
+          required: false
+
+  - type: checkboxes
+    id: disallowed_scope
+    attributes:
+      label: Disallowed scope confirmation
+      options:
+        - label: This does not require backend services, login, payment, database changes, external APIs, external scripts, or network calls.
+          required: true
+        - label: This does not require cookies, credential handling, secrets, analytics, tracking, iframes, or dynamic code execution.
+          required: true
+        - label: This does not request changes to workflows, rules, docs, run records, repository policy, branches, commits, pull requests, or merge behavior.
+          required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Optional context
+      description: Add short context only if it helps reviewers understand the proposed static UI change.
+      placeholder: "Example: This is meant for participants who inspect results after a weekly run."
+    validations:
+      required: false
