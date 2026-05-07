@@ -12,20 +12,21 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 2. [How to participate](./how-to-participate.md) — submit, vote, and review.
 3. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
 4. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-5. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-6. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-7. [Automation map](./automation-map.md) — workflow boundaries.
-8. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-9. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-10. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-11. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-12. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-13. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-14. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-15. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-16. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-17. [Report policy](./report-policy.md) — weekly report draft policy.
-18. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+5. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+6. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+7. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+8. [Automation map](./automation-map.md) — workflow boundaries.
+9. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+10. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+11. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+12. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+13. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+14. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+15. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+16. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+17. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+18. [Report policy](./report-policy.md) — weekly report draft policy.
+19. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -53,6 +54,12 @@ data/public-results.md
 ```
 
 The export is intended for participant-side analysis of prompt outcomes, votes, labels, PRs, workflow runs, and run records.
+
+## Public agent-run evidence status
+
+Fixed-Issue 009 runs also upload a redacted raw agent-run evidence bundle.
+
+The primary evidence is the allowlisted raw files in the bundle. The bundle index is a manifest only. It must not replace raw evidence with a model-written summary.
 
 ## Current usable experiment status
 
