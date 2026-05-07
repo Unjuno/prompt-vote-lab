@@ -18,14 +18,9 @@ BLOCKED_LABEL = "issue-safety:blocked"
 POST_DETECTED_LABEL = "issue-safety:submission-detected"
 RUNTIME_DETECTED_LABEL = "issue-safety:runtime-detected"
 AUTHORIZED_CANARY_LABEL = "authorized-canary"
-
-ALL_LABELS = [
-    CLEAR_LABEL,
-    REVIEW_LABEL,
-    BLOCKED_LABEL,
-    POST_DETECTED_LABEL,
-    RUNTIME_DETECTED_LABEL,
-]
+STATUS_LABELS = [CLEAR_LABEL, REVIEW_LABEL, BLOCKED_LABEL]
+PHASE_LABELS = [POST_DETECTED_LABEL, RUNTIME_DETECTED_LABEL]
+ALL_LABELS = STATUS_LABELS + PHASE_LABELS
 
 LABEL_METADATA = {
     CLEAR_LABEL: {
@@ -98,18 +93,25 @@ def issue_from_raw_json(path: Path) -> dict[str, Any]:
     }
 
 
+def labels_for_scan(unsafe_count: int, phase: str) -> tuple[list[str], list[str]]:
+    status_to_add = [CLEAR_LABEL] if unsafe_count == 0 else [REVIEW_LABEL, BLOCKED_LABEL]
+    phase_to_add = [POST_DETECTED_LABEL] if phase == "issue_event" else [RUNTIME_DETECTED_LABEL]
+
+    labels_to_add = status_to_add + phase_to_add
+
+    # Status labels are mutually exclusive and should reflect the latest scan result.
+    # Phase labels are cumulative evidence: a runtime scan must not erase prior posting/edit detection,
+    # and a posting/edit scan must not erase prior runtime evidence.
+    labels_to_remove = [label for label in STATUS_LABELS if label not in status_to_add]
+    return labels_to_add, labels_to_remove
+
+
 def scan_issue(issue: dict[str, Any], phase: str) -> dict[str, Any]:
     findings = packet.detect_unsafe_instructions(issue["issue_title"], issue["body"])
     safe_task = packet.make_safe_task(issue["issue_title"], issue["body"])
     unsafe_count = len(findings)
     severity = "clear" if unsafe_count == 0 else "blocked"
-    labels_to_add = [CLEAR_LABEL] if unsafe_count == 0 else [REVIEW_LABEL, BLOCKED_LABEL]
-    if phase == "issue_event":
-        labels_to_add.append(POST_DETECTED_LABEL)
-    elif phase == "runtime":
-        labels_to_add.append(RUNTIME_DETECTED_LABEL)
-
-    labels_to_remove = [label for label in ALL_LABELS if label not in labels_to_add]
+    labels_to_add, labels_to_remove = labels_for_scan(unsafe_count, phase)
 
     return {
         "schema_version": "issue-safety-scan-v1",
