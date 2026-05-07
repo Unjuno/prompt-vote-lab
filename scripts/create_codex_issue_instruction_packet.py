@@ -143,6 +143,11 @@ FORBIDDEN_AS_REQUIREMENT_PATTERNS = (
     r"\bexecute\b",
     r"\brun\b",
     r"\btrack\b",
+    r"\bignore\b",
+    r"\boverride\b",
+    r"\bbypass\b",
+    r"\bbypassed\b",
+    r"\btreat\b",
 )
 
 
