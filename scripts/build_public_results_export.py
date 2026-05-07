@@ -25,6 +25,18 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def connection_nodes(value: Any) -> list[Any]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    if isinstance(value, dict):
+        nodes = value.get("nodes")
+        if isinstance(nodes, list):
+            return nodes
+    return []
+
+
 def reaction_count(item: dict[str, Any], content: str) -> int:
     for group in item.get("reactionGroups") or []:
         if str(group.get("content") or "").upper() == content.upper():
@@ -34,7 +46,7 @@ def reaction_count(item: dict[str, Any], content: str) -> int:
 
 def compact_labels(item: dict[str, Any]) -> list[str]:
     out: list[str] = []
-    for label in item.get("labels") or []:
+    for label in connection_nodes(item.get("labels")):
         if isinstance(label, dict):
             name = str(label.get("name") or "").strip()
         else:
@@ -49,6 +61,15 @@ def compact_author(item: dict[str, Any]) -> str:
     if isinstance(author, dict):
         return str(author.get("login") or "unknown")
     return str(author or "unknown")
+
+
+def comment_count(item: dict[str, Any]) -> int | None:
+    comments = item.get("comments")
+    if isinstance(comments, dict):
+        return int(comments.get("totalCount") or 0)
+    if comments is None:
+        return None
+    return int(comments)
 
 
 def normalize_issue(issue: dict[str, Any]) -> dict[str, Any]:
@@ -66,7 +87,7 @@ def normalize_issue(issue: dict[str, Any]) -> dict[str, Any]:
         "labels": labels,
         "reaction_plus_one_count": reaction_count(issue, "THUMBS_UP"),
         "reaction_minus_one_count": reaction_count(issue, "THUMBS_DOWN"),
-        "comment_count": int(issue.get("comments", {}).get("totalCount") or 0) if isinstance(issue.get("comments"), dict) else issue.get("comments"),
+        "comment_count": comment_count(issue),
         "body": body,
         "body_length": len(body),
         "safety": {
@@ -83,9 +104,8 @@ def normalize_issue(issue: dict[str, Any]) -> dict[str, Any]:
 def normalize_pr(pr: dict[str, Any]) -> dict[str, Any]:
     labels = compact_labels(pr)
     body = str(pr.get("body") or "")
-    files = pr.get("files") or []
     compact_files = []
-    for file in files:
+    for file in connection_nodes(pr.get("files")):
         if isinstance(file, dict):
             compact_files.append(
                 {
@@ -114,7 +134,7 @@ def normalize_pr(pr: dict[str, Any]) -> dict[str, Any]:
         "additions": pr.get("additions"),
         "deletions": pr.get("deletions"),
         "review_decision": pr.get("reviewDecision"),
-        "comment_count": int(pr.get("comments", {}).get("totalCount") or 0) if isinstance(pr.get("comments"), dict) else pr.get("comments"),
+        "comment_count": comment_count(pr),
         "reaction_plus_one_count": reaction_count(pr, "THUMBS_UP"),
         "files": compact_files,
         "body": body,
