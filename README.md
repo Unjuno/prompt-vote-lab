@@ -132,13 +132,13 @@ See [`docs/no-change-baseline.md`](docs/no-change-baseline.md).
 
 ## Implementation agent policy
 
-Implementation agent/model:
+Current implementation agent/model policy:
 
 ```text
-gpt-5-nano
+model-policy-v1.1: gpt-5.4-nano
 ```
 
-The implementation model is fixed by `rules/model-policy-v1.0.md`.
+The implementation model is fixed by `rules/model-policy-v1.1.md` for the current canary comparison period.
 
 All ranked candidates in the same weekly vote must use the same implementation condition.
 
@@ -171,7 +171,7 @@ Supported one-time tiers:
 
 There is no general support tier.
 
-Support applies to the current weekly vote only. It does not create a request channel, maintenance contract, paid review obligation, delivery promise, or support obligation.
+Support applies to the current weekly vote only. It does not create a request channel, maintenance contract, paid review obligation, delivery promise, support obligation, or specification-control right.
 
 See [`docs/support-policy.md`](docs/support-policy.md).
 
@@ -206,6 +206,7 @@ Key documents:
 
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
 - [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
+- [`docs/usable-experiment-ops.md`](docs/usable-experiment-ops.md) — current usable manual experiment operations
 - [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
 - [`docs/automation-map.md`](docs/automation-map.md) — automation boundary
