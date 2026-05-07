@@ -10,7 +10,7 @@ on:
 
 permissions:
   contents: write
-  issues: read
+  issues: write
   pull-requests: write
 
 concurrency:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Capture diagnostics baseline
         run: |
-          mkdir -p .tmp/canary-diagnostics .tmp/issue-source
+          mkdir -p .tmp/canary-diagnostics .tmp/issue-source .tmp/issue-safety-runtime
           git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
           python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
           import hashlib
@@ -59,6 +59,32 @@ jobs:
             --json number,title,body,url,author,createdAt \
             > .tmp/issue-source/selected-issue.raw.json
           cp .tmp/issue-source/selected-issue.raw.json .tmp/canary-diagnostics/source-issue.raw.json
+
+      - name: Scan fixed Issue safety at runtime phase
+        run: |
+          python scripts/scan_issue_safety.py \
+            --issue-json .tmp/issue-source/selected-issue.raw.json \
+            --phase runtime \
+            --out-json .tmp/issue-safety-runtime/scan.json \
+            --out-md .tmp/issue-safety-runtime/comment.md
+          cp .tmp/issue-safety-runtime/scan.json .tmp/canary-diagnostics/runtime-issue-safety-scan.json
+          cp .tmp/issue-safety-runtime/comment.md .tmp/canary-diagnostics/runtime-issue-safety-comment.md
+
+      - name: Upload runtime Issue safety scan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-fixed-issue-runtime-safety-scan-${{ github.run_number }}
+          path: .tmp/issue-safety-runtime
+          if-no-files-found: error
+
+      - name: Apply runtime Issue safety feedback
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          bash scripts/apply_issue_safety_feedback.sh \
+            --scan-json .tmp/issue-safety-runtime/scan.json \
+            --comment-md .tmp/issue-safety-runtime/comment.md \
+            --issue-number "$ISSUE_NUMBER"
 
       - name: Run Codex fixed Issue instruction packet once
         env:
@@ -202,6 +228,7 @@ jobs:
           ## Internal checks
 
           - fixed Issue fetched before task packet generation
+          - runtime Issue safety scan completed before task packet execution
           - instruction packet runner completed before PR creation
           - changed-file guard passed before PR creation
           - safety-check passed before PR creation
@@ -209,7 +236,7 @@ jobs:
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for source Issue, instruction packet, credential presence, mount, Codex event, and diff analysis.
+          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, instruction packet, credential presence, mount, Codex event, and diff analysis.
 
           ## Merge policy
 
