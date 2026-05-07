@@ -30,17 +30,27 @@ Examples:
 codex-events.jsonl
 codex-last-message.txt
 codex-exit-code.txt
+issue-instruction-container-exit-code.txt
 issue-instruction-diff.patch
 issue-instruction-diff-name-only.txt
+issue-instruction-copied-files.txt
 git-diff.patch
 git-diff-stat.txt
+git-diff-name-only.txt
 check-results.json
 failure-summary.json
 artifact-manifest.json
+file-hashes-before.json
+file-hashes-after.json
 credential-presence-check.txt
 policy-allowed-paths.json
 policy-denied-access.txt
 task-write-test-exit-code.txt
+issue-execution-gate.json
+issue-execution-gate.md
+runtime-issue-safety-scan.json
+runtime-issue-safety-comment.md
+source-issue.raw.json
 task-run-manifest.json
 task-allowed-files.json
 task-execution-policy.md
@@ -52,11 +62,30 @@ task-selected-prompt.md
 task-static-ui-v1.0.md
 task-agent-run-policy-v1.0.md
 task-file-hashes.json
+task-visible-files.txt
+task-visible-files-container.txt
+task-visible-files-container-after.txt
 container-visible-files-before.txt
 container-visible-files-after.txt
 ```
 
 The exact allowlist is enforced by `scripts/build_public_agent_run_bundle.py`.
+
+## Why runtime scan and execution-gate files are included
+
+The public bundle must let participants connect prompt text to execution behavior.
+
+These files provide that linkage:
+
+```text
+source-issue.raw.json
+runtime-issue-safety-scan.json
+runtime-issue-safety-comment.md
+issue-execution-gate.json
+issue-execution-gate.md
+```
+
+Without them, a participant can see the diff and Codex events but cannot independently verify whether the Issue was clear, blocked, authorized, or stopped before execution.
 
 ## What is omitted
 
@@ -145,6 +174,9 @@ whether forbidden files changed
 whether the task mount was read-only
 what final agent message was produced
 how many JSONL events were emitted
+whether runtime scan was clear/blocked/review
+whether the execution gate allowed or stopped the run
+which source Issue generated the task packet
 ```
 
 The project does not automatically explain or score these observations.
