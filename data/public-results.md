@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T18:50:34+00:00`
+Generated at: `2026-05-07T19:01:59+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -9,7 +9,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | metric | value |
 | --- | --- |
 | issue_count | 10 |
-| open_issue_count | 1 |
+| open_issue_count | 0 |
 | blocked_issue_count | 2 |
 | clear_issue_count | 3 |
 | authorized_canary_issue_count | 1 |
@@ -23,7 +23,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 191 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
+| 191 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
 | 186 | CLOSED | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
 | 3 | CLOSED | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
@@ -73,7 +73,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25515579475 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25516127857 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25516031937 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
+| 25515833608 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
+| 25515599903 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25515579475 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25515402303 | Terminal State Report | pull_request | completed | skipped | Record Issue 191 template-normal success |
 | 25515401366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25515354616 | Lab PR Scope Check | pull_request | completed | success | Record Issue 191 template-normal success |
@@ -99,10 +103,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25511275207 | Weekly Issue Finalizer | workflow_dispatch | completed | failure | Weekly Issue Finalizer |
 | 25511167576 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
 | 25511074402 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25511055896 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25510983555 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25510959916 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25510621527 | Terminal State Report | pull_request | completed | skipped | Fix storage policy overblocking |
 
 ## Raw JSON
 
