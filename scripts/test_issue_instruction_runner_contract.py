@@ -53,6 +53,12 @@ REQUIRED_WORKFLOW_TEXT = [
     "--canary-id first-canary-009",
     "--runner-mode codex-cli-fixed-issue-instruction-packet-container",
     "--sandbox-mode docker-workdir-plus-readonly-issue-instruction-packet",
+    "python scripts/build_public_agent_run_bundle.py",
+    "--diagnostics-dir .tmp/canary-diagnostics",
+    "--out-dir .tmp/public-agent-run-bundle",
+    "codex-fixed-issue-public-agent-run-bundle-",
+    "redacted public agent run bundle",
+    "allowlisted raw evidence files",
     "codex-fixed-issue-instruction-canary-diagnostics-",
     "codex-fixed-issue-instruction-canary-public-log-",
     "codex-fixed-issue-runtime-safety-scan-",
@@ -90,6 +96,10 @@ def main() -> int:
 
     if workflow_text.index("Check Issue execution gate") > workflow_text.index("Run Codex fixed Issue instruction packet once"):
         raise SystemExit("Issue execution gate must run before Codex execution")
+    if workflow_text.index("Collect diagnostics artifact") > workflow_text.index("Build redacted public agent run bundle"):
+        raise SystemExit("Public agent run bundle must be built after diagnostics are collected")
+    if workflow_text.index("Build redacted public agent run bundle") > workflow_text.index("Upload redacted public agent run bundle"):
+        raise SystemExit("Public agent run bundle upload must happen after the bundle is built")
     if runner_text.index("codex login --with-api-key") > runner_text.index("unset OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY is unset before login, not after login")
     if runner_text.index("unset OPENAI_API_KEY") > runner_text.index("codex exec"):

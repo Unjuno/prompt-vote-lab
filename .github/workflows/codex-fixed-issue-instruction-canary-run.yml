@@ -32,7 +32,7 @@ jobs:
 
       - name: Capture diagnostics baseline
         run: |
-          mkdir -p .tmp/canary-diagnostics .tmp/issue-source .tmp/issue-safety-runtime .tmp/issue-execution-gate
+          mkdir -p .tmp/canary-diagnostics .tmp/issue-source .tmp/issue-safety-runtime .tmp/issue-execution-gate .tmp/public-agent-run-bundle
           git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
           python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
           import hashlib
@@ -150,6 +150,23 @@ jobs:
             --allowed-file lab/style.css \
             --allowed-file lab/app.js
 
+      - name: Build redacted public agent run bundle
+        if: ${{ always() }}
+        run: |
+          python scripts/build_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --out-dir .tmp/public-agent-run-bundle \
+            --run-id "${{ github.run_number }}" \
+            --issue-number "$ISSUE_NUMBER"
+
+      - name: Upload redacted public agent run bundle
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-fixed-issue-public-agent-run-bundle-${{ github.run_number }}
+          path: .tmp/public-agent-run-bundle
+          if-no-files-found: warn
+
       - name: Upload diagnostics artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -259,6 +276,8 @@ jobs:
           ## Diagnostics
 
           Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, and diff analysis.
+
+          A redacted public agent run bundle is also uploaded for participant analysis. It exposes allowlisted raw evidence files after secret-pattern redaction and omits denylisted diagnostics such as login stderr/stdout and raw container stderr.
 
           ## Merge policy
 

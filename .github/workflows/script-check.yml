@@ -27,6 +27,7 @@ on:
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
       - "docs/public-results-export.md"
+      - "docs/public-agent-run-bundle.md"
       - "docs/canary-007-policy-enforced-agent.md"
       - "docs/canary-008-selected-prompt-task-packet.md"
       - "docs/canary-009-selected-issue-instructions.md"
@@ -130,6 +131,9 @@ jobs:
 
       - name: Run public results export workflow contract test
         run: python scripts/test_public_results_export_workflow_contract.py
+
+      - name: Run public agent run bundle builder test
+        run: python scripts/test_build_public_agent_run_bundle.py
 
       - name: Run task packet generator test
         run: python scripts/test_create_codex_task_packet.py
