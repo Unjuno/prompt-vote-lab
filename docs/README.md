@@ -11,20 +11,21 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 1. [Experiment model](./experiment-model.md) — game model and boundaries.
 2. [How to participate](./how-to-participate.md) — submit, vote, and review.
 3. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-4. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-5. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-6. [Automation map](./automation-map.md) — workflow boundaries.
-7. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-8. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-9. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-10. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-11. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-12. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-13. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-14. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-15. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-16. [Report policy](./report-policy.md) — weekly report draft policy.
-17. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+4. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+5. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+6. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+7. [Automation map](./automation-map.md) — workflow boundaries.
+8. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+9. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+10. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+11. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+12. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+13. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+14. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+15. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+16. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+17. [Report policy](./report-policy.md) — weekly report draft policy.
+18. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -39,6 +40,19 @@ Report generation is currently model-free.
 The workflow can draft `runs/<week>-report.md` from explicit inputs and repository files, then open a reviewable PR.
 
 It does not publish externally and does not compute automated trust ratings.
+
+## Public results status
+
+Public results export is raw data, not analysis.
+
+Participants can inspect:
+
+```text
+data/public-results.json
+data/public-results.md
+```
+
+The export is intended for participant-side analysis of prompt outcomes, votes, labels, PRs, workflow runs, and run records.
 
 ## Current usable experiment status
 
@@ -100,6 +114,7 @@ GitHub rendered views show the documents as readable Markdown.
 ```text
 /      = stable explanation layer
 /lab/  = changing implementation target
+/data/ = raw public results snapshots
 /docs/ = rendered project explanation
 /rules/ = operational constraints
 /runs/ = recorded run history
