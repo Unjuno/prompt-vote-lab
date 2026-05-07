@@ -59,7 +59,7 @@ def test_issue_event_hostile_feedback() -> None:
     assert "issue-safety:blocked" in scan["labels_to_add"]
     assert "issue-safety:review" in scan["labels_to_add"]
     assert "issue-safety:submission-detected" in scan["labels_to_add"]
-    assert "issue-safety:runtime-detected" in scan["labels_to_remove"]
+    assert "issue-safety:runtime-detected" not in scan["labels_to_remove"]
     detected = {item["id"] for item in scan["unsafe_instructions_detected"]}
     assert {"policy_override", "file_scope_escalation", "network_behavior", "cookie_or_tracking"}.issubset(detected)
     assert "<!-- prompt-vote-lab:issue-safety-scan:v1 -->" in comment
@@ -84,7 +84,7 @@ def test_runtime_hostile_feedback_marker_is_separate() -> None:
     assert scan["phase"] == "runtime"
     assert scan["severity"] == "blocked"
     assert "issue-safety:runtime-detected" in scan["labels_to_add"]
-    assert "issue-safety:submission-detected" in scan["labels_to_remove"]
+    assert "issue-safety:submission-detected" not in scan["labels_to_remove"]
     detected = {item["id"] for item in scan["unsafe_instructions_detected"]}
     assert {"network_behavior", "self_merge_or_repo_mutation"}.issubset(detected)
     assert "<!-- prompt-vote-lab:issue-runtime-safety-scan:v1 -->" in comment
@@ -112,6 +112,8 @@ def test_clear_issue_feedback() -> None:
     assert scan["unsafe_instruction_count"] == 0
     assert scan["labels_to_add"] == ["issue-safety:clear", "issue-safety:submission-detected"]
     assert "issue-safety:blocked" in scan["labels_to_remove"]
+    assert "issue-safety:review" in scan["labels_to_remove"]
+    assert "issue-safety:runtime-detected" not in scan["labels_to_remove"]
     assert "No unsafe instruction categories were detected" in comment
 
 
