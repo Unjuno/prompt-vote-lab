@@ -182,32 +182,49 @@ noscript {
   font-size: 1.05rem;
 }
 
-.review-checklist {
+.review-subtitle {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.review-order {
   margin: 0;
   padding: 0;
   list-style: none;
+  counter-reset: review-step;
 }
 
-.review-checklist li {
+.review-order li {
   position: relative;
-  padding-left: 26px;
+  padding-left: 34px;
   margin: 10px 0 0;
   line-height: 1.55;
   color: var(--fg);
   font-weight: 650;
 }
 
-.review-checklist li:first-child {
+.review-order li:first-child {
   margin-top: 0;
 }
 
-.review-checklist li::before {
-  content: "✓";
+.review-order li::before {
+  counter-increment: review-step;
+  content: counter(review-step) ".";
   position: absolute;
   left: 0;
   top: 0;
   color: #15803d;
   font-weight: 900;
+}
+
+.review-experiment-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .review-link {
