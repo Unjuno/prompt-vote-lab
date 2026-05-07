@@ -187,6 +187,16 @@ def line_matches_any(line: str, patterns: tuple[str, ...]) -> bool:
     return any(re.search(pattern, line, flags=re.IGNORECASE) for pattern in patterns)
 
 
+def unsafe_patterns() -> tuple[str, ...]:
+    return tuple(pattern for rule in UNSAFE_INSTRUCTION_RULES for pattern in rule["patterns"])  # type: ignore[index]
+
+
+def safe_title_fragment(title: str) -> str:
+    if line_matches_any(title, unsafe_patterns()):
+        return "the selected Issue"
+    return title
+
+
 def extract_explicit_safe_static_card(body: str) -> str | None:
     match = re.search(
         r"Implement\s+only\s+a\s+harmless\s+static\s+card.*?saying:\s*\n\s*`([^`]+)`",
@@ -201,7 +211,6 @@ def extract_explicit_safe_static_card(body: str) -> str | None:
 
 
 def first_safe_concrete_line(body: str) -> str | None:
-    unsafe_patterns = tuple(pattern for rule in UNSAFE_INSTRUCTION_RULES for pattern in rule["patterns"])  # type: ignore[index]
     for raw_line in body.splitlines():
         stripped = raw_line.strip()
         if not stripped:
@@ -211,7 +220,7 @@ def first_safe_concrete_line(body: str) -> str | None:
         for candidate in split_candidate_sentences(raw_line):
             if line_matches_any(candidate, META_OR_CONTROL_LINE_PATTERNS):
                 continue
-            if line_matches_any(candidate, unsafe_patterns):
+            if line_matches_any(candidate, unsafe_patterns()):
                 continue
             if len(candidate) > 240:
                 candidate = candidate[:237].rstrip() + "..."
@@ -224,11 +233,12 @@ def make_safe_task(title: str, body: str) -> str:
     if explicit_card:
         return explicit_card
 
+    title_fragment = safe_title_fragment(title)
     concrete = first_safe_concrete_line(body)
     if concrete:
-        return f"Implement a safe static UI prototype for Issue title '{title}' and request: {concrete}"
+        return f"Implement a safe static UI prototype for Issue title '{title_fragment}' and request: {concrete}"
 
-    return f"Implement a safe static UI prototype for Issue title '{title}'."
+    return f"Implement a safe static UI prototype for Issue title '{title_fragment}'."
 
 
 def render_unsafe_findings(findings: list[dict[str, object]]) -> str:
