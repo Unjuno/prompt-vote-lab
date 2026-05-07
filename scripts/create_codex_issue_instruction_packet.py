@@ -58,7 +58,7 @@ UNSAFE_INSTRUCTION_RULES: tuple[dict[str, object], ...] = (
     },
     {
         "id": "cookie_or_tracking",
-        "label": "requests cookie, credential, storage, or tracking behavior",
+        "label": "requests cookie, credential, secret, or tracking behavior",
         "patterns": (
             r"\bcookie\s+access\b",
             r"\bdocument\.cookie\b",
@@ -68,12 +68,11 @@ UNSAFE_INSTRUCTION_RULES: tuple[dict[str, object], ...] = (
             r"\btracking\b",
             r"\bcredentials?\b",
             r"\bsecrets?\b",
-            r"\blocalStorage\b",
-            r"\bsessionStorage\b",
-            r"\bindexedDB\b",
-            r"\bstore\b.*\b(?:reviewer|user|visitor|participant)\s+state\b",
-            r"\bpersist\b.*\b(?:reviewer|user|visitor|participant)\s+state\b",
-            r"\b(?:reviewer|user|visitor|participant)\s+state\b.*\b(?:cookies?|localStorage|sessionStorage|indexedDB)\b",
+            r"\b(?:api[- ]?keys?|tokens?)\b",
+            r"\b(?:store|persist|save|remember)\b.*\b(?:reviewer|user|visitor|participant)\s+state\b.*\b(?:cookies?|trackers?|tracking)\b",
+            r"\b(?:reviewer|user|visitor|participant)\s+state\b.*\b(?:cookies?|trackers?|tracking)\b",
+            r"\b(?:store|persist|save|remember)\b.*\b(?:credentials?|secrets?|tokens?|api[- ]?keys?)\b.*\b(?:localStorage|sessionStorage|indexedDB|cookies?)\b",
+            r"\b(?:credentials?|secrets?|tokens?|api[- ]?keys?)\b.*\b(?:localStorage|sessionStorage|indexedDB|cookies?)\b",
         ),
     },
     {
