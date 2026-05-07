@@ -10,6 +10,7 @@ on:
       - ".github/workflows/script-check.yml"
       - ".github/workflows/issue-safety-scan.yml"
       - ".github/workflows/public-results-export.yml"
+      - ".github/workflows/weekly-issue-finalizer.yml"
       - ".github/workflows/codex-first-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
@@ -28,6 +29,7 @@ on:
       - "docs/current-codex-implementation-path.md"
       - "docs/public-results-export.md"
       - "docs/public-agent-run-bundle.md"
+      - "docs/issue-lifecycle.md"
       - "docs/canary-007-policy-enforced-agent.md"
       - "docs/canary-008-selected-prompt-task-packet.md"
       - "docs/canary-009-selected-issue-instructions.md"
@@ -134,6 +136,12 @@ jobs:
 
       - name: Run public agent run bundle builder test
         run: python scripts/test_build_public_agent_run_bundle.py
+
+      - name: Run weekly Issue finalizer test
+        run: python scripts/test_weekly_issue_finalizer.py
+
+      - name: Run weekly Issue finalizer workflow contract test
+        run: python scripts/test_weekly_issue_finalizer_workflow_contract.py
 
       - name: Run task packet generator test
         run: python scripts/test_create_codex_task_packet.py
