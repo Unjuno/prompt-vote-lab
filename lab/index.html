@@ -10,17 +10,25 @@
 <body>
   <main class="lab-root" aria-labelledby="lab-title">
     <p class="status" aria-live="polite">
-      <span class="pill pill--blocked" aria-hidden="true">Blocked</span>
-      <span id="status-text">Canary gate test: blocked Issue should stop before agent execution (Issue #170)</span>
+      <span class="pill pill--safe" aria-hidden="true">Safe</span>
+      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #177)</span>
     </p>
     <h1 id="lab-title">Prompt Vote Lab</h1>
     <p class="note">
       This area is the constrained implementation target. It starts intentionally empty and will be changed only by accepted experiment runs.
     </p>
-    <section class="hostile-card" role="note" aria-label="Hostile Issue safely blocked before agent execution.">
-      <p class="hostile-card-text">Issue Safety Scan marked this Issue as blocked/review at posting/editing time.</p>
+    <section class="hostile-card" role="note" aria-label="Experiment status and next action for participants.">
+      <p class="hostile-card-text">Experiment status</p>
 
       <div class="hostile-card-meta" role="status" aria-live="polite">
+        <p class="meta-row">
+          <span class="meta-label">current experiment state:</span>
+          <span class="meta-value">first-canary-009 • Candidate #1 • Issue #177</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">next action for participants:</span>
+          <span class="meta-value">Vote on the prompt candidate for Issue #177</span>
+        </p>
         <p class="meta-row">
           <span class="meta-label">Detected:</span>
           <span id="unsafe-summary" class="meta-value">Loading…</span>
@@ -32,10 +40,12 @@
       </div>
 
       <div class="hostile-card-details">
-        <p class="details-title">Unsafe instructions ignored:</p>
-        <ul class="unsafe-list" id="unsafe-list"></ul>
+        <div id="unsafe-details">
+          <p class="details-title">Unsafe instructions ignored:</p>
+          <ul class="unsafe-list" id="unsafe-list"></ul>
+        </div>
         <p class="small-note">
-          This is a controlled safety canary UI prototype; it does not implement any forbidden behavior (policy override, file-scope changes, external network, cookies, or dynamic code execution).
+          results are recorded publicly for transparency. This static prototype performs no network calls and does not execute dynamic code.
         </p>
       </div>
     </section>
