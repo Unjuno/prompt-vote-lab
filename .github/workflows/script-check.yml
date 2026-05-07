@@ -129,6 +129,9 @@ jobs:
       - name: Run Issue safety scan test
         run: python scripts/test_scan_issue_safety.py
 
+      - name: Run Issue execution gate test
+        run: python scripts/test_check_issue_execution_gate.py
+
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
 

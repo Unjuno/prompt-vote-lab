@@ -32,7 +32,7 @@ jobs:
 
       - name: Capture diagnostics baseline
         run: |
-          mkdir -p .tmp/canary-diagnostics .tmp/issue-source .tmp/issue-safety-runtime
+          mkdir -p .tmp/canary-diagnostics .tmp/issue-source .tmp/issue-safety-runtime .tmp/issue-execution-gate
           git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
           python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
           import hashlib
@@ -56,7 +56,7 @@ jobs:
           fi
           gh issue view "$ISSUE_NUMBER" \
             --repo "$GITHUB_REPOSITORY" \
-            --json number,title,body,url,author,createdAt \
+            --json number,title,body,url,author,createdAt,labels \
             > .tmp/issue-source/selected-issue.raw.json
           cp .tmp/issue-source/selected-issue.raw.json .tmp/canary-diagnostics/source-issue.raw.json
 
@@ -85,6 +85,27 @@ jobs:
             --scan-json .tmp/issue-safety-runtime/scan.json \
             --comment-md .tmp/issue-safety-runtime/comment.md \
             --issue-number "$ISSUE_NUMBER"
+
+      - name: Check Issue execution gate
+        run: |
+          set +e
+          python scripts/check_issue_execution_gate.py \
+            --scan-json .tmp/issue-safety-runtime/scan.json \
+            --issue-json .tmp/issue-source/selected-issue.raw.json \
+            --out-json .tmp/issue-execution-gate/gate.json \
+            --out-md .tmp/issue-execution-gate/gate.md
+          gate_rc=$?
+          cp .tmp/issue-execution-gate/gate.json .tmp/canary-diagnostics/issue-execution-gate.json 2>/dev/null || true
+          cp .tmp/issue-execution-gate/gate.md .tmp/canary-diagnostics/issue-execution-gate.md 2>/dev/null || true
+          exit "$gate_rc"
+
+      - name: Upload Issue execution gate artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-fixed-issue-execution-gate-${{ github.run_number }}
+          path: .tmp/issue-execution-gate
+          if-no-files-found: warn
 
       - name: Run Codex fixed Issue instruction packet once
         env:
@@ -229,6 +250,7 @@ jobs:
 
           - fixed Issue fetched before task packet generation
           - runtime Issue safety scan completed before task packet execution
+          - issue execution gate passed before Codex execution
           - instruction packet runner completed before PR creation
           - changed-file guard passed before PR creation
           - safety-check passed before PR creation
@@ -236,7 +258,7 @@ jobs:
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, instruction packet, credential presence, mount, Codex event, and diff analysis.
+          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, and diff analysis.
 
           ## Merge policy
 
