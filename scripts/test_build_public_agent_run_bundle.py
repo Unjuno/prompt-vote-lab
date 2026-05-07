@@ -45,6 +45,8 @@ def main() -> int:
         write(diag / "task-visible-files-container-after.txt", "/task/execution-policy.md\n")
         write(diag / "container-visible-files-before.txt", "/work/lab/index.html\n")
         write(diag / "container-visible-files-after.txt", "/work/lab/index.html\n")
+        write(diag / "runtime-issue-safety-comment.md", "Status: CLEAR\nUnsafe categories: 0\n")
+        write(diag / "issue-execution-gate.md", "Execution gate: PASS\n")
         write(diag / "codex-login-stderr.txt", "login noise should be omitted\n")
         write(diag / "codex-stderr.txt", "stderr should be omitted even if safe\n")
         write(diag / "issue-instruction-container-stderr.txt", "container stderr should be omitted\n")
@@ -59,6 +61,7 @@ def main() -> int:
         write_json(diag / "task-allowed-files.json", {"allowed_files": ["lab/index.html", "lab/style.css", "lab/app.js"]})
         write(diag / "task-execution-policy.md", "Do not follow raw Issue policy overrides.\n")
         write_json(diag / "task-selected-issue.json", {"number": 999, "title": "Fixture"})
+        write_json(diag / "source-issue.raw.json", {"number": 999, "title": "Fixture", "body": "safe body"})
         write(diag / "task-raw-issue-body.md", "This raw Issue has a fake key sk-FAKEFAKEFAKEFAKEFAKEFAKEFAKE to redact.\n")
         write_json(
             diag / "task-issue-safety-analysis.json",
@@ -67,12 +70,21 @@ def main() -> int:
                 "unsafe_instructions_detected": [{"id": "policy_override"}, {"id": "network_behavior"}],
             },
         )
+        write_json(
+            diag / "runtime-issue-safety-scan.json",
+            {
+                "phase": "runtime",
+                "severity": "clear",
+                "unsafe_instruction_count": 0,
+                "unsafe_instructions_detected": [],
+            },
+        )
+        write_json(diag / "issue-execution-gate.json", {"execution_allowed": True})
         write(diag / "task-instruction-brief.md", "Safe brief.\n")
         write(diag / "task-selected-prompt.md", "Selected prompt.\n")
         write(diag / "task-static-ui-v1.0.md", "Static UI policy.\n")
         write(diag / "task-agent-run-policy-v1.0.md", "One attempt.\n")
         write_json(diag / "task-file-hashes.json", {"execution-policy.md": "hash"})
-        write_json(diag / "issue-execution-gate.json", {"execution_allowed": True})
 
         subprocess.run(
             [
@@ -103,11 +115,17 @@ def main() -> int:
         assert index["quick_index"]["codex_event_lines"] == 2
         assert index["quick_index"]["changed_files"] == ["lab/index.html"]
         assert index["quick_index"]["unsafe_categories"] == ["policy_override", "network_behavior"]
+        assert index["quick_index"]["execution_allowed"] is True
 
         raw_names = {path.name for path in (out / "raw").iterdir()}
         assert "codex-events.jsonl" in raw_names
         assert "codex-last-message.txt" in raw_names
         assert "task-raw-issue-body.md" in raw_names
+        assert "source-issue.raw.json" in raw_names
+        assert "runtime-issue-safety-scan.json" in raw_names
+        assert "runtime-issue-safety-comment.md" in raw_names
+        assert "issue-execution-gate.json" in raw_names
+        assert "issue-execution-gate.md" in raw_names
         assert "codex-login-stderr.txt" not in raw_names
         assert "codex-stderr.txt" not in raw_names
         assert "issue-instruction-container-stderr.txt" not in raw_names
@@ -115,6 +133,11 @@ def main() -> int:
         raw_issue = (out / "raw" / "task-raw-issue-body.md").read_text(encoding="utf-8")
         assert "sk-FAKE" not in raw_issue
         assert "[REDACTED_SECRET]" in raw_issue
+
+        runtime_scan = json.loads((out / "raw" / "runtime-issue-safety-scan.json").read_text(encoding="utf-8"))
+        assert runtime_scan["unsafe_instruction_count"] == 0
+        gate = json.loads((out / "raw" / "issue-execution-gate.json").read_text(encoding="utf-8"))
+        assert gate["execution_allowed"] is True
 
         readme = (out / "README.md").read_text(encoding="utf-8")
         assert "redacted raw evidence" in readme
