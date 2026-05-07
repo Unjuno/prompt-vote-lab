@@ -8,6 +8,7 @@ on:
       - "scripts/**/*.sh"
       - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
+      - ".github/workflows/issue-safety-scan.yml"
       - ".github/workflows/codex-first-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
@@ -124,6 +125,9 @@ jobs:
 
       - name: Run fixed Issue instruction runner contract test
         run: python scripts/test_issue_instruction_runner_contract.py
+
+      - name: Run Issue safety scan test
+        run: python scripts/test_scan_issue_safety.py
 
       - name: Run terminal metadata extraction test
         run: python scripts/test_extract_pr_metadata.py
