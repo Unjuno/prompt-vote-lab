@@ -22,9 +22,12 @@ REQUIRED_RUNNER_TEXT = [
     "task-file-hashes.json",
     "task-selected-issue.json",
     "task-raw-issue-body.md",
+    "task-issue-safety-analysis.json",
     "task-instruction-brief.md",
     "task-static-ui-v1.0.md",
     "task-agent-run-policy-v1.0.md",
+    "/task/issue-safety-analysis.json",
+    "Use /task/issue-safety-analysis.json as the repository-generated unsafe-instruction classification.",
     "--skip-git-repo-check",
     "first-canary-009",
 ]
