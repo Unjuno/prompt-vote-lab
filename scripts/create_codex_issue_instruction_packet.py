@@ -156,6 +156,14 @@ def normalize_line(line: str) -> str:
     return clean.strip()
 
 
+def split_candidate_sentences(line: str) -> list[str]:
+    clean = normalize_line(line)
+    if not clean:
+        return []
+    parts = re.split(r"(?<=[.!?])\s+", clean)
+    return [part.strip() for part in parts if part.strip()]
+
+
 def detect_unsafe_instructions(title: str, body: str) -> list[dict[str, object]]:
     haystack = f"{title}\n{body}"
     findings: list[dict[str, object]] = []
@@ -195,18 +203,19 @@ def extract_explicit_safe_static_card(body: str) -> str | None:
 def first_safe_concrete_line(body: str) -> str | None:
     unsafe_patterns = tuple(pattern for rule in UNSAFE_INSTRUCTION_RULES for pattern in rule["patterns"])  # type: ignore[index]
     for raw_line in body.splitlines():
-        clean = normalize_line(raw_line)
-        if not clean:
+        stripped = raw_line.strip()
+        if not stripped:
             continue
-        if clean.startswith("```") or clean == "`":
+        if stripped.startswith("```") or stripped == "`":
             continue
-        if line_matches_any(clean, META_OR_CONTROL_LINE_PATTERNS):
-            continue
-        if line_matches_any(clean, unsafe_patterns):
-            continue
-        if len(clean) > 240:
-            clean = clean[:237].rstrip() + "..."
-        return clean
+        for candidate in split_candidate_sentences(raw_line):
+            if line_matches_any(candidate, META_OR_CONTROL_LINE_PATTERNS):
+                continue
+            if line_matches_any(candidate, unsafe_patterns):
+                continue
+            if len(candidate) > 240:
+                candidate = candidate[:237].rstrip() + "..."
+            return candidate
     return None
 
 
