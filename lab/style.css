@@ -92,6 +92,12 @@ noscript {
   color: #8a1f1f;
 }
 
+.pill--safe {
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(220, 252, 231, 0.78);
+  color: #15803d;
+}
+
 .hostile-card-meta {
   margin-top: 14px;
 }
