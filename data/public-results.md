@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T17:15:16+00:00`
+Generated at: `2026-05-07T17:17:07+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -23,7 +23,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 186 | OPEN | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
+| 186 | OPEN | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
 | 3 | CLOSED | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
 | 2 | CLOSED | 0 | prompt-proposal | [Prompt]: Add expected-vs-actual comparison cards |
@@ -72,7 +72,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25510959916 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25511055896 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25510983555 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25510959916 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25510621527 | Terminal State Report | pull_request | completed | skipped | Fix storage policy overblocking |
 | 25510618972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25510560880 | Script Check | pull_request | completed | success | Fix storage policy overblocking |
@@ -100,8 +102,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25504614838 | Weekly Issue Finalizer | workflow_dispatch | completed | failure | Weekly Issue Finalizer |
 | 25503051284 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
 | 25502613713 | Terminal State Report | pull_request | completed | skipped | Add weekly Issue finalizer |
-| 25502610682 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25502452389 | Lab PR Scope Check | pull_request | completed | success | Add weekly Issue finalizer |
 
 ## Raw JSON
 
