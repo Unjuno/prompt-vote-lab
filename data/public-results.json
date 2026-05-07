@@ -1,0 +1,26 @@
+{
+  "issues": [],
+  "labels": [],
+  "pull_requests": [],
+  "run_records": [],
+  "schema_version": "prompt-vote-lab-public-results-export-v1",
+  "scope": {
+    "interpretation": "none; participant analysis expected",
+    "privacy": "public GitHub repository data only",
+    "raw_actions_logs": "not collected",
+    "secrets": "not collected"
+  },
+  "summary": {
+    "authorized_canary_issue_count": 0,
+    "blocked_issue_count": 0,
+    "clear_issue_count": 0,
+    "issue_count": 0,
+    "merged_pr_count": 0,
+    "open_issue_count": 0,
+    "open_pr_count": 0,
+    "pr_count": 0,
+    "run_record_count": 0,
+    "workflow_run_count": 0
+  },
+  "workflow_runs": []
+}

@@ -1,0 +1,166 @@
+name: Public Results Export
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Maximum Issues, PRs, and workflow runs to export"
+        required: false
+        default: "100"
+      commit_results:
+        description: "Commit data/public-results.json and data/public-results.md to the current branch"
+        required: false
+        default: "true"
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: read
+  actions: read
+
+concurrency:
+  group: public-results-export
+  cancel-in-progress: true
+
+jobs:
+  public-results-export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch public repository data
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/public-results data
+          limit="${INPUT_LIMIT:-100}"
+          if [ -z "$limit" ]; then limit=100; fi
+          owner="${GITHUB_REPOSITORY%/*}"
+          repo="${GITHUB_REPOSITORY#*/}"
+
+          cat > .tmp/public-results/query.graphql <<'GRAPHQL'
+          query($owner: String!, $repo: String!, $limit: Int!) {
+            repository(owner: $owner, name: $repo) {
+              issues(first: $limit, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                nodes {
+                  number
+                  title
+                  body
+                  state
+                  url
+                  createdAt
+                  updatedAt
+                  closedAt
+                  author { login }
+                  labels(first: 50) { nodes { name } }
+                  reactionGroups { content users { totalCount } }
+                  comments { totalCount }
+                }
+              }
+              pullRequests(first: $limit, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                nodes {
+                  number
+                  title
+                  body
+                  state
+                  url
+                  createdAt
+                  updatedAt
+                  closedAt
+                  mergedAt
+                  author { login }
+                  mergedBy { login }
+                  baseRefName
+                  headRefName
+                  headRefOid
+                  mergeCommit { oid }
+                  labels(first: 50) { nodes { name } }
+                  reactionGroups { content users { totalCount } }
+                  comments { totalCount }
+                  changedFiles
+                  additions
+                  deletions
+                  reviewDecision
+                  files(first: 100) { nodes { path additions deletions } }
+                }
+              }
+            }
+          }
+          GRAPHQL
+
+          gh api graphql \
+            -f owner="$owner" \
+            -f repo="$repo" \
+            -F limit="$limit" \
+            -f query="$(cat .tmp/public-results/query.graphql)" \
+            > .tmp/public-results/repository.graphql.json
+
+          python - <<'PY'
+          from __future__ import annotations
+          import json
+          from pathlib import Path
+          raw = json.loads(Path('.tmp/public-results/repository.graphql.json').read_text(encoding='utf-8'))
+          repo = raw['data']['repository']
+          Path('.tmp/public-results/issues.json').write_text(json.dumps(repo['issues']['nodes'], indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          Path('.tmp/public-results/pull-requests.json').write_text(json.dumps(repo['pullRequests']['nodes'], indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          PY
+
+          gh run list \
+            --repo "$GITHUB_REPOSITORY" \
+            --limit "$limit" \
+            --json databaseId,name,workflowName,displayTitle,event,status,conclusion,createdAt,updatedAt,headBranch,headSha,url \
+            > .tmp/public-results/workflow-runs.json
+
+          gh label list \
+            --repo "$GITHUB_REPOSITORY" \
+            --limit 200 \
+            --json name,color,description \
+            > .tmp/public-results/labels.json
+
+      - name: Build public results export
+        run: |
+          python scripts/build_public_results_export.py \
+            --issues .tmp/public-results/issues.json \
+            --prs .tmp/public-results/pull-requests.json \
+            --workflow-runs .tmp/public-results/workflow-runs.json \
+            --labels .tmp/public-results/labels.json \
+            --runs-dir runs \
+            --out-json data/public-results.json \
+            --out-md data/public-results.md
+
+      - name: Upload public results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-results-export-${{ github.run_number }}
+          path: |
+            data/public-results.json
+            data/public-results.md
+            .tmp/public-results
+          if-no-files-found: error
+
+      - name: Commit public results snapshot
+        env:
+          INPUT_COMMIT_RESULTS: ${{ inputs.commit_results }}
+        run: |
+          set -euo pipefail
+          commit_results="${INPUT_COMMIT_RESULTS:-true}"
+          if [ "$commit_results" != "true" ]; then
+            echo "commit_results is not true; skipping commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/public-results.json data/public-results.md
+          if git diff --cached --quiet; then
+            echo "No public results changes to commit."
+            exit 0
+          fi
+          git commit -m "Update public results export"
+          git push

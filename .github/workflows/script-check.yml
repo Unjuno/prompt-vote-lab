@@ -9,6 +9,7 @@ on:
       - "tests/fixtures/**"
       - ".github/workflows/script-check.yml"
       - ".github/workflows/issue-safety-scan.yml"
+      - ".github/workflows/public-results-export.yml"
       - ".github/workflows/codex-first-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-canary-run.yml"
       - ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
@@ -20,9 +21,12 @@ on:
       - ".github/workflows/codex-task-packet-canary-run.yml"
       - ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
       - "README.md"
+      - "data/public-results.json"
+      - "data/public-results.md"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
+      - "docs/public-results-export.md"
       - "docs/canary-007-policy-enforced-agent.md"
       - "docs/canary-008-selected-prompt-task-packet.md"
       - "docs/canary-009-selected-issue-instructions.md"
@@ -120,6 +124,12 @@ jobs:
 
       - name: Run usable experiment ops doc test
         run: python scripts/test_usable_experiment_ops_doc.py
+
+      - name: Run public results export builder test
+        run: python scripts/test_build_public_results_export.py
+
+      - name: Run public results export workflow contract test
+        run: python scripts/test_public_results_export_workflow_contract.py
 
       - name: Run task packet generator test
         run: python scripts/test_create_codex_task_packet.py
