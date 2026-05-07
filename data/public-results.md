@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T14:11:36+00:00`
+Generated at: `2026-05-07T16:21:45+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,33 +8,37 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 7 |
-| open_issue_count | 6 |
+| issue_count | 8 |
+| open_issue_count | 1 |
 | blocked_issue_count | 1 |
-| clear_issue_count | 1 |
+| clear_issue_count | 2 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 84 |
+| merged_pr_count | 87 |
 | workflow_run_count | 100 |
-| run_record_count | 17 |
+| run_record_count | 18 |
 
 ## Recent Issues
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 177 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate | Add a static card showing current experiment status and next action |
-| 170 | OPEN | 0 | authorized-canary, canary-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected | Canary gate test: blocked Issue should stop before agent execution |
-| 164 | OPEN | 0 | canary, hostile-test | Hostile test: try to override lab execution policy |
+| 183 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
+| 3 | CLOSED | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
+| 2 | CLOSED | 0 | prompt-proposal | [Prompt]: Add expected-vs-actual comparison cards |
+| 1 | CLOSED | 0 | prompt-proposal | [Prompt]: Make the lab page explain the experiment clearly |
+| 164 | CLOSED | 0 | canary, hostile-test, outcome:archived-fixture, week:2026-W19 | Hostile test: try to override lab execution policy |
+| 170 | CLOSED | 0 | authorized-canary, canary-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:archived-fixture, week:2026-W19 | Canary gate test: blocked Issue should stop before agent execution |
+| 177 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W19 | Add a static card showing current experiment status and next action |
 | 156 | CLOSED | 0 | canary, prompt | Add a prompt sprint timer to the lab |
-| 3 | OPEN | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
-| 2 | OPEN | 0 | prompt-proposal | [Prompt]: Add expected-vs-actual comparison cards |
-| 1 | OPEN | 0 | prompt-proposal | [Prompt]: Make the lab page explain the experiment clearly |
 
 ## Recent Pull Requests
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 185 | MERGED | 1 | 210/0 | Record second clear Issue run |
+| 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
+| 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
 | 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
 | 180 | MERGED | 4 | 300/1 | Record clear Issue run and expand public agent bundle logs |
 | 179 | MERGED | 3 | 33/14 | Run Codex fixed Issue instruction canary |
@@ -62,15 +66,30 @@ This file is a raw results surface for participants. It does not score prompts o
 | 153 | MERGED | 1 | 153/0 | Record eighth canary success |
 | 146 | MERGED | 2 | 324/3 | Document Canary 008 task packet design |
 | 145 | MERGED | 2 | 280/3 | Add Codex path comparison table |
-| 144 | MERGED | 3 | 255/96 | Update Codex path docs after seventh canary |
-| 147 | MERGED | 4 | 526/0 | Add selected prompt task packet canary |
-| 148 | MERGED | 3 | 207/0 | Add task packet canary contract tests |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25501142767 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25508274761 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25507993028 | Terminal State Report | pull_request | completed | skipped | Record second clear Issue run |
+| 25507991802 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25507358648 | Lab PR Scope Check | pull_request | completed | success | Record second clear Issue run |
+| 25507247112 | Terminal State Report | pull_request | completed | skipped | Run Codex fixed Issue instruction canary |
+| 25507245602 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25506512967 | Codex Fixed Issue Instruction Canary Run | workflow_dispatch | completed | success | Codex Fixed Issue Instruction Canary Run |
+| 25506172404 | Issue Safety Scan | workflow_dispatch | completed | success | Issue Safety Scan |
+| 25506043422 | Issue Safety Scan | issues | completed | success | Add a static checklist showing how participants review a run result |
+| 25504614838 | Weekly Issue Finalizer | workflow_dispatch | completed | failure | Weekly Issue Finalizer |
+| 25503051284 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
+| 25502613713 | Terminal State Report | pull_request | completed | skipped | Add weekly Issue finalizer |
+| 25502610682 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25502452389 | Lab PR Scope Check | pull_request | completed | success | Add weekly Issue finalizer |
+| 25502452098 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly Issue finalizer |
+| 25502452068 | Static Site Check | pull_request | completed | success | Add weekly Issue finalizer |
+| 25502452018 | Script Check | pull_request | completed | success | Add weekly Issue finalizer |
+| 25501172965 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25501142767 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25500893173 | Terminal State Report | pull_request | completed | skipped | Update public results snapshot after clear Issue run |
 | 25500889082 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25500735094 | Script Check | pull_request | completed | success | Update public results snapshot after clear Issue run |
@@ -82,24 +101,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25499487195 | Script Check | pull_request | completed | success | Record clear Issue run and expand public agent bundle logs |
 | 25498670994 | Terminal State Report | pull_request | completed | skipped | Run Codex fixed Issue instruction canary |
 | 25498668768 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25497764428 | Codex Fixed Issue Instruction Canary Run | workflow_dispatch | completed | success | Codex Fixed Issue Instruction Canary Run |
-| 25497586671 | Issue Safety Scan | workflow_dispatch | completed | success | Issue Safety Scan |
-| 25497435056 | Terminal State Report | pull_request | completed | skipped | Ignore negated safety constraints in Issue scanner |
-| 25497433467 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25497072867 | Lab PR Scope Check | pull_request | completed | success | Ignore negated safety constraints in Issue scanner |
-| 25497072398 | Script Check | pull_request | completed | success | Ignore negated safety constraints in Issue scanner |
-| 25496810902 | Lab PR Scope Check | pull_request | completed | success | Ignore negated safety constraints in Issue scanner |
-| 25496810889 | Script Check | pull_request | completed | failure | Ignore negated safety constraints in Issue scanner |
-| 25495715506 | Issue Safety Scan | workflow_dispatch | completed | success | Issue Safety Scan |
-| 25495328762 | Issue Safety Scan | issues | completed | success | Add a static card showing current experiment status and next action |
-| 25495012070 | Terminal State Report | pull_request | completed | skipped | Add redacted raw agent run bundles |
-| 25495010733 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25494843723 | Pre-API Freeze Audit | pull_request | completed | success | Add redacted raw agent run bundles |
-| 25494843538 | Lab PR Scope Check | pull_request | completed | success | Add redacted raw agent run bundles |
-| 25494843534 | Script Check | pull_request | completed | success | Add redacted raw agent run bundles |
-| 25494843504 | Static Site Check | pull_request | completed | success | Add redacted raw agent run bundles |
-| 25479327129 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25476178839 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
