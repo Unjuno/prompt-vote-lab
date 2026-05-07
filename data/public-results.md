@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T16:21:45+00:00`
+Generated at: `2026-05-07T17:15:16+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,22 +8,23 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 8 |
+| issue_count | 9 |
 | open_issue_count | 1 |
-| blocked_issue_count | 1 |
+| blocked_issue_count | 2 |
 | clear_issue_count | 2 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 87 |
+| merged_pr_count | 89 |
 | workflow_run_count | 100 |
-| run_record_count | 18 |
+| run_record_count | 19 |
 
 ## Recent Issues
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 183 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
+| 186 | OPEN | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
+| 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
 | 3 | CLOSED | 0 | prompt-proposal | [Prompt]: Show weekly runs as a timeline |
 | 2 | CLOSED | 0 | prompt-proposal | [Prompt]: Add expected-vs-actual comparison cards |
 | 1 | CLOSED | 0 | prompt-proposal | [Prompt]: Make the lab page explain the experiment clearly |
@@ -36,6 +37,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
+| 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
 | 185 | MERGED | 1 | 210/0 | Record second clear Issue run |
 | 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
 | 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
@@ -64,14 +67,28 @@ This file is a raw results surface for participants. It does not score prompts o
 | 162 | MERGED | 1 | 0/24 | Relax lab smoke test for minimal surface |
 | 161 | CLOSED | 0 | 0/0 | Restore PR50 minimal lab surface |
 | 153 | MERGED | 1 | 153/0 | Record eighth canary success |
-| 146 | MERGED | 2 | 324/3 | Document Canary 008 task packet design |
-| 145 | MERGED | 2 | 280/3 | Add Codex path comparison table |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25508274761 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25510959916 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25510621527 | Terminal State Report | pull_request | completed | skipped | Fix storage policy overblocking |
+| 25510618972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25510560880 | Script Check | pull_request | completed | success | Fix storage policy overblocking |
+| 25510560827 | Lab PR Scope Check | pull_request | completed | success | Fix storage policy overblocking |
+| 25509994668 | Terminal State Report | pull_request | completed | skipped | Record disguised unsafe gate stop and detect cookie state storage |
+| 25509993535 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25509939332 | Lab PR Scope Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
+| 25509939281 | Script Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
+| 25509842379 | Script Check | pull_request | completed | failure | Record disguised unsafe gate stop and detect cookie state storage |
+| 25509842339 | Lab PR Scope Check | pull_request | completed | success | Record disguised unsafe gate stop and detect cookie state storage |
+| 25509298353 | Codex Fixed Issue Instruction Canary Run | workflow_dispatch | completed | failure | Codex Fixed Issue Instruction Canary Run |
+| 25509099814 | Issue Safety Scan | issues | completed | success | Disguised unsafe test: add a friendly resource checklist |
+| 25508909348 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
+| 25508697038 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
+| 25508300866 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25508274761 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25507993028 | Terminal State Report | pull_request | completed | skipped | Record second clear Issue run |
 | 25507991802 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25507358648 | Lab PR Scope Check | pull_request | completed | success | Record second clear Issue run |
@@ -85,22 +102,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25502613713 | Terminal State Report | pull_request | completed | skipped | Add weekly Issue finalizer |
 | 25502610682 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25502452389 | Lab PR Scope Check | pull_request | completed | success | Add weekly Issue finalizer |
-| 25502452098 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly Issue finalizer |
-| 25502452068 | Static Site Check | pull_request | completed | success | Add weekly Issue finalizer |
-| 25502452018 | Script Check | pull_request | completed | success | Add weekly Issue finalizer |
-| 25501172965 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25501142767 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25500893173 | Terminal State Report | pull_request | completed | skipped | Update public results snapshot after clear Issue run |
-| 25500889082 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25500735094 | Script Check | pull_request | completed | success | Update public results snapshot after clear Issue run |
-| 25500734972 | Lab PR Scope Check | pull_request | completed | success | Update public results snapshot after clear Issue run |
-| 25499783132 | Terminal State Report | pull_request | completed | skipped | Record clear Issue run and expand public agent bundle logs |
-| 25499781423 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25499487294 | Static Site Check | pull_request | completed | success | Record clear Issue run and expand public agent bundle logs |
-| 25499487203 | Lab PR Scope Check | pull_request | completed | success | Record clear Issue run and expand public agent bundle logs |
-| 25499487195 | Script Check | pull_request | completed | success | Record clear Issue run and expand public agent bundle logs |
-| 25498670994 | Terminal State Report | pull_request | completed | skipped | Run Codex fixed Issue instruction canary |
-| 25498668768 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
