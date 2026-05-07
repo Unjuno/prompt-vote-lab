@@ -39,10 +39,15 @@ REQUIRED_WORKFLOW_TEXT = [
     "CODEX_MODEL: gpt-5.4-nano",
     "RUN_WEEK: first-canary-009",
     "gh issue view \"$ISSUE_NUMBER\"",
-    "--json number,title,body,url,author,createdAt",
+    "--json number,title,body,url,author,createdAt,labels",
     "python scripts/scan_issue_safety.py",
     "--phase runtime",
     "bash scripts/apply_issue_safety_feedback.sh",
+    "python scripts/check_issue_execution_gate.py",
+    "--scan-json .tmp/issue-safety-runtime/scan.json",
+    "--issue-json .tmp/issue-source/selected-issue.raw.json",
+    "issue execution gate passed before Codex execution",
+    "codex-fixed-issue-execution-gate-",
     "runtime Issue safety scan completed before task packet execution",
     "bash scripts/run_codex_issue_instruction_canary.sh",
     "--canary-id first-canary-009",
@@ -83,6 +88,8 @@ def main() -> int:
     reject_all(runner_text, FORBIDDEN_RUNNER_TEXT, "runner")
     require_all(workflow_text, REQUIRED_WORKFLOW_TEXT, "workflow")
 
+    if workflow_text.index("Check Issue execution gate") > workflow_text.index("Run Codex fixed Issue instruction packet once"):
+        raise SystemExit("Issue execution gate must run before Codex execution")
     if runner_text.index("codex login --with-api-key") > runner_text.index("unset OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY is unset before login, not after login")
     if runner_text.index("unset OPENAI_API_KEY") > runner_text.index("codex exec"):
