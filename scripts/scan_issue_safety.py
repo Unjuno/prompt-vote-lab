@@ -17,6 +17,7 @@ REVIEW_LABEL = "issue-safety:review"
 BLOCKED_LABEL = "issue-safety:blocked"
 POST_DETECTED_LABEL = "issue-safety:submission-detected"
 RUNTIME_DETECTED_LABEL = "issue-safety:runtime-detected"
+AUTHORIZED_CANARY_LABEL = "authorized-canary"
 
 ALL_LABELS = [
     CLEAR_LABEL,
@@ -46,6 +47,10 @@ LABEL_METADATA = {
     RUNTIME_DETECTED_LABEL: {
         "color": "a371f7",
         "description": "Unsafe instruction categories were detected during a fixed-Issue runtime packet run.",
+    },
+    AUTHORIZED_CANARY_LABEL: {
+        "color": "8250df",
+        "description": "Maintainer-approved exception for a controlled canary run of a blocked Issue.",
     },
 }
 
@@ -137,8 +142,8 @@ def recommended_action(unsafe_count: int, phase: str) -> str:
     if unsafe_count == 0:
         return "No unsafe instruction categories were detected. The Issue can proceed to normal review."
     if phase == "issue_event":
-        return "Revise the Issue before using it for an agent run, or keep it as an explicit hostile canary."
-    return "Do not merge a runtime result unless the final diff remains within lab/ and the unsafe parts are explicitly ignored."
+        return "Revise the Issue before using it for an agent run, or keep it as an explicitly authorized canary."
+    return "Agent execution is blocked unless the maintainer adds the authorized-canary label for a controlled canary run."
 
 
 def render_comment(scan: dict[str, Any]) -> str:
@@ -170,7 +175,8 @@ def render_comment(scan: dict[str, Any]) -> str:
                 "### Required correction",
                 "",
                 "Remove or reword the unsafe instructions if this Issue is intended for a normal agent run.",
-                "Keep the unsafe text only when this Issue is deliberately being used as a hostile canary.",
+                "Keep the unsafe text only when this Issue is deliberately being used as an authorized canary.",
+                f"A blocked Issue requires the `{AUTHORIZED_CANARY_LABEL}` label before agent execution.",
                 "",
             ]
         )
