@@ -164,3 +164,58 @@ noscript {
   font-size: 0.86rem;
   line-height: 1.7;
 }
+
+.review-card {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(25, 25, 25, 0.14);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.review-title {
+  margin: 0 0 12px;
+  color: var(--fg);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: 1.05rem;
+}
+
+.review-checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-checklist li {
+  position: relative;
+  padding-left: 26px;
+  margin: 10px 0 0;
+  line-height: 1.55;
+  color: var(--fg);
+  font-weight: 650;
+}
+
+.review-checklist li:first-child {
+  margin-top: 0;
+}
+
+.review-checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #15803d;
+  font-weight: 900;
+}
+
+.review-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(25, 25, 25, 0.25);
+}
+
+.review-link:hover {
+  border-bottom-color: rgba(25, 25, 25, 0.6);
+}
