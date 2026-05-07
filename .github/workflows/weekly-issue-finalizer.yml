@@ -1,0 +1,99 @@
+name: Weekly Issue Finalizer
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: "Week label suffix, for example 2026-W19. Issues must have label week:<week_id>."
+        required: true
+        default: "2026-W19"
+      dry_run:
+        description: "If true, only produce the close plan artifact. If false, comment and close eligible Issues."
+        required: true
+        default: "true"
+      require_public_results_membership:
+        description: "If true, eligible Issues must already appear in data/public-results.json."
+        required: true
+        default: "true"
+      run_record_hint:
+        description: "Run record path or directory to mention in the close comment."
+        required: false
+        default: "runs/"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: weekly-issue-finalizer-${{ inputs.week_id }}
+  cancel-in-progress: false
+
+jobs:
+  weekly-issue-finalizer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch open Issues with week/outcome labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WEEK_ID: ${{ inputs.week_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/weekly-issue-finalizer/comments
+          gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state open \
+            --label "week:${WEEK_ID}" \
+            --limit 200 \
+            --json number,title,url,labels,state \
+            > .tmp/weekly-issue-finalizer/issues.json
+
+      - name: Build finalizer plan
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          REQUIRE_PUBLIC_RESULTS_MEMBERSHIP: ${{ inputs.require_public_results_membership }}
+        run: |
+          set -euo pipefail
+          dry_flag=""
+          if [ "${DRY_RUN}" = "true" ]; then dry_flag="--dry-run"; fi
+          require_flag=""
+          if [ "${REQUIRE_PUBLIC_RESULTS_MEMBERSHIP}" = "true" ]; then require_flag="--require-public-results-membership"; fi
+          python scripts/weekly_issue_finalizer.py \
+            --issues-json .tmp/weekly-issue-finalizer/issues.json \
+            --public-results data/public-results.json \
+            --week-id "${{ inputs.week_id }}" \
+            --out-json .tmp/weekly-issue-finalizer/plan.json \
+            --out-md .tmp/weekly-issue-finalizer/plan.md \
+            --comments-dir .tmp/weekly-issue-finalizer/comments \
+            --run-record-hint "${{ inputs.run_record_hint }}" \
+            $dry_flag \
+            $require_flag
+
+      - name: Upload finalizer plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-issue-finalizer-${{ inputs.week_id }}-${{ github.run_number }}
+          path: .tmp/weekly-issue-finalizer
+          if-no-files-found: error
+
+      - name: Comment and close eligible Issues
+        if: ${{ inputs.dry_run != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' > .tmp/weekly-issue-finalizer/close-commands.sh
+          import json
+          import shlex
+          from pathlib import Path
+          plan = json.loads(Path('.tmp/weekly-issue-finalizer/plan.json').read_text(encoding='utf-8'))
+          for item in plan.get('to_close', []):
+              number = str(item['number'])
+              reason = item['close_reason']
+              comment = f".tmp/weekly-issue-finalizer/comments/{number}.md"
+              print(f"gh issue comment {shlex.quote(number)} --repo \"$GITHUB_REPOSITORY\" --body-file {shlex.quote(comment)}")
+              print(f"gh issue close {shlex.quote(number)} --repo \"$GITHUB_REPOSITORY\" --reason {shlex.quote(reason)}")
+          PY
+          bash .tmp/weekly-issue-finalizer/close-commands.sh
