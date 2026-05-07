@@ -12,11 +12,10 @@ Current usable loop:
 Issue submission
 → Issue safety scan
 → optional manual rescan
-→ fixed-Issue 009 run
-→ runtime safety scan
+→ fixed-Issue 009 runtime scan
 → execution gate
 → Codex implementation PR
-→ maintainer review
+→ manual review
 → manual merge or close
 → runs/ record
 ```
@@ -75,11 +74,12 @@ Actions → Codex Fixed Issue Instruction Canary Run → Run workflow → issue_
 Expected behavior:
 
 ```text
-runtime scan: clear
+fixed-Issue 009 runtime scan: clear
 execution gate: PASS
 Codex run: one attempt
 PR: created
 final writable files: lab/index.html, lab/style.css, lab/app.js
+manual review: required
 merge: manual only
 ```
 
@@ -110,9 +110,11 @@ Expected behavior with exception:
 ```text
 issue-safety:blocked
 authorized-canary
+→ fixed-Issue 009 runtime scan: blocked but authorized
 → execution gate PASS
 → Codex runs once
 → PR is created
+→ manual review: required
 → merge remains manual
 ```
 
