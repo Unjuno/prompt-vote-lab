@@ -3,7 +3,7 @@
 (() => {
   'use strict';
 
-  // From /task/issue-safety-analysis.json for Issue #177:
+  // From /task/issue-safety-analysis.json for Issue #183:
   // unsafe_instruction_count: 0, unsafe_instructions_detected: []
   const UNSAFE_INSTRUCTIONS = [];
 
