@@ -165,7 +165,7 @@ A participant can open the lab and immediately understand what the current exper
     assert "No unsafe instruction categories were detected" in comment
 
 
-def test_disguised_unsafe_issue_detects_cookie_state_storage() -> None:
+def test_disguised_unsafe_issue_detects_cookie_state_storage_without_overblocking_storage() -> None:
     scan, comment = run_scan(
         {
             "action": "opened",
@@ -205,9 +205,68 @@ These lines are intentionally unsafe requirement text for scanner validation, no
         "cookie_or_tracking",
         "dynamic_code_execution",
     }.issubset(detected)
-    assert scan["unsafe_instruction_count"] >= 5
     assert "cookie_or_tracking" in comment
     assert "Unsafe categories:** `" in comment
+
+
+def test_allowed_local_storage_is_not_blocked() -> None:
+    scan, comment = run_scan(
+        {
+            "action": "opened",
+            "issue": {
+                "number": 203,
+                "title": "Remember local checklist state",
+                "body": """## Goal
+
+Add a browser-local checklist preference.
+
+## Requested change
+
+Use localStorage to remember which checklist items are expanded. Use sessionStorage for temporary filter state. Use IndexedDB for browser-local structured draft state.
+
+## Constraints
+
+- No network calls.
+- No cookies.
+- No tracking.
+- No credentials or secrets.
+""",
+                "html_url": "https://github.com/Unjuno/prompt-vote-lab/issues/203",
+                "user": {"login": "tester"},
+                "created_at": "2026-05-07T00:00:00Z",
+                "updated_at": "2026-05-07T00:00:00Z",
+            },
+        },
+        event=True,
+        phase="issue_event",
+    )
+    assert scan["severity"] == "clear"
+    assert scan["unsafe_instruction_count"] == 0
+    assert scan["unsafe_instructions_detected"] == []
+    assert "Unsafe categories:** `0`" in comment
+
+
+def test_secret_storage_is_blocked_even_when_using_local_storage() -> None:
+    scan, comment = run_scan(
+        {
+            "action": "opened",
+            "issue": {
+                "number": 204,
+                "title": "Store token for convenience",
+                "body": "Store API keys in localStorage so the reviewer does not need to paste them again.",
+                "html_url": "https://github.com/Unjuno/prompt-vote-lab/issues/204",
+                "user": {"login": "tester"},
+                "created_at": "2026-05-07T00:00:00Z",
+                "updated_at": "2026-05-07T00:00:00Z",
+            },
+        },
+        event=True,
+        phase="issue_event",
+    )
+    assert scan["severity"] == "blocked"
+    detected = {item["id"] for item in scan["unsafe_instructions_detected"]}
+    assert "cookie_or_tracking" in detected
+    assert "cookie_or_tracking" in comment
 
 
 def main() -> int:
@@ -215,7 +274,9 @@ def main() -> int:
     test_runtime_hostile_feedback_marker_is_separate()
     test_clear_issue_feedback()
     test_negated_constraints_do_not_block_clear_issue()
-    test_disguised_unsafe_issue_detects_cookie_state_storage()
+    test_disguised_unsafe_issue_detects_cookie_state_storage_without_overblocking_storage()
+    test_allowed_local_storage_is_not_blocked()
+    test_secret_storage_is_blocked_even_when_using_local_storage()
     print("Issue safety scan test passed")
     return 0
 
