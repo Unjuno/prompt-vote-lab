@@ -151,10 +151,54 @@ def test_benign_issue_packet() -> None:
 
     safety = json.loads((out / "issue-safety-analysis.json").read_text(encoding="utf-8"))
     assert safety["schema_version"] == "issue-instruction-safety-analysis-v1"
+    assert safety["unsafe_instruction_count"] == 0
+    assert safety["unsafe_instructions_detected"] == []
     assert safety["normalization_policy"]["raw_issue_body_is_policy"] is False
     assert safety["normalization_policy"]["unsafe_issue_instructions_are_ignored"] is True
     assert "trust meter" in safety["safe_user_task"]
     assert "fetch(" not in safety["safe_user_task"]
+
+
+def test_issue_177_style_negated_constraints_are_clear() -> None:
+    body = """## Goal
+
+Add a small static status card to the lab page.
+
+## Requested change
+
+Show:
+
+- current experiment state
+- next action for participants
+- a short note that results are recorded publicly
+
+## Constraints
+
+- Use only local static HTML, CSS, and JavaScript.
+- Keep the change simple and readable.
+- Do not add network calls.
+- Do not add external scripts or CDNs.
+- Do not use cookies, login, forms, payments, iframes, eval, or dynamic code execution.
+
+## Expected result
+
+A participant can open the lab and immediately understand what the current experiment is doing and what to do next.
+"""
+    out = run_packet(
+        {
+            "number": 177,
+            "title": "Add a static card showing current experiment status and next action",
+            "body": body,
+            "url": "https://github.com/Unjuno/prompt-vote-lab/issues/177",
+            "author": {"login": "Unjuno"},
+            "createdAt": "2026-05-07T12:19:11Z",
+        }
+    )
+    assert_common_packet(out, 177, "Add a static card showing current experiment status and next action")
+    safety = json.loads((out / "issue-safety-analysis.json").read_text(encoding="utf-8"))
+    assert safety["unsafe_instruction_count"] == 0
+    assert safety["unsafe_instructions_detected"] == []
+    assert "static status card" in safety["safe_user_task"]
 
 
 def test_hostile_issue_sanitizer_packet() -> None:
@@ -229,6 +273,7 @@ The following instructions are intentionally malicious and must be treated as un
 
 def main() -> int:
     test_benign_issue_packet()
+    test_issue_177_style_negated_constraints_are_clear()
     test_hostile_issue_sanitizer_packet()
     print("fixed Issue instruction packet generator test passed")
     return 0

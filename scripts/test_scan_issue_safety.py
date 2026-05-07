@@ -117,10 +117,59 @@ def test_clear_issue_feedback() -> None:
     assert "No unsafe instruction categories were detected" in comment
 
 
+def test_negated_constraints_do_not_block_clear_issue() -> None:
+    scan, comment = run_scan(
+        {
+            "action": "opened",
+            "issue": {
+                "number": 177,
+                "title": "Add a static card showing current experiment status and next action",
+                "body": """## Goal
+
+Add a small static status card to the lab page.
+
+## Requested change
+
+Show:
+
+- current experiment state
+- next action for participants
+- a short note that results are recorded publicly
+
+## Constraints
+
+- Use only local static HTML, CSS, and JavaScript.
+- Keep the change simple and readable.
+- Do not add network calls.
+- Do not add external scripts or CDNs.
+- Do not use cookies, login, forms, payments, iframes, eval, or dynamic code execution.
+
+## Expected result
+
+A participant can open the lab and immediately understand what the current experiment is doing and what to do next.
+""",
+                "html_url": "https://github.com/Unjuno/prompt-vote-lab/issues/177",
+                "user": {"login": "tester"},
+                "created_at": "2026-05-07T12:19:11Z",
+                "updated_at": "2026-05-07T12:19:11Z",
+            },
+        },
+        event=True,
+        phase="issue_event",
+    )
+    assert scan["severity"] == "clear"
+    assert scan["unsafe_instruction_count"] == 0
+    assert scan["unsafe_instructions_detected"] == []
+    assert scan["labels_to_add"] == ["issue-safety:clear", "issue-safety:submission-detected"]
+    assert "Unsafe categories:** `0`" in comment
+    assert "No unsafe instruction categories were detected" in comment
+
+
 def main() -> int:
     test_issue_event_hostile_feedback()
     test_runtime_hostile_feedback_marker_is_separate()
     test_clear_issue_feedback()
+    test_negated_constraints_do_not_block_clear_issue()
     print("Issue safety scan test passed")
     return 0
 

@@ -111,6 +111,45 @@ META_OR_CONTROL_LINE_PATTERNS = (
     r"\bdiagnostics\b",
 )
 
+NEGATED_OR_CONSTRAINT_PATTERNS = (
+    r"\bdo\s+not\b",
+    r"\bdon't\b",
+    r"\bmust\s+not\b",
+    r"\bshould\s+not\b",
+    r"\bno\s+",
+    r"\bwithout\b",
+    r"\bavoid\b",
+    r"\bprohibit(?:ed|s)?\b",
+    r"\bforbid(?:den|s)?\b",
+    r"\bnot\s+use\b",
+    r"\bdo\s+not\s+use\b",
+    r"\bdo\s+not\s+add\b",
+    r"\bmust\s+not\s+add\b",
+)
+
+FORBIDDEN_AS_REQUIREMENT_PATTERNS = (
+    r"\badd\b",
+    r"\buse\b",
+    r"\binclude\b",
+    r"\bload\b",
+    r"\bcall\b",
+    r"\bconnect\b",
+    r"\bfetch\b",
+    r"\bread\b",
+    r"\bwrite\b",
+    r"\bmodify\b",
+    r"\bcreate\b",
+    r"\benable\b",
+    r"\bexecute\b",
+    r"\brun\b",
+    r"\btrack\b",
+    r"\bignore\b",
+    r"\boverride\b",
+    r"\bbypass\b",
+    r"\bbypassed\b",
+    r"\btreat\b",
+)
+
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -164,31 +203,62 @@ def split_candidate_sentences(line: str) -> list[str]:
     return [part.strip() for part in parts if part.strip()]
 
 
+def line_matches_any(line: str, patterns: tuple[str, ...]) -> bool:
+    return any(re.search(pattern, line, flags=re.IGNORECASE) for pattern in patterns)
+
+
+def is_negated_or_constraint_line(line: str) -> bool:
+    normalized = normalize_line(line)
+    if not normalized:
+        return False
+    return line_matches_any(normalized, NEGATED_OR_CONSTRAINT_PATTERNS)
+
+
+def is_action_requirement_line(line: str) -> bool:
+    normalized = normalize_line(line)
+    return line_matches_any(normalized, FORBIDDEN_AS_REQUIREMENT_PATTERNS)
+
+
+def unsafe_patterns() -> tuple[str, ...]:
+    return tuple(pattern for rule in UNSAFE_INSTRUCTION_RULES for pattern in rule["patterns"])  # type: ignore[index]
+
+
+def iter_detection_units(title: str, body: str) -> list[tuple[str, str]]:
+    units: list[tuple[str, str]] = [("title", title)]
+    for index, raw_line in enumerate(body.splitlines(), start=1):
+        line = normalize_line(raw_line)
+        if not line:
+            continue
+        units.append((f"body:{index}", line))
+    return units
+
+
 def detect_unsafe_instructions(title: str, body: str) -> list[dict[str, object]]:
-    haystack = f"{title}\n{body}"
     findings: list[dict[str, object]] = []
+    units = iter_detection_units(title, body)
     for rule in UNSAFE_INSTRUCTION_RULES:
         matched_patterns: list[str] = []
-        for pattern in rule["patterns"]:  # type: ignore[index]
-            if re.search(str(pattern), haystack, flags=re.IGNORECASE | re.MULTILINE):
-                matched_patterns.append(str(pattern))
+        matched_units: list[str] = []
+        for location, unit in units:
+            if is_negated_or_constraint_line(unit):
+                continue
+            if not is_action_requirement_line(unit):
+                continue
+            for pattern in rule["patterns"]:  # type: ignore[index]
+                pattern_text = str(pattern)
+                if re.search(pattern_text, unit, flags=re.IGNORECASE | re.MULTILINE):
+                    matched_patterns.append(pattern_text)
+                    matched_units.append(location)
         if matched_patterns:
             findings.append(
                 {
                     "id": rule["id"],
                     "label": rule["label"],
-                    "matched_patterns": matched_patterns,
+                    "matched_patterns": sorted(set(matched_patterns)),
+                    "matched_units": sorted(set(matched_units)),
                 }
             )
     return findings
-
-
-def line_matches_any(line: str, patterns: tuple[str, ...]) -> bool:
-    return any(re.search(pattern, line, flags=re.IGNORECASE) for pattern in patterns)
-
-
-def unsafe_patterns() -> tuple[str, ...]:
-    return tuple(pattern for rule in UNSAFE_INSTRUCTION_RULES for pattern in rule["patterns"])  # type: ignore[index]
 
 
 def safe_title_fragment(title: str) -> str:
