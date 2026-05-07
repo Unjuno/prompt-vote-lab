@@ -91,9 +91,10 @@ jobs:
           plan = json.loads(Path('.tmp/weekly-issue-finalizer/plan.json').read_text(encoding='utf-8'))
           for item in plan.get('to_close', []):
               number = str(item['number'])
-              reason = item['close_reason']
+              reason = str(item['close_reason'])
+              gh_reason = reason.replace('_', ' ')
               comment = f".tmp/weekly-issue-finalizer/comments/{number}.md"
               print(f"gh issue comment {shlex.quote(number)} --repo \"$GITHUB_REPOSITORY\" --body-file {shlex.quote(comment)}")
-              print(f"gh issue close {shlex.quote(number)} --repo \"$GITHUB_REPOSITORY\" --reason {shlex.quote(reason)}")
+              print(f"gh issue close {shlex.quote(number)} --repo \"$GITHUB_REPOSITORY\" --reason {shlex.quote(gh_reason)}")
           PY
           bash .tmp/weekly-issue-finalizer/close-commands.sh
