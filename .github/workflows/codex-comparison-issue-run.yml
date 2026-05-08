@@ -27,6 +27,11 @@ on:
         type: number
   issue_comment:
     types: [created]
+  push:
+    branches:
+      - main
+    paths:
+      - "run-requests/comparison/*.json"
 
 permissions:
   contents: write
@@ -34,13 +39,14 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: codex-comparison-${{ github.event_name == 'workflow_dispatch' && inputs.week_id || github.event.issue.number }}-${{ github.event_name == 'workflow_dispatch' && inputs.candidate_rank || github.event.comment.id }}
+  group: codex-comparison-${{ github.run_id }}
   cancel-in-progress: false
 
 jobs:
   codex-comparison-issue-run:
     if: >-
       github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request == null && startsWith(github.event.comment.body, '/run-comparison '))
     runs-on: ubuntu-latest
     env:
@@ -61,6 +67,8 @@ jobs:
           DISPATCH_VOTE_COUNT: ${{ inputs.vote_count }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -69,7 +77,7 @@ jobs:
             issue_number="$DISPATCH_ISSUE_NUMBER"
             candidate_rank="$DISPATCH_CANDIDATE_RANK"
             vote_count="$DISPATCH_VOTE_COUNT"
-          else
+          elif [ "$EVENT_NAME" = "issue_comment" ]; then
             python - <<'PY' > .tmp-comparison-inputs.env
           import os
           import re
@@ -94,11 +102,46 @@ jobs:
             issue_number="$ISSUE_NUMBER"
             candidate_rank="$CANDIDATE_RANK"
             vote_count="$VOTE_COUNT"
+          elif [ "$EVENT_NAME" = "push" ]; then
+            python - <<'PY' > .tmp-comparison-inputs.env
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+          before = os.environ.get('PUSH_BEFORE', '')
+          after = os.environ.get('PUSH_SHA', '')
+          files = subprocess.check_output([
+              'git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'
+          ], text=True).splitlines()
+          files = [name for name in files if name.startswith('run-requests/comparison/') and name.endswith('.json')]
+          if len(files) != 1:
+              raise SystemExit(f'exactly one comparison request JSON is required, got {files}')
+          data = json.loads(Path(files[0]).read_text(encoding='utf-8'))
+          required = ['week_id', 'base_sha', 'issue_number', 'candidate_rank', 'vote_count']
+          missing = [key for key in required if key not in data]
+          if missing:
+              raise SystemExit(f'missing comparison request keys: {missing}')
+          print(f"RUN_WEEK={data['week_id']}")
+          print(f"BASE_SHA={data['base_sha']}")
+          print(f"ISSUE_NUMBER={data['issue_number']}")
+          print(f"CANDIDATE_RANK={data['candidate_rank']}")
+          print(f"VOTE_COUNT={data['vote_count']}")
+          PY
+            . ./.tmp-comparison-inputs.env
+            run_week="$RUN_WEEK"
+            base_sha="$BASE_SHA"
+            issue_number="$ISSUE_NUMBER"
+            candidate_rank="$CANDIDATE_RANK"
+            vote_count="$VOTE_COUNT"
+          else
+            echo "Unsupported event: $EVENT_NAME"
+            exit 1
           fi
 
           case "$candidate_rank" in 1|2|3) ;; *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;; esac
           case "$vote_count" in ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;; *) ;; esac
           case "$run_week" in *[!A-Za-z0-9._-]*|'') echo "week_id contains unsupported characters"; exit 1 ;; *) ;; esac
+          case "$issue_number" in ''|*[!0-9]*) echo "issue_number must be a positive integer"; exit 1 ;; *) ;; esac
           test -n "$base_sha"
 
           output_root="lab/comparisons/${run_week}/rank-${candidate_rank}"
