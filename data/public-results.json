@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-08T16:22:12+00:00",
+  "generated_at": "2026-05-08T16:41:33+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -490,6 +490,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 3,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes the comparison workflow safety check to compare against the fixed comparison base instead of `origin/main`.\n\n## Problem\n\nRequest-file triggered runs add a JSON file under:\n\n```text\nrun-requests/comparison/*.json\n```\n\nIf the comparison job validates against `origin/main`, that request file can appear as a non-lab change and make the safety check fail for the wrong reason.\n\n## Change\n\n```text\nbash scripts/safety-check.sh origin/main HEAD\n```\n\nbecomes:\n\n```text\nbash scripts/safety-check.sh \"$BASE_SHA\" HEAD\n```\n\n## Why this is correct\n\nThe comparison experiment must measure only the generated rank artifact against the fixed comparison base. The request file is a trigger, not part of the generated artifact.\n\n## Tests\n\nUpdates the comparison workflow contract test to require the fixed-base safety check and reject the old `origin/main` comparison.",
+      "body_length": 870,
+      "changed_files": 2,
+      "closed_at": "2026-05-08T16:41:16Z",
+      "comment_count": 0,
+      "created_at": "2026-05-08T16:39:31Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 1,
+          "path": ".github/workflows/codex-comparison-issue-run.yml"
+        },
+        {
+          "additions": 2,
+          "deletions": 1,
+          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "fix-comparison-request-safety-base",
+      "head_ref_oid": "164dc9af75432f044d2a3c9693d8762fd8b75353",
+      "labels": [],
+      "merge_commit_oid": "633f4e1ce019743f4847b003267f8ec7ee1a1ac2",
+      "merged_at": "2026-05-08T16:41:16Z",
+      "merged_by": "Unjuno",
+      "number": 205,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix comparison safety check base",
+      "updated_at": "2026-05-08T16:41:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/205"
+    },
     {
       "additions": 66,
       "author": "Unjuno",
@@ -4416,63 +4453,6 @@
       "title": "Add fixed first canary prompt",
       "updated_at": "2026-05-05T05:07:58Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/97"
-    },
-    {
-      "additions": 20,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nLowers the first implementation-agent canary output cap from 12000 to 5000.\n\n## Changed files\n\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/preflight_implementation_agent.py`\n- `docs/pre-api-freeze.md`\n- `docs/canary-policy.md`\n- `scripts/test_canary_policy_alignment.py`\n- `scripts/pre_api_freeze_audit.py`\n\n## Scope\n\n- Cost and diff-size guardrail only.\n- No `/lab/` changes.\n- No API canary.",
-      "body_length": 414,
-      "changed_files": 6,
-      "closed_at": "2026-05-05T04:17:53Z",
-      "comment_count": 1,
-      "created_at": "2026-05-05T04:14:09Z",
-      "deletions": 8,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": ".github/workflows/weekly-auto-run.yml"
-        },
-        {
-          "additions": 1,
-          "deletions": 1,
-          "path": "docs/canary-policy.md"
-        },
-        {
-          "additions": 1,
-          "deletions": 1,
-          "path": "docs/pre-api-freeze.md"
-        },
-        {
-          "additions": 6,
-          "deletions": 1,
-          "path": "scripts/pre_api_freeze_audit.py"
-        },
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": "scripts/preflight_implementation_agent.py"
-        },
-        {
-          "additions": 8,
-          "deletions": 1,
-          "path": "scripts/test_canary_policy_alignment.py"
-        }
-      ],
-      "head_ref_name": "canary-token-limit",
-      "head_ref_oid": "29e9c0e7fc41b96a5e96052f4e175c7c8398cb0e",
-      "labels": [],
-      "merge_commit_oid": "01f1d57d403e0e5468cb27426ef014a064f15afa",
-      "merged_at": "2026-05-05T04:17:53Z",
-      "merged_by": "Unjuno",
-      "number": 96,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Lower first canary output token limit",
-      "updated_at": "2026-05-05T04:20:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/96"
     }
   ],
   "run_records": [
@@ -4618,7 +4598,91 @@
   },
   "workflow_runs": [
     {
+      "conclusion": "skipped",
+      "created_at": "2026-05-08T16:41:19Z",
+      "database_id": 25567566033,
+      "display_title": "Fix comparison safety check base",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-request-safety-base",
+      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:41:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567566033",
+      "workflow_name": "Terminal State Report"
+    },
+    {
       "conclusion": "",
+      "created_at": "2026-05-08T16:41:19Z",
+      "database_id": 25567565972,
+      "display_title": "Fix comparison safety check base (#205)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "633f4e1ce019743f4847b003267f8ec7ee1a1ac2",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-08T16:41:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567565972",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-08T16:41:18Z",
+      "database_id": 25567565059,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "633f4e1ce019743f4847b003267f8ec7ee1a1ac2",
+      "name": "pages build and deployment",
+      "status": "waiting",
+      "updated_at": "2026-05-08T16:41:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567565059",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T16:39:36Z",
+      "database_id": 25567484270,
+      "display_title": "Fix comparison safety check base",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-request-safety-base",
+      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:39:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567484270",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T16:39:36Z",
+      "database_id": 25567484235,
+      "display_title": "Fix comparison safety check base",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-request-safety-base",
+      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:39:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567484235",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T16:22:16Z",
+      "database_id": 25566686968,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "def8bd86803d82d994d40ea42c3a599750ac4345",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:22:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566686968",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-08T16:21:50Z",
       "database_id": 25566668292,
       "display_title": "Allow comparison run request files (#204)",
@@ -4626,8 +4690,8 @@
       "head_branch": "main",
       "head_sha": "9c35ad643dafd2c019c0310df682f069c2ef70df",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-08T16:22:01Z",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:22:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566668292",
       "workflow_name": "Public Results Export"
     },
@@ -4646,7 +4710,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-08T16:21:49Z",
       "database_id": 25566667573,
       "display_title": "pages build and deployment",
@@ -4654,8 +4718,8 @@
       "head_branch": "main",
       "head_sha": "9c35ad643dafd2c019c0310df682f069c2ef70df",
       "name": "pages build and deployment",
-      "status": "in_progress",
-      "updated_at": "2026-05-08T16:22:05Z",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:22:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566667573",
       "workflow_name": "pages-build-deployment"
     },
@@ -5932,90 +5996,6 @@
       "updated_at": "2026-05-07T16:55:48Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509993535",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T16:54:12Z",
-      "database_id": 25509939332,
-      "display_title": "Record disguised unsafe gate stop and detect cookie state storage",
-      "event": "pull_request",
-      "head_branch": "record-186-gate-stop-and-cookie-scan-fix",
-      "head_sha": "b7935d6645bcd25aa82ba981d2eca2438a904b07",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:54:23Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509939332",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T16:54:12Z",
-      "database_id": 25509939281,
-      "display_title": "Record disguised unsafe gate stop and detect cookie state storage",
-      "event": "pull_request",
-      "head_branch": "record-186-gate-stop-and-cookie-scan-fix",
-      "head_sha": "b7935d6645bcd25aa82ba981d2eca2438a904b07",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:54:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509939281",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-07T16:52:13Z",
-      "database_id": 25509842379,
-      "display_title": "Record disguised unsafe gate stop and detect cookie state storage",
-      "event": "pull_request",
-      "head_branch": "record-186-gate-stop-and-cookie-scan-fix",
-      "head_sha": "5ed7f78a1972b8808b716bb2bb59c34313bb42c1",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:52:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509842379",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T16:52:13Z",
-      "database_id": 25509842339,
-      "display_title": "Record disguised unsafe gate stop and detect cookie state storage",
-      "event": "pull_request",
-      "head_branch": "record-186-gate-stop-and-cookie-scan-fix",
-      "head_sha": "5ed7f78a1972b8808b716bb2bb59c34313bb42c1",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:52:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509842339",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-07T16:41:14Z",
-      "database_id": 25509298353,
-      "display_title": "Codex Fixed Issue Instruction Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "e8d604ac270c28abebd77d0551c7402e5ed7c114",
-      "name": "Codex Fixed Issue Instruction Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:41:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509298353",
-      "workflow_name": "Codex Fixed Issue Instruction Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T16:37:19Z",
-      "database_id": 25509099814,
-      "display_title": "Disguised unsafe test: add a friendly resource checklist",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "e8d604ac270c28abebd77d0551c7402e5ed7c114",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:37:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25509099814",
-      "workflow_name": "Issue Safety Scan"
     }
   ]
 }
