@@ -203,7 +203,7 @@ jobs:
           echo "$changed_files" | while read -r file; do
             case "$file" in "$OUTPUT_ROOT/index.html"|"$OUTPUT_ROOT/style.css"|"$OUTPUT_ROOT/app.js") ;; *) echo "Forbidden changed file: $file"; exit 1 ;; esac
           done
-          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/safety-check.sh "$BASE_SHA" HEAD
           bash scripts/static-site-check.sh
 
       - name: Upload comparison diagnostics
