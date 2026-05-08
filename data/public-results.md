@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T16:41:33+00:00`
+Generated at: `2026-05-08T16:44:01+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -75,9 +75,13 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25567680631 | Public Results Export | push | in_progress |  | Request comparison run for issue 195 rank 2 |
+| 25567680613 | Codex Comparison Issue Run | push | in_progress |  | Request comparison run for issue 195 rank 2 |
+| 25567679424 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25567579202 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25567566033 | Terminal State Report | pull_request | completed | skipped | Fix comparison safety check base |
-| 25567565972 | Public Results Export | push | in_progress |  | Fix comparison safety check base (#205) |
-| 25567565059 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25567565972 | Public Results Export | push | completed | success | Fix comparison safety check base (#205) |
+| 25567565059 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25567484270 | Lab PR Scope Check | pull_request | completed | success | Fix comparison safety check base |
 | 25567484235 | Script Check | pull_request | completed | success | Fix comparison safety check base |
 | 25566686968 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -101,10 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25565024384 | Lab PR Scope Check | pull_request | completed | success | Add lab evidence navigation |
 | 25565024381 | Safety Check | pull_request | completed | success | Add lab evidence navigation |
 | 25564359285 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25564342943 | Terminal State Report | pull_request | completed | skipped | Auto-run public results export after main pushes |
-| 25564342846 | Public Results Export | push | completed | success | Auto-run public results export after main pushes (#201) |
-| 25564341602 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25564232066 | Lab PR Scope Check | pull_request | completed | success | Auto-run public results export after main pushes |
 
 ## Raw JSON
 
