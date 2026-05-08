@@ -71,7 +71,7 @@ def test_dashboard_builder() -> None:
         "runs/2026-W20-rank-2-issue-195.md",
         "participant evidence comprehension",
         "data/public-results.json",
-        "connect-src &#x27;none&#x27;",
+        "connect-src 'none'",
     ]
     missing = [item for item in required if item not in html]
     if missing:
