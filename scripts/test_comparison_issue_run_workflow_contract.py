@@ -9,15 +9,30 @@ WORKFLOW = ROOT / ".github" / "workflows" / "codex-comparison-issue-run.yml"
 REQUIRED_TEXT = [
     "name: Codex Comparison Issue Run",
     "workflow_dispatch:",
+    "issue_comment:",
+    "types: [created]",
     "week_id:",
     "base_sha:",
     "issue_number:",
     "candidate_rank:",
     "vote_count:",
-    "ref: ${{ inputs.base_sha }}",
+    "startsWith(github.event.comment.body, '/run-comparison ')",
+    "Checkout workflow source",
+    "Resolve comparison inputs",
+    "COMMENT_BODY: ${{ github.event.comment.body }}",
+    "COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}",
+    "week|base|rank|votes",
+    "missing comparison command keys",
+    "RUN_WEEK=",
+    "BASE_SHA=",
+    "ISSUE_NUMBER=",
+    "CANDIDATE_RANK=",
+    "VOTE_COUNT=",
+    "OUTPUT_ROOT=",
+    "Checkout fixed comparison base",
+    "git fetch origin \"$BASE_SHA\"",
+    "git checkout \"$BASE_SHA\"",
     "CODEX_MODEL: gpt-5.4-nano",
-    "OUTPUT_ROOT: lab/comparisons/${{ inputs.week_id }}/rank-${{ inputs.candidate_rank }}",
-    "codex-comparison-${{ inputs.week_id }}-rank-${{ inputs.candidate_rank }}",
     "candidate_rank must be 1, 2, or 3",
     "week_id contains unsupported characters",
     "Fetch Issue and run safety gate",
@@ -69,8 +84,10 @@ def main() -> int:
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
 
-    if text.index("Validate comparison inputs") > text.index("Fetch Issue and run safety gate"):
-        raise SystemExit("Inputs must be validated before fetching the Issue")
+    if text.index("Resolve comparison inputs") > text.index("Checkout fixed comparison base"):
+        raise SystemExit("Inputs must be resolved before fixed-base checkout")
+    if text.index("Checkout fixed comparison base") > text.index("Fetch Issue and run safety gate"):
+        raise SystemExit("Fixed base must be checked out before fetching the Issue")
     if text.index("Fetch Issue and run safety gate") > text.index("Run existing fixed-Issue runner"):
         raise SystemExit("Issue safety gate must run before the model runner")
     if text.index("Run existing fixed-Issue runner") > text.index("Move root lab result into comparison output root"):
