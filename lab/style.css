@@ -56,6 +56,32 @@ noscript {
   margin-top: 16px;
 }
 
+.evidence-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+}
+
+.evidence-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(25, 25, 25, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--fg);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.evidence-nav a:hover {
+  border-color: rgba(25, 25, 25, 0.34);
+}
+
 .hostile-card {
   margin: 16px 0 0;
   padding: 14px 16px;
@@ -235,4 +261,17 @@ noscript {
 
 .review-link:hover {
   border-bottom-color: rgba(25, 25, 25, 0.6);
+}
+
+@media (max-width: 520px) {
+  .lab-root {
+    width: min(100% - 20px, 640px);
+    padding: 28px 18px;
+    border-radius: 20px;
+  }
+
+  .evidence-nav a {
+    width: 100%;
+    justify-content: center;
+  }
 }
