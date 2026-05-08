@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T16:44:01+00:00`
+Generated at: `2026-05-08T17:22:13+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
@@ -69,15 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
 | 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
 | 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
-| 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25567680631 | Public Results Export | push | in_progress |  | Request comparison run for issue 195 rank 2 |
-| 25567680613 | Codex Comparison Issue Run | push | in_progress |  | Request comparison run for issue 195 rank 2 |
-| 25567679424 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25569417723 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 195 rank 2 |
+| 25569417718 | Codex Comparison Issue Run | push | in_progress |  | Request comparison run for Issue 195 rank 2 (#206) |
+| 25569417713 | Public Results Export | push | in_progress |  | Request comparison run for Issue 195 rank 2 (#206) |
+| 25569417125 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25569285896 | Lab PR Scope Check | pull_request | completed | success | Request comparison run for Issue 195 rank 2 |
+| 25567694917 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25567680631 | Public Results Export | push | completed | success | Request comparison run for issue 195 rank 2 |
+| 25567680613 | Codex Comparison Issue Run | push | completed | failure | Request comparison run for issue 195 rank 2 |
+| 25567679424 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25567579202 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25567566033 | Terminal State Report | pull_request | completed | skipped | Fix comparison safety check base |
 | 25567565972 | Public Results Export | push | completed | success | Fix comparison safety check base (#205) |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25566077185 | Script Check | pull_request | completed | success | Allow comparison runs from Issue comments |
 | 25565105541 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25565087937 | Public Results Export | push | completed | success | Add lab evidence navigation (#202) |
-| 25565087908 | Terminal State Report | pull_request | completed | skipped | Add lab evidence navigation |
-| 25565087055 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25565024394 | Static Site Check | pull_request | completed | success | Add lab evidence navigation |
-| 25565024384 | Lab PR Scope Check | pull_request | completed | success | Add lab evidence navigation |
-| 25565024381 | Safety Check | pull_request | completed | success | Add lab evidence navigation |
-| 25564359285 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
