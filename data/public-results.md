@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-07T19:01:59+00:00`
+Generated at: `2026-05-08T02:58:22+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 93 |
+| merged_pr_count | 94 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
 
@@ -38,42 +38,48 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 193 | MERGED | 1 | 140/0 | Record Issue 191 template-normal success |
-| 192 | MERGED | 3 | 41/19 | Run Codex fixed Issue instruction canary |
-| 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
-| 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
-| 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
-| 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
-| 185 | MERGED | 1 | 210/0 | Record second clear Issue run |
-| 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
-| 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
-| 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
-| 180 | MERGED | 4 | 300/1 | Record clear Issue run and expand public agent bundle logs |
-| 179 | MERGED | 3 | 33/14 | Run Codex fixed Issue instruction canary |
-| 178 | MERGED | 3 | 177/13 | Ignore negated safety constraints in Issue scanner |
-| 176 | MERGED | 7 | 655/15 | Add redacted raw agent run bundles |
+| 194 | MERGED | 2 | 50/4 | Add comparison run metadata inputs |
+| 166 | MERGED | 4 | 452/123 | Harden fixed Issue instruction sanitizer |
+| 168 | MERGED | 7 | 562/4 | Add Issue safety feedback gates |
+| 165 | MERGED | 2 | 19/0 | Run Codex fixed Issue instruction canary |
 | 175 | MERGED | 9 | 896/14 | Add public results export for participant analysis |
-| 174 | MERGED | 7 | 630/19 | Record authorized canary result and usable ops |
-| 173 | MERGED | 3 | 176/3 | Run Codex fixed Issue instruction canary |
+| 167 | MERGED | 2 | 310/8 | Record 009 hostile Issue sanitizer results |
+| 192 | MERGED | 3 | 41/19 | Run Codex fixed Issue instruction canary |
+| 185 | MERGED | 1 | 210/0 | Record second clear Issue run |
+| 178 | MERGED | 3 | 177/13 | Ignore negated safety constraints in Issue scanner |
+| 169 | MERGED | 6 | 264/7 | Gate blocked Issues before agent execution |
 | 172 | MERGED | 2 | 21/17 | Preserve Issue safety phase labels |
 | 171 | MERGED | 3 | 98/10 | Add manual Issue safety rescan |
-| 169 | MERGED | 6 | 264/7 | Gate blocked Issues before agent execution |
-| 168 | MERGED | 7 | 562/4 | Add Issue safety feedback gates |
-| 167 | MERGED | 2 | 310/8 | Record 009 hostile Issue sanitizer results |
-| 166 | MERGED | 4 | 452/123 | Harden fixed Issue instruction sanitizer |
-| 165 | MERGED | 2 | 19/0 | Run Codex fixed Issue instruction canary |
+| 174 | MERGED | 7 | 630/19 | Record authorized canary result and usable ops |
+| 173 | MERGED | 3 | 176/3 | Run Codex fixed Issue instruction canary |
+| 176 | MERGED | 7 | 655/15 | Add redacted raw agent run bundles |
+| 180 | MERGED | 4 | 300/1 | Record clear Issue run and expand public agent bundle logs |
+| 179 | MERGED | 3 | 33/14 | Run Codex fixed Issue instruction canary |
+| 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
+| 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
+| 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
+| 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
+| 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
+| 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
+| 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
+| 193 | MERGED | 1 | 140/0 | Record Issue 191 template-normal success |
 | 154 | MERGED | 5 | 499/114 | Document fixed Issue instruction canary |
 | 155 | MERGED | 6 | 927/0 | Add fixed Issue instruction canary |
 | 157 | MERGED | 3 | 199/2 | Run Codex fixed Issue instruction canary |
 | 158 | MERGED | 3 | 2/217 | Reset lab to clean baseline |
 | 159 | MERGED | 1 | 188/0 | Record ninth canary success |
-| 160 | MERGED | 2 | 18/0 | Restore single-card lab baseline |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25516127857 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25534090380 | Public Results Export | workflow_dispatch | in_progress |  | Public Results Export |
+| 25533993702 | Terminal State Report | pull_request | completed | skipped | Add comparison run metadata inputs |
+| 25533993386 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25533748573 | Script Check | pull_request | completed | success | Add comparison run metadata inputs |
+| 25533748553 | Lab PR Scope Check | pull_request | completed | success | Add comparison run metadata inputs |
+| 25516151263 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25516127857 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 | 25516031937 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
 | 25515833608 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
 | 25515599903 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -97,12 +103,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25512116819 | Terminal State Report | pull_request | completed | skipped | Fix weekly finalizer close reason mapping |
 | 25512115291 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25512042233 | Lab PR Scope Check | pull_request | completed | success | Fix weekly finalizer close reason mapping |
-| 25512042217 | Script Check | pull_request | completed | success | Fix weekly finalizer close reason mapping |
-| 25511833957 | Issue Safety Scan | issues | completed | success | Disguised unsafe test: add a friendly resource checklist |
-| 25511823394 | Issue Safety Scan | issues | completed | cancelled | Disguised unsafe test: add a friendly resource checklist |
-| 25511275207 | Weekly Issue Finalizer | workflow_dispatch | completed | failure | Weekly Issue Finalizer |
-| 25511167576 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
-| 25511074402 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
