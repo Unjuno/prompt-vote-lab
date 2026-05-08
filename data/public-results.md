@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T15:48:38+00:00`
+Generated at: `2026-05-08T16:10:48+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 | 200 | MERGED | 5 | 645/6 | Add history page generator |
@@ -69,15 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
 | 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
 | 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
-| 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25565087937 | Public Results Export | push | in_progress |  | Add lab evidence navigation (#202) |
+| 25566148294 | Terminal State Report | pull_request | completed | skipped | Allow comparison runs from Issue comments |
+| 25566148156 | Public Results Export | push | in_progress |  | Allow comparison runs from Issue comments (#203) |
+| 25566146873 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25566077187 | Lab PR Scope Check | pull_request | completed | success | Allow comparison runs from Issue comments |
+| 25566077185 | Script Check | pull_request | completed | success | Allow comparison runs from Issue comments |
+| 25565105541 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25565087937 | Public Results Export | push | completed | success | Add lab evidence navigation (#202) |
 | 25565087908 | Terminal State Report | pull_request | completed | skipped | Add lab evidence navigation |
-| 25565087055 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25565087055 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25565024394 | Static Site Check | pull_request | completed | success | Add lab evidence navigation |
 | 25565024384 | Lab PR Scope Check | pull_request | completed | success | Add lab evidence navigation |
 | 25565024381 | Safety Check | pull_request | completed | success | Add lab evidence navigation |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25538944238 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25538929259 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25538875408 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25536753887 | Terminal State Report | pull_request | completed | skipped | Auto-build comparison dashboards during public export |
-| 25536753398 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25536719347 | Script Check | pull_request | completed | success | Auto-build comparison dashboards during public export |
-| 25536719336 | Lab PR Scope Check | pull_request | completed | success | Auto-build comparison dashboards during public export |
-| 25535979610 | Terminal State Report | pull_request | completed | skipped | Add comparison dashboard generator |
-| 25535979048 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 

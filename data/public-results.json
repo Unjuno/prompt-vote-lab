@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-08T15:48:38+00:00",
+  "generated_at": "2026-05-08T16:10:48+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -490,6 +490,43 @@
   ],
   "pull_requests": [
     {
+      "additions": 94,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds an `issue_comment` trigger to `Codex Comparison Issue Run` so comparison runs can be started by commenting on a candidate Issue.\n\n## Why\n\nThis environment cannot invoke `workflow_dispatch` directly, but it can create Issue comments. The comment trigger lets maintainers and connected tools start comparison runs without pressing the GitHub UI button.\n\n## Command\n\nComment on a candidate Issue:\n\n```text\n/run-comparison week=2026-W20 base=<base_sha> rank=2 votes=0\n```\n\nThe Issue number is taken from the commented Issue.\n\n## Preserved behavior\n\n`workflow_dispatch` remains supported.\n\n## Safety boundary\n\nThe job only runs for comments that:\n\n```text\nstart with /run-comparison\nare on Issues, not PRs\n```\n\nThe existing runtime Issue safety scan and execution gate still run before the model runner.\n\n## Output root\n\nComparison output is still constrained to:\n\n```text\nlab/comparisons/<week>/rank-<rank>/index.html\nlab/comparisons/<week>/rank-<rank>/style.css\nlab/comparisons/<week>/rank-<rank>/app.js\n```\n\nRoot `lab/` is restored before PR creation.\n\n## Tests\n\nUpdates `scripts/test_comparison_issue_run_workflow_contract.py` to require the comment trigger and command parser contract.",
+      "body_length": 1202,
+      "changed_files": 2,
+      "closed_at": "2026-05-08T16:10:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-08T16:08:54Z",
+      "deletions": 20,
+      "files": [
+        {
+          "additions": 72,
+          "deletions": 15,
+          "path": ".github/workflows/codex-comparison-issue-run.yml"
+        },
+        {
+          "additions": 22,
+          "deletions": 5,
+          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "comment-trigger-comparison-run",
+      "head_ref_oid": "d735c6690679dce458b67896cf85d38894229822",
+      "labels": [],
+      "merge_commit_oid": "9476e82a99087cb93385afa76db4cddf719c00f1",
+      "merged_at": "2026-05-08T16:10:24Z",
+      "merged_by": "Unjuno",
+      "number": 203,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Allow comparison runs from Issue comments",
+      "updated_at": "2026-05-08T16:10:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/203"
+    },
+    {
       "additions": 47,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -519,7 +556,7 @@
       "merged_at": "2026-05-08T15:48:15Z",
       "merged_by": "Unjuno",
       "number": 202,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Add lab evidence navigation",
@@ -4435,43 +4472,6 @@
       "title": "Add canary policy alignment test",
       "updated_at": "2026-05-05T04:20:04Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/95"
-    },
-    {
-      "additions": 119,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a Lean model for the bounded first-canary policy.\n\n## Changed files\n\n- `formal/Canary.lean`\n- `scripts/pre_api_freeze_audit.py`\n\n## Scope\n\n- Formal specification and audit requirement only.\n- No `/lab/` changes.\n- No workflow changes.\n- No API canary.\n\n## Note\n\nThis models the closed canary policy constraints. It does not prove GitHub Actions runtime behavior.",
-      "body_length": 379,
-      "changed_files": 2,
-      "closed_at": "2026-05-05T03:42:06Z",
-      "comment_count": 1,
-      "created_at": "2026-05-05T03:40:01Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 106,
-          "deletions": 0,
-          "path": "formal/Canary.lean"
-        },
-        {
-          "additions": 13,
-          "deletions": 0,
-          "path": "scripts/pre_api_freeze_audit.py"
-        }
-      ],
-      "head_ref_name": "formal-canary-policy",
-      "head_ref_oid": "73fab8d692856b70d50b6a587accc7a999c8b7b3",
-      "labels": [],
-      "merge_commit_oid": "b5c3da5325225061df18011567245f14465853e1",
-      "merged_at": "2026-05-05T03:42:06Z",
-      "merged_by": "Unjuno",
-      "number": 94,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add formal canary policy model",
-      "updated_at": "2026-05-05T03:44:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/94"
     }
   ],
   "run_records": [
@@ -4617,7 +4617,91 @@
   },
   "workflow_runs": [
     {
+      "conclusion": "skipped",
+      "created_at": "2026-05-08T16:10:29Z",
+      "database_id": 25566148294,
+      "display_title": "Allow comparison runs from Issue comments",
+      "event": "pull_request",
+      "head_branch": "comment-trigger-comparison-run",
+      "head_sha": "d735c6690679dce458b67896cf85d38894229822",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:10:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566148294",
+      "workflow_name": "Terminal State Report"
+    },
+    {
       "conclusion": "",
+      "created_at": "2026-05-08T16:10:29Z",
+      "database_id": 25566148156,
+      "display_title": "Allow comparison runs from Issue comments (#203)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "9476e82a99087cb93385afa76db4cddf719c00f1",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-08T16:10:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566148156",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-08T16:10:27Z",
+      "database_id": 25566146873,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9476e82a99087cb93385afa76db4cddf719c00f1",
+      "name": "pages build and deployment",
+      "status": "queued",
+      "updated_at": "2026-05-08T16:10:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566146873",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T16:08:58Z",
+      "database_id": 25566077187,
+      "display_title": "Allow comparison runs from Issue comments",
+      "event": "pull_request",
+      "head_branch": "comment-trigger-comparison-run",
+      "head_sha": "d735c6690679dce458b67896cf85d38894229822",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:09:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566077187",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T16:08:58Z",
+      "database_id": 25566077185,
+      "display_title": "Allow comparison runs from Issue comments",
+      "event": "pull_request",
+      "head_branch": "comment-trigger-comparison-run",
+      "head_sha": "d735c6690679dce458b67896cf85d38894229822",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-08T16:09:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566077185",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-08T15:48:41Z",
+      "database_id": 25565105541,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8aab8757b3516d12a7443cffd5b32db2d924cd86",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-08T15:49:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25565105541",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-08T15:48:18Z",
       "database_id": 25565087937,
       "display_title": "Add lab evidence navigation (#202)",
@@ -4625,8 +4709,8 @@
       "head_branch": "main",
       "head_sha": "2c313385489e35d1374f6ab7592391fb1859aeac",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-08T15:48:29Z",
+      "status": "completed",
+      "updated_at": "2026-05-08T15:48:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25565087937",
       "workflow_name": "Public Results Export"
     },
@@ -4645,7 +4729,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-08T15:48:17Z",
       "database_id": 25565087055,
       "display_title": "pages build and deployment",
@@ -4653,8 +4737,8 @@
       "head_branch": "main",
       "head_sha": "2c313385489e35d1374f6ab7592391fb1859aeac",
       "name": "pages build and deployment",
-      "status": "queued",
-      "updated_at": "2026-05-08T15:48:35Z",
+      "status": "completed",
+      "updated_at": "2026-05-08T15:48:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25565087055",
       "workflow_name": "pages-build-deployment"
     },
@@ -5931,90 +6015,6 @@
       "updated_at": "2026-05-07T16:03:55Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25507358648",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-07T16:01:31Z",
-      "database_id": 25507247112,
-      "display_title": "Run Codex fixed Issue instruction canary",
-      "event": "pull_request",
-      "head_branch": "codex-fixed-issue-canary-009-6",
-      "head_sha": "59bf26973bd7d8f63bbc4e23b13943f3a58a484a",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:01:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25507247112",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T16:01:29Z",
-      "database_id": 25507245602,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "2c19dfd5026c9b1597076f40e84814975c8982c6",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-07T16:02:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25507245602",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T15:47:38Z",
-      "database_id": 25506512967,
-      "display_title": "Codex Fixed Issue Instruction Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "cb2efeff827965a9eba3abad73ada38ebaf6ec73",
-      "name": "Codex Fixed Issue Instruction Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-07T15:50:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25506512967",
-      "workflow_name": "Codex Fixed Issue Instruction Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T15:41:27Z",
-      "database_id": 25506172404,
-      "display_title": "Issue Safety Scan",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "cb2efeff827965a9eba3abad73ada38ebaf6ec73",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-07T15:42:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25506172404",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T15:39:04Z",
-      "database_id": 25506043422,
-      "display_title": "Add a static checklist showing how participants review a run result",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "cb2efeff827965a9eba3abad73ada38ebaf6ec73",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-07T15:39:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25506043422",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-07T15:13:16Z",
-      "database_id": 25504614838,
-      "display_title": "Weekly Issue Finalizer",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "cb2efeff827965a9eba3abad73ada38ebaf6ec73",
-      "name": "Weekly Issue Finalizer",
-      "status": "completed",
-      "updated_at": "2026-05-07T15:13:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25504614838",
-      "workflow_name": "Weekly Issue Finalizer"
     }
   ]
 }
