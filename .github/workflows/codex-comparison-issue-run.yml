@@ -1,0 +1,172 @@
+name: Codex Comparison Issue Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      week_id:
+        description: "Week id for the comparison output root, for example 2026-W20"
+        required: true
+        default: "2026-W20"
+        type: string
+      base_sha:
+        description: "Fixed base commit SHA for all ranks in the comparison set"
+        required: true
+        type: string
+      issue_number:
+        description: "GitHub Issue number to run"
+        required: true
+        type: number
+      candidate_rank:
+        description: "Candidate rank: 1, 2, or 3"
+        required: true
+        type: number
+      vote_count:
+        description: "Vote count at selection time"
+        required: true
+        default: "0"
+        type: number
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: codex-comparison-${{ inputs.week_id }}-rank-${{ inputs.candidate_rank }}
+  cancel-in-progress: false
+
+jobs:
+  codex-comparison-issue-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.4-nano
+      RUN_WEEK: ${{ inputs.week_id }}
+      BASE_SHA: ${{ inputs.base_sha }}
+      ISSUE_NUMBER: ${{ inputs.issue_number }}
+      CANDIDATE_RANK: ${{ inputs.candidate_rank }}
+      VOTE_COUNT: ${{ inputs.vote_count }}
+      OUTPUT_ROOT: lab/comparisons/${{ inputs.week_id }}/rank-${{ inputs.candidate_rank }}
+    steps:
+      - name: Checkout fixed comparison base
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.base_sha }}
+          fetch-depth: 0
+
+      - name: Validate comparison inputs
+        run: |
+          set -euo pipefail
+          case "$CANDIDATE_RANK" in 1|2|3) ;; *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;; esac
+          case "$VOTE_COUNT" in ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;; *) ;; esac
+          case "$RUN_WEEK" in *[!A-Za-z0-9._-]*|'') echo "week_id contains unsupported characters"; exit 1 ;; *) ;; esac
+          test -n "$BASE_SHA"
+          case "$OUTPUT_ROOT" in lab/comparisons/*/rank-1|lab/comparisons/*/rank-2|lab/comparisons/*/rank-3) ;; *) echo "invalid output root"; exit 1 ;; esac
+
+      - name: Fetch Issue and run safety gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/issue-source .tmp/issue-safety-runtime .tmp/issue-execution-gate .tmp/canary-diagnostics
+          gh issue view "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --json number,title,body,url,author,createdAt,labels > .tmp/issue-source/selected-issue.raw.json
+          cp .tmp/issue-source/selected-issue.raw.json .tmp/canary-diagnostics/source-issue.raw.json
+          python scripts/scan_issue_safety.py --issue-json .tmp/issue-source/selected-issue.raw.json --phase runtime --out-json .tmp/issue-safety-runtime/scan.json --out-md .tmp/issue-safety-runtime/comment.md
+          bash scripts/apply_issue_safety_feedback.sh --scan-json .tmp/issue-safety-runtime/scan.json --comment-md .tmp/issue-safety-runtime/comment.md --issue-number "$ISSUE_NUMBER"
+          python scripts/check_issue_execution_gate.py --scan-json .tmp/issue-safety-runtime/scan.json --issue-json .tmp/issue-source/selected-issue.raw.json --out-json .tmp/issue-execution-gate/gate.json --out-md .tmp/issue-execution-gate/gate.md
+
+      - name: Run existing fixed-Issue runner
+        env:
+          RUNNER_KEY: ${{ secrets.OPENAI_API_KEY_ }}
+          ISSUE_JSON_PATH: .tmp/issue-source/selected-issue.raw.json
+        run: |
+          set -euo pipefail
+          key_name="OPENAI_""API_KEY"
+          export "$key_name=$RUNNER_KEY"
+          bash scripts/run_codex_issue_instruction_canary.sh
+
+      - name: Move root lab result into comparison output root
+        run: |
+          set -euo pipefail
+          mkdir -p "$OUTPUT_ROOT"
+          cp lab/index.html "$OUTPUT_ROOT/index.html"
+          cp lab/style.css "$OUTPUT_ROOT/style.css"
+          cp lab/app.js "$OUTPUT_ROOT/app.js"
+          git checkout -- lab/index.html lab/style.css lab/app.js
+          printf '%s\n' "$BASE_SHA" > .tmp/canary-diagnostics/comparison-base-sha.txt
+          printf '%s\n' "$OUTPUT_ROOT" > .tmp/canary-diagnostics/comparison-output-root.txt
+
+      - name: Validate comparison output scope
+        run: |
+          set -euo pipefail
+          changed_files="$(git diff --name-only --)"
+          test -n "$changed_files"
+          echo "$changed_files" | while read -r file; do
+            case "$file" in "$OUTPUT_ROOT/index.html"|"$OUTPUT_ROOT/style.css"|"$OUTPUT_ROOT/app.js") ;; *) echo "Forbidden changed file: $file"; exit 1 ;; esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+      - name: Upload comparison diagnostics
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-comparison-diagnostics-${{ github.run_number }}
+          path: .tmp
+          if-no-files-found: warn
+
+      - name: Commit comparison output and create PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch="codex-comparison-${RUN_WEEK}-rank-${CANDIDATE_RANK}-${{ github.run_number }}"
+          changed_files="$(git diff --name-only -- | paste -sd ', ' -)"
+          issue_title="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('.tmp/issue-source/selected-issue.raw.json').read_text(encoding='utf-8'))
+          print(data.get('title', '').strip())
+          PY
+          )"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add "$OUTPUT_ROOT/index.html" "$OUTPUT_ROOT/style.css" "$OUTPUT_ROOT/app.js"
+          git commit -m "Run Codex comparison issue rank $CANDIDATE_RANK"
+          git push --set-upstream origin "$branch"
+          cat > .tmp/comparison-pr-body.md <<EOF
+          Implements a Prompt Vote Lab comparison candidate.
+
+          ## Configuration
+
+          - Week: $RUN_WEEK
+          - Issue: #$ISSUE_NUMBER
+          - Issue title: $issue_title
+          - Rank: $CANDIDATE_RANK
+          - Votes: $VOTE_COUNT
+          - Fixed comparison base: \`$BASE_SHA\`
+          - Output root: \`$OUTPUT_ROOT\`
+          - Model: \`$CODEX_MODEL\`
+          - Attempts: \`1\`
+          - Retry policy: \`none\`
+          - Fallback: \`none\`
+          - Auto-merge: disabled
+          - Final writable files: \`$OUTPUT_ROOT/index.html\`, \`$OUTPUT_ROOT/style.css\`, \`$OUTPUT_ROOT/app.js\`
+
+          ## Changed files
+
+          $changed_files
+
+          ## Checks
+
+          - runtime Issue safety scan passed
+          - issue execution gate passed
+          - root lab output copied into rank-specific comparison root
+          - root lab files restored before PR creation
+          - changed-file guard passed
+          - safety-check passed
+          - static-site-check passed
+
+          Manual review is required. Do not auto-merge.
+          EOF
+          gh pr create --title "Run Codex comparison issue rank $CANDIDATE_RANK" --body-file .tmp/comparison-pr-body.md --base main --head "$branch"
