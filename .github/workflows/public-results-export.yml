@@ -8,7 +8,7 @@ on:
         required: false
         default: "100"
       commit_results:
-        description: "Commit data/public-results.json and data/public-results.md to the current branch"
+        description: "Commit data/public-results.json, data/public-results.md, and generated comparison dashboards to the current branch"
         required: false
         default: "true"
   schedule:
@@ -135,6 +135,43 @@ jobs:
             --out-json data/public-results.json \
             --out-md data/public-results.md
 
+      - name: Build comparison dashboards
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          data = json.loads(Path('data/public-results.json').read_text(encoding='utf-8'))
+          weeks = sorted({
+              label.split(':', 1)[1]
+              for issue in data.get('issues', [])
+              for label in issue.get('labels', [])
+              if isinstance(label, str) and label.startswith('week:')
+          })
+          if not weeks:
+              print('No week labels found; skipping comparison dashboard generation.')
+          for week_id in weeks:
+              out_dir = Path('lab') / 'comparisons' / week_id
+              print(f'Building comparison dashboard for {week_id} -> {out_dir}')
+              subprocess.run(
+                  [
+                      sys.executable,
+                      'scripts/build_comparison_dashboard.py',
+                      '--public-results',
+                      'data/public-results.json',
+                      '--week-id',
+                      week_id,
+                      '--out-dir',
+                      str(out_dir),
+                  ],
+                  check=True,
+              )
+          PY
+
       - name: Upload public results artifact
         uses: actions/upload-artifact@v4
         with:
@@ -142,6 +179,7 @@ jobs:
           path: |
             data/public-results.json
             data/public-results.md
+            lab/comparisons/**
             .tmp/public-results
           if-no-files-found: error
 
@@ -157,9 +195,9 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/public-results.json data/public-results.md
+          git add data/public-results.json data/public-results.md lab/comparisons
           if git diff --cached --quiet; then
-            echo "No public results changes to commit."
+            echo "No public results or comparison dashboard changes to commit."
             exit 0
           fi
           git commit -m "Update public results export"
