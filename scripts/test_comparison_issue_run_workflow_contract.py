@@ -11,18 +11,34 @@ REQUIRED_TEXT = [
     "workflow_dispatch:",
     "issue_comment:",
     "types: [created]",
+    "push:",
+    "branches:",
+    "- main",
+    "paths:",
+    "run-requests/comparison/*.json",
     "week_id:",
     "base_sha:",
     "issue_number:",
     "candidate_rank:",
     "vote_count:",
     "startsWith(github.event.comment.body, '/run-comparison ')",
+    "github.event_name == 'push'",
     "Checkout workflow source",
     "Resolve comparison inputs",
     "COMMENT_BODY: ${{ github.event.comment.body }}",
     "COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}",
+    "PUSH_BEFORE: ${{ github.event.before }}",
+    "PUSH_SHA: ${{ github.sha }}",
     "week|base|rank|votes",
     "missing comparison command keys",
+    "git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'",
+    "exactly one comparison request JSON is required",
+    "missing comparison request keys",
+    "week_id",
+    "base_sha",
+    "issue_number",
+    "candidate_rank",
+    "vote_count",
     "RUN_WEEK=",
     "BASE_SHA=",
     "ISSUE_NUMBER=",
@@ -34,6 +50,7 @@ REQUIRED_TEXT = [
     "git checkout \"$BASE_SHA\"",
     "CODEX_MODEL: gpt-5.4-nano",
     "candidate_rank must be 1, 2, or 3",
+    "issue_number must be a positive integer",
     "week_id contains unsupported characters",
     "Fetch Issue and run safety gate",
     "gh issue view \"$ISSUE_NUMBER\"",
@@ -84,6 +101,10 @@ def main() -> int:
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
 
+    if text.index("workflow_dispatch:") > text.index("issue_comment:"):
+        raise SystemExit("workflow_dispatch should appear before issue_comment")
+    if text.index("issue_comment:") > text.index("push:"):
+        raise SystemExit("issue_comment should appear before request-file push trigger")
     if text.index("Resolve comparison inputs") > text.index("Checkout fixed comparison base"):
         raise SystemExit("Inputs must be resolved before fixed-base checkout")
     if text.index("Checkout fixed comparison base") > text.index("Fetch Issue and run safety gate"):
