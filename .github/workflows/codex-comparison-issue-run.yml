@@ -25,6 +25,8 @@ on:
         required: true
         default: "0"
         type: number
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
@@ -32,35 +34,90 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: codex-comparison-${{ inputs.week_id }}-rank-${{ inputs.candidate_rank }}
+  group: codex-comparison-${{ github.event_name == 'workflow_dispatch' && inputs.week_id || github.event.issue.number }}-${{ github.event_name == 'workflow_dispatch' && inputs.candidate_rank || github.event.comment.id }}
   cancel-in-progress: false
 
 jobs:
   codex-comparison-issue-run:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issue_comment' && github.event.issue.pull_request == null && startsWith(github.event.comment.body, '/run-comparison '))
     runs-on: ubuntu-latest
     env:
       CODEX_MODEL: gpt-5.4-nano
-      RUN_WEEK: ${{ inputs.week_id }}
-      BASE_SHA: ${{ inputs.base_sha }}
-      ISSUE_NUMBER: ${{ inputs.issue_number }}
-      CANDIDATE_RANK: ${{ inputs.candidate_rank }}
-      VOTE_COUNT: ${{ inputs.vote_count }}
-      OUTPUT_ROOT: lab/comparisons/${{ inputs.week_id }}/rank-${{ inputs.candidate_rank }}
     steps:
-      - name: Checkout fixed comparison base
+      - name: Checkout workflow source
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.base_sha }}
           fetch-depth: 0
 
-      - name: Validate comparison inputs
+      - name: Resolve comparison inputs
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_WEEK_ID: ${{ inputs.week_id }}
+          DISPATCH_BASE_SHA: ${{ inputs.base_sha }}
+          DISPATCH_ISSUE_NUMBER: ${{ inputs.issue_number }}
+          DISPATCH_CANDIDATE_RANK: ${{ inputs.candidate_rank }}
+          DISPATCH_VOTE_COUNT: ${{ inputs.vote_count }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           set -euo pipefail
-          case "$CANDIDATE_RANK" in 1|2|3) ;; *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;; esac
-          case "$VOTE_COUNT" in ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;; *) ;; esac
-          case "$RUN_WEEK" in *[!A-Za-z0-9._-]*|'') echo "week_id contains unsupported characters"; exit 1 ;; *) ;; esac
-          test -n "$BASE_SHA"
-          case "$OUTPUT_ROOT" in lab/comparisons/*/rank-1|lab/comparisons/*/rank-2|lab/comparisons/*/rank-3) ;; *) echo "invalid output root"; exit 1 ;; esac
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            run_week="$DISPATCH_WEEK_ID"
+            base_sha="$DISPATCH_BASE_SHA"
+            issue_number="$DISPATCH_ISSUE_NUMBER"
+            candidate_rank="$DISPATCH_CANDIDATE_RANK"
+            vote_count="$DISPATCH_VOTE_COUNT"
+          else
+            python - <<'PY' > .tmp-comparison-inputs.env
+          import os
+          import re
+          body = os.environ.get('COMMENT_BODY', '').strip()
+          issue_number = os.environ.get('COMMENT_ISSUE_NUMBER', '').strip()
+          if not body.startswith('/run-comparison '):
+              raise SystemExit('comment is not a comparison run command')
+          pairs = dict(re.findall(r'(week|base|rank|votes)=([^\s]+)', body))
+          required = ['week', 'base', 'rank', 'votes']
+          missing = [key for key in required if key not in pairs]
+          if missing:
+              raise SystemExit(f'missing comparison command keys: {missing}')
+          print(f"RUN_WEEK={pairs['week']}")
+          print(f"BASE_SHA={pairs['base']}")
+          print(f"ISSUE_NUMBER={issue_number}")
+          print(f"CANDIDATE_RANK={pairs['rank']}")
+          print(f"VOTE_COUNT={pairs['votes']}")
+          PY
+            . ./.tmp-comparison-inputs.env
+            run_week="$RUN_WEEK"
+            base_sha="$BASE_SHA"
+            issue_number="$ISSUE_NUMBER"
+            candidate_rank="$CANDIDATE_RANK"
+            vote_count="$VOTE_COUNT"
+          fi
+
+          case "$candidate_rank" in 1|2|3) ;; *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;; esac
+          case "$vote_count" in ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;; *) ;; esac
+          case "$run_week" in *[!A-Za-z0-9._-]*|'') echo "week_id contains unsupported characters"; exit 1 ;; *) ;; esac
+          test -n "$base_sha"
+
+          output_root="lab/comparisons/${run_week}/rank-${candidate_rank}"
+          case "$output_root" in lab/comparisons/*/rank-1|lab/comparisons/*/rank-2|lab/comparisons/*/rank-3) ;; *) echo "invalid output root"; exit 1 ;; esac
+
+          {
+            echo "RUN_WEEK=$run_week"
+            echo "BASE_SHA=$base_sha"
+            echo "ISSUE_NUMBER=$issue_number"
+            echo "CANDIDATE_RANK=$candidate_rank"
+            echo "VOTE_COUNT=$vote_count"
+            echo "OUTPUT_ROOT=$output_root"
+          } >> "$GITHUB_ENV"
+
+      - name: Checkout fixed comparison base
+        run: |
+          set -euo pipefail
+          git fetch origin "$BASE_SHA"
+          git checkout "$BASE_SHA"
 
       - name: Fetch Issue and run safety gate
         env:
