@@ -66,7 +66,7 @@ REQUIRED_TEXT = [
     "git checkout -- lab/index.html lab/style.css lab/app.js",
     "Validate comparison output scope",
     "\"$OUTPUT_ROOT/index.html\"|\"$OUTPUT_ROOT/style.css\"|\"$OUTPUT_ROOT/app.js\"",
-    "bash scripts/safety-check.sh origin/main HEAD",
+    "bash scripts/safety-check.sh \"$BASE_SHA\" HEAD",
     "bash scripts/static-site-check.sh",
     "Upload comparison diagnostics",
     "Commit comparison output and create PR",
@@ -81,6 +81,7 @@ FORBIDDEN_TEXT = [
     "gh pr merge",
     "enable_auto_merge",
     "schedule:",
+    "bash scripts/safety-check.sh origin/main HEAD",
 ]
 
 
