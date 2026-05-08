@@ -32,6 +32,11 @@ on:
       - main
     paths:
       - "run-requests/comparison/*.json"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "run-requests/comparison/*.json"
 
 permissions:
   contents: write
@@ -47,6 +52,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request == null && startsWith(github.event.comment.body, '/run-comparison '))
     runs-on: ubuntu-latest
     env:
@@ -69,6 +75,8 @@ jobs:
           COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
           PUSH_BEFORE: ${{ github.event.before }}
           PUSH_SHA: ${{ github.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
@@ -112,6 +120,37 @@ jobs:
           after = os.environ.get('PUSH_SHA', '')
           files = subprocess.check_output([
               'git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'
+          ], text=True).splitlines()
+          files = [name for name in files if name.startswith('run-requests/comparison/') and name.endswith('.json')]
+          if len(files) != 1:
+              raise SystemExit(f'exactly one comparison request JSON is required, got {files}')
+          data = json.loads(Path(files[0]).read_text(encoding='utf-8'))
+          required = ['week_id', 'base_sha', 'issue_number', 'candidate_rank', 'vote_count']
+          missing = [key for key in required if key not in data]
+          if missing:
+              raise SystemExit(f'missing comparison request keys: {missing}')
+          print(f"RUN_WEEK={data['week_id']}")
+          print(f"BASE_SHA={data['base_sha']}")
+          print(f"ISSUE_NUMBER={data['issue_number']}")
+          print(f"CANDIDATE_RANK={data['candidate_rank']}")
+          print(f"VOTE_COUNT={data['vote_count']}")
+          PY
+            . ./.tmp-comparison-inputs.env
+            run_week="$RUN_WEEK"
+            base_sha="$BASE_SHA"
+            issue_number="$ISSUE_NUMBER"
+            candidate_rank="$CANDIDATE_RANK"
+            vote_count="$VOTE_COUNT"
+          elif [ "$EVENT_NAME" = "pull_request" ]; then
+            python - <<'PY' > .tmp-comparison-inputs.env
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+          base = os.environ.get('PR_BASE_SHA', '')
+          head = os.environ.get('PR_HEAD_SHA', '')
+          files = subprocess.check_output([
+              'git', 'diff', '--name-only', base, head, '--', 'run-requests/comparison/*.json'
           ], text=True).splitlines()
           files = [name for name in files if name.startswith('run-requests/comparison/') and name.endswith('.json')]
           if len(files) != 1:
