@@ -7,6 +7,16 @@ on:
         description: "Fixed GitHub Issue number to convert into a task instruction packet"
         required: true
         type: number
+      candidate_rank:
+        description: "Candidate rank within the comparison set. Use 1 for normal weekly winner, 2/3 for comparison runs."
+        required: true
+        default: "1"
+        type: number
+      vote_count:
+        description: "Vote count recorded for this candidate at selection time."
+        required: true
+        default: "0"
+        type: number
 
 permissions:
   contents: write
@@ -24,11 +34,25 @@ jobs:
       CODEX_MODEL: gpt-5.4-nano
       RUN_WEEK: first-canary-009
       ISSUE_NUMBER: ${{ inputs.issue_number }}
+      CANDIDATE_RANK: ${{ inputs.candidate_rank }}
+      VOTE_COUNT: ${{ inputs.vote_count }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Validate dispatch inputs
+        run: |
+          set -euo pipefail
+          case "$CANDIDATE_RANK" in
+            1|2|3) ;;
+            *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;;
+          esac
+          case "$VOTE_COUNT" in
+            ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;;
+            *) ;;
+          esac
 
       - name: Capture diagnostics baseline
         run: |
@@ -191,9 +215,9 @@ jobs:
             --workflow "Codex Fixed Issue Instruction Canary Run" \
             --run-number "${{ github.run_number }}" \
             --week "$RUN_WEEK" \
-            --candidate-rank 1 \
+            --candidate-rank "$CANDIDATE_RANK" \
             --issue-number "$ISSUE_NUMBER" \
-            --vote-count 0 \
+            --vote-count "$VOTE_COUNT" \
             --base-sha "$base_sha" \
             --branch "codex-fixed-issue-canary-009-${{ github.run_number }}" \
             --attempt-count 1 \
@@ -243,8 +267,8 @@ jobs:
           - Week: $RUN_WEEK
           - Issue: #$ISSUE_NUMBER
           - Issue title: $issue_title
-          - Rank: 1
-          - Votes: 0
+          - Rank: $CANDIDATE_RANK
+          - Votes: $VOTE_COUNT
           - Inherited lab base: \`$base_sha\`
           - Provider: \`openai-codex\`
           - Runner: \`codex-cli-fixed-issue-instruction-packet-container\`
