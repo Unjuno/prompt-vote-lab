@@ -21,6 +21,11 @@ REQUIRED_WORKFLOW_TEXT = [
     "gh run list",
     "gh label list",
     "python scripts/build_public_results_export.py",
+    "Build comparison dashboards",
+    "scripts/build_comparison_dashboard.py",
+    "lab/comparisons",
+    "lab/comparisons/**",
+    "git add data/public-results.json data/public-results.md lab/comparisons",
     "data/public-results.json",
     "data/public-results.md",
     "public-results-export-${{ github.run_number }}",
@@ -32,6 +37,7 @@ FORBIDDEN_WORKFLOW_TEXT = [
     "run_codex_issue_instruction_canary",
     "codex exec",
     "gh pr merge",
+    "raw diagnostics",
 ]
 
 REQUIRED_DOC_TEXT = [
@@ -75,6 +81,13 @@ def main() -> int:
     require_all(doc_text, REQUIRED_DOC_TEXT, "public results doc")
     require_all(data_json_text, REQUIRED_DATA_TEXT, "public results json")
     require_all(data_md_text, ["raw results surface", "See `public-results.json`"], "public results markdown")
+
+    if workflow_text.index("Build public results export") > workflow_text.index("Build comparison dashboards"):
+        raise SystemExit("Comparison dashboards must be built after public results export")
+    if workflow_text.index("Build comparison dashboards") > workflow_text.index("Upload public results artifact"):
+        raise SystemExit("Comparison dashboards must be built before artifact upload")
+    if workflow_text.index("Upload public results artifact") > workflow_text.index("Commit public results snapshot"):
+        raise SystemExit("Artifacts should be uploaded before the commit step")
 
     print("public results export workflow contract test passed")
     return 0
