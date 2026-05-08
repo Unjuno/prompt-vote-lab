@@ -12,6 +12,14 @@ DATA_MD = ROOT / "data" / "public-results.md"
 REQUIRED_WORKFLOW_TEXT = [
     "name: Public Results Export",
     "workflow_dispatch:",
+    "push:",
+    "branches:",
+    "- main",
+    "paths-ignore:",
+    "data/public-results.json",
+    "data/public-results.md",
+    "lab/comparisons/**",
+    "lab/history/**",
     "schedule:",
     "contents: write",
     "issues: read",
@@ -27,11 +35,7 @@ REQUIRED_WORKFLOW_TEXT = [
     "scripts/build_history_page.py",
     "--out-dir lab/history",
     "lab/comparisons",
-    "lab/comparisons/**",
-    "lab/history/**",
     "git add data/public-results.json data/public-results.md lab/comparisons lab/history",
-    "data/public-results.json",
-    "data/public-results.md",
     "public-results-export-${{ github.run_number }}",
 ]
 
@@ -86,6 +90,10 @@ def main() -> int:
     require_all(data_json_text, REQUIRED_DATA_TEXT, "public results json")
     require_all(data_md_text, ["raw results surface", "See `public-results.json`"], "public results markdown")
 
+    if workflow_text.index("workflow_dispatch:") > workflow_text.index("push:"):
+        raise SystemExit("workflow_dispatch should remain before push trigger for readability")
+    if workflow_text.index("push:") > workflow_text.index("schedule:"):
+        raise SystemExit("push trigger should appear before schedule trigger")
     if workflow_text.index("Build public results export") > workflow_text.index("Build comparison dashboards"):
         raise SystemExit("Comparison dashboards must be built after public results export")
     if workflow_text.index("Build comparison dashboards") > workflow_text.index("Build history page"):

@@ -11,6 +11,14 @@ on:
         description: "Commit public results, generated comparison dashboards, and generated history page to the current branch"
         required: false
         default: "true"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "data/public-results.json"
+      - "data/public-results.md"
+      - "lab/comparisons/**"
+      - "lab/history/**"
   schedule:
     - cron: "17 3 * * *"
 
