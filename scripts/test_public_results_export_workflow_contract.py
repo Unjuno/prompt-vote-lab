@@ -23,9 +23,13 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/build_public_results_export.py",
     "Build comparison dashboards",
     "scripts/build_comparison_dashboard.py",
+    "Build history page",
+    "scripts/build_history_page.py",
+    "--out-dir lab/history",
     "lab/comparisons",
     "lab/comparisons/**",
-    "git add data/public-results.json data/public-results.md lab/comparisons",
+    "lab/history/**",
+    "git add data/public-results.json data/public-results.md lab/comparisons lab/history",
     "data/public-results.json",
     "data/public-results.md",
     "public-results-export-${{ github.run_number }}",
@@ -84,8 +88,10 @@ def main() -> int:
 
     if workflow_text.index("Build public results export") > workflow_text.index("Build comparison dashboards"):
         raise SystemExit("Comparison dashboards must be built after public results export")
-    if workflow_text.index("Build comparison dashboards") > workflow_text.index("Upload public results artifact"):
-        raise SystemExit("Comparison dashboards must be built before artifact upload")
+    if workflow_text.index("Build comparison dashboards") > workflow_text.index("Build history page"):
+        raise SystemExit("History page must be built after comparison dashboards")
+    if workflow_text.index("Build history page") > workflow_text.index("Upload public results artifact"):
+        raise SystemExit("History page must be built before artifact upload")
     if workflow_text.index("Upload public results artifact") > workflow_text.index("Commit public results snapshot"):
         raise SystemExit("Artifacts should be uploaded before the commit step")
 
