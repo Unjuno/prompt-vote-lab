@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T16:10:48+00:00`
+Generated at: `2026-05-08T16:22:12+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -23,8 +23,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 195 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 196 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
-| 195 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 191 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
 | 186 | CLOSED | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
@@ -69,15 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
 | 187 | MERGED | 4 | 255/1 | Record disguised unsafe gate stop and detect cookie state storage |
 | 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
-| 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25566668292 | Public Results Export | push | in_progress |  | Allow comparison run request files (#204) |
+| 25566668180 | Terminal State Report | pull_request | completed | skipped | Allow comparison run request files |
+| 25566667573 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25566523718 | Script Check | pull_request | completed | success | Allow comparison run request files |
+| 25566523702 | Lab PR Scope Check | pull_request | completed | success | Allow comparison run request files |
+| 25566205381 | Codex Comparison Issue Run | issue_comment | completed | failure | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
+| 25566165626 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25566148294 | Terminal State Report | pull_request | completed | skipped | Allow comparison runs from Issue comments |
-| 25566148156 | Public Results Export | push | in_progress |  | Allow comparison runs from Issue comments (#203) |
-| 25566146873 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25566148156 | Public Results Export | push | completed | success | Allow comparison runs from Issue comments (#203) |
+| 25566146873 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25566077187 | Lab PR Scope Check | pull_request | completed | success | Allow comparison runs from Issue comments |
 | 25566077185 | Script Check | pull_request | completed | success | Allow comparison runs from Issue comments |
 | 25565105541 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25561595448 | Static Site Check | pull_request | completed | success | Add history page generator |
 | 25561595442 | Script Check | pull_request | completed | success | Add history page generator |
 | 25561595421 | Lab PR Scope Check | pull_request | completed | success | Add history page generator |
-| 25559757014 | Terminal State Report | pull_request | completed | skipped | Add comparison Issue run workflow |
-| 25559755711 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25559574858 | Lab PR Scope Check | pull_request | completed | success | Add comparison Issue run workflow |
-| 25559574840 | Script Check | pull_request | completed | success | Add comparison Issue run workflow |
-| 25538944238 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25538929259 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25538875408 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
