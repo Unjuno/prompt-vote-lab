@@ -35,6 +35,14 @@ REQUIRED_RUNNER_TEXT = [
 REQUIRED_WORKFLOW_TEXT = [
     "name: Codex Fixed Issue Instruction Canary Run",
     "issue_number:",
+    "candidate_rank:",
+    "vote_count:",
+    "Candidate rank within the comparison set. Use 1 for normal weekly winner, 2/3 for comparison runs.",
+    "Vote count recorded for this candidate at selection time.",
+    "CANDIDATE_RANK: ${{ inputs.candidate_rank }}",
+    "VOTE_COUNT: ${{ inputs.vote_count }}",
+    "candidate_rank must be 1, 2, or 3",
+    "vote_count must be a non-negative integer",
     "issues: write",
     "CODEX_MODEL: gpt-5.4-nano",
     "RUN_WEEK: first-canary-009",
@@ -62,6 +70,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "codex-fixed-issue-instruction-canary-diagnostics-",
     "codex-fixed-issue-instruction-canary-public-log-",
     "codex-fixed-issue-runtime-safety-scan-",
+    "--candidate-rank \"$CANDIDATE_RANK\"",
+    "--vote-count \"$VOTE_COUNT\"",
+    "- Rank: $CANDIDATE_RANK",
+    "- Votes: $VOTE_COUNT",
     "--retry-policy none",
     "--fallback-policy none",
     "--auto-merge-policy disabled",
@@ -71,6 +83,13 @@ FORBIDDEN_RUNNER_TEXT = [
     "-v \"$task:/task:rw\"",
     "cat " + "$" + "OPENAI_API_KEY",
     "echo " + "$" + "OPENAI_API_KEY",
+]
+
+FORBIDDEN_WORKFLOW_TEXT = [
+    "--candidate-rank 1",
+    "--vote-count 0",
+    "- Rank: 1",
+    "- Votes: 0",
 ]
 
 
@@ -93,7 +112,10 @@ def main() -> int:
     require_all(runner_text, REQUIRED_RUNNER_TEXT, "runner")
     reject_all(runner_text, FORBIDDEN_RUNNER_TEXT, "runner")
     require_all(workflow_text, REQUIRED_WORKFLOW_TEXT, "workflow")
+    reject_all(workflow_text, FORBIDDEN_WORKFLOW_TEXT, "workflow")
 
+    if workflow_text.index("Validate dispatch inputs") > workflow_text.index("Capture diagnostics baseline"):
+        raise SystemExit("Dispatch inputs must be validated before diagnostics baseline")
     if workflow_text.index("Check Issue execution gate") > workflow_text.index("Run Codex fixed Issue instruction packet once"):
         raise SystemExit("Issue execution gate must run before Codex execution")
     if workflow_text.index("Collect diagnostics artifact") > workflow_text.index("Build redacted public agent run bundle"):
