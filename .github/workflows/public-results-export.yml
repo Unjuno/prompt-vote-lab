@@ -8,7 +8,7 @@ on:
         required: false
         default: "100"
       commit_results:
-        description: "Commit data/public-results.json, data/public-results.md, and generated comparison dashboards to the current branch"
+        description: "Commit public results, generated comparison dashboards, and generated history page to the current branch"
         required: false
         default: "true"
   schedule:
@@ -172,6 +172,12 @@ jobs:
               )
           PY
 
+      - name: Build history page
+        run: |
+          python scripts/build_history_page.py \
+            --public-results data/public-results.json \
+            --out-dir lab/history
+
       - name: Upload public results artifact
         uses: actions/upload-artifact@v4
         with:
@@ -180,6 +186,7 @@ jobs:
             data/public-results.json
             data/public-results.md
             lab/comparisons/**
+            lab/history/**
             .tmp/public-results
           if-no-files-found: error
 
@@ -195,9 +202,9 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/public-results.json data/public-results.md lab/comparisons
+          git add data/public-results.json data/public-results.md lab/comparisons lab/history
           if git diff --cached --quiet; then
-            echo "No public results or comparison dashboard changes to commit."
+            echo "No public results, comparison dashboard, or history changes to commit."
             exit 0
           fi
           git commit -m "Update public results export"
