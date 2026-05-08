@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T05:37:19+00:00`
+Generated at: `2026-05-08T15:33:16+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 96 |
+| merged_pr_count | 97 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
 
@@ -40,8 +40,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 198 | MERGED | 2 | 54/3 | Auto-build comparison dashboards during public export |
+| 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
+| 200 | MERGED | 5 | 645/6 | Add history page generator |
 | 197 | MERGED | 4 | 529/0 | Add comparison dashboard generator |
+| 198 | MERGED | 2 | 54/3 | Auto-build comparison dashboards during public export |
+| 199 | MERGED | 2 | 260/0 | Add comparison Issue run workflow |
 | 194 | MERGED | 2 | 50/4 | Add comparison run metadata inputs |
 | 166 | MERGED | 4 | 452/123 | Harden fixed Issue instruction sanitizer |
 | 168 | MERGED | 7 | 562/4 | Add Issue safety feedback gates |
@@ -67,15 +70,27 @@ This file is a raw results surface for participants. It does not score prompts o
 | 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
 | 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
 | 193 | MERGED | 1 | 140/0 | Record Issue 191 template-normal success |
-| 154 | MERGED | 5 | 499/114 | Document fixed Issue instruction canary |
-| 155 | MERGED | 6 | 927/0 | Add fixed Issue instruction canary |
-| 157 | MERGED | 3 | 199/2 | Run Codex fixed Issue instruction canary |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25538929259 | Public Results Export | schedule | in_progress |  | Public Results Export |
+| 25564342943 | Terminal State Report | pull_request | completed | skipped | Auto-run public results export after main pushes |
+| 25564342846 | Public Results Export | push | in_progress |  | Auto-run public results export after main pushes (#201) |
+| 25564341602 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25564232066 | Lab PR Scope Check | pull_request | completed | success | Auto-run public results export after main pushes |
+| 25564232042 | Script Check | pull_request | completed | success | Auto-run public results export after main pushes |
+| 25563762273 | Terminal State Report | pull_request | completed | skipped | Add history page generator |
+| 25563761387 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25561595448 | Static Site Check | pull_request | completed | success | Add history page generator |
+| 25561595442 | Script Check | pull_request | completed | success | Add history page generator |
+| 25561595421 | Lab PR Scope Check | pull_request | completed | success | Add history page generator |
+| 25559757014 | Terminal State Report | pull_request | completed | skipped | Add comparison Issue run workflow |
+| 25559755711 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25559574858 | Lab PR Scope Check | pull_request | completed | success | Add comparison Issue run workflow |
+| 25559574840 | Script Check | pull_request | completed | success | Add comparison Issue run workflow |
+| 25538944238 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25538929259 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25538875408 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25536753887 | Terminal State Report | pull_request | completed | skipped | Auto-build comparison dashboards during public export |
 | 25536753398 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -90,21 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25534446917 | Issue Safety Scan | issues | completed | success | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 25534099021 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25534090380 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25533993702 | Terminal State Report | pull_request | completed | skipped | Add comparison run metadata inputs |
-| 25533993386 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25533748573 | Script Check | pull_request | completed | success | Add comparison run metadata inputs |
-| 25533748553 | Lab PR Scope Check | pull_request | completed | success | Add comparison run metadata inputs |
-| 25516151263 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25516127857 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25516031937 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
-| 25515833608 | Weekly Issue Finalizer | workflow_dispatch | completed | success | Weekly Issue Finalizer |
-| 25515599903 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25515579475 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
-| 25515402303 | Terminal State Report | pull_request | completed | skipped | Record Issue 191 template-normal success |
-| 25515401366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25515354616 | Lab PR Scope Check | pull_request | completed | success | Record Issue 191 template-normal success |
-| 25515112260 | Terminal State Report | pull_request | completed | skipped | Run Codex fixed Issue instruction canary |
-| 25515111285 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
