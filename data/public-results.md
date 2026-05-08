@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T15:33:16+00:00`
+Generated at: `2026-05-08T15:48:38+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 | 200 | MERGED | 5 | 645/6 | Add history page generator |
 | 197 | MERGED | 4 | 529/0 | Add comparison dashboard generator |
@@ -69,15 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 188 | MERGED | 3 | 123/13 | Fix storage policy overblocking |
 | 190 | MERGED | 3 | 143/14 | Harden prompt proposal issue template |
 | 189 | MERGED | 2 | 5/2 | Fix weekly finalizer close reason mapping |
-| 193 | MERGED | 1 | 140/0 | Record Issue 191 template-normal success |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25565087937 | Public Results Export | push | in_progress |  | Add lab evidence navigation (#202) |
+| 25565087908 | Terminal State Report | pull_request | completed | skipped | Add lab evidence navigation |
+| 25565087055 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25565024394 | Static Site Check | pull_request | completed | success | Add lab evidence navigation |
+| 25565024384 | Lab PR Scope Check | pull_request | completed | success | Add lab evidence navigation |
+| 25565024381 | Safety Check | pull_request | completed | success | Add lab evidence navigation |
+| 25564359285 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25564342943 | Terminal State Report | pull_request | completed | skipped | Auto-run public results export after main pushes |
-| 25564342846 | Public Results Export | push | in_progress |  | Auto-run public results export after main pushes (#201) |
-| 25564341602 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25564342846 | Public Results Export | push | completed | success | Auto-run public results export after main pushes (#201) |
+| 25564341602 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25564232066 | Lab PR Scope Check | pull_request | completed | success | Auto-run public results export after main pushes |
 | 25564232042 | Script Check | pull_request | completed | success | Auto-run public results export after main pushes |
 | 25563762273 | Terminal State Report | pull_request | completed | skipped | Add history page generator |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25536719336 | Lab PR Scope Check | pull_request | completed | success | Auto-build comparison dashboards during public export |
 | 25535979610 | Terminal State Report | pull_request | completed | skipped | Add comparison dashboard generator |
 | 25535979048 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25535943023 | Static Site Check | pull_request | completed | success | Add comparison dashboard generator |
-| 25535943019 | Script Check | pull_request | completed | success | Add comparison dashboard generator |
-| 25535943009 | Lab PR Scope Check | pull_request | completed | success | Add comparison dashboard generator |
-| 25534466438 | Issue Safety Scan | issues | completed | success | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
-| 25534446917 | Issue Safety Scan | issues | completed | success | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
-| 25534099021 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25534090380 | Public Results Export | workflow_dispatch | completed | success | Public Results Export |
 
 ## Raw JSON
 
