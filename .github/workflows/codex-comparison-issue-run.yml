@@ -25,13 +25,6 @@ on:
         required: true
         default: "0"
         type: number
-  issue_comment:
-    types: [created]
-  push:
-    branches:
-      - main
-    paths:
-      - "run-requests/comparison/*.json"
   pull_request:
     branches:
       - main
@@ -51,9 +44,7 @@ jobs:
   codex-comparison-issue-run:
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) ||
-      (github.event_name == 'issue_comment' && github.event.issue.pull_request == null && startsWith(github.event.comment.body, '/run-comparison '))
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     env:
       CODEX_MODEL: gpt-5.4-nano
@@ -71,76 +62,17 @@ jobs:
           DISPATCH_ISSUE_NUMBER: ${{ inputs.issue_number }}
           DISPATCH_CANDIDATE_RANK: ${{ inputs.candidate_rank }}
           DISPATCH_VOTE_COUNT: ${{ inputs.vote_count }}
-          COMMENT_BODY: ${{ github.event.comment.body }}
-          COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
-          PUSH_BEFORE: ${{ github.event.before }}
-          PUSH_SHA: ${{ github.sha }}
           PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
+          mkdir -p .tmp/canary-diagnostics
           if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             run_week="$DISPATCH_WEEK_ID"
             base_sha="$DISPATCH_BASE_SHA"
             issue_number="$DISPATCH_ISSUE_NUMBER"
             candidate_rank="$DISPATCH_CANDIDATE_RANK"
             vote_count="$DISPATCH_VOTE_COUNT"
-          elif [ "$EVENT_NAME" = "issue_comment" ]; then
-            python - <<'PY' > .tmp-comparison-inputs.env
-          import os
-          import re
-          body = os.environ.get('COMMENT_BODY', '').strip()
-          issue_number = os.environ.get('COMMENT_ISSUE_NUMBER', '').strip()
-          if not body.startswith('/run-comparison '):
-              raise SystemExit('comment is not a comparison run command')
-          pairs = dict(re.findall(r'(week|base|rank|votes)=([^\s]+)', body))
-          required = ['week', 'base', 'rank', 'votes']
-          missing = [key for key in required if key not in pairs]
-          if missing:
-              raise SystemExit(f'missing comparison command keys: {missing}')
-          print(f"RUN_WEEK={pairs['week']}")
-          print(f"BASE_SHA={pairs['base']}")
-          print(f"ISSUE_NUMBER={issue_number}")
-          print(f"CANDIDATE_RANK={pairs['rank']}")
-          print(f"VOTE_COUNT={pairs['votes']}")
-          PY
-            . ./.tmp-comparison-inputs.env
-            run_week="$RUN_WEEK"
-            base_sha="$BASE_SHA"
-            issue_number="$ISSUE_NUMBER"
-            candidate_rank="$CANDIDATE_RANK"
-            vote_count="$VOTE_COUNT"
-          elif [ "$EVENT_NAME" = "push" ]; then
-            python - <<'PY' > .tmp-comparison-inputs.env
-          import json
-          import os
-          import subprocess
-          from pathlib import Path
-          before = os.environ.get('PUSH_BEFORE', '')
-          after = os.environ.get('PUSH_SHA', '')
-          files = subprocess.check_output([
-              'git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'
-          ], text=True).splitlines()
-          files = [name for name in files if name.startswith('run-requests/comparison/') and name.endswith('.json')]
-          if len(files) != 1:
-              raise SystemExit(f'exactly one comparison request JSON is required, got {files}')
-          data = json.loads(Path(files[0]).read_text(encoding='utf-8'))
-          required = ['week_id', 'base_sha', 'issue_number', 'candidate_rank', 'vote_count']
-          missing = [key for key in required if key not in data]
-          if missing:
-              raise SystemExit(f'missing comparison request keys: {missing}')
-          print(f"RUN_WEEK={data['week_id']}")
-          print(f"BASE_SHA={data['base_sha']}")
-          print(f"ISSUE_NUMBER={data['issue_number']}")
-          print(f"CANDIDATE_RANK={data['candidate_rank']}")
-          print(f"VOTE_COUNT={data['vote_count']}")
-          PY
-            . ./.tmp-comparison-inputs.env
-            run_week="$RUN_WEEK"
-            base_sha="$BASE_SHA"
-            issue_number="$ISSUE_NUMBER"
-            candidate_rank="$CANDIDATE_RANK"
-            vote_count="$VOTE_COUNT"
           elif [ "$EVENT_NAME" = "pull_request" ]; then
             python - <<'PY' > .tmp-comparison-inputs.env
           import json
@@ -165,6 +97,7 @@ jobs:
           print(f"ISSUE_NUMBER={data['issue_number']}")
           print(f"CANDIDATE_RANK={data['candidate_rank']}")
           print(f"VOTE_COUNT={data['vote_count']}")
+          print(f"REQUEST_FILE={files[0]}")
           PY
             . ./.tmp-comparison-inputs.env
             run_week="$RUN_WEEK"
@@ -172,6 +105,7 @@ jobs:
             issue_number="$ISSUE_NUMBER"
             candidate_rank="$CANDIDATE_RANK"
             vote_count="$VOTE_COUNT"
+            printf '%s\n' "${REQUEST_FILE:-unknown}" > .tmp/canary-diagnostics/request-file.txt
           else
             echo "Unsupported event: $EVENT_NAME"
             exit 1
@@ -182,7 +116,6 @@ jobs:
           case "$run_week" in *[!A-Za-z0-9._-]*|'') echo "week_id contains unsupported characters"; exit 1 ;; *) ;; esac
           case "$issue_number" in ''|*[!0-9]*) echo "issue_number must be a positive integer"; exit 1 ;; *) ;; esac
           test -n "$base_sha"
-
           output_root="lab/comparisons/${run_week}/rank-${candidate_rank}"
           case "$output_root" in lab/comparisons/*/rank-1|lab/comparisons/*/rank-2|lab/comparisons/*/rank-3) ;; *) echo "invalid output root"; exit 1 ;; esac
 
@@ -226,19 +159,32 @@ jobs:
       - name: Move root lab result into comparison output root
         run: |
           set -euo pipefail
-          mkdir -p "$OUTPUT_ROOT"
+          mkdir -p "$OUTPUT_ROOT" .tmp/canary-diagnostics
+          git status --short > .tmp/canary-diagnostics/git-status-before-rank-copy.txt
+          git diff --name-only -- lab/index.html lab/style.css lab/app.js > .tmp/canary-diagnostics/root-lab-changed-files-before-rank-copy.txt
+          git diff -- lab/index.html lab/style.css lab/app.js > .tmp/canary-diagnostics/root-lab-diff-before-rank-copy.patch || true
           cp lab/index.html "$OUTPUT_ROOT/index.html"
           cp lab/style.css "$OUTPUT_ROOT/style.css"
           cp lab/app.js "$OUTPUT_ROOT/app.js"
           git checkout -- lab/index.html lab/style.css lab/app.js
+          git add -N "$OUTPUT_ROOT/index.html" "$OUTPUT_ROOT/style.css" "$OUTPUT_ROOT/app.js"
           printf '%s\n' "$BASE_SHA" > .tmp/canary-diagnostics/comparison-base-sha.txt
           printf '%s\n' "$OUTPUT_ROOT" > .tmp/canary-diagnostics/comparison-output-root.txt
 
       - name: Validate comparison output scope
         run: |
           set -euo pipefail
-          changed_files="$(git diff --name-only --)"
-          test -n "$changed_files"
+          mkdir -p .tmp/canary-diagnostics
+          git status --short -- "$OUTPUT_ROOT" > .tmp/canary-diagnostics/rank-output-status.txt
+          git diff --name-only -- "$OUTPUT_ROOT" > .tmp/canary-diagnostics/rank-output-changed-files.txt
+          git diff --stat -- "$OUTPUT_ROOT" > .tmp/canary-diagnostics/rank-output-diff-stat.txt || true
+          git diff -- "$OUTPUT_ROOT" > .tmp/canary-diagnostics/rank-output-diff.patch || true
+          changed_files="$(git diff --name-only -- "$OUTPUT_ROOT")"
+          if [ -z "$changed_files" ]; then
+            echo "ERROR: comparison runner produced no rank output diff."
+            echo "See rank-output-status.txt and root-lab-changed-files-before-rank-copy.txt."
+            exit 1
+          fi
           echo "$changed_files" | while read -r file; do
             case "$file" in "$OUTPUT_ROOT/index.html"|"$OUTPUT_ROOT/style.css"|"$OUTPUT_ROOT/app.js") ;; *) echo "Forbidden changed file: $file"; exit 1 ;; esac
           done
@@ -251,6 +197,7 @@ jobs:
         with:
           name: codex-comparison-diagnostics-${{ github.run_number }}
           path: .tmp
+          include-hidden-files: true
           if-no-files-found: warn
 
       - name: Commit comparison output and create PR
@@ -259,7 +206,7 @@ jobs:
         run: |
           set -euo pipefail
           branch="codex-comparison-${RUN_WEEK}-rank-${CANDIDATE_RANK}-${{ github.run_number }}"
-          changed_files="$(git diff --name-only -- | paste -sd ', ' -)"
+          changed_files="$(git diff --name-only -- "$OUTPUT_ROOT" | paste -sd ', ' -)"
           issue_title="$(python - <<'PY'
           import json
           from pathlib import Path
