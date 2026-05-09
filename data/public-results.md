@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-09T09:44:56+00:00`
+Generated at: `2026-05-09T11:20:21+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,8 +14,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 0 |
-| merged_pr_count | 97 |
+| open_pr_count | 1 |
+| merged_pr_count | 96 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
 
@@ -40,6 +40,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
+| 208 | OPEN | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
@@ -68,16 +70,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 176 | MERGED | 7 | 655/15 | Add redacted raw agent run bundles |
 | 180 | MERGED | 4 | 300/1 | Record clear Issue run and expand public agent bundle logs |
 | 179 | MERGED | 3 | 33/14 | Run Codex fixed Issue instruction canary |
-| 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
-| 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25599859820 | Terminal State Report | pull_request | completed | skipped | Simplify comparison workflow and detect new rank files |
+| 25599859809 | Public Results Export | push | in_progress |  | Simplify comparison workflow and detect new rank files (#209) |
+| 25599859438 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25599805583 | Script Check | pull_request | completed | success | Simplify comparison workflow and detect new rank files |
+| 25599805580 | Lab PR Scope Check | pull_request | completed | success | Simplify comparison workflow and detect new rank files |
+| 25598395926 | Codex Comparison Issue Run | pull_request | completed | failure | Request comparison run for Issue 195 rank 2 v2 |
+| 25598395925 | Lab PR Scope Check | pull_request | completed | success | Request comparison run for Issue 195 rank 2 v2 |
+| 25598019392 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25598013730 | Terminal State Report | pull_request | completed | skipped | Allow comparison runs from request PRs |
-| 25598013728 | Public Results Export | push | in_progress |  | Allow comparison runs from request PRs (#207) |
-| 25598013386 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25598013728 | Public Results Export | push | completed | success | Allow comparison runs from request PRs (#207) |
+| 25598013386 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25593582772 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25593576392 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25593533491 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
@@ -97,14 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25567566033 | Terminal State Report | pull_request | completed | skipped | Fix comparison safety check base |
 | 25567565972 | Public Results Export | push | completed | success | Fix comparison safety check base (#205) |
 | 25567565059 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25567484270 | Lab PR Scope Check | pull_request | completed | success | Fix comparison safety check base |
-| 25567484235 | Script Check | pull_request | completed | success | Fix comparison safety check base |
-| 25566686968 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25566668292 | Public Results Export | push | completed | success | Allow comparison run request files (#204) |
-| 25566668180 | Terminal State Report | pull_request | completed | skipped | Allow comparison run request files |
-| 25566667573 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25566523718 | Script Check | pull_request | completed | success | Allow comparison run request files |
-| 25566523702 | Lab PR Scope Check | pull_request | completed | success | Allow comparison run request files |
 
 ## Raw JSON
 
