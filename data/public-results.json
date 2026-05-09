@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-09T11:20:21+00:00",
+  "generated_at": "2026-05-09T11:59:09+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -29,7 +29,7 @@
       },
       "state": "OPEN",
       "title": "[Prompt][Rank 2]: Add an evidence map for reviewing weekly runs",
-      "updated_at": "2026-05-09T10:04:23Z",
+      "updated_at": "2026-05-09T11:33:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/195"
     },
     {
@@ -491,6 +491,127 @@
   ],
   "pull_requests": [
     {
+      "additions": 132,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nNormalizes copied `/lab/` links after a generated rank artifact is moved into a nested comparison rank root.\n\n## Problem\n\n#211 proved that the request-PR comparison workflow can generate a rank output PR. However, the copied root `/lab/` page keeps root-relative assumptions such as:\n\n```text\n./history/\n./comparisons/<week>/\n../data/public-results.json\n```\n\nInside:\n\n```text\nlab/comparisons/<week>/rank-*/\n```\n\nthose links point to the wrong locations.\n\n## Changes\n\nAdds:\n\n```text\nscripts/normalize_comparison_rank_links.py\nscripts/test_normalize_comparison_rank_links.py\n```\n\nUpdates the comparison workflow to run:\n\n```text\npython scripts/normalize_comparison_rank_links.py --index \"$OUTPUT_ROOT/index.html\" --week-id \"$RUN_WEEK\"\n```\n\nbefore validation and PR creation.\n\n## Normalized links\n\nFrom a rank root:\n\n```text\n./history/                      -> ../../../history/\n./comparisons/<week>/            -> ../\n../data/public-results.json      -> ../../../../data/public-results.json\n```\n\n## Non-goals\n\n- No model run in this PR.\n- No generated rank output is committed here.\n- No auto-merge of generated comparison output.",
+      "body_length": 1139,
+      "changed_files": 4,
+      "closed_at": "2026-05-09T11:58:52Z",
+      "comment_count": 0,
+      "created_at": "2026-05-09T11:57:03Z",
+      "deletions": 13,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": ".github/workflows/codex-comparison-issue-run.yml"
+        },
+        {
+          "additions": 52,
+          "deletions": 0,
+          "path": "scripts/normalize_comparison_rank_links.py"
+        },
+        {
+          "additions": 2,
+          "deletions": 13,
+          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
+        },
+        {
+          "additions": 76,
+          "deletions": 0,
+          "path": "scripts/test_normalize_comparison_rank_links.py"
+        }
+      ],
+      "head_ref_name": "normalize-comparison-rank-links",
+      "head_ref_oid": "5f96f339da853dccdbbfad3e13b1fbfa9c6e86af",
+      "labels": [],
+      "merge_commit_oid": "0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0",
+      "merged_at": "2026-05-09T11:58:52Z",
+      "merged_by": "Unjuno",
+      "number": 212,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Normalize comparison rank links",
+      "updated_at": "2026-05-09T11:58:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/212"
+    },
+    {
+      "additions": 492,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements a Prompt Vote Lab comparison candidate.\n\n## Configuration\n\n- Week: 2026-W20\n- Issue: #195\n- Issue title: [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs\n- Rank: 2\n- Votes: 0\n- Fixed comparison base: `99441b168c646c1dd1e15fa90eab91754932819e`\n- Output root: `lab/comparisons/2026-W20/rank-2`\n- Model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/comparisons/2026-W20/rank-2/index.html`, `lab/comparisons/2026-W20/rank-2/style.css`, `lab/comparisons/2026-W20/rank-2/app.js`\n\n## Changed files\n\nlab/comparisons/2026-W20/rank-2/app.js,lab/comparisons/2026-W20/rank-2/index.html lab/comparisons/2026-W20/rank-2/style.css\n\n## Checks\n\n- runtime Issue safety scan passed\n- issue execution gate passed\n- root lab output copied into rank-specific comparison root\n- root lab files restored before PR creation\n- changed-file guard passed\n- safety-check passed\n- static-site-check passed\n\nManual review is required. Do not auto-merge.\n",
+      "body_length": 1028,
+      "changed_files": 3,
+      "closed_at": null,
+      "comment_count": 0,
+      "created_at": "2026-05-09T11:36:44Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 69,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-2/app.js"
+        },
+        {
+          "additions": 98,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-2/index.html"
+        },
+        {
+          "additions": 325,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-2/style.css"
+        }
+      ],
+      "head_ref_name": "codex-comparison-2026-W20-rank-2-5",
+      "head_ref_oid": "400f675850735c3c64f3235d3637906336aadd58",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 211,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "OPEN",
+      "title": "Run Codex comparison issue rank 2",
+      "updated_at": "2026-05-09T11:36:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/211"
+    },
+    {
+      "additions": 7,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a comparison run request file for Issue #195 as rank 2 after the workflow fix in #209.\n\n## Request\n\n```json\n{\n  \"week_id\": \"2026-W20\",\n  \"base_sha\": \"99441b168c646c1dd1e15fa90eab91754932819e\",\n  \"issue_number\": 195,\n  \"candidate_rank\": 2,\n  \"vote_count\": 0\n}\n```\n\n## Expected trigger\n\nThis PR should trigger `Codex Comparison Issue Run` through the request-file `pull_request` trigger.\n\nExpected generated output PR path:\n\n```text\nlab/comparisons/2026-W20/rank-2/\n```\n\n## Non-goals\n\n- No direct lab output changes in this request PR.\n- No auto-merge of generated comparison output.\n- No rank 3 request in this PR.",
+      "body_length": 630,
+      "changed_files": 1,
+      "closed_at": null,
+      "comment_count": 0,
+      "created_at": "2026-05-09T11:33:28Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 7,
+          "deletions": 0,
+          "path": "run-requests/comparison/2026-W20-rank-2-issue-195-v3.json"
+        }
+      ],
+      "head_ref_name": "request-rank2-issue195-comparison-v3",
+      "head_ref_oid": "7f00f64e1214c3e07d375bc2a8cc72203a850c77",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 210,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "OPEN",
+      "title": "Request comparison run for Issue 195 rank 2 v3",
+      "updated_at": "2026-05-09T11:33:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/210"
+    },
+    {
       "additions": 44,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -524,7 +645,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Simplify comparison workflow and detect new rank files",
-      "updated_at": "2026-05-09T11:20:02Z",
+      "updated_at": "2026-05-09T11:20:29Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/209"
     },
     {
@@ -4307,117 +4428,6 @@
       "title": "Define Codex runner contract",
       "updated_at": "2026-05-05T15:15:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/104"
-    },
-    {
-      "additions": 100,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a regression test for terminal report metadata extraction.\n\n## Problem\n\nA normal maintenance PR can have no run metadata. Terminal reports must not treat that as valid run evidence.\n\n## Changed files\n\n- `scripts/test_extract_pr_metadata.py`\n- `.github/workflows/script-check.yml`\n\n## What this tests\n\n- Ordinary maintenance PR body remains `unrecorded`.\n- Real run PR body extracts:\n  - week\n  - rank\n  - issue\n  - votes\n  - run reason\n  - selected prompt\n  - terminal state from `pvl:merged`\n\n## What this deliberately does not change\n\n- Does not modify `/lab/`.\n- Does not call the OpenAI API.\n- Does not change `weekly-auto-run.yml`.\n- Does not change `first-canary-run.yml`.\n\n## Release relevance\n\nThis makes the terminal report gate testable before the first real API canary.",
-      "body_length": 797,
-      "changed_files": 2,
-      "closed_at": "2026-05-05T14:09:54Z",
-      "comment_count": 1,
-      "created_at": "2026-05-05T14:08:55Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 97,
-          "deletions": 0,
-          "path": "scripts/test_extract_pr_metadata.py"
-        }
-      ],
-      "head_ref_name": "test-terminal-report-metadata-gate",
-      "head_ref_oid": "f15866f125a1a419009101504f8bdf7c4c0332bf",
-      "labels": [],
-      "merge_commit_oid": "baf2392e8d096f9f8e2c8809f5dfd670ed068044",
-      "merged_at": "2026-05-05T14:09:54Z",
-      "merged_by": "Unjuno",
-      "number": 103,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Test terminal report metadata gate",
-      "updated_at": "2026-05-05T14:09:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/103"
-    },
-    {
-      "additions": 29,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nPrevents `Terminal State Report` from creating reports for ordinary maintenance PRs that do not contain Prompt Vote Lab run metadata.\n\n## Problem\n\nAfter PR #101 was merged, `terminal-state-report.yml` treated the merge itself as a terminal run event and created a branch containing `docs/reports/unrecorded-rank-unrecorded.md`. That is not valid run evidence.\n\n## Changed file\n\n- `.github/workflows/terminal-state-report.yml`\n\n## What changed\n\n- A merged PR now triggers a terminal report only when the PR body contains run metadata:\n  - `- Week:`\n  - `- Rank:`\n  - `- Issue:`\n  - `- Votes:`\n  - `## Selected prompt`\n- Explicit terminal labels still trigger the workflow:\n  - `pvl:merged`\n  - `pvl:rejected`\n  - `pvl:unsafe`\n  - `pvl:failed`\n  - `pvl:no-change`\n- A validation step refuses to write a report if required metadata is `unrecorded`.\n\n## What this deliberately does not change\n\n- Does not change `/lab/`.\n- Does not call any API.\n- Does not change weekly vote collection.\n- Does not change the first canary workflow.\n- Does not remove or split `weekly-auto-run.yml`.\n\n## Release relevance\n\nThis prevents false run evidence from being generated by normal release-readiness or maintenance PRs.",
-      "body_length": 1215,
-      "changed_files": 1,
-      "closed_at": "2026-05-05T13:49:16Z",
-      "comment_count": 1,
-      "created_at": "2026-05-05T13:40:59Z",
-      "deletions": 4,
-      "files": [
-        {
-          "additions": 29,
-          "deletions": 4,
-          "path": ".github/workflows/terminal-state-report.yml"
-        }
-      ],
-      "head_ref_name": "fix-terminal-report-gate",
-      "head_ref_oid": "1aac58b50b1641eaa1c24ce5c06b3acad7a9b8d7",
-      "labels": [],
-      "merge_commit_oid": "b7839ae93d942d4652231897fbbbfff901666ae4",
-      "merged_at": "2026-05-05T13:49:16Z",
-      "merged_by": "Unjuno",
-      "number": 102,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Prevent terminal reports for non-run PRs",
-      "updated_at": "2026-05-05T13:49:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/102"
-    },
-    {
-      "additions": 30,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nKeeps the existing `Weekly Auto Run` structure intact and applies only release-readiness guardrail fixes.\n\n## Changed files\n\n- `.github/workflows/lean-proof-test.yml`\n- `formal/Canary.lean`\n- `docs/current-features.md`\n\n## What changed\n\n- `Lean Proof Test` now checks every Lean file under `formal/`, not only `formal/Selection.lean`.\n- `formal/Canary.lean` proof decomposition was fixed after the expanded CI exposed that it had not actually been checked before.\n- `docs/current-features.md` now reflects the current implementation-agent guardrail of `max output tokens capped at 5000`.\n- The feature inventory now records that `formal/Canary.lean` exists and states the canary-policy proof coverage.\n\n## What this deliberately does not change\n\n- Does not remove `weekly-auto-run.yml`.\n- Does not split the weekly workflow.\n- Does not run the API canary.\n- Does not change `/lab/`.\n- Does not change model, retry, fallback, or auto-merge behavior.\n\n## CI result\n\n- Lean Proof Test: PASS\n- Static Site Check: PASS\n- Lab PR Scope Check: PASS\n- Pre-API Freeze Audit: PASS\n\n## Release relevance\n\nThis PR reduces release ambiguity before the first API canary by making the formal proof check match the files that exist and making documentation match the 5000-token canary guardrail.",
-      "body_length": 1290,
-      "changed_files": 3,
-      "closed_at": "2026-05-05T13:26:52Z",
-      "comment_count": 0,
-      "created_at": "2026-05-05T13:09:53Z",
-      "deletions": 10,
-      "files": [
-        {
-          "additions": 13,
-          "deletions": 2,
-          "path": ".github/workflows/lean-proof-test.yml"
-        },
-        {
-          "additions": 5,
-          "deletions": 2,
-          "path": "docs/current-features.md"
-        },
-        {
-          "additions": 12,
-          "deletions": 6,
-          "path": "formal/Canary.lean"
-        }
-      ],
-      "head_ref_name": "release-readiness-gates",
-      "head_ref_oid": "9bd0dcabb7b1e57319fd089e95a25e8e25a6a22c",
-      "labels": [],
-      "merge_commit_oid": "5cbe90de50532733cf21e41dfa87ad31ca9385ac",
-      "merged_at": "2026-05-05T13:26:52Z",
-      "merged_by": "Unjuno",
-      "number": 101,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Tighten release readiness guardrails",
-      "updated_at": "2026-05-05T13:26:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/101"
     }
   ],
   "run_records": [
@@ -4554,14 +4564,126 @@
     "blocked_issue_count": 2,
     "clear_issue_count": 5,
     "issue_count": 12,
-    "merged_pr_count": 96,
+    "merged_pr_count": 94,
     "open_issue_count": 2,
-    "open_pr_count": 1,
+    "open_pr_count": 3,
     "pr_count": 100,
     "run_record_count": 20,
     "workflow_run_count": 100
   },
   "workflow_runs": [
+    {
+      "conclusion": "",
+      "created_at": "2026-05-09T11:58:55Z",
+      "database_id": 25600574295,
+      "display_title": "Normalize comparison rank links (#212)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-09T11:58:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600574295",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-09T11:58:54Z",
+      "database_id": 25600574229,
+      "display_title": "Normalize comparison rank links",
+      "event": "pull_request",
+      "head_branch": "normalize-comparison-rank-links",
+      "head_sha": "5f96f339da853dccdbbfad3e13b1fbfa9c6e86af",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:58:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600574229",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-09T11:58:54Z",
+      "database_id": 25600573988,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0",
+      "name": "pages build and deployment",
+      "status": "queued",
+      "updated_at": "2026-05-09T11:59:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600573988",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T11:57:06Z",
+      "database_id": 25600541744,
+      "display_title": "Normalize comparison rank links",
+      "event": "pull_request",
+      "head_branch": "normalize-comparison-rank-links",
+      "head_sha": "5f96f339da853dccdbbfad3e13b1fbfa9c6e86af",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:57:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600541744",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T11:57:06Z",
+      "database_id": 25600541742,
+      "display_title": "Normalize comparison rank links",
+      "event": "pull_request",
+      "head_branch": "normalize-comparison-rank-links",
+      "head_sha": "5f96f339da853dccdbbfad3e13b1fbfa9c6e86af",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:57:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600541742",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T11:33:32Z",
+      "database_id": 25600112584,
+      "display_title": "Request comparison run for Issue 195 rank 2 v3",
+      "event": "pull_request",
+      "head_branch": "request-rank2-issue195-comparison-v3",
+      "head_sha": "7f00f64e1214c3e07d375bc2a8cc72203a850c77",
+      "name": "Codex Comparison Issue Run",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:36:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600112584",
+      "workflow_name": "Codex Comparison Issue Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T11:33:32Z",
+      "database_id": 25600112581,
+      "display_title": "Request comparison run for Issue 195 rank 2 v3",
+      "event": "pull_request",
+      "head_branch": "request-rank2-issue195-comparison-v3",
+      "head_sha": "7f00f64e1214c3e07d375bc2a8cc72203a850c77",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:33:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600112581",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T11:20:25Z",
+      "database_id": 25599868036,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b0dc3a0a5b600ab08437ecc25e3677a38cb1eeaf",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:20:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25599868036",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-09T11:20:05Z",
@@ -4577,7 +4699,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-09T11:20:04Z",
       "database_id": 25599859809,
       "display_title": "Simplify comparison workflow and detect new rank files (#209)",
@@ -4585,13 +4707,13 @@
       "head_branch": "main",
       "head_sha": "99441b168c646c1dd1e15fa90eab91754932819e",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-09T11:20:10Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:20:27Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25599859809",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-09T11:20:04Z",
       "database_id": 25599859438,
       "display_title": "pages build and deployment",
@@ -4599,8 +4721,8 @@
       "head_branch": "main",
       "head_sha": "99441b168c646c1dd1e15fa90eab91754932819e",
       "name": "pages build and deployment",
-      "status": "queued",
-      "updated_at": "2026-05-09T11:20:18Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T11:20:28Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25599859438",
       "workflow_name": "pages-build-deployment"
     },
@@ -5849,118 +5971,6 @@
       "updated_at": "2026-05-07T18:51:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515599903",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:50:12Z",
-      "database_id": 25515579475,
-      "display_title": "Public Results Export",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "5c9d418799bbf1f665530bbec756c1b318120640",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:50:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515579475",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-07T18:46:36Z",
-      "database_id": 25515402303,
-      "display_title": "Record Issue 191 template-normal success",
-      "event": "pull_request",
-      "head_branch": "record-issue-191-template-run",
-      "head_sha": "7cf6ee4fa7bbff63bcf1bcc16df9f5100d8cc34f",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:46:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515402303",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:46:35Z",
-      "database_id": 25515401366,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5c9d418799bbf1f665530bbec756c1b318120640",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:47:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515401366",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:45:36Z",
-      "database_id": 25515354616,
-      "display_title": "Record Issue 191 template-normal success",
-      "event": "pull_request",
-      "head_branch": "record-issue-191-template-run",
-      "head_sha": "7cf6ee4fa7bbff63bcf1bcc16df9f5100d8cc34f",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:45:46Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515354616",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-07T18:40:40Z",
-      "database_id": 25515112260,
-      "display_title": "Run Codex fixed Issue instruction canary",
-      "event": "pull_request",
-      "head_branch": "codex-fixed-issue-canary-009-8",
-      "head_sha": "c59bf732e56031a58ef81346b9215dfbe9f770c1",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:40:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515112260",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:40:38Z",
-      "database_id": 25515111285,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "559b34f9b220b2d8cc4729417667fdc45bbbb11a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:41:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25515111285",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:22:22Z",
-      "database_id": 25514229051,
-      "display_title": "Codex Fixed Issue Instruction Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "13b0132d4dad9a1a4d127d2ecace79ede5589d32",
-      "name": "Codex Fixed Issue Instruction Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:25:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25514229051",
-      "workflow_name": "Codex Fixed Issue Instruction Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-07T18:18:45Z",
-      "database_id": 25514055438,
-      "display_title": "Issue Safety Scan",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "13b0132d4dad9a1a4d127d2ecace79ede5589d32",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-07T18:19:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25514055438",
-      "workflow_name": "Issue Safety Scan"
     }
   ]
 }
