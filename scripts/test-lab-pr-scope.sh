@@ -62,11 +62,11 @@ run_case() {
   echo "CASE OK: $name"
 }
 
-mutate_lab_only() {
+mutate_root_lab_only() {
   local repo_dir="$1"
-  printf '\n<!-- scope test lab only -->\n' >> "$repo_dir/lab/index.html"
+  printf '\n<!-- scope test root lab only -->\n' >> "$repo_dir/lab/index.html"
   git -C "$repo_dir" add lab/index.html
-  git -C "$repo_dir" commit -q -m "change lab only"
+  git -C "$repo_dir" commit -q -m "change root lab only"
 }
 
 mutate_docs_only() {
@@ -76,12 +76,37 @@ mutate_docs_only() {
   git -C "$repo_dir" commit -q -m "change docs only"
 }
 
-mutate_lab_and_docs() {
+mutate_generated_comparison_only() {
+  local repo_dir="$1"
+  mkdir -p "$repo_dir/lab/comparisons/2099-W01/rank-2"
+  printf '<!doctype html>\n<title>scope test</title>\n' > "$repo_dir/lab/comparisons/2099-W01/rank-2/index.html"
+  git -C "$repo_dir" add lab/comparisons/2099-W01/rank-2/index.html
+  git -C "$repo_dir" commit -q -m "change generated comparison only"
+}
+
+mutate_generated_history_only() {
+  local repo_dir="$1"
+  mkdir -p "$repo_dir/lab/history"
+  printf '<!doctype html>\n<title>history scope test</title>\n' > "$repo_dir/lab/history/index.html"
+  git -C "$repo_dir" add lab/history/index.html
+  git -C "$repo_dir" commit -q -m "change generated history only"
+}
+
+mutate_root_lab_and_docs() {
   local repo_dir="$1"
   printf '\n<!-- scope test mixed -->\n' >> "$repo_dir/lab/index.html"
   printf '\nScope test mixed docs.\n' >> "$repo_dir/docs/README.md"
   git -C "$repo_dir" add lab/index.html docs/README.md
-  git -C "$repo_dir" commit -q -m "change lab and docs"
+  git -C "$repo_dir" commit -q -m "change root lab and docs"
+}
+
+mutate_root_lab_and_generated_evidence() {
+  local repo_dir="$1"
+  mkdir -p "$repo_dir/lab/comparisons/2099-W01/rank-1"
+  printf '\n<!-- scope test root lab plus evidence -->\n' >> "$repo_dir/lab/index.html"
+  printf '<!doctype html>\n<title>mixed evidence</title>\n' > "$repo_dir/lab/comparisons/2099-W01/rank-1/index.html"
+  git -C "$repo_dir" add lab/index.html lab/comparisons/2099-W01/rank-1/index.html
+  git -C "$repo_dir" commit -q -m "change root lab and generated evidence"
 }
 
 mutate_extra_lab_file() {
@@ -91,9 +116,12 @@ mutate_extra_lab_file() {
   git -C "$repo_dir" commit -q -m "add extra lab file"
 }
 
-run_case "lab-only" "pass" mutate_lab_only
+run_case "root-lab-only" "pass" mutate_root_lab_only
 run_case "docs-only" "pass" mutate_docs_only
-run_case "lab-and-docs" "fail" mutate_lab_and_docs
+run_case "generated-comparison-only" "pass" mutate_generated_comparison_only
+run_case "generated-history-only" "pass" mutate_generated_history_only
+run_case "root-lab-and-docs" "fail" mutate_root_lab_and_docs
+run_case "root-lab-and-generated-evidence" "fail" mutate_root_lab_and_generated_evidence
 run_case "extra-lab-file" "fail" mutate_extra_lab_file
 
 echo "Lab PR scope guard self-test passed."
