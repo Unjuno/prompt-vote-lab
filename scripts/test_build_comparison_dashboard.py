@@ -16,6 +16,26 @@ def test_dashboard_builder() -> None:
         "generated_at": "2026-05-08T00:00:00+00:00",
         "issues": [
             {
+                "number": 183,
+                "title": "Old Rank 1 candidate",
+                "url": "https://example.test/issues/183",
+                "state": "CLOSED",
+                "labels": ["week:2026-W20", "prompt-proposal", "normal-candidate", "issue-safety:clear"],
+                "reaction_plus_one_count": 0,
+                "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": True},
+                "body": "## Comparison metadata\n\n- Intended comparison rank: 1",
+            },
+            {
+                "number": 191,
+                "title": "Preferred Rank 1 candidate",
+                "url": "https://example.test/issues/191",
+                "state": "CLOSED",
+                "labels": ["week:2026-W20", "prompt-proposal", "normal-candidate", "issue-safety:clear"],
+                "reaction_plus_one_count": 0,
+                "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": True},
+                "body": "## Comparison metadata\n\n- Intended comparison rank: 1",
+            },
+            {
                 "number": 195,
                 "title": "[Prompt][Rank 2]: Add an evidence map",
                 "url": "https://example.test/issues/195",
@@ -37,6 +57,22 @@ def test_dashboard_builder() -> None:
             },
         ],
         "pull_requests": [
+            {
+                "number": 184,
+                "title": "Older merged rank 1 output",
+                "url": "https://example.test/pulls/184",
+                "state": "MERGED",
+                "body": "- Issue: #183\n- Rank: 1\n- Votes: 0",
+                "files": [{"path": "lab/comparisons/2026-W20/rank-1/old.html"}],
+            },
+            {
+                "number": 192,
+                "title": "Preferred merged rank 1 output",
+                "url": "https://example.test/pulls/192",
+                "state": "MERGED",
+                "body": "- Issue: #191\n- Rank: 1\n- Votes: 0",
+                "files": [{"path": "lab/comparisons/2026-W20/rank-1/index.html"}],
+            },
             {
                 "number": 199,
                 "title": "Closed stale comparison output",
@@ -70,12 +106,16 @@ def test_dashboard_builder() -> None:
 
     required = [
         "Prompt Vote Lab comparison: 2026-W20",
+        "Rank 1",
         "Rank 2",
         "Rank 3",
+        "Issue #191",
         "Issue #195",
         "Issue #196",
+        "PR #192",
         "PR #201",
         "MERGED",
+        "lab/comparisons/2026-W20/rank-1/",
         "lab/comparisons/2026-W20/rank-2/",
         "runs/2026-W20-rank-2-issue-195.md",
         "participant evidence comprehension",
@@ -87,6 +127,10 @@ def test_dashboard_builder() -> None:
         raise AssertionError(f"dashboard missing expected text: {missing}")
 
     forbidden = [
+        "Old Rank 1 candidate",
+        "Issue #183",
+        "PR #184",
+        "old.html",
         "PR #199",
         "stale.html",
         "OPENAI_API_KEY",
@@ -101,6 +145,9 @@ def test_dashboard_builder() -> None:
     found = [item for item in forbidden if item in html]
     if found:
         raise AssertionError(f"dashboard leaked forbidden text: {found}")
+
+    if html.count("Rank 1") != 1:
+        raise AssertionError("dashboard should render exactly one Rank 1 card")
 
     if "rank-grid" not in css or "rank-card" not in css:
         raise AssertionError("dashboard CSS should define rank grid/cards")
