@@ -41,11 +41,6 @@ for file in "${changed_files[@]}"; do
   esac
 done
 
-if [ "$root_lab_changed" != "true" ] && [ "$generated_evidence_changed" != "true" ]; then
-  echo "No lab files changed. Lab PR scope guard passes."
-  exit 0
-fi
-
 if [ "${#invalid_lab_changes[@]}" -gt 0 ]; then
   echo "ERROR: invalid lab path changes detected."
   echo "Allowed root lab implementation files:"
@@ -58,6 +53,11 @@ if [ "${#invalid_lab_changes[@]}" -gt 0 ]; then
   echo "Invalid lab path changes:"
   printf '  - %s\n' "${invalid_lab_changes[@]}"
   exit 1
+fi
+
+if [ "$root_lab_changed" != "true" ] && [ "$generated_evidence_changed" != "true" ]; then
+  echo "No lab files changed. Lab PR scope guard passes."
+  exit 0
 fi
 
 if [ "$root_lab_changed" = "true" ] && [ "${#non_lab_changes[@]}" -gt 0 ]; then
