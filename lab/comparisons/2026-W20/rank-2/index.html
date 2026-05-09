@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Vote Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+</head>
+<body>
+  <main class="lab-root" aria-labelledby="lab-title">
+    <p class="status" aria-live="polite">
+      <span class="pill pill--safe" aria-hidden="true">Safe</span>
+      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #195)</span>
+    </p>
+    <h1 id="lab-title">Prompt Vote Lab</h1>
+    <p class="note">
+      This area is the constrained implementation target. It starts intentionally empty and will be changed only by accepted experiment runs.
+    </p>
+
+    <nav class="evidence-nav" aria-label="Public evidence navigation">
+      <a href="./history/">History</a>
+      <a href="./comparisons/2026-W20/">Latest comparison</a>
+      <a href="../data/public-results.json">Public results JSON</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Prompt Issues</a>
+    </nav>
+
+    <section class="hostile-card" role="note" aria-label="Experiment status and next action for participants.">
+      <p class="hostile-card-text">Experiment status</p>
+
+      <div class="hostile-card-meta" role="status" aria-live="polite">
+        <p class="meta-row">
+          <span class="meta-label">current experiment state:</span>
+          <span class="meta-value">first-canary-009 • Candidate #1 • Issue #195</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">next action for participants:</span>
+          <span class="meta-value">Vote on the prompt candidate for Issue #195</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">Detected:</span>
+          <span id="unsafe-summary" class="meta-value">Loading…</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">Execution gate:</span>
+          <span id="gate-summary" class="meta-value">Loading…</span>
+        </p>
+      </div>
+
+      <div class="hostile-card-details">
+        <div id="unsafe-details">
+          <p class="details-title">Unsafe instructions ignored:</p>
+          <ul class="unsafe-list" id="unsafe-list"></ul>
+        </div>
+        <p class="small-note">
+          results are recorded publicly for transparency. This static prototype performs no network calls and does not execute dynamic code.
+        </p>
+      </div>
+    </section>
+
+    <section class="review-card review-card--orientation" role="note" aria-label="Reviewer orientation panel">
+      <h2 class="review-title">Evidence chain map (weekly run)</h2>
+      <p class="review-subtitle">
+        Inspect evidence in this order: Candidate Issue → runtime safety scan → implementation PR → public agent run bundle → run record → public results snapshot.
+      </p>
+
+      <div class="evidence-chain-map" role="navigation" aria-label="Evidence chain map">
+        <a class="evidence-chip" href="https://github.com/Unjuno/prompt-vote-lab/issues/195">Issue #195</a>
+        <span class="evidence-arrow" aria-hidden="true">→</span>
+        <a class="evidence-chip" href="#unsafe-summary">Safety scan</a>
+        <span class="evidence-arrow" aria-hidden="true">→</span>
+        <a class="evidence-chip" href="./comparisons/2026-W20/">Implementation PR</a>
+        <span class="evidence-arrow" aria-hidden="true">→</span>
+        <a class="evidence-chip" href="./comparisons/2026-W20/">Run bundle</a>
+        <span class="evidence-arrow" aria-hidden="true">→</span>
+        <a class="evidence-chip" href="./comparisons/2026-W20/">Run record</a>
+        <span class="evidence-arrow" aria-hidden="true">→</span>
+        <a class="evidence-chip" href="../data/public-results.json">Public results</a>
+      </div>
+
+      <ol class="review-order">
+        <li><a class="review-link" href="https://github.com/Unjuno/prompt-vote-lab/issues/195">Candidate Issue (Issue #195)</a></li>
+        <li><a class="review-link" href="#unsafe-summary">Runtime safety scan (unsafe vs. ignored)</a></li>
+        <li><a class="review-link" href="./comparisons/2026-W20/">Implementation PR (diff)</a></li>
+        <li><a class="review-link" href="./comparisons/2026-W20/">Public agent run bundle (artifacts)</a></li>
+        <li><a class="review-link" href="./comparisons/2026-W20/">Run record (status/logs)</a></li>
+        <li><a class="review-link" href="../data/public-results.json">Public results snapshot (what the run produced)</a></li>
+      </ol>
+      <p class="review-experiment-note">
+        This page is a constrained static UI experiment: it performs no network calls and does not execute dynamic Codex code.
+      </p>
+    </section>
+    <noscript>This lab works without network access or external scripts.</noscript>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
