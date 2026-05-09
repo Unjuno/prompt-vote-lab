@@ -146,7 +146,7 @@ def test_dashboard_builder() -> None:
     if found:
         raise AssertionError(f"dashboard leaked forbidden text: {found}")
 
-    if html.count("Rank 1") != 1:
+    if html.count('<p class="rank-eyebrow">Rank 1</p>') != 1:
         raise AssertionError("dashboard should render exactly one Rank 1 card")
 
     if "rank-grid" not in css or "rank-card" not in css:
