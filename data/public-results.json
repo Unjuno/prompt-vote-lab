@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-09T18:21:59+00:00",
+  "generated_at": "2026-05-09T19:01:04+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -492,6 +492,80 @@
   ],
   "pull_requests": [
     {
+      "additions": 49,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes comparison dashboard PR selection when the same Issue has multiple generated or corrective PRs.\n\n## Problem\n\nThe dashboard currently builds `prs_by_issue` with a simple assignment:\n\n```python\nprs_by_issue[issue_number] = pr\n```\n\nThat makes the selected PR depend on public-results ordering. In rerun flows, an Issue can have stale closed PRs and later merged PRs, for example:\n\n```text\nIssue #195: #211 CLOSED, #214 MERGED, #222 MERGED metadata fix\nIssue #196: #216 CLOSED, #224 MERGED\n```\n\nThe dashboard can therefore show closed stale PRs even after corrected artifacts are merged.\n\n## Change\n\nAdds PR selection logic:\n\n```text\nMERGED > OPEN > CLOSED > unknown\nthen higher PR number wins\n```\n\n## Tests\n\nUpdates `scripts/test_build_comparison_dashboard.py` with a regression case where Issue #195 has:\n\n```text\nPR #199 CLOSED\nPR #201 MERGED\n```\n\nand verifies the dashboard selects #201 and does not show #199 or stale changed files.\n\n## Non-goals\n\n- Does not regenerate public results in this PR.\n- Does not modify generated comparison HTML in this PR.\n- Does not change rank artifacts.",
+      "body_length": 1105,
+      "changed_files": 2,
+      "closed_at": "2026-05-09T19:00:42Z",
+      "comment_count": 0,
+      "created_at": "2026-05-09T18:49:23Z",
+      "deletions": 8,
+      "files": [
+        {
+          "additions": 35,
+          "deletions": 5,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 14,
+          "deletions": 3,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "fix-comparison-dashboard-pr-selection",
+      "head_ref_oid": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
+      "labels": [],
+      "merge_commit_oid": "571419d9716040cc25b2b6577d62274f3a84fe0f",
+      "merged_at": "2026-05-09T19:00:42Z",
+      "merged_by": "Unjuno",
+      "number": 227,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Prefer merged latest PRs in comparison dashboard",
+      "updated_at": "2026-05-09T19:00:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/227"
+    },
+    {
+      "additions": 5,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds explicit timeouts to the comparison-run workflow so Codex runner stalls fail deterministically instead of blocking the queue indefinitely.\n\n## Change\n\n```text\n.github/workflows/codex-comparison-issue-run.yml\n```\n\nAdds:\n\n```yaml\njobs:\n  codex-comparison-issue-run:\n    timeout-minutes: 30\n\nsteps:\n  - name: Run existing fixed-Issue runner\n    timeout-minutes: 20\n```\n\nAlso updates:\n\n```text\nscripts/test_comparison_issue_run_workflow_contract.py\n```\n\nto require those timeout settings.\n\n## Why\n\nSeveral comparison runs spend most of their time in:\n\n```text\nRun existing fixed-Issue runner\n```\n\nWithout a timeout, a stuck model/API/container invocation can block operational progress and leave only manual cancellation as the recovery path.\n\n## Non-goals\n\n- Does not change model, prompt, fixed base, retry policy, or fallback policy.\n- Does not alter generated comparison artifacts.\n- Does not affect the currently running #223 workflow run; it only applies to future runs.\n\n<!-- CURSOR_SUMMARY -->\n---\n\n> [!NOTE]\n> **Low Risk**\n> Low risk: CI-only change that adds job/step time limits; main behavior change is that long-running/stuck comparison runs will now fail instead of hanging.\n> \n> **Overview**\n> Adds explicit timeouts to the `codex-comparison-issue-run` GitHub Actions workflow: a **30-minute cap** for the job and a **20-minute cap** for the `Run existing fixed-Issue runner` step to prevent stalled runs from blocking the queue.\n> \n> Updates the workflow contract test (`scripts/test_comparison_issue_run_workflow_contract.py`) to require these timeout settings so regressions are caught in CI.\n> \n> <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup>\n<!-- /CURSOR_SUMMARY -->",
+      "body_length": 1889,
+      "changed_files": 2,
+      "closed_at": "2026-05-09T18:26:10Z",
+      "comment_count": 1,
+      "created_at": "2026-05-09T17:54:24Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": ".github/workflows/codex-comparison-issue-run.yml"
+        },
+        {
+          "additions": 3,
+          "deletions": 0,
+          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "add-comparison-run-timeouts-v2",
+      "head_ref_oid": "829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 225,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Add timeouts to comparison runs",
+      "updated_at": "2026-05-09T18:26:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/225"
+    },
+    {
       "additions": 5,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -601,43 +675,6 @@
       "title": "Run Codex comparison issue rank 3",
       "updated_at": "2026-05-09T17:58:08Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/224"
-    },
-    {
-      "additions": 5,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds explicit timeouts to the comparison-run workflow so Codex runner stalls fail deterministically instead of blocking the queue indefinitely.\n\n## Change\n\n```text\n.github/workflows/codex-comparison-issue-run.yml\n```\n\nAdds:\n\n```yaml\njobs:\n  codex-comparison-issue-run:\n    timeout-minutes: 30\n\nsteps:\n  - name: Run existing fixed-Issue runner\n    timeout-minutes: 20\n```\n\nAlso updates:\n\n```text\nscripts/test_comparison_issue_run_workflow_contract.py\n```\n\nto require those timeout settings.\n\n## Why\n\nSeveral comparison runs spend most of their time in:\n\n```text\nRun existing fixed-Issue runner\n```\n\nWithout a timeout, a stuck model/API/container invocation can block operational progress and leave only manual cancellation as the recovery path.\n\n## Non-goals\n\n- Does not change model, prompt, fixed base, retry policy, or fallback policy.\n- Does not alter generated comparison artifacts.\n- Does not affect the currently running #223 workflow run; it only applies to future runs.\n\n<!-- CURSOR_SUMMARY -->\n---\n\n> [!NOTE]\n> **Low Risk**\n> Low risk: CI-only change that adds job/step time limits; main behavior change is that long-running/stuck comparison runs will now fail instead of hanging.\n> \n> **Overview**\n> Adds explicit timeouts to the `codex-comparison-issue-run` GitHub Actions workflow: a **30-minute cap** for the job and a **20-minute cap** for the `Run existing fixed-Issue runner` step to prevent stalled runs from blocking the queue.\n> \n> Updates the workflow contract test (`scripts/test_comparison_issue_run_workflow_contract.py`) to require these timeout settings so regressions are caught in CI.\n> \n> <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup>\n<!-- /CURSOR_SUMMARY -->",
-      "body_length": 1889,
-      "changed_files": 2,
-      "closed_at": null,
-      "comment_count": 0,
-      "created_at": "2026-05-09T17:54:24Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": ".github/workflows/codex-comparison-issue-run.yml"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-run-timeouts-v2",
-      "head_ref_oid": "829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 225,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "OPEN",
-      "title": "Add timeouts to comparison runs",
-      "updated_at": "2026-05-09T17:54:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/225"
     },
     {
       "additions": 1,
@@ -4392,38 +4429,6 @@
       "title": "Pass Codex prompt as argument",
       "updated_at": "2026-05-06T03:03:16Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/108"
-    },
-    {
-      "additions": 27,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nExtends the first-canary contract test to cover the runner script after the runner plumbing was fixed.\n\n## Changed file\n\n- `scripts/test_codex_canary_contract.py`\n\n## What this guards\n\n- runner fallback model remains `gpt-5.4-nano`\n- workspace-write sandbox remains enabled\n- JSON event output remains enabled\n- last-message capture remains enabled\n- invalid local apply step stays removed\n- sampling controls such as temperature, top_p, logprobs, and seed remain forbidden\n\n## Scope\n\n- CI guard only.\n- No `/lab/` changes.\n- No canary execution.\n- No model or parameter changes.",
-      "body_length": 591,
-      "changed_files": 1,
-      "closed_at": "2026-05-05T17:39:14Z",
-      "comment_count": 0,
-      "created_at": "2026-05-05T17:38:17Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 27,
-          "deletions": 0,
-          "path": "scripts/test_codex_canary_contract.py"
-        }
-      ],
-      "head_ref_name": "guard-runner-contract",
-      "head_ref_oid": "aa0be9d2ced7448aabc8e98136f1a3cc2492ce09",
-      "labels": [],
-      "merge_commit_oid": "1864292335cd6717e7bda9a00a692d2bff379f6f",
-      "merged_at": "2026-05-05T17:39:14Z",
-      "merged_by": "Unjuno",
-      "number": 114,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Guard first canary runner contract",
-      "updated_at": "2026-05-06T03:03:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/114"
     }
   ],
   "run_records": [
@@ -4562,12 +4567,110 @@
     "issue_count": 12,
     "merged_pr_count": 86,
     "open_issue_count": 2,
-    "open_pr_count": 1,
+    "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 20,
     "workflow_run_count": 100
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-09T19:00:45Z",
+      "database_id": 25609278208,
+      "display_title": "Prefer merged latest PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-dashboard-pr-selection",
+      "head_sha": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:00:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609278208",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-09T19:00:45Z",
+      "database_id": 25609278182,
+      "display_title": "Prefer merged latest PRs in comparison dashboard (#227)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "571419d9716040cc25b2b6577d62274f3a84fe0f",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-09T19:00:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609278182",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-09T19:00:44Z",
+      "database_id": 25609277773,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "571419d9716040cc25b2b6577d62274f3a84fe0f",
+      "name": "pages build and deployment",
+      "status": "in_progress",
+      "updated_at": "2026-05-09T19:01:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609277773",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T18:49:26Z",
+      "database_id": 25609045899,
+      "display_title": "Prefer merged latest PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-dashboard-pr-selection",
+      "head_sha": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:49:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609045899",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T18:49:26Z",
+      "database_id": 25609045890,
+      "display_title": "Prefer merged latest PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "fix-comparison-dashboard-pr-selection",
+      "head_sha": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:49:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609045890",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-09T18:26:12Z",
+      "database_id": 25608555244,
+      "display_title": "Add timeouts to comparison runs",
+      "event": "pull_request",
+      "head_branch": "add-comparison-run-timeouts-v2",
+      "head_sha": "829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:26:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25608555244",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T18:22:02Z",
+      "database_id": 25608468348,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "73e3b3591abfaa184798c837741b9b0bf894c10e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:22:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25608468348",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-09T18:21:44Z",
@@ -4583,7 +4686,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-09T18:21:44Z",
       "database_id": 25608462118,
       "display_title": "Add timeouts to comparison runs v3 (#226)",
@@ -4591,13 +4694,13 @@
       "head_branch": "main",
       "head_sha": "6c7c4d4cb36e341256f3a2053e90a53ed94d7d68",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-09T18:21:48Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:22:05Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25608462118",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-09T18:21:43Z",
       "database_id": 25608461748,
       "display_title": "pages build and deployment",
@@ -4605,8 +4708,8 @@
       "head_branch": "main",
       "head_sha": "6c7c4d4cb36e341256f3a2053e90a53ed94d7d68",
       "name": "pages build and deployment",
-      "status": "waiting",
-      "updated_at": "2026-05-09T18:21:56Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T18:22:11Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25608461748",
       "workflow_name": "pages-build-deployment"
     },
@@ -5869,104 +5972,6 @@
       "updated_at": "2026-05-08T16:22:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566668292",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-08T16:21:50Z",
-      "database_id": 25566668180,
-      "display_title": "Allow comparison run request files",
-      "event": "pull_request",
-      "head_branch": "comparison-run-request-files",
-      "head_sha": "df968743988cf9edc7cdc32394504cad89b12777",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:22:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566668180",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:21:49Z",
-      "database_id": 25566667573,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9c35ad643dafd2c019c0310df682f069c2ef70df",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:22:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566667573",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:18:46Z",
-      "database_id": 25566523718,
-      "display_title": "Allow comparison run request files",
-      "event": "pull_request",
-      "head_branch": "comparison-run-request-files",
-      "head_sha": "df968743988cf9edc7cdc32394504cad89b12777",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:19:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566523718",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:18:46Z",
-      "database_id": 25566523702,
-      "display_title": "Allow comparison run request files",
-      "event": "pull_request",
-      "head_branch": "comparison-run-request-files",
-      "head_sha": "df968743988cf9edc7cdc32394504cad89b12777",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:19:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566523702",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-08T16:11:45Z",
-      "database_id": 25566205381,
-      "display_title": "[Prompt][Rank 2]: Add an evidence map for reviewing weekly runs",
-      "event": "issue_comment",
-      "head_branch": "main",
-      "head_sha": "3cf250e586bffb3f53ddc3c25cbfa2a66ed144ee",
-      "name": "Codex Comparison Issue Run",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:15:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566205381",
-      "workflow_name": "Codex Comparison Issue Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:10:52Z",
-      "database_id": 25566165626,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "3cf250e586bffb3f53ddc3c25cbfa2a66ed144ee",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:11:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566165626",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-08T16:10:29Z",
-      "database_id": 25566148294,
-      "display_title": "Allow comparison runs from Issue comments",
-      "event": "pull_request",
-      "head_branch": "comment-trigger-comparison-run",
-      "head_sha": "d735c6690679dce458b67896cf85d38894229822",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:10:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566148294",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }

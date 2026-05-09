@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-09T18:21:59+00:00`
+Generated at: `2026-05-09T19:01:04+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,7 +14,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 1 |
+| open_pr_count | 0 |
 | merged_pr_count | 86 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
@@ -40,10 +40,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 227 | MERGED | 2 | 49/8 | Prefer merged latest PRs in comparison dashboard |
+| 225 | CLOSED | 2 | 5/0 | Add timeouts to comparison runs |
 | 226 | MERGED | 2 | 5/0 | Add timeouts to comparison runs v3 |
 | 223 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 196 rank 3 |
 | 224 | MERGED | 3 | 540/0 | Run Codex comparison issue rank 3 |
-| 225 | OPEN | 2 | 5/0 | Add timeouts to comparison runs |
 | 220 | CLOSED | 1 | 1/1 | Normalize rank 2 comparison metadata |
 | 219 | CLOSED | 3 | 491/0 | Run Codex comparison issue rank 2 |
 | 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
@@ -69,15 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 200 | MERGED | 5 | 645/6 | Add history page generator |
 | 197 | MERGED | 4 | 529/0 | Add comparison dashboard generator |
 | 198 | MERGED | 2 | 54/3 | Auto-build comparison dashboards during public export |
-| 199 | MERGED | 2 | 260/0 | Add comparison Issue run workflow |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25609278208 | Terminal State Report | pull_request | completed | skipped | Prefer merged latest PRs in comparison dashboard |
+| 25609278182 | Public Results Export | push | in_progress |  | Prefer merged latest PRs in comparison dashboard (#227) |
+| 25609277773 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25609045899 | Script Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
+| 25609045890 | Lab PR Scope Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
+| 25608555244 | Terminal State Report | pull_request | completed | skipped | Add timeouts to comparison runs |
+| 25608468348 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25608462139 | Terminal State Report | pull_request | completed | skipped | Add timeouts to comparison runs v3 |
-| 25608462118 | Public Results Export | push | in_progress |  | Add timeouts to comparison runs v3 (#226) |
-| 25608461748 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25608462118 | Public Results Export | push | completed | success | Add timeouts to comparison runs v3 (#226) |
+| 25608461748 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25608404410 | Script Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
 | 25608404408 | Lab PR Scope Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
 | 25608105242 | Terminal State Report | pull_request | completed | skipped | Request metadata-normalized comparison run for Issue 196 rank 3 |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25604107193 | Terminal State Report | pull_request | completed | skipped | Allow generated lab evidence paths in scope guard |
 | 25604107189 | Public Results Export | push | completed | success | Allow generated lab evidence paths in scope guard (#221) |
 | 25604106917 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25604061311 | Script Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
-| 25604061305 | Lab PR Scope Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
-| 25603929107 | Lab PR Scope Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
-| 25603929097 | Script Check | pull_request | completed | failure | Allow generated lab evidence paths in scope guard |
-| 25603375356 | Static Site Check | pull_request | completed | success | Normalize rank 2 comparison metadata |
-| 25603375340 | Lab PR Scope Check | pull_request | completed | failure | Normalize rank 2 comparison metadata |
-| 25603375335 | Safety Check | pull_request | completed | success | Normalize rank 2 comparison metadata |
 
 ## Raw JSON
 
