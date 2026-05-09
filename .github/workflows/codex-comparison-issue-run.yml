@@ -166,7 +166,7 @@ jobs:
           cp lab/index.html "$OUTPUT_ROOT/index.html"
           cp lab/style.css "$OUTPUT_ROOT/style.css"
           cp lab/app.js "$OUTPUT_ROOT/app.js"
-          python scripts/normalize_comparison_rank_links.py --index "$OUTPUT_ROOT/index.html" --week-id "$RUN_WEEK"
+          python scripts/normalize_comparison_rank_links.py --index "$OUTPUT_ROOT/index.html" --week-id "$RUN_WEEK" --issue-number "$ISSUE_NUMBER" --candidate-rank "$CANDIDATE_RANK"
           git checkout -- lab/index.html lab/style.css lab/app.js
           git add -N "$OUTPUT_ROOT/index.html" "$OUTPUT_ROOT/style.css" "$OUTPUT_ROOT/app.js"
           printf '%s\n' "$BASE_SHA" > .tmp/canary-diagnostics/comparison-base-sha.txt
@@ -250,6 +250,7 @@ jobs:
           - issue execution gate passed
           - root lab output copied into rank-specific comparison root
           - rank-root relative links normalized
+          - rank-root issue/rank metadata normalized
           - root lab files restored before PR creation
           - changed-file guard passed
           - safety-check passed
