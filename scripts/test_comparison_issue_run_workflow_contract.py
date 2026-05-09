@@ -12,6 +12,7 @@ REQUIRED_TEXT = [
     "issue_comment:",
     "types: [created]",
     "push:",
+    "pull_request:",
     "branches:",
     "- main",
     "paths:",
@@ -23,15 +24,20 @@ REQUIRED_TEXT = [
     "vote_count:",
     "startsWith(github.event.comment.body, '/run-comparison ')",
     "github.event_name == 'push'",
+    "github.event_name == 'pull_request'",
+    "github.event.pull_request.head.repo.full_name == github.repository",
     "Checkout workflow source",
     "Resolve comparison inputs",
     "COMMENT_BODY: ${{ github.event.comment.body }}",
     "COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}",
     "PUSH_BEFORE: ${{ github.event.before }}",
     "PUSH_SHA: ${{ github.sha }}",
+    "PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}",
+    "PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}",
     "week|base|rank|votes",
     "missing comparison command keys",
     "git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'",
+    "git', 'diff', '--name-only', base, head, '--', 'run-requests/comparison/*.json'",
     "exactly one comparison request JSON is required",
     "missing comparison request keys",
     "week_id",
@@ -106,6 +112,8 @@ def main() -> int:
         raise SystemExit("workflow_dispatch should appear before issue_comment")
     if text.index("issue_comment:") > text.index("push:"):
         raise SystemExit("issue_comment should appear before request-file push trigger")
+    if text.index("push:") > text.index("pull_request:"):
+        raise SystemExit("push trigger should appear before request-file pull_request trigger")
     if text.index("Resolve comparison inputs") > text.index("Checkout fixed comparison base"):
         raise SystemExit("Inputs must be resolved before fixed-base checkout")
     if text.index("Checkout fixed comparison base") > text.index("Fetch Issue and run safety gate"):
