@@ -46,6 +46,7 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       CODEX_MODEL: gpt-5.4-nano
     steps:
@@ -148,6 +149,7 @@ jobs:
           python scripts/check_issue_execution_gate.py --scan-json .tmp/issue-safety-runtime/scan.json --issue-json .tmp/issue-source/selected-issue.raw.json --out-json .tmp/issue-execution-gate/gate.json --out-md .tmp/issue-execution-gate/gate.md
 
       - name: Run existing fixed-Issue runner
+        timeout-minutes: 20
         env:
           RUNNER_KEY: ${{ secrets.OPENAI_API_KEY_ }}
           ISSUE_JSON_PATH: .tmp/issue-source/selected-issue.raw.json
