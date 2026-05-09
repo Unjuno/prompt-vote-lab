@@ -10,10 +10,14 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "normalize_comparison_rank_links.py"
 
 
-def run_normalizer(index: Path, week_id: str | None = None) -> None:
+def run_normalizer(index: Path, week_id: str | None = None, issue: str = "", rank: str = "") -> None:
     cmd = [sys.executable, str(SCRIPT), "--index", str(index)]
     if week_id:
         cmd.extend(["--week-id", week_id])
+    if issue:
+        cmd.extend(["--issue-number", issue])
+    if rank:
+        cmd.extend(["--candidate-rank", rank])
     subprocess.run(cmd, check=True, cwd=ROOT)
 
 
@@ -37,17 +41,30 @@ def assert_links(text: str, week_id: str) -> None:
         raise AssertionError(f"root-lab links remain: {found}")
 
 
-def test_explicit_week() -> None:
+def test_explicit_week_and_metadata() -> None:
     with tempfile.TemporaryDirectory() as tmp:
-        index = Path(tmp) / "index.html"
+        rank_root = Path(tmp)
+        index = rank_root / "index.html"
+        app = rank_root / "app.js"
         index.write_text(
             '<a href="./history/">History</a>\n'
             '<a href="./comparisons/2026-W21/">Latest</a>\n'
-            '<a href="../data/public-results.json">Results</a>\n',
+            '<a href="../data/public-results.json">Results</a>\n'
+            '<p>Issue #191</p>\n'
+            '<p>Candidate #1</p>\n',
             encoding="utf-8",
         )
-        run_normalizer(index, "2026-W21")
-        assert_links(index.read_text(encoding="utf-8"), "2026-W21")
+        app.write_text("// Issue #191\nconst label = 'Candidate #1';\n", encoding="utf-8")
+        run_normalizer(index, "2026-W21", issue="196", rank="3")
+        index_text = index.read_text(encoding="utf-8")
+        app_text = app.read_text(encoding="utf-8")
+        assert_links(index_text, "2026-W21")
+        if "Issue #196" not in index_text or "Candidate #3" not in index_text:
+            raise AssertionError("index metadata was not normalized")
+        if "Issue #196" not in app_text or "Candidate #3" not in app_text:
+            raise AssertionError("app metadata was not normalized")
+        if "Issue #191" in index_text + app_text or "Candidate #1" in index_text + app_text:
+            raise AssertionError("stale metadata remains")
 
 
 def test_inferred_week() -> None:
@@ -66,7 +83,7 @@ def test_inferred_week() -> None:
 
 
 def main() -> int:
-    test_explicit_week()
+    test_explicit_week_and_metadata()
     test_inferred_week()
     print("comparison rank link normalizer test passed")
     return 0
