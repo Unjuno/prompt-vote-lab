@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Vote Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+</head>
+<body>
+  <main class="lab-root" aria-labelledby="lab-title">
+    <p class="status" aria-live="polite">
+      <span class="pill pill--safe" aria-hidden="true">Safe</span>
+      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #196)</span>
+    </p>
+    <h1 id="lab-title">Prompt Vote Lab</h1>
+    <p class="note">
+      This area is the constrained implementation target. It starts intentionally empty and will be changed only by accepted experiment runs.
+    </p>
+
+    <nav class="evidence-nav" aria-label="Public evidence navigation">
+      <a href="../../../history/">History</a>
+      <a href="../">Latest comparison</a>
+      <a href="../../../../data/public-results.json">Public results JSON</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Prompt Issues</a>
+    </nav>
+
+    <section class="hostile-card" role="note" aria-label="Experiment status and next action for participants.">
+      <p class="hostile-card-text">Experiment status</p>
+
+      <div class="hostile-card-meta" role="status" aria-live="polite">
+        <p class="meta-row">
+          <span class="meta-label">current experiment state:</span>
+          <span class="meta-value">first-canary-009 • Candidate #3 • Issue #196</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">next action for participants:</span>
+          <span class="meta-value">Vote on the prompt candidate for Issue #196</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">Detected:</span>
+          <span id="unsafe-summary" class="meta-value">Loading…</span>
+        </p>
+        <p class="meta-row">
+          <span class="meta-label">Execution gate:</span>
+          <span id="gate-summary" class="meta-value">Loading…</span>
+        </p>
+      </div>
+
+      <div class="hostile-card-details">
+        <div id="unsafe-details">
+          <p class="details-title">Unsafe instructions ignored:</p>
+          <ul class="unsafe-list" id="unsafe-list"></ul>
+        </div>
+        <p class="small-note">
+          results are recorded publicly for transparency. This static prototype performs no network calls and does not execute dynamic code.
+        </p>
+      </div>
+    </section>
+
+    <section class="review-card review-card--orientation" role="note" aria-label="Reviewer orientation panel">
+      <h2 class="review-title">Reviewer orientation: evidence review order</h2>
+      <p class="review-subtitle">Before trusting a weekly Prompt Vote Lab result, inspect evidence in this order:</p>
+      <ol class="review-order">
+        <li><a class="review-link" href="#status-text">Selected Issue (Issue #196)</a></li>
+        <li><a class="review-link" href="#unsafe-summary">Safety scan (what was flagged unsafe vs. ignored)</a></li>
+        <li>Changed files (experiment PR diff)</li>
+        <li>Public agent run bundle (run artifacts)</li>
+        <li>Run record (status/logs)</li>
+        <li>Public results snapshot (the final public summary of what the run produced)</li>
+      </ol>
+      <p class="review-experiment-note">
+        This page is a constrained static UI experiment: it performs no network calls and does not execute dynamic Codex code.
+      </p>
+    </section>
+
+    <section class="decision-card" role="note" aria-label="Participant decision card">
+      <h2 class="decision-title">Participant decision: next action</h2>
+      <p class="decision-subtitle">
+        After reviewing this week's evidence, pick the next step that fits what you saw:
+      </p>
+
+      <ol class="decision-options">
+        <li class="decision-option decision-option--trust">
+          <h3 class="decision-option-title">Trust the run</h3>
+          <p class="decision-option-criteria">
+            Choose this when the result matches the prompt and the safety scan has nothing to ignore.
+          </p>
+        </li>
+        <li class="decision-option decision-option--inspect">
+          <h3 class="decision-option-title">Inspect more evidence</h3>
+          <p class="decision-option-criteria">
+            Choose this when key details are missing or unclear, and you want to re-check the evidence on this page.
+          </p>
+        </li>
+        <li class="decision-option decision-option--propose">
+          <h3 class="decision-option-title">Propose a better prompt</h3>
+          <p class="decision-option-criteria">
+            Choose this when the run misses the goal, seems risky/low quality, or you can suggest a clearer prompt candidate.
+          </p>
+        </li>
+      </ol>
+    </section>
+    <noscript>This lab works without network access or external scripts.</noscript>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
