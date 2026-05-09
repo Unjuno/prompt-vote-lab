@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-09T19:01:04+00:00",
+  "generated_at": "2026-05-09T19:38:52+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -491,6 +491,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 67,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes the comparison dashboard so it does not show stale PRs or duplicate rank cards.\n\n## Problem\n\nThe comparison dashboard had two related issues:\n\n```text\n1. Same Issue with multiple PRs could select a stale closed PR.\n2. Same rank could render multiple cards, for example two Rank 1 cards.\n```\n\nObserved examples:\n\n```text\nRank 2: stale PR #211 instead of the corrected/merged rank-2 output\nRank 3: stale PR #216 instead of merged PR #224\nRank 1: duplicate cards from Issue #183 and Issue #191\n```\n\n## Change\n\nSelection is now deterministic:\n\n```text\nPR state: MERGED > OPEN > CLOSED > unknown\nTie-break: larger PR number\nRank dedupe tie-break: PR selection key, then larger Issue number\n```\n\n## Tests\n\nAdds regression coverage for:\n\n```text\nIssue #195: choose MERGED PR #201 over CLOSED PR #199\nRank 1: choose the preferred/newer merged row and render exactly one Rank 1 card\n```\n\n## Non-goals\n\n- Does not directly edit generated comparison HTML in this PR.\n- Does not modify rank artifacts.\n- Does not change model execution workflow.",
+      "body_length": 1051,
+      "changed_files": 2,
+      "closed_at": "2026-05-09T19:38:34Z",
+      "comment_count": 0,
+      "created_at": "2026-05-09T19:25:32Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 20,
+          "deletions": 7,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 47,
+          "deletions": 0,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_ref_oid": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
+      "labels": [],
+      "merge_commit_oid": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
+      "merged_at": "2026-05-09T19:38:34Z",
+      "merged_by": "Unjuno",
+      "number": 228,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Dedupe comparison dashboard rows by rank",
+      "updated_at": "2026-05-09T19:38:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/228"
+    },
     {
       "additions": 49,
       "author": "Unjuno",
@@ -4397,38 +4434,6 @@
       "title": "Enable Codex write mode for canary",
       "updated_at": "2026-05-06T03:03:16Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/109"
-    },
-    {
-      "additions": 3,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the Codex first canary prompt delivery after the latest run authenticated successfully but produced no file changes.\n\n## Observed result\n\n```text\nReading API key from stdin...\nSuccessfully logged in\nCodex produced no changes.\n```\n\n## Hypothesis\n\n`codex exec ... - < .tmp/codex-first-canary-prompt.md` did not deliver the editing prompt as intended. The command completed without changing files.\n\n## Changed file\n\n- `scripts/run_codex_first_canary.sh`\n\n## What changed\n\n- Reads `.tmp/codex-first-canary-prompt.md` into a shell variable.\n- Passes the prompt as the positional argument to `codex exec`.\n- Keeps explicit API-key login.\n- Keeps `workspace-write`, JSON event output, and last-message capture.\n\n## What this deliberately does not change\n\n- Does not modify `/lab/`.\n- Does not run Codex during this PR.\n- Does not change the model label.\n- Does not change the public log contract.\n- Does not auto-merge.\n\n## Next step after merge\n\nRun `Codex First Canary Run` manually again. PASS requires a lab-only diff, checks passing, and a PR created by the workflow.",
-      "body_length": 1083,
-      "changed_files": 1,
-      "closed_at": "2026-05-05T16:35:28Z",
-      "comment_count": 1,
-      "created_at": "2026-05-05T16:31:31Z",
-      "deletions": 1,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 1,
-          "path": "scripts/run_codex_first_canary.sh"
-        }
-      ],
-      "head_ref_name": "fix-codex-prompt-delivery",
-      "head_ref_oid": "f03b61b493ca7faf8f6f32589079910c51088e0f",
-      "labels": [],
-      "merge_commit_oid": "09ca1fb3c8065ac028df4690a16288f2b5b980a4",
-      "merged_at": "2026-05-05T16:35:28Z",
-      "merged_by": "Unjuno",
-      "number": 108,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Pass Codex prompt as argument",
-      "updated_at": "2026-05-06T03:03:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/108"
     }
   ],
   "run_records": [
@@ -4574,6 +4579,118 @@
   },
   "workflow_runs": [
     {
+      "conclusion": "",
+      "created_at": "2026-05-09T19:38:36Z",
+      "database_id": 25610023339,
+      "display_title": "Dedupe comparison dashboard rows by rank (#228)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-09T19:38:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023339",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-09T19:38:36Z",
+      "database_id": 25610023322,
+      "display_title": "Dedupe comparison dashboard rows by rank",
+      "event": "pull_request",
+      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:38:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023322",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-09T19:38:35Z",
+      "database_id": 25610023038,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
+      "name": "pages build and deployment",
+      "status": "queued",
+      "updated_at": "2026-05-09T19:38:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023038",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T19:31:26Z",
+      "database_id": 25609885998,
+      "display_title": "Dedupe comparison dashboard rows by rank",
+      "event": "pull_request",
+      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:31:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609885998",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T19:31:26Z",
+      "database_id": 25609885994,
+      "display_title": "Dedupe comparison dashboard rows by rank",
+      "event": "pull_request",
+      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:31:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609885994",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-09T19:25:36Z",
+      "database_id": 25609768439,
+      "display_title": "Dedupe comparison dashboard rows by rank",
+      "event": "pull_request",
+      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_sha": "2b6426eda85fb78a1908432263032fe674b45613",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:25:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609768439",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T19:25:36Z",
+      "database_id": 25609768438,
+      "display_title": "Dedupe comparison dashboard rows by rank",
+      "event": "pull_request",
+      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
+      "head_sha": "2b6426eda85fb78a1908432263032fe674b45613",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:25:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609768438",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-09T19:01:07Z",
+      "database_id": 25609286937,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "05346dc890fb69791fcb402a088f0dc3ee340f0a",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:01:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609286937",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
       "conclusion": "skipped",
       "created_at": "2026-05-09T19:00:45Z",
       "database_id": 25609278208,
@@ -4588,7 +4705,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-09T19:00:45Z",
       "database_id": 25609278182,
       "display_title": "Prefer merged latest PRs in comparison dashboard (#227)",
@@ -4596,13 +4713,13 @@
       "head_branch": "main",
       "head_sha": "571419d9716040cc25b2b6577d62274f3a84fe0f",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-09T19:00:54Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:01:08Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609278182",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-09T19:00:44Z",
       "database_id": 25609277773,
       "display_title": "pages build and deployment",
@@ -4610,8 +4727,8 @@
       "head_branch": "main",
       "head_sha": "571419d9716040cc25b2b6577d62274f3a84fe0f",
       "name": "pages build and deployment",
-      "status": "in_progress",
-      "updated_at": "2026-05-09T19:01:01Z",
+      "status": "completed",
+      "updated_at": "2026-05-09T19:01:10Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609277773",
       "workflow_name": "pages-build-deployment"
     },
@@ -5860,118 +5977,6 @@
       "updated_at": "2026-05-08T16:44:10Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567679424",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:41:36Z",
-      "database_id": 25567579202,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "848e90bddc00bae7347a3f77676e2b5ff6ed0fb2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:42:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567579202",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-08T16:41:19Z",
-      "database_id": 25567566033,
-      "display_title": "Fix comparison safety check base",
-      "event": "pull_request",
-      "head_branch": "fix-comparison-request-safety-base",
-      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:41:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567566033",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:41:19Z",
-      "database_id": 25567565972,
-      "display_title": "Fix comparison safety check base (#205)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "633f4e1ce019743f4847b003267f8ec7ee1a1ac2",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:41:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567565972",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-08T16:41:18Z",
-      "database_id": 25567565059,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "633f4e1ce019743f4847b003267f8ec7ee1a1ac2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:41:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567565059",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:39:36Z",
-      "database_id": 25567484270,
-      "display_title": "Fix comparison safety check base",
-      "event": "pull_request",
-      "head_branch": "fix-comparison-request-safety-base",
-      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:39:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567484270",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:39:36Z",
-      "database_id": 25567484235,
-      "display_title": "Fix comparison safety check base",
-      "event": "pull_request",
-      "head_branch": "fix-comparison-request-safety-base",
-      "head_sha": "164dc9af75432f044d2a3c9693d8762fd8b75353",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:39:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25567484235",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:22:16Z",
-      "database_id": 25566686968,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "def8bd86803d82d994d40ea42c3a599750ac4345",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:22:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566686968",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-08T16:21:50Z",
-      "database_id": 25566668292,
-      "display_title": "Allow comparison run request files (#204)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "9c35ad643dafd2c019c0310df682f069c2ef70df",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-08T16:22:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25566668292",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
