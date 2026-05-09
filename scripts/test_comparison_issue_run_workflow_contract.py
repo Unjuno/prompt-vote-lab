@@ -9,9 +9,6 @@ WORKFLOW = ROOT / ".github" / "workflows" / "codex-comparison-issue-run.yml"
 REQUIRED_TEXT = [
     "name: Codex Comparison Issue Run",
     "workflow_dispatch:",
-    "issue_comment:",
-    "types: [created]",
-    "push:",
     "pull_request:",
     "branches:",
     "- main",
@@ -22,21 +19,12 @@ REQUIRED_TEXT = [
     "issue_number:",
     "candidate_rank:",
     "vote_count:",
-    "startsWith(github.event.comment.body, '/run-comparison ')",
-    "github.event_name == 'push'",
     "github.event_name == 'pull_request'",
     "github.event.pull_request.head.repo.full_name == github.repository",
     "Checkout workflow source",
     "Resolve comparison inputs",
-    "COMMENT_BODY: ${{ github.event.comment.body }}",
-    "COMMENT_ISSUE_NUMBER: ${{ github.event.issue.number }}",
-    "PUSH_BEFORE: ${{ github.event.before }}",
-    "PUSH_SHA: ${{ github.sha }}",
     "PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}",
     "PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}",
-    "week|base|rank|votes",
-    "missing comparison command keys",
-    "git', 'diff', '--name-only', before, after, '--', 'run-requests/comparison/*.json'",
     "git', 'diff', '--name-only', base, head, '--', 'run-requests/comparison/*.json'",
     "exactly one comparison request JSON is required",
     "missing comparison request keys",
@@ -45,6 +33,7 @@ REQUIRED_TEXT = [
     "issue_number",
     "candidate_rank",
     "vote_count",
+    "REQUEST_FILE=",
     "RUN_WEEK=",
     "BASE_SHA=",
     "ISSUE_NUMBER=",
@@ -66,15 +55,25 @@ REQUIRED_TEXT = [
     "Run existing fixed-Issue runner",
     "scripts/run_codex_issue_instruction_canary.sh",
     "Move root lab result into comparison output root",
+    "git status --short > .tmp/canary-diagnostics/git-status-before-rank-copy.txt",
+    "root-lab-changed-files-before-rank-copy.txt",
+    "root-lab-diff-before-rank-copy.patch",
     "cp lab/index.html \"$OUTPUT_ROOT/index.html\"",
     "cp lab/style.css \"$OUTPUT_ROOT/style.css\"",
     "cp lab/app.js \"$OUTPUT_ROOT/app.js\"",
     "git checkout -- lab/index.html lab/style.css lab/app.js",
+    "git add -N \"$OUTPUT_ROOT/index.html\" \"$OUTPUT_ROOT/style.css\" \"$OUTPUT_ROOT/app.js\"",
     "Validate comparison output scope",
+    "rank-output-status.txt",
+    "rank-output-changed-files.txt",
+    "rank-output-diff-stat.txt",
+    "rank-output-diff.patch",
+    "ERROR: comparison runner produced no rank output diff.",
     "\"$OUTPUT_ROOT/index.html\"|\"$OUTPUT_ROOT/style.css\"|\"$OUTPUT_ROOT/app.js\"",
     "bash scripts/safety-check.sh \"$BASE_SHA\" HEAD",
     "bash scripts/static-site-check.sh",
     "Upload comparison diagnostics",
+    "include-hidden-files: true",
     "Commit comparison output and create PR",
     "Fixed comparison base:",
     "Output root:",
@@ -83,6 +82,15 @@ REQUIRED_TEXT = [
 ]
 
 FORBIDDEN_TEXT = [
+    "issue_comment:",
+    "types: [created]",
+    "push:",
+    "startsWith(github.event.comment.body, '/run-comparison ')",
+    "github.event_name == 'push'",
+    "PUSH_BEFORE:",
+    "PUSH_SHA:",
+    "COMMENT_BODY:",
+    "COMMENT_ISSUE_NUMBER:",
     "git add lab/index.html lab/style.css lab/app.js",
     "gh pr merge",
     "enable_auto_merge",
@@ -108,12 +116,8 @@ def main() -> int:
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
 
-    if text.index("workflow_dispatch:") > text.index("issue_comment:"):
-        raise SystemExit("workflow_dispatch should appear before issue_comment")
-    if text.index("issue_comment:") > text.index("push:"):
-        raise SystemExit("issue_comment should appear before request-file push trigger")
-    if text.index("push:") > text.index("pull_request:"):
-        raise SystemExit("push trigger should appear before request-file pull_request trigger")
+    if text.index("workflow_dispatch:") > text.index("pull_request:"):
+        raise SystemExit("workflow_dispatch should appear before pull_request")
     if text.index("Resolve comparison inputs") > text.index("Checkout fixed comparison base"):
         raise SystemExit("Inputs must be resolved before fixed-base checkout")
     if text.index("Checkout fixed comparison base") > text.index("Fetch Issue and run safety gate"):
