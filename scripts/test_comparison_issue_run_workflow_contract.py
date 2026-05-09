@@ -25,6 +25,8 @@ REQUIRED_TEXT = [
     "Resolve comparison inputs",
     "PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}",
     "PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}",
+    "mkdir -p .tmp/canary-diagnostics .tmp/workflow-tools",
+    "cp scripts/normalize_comparison_rank_links.py .tmp/workflow-tools/normalize_comparison_rank_links.py",
     "git', 'diff', '--name-only', base, head, '--', 'run-requests/comparison/*.json'",
     "exactly one comparison request JSON is required",
     "missing comparison request keys",
@@ -48,7 +50,7 @@ REQUIRED_TEXT = [
     "cp lab/index.html \"$OUTPUT_ROOT/index.html\"",
     "cp lab/style.css \"$OUTPUT_ROOT/style.css\"",
     "cp lab/app.js \"$OUTPUT_ROOT/app.js\"",
-    "python scripts/normalize_comparison_rank_links.py --index \"$OUTPUT_ROOT/index.html\" --week-id \"$RUN_WEEK\" --issue-number \"$ISSUE_NUMBER\" --candidate-rank \"$CANDIDATE_RANK\"",
+    "python .tmp/workflow-tools/normalize_comparison_rank_links.py --index \"$OUTPUT_ROOT/index.html\" --week-id \"$RUN_WEEK\" --issue-number \"$ISSUE_NUMBER\" --candidate-rank \"$CANDIDATE_RANK\"",
     "rank-root relative links normalized",
     "rank-root issue/rank metadata normalized",
     "git checkout -- lab/index.html lab/style.css lab/app.js",
@@ -81,6 +83,7 @@ FORBIDDEN_TEXT = [
     "PUSH_SHA:",
     "COMMENT_BODY:",
     "COMMENT_ISSUE_NUMBER:",
+    "python scripts/normalize_comparison_rank_links.py --index \"$OUTPUT_ROOT/index.html\" --week-id \"$RUN_WEEK\" --issue-number \"$ISSUE_NUMBER\" --candidate-rank \"$CANDIDATE_RANK\"",
     "git add lab/index.html lab/style.css lab/app.js",
     "gh pr merge",
     "enable_auto_merge",
@@ -110,6 +113,8 @@ def main() -> int:
         raise SystemExit("workflow_dispatch should appear before pull_request")
     if text.index("Resolve comparison inputs") > text.index("Checkout fixed comparison base"):
         raise SystemExit("Inputs must be resolved before fixed-base checkout")
+    if text.index("cp scripts/normalize_comparison_rank_links.py .tmp/workflow-tools/normalize_comparison_rank_links.py") > text.index("Checkout fixed comparison base"):
+        raise SystemExit("Workflow-source normalizer must be copied before fixed-base checkout")
     if text.index("Checkout fixed comparison base") > text.index("Fetch Issue and run safety gate"):
         raise SystemExit("Fixed base must be checked out before fetching the Issue")
     if text.index("Fetch Issue and run safety gate") > text.index("Run existing fixed-Issue runner"):
