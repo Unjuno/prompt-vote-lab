@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-09T19:38:52+00:00`
+Generated at: `2026-05-09T20:46:17+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 230 | MERGED | 2 | 100/0 | Test generated comparison dashboards |
+| 229 | MERGED | 1 | 0/17 | Regenerate 2026-W20 comparison dashboard |
 | 228 | MERGED | 2 | 67/7 | Dedupe comparison dashboard rows by rank |
 | 227 | MERGED | 2 | 49/8 | Prefer merged latest PRs in comparison dashboard |
 | 225 | CLOSED | 2 | 5/0 | Add timeouts to comparison runs |
@@ -68,16 +70,25 @@ This file is a raw results surface for participants. It does not score prompts o
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
-| 200 | MERGED | 5 | 645/6 | Add history page generator |
-| 197 | MERGED | 4 | 529/0 | Add comparison dashboard generator |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25610023339 | Public Results Export | push | in_progress |  | Dedupe comparison dashboard rows by rank (#228) |
+| 25611408270 | Public Results Export | push | in_progress |  | Test generated comparison dashboards (#230) |
+| 25611408238 | Terminal State Report | pull_request | completed | skipped | Test generated comparison dashboards |
+| 25611407890 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25611259631 | Script Check | pull_request | completed | success | Test generated comparison dashboards |
+| 25611259630 | Lab PR Scope Check | pull_request | completed | success | Test generated comparison dashboards |
+| 25610438195 | Terminal State Report | pull_request | completed | skipped | Regenerate 2026-W20 comparison dashboard |
+| 25610437782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25610227912 | Lab PR Scope Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
+| 25610227908 | Static Site Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
+| 25610227902 | Safety Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
+| 25610028458 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25610023339 | Public Results Export | push | completed | success | Dedupe comparison dashboard rows by rank (#228) |
 | 25610023322 | Terminal State Report | pull_request | completed | skipped | Dedupe comparison dashboard rows by rank |
-| 25610023038 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25610023038 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25609885998 | Lab PR Scope Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
 | 25609885994 | Script Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
 | 25609768439 | Script Check | pull_request | completed | failure | Dedupe comparison dashboard rows by rank |
@@ -94,17 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25608462118 | Public Results Export | push | completed | success | Add timeouts to comparison runs v3 (#226) |
 | 25608461748 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25608404410 | Script Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
-| 25608404408 | Lab PR Scope Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
-| 25608105242 | Terminal State Report | pull_request | completed | skipped | Request metadata-normalized comparison run for Issue 196 rank 3 |
-| 25607952304 | Terminal State Report | pull_request | completed | skipped | Run Codex comparison issue rank 3 |
-| 25607951957 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25607870662 | Script Check | pull_request | completed | success | Add timeouts to comparison runs |
-| 25607870649 | Lab PR Scope Check | pull_request | completed | success | Add timeouts to comparison runs |
-| 25607411893 | Lab PR Scope Check | pull_request | completed | success | Request metadata-normalized comparison run for Issue 196 rank 3 |
-| 25607411892 | Codex Comparison Issue Run | pull_request | completed | success | Request metadata-normalized comparison run for Issue 196 rank 3 |
-| 25605419146 | Terminal State Report | pull_request | completed | skipped | Normalize rank 2 comparison metadata |
-| 25604763340 | Terminal State Report | pull_request | completed | skipped | Request metadata-normalized comparison run for Issue 195 rank 2 |
-| 25604609567 | Terminal State Report | pull_request | completed | skipped | Normalize rank 2 comparison metadata v2 |
 
 ## Raw JSON
 
