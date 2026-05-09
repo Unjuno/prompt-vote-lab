@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-08T17:22:13+00:00`
+Generated at: `2026-05-09T06:01:21+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,8 +14,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 0 |
-| merged_pr_count | 97 |
+| open_pr_count | 1 |
+| merged_pr_count | 96 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 207 | OPEN | 2 | 47/0 | Allow comparison runs from request PRs |
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
@@ -69,16 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 179 | MERGED | 3 | 33/14 | Run Codex fixed Issue instruction canary |
 | 182 | MERGED | 7 | 869/14 | Add weekly Issue finalizer |
 | 181 | MERGED | 2 | 258/16 | Update public results snapshot after clear Issue run |
-| 184 | MERGED | 3 | 70/4 | Run Codex fixed Issue instruction canary |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25593576392 | Public Results Export | schedule | in_progress |  | Public Results Export |
+| 25593533491 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25572378585 | Script Check | pull_request | completed | success | Allow comparison runs from request PRs |
+| 25572378580 | Lab PR Scope Check | pull_request | completed | success | Allow comparison runs from request PRs |
+| 25569438080 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25569417723 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 195 rank 2 |
-| 25569417718 | Codex Comparison Issue Run | push | in_progress |  | Request comparison run for Issue 195 rank 2 (#206) |
-| 25569417713 | Public Results Export | push | in_progress |  | Request comparison run for Issue 195 rank 2 (#206) |
-| 25569417125 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25569417718 | Codex Comparison Issue Run | push | completed | failure | Request comparison run for Issue 195 rank 2 (#206) |
+| 25569417713 | Public Results Export | push | completed | success | Request comparison run for Issue 195 rank 2 (#206) |
+| 25569417125 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25569285896 | Lab PR Scope Check | pull_request | completed | success | Request comparison run for Issue 195 rank 2 |
 | 25567694917 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25567680631 | Public Results Export | push | completed | success | Request comparison run for issue 195 rank 2 |
@@ -100,11 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25566165626 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25566148294 | Terminal State Report | pull_request | completed | skipped | Allow comparison runs from Issue comments |
 | 25566148156 | Public Results Export | push | completed | success | Allow comparison runs from Issue comments (#203) |
-| 25566146873 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25566077187 | Lab PR Scope Check | pull_request | completed | success | Allow comparison runs from Issue comments |
-| 25566077185 | Script Check | pull_request | completed | success | Allow comparison runs from Issue comments |
-| 25565105541 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25565087937 | Public Results Export | push | completed | success | Add lab evidence navigation (#202) |
 
 ## Raw JSON
 
