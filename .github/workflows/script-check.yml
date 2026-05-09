@@ -25,6 +25,7 @@ on:
       - "README.md"
       - "data/public-results.json"
       - "data/public-results.md"
+      - "lab/comparisons/**"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
@@ -141,6 +142,9 @@ jobs:
 
       - name: Run comparison dashboard builder test
         run: python scripts/test_build_comparison_dashboard.py
+
+      - name: Run generated comparison dashboard test
+        run: python scripts/test_generated_comparison_dashboards.py
 
       - name: Run weekly Issue finalizer test
         run: python scripts/test_weekly_issue_finalizer.py
