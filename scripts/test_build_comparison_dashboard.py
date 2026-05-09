@@ -38,13 +38,21 @@ def test_dashboard_builder() -> None:
         ],
         "pull_requests": [
             {
+                "number": 199,
+                "title": "Closed stale comparison output",
+                "url": "https://example.test/pulls/199",
+                "state": "CLOSED",
+                "body": "- Issue: #195\n- Rank: 2\n- Votes: 4",
+                "files": [{"path": "lab/comparisons/2026-W20/rank-2/stale.html"}],
+            },
+            {
                 "number": 201,
-                "title": "Run Codex fixed Issue instruction canary",
+                "title": "Merged comparison output",
                 "url": "https://example.test/pulls/201",
-                "state": "OPEN",
+                "state": "MERGED",
                 "body": "- Issue: #195\n- Rank: 2\n- Votes: 4",
                 "files": [{"path": "lab/comparisons/2026-W20/rank-2/index.html"}],
-            }
+            },
         ],
     }
     with tempfile.TemporaryDirectory() as tmp:
@@ -67,6 +75,7 @@ def test_dashboard_builder() -> None:
         "Issue #195",
         "Issue #196",
         "PR #201",
+        "MERGED",
         "lab/comparisons/2026-W20/rank-2/",
         "runs/2026-W20-rank-2-issue-195.md",
         "participant evidence comprehension",
@@ -78,6 +87,8 @@ def test_dashboard_builder() -> None:
         raise AssertionError(f"dashboard missing expected text: {missing}")
 
     forbidden = [
+        "PR #199",
+        "stale.html",
         "OPENAI_API_KEY",
         "codex login",
         "container stderr",
