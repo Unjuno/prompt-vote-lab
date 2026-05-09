@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-09T14:57:47+00:00`
+Generated at: `2026-05-09T18:21:59+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,8 +14,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 3 |
-| merged_pr_count | 88 |
+| open_pr_count | 1 |
+| merged_pr_count | 86 |
 | workflow_run_count | 100 |
 | run_record_count | 20 |
 
@@ -23,8 +23,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 195 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 196 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
+| 195 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 191 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
 | 186 | CLOSED | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
@@ -40,10 +40,15 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 226 | MERGED | 2 | 5/0 | Add timeouts to comparison runs v3 |
+| 223 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 196 rank 3 |
+| 224 | MERGED | 3 | 540/0 | Run Codex comparison issue rank 3 |
+| 225 | OPEN | 2 | 5/0 | Add timeouts to comparison runs |
+| 220 | CLOSED | 1 | 1/1 | Normalize rank 2 comparison metadata |
+| 219 | CLOSED | 3 | 491/0 | Run Codex comparison issue rank 2 |
+| 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
+| 222 | MERGED | 1 | 1/1 | Normalize rank 2 comparison metadata v2 |
 | 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
-| 220 | OPEN | 1 | 1/1 | Normalize rank 2 comparison metadata |
-| 219 | OPEN | 3 | 491/0 | Run Codex comparison issue rank 2 |
-| 218 | OPEN | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
 | 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
@@ -65,19 +70,34 @@ This file is a raw results surface for participants. It does not score prompts o
 | 197 | MERGED | 4 | 529/0 | Add comparison dashboard generator |
 | 198 | MERGED | 2 | 54/3 | Auto-build comparison dashboards during public export |
 | 199 | MERGED | 2 | 260/0 | Add comparison Issue run workflow |
-| 194 | MERGED | 2 | 50/4 | Add comparison run metadata inputs |
-| 166 | MERGED | 4 | 452/123 | Harden fixed Issue instruction sanitizer |
-| 168 | MERGED | 7 | 562/4 | Add Issue safety feedback gates |
-| 165 | MERGED | 2 | 19/0 | Run Codex fixed Issue instruction canary |
-| 175 | MERGED | 9 | 896/14 | Add public results export for participant analysis |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25608462139 | Terminal State Report | pull_request | completed | skipped | Add timeouts to comparison runs v3 |
+| 25608462118 | Public Results Export | push | in_progress |  | Add timeouts to comparison runs v3 (#226) |
+| 25608461748 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25608404410 | Script Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
+| 25608404408 | Lab PR Scope Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
+| 25608105242 | Terminal State Report | pull_request | completed | skipped | Request metadata-normalized comparison run for Issue 196 rank 3 |
+| 25607952304 | Terminal State Report | pull_request | completed | skipped | Run Codex comparison issue rank 3 |
+| 25607951957 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25607870662 | Script Check | pull_request | completed | success | Add timeouts to comparison runs |
+| 25607870649 | Lab PR Scope Check | pull_request | completed | success | Add timeouts to comparison runs |
+| 25607411893 | Lab PR Scope Check | pull_request | completed | success | Request metadata-normalized comparison run for Issue 196 rank 3 |
+| 25607411892 | Codex Comparison Issue Run | pull_request | completed | success | Request metadata-normalized comparison run for Issue 196 rank 3 |
+| 25605419146 | Terminal State Report | pull_request | completed | skipped | Normalize rank 2 comparison metadata |
+| 25604763340 | Terminal State Report | pull_request | completed | skipped | Request metadata-normalized comparison run for Issue 195 rank 2 |
+| 25604609567 | Terminal State Report | pull_request | completed | skipped | Normalize rank 2 comparison metadata v2 |
+| 25604609164 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25604363153 | Lab PR Scope Check | pull_request | completed | success | Normalize rank 2 comparison metadata v2 |
+| 25604363125 | Safety Check | pull_request | completed | success | Normalize rank 2 comparison metadata v2 |
+| 25604363117 | Static Site Check | pull_request | completed | success | Normalize rank 2 comparison metadata v2 |
+| 25604112881 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25604107193 | Terminal State Report | pull_request | completed | skipped | Allow generated lab evidence paths in scope guard |
-| 25604107189 | Public Results Export | push | in_progress |  | Allow generated lab evidence paths in scope guard (#221) |
-| 25604106917 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25604107189 | Public Results Export | push | completed | success | Allow generated lab evidence paths in scope guard (#221) |
+| 25604106917 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25604061311 | Script Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
 | 25604061305 | Lab PR Scope Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
 | 25603929107 | Lab PR Scope Check | pull_request | completed | success | Allow generated lab evidence paths in scope guard |
@@ -85,26 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25603375356 | Static Site Check | pull_request | completed | success | Normalize rank 2 comparison metadata |
 | 25603375340 | Lab PR Scope Check | pull_request | completed | failure | Normalize rank 2 comparison metadata |
 | 25603375335 | Safety Check | pull_request | completed | success | Normalize rank 2 comparison metadata |
-| 25602984788 | Codex Comparison Issue Run | pull_request | completed | success | Request metadata-normalized comparison run for Issue 195 rank 2 |
-| 25602984781 | Lab PR Scope Check | pull_request | completed | success | Request metadata-normalized comparison run for Issue 195 rank 2 |
-| 25602849549 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 196 rank 3 |
-| 25602750581 | Terminal State Report | pull_request | completed | skipped | Run Codex comparison issue rank 3 |
-| 25602557631 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25602551005 | Public Results Export | push | completed | success | Normalize comparison rank metadata (#217) |
-| 25602550935 | Terminal State Report | pull_request | completed | skipped | Normalize comparison rank metadata |
-| 25602550589 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25602213760 | Lab PR Scope Check | pull_request | completed | success | Normalize comparison rank metadata |
-| 25602213753 | Script Check | pull_request | completed | success | Normalize comparison rank metadata |
-| 25601632869 | Codex Comparison Issue Run | pull_request | completed | success | Request comparison run for Issue 196 rank 3 |
-| 25601632865 | Lab PR Scope Check | pull_request | completed | success | Request comparison run for Issue 196 rank 3 |
-| 25601513761 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 195 rank 2 v4 |
-| 25601351975 | Terminal State Report | pull_request | completed | skipped | Run Codex comparison issue rank 2 |
-| 25601351629 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25601243404 | Terminal State Report | pull_request | completed | skipped | Run Codex comparison issue rank 2 |
-| 25600937772 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 195 rank 2 v3 |
-| 25600864663 | Terminal State Report | pull_request | completed | skipped | Request comparison run for Issue 195 rank 2 v2 |
-| 25600652854 | Lab PR Scope Check | pull_request | completed | success | Request comparison run for Issue 195 rank 2 v4 |
-| 25600652853 | Codex Comparison Issue Run | pull_request | completed | success | Request comparison run for Issue 195 rank 2 v4 |
 
 ## Raw JSON
 
