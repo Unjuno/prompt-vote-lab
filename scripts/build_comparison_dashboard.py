@@ -80,6 +80,40 @@ def _pr_issue_number(item: dict[str, Any]) -> int | None:
     return None
 
 
+def _pr_number(item: dict[str, Any]) -> int:
+    try:
+        return int(item.get("number") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _pr_state_score(item: dict[str, Any]) -> int:
+    state = str(item.get("state", "")).upper()
+    if state == "MERGED":
+        return 3
+    if state == "OPEN":
+        return 2
+    if state == "CLOSED":
+        return 1
+    return 0
+
+
+def _pr_selection_key(item: dict[str, Any]) -> tuple[int, int]:
+    return (_pr_state_score(item), _pr_number(item))
+
+
+def _best_pr_by_issue(prs: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
+    prs_by_issue: dict[int, dict[str, Any]] = {}
+    for pr in prs:
+        issue_number = _pr_issue_number(pr)
+        if issue_number is None:
+            continue
+        current = prs_by_issue.get(issue_number)
+        if current is None or _pr_selection_key(pr) > _pr_selection_key(current):
+            prs_by_issue[issue_number] = pr
+    return prs_by_issue
+
+
 def _vote_count(issue: dict[str, Any], pr: dict[str, Any] | None) -> int:
     if pr:
         body = str(pr.get("body", ""))
@@ -107,11 +141,7 @@ def _changed_files(pr: dict[str, Any] | None) -> tuple[str, ...]:
 def build_rows(public_results: dict[str, Any], week_id: str) -> list[ComparisonRow]:
     issues = [item for item in public_results.get("issues", []) if f"week:{week_id}" in _labels(item)]
     prs = list(public_results.get("pull_requests", []))
-    prs_by_issue: dict[int, dict[str, Any]] = {}
-    for pr in prs:
-        issue_number = _pr_issue_number(pr)
-        if issue_number is not None:
-            prs_by_issue[issue_number] = pr
+    prs_by_issue = _best_pr_by_issue(prs)
 
     rows: list[ComparisonRow] = []
     for issue in issues:
