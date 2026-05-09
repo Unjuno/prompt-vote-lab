@@ -87,19 +87,23 @@ def _pr_number(item: dict[str, Any]) -> int:
         return 0
 
 
-def _pr_state_score(item: dict[str, Any]) -> int:
-    state = str(item.get("state", "")).upper()
-    if state == "MERGED":
+def _state_score(state: str) -> int:
+    normalized = state.upper()
+    if normalized == "MERGED":
         return 3
-    if state == "OPEN":
+    if normalized == "OPEN":
         return 2
-    if state == "CLOSED":
+    if normalized == "CLOSED":
         return 1
     return 0
 
 
 def _pr_selection_key(item: dict[str, Any]) -> tuple[int, int]:
-    return (_pr_state_score(item), _pr_number(item))
+    return (_state_score(str(item.get("state", ""))), _pr_number(item))
+
+
+def _row_selection_key(row: ComparisonRow) -> tuple[int, int, int]:
+    return (_state_score(row.pr_state), row.pr_number or 0, row.issue_number)
 
 
 def _best_pr_by_issue(prs: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
@@ -136,6 +140,15 @@ def _changed_files(pr: dict[str, Any] | None) -> tuple[str, ...]:
         return ()
     files = pr.get("files") or []
     return tuple(str(item.get("path", "")) for item in files if item.get("path"))
+
+
+def _dedupe_rows_by_rank(rows: list[ComparisonRow]) -> list[ComparisonRow]:
+    best_by_rank: dict[int, ComparisonRow] = {}
+    for row in rows:
+        current = best_by_rank.get(row.rank)
+        if current is None or _row_selection_key(row) > _row_selection_key(current):
+            best_by_rank[row.rank] = row
+    return sorted(best_by_rank.values(), key=lambda row: row.rank)
 
 
 def build_rows(public_results: dict[str, Any], week_id: str) -> list[ComparisonRow]:
@@ -180,7 +193,7 @@ def build_rows(public_results: dict[str, Any], week_id: str) -> list[ComparisonR
                 decision=decision,
             )
         )
-    return sorted(rows, key=lambda row: row.rank)
+    return _dedupe_rows_by_rank(rows)
 
 
 def _link(url: str, label: str) -> str:
