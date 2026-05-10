@@ -137,6 +137,9 @@ jobs:
       - name: Run public results export workflow contract test
         run: python scripts/test_public_results_export_workflow_contract.py
 
+      - name: Run script-check workflow contract test
+        run: python scripts/test_script_check_workflow_contract.py
+
       - name: Run public agent run bundle builder test
         run: python scripts/test_build_public_agent_run_bundle.py
 
