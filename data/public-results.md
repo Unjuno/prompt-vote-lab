@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T14:04:24+00:00`
+Generated at: `2026-05-10T14:27:41+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 237 | MERGED | 2 | 145/5 | Validate public support unlock files |
 | 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
 | 235 | MERGED | 3 | 50/4 | Allow manual support unlock backfill windows |
 | 234 | MERGED | 14 | 957/7 | Automate support unlocks for comparison runs |
@@ -69,15 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
 | 212 | MERGED | 4 | 132/13 | Normalize comparison rank links |
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
-| 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25630725467 | Public Results Export | push | in_progress |  | Require support unlock data before weekly runs (#236) |
+| 25631227706 | Terminal State Report | pull_request | completed | skipped | Validate public support unlock files |
+| 25631227704 | Public Results Export | push | in_progress |  | Validate public support unlock files (#237) |
+| 25631227376 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25631206281 | Script Check | pull_request | completed | success | Validate public support unlock files |
+| 25631206270 | Lab PR Scope Check | pull_request | completed | success | Validate public support unlock files |
+| 25630731710 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25630725467 | Public Results Export | push | completed | success | Require support unlock data before weekly runs (#236) |
 | 25630725445 | Terminal State Report | pull_request | completed | skipped | Require support unlock data before weekly runs |
-| 25630725079 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25630725079 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25630650663 | Pre-API Freeze Audit | pull_request | completed | success | Require support unlock data before weekly runs |
 | 25630650662 | Static Site Check | pull_request | completed | success | Require support unlock data before weekly runs |
 | 25630650650 | Select Eligible Test | pull_request | completed | success | Require support unlock data before weekly runs |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25629095905 | Pre-API Freeze Audit | pull_request | completed | success | Automate support unlocks for comparison runs |
 | 25629095899 | Implementation Preflight Test | pull_request | completed | success | Automate support unlocks for comparison runs |
 | 25629095897 | Script Check | pull_request | completed | success | Automate support unlocks for comparison runs |
-| 25629095892 | Lab PR Scope Check | pull_request | completed | success | Automate support unlocks for comparison runs |
-| 25629095883 | Static Site Check | pull_request | completed | success | Automate support unlocks for comparison runs |
-| 25621692906 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25621685408 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25621649862 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25621093532 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
