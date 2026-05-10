@@ -71,6 +71,9 @@ jobs:
             --until "${{ steps.window.outputs.until }}" \
             --out-dir data/support-unlocks
 
+      - name: Validate public support unlock output
+        run: python scripts/test_unlock_export_public.py
+
       - name: Verify support unlock tooling
         run: python scripts/test_build_support_unlocks.py
 
