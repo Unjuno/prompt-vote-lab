@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T05:46:30+00:00`
+Generated at: `2026-05-10T06:20:31+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -75,9 +75,12 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25621088993 | Public Results Export | push | in_progress |  | Update root lab status for completed W20 comparison (#233) |
+| 25621685408 | Public Results Export | schedule | in_progress |  | Public Results Export |
+| 25621649862 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25621093532 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25621088993 | Public Results Export | push | completed | success | Update root lab status for completed W20 comparison (#233) |
 | 25621088936 | Terminal State Report | pull_request | completed | skipped | Update root lab status for completed W20 comparison |
-| 25621088689 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25621088689 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25620968616 | Static Site Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
 | 25620968615 | Lab PR Scope Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
 | 25620968614 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
@@ -102,9 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25611407890 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25611259631 | Script Check | pull_request | completed | success | Test generated comparison dashboards |
 | 25611259630 | Lab PR Scope Check | pull_request | completed | success | Test generated comparison dashboards |
-| 25610438195 | Terminal State Report | pull_request | completed | skipped | Regenerate 2026-W20 comparison dashboard |
-| 25610437782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25610227912 | Lab PR Scope Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
 
 ## Raw JSON
 

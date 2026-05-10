@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T05:46:30+00:00",
+  "generated_at": "2026-05-10T06:20:31+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -4612,6 +4612,48 @@
   "workflow_runs": [
     {
       "conclusion": "",
+      "created_at": "2026-05-10T06:20:12Z",
+      "database_id": 25621685408,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-10T06:20:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621685408",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-10T06:18:10Z",
+      "database_id": 25621649862,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T06:18:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621649862",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T05:46:34Z",
+      "database_id": 25621093532,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T05:47:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621093532",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-10T05:46:16Z",
       "database_id": 25621088993,
       "display_title": "Update root lab status for completed W20 comparison (#233)",
@@ -4619,8 +4661,8 @@
       "head_branch": "main",
       "head_sha": "fffb2afa9b2f15a6c953cee19618cd90695900ae",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T05:46:20Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T05:46:36Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621088993",
       "workflow_name": "Public Results Export"
     },
@@ -4639,7 +4681,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-10T05:46:15Z",
       "database_id": 25621088689,
       "display_title": "pages build and deployment",
@@ -4647,8 +4689,8 @@
       "head_branch": "main",
       "head_sha": "fffb2afa9b2f15a6c953cee19618cd90695900ae",
       "name": "pages build and deployment",
-      "status": "queued",
-      "updated_at": "2026-05-10T05:46:26Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T05:46:39Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621088689",
       "workflow_name": "pages-build-deployment"
     },
@@ -5967,48 +6009,6 @@
       "updated_at": "2026-05-09T12:03:11Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600652854",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T12:03:00Z",
-      "database_id": 25600652853,
-      "display_title": "Request comparison run for Issue 195 rank 2 v4",
-      "event": "pull_request",
-      "head_branch": "request-rank2-issue195-comparison-v4",
-      "head_sha": "89242d79a0d26be81ccbeddb3b88a837df36e70a",
-      "name": "Codex Comparison Issue Run",
-      "status": "completed",
-      "updated_at": "2026-05-09T12:06:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600652853",
-      "workflow_name": "Codex Comparison Issue Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T11:59:12Z",
-      "database_id": 25600579102,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "4589fa088d773f5c2fcbfa8aa8e7a08c477090ea",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T11:59:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600579102",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T11:58:55Z",
-      "database_id": 25600574295,
-      "display_title": "Normalize comparison rank links (#212)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-09T11:59:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25600574295",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
