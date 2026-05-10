@@ -32,17 +32,28 @@ def normalize_week_id(value: str) -> str:
     return text[5:] if text.startswith("week-") else text
 
 
-def support_from_unlock_file(week: str | None) -> float | None:
+def support_unlock_path(week: str | None) -> Path | None:
     if not week:
         return None
-    path = SUPPORT_UNLOCK_DIR / f"{normalize_week_id(week)}.json"
-    if not path.exists():
+    return SUPPORT_UNLOCK_DIR / f"{normalize_week_id(week)}.json"
+
+
+def support_from_unlock_file(week: str | None) -> float | None:
+    path = support_unlock_path(week)
+    if path is None or not path.exists():
         return None
     data = json.loads(path.read_text(encoding="utf-8"))
     support = float(data.get("support_total_usd") or 0)
     if not math.isfinite(support) or support < 0:
         raise ValueError(f"support unlock file has invalid support_total_usd: {path}")
     return support
+
+
+def support_source_for_week(week: str | None) -> str:
+    path = support_unlock_path(week)
+    if path is not None and path.exists():
+        return "support-unlock-file"
+    return "workflow-input"
 
 
 def parse_support_usd(value: str | int | float, week: str | None = None) -> float:
@@ -98,7 +109,15 @@ def select_eligible(candidates: list[dict[str, Any]], support_usd: str | int | f
     return eligible
 
 
-def write_outputs(eligible: list[dict[str, Any]], out: Path, flag: Path, meta: Path, candidates: list[dict[str, Any]], support_usd: float) -> None:
+def write_outputs(
+    eligible: list[dict[str, Any]],
+    out: Path,
+    flag: Path,
+    meta: Path,
+    candidates: list[dict[str, Any]],
+    support_usd: float,
+    support_source: str,
+) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     flag.parent.mkdir(parents=True, exist_ok=True)
     meta.parent.mkdir(parents=True, exist_ok=True)
@@ -111,7 +130,7 @@ def write_outputs(eligible: list[dict[str, Any]], out: Path, flag: Path, meta: P
                 "eligible_count": len(eligible),
                 "eligible_ranks": [candidate.get("rank") for candidate in eligible],
                 "support_usd": support_usd,
-                "support_source": "support-unlock-file" if os.getenv("RUN_WEEK") and support_from_unlock_file(os.getenv("RUN_WEEK")) is not None else "workflow-input",
+                "support_source": support_source,
             },
             indent=2,
             ensure_ascii=False,
@@ -136,7 +155,15 @@ def main() -> int:
         raise SystemExit("candidates JSON must be a list")
     support = parse_support_usd(args.support_usd, week=args.week)
     eligible = select_eligible(candidates, support, week=args.week)
-    write_outputs(eligible, Path(args.out), Path(args.flag), Path(args.meta), candidates, support)
+    write_outputs(
+        eligible,
+        Path(args.out),
+        Path(args.flag),
+        Path(args.meta),
+        candidates,
+        support,
+        support_source_for_week(args.week),
+    )
     print(json.dumps({"eligible": eligible, "baseline_won": baseline_won(candidates), "support_usd": support}, indent=2, ensure_ascii=False))
     return 0
 
