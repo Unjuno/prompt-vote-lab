@@ -7,12 +7,14 @@ If the baseline ranks first, no implementation run should be created.
 | Rank | Candidate | Type | 👍 votes | Title |
 |---:|---|---|---:|---|
 | 1 | baseline | no-change-baseline | 20 | [Baseline]: No change this week |
-| 2 | [#1](https://github.com/Unjuno/prompt-vote-lab/issues/1) | prompt-proposal | 0 | [Prompt]: Make the lab page explain the experiment clearly |
-| 3 | [#2](https://github.com/Unjuno/prompt-vote-lab/issues/2) | prompt-proposal | 0 | [Prompt]: Add expected-vs-actual comparison cards |
 
 ## Weekly support total
 
-0 USD
+0.0 USD
+
+## Support unlock source
+
+2026-W19 / data/support-unlocks/2026-W19.json / rank2=false / rank3=false
 
 ## No-change baseline
 
@@ -28,6 +30,8 @@ If the baseline ranks first, no implementation run should be created.
 {
   "baseline_won": true,
   "eligible_count": 0,
-  "eligible_ranks": []
+  "eligible_ranks": [],
+  "support_usd": 0.0,
+  "support_source": "support-unlock-file"
 }
 ```
