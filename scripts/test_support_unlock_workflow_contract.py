@@ -38,6 +38,8 @@ def main() -> int:
             "SPONSORS_GRAPHQL_TOKEN",
             "scripts/fetch_support_activities.py",
             "scripts/build_support_unlocks.py",
+            "Validate public support unlock output",
+            "python scripts/test_unlock_export_public.py",
             "data/support-unlocks",
             "git add data/support-unlocks/",
         ],
@@ -86,6 +88,9 @@ def main() -> int:
         ],
         "script check",
     )
+
+    if support.index("Validate public support unlock output") > support.index("Commit support unlocks"):
+        raise SystemExit("public support unlock output must be validated before commit")
 
     print("support unlock workflow contract test passed")
     return 0
