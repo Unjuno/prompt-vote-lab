@@ -42,6 +42,8 @@ The support export workflow writes the anonymized aggregate file used by the wee
 data/support-unlocks/<week-id>.json
 ```
 
+On scheduled runs, support export defaults to the previous UTC ISO week. Manual `workflow_dispatch` inputs can still override `week_id`, `since`, and `until` for verification or backfill.
+
 ## Weekly run order
 
 `Weekly Auto Run` runs in this order:
@@ -85,13 +87,17 @@ Weekly auto run:
 
 ## Time-window caveat
 
-Both workflows use UTC ISO weeks.
+The scheduled production path should process the UTC ISO week that just ended, not the week that has just started.
 
-`Weekly Auto Run` uses:
+`Support Unlock Export` scheduled runs therefore default to:
 
 ```text
-RUN_WEEK=week-$(date -u +%G-W%V)
+target = current UTC time - 7 days
 ```
+
+This writes the previous ISO week by default.
+
+`Weekly Auto Run` should use the same previous-week target when scheduled. If it uses the current ISO week on Monday morning, it will look for a support unlock file for the newly started week and may fail or record the wrong week.
 
 `Support Unlock Export` writes:
 
