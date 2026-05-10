@@ -45,16 +45,15 @@ def main() -> int:
         )
         text = out.read_text(encoding="utf-8")
 
-        scheduled_out = base / "scheduled-env.txt"
         scheduled_env = os.environ.copy()
         scheduled_env["GITHUB_EVENT_NAME"] = "schedule"
         scheduled_env["PYTHONPATH"] = str(ROOT)
         scheduled_code = """
-from datetime import datetime, timezone
 from pathlib import Path
 from scripts import resolve_support_unlock as r
 base = Path(r'{base}')
 unlock_dir = base / 'support-unlocks'
+r.previous_utc_iso_week_id = lambda now=None: '2026-W20'
 week_id, path = r.resolve_week_and_path(unlock_dir, 'week-2026-W21', True)
 assert week_id == '2026-W20', week_id
 assert path.name == '2026-W20.json', path
