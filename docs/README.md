@@ -16,18 +16,19 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 6. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
 7. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
 8. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-9. [Automation map](./automation-map.md) — workflow boundaries.
-10. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-11. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-12. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-13. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-14. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-15. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-16. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-17. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-18. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-19. [Report policy](./report-policy.md) — weekly report draft policy.
-20. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+9. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+10. [Automation map](./automation-map.md) — workflow boundaries.
+11. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+12. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+13. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+14. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+15. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+16. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+17. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+18. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+19. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+20. [Report policy](./report-policy.md) — weekly report draft policy.
+21. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -79,7 +80,9 @@ Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
-The repository is currently usable for manual canary experiments:
+The repository has scheduled weekly automation and support-unlock gates implemented, but live production verification is still pending.
+
+Manual canary and comparison operations remain available:
 
 ```text
 Issue safety scan
@@ -91,7 +94,7 @@ Issue safety scan
 → runs/ record
 ```
 
-It is not yet a fully automatic weekly production system.
+Scheduled weekly automation is documented in [Weekly automation](./weekly-automation.md). It still requires live `SPONSORS_GRAPHQL_TOKEN` verification and Weekly Auto Run E2E verification before it should be called fully production-verified.
 
 ## Pre-API freeze status
 
