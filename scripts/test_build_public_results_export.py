@@ -106,7 +106,35 @@ def main() -> int:
                     "headBranch": "branch",
                     "headSha": "sha",
                     "url": "https://example.test/actions/100",
-                }
+                },
+                {
+                    "databaseId": 101,
+                    "name": "Public Results Export",
+                    "workflowName": "Public Results Export",
+                    "displayTitle": "Export currently running",
+                    "event": "push",
+                    "status": "in_progress",
+                    "conclusion": None,
+                    "createdAt": "2026-05-07T00:03:00Z",
+                    "updatedAt": "2026-05-07T00:04:00Z",
+                    "headBranch": "main",
+                    "headSha": "sha2",
+                    "url": "https://example.test/actions/101",
+                },
+                {
+                    "databaseId": 102,
+                    "name": "pages-build-deployment",
+                    "workflowName": "pages-build-deployment",
+                    "displayTitle": "Pages queued",
+                    "event": "dynamic",
+                    "status": "queued",
+                    "conclusion": None,
+                    "createdAt": "2026-05-07T00:05:00Z",
+                    "updatedAt": "2026-05-07T00:05:00Z",
+                    "headBranch": "main",
+                    "headSha": "sha3",
+                    "url": "https://example.test/actions/102",
+                },
             ],
         )
         write(labels, [{"name": "issue-safety:clear", "color": "2ea043", "description": "clear"}])
@@ -142,11 +170,15 @@ def main() -> int:
         export = json.loads(out_json.read_text(encoding="utf-8"))
         assert export["schema_version"] == "prompt-vote-lab-public-results-export-v1"
         assert export["scope"]["interpretation"] == "none; participant analysis expected"
+        assert export["scope"]["workflow_runs"] == "terminal workflow runs only; queued and in-progress runs are excluded"
         assert export["summary"]["issue_count"] == 2
         assert export["summary"]["blocked_issue_count"] == 1
         assert export["summary"]["clear_issue_count"] == 1
         assert export["summary"]["authorized_canary_issue_count"] == 1
         assert export["summary"]["merged_pr_count"] == 1
+        assert export["summary"]["workflow_run_count"] == 1
+        assert export["workflow_runs"][0]["database_id"] == 100
+        assert all(run["status"] == "completed" for run in export["workflow_runs"])
         assert export["issues"][0]["reaction_plus_one_count"] == 7
         assert export["issues"][0]["body"] == "Show a local card."
         assert export["pull_requests"][0]["files"][0]["path"] == "lab/index.html"
@@ -155,6 +187,8 @@ def main() -> int:
         assert "This file is a raw results surface for participants" in md
         assert "## Recent Issues" in md
         assert "## Recent Pull Requests" in md
+        assert "Export currently running" not in md
+        assert "Pages queued" not in md
 
     print("public results export builder test passed")
     return 0

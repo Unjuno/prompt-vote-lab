@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA_VERSION = "prompt-vote-lab-public-results-export-v1"
+TERMINAL_WORKFLOW_STATUSES = {"completed"}
 
 
 def utc_now() -> str:
@@ -142,7 +143,13 @@ def normalize_pr(pr: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def normalize_run(run: dict[str, Any]) -> dict[str, Any]:
+def is_terminal_workflow_run(run: dict[str, Any]) -> bool:
+    return str(run.get("status") or "").lower() in TERMINAL_WORKFLOW_STATUSES
+
+
+def normalize_run(run: dict[str, Any]) -> dict[str, Any] | None:
+    if not is_terminal_workflow_run(run):
+        return None
     return {
         "database_id": run.get("databaseId"),
         "name": run.get("name"),
@@ -157,6 +164,15 @@ def normalize_run(run: dict[str, Any]) -> dict[str, Any]:
         "head_sha": run.get("headSha"),
         "url": run.get("url"),
     }
+
+
+def normalize_runs(runs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    normalized: list[dict[str, Any]] = []
+    for run in runs:
+        item = normalize_run(run)
+        if item is not None:
+            normalized.append(item)
+    return normalized
 
 
 def run_records(runs_dir: Path) -> list[dict[str, Any]]:
@@ -255,7 +271,7 @@ def main() -> int:
 
     issues = [normalize_issue(item) for item in read_json(Path(args.issues), [])]
     prs = [normalize_pr(item) for item in read_json(Path(args.prs), [])]
-    workflow_runs = [normalize_run(item) for item in read_json(Path(args.workflow_runs), [])]
+    workflow_runs = normalize_runs(read_json(Path(args.workflow_runs), []))
     labels = read_json(Path(args.labels), [])
     records = run_records(Path(args.runs_dir))
 
@@ -267,6 +283,7 @@ def main() -> int:
             "interpretation": "none; participant analysis expected",
             "secrets": "not collected",
             "raw_actions_logs": "not collected",
+            "workflow_runs": "terminal workflow runs only; queued and in-progress runs are excluded",
         },
         "summary": summarize(issues, prs, workflow_runs, records),
         "issues": issues,
