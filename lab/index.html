@@ -16,7 +16,7 @@
 
     <h1 id="lab-title">Prompt Vote Lab</h1>
     <p class="note">
-      A constrained experiment where prompt proposals become small static UI changes, then the Issue, safety scan, PR, run record, and public result are preserved for review.
+      A constrained implementation target where prompt proposals become small static UI changes. Accepted experiment runs may change this page, while the Issue, safety scan, PR, run record, and public result are preserved for review.
     </p>
 
     <nav class="evidence-nav" aria-label="Public evidence navigation">
@@ -56,11 +56,11 @@
       <p class="eyebrow">Execution boundary</p>
       <h2 id="scope-title">The lab remains static and local.</h2>
       <p>
-        The accepted implementation target is limited to <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>. This page does not call external APIs, use cookies, collect analytics, or require login to read.
+        The accepted implementation target is limited to <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>. This page works without network access, does not call external APIs, does not use cookies, and does not collect analytics.
       </p>
     </section>
 
-    <noscript>This lab is readable without JavaScript.</noscript>
+    <noscript>This lab is readable without JavaScript and without network access.</noscript>
   </main>
 
   <script src="./app.js"></script>
