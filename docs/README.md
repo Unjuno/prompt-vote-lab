@@ -82,7 +82,7 @@ Closed Issues remain visible. They are not deleted.
 
 The repository has scheduled weekly automation and support-unlock gates implemented, but live production verification is still pending.
 
-Manual canary and comparison operations remain available:
+Manual canary experiments and comparison operations remain available:
 
 ```text
 Issue safety scan
