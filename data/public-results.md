@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T06:20:31+00:00`
+Generated at: `2026-05-10T12:48:21+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 234 | MERGED | 14 | 957/7 | Automate support unlocks for comparison runs |
 | 233 | MERGED | 3 | 129/280 | Update root lab status for completed W20 comparison |
 | 232 | MERGED | 4 | 242/223 | Derive comparison decisions from merged PR state |
 | 231 | MERGED | 2 | 68/0 | Add Script Check workflow contract test |
@@ -69,13 +70,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
-| 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25621685408 | Public Results Export | schedule | in_progress |  | Public Results Export |
+| 25629137359 | Terminal State Report | pull_request | completed | skipped | Automate support unlocks for comparison runs |
+| 25629137348 | Public Results Export | push | in_progress |  | Automate support unlocks for comparison runs (#234) |
+| 25629137047 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25629095909 | Select Eligible Test | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25629095905 | Pre-API Freeze Audit | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25629095899 | Implementation Preflight Test | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25629095897 | Script Check | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25629095892 | Lab PR Scope Check | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25629095883 | Static Site Check | pull_request | completed | success | Automate support unlocks for comparison runs |
+| 25621692906 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25621685408 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25621649862 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25621093532 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25621088993 | Public Results Export | push | completed | success | Update root lab status for completed W20 comparison (#233) |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25620524425 | Script Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
 | 25618837193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25618831334 | Terminal State Report | pull_request | completed | skipped | Add Script Check workflow contract test |
-| 25618831326 | Public Results Export | push | completed | success | Add Script Check workflow contract test (#231) |
-| 25618831039 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25617683952 | Lab PR Scope Check | pull_request | completed | success | Add Script Check workflow contract test |
-| 25617683943 | Script Check | pull_request | completed | success | Add Script Check workflow contract test |
-| 25611414341 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25611408270 | Public Results Export | push | completed | success | Test generated comparison dashboards (#230) |
-| 25611408238 | Terminal State Report | pull_request | completed | skipped | Test generated comparison dashboards |
-| 25611407890 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25611259631 | Script Check | pull_request | completed | success | Test generated comparison dashboards |
-| 25611259630 | Lab PR Scope Check | pull_request | completed | success | Test generated comparison dashboards |
 
 ## Raw JSON
 
