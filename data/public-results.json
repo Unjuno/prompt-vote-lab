@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T13:41:01+00:00",
+  "generated_at": "2026-05-10T14:04:24+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 58,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nStops `Weekly Auto Run` from silently treating missing weekly support data as 0 USD.\n\n## Why\n\nSupport unlocks now determine whether rank 2 and rank 3 comparison runs are eligible. If `data/support-unlocks/<week-id>.json` is missing, treating that as 0 USD can undercount support and suppress comparison runs that should have been unlocked.\n\n## Changes\n\n- Add `--require` to `scripts/resolve_support_unlock.py`.\n- Use `--require` in `weekly-auto-run.yml` before vote collection and candidate selection.\n- Include `SUPPORT_UNLOCK_FILE` in weekly vote summary output.\n- Extend resolver tests to verify missing required support unlock data fails.\n- Extend support unlock workflow contract tests so the weekly gate cannot be removed silently.\n- Document the weekly support unlock gate.\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes.\n- No model/API run behavior changes.\n- No sponsor identity or event-level data changes.",
+      "body_length": 950,
+      "changed_files": 5,
+      "closed_at": "2026-05-10T14:04:08Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T14:00:35Z",
+      "deletions": 4,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 2,
+          "path": ".github/workflows/weekly-auto-run.yml"
+        },
+        {
+          "additions": 13,
+          "deletions": 0,
+          "path": "docs/support-unlock-automation.md"
+        },
+        {
+          "additions": 8,
+          "deletions": 0,
+          "path": "scripts/resolve_support_unlock.py"
+        },
+        {
+          "additions": 33,
+          "deletions": 2,
+          "path": "scripts/test_resolve_support_unlock.py"
+        },
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "scripts/test_support_unlock_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "require-support-unlock-for-weekly-run",
+      "head_ref_oid": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "labels": [],
+      "merge_commit_oid": "84656dbbf1850c6839b5cb6a020fc235bf39e5dd",
+      "merged_at": "2026-05-10T14:04:08Z",
+      "merged_by": "Unjuno",
+      "number": 236,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Require support unlock data before weekly runs",
+      "updated_at": "2026-05-10T14:04:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/236"
+    },
     {
       "additions": 50,
       "author": "Unjuno",
@@ -4489,38 +4541,6 @@
       "title": "Add Codex writeback canary",
       "updated_at": "2026-05-06T04:22:54Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/124"
-    },
-    {
-      "additions": 94,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords `first-canary-005` as a successful offline-context JSON writeback canary.\n\n## Observed result\n\nCodex authenticated, ran in an empty temporary context, received only the three allowed file contents as prompt context, returned JSON, and the workflow validated/applied the allowed replacement. PR #127 was created and merged.\n\n## Changed file\n\n- `runs/first-canary-005-offline-json-success.md`\n\n## Interpretation\n\nThis is the first successful workflow-mediated writeback canary that does not rely on Codex directly editing repository files.\n\n## Scope\n\n- Records result only.\n- No `/lab/` changes.\n- No model, retry, fallback, or sandbox changes.",
-      "body_length": 662,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T04:19:57Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T04:19:17Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 94,
-          "deletions": 0,
-          "path": "runs/first-canary-005-offline-json-success.md"
-        }
-      ],
-      "head_ref_name": "record-canary-004-failure",
-      "head_ref_oid": "efc66c025741c2cac3381381324b6cfd04d24f3e",
-      "labels": [],
-      "merge_commit_oid": "7a8844bf901419b098b2b2b8ee9327839c6c96a5",
-      "merged_at": "2026-05-06T04:19:57Z",
-      "merged_by": "Unjuno",
-      "number": 128,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record fifth canary success",
-      "updated_at": "2026-05-06T04:22:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/128"
     }
   ],
   "run_records": [
@@ -4667,6 +4687,146 @@
   "workflow_runs": [
     {
       "conclusion": "",
+      "created_at": "2026-05-10T14:04:11Z",
+      "database_id": 25630725467,
+      "display_title": "Require support unlock data before weekly runs (#236)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "84656dbbf1850c6839b5cb6a020fc235bf39e5dd",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-10T14:04:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630725467",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-10T14:04:11Z",
+      "database_id": 25630725445,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:04:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630725445",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-10T14:04:10Z",
+      "database_id": 25630725079,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "84656dbbf1850c6839b5cb6a020fc235bf39e5dd",
+      "name": "pages build and deployment",
+      "status": "waiting",
+      "updated_at": "2026-05-10T14:04:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630725079",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650663,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650663",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650662,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650662",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650650,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Select Eligible Test",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650650",
+      "workflow_name": "Select Eligible Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650647,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Implementation Preflight Test",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650647",
+      "workflow_name": "Implementation Preflight Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650642,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650642",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:00:39Z",
+      "database_id": 25630650641,
+      "display_title": "Require support unlock data before weekly runs",
+      "event": "pull_request",
+      "head_branch": "require-support-unlock-for-weekly-run",
+      "head_sha": "eece2e636a0a85f63cab28af954ccfb417d43693",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:00:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630650641",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T13:41:04Z",
+      "database_id": 25630234272,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "af54d5cc4c87e0654b70ce6e23c9bcd145b000ee",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T13:41:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630234272",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-10T13:40:48Z",
       "database_id": 25630228605,
       "display_title": "Allow manual support unlock backfill windows (#235)",
@@ -4674,8 +4834,8 @@
       "head_branch": "main",
       "head_sha": "cb94507f6b23397d608cfb717211a26c660aa842",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T13:40:52Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T13:41:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630228605",
       "workflow_name": "Public Results Export"
     },
@@ -4694,7 +4854,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-10T13:40:47Z",
       "database_id": 25630228274,
       "display_title": "pages build and deployment",
@@ -4702,8 +4862,8 @@
       "head_branch": "main",
       "head_sha": "cb94507f6b23397d608cfb717211a26c660aa842",
       "name": "pages build and deployment",
-      "status": "waiting",
-      "updated_at": "2026-05-10T13:40:58Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T13:41:09Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25630228274",
       "workflow_name": "pages-build-deployment"
     },
@@ -5924,146 +6084,6 @@
       "updated_at": "2026-05-09T14:57:52Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604107189",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-09T14:57:31Z",
-      "database_id": 25604106917,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "75a7b665db6b7632ad9812e44ed00b48828bb78f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:58:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604106917",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:55:15Z",
-      "database_id": 25604061311,
-      "display_title": "Allow generated lab evidence paths in scope guard",
-      "event": "pull_request",
-      "head_branch": "allow-generated-lab-evidence-paths",
-      "head_sha": "8129c526c2df9ad4c7c5fcb6ca616b839ee77e86",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:55:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604061311",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:55:15Z",
-      "database_id": 25604061305,
-      "display_title": "Allow generated lab evidence paths in scope guard",
-      "event": "pull_request",
-      "head_branch": "allow-generated-lab-evidence-paths",
-      "head_sha": "8129c526c2df9ad4c7c5fcb6ca616b839ee77e86",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:55:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604061305",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:48:49Z",
-      "database_id": 25603929107,
-      "display_title": "Allow generated lab evidence paths in scope guard",
-      "event": "pull_request",
-      "head_branch": "allow-generated-lab-evidence-paths",
-      "head_sha": "967ac6c1092cdca9315feb35a59aa790cfd5ae38",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:49:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25603929107",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-09T14:48:49Z",
-      "database_id": 25603929097,
-      "display_title": "Allow generated lab evidence paths in scope guard",
-      "event": "pull_request",
-      "head_branch": "allow-generated-lab-evidence-paths",
-      "head_sha": "967ac6c1092cdca9315feb35a59aa790cfd5ae38",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:49:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25603929097",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:21:44Z",
-      "database_id": 25603375356,
-      "display_title": "Normalize rank 2 comparison metadata",
-      "event": "pull_request",
-      "head_branch": "update-rank2-issue195-metadata-normalized",
-      "head_sha": "aee616da9e55415bf9d861dc4c49854041f81f06",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:21:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25603375356",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-09T14:21:44Z",
-      "database_id": 25603375340,
-      "display_title": "Normalize rank 2 comparison metadata",
-      "event": "pull_request",
-      "head_branch": "update-rank2-issue195-metadata-normalized",
-      "head_sha": "aee616da9e55415bf9d861dc4c49854041f81f06",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:21:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25603375340",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:21:44Z",
-      "database_id": 25603375335,
-      "display_title": "Normalize rank 2 comparison metadata",
-      "event": "pull_request",
-      "head_branch": "update-rank2-issue195-metadata-normalized",
-      "head_sha": "aee616da9e55415bf9d861dc4c49854041f81f06",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:21:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25603375335",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:02:24Z",
-      "database_id": 25602984788,
-      "display_title": "Request metadata-normalized comparison run for Issue 195 rank 2",
-      "event": "pull_request",
-      "head_branch": "request-rank2-issue195-comparison-v5",
-      "head_sha": "fd4f2d1b20d458802d760867f64e668d8d56aa05",
-      "name": "Codex Comparison Issue Run",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:07:23Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25602984788",
-      "workflow_name": "Codex Comparison Issue Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T14:02:24Z",
-      "database_id": 25602984781,
-      "display_title": "Request metadata-normalized comparison run for Issue 195 rank 2",
-      "event": "pull_request",
-      "head_branch": "request-rank2-issue195-comparison-v5",
-      "head_sha": "fd4f2d1b20d458802d760867f64e668d8d56aa05",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T14:02:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25602984781",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

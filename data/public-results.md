@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T13:41:01+00:00`
+Generated at: `2026-05-10T14:04:24+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
 | 235 | MERGED | 3 | 50/4 | Allow manual support unlock backfill windows |
 | 234 | MERGED | 14 | 957/7 | Automate support unlocks for comparison runs |
 | 233 | MERGED | 3 | 129/280 | Update root lab status for completed W20 comparison |
@@ -69,15 +70,24 @@ This file is a raw results surface for participants. It does not score prompts o
 | 212 | MERGED | 4 | 132/13 | Normalize comparison rank links |
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
-| 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25630228605 | Public Results Export | push | in_progress |  | Allow manual support unlock backfill windows (#235) |
+| 25630725467 | Public Results Export | push | in_progress |  | Require support unlock data before weekly runs (#236) |
+| 25630725445 | Terminal State Report | pull_request | completed | skipped | Require support unlock data before weekly runs |
+| 25630725079 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25630650663 | Pre-API Freeze Audit | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630650662 | Static Site Check | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630650650 | Select Eligible Test | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630650647 | Implementation Preflight Test | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630650642 | Lab PR Scope Check | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630650641 | Script Check | pull_request | completed | success | Require support unlock data before weekly runs |
+| 25630234272 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25630228605 | Public Results Export | push | completed | success | Allow manual support unlock backfill windows (#235) |
 | 25630228525 | Terminal State Report | pull_request | completed | skipped | Allow manual support unlock backfill windows |
-| 25630228274 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25630228274 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25630135328 | Static Site Check | pull_request | completed | success | Allow manual support unlock backfill windows |
 | 25630135324 | Lab PR Scope Check | pull_request | completed | success | Allow manual support unlock backfill windows |
 | 25630135310 | Script Check | pull_request | completed | success | Allow manual support unlock backfill windows |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25621685408 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25621649862 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25621093532 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25621088993 | Public Results Export | push | completed | success | Update root lab status for completed W20 comparison (#233) |
-| 25621088936 | Terminal State Report | pull_request | completed | skipped | Update root lab status for completed W20 comparison |
-| 25621088689 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25620968616 | Static Site Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
-| 25620968615 | Lab PR Scope Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
-| 25620968614 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
-| 25620944830 | Lab PR Scope Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
-| 25620944821 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
-| 25620944816 | Static Site Check | pull_request | completed | failure | Update root lab status for completed W20 comparison |
-| 25620563492 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
