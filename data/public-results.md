@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-09T20:46:17+00:00`
+Generated at: `2026-05-10T03:33:19+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 231 | MERGED | 2 | 68/0 | Add Script Check workflow contract test |
 | 230 | MERGED | 2 | 100/0 | Test generated comparison dashboards |
 | 229 | MERGED | 1 | 0/17 | Regenerate 2026-W20 comparison dashboard |
 | 228 | MERGED | 2 | 67/7 | Dedupe comparison dashboard rows by rank |
@@ -69,15 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
-| 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25611408270 | Public Results Export | push | in_progress |  | Test generated comparison dashboards (#230) |
+| 25618831334 | Terminal State Report | pull_request | completed | skipped | Add Script Check workflow contract test |
+| 25618831326 | Public Results Export | push | in_progress |  | Add Script Check workflow contract test (#231) |
+| 25618831039 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25617683952 | Lab PR Scope Check | pull_request | completed | success | Add Script Check workflow contract test |
+| 25617683943 | Script Check | pull_request | completed | success | Add Script Check workflow contract test |
+| 25611414341 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25611408270 | Public Results Export | push | completed | success | Test generated comparison dashboards (#230) |
 | 25611408238 | Terminal State Report | pull_request | completed | skipped | Test generated comparison dashboards |
-| 25611407890 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25611407890 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25611259631 | Script Check | pull_request | completed | success | Test generated comparison dashboards |
 | 25611259630 | Lab PR Scope Check | pull_request | completed | success | Test generated comparison dashboards |
 | 25610438195 | Terminal State Report | pull_request | completed | skipped | Regenerate 2026-W20 comparison dashboard |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25609277773 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25609045899 | Script Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
 | 25609045890 | Lab PR Scope Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
-| 25608555244 | Terminal State Report | pull_request | completed | skipped | Add timeouts to comparison runs |
-| 25608468348 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25608462139 | Terminal State Report | pull_request | completed | skipped | Add timeouts to comparison runs v3 |
-| 25608462118 | Public Results Export | push | completed | success | Add timeouts to comparison runs v3 (#226) |
-| 25608461748 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25608404410 | Script Check | pull_request | completed | success | Add timeouts to comparison runs v3 |
 
 ## Raw JSON
 
