@@ -45,7 +45,7 @@ FORBIDDEN_KEYS = {
     "account",
 }
 
-FORBIDDEN_TEXT_FRAGMENTS = [
+FORBIDDEN_STRING_VALUE_FRAGMENTS = [
     "@",
     "private-sponsor",
     "sponsor_login",
@@ -69,9 +69,26 @@ def contains_forbidden_key(value: Any) -> str | None:
     return None
 
 
+def contains_forbidden_string_value(value: Any) -> str | None:
+    if isinstance(value, str):
+        for fragment in FORBIDDEN_STRING_VALUE_FRAGMENTS:
+            if fragment in value:
+                return fragment
+    if isinstance(value, dict):
+        for child in value.values():
+            nested = contains_forbidden_string_value(child)
+            if nested:
+                return nested
+    if isinstance(value, list):
+        for child in value:
+            nested = contains_forbidden_string_value(child)
+            if nested:
+                return nested
+    return None
+
+
 def validate_unlock(path: Path) -> None:
-    text = path.read_text(encoding="utf-8")
-    data = json.loads(text)
+    data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise SystemExit(f"{path}: support unlock JSON must be an object")
 
@@ -87,9 +104,9 @@ def validate_unlock(path: Path) -> None:
     if forbidden_key:
         raise SystemExit(f"{path}: forbidden identity key found: {forbidden_key}")
 
-    leaked_fragments = [fragment for fragment in FORBIDDEN_TEXT_FRAGMENTS if fragment in text]
-    if leaked_fragments:
-        raise SystemExit(f"{path}: forbidden text fragment found: {leaked_fragments}")
+    leaked_fragment = contains_forbidden_string_value(data)
+    if leaked_fragment:
+        raise SystemExit(f"{path}: forbidden string value fragment found: {leaked_fragment}")
 
     if data["schema_version"] != "support-unlock.v1":
         raise SystemExit(f"{path}: unexpected schema_version")
