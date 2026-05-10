@@ -35,6 +35,8 @@ def main() -> int:
             "week_id:",
             "since:",
             "until:",
+            "previous UTC ISO week",
+            "target = current - timedelta(days=7)",
             "SPONSORS_GRAPHQL_TOKEN",
             "scripts/fetch_support_activities.py",
             "scripts/build_support_unlocks.py",
