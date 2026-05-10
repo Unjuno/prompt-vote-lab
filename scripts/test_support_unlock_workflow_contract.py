@@ -76,12 +76,13 @@ def main() -> int:
         [
             "Run support unlock builder test",
             "python scripts/test_build_support_unlocks.py",
-            "Run support unlock workflow contract test",
-            "python scripts/test_support_unlock_workflow_contract.py",
-            "Run eligible selector support unlock test",
-            "python scripts/test_select_eligible_support_unlock.py",
             "Run support unlock resolver test",
             "python scripts/test_resolve_support_unlock.py",
+            "Run eligible selector support unlock test",
+            "python scripts/test_select_eligible_support_unlock.py",
+            "Run support unlock workflow contract test",
+            "python scripts/test_support_unlock_workflow_contract.py",
+            "python scripts/test_unlock_export_public.py",
         ],
         "script check",
     )
