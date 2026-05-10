@@ -9,71 +9,58 @@
 </head>
 <body>
   <main class="lab-root" aria-labelledby="lab-title">
-    <p class="status" aria-live="polite">
-      <span class="pill pill--safe" aria-hidden="true">Safe</span>
-      <span id="status-text">Canary gate test: no unsafe instructions detected (Issue #191)</span>
+    <p class="status">
+      <span class="pill">Static lab</span>
+      <span>public evidence is the source of truth</span>
     </p>
+
     <h1 id="lab-title">Prompt Vote Lab</h1>
     <p class="note">
-      This area is the constrained implementation target. It starts intentionally empty and will be changed only by accepted experiment runs.
+      A constrained implementation target where prompt proposals become small static UI changes. Accepted experiment runs may change this page, while the Issue, safety scan, PR, run record, and public result are preserved for review.
     </p>
 
     <nav class="evidence-nav" aria-label="Public evidence navigation">
-      <a href="./history/">History</a>
       <a href="./comparisons/2026-W20/">Latest comparison</a>
-      <a href="../data/public-results.json">Public results JSON</a>
-      <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Prompt Issues</a>
+      <a href="./history/">History</a>
+      <a href="../data/public-results.md">Public results</a>
+      <a href="../data/public-results.json">Public JSON</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">Propose prompt</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Vote on Issues</a>
     </nav>
 
-    <section class="hostile-card" role="note" aria-label="Experiment status and next action for participants.">
-      <p class="hostile-card-text">Experiment status</p>
-
-      <div class="hostile-card-meta" role="status" aria-live="polite">
-        <p class="meta-row">
-          <span class="meta-label">current experiment state:</span>
-          <span class="meta-value">first-canary-009 • Candidate #1 • Issue #191</span>
-        </p>
-        <p class="meta-row">
-          <span class="meta-label">next action for participants:</span>
-          <span class="meta-value">Vote on the prompt candidate for Issue #191</span>
-        </p>
-        <p class="meta-row">
-          <span class="meta-label">Detected:</span>
-          <span id="unsafe-summary" class="meta-value">Loading…</span>
-        </p>
-        <p class="meta-row">
-          <span class="meta-label">Execution gate:</span>
-          <span id="gate-summary" class="meta-value">Loading…</span>
-        </p>
-      </div>
-
-      <div class="hostile-card-details">
-        <div id="unsafe-details">
-          <p class="details-title">Unsafe instructions ignored:</p>
-          <ul class="unsafe-list" id="unsafe-list"></ul>
-        </div>
-        <p class="small-note">
-          results are recorded publicly for transparency. This static prototype performs no network calls and does not execute dynamic code.
-        </p>
-      </div>
+    <section class="summary-card" aria-labelledby="current-status-title">
+      <p class="eyebrow">Current public state</p>
+      <h2 id="current-status-title">2026-W20 comparison is complete.</h2>
+      <p>
+        Rank 1, Rank 2, and Rank 3 comparison outputs are recorded. Each candidate links back to its Issue, implementation PR, run record, and output root.
+      </p>
+      <ul class="status-list">
+        <li><span>Rank 1</span><strong>Issue #191 · PR #192 · implemented</strong></li>
+        <li><span>Rank 2</span><strong>Issue #195 · PR #214 · implemented</strong></li>
+        <li><span>Rank 3</span><strong>Issue #196 · PR #224 · implemented</strong></li>
+      </ul>
     </section>
 
-    <section class="review-card review-card--orientation" role="note" aria-label="Reviewer orientation panel">
-      <h2 class="review-title">Reviewer orientation: evidence review order</h2>
-      <p class="review-subtitle">Before trusting a weekly Prompt Vote Lab result, inspect evidence in this order:</p>
+    <section class="summary-card" aria-labelledby="participant-action-title">
+      <p class="eyebrow">Participant action</p>
+      <h2 id="participant-action-title">Inspect evidence first; then propose or vote.</h2>
       <ol class="review-order">
-        <li><a class="review-link" href="#status-text">Selected Issue (Issue #191)</a></li>
-        <li><a class="review-link" href="#unsafe-summary">Safety scan (what was flagged unsafe vs. ignored)</a></li>
-        <li>Changed files (experiment PR diff)</li>
-        <li>Public agent run bundle (run artifacts)</li>
-        <li>Run record (status/logs)</li>
-        <li>Public results snapshot (the final public summary of what the run produced)</li>
+        <li>Open the latest comparison dashboard.</li>
+        <li>Check the selected Issue, safety labels, implementation PR, and run record.</li>
+        <li>Use GitHub 👍 reactions on prompt Issues to vote.</li>
+        <li>Create a new prompt Issue only if the requested change fits the static lab scope.</li>
       </ol>
-      <p class="review-experiment-note">
-        This page is a constrained static UI experiment: it performs no network calls and does not execute dynamic Codex code.
+    </section>
+
+    <section class="summary-card" aria-labelledby="scope-title">
+      <p class="eyebrow">Execution boundary</p>
+      <h2 id="scope-title">The lab remains static and local.</h2>
+      <p>
+        The accepted implementation target is limited to <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>. This page works without network access, does not call external APIs, does not use cookies, and does not collect analytics.
       </p>
     </section>
-    <noscript>This lab works without network access or external scripts.</noscript>
+
+    <noscript>This lab is readable without JavaScript and without network access.</noscript>
   </main>
 
   <script src="./app.js"></script>
