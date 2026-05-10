@@ -6,15 +6,15 @@ on:
   workflow_dispatch:
     inputs:
       week_id:
-        description: "ISO week id to write, for example 2026-W20. Empty uses current UTC week."
+        description: "ISO week id to write, for example 2026-W20. Empty uses the previous UTC ISO week."
         required: false
         default: ""
       since:
-        description: "UTC window start, for example 2026-05-04T00:00:00Z. Empty uses current UTC week start."
+        description: "UTC window start, for example 2026-05-04T00:00:00Z. Empty uses previous UTC ISO week start."
         required: false
         default: ""
       until:
-        description: "UTC window end, for example 2026-05-11T00:00:00Z. Empty uses current UTC week end."
+        description: "UTC window end, for example 2026-05-11T00:00:00Z. Empty uses previous UTC ISO week end."
         required: false
         default: ""
 
@@ -41,8 +41,9 @@ jobs:
           from datetime import datetime, timedelta, timezone
           import os
           current = datetime.now(timezone.utc)
-          iso = current.isocalendar()
-          start = current - timedelta(days=iso.weekday - 1)
+          target = current - timedelta(days=7)
+          iso = target.isocalendar()
+          start = target - timedelta(days=iso.weekday - 1)
           start = start.replace(hour=0, minute=0, second=0, microsecond=0)
           end = start + timedelta(days=7)
           week_id = '''${{ inputs.week_id }}'''.strip() or f"{iso.year}-W{iso.week:02d}"

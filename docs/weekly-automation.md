@@ -42,21 +42,24 @@ The support export workflow writes the anonymized aggregate file used by the wee
 data/support-unlocks/<week-id>.json
 ```
 
+On scheduled runs, support export defaults to the previous UTC ISO week. Manual `workflow_dispatch` inputs can still override `week_id`, `since`, and `until` for verification or backfill.
+
 ## Weekly run order
 
 `Weekly Auto Run` runs in this order:
 
 ```text
 1. checkout repository
-2. set RUN_WEEK as week-<ISO-year>-W<ISO-week>
-3. require data/support-unlocks/<week-id>.json
-4. collect prompt proposal votes
-5. insert no-change baseline
-6. select eligible ranks
-7. write weekly vote summary PR
-8. if eligible candidates exist, require implementation secret
-9. preflight the implementation run
-10. create implementation PRs for eligible candidates
+2. set an initial RUN_WEEK
+3. resolve the required support unlock file
+4. on scheduled runs, rewrite RUN_WEEK to the previous UTC ISO week resolved from the support unlock file
+5. collect prompt proposal votes
+6. insert no-change baseline
+7. select eligible ranks
+8. write weekly vote summary PR
+9. if eligible candidates exist, require implementation secret
+10. preflight the implementation run
+11. create implementation PRs for eligible candidates
 ```
 
 The support unlock file is required before vote collection and rank selection.
@@ -85,13 +88,23 @@ Weekly auto run:
 
 ## Time-window caveat
 
-Both workflows use UTC ISO weeks.
+The scheduled production path should process the UTC ISO week that just ended, not the week that has just started.
 
-`Weekly Auto Run` uses:
+`Support Unlock Export` scheduled runs therefore default to:
 
 ```text
-RUN_WEEK=week-$(date -u +%G-W%V)
+target = current UTC time - 7 days
 ```
+
+This writes the previous ISO week by default.
+
+`Weekly Auto Run` also resolves to the previous UTC ISO week when the GitHub event is `schedule`. The resolver writes this resolved week back into the job environment as:
+
+```text
+RUN_WEEK=week-<previous-ISO-year>-W<previous-ISO-week>
+```
+
+This prevents the Monday morning scheduled run from recording the newly started week by mistake.
 
 `Support Unlock Export` writes:
 
@@ -105,7 +118,7 @@ The resolver normalizes these two forms:
 week-2026-W20 -> 2026-W20
 ```
 
-The weekly workflow requires the matching support unlock file for its `RUN_WEEK`.
+The weekly workflow requires the matching support unlock file for its resolved `RUN_WEEK`.
 
 ## Manual verification
 
