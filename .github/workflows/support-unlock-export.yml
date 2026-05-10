@@ -4,6 +4,19 @@ on:
   schedule:
     - cron: "17 0 * * *"
   workflow_dispatch:
+    inputs:
+      week_id:
+        description: "ISO week id to write, for example 2026-W20. Empty uses current UTC week."
+        required: false
+        default: ""
+      since:
+        description: "UTC window start, for example 2026-05-04T00:00:00Z. Empty uses current UTC week start."
+        required: false
+        default: ""
+      until:
+        description: "UTC window end, for example 2026-05-11T00:00:00Z. Empty uses current UTC week end."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -32,10 +45,13 @@ jobs:
           start = current - timedelta(days=iso.weekday - 1)
           start = start.replace(hour=0, minute=0, second=0, microsecond=0)
           end = start + timedelta(days=7)
+          week_id = '''${{ inputs.week_id }}'''.strip() or f"{iso.year}-W{iso.week:02d}"
+          since = '''${{ inputs.since }}'''.strip() or start.isoformat(timespec='seconds').replace('+00:00', 'Z')
+          until = '''${{ inputs.until }}'''.strip() or end.isoformat(timespec='seconds').replace('+00:00', 'Z')
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
-              handle.write(f"week_id={iso.year}-W{iso.week:02d}\n")
-              handle.write(f"since={start.isoformat(timespec='seconds').replace('+00:00', 'Z')}\n")
-              handle.write(f"until={end.isoformat(timespec='seconds').replace('+00:00', 'Z')}\n")
+              handle.write(f"week_id={week_id}\n")
+              handle.write(f"since={since}\n")
+              handle.write(f"until={until}\n")
 
       - name: Fetch support activity
         run: |
