@@ -15,6 +15,8 @@ REQUIRED_TEXT = [
     "contents: read",
     "Run comparison dashboard builder test",
     "python scripts/test_build_comparison_dashboard.py",
+    "Run comparison dashboard decision test",
+    "python scripts/test_comparison_dashboard_decision.py",
     "Run generated comparison dashboard test",
     "python scripts/test_generated_comparison_dashboards.py",
     "Run public results export workflow contract test",
@@ -51,8 +53,11 @@ def main() -> int:
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
 
-    if text.index("Run comparison dashboard builder test") > text.index("Run generated comparison dashboard test"):
-        raise SystemExit("Generated comparison dashboard test should run after the builder test")
+    if text.index("Run comparison dashboard builder test") > text.index("Run comparison dashboard decision test"):
+        raise SystemExit("Comparison dashboard decision test should run after the builder test")
+
+    if text.index("Run comparison dashboard decision test") > text.index("Run generated comparison dashboard test"):
+        raise SystemExit("Generated comparison dashboard test should run after the decision test")
 
     if text.index("Run generated comparison dashboard test") > text.index("Run weekly Issue finalizer test"):
         raise SystemExit("Generated dashboard test should run before later weekly finalizer tests")

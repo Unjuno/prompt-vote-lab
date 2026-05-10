@@ -146,6 +146,9 @@ jobs:
       - name: Run comparison dashboard builder test
         run: python scripts/test_build_comparison_dashboard.py
 
+      - name: Run comparison dashboard decision test
+        run: python scripts/test_comparison_dashboard_decision.py
+
       - name: Run generated comparison dashboard test
         run: python scripts/test_generated_comparison_dashboards.py
 
