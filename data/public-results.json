@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T14:53:21+00:00",
+  "generated_at": "2026-05-10T15:12:47+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 124,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAligns scheduled support unlock resolution with the weekly operating model: Monday automation should process the UTC ISO week that just ended, not the newly started week.\n\n## Why\n\n`Weekly Auto Run` currently initializes `RUN_WEEK` from the current UTC ISO week. On Monday morning, that points at the week that just started. The support export and weekly vote evidence should instead resolve to the previous completed week.\n\nDirectly rewriting the full weekly workflow was avoided because that file contains multiple implementation secret bindings. This PR keeps workflow behavior compatible and moves the previous-week resolution into the support unlock resolver, which already writes environment variables back into `$GITHUB_ENV`.\n\n## Changes\n\n- Make `Support Unlock Export` default to the previous UTC ISO week when manual inputs are omitted.\n- Update `resolve_support_unlock.py` so scheduled and manual workflow runs can resolve the previous week's support unlock file and write the resolved `RUN_WEEK` back to the environment.\n- Add deterministic resolver tests for scheduled and manual previous-week fallback.\n- Extend the support unlock workflow contract test so previous-week support export defaults are preserved.\n- Update `docs/weekly-automation.md` to explain previous-week resolution.\n\n## Behavior\n\nScheduled path:\n\n```text\nSupport Unlock Export → previous ISO week JSON\nWeekly Auto Run → resolver finds previous ISO week JSON → RUN_WEEK is rewritten to week-<previous week>\n```\n\nManual path:\n\n```text\nSupport Unlock Export can still accept explicit week_id/since/until\nWeekly Auto Run can resolve previous week when current week support data is absent\n```\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes.\n- No implementation model behavior changes.\n- No sponsor identity or event-level data changes.",
+      "body_length": 1844,
+      "changed_files": 5,
+      "closed_at": "2026-05-10T15:12:32Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T15:11:33Z",
+      "deletions": 27,
+      "files": [
+        {
+          "additions": 6,
+          "deletions": 5,
+          "path": ".github/workflows/support-unlock-export.yml"
+        },
+        {
+          "additions": 26,
+          "deletions": 13,
+          "path": "docs/weekly-automation.md"
+        },
+        {
+          "additions": 50,
+          "deletions": 8,
+          "path": "scripts/resolve_support_unlock.py"
+        },
+        {
+          "additions": 40,
+          "deletions": 1,
+          "path": "scripts/test_resolve_support_unlock.py"
+        },
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "scripts/test_support_unlock_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "process-previous-week-on-schedule",
+      "head_ref_oid": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
+      "labels": [],
+      "merge_commit_oid": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
+      "merged_at": "2026-05-10T15:12:32Z",
+      "merged_by": "Unjuno",
+      "number": 240,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Process previous week in scheduled support resolution",
+      "updated_at": "2026-05-10T15:12:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/240"
+    },
     {
       "additions": 218,
       "author": "Unjuno",
@@ -4514,38 +4566,6 @@
       "title": "Fix policy runner npm home",
       "updated_at": "2026-05-06T07:27:01Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/139"
-    },
-    {
-      "additions": 1,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `d44ec217581cc85f49da46d1297bb3e1cffb6906`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 1154,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T07:15:34Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T07:05:50Z",
-      "deletions": 1,
-      "files": [
-        {
-          "additions": 1,
-          "deletions": 1,
-          "path": "lab/index.html"
-        }
-      ],
-      "head_ref_name": "codex-policy-agent-canary-007-6",
-      "head_ref_oid": "aaf42f28a9f2b5dfc494ec8cebea3a4455f26336",
-      "labels": [],
-      "merge_commit_oid": "11ccdf4153a67a14970b12f7b8d21db337ff04c8",
-      "merged_at": "2026-05-06T07:15:34Z",
-      "merged_by": "Unjuno",
-      "number": 142,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Run Codex policy-enforced agent canary",
-      "updated_at": "2026-05-06T07:27:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/142"
     }
   ],
   "run_records": [
@@ -4692,6 +4712,104 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-10T15:12:34Z",
+      "database_id": 25632199099,
+      "display_title": "Process previous week in scheduled support resolution",
+      "event": "pull_request",
+      "head_branch": "process-previous-week-on-schedule",
+      "head_sha": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:12:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632199099",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-10T15:12:34Z",
+      "database_id": 25632199078,
+      "display_title": "Process previous week in scheduled support resolution (#240)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-10T15:12:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632199078",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-10T15:12:33Z",
+      "database_id": 25632198724,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
+      "name": "pages build and deployment",
+      "status": "in_progress",
+      "updated_at": "2026-05-10T15:12:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632198724",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:11:36Z",
+      "database_id": 25632178668,
+      "display_title": "Process previous week in scheduled support resolution",
+      "event": "pull_request",
+      "head_branch": "process-previous-week-on-schedule",
+      "head_sha": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:11:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632178668",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:11:36Z",
+      "database_id": 25632178657,
+      "display_title": "Process previous week in scheduled support resolution",
+      "event": "pull_request",
+      "head_branch": "process-previous-week-on-schedule",
+      "head_sha": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:11:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632178657",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:11:36Z",
+      "database_id": 25632178656,
+      "display_title": "Process previous week in scheduled support resolution",
+      "event": "pull_request",
+      "head_branch": "process-previous-week-on-schedule",
+      "head_sha": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:11:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632178656",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:53:24Z",
+      "database_id": 25631791157,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b00feca14966b50ad317280189869d5f78e092b5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:53:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631791157",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-10T14:53:03Z",
       "database_id": 25631783322,
       "display_title": "Document weekly automation schedule",
@@ -4705,7 +4823,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-10T14:53:03Z",
       "database_id": 25631783315,
       "display_title": "Document weekly automation schedule (#239)",
@@ -4713,13 +4831,13 @@
       "head_branch": "main",
       "head_sha": "e91a498bdbdd07ec333371bed8327976dea56b2b",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T14:53:12Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:53:25Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631783315",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-10T14:53:02Z",
       "database_id": 25631782896,
       "display_title": "pages build and deployment",
@@ -4727,8 +4845,8 @@
       "head_branch": "main",
       "head_sha": "e91a498bdbdd07ec333371bed8327976dea56b2b",
       "name": "pages build and deployment",
-      "status": "queued",
-      "updated_at": "2026-05-10T14:53:16Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:53:28Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631782896",
       "workflow_name": "pages-build-deployment"
     },
@@ -5990,104 +6108,6 @@
       "status": "completed",
       "updated_at": "2026-05-09T19:38:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023322",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-09T19:38:35Z",
-      "database_id": 25610023038,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:38:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023038",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:31:26Z",
-      "database_id": 25609885998,
-      "display_title": "Dedupe comparison dashboard rows by rank",
-      "event": "pull_request",
-      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:31:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609885998",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:31:26Z",
-      "database_id": 25609885994,
-      "display_title": "Dedupe comparison dashboard rows by rank",
-      "event": "pull_request",
-      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:31:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609885994",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-09T19:25:36Z",
-      "database_id": 25609768439,
-      "display_title": "Dedupe comparison dashboard rows by rank",
-      "event": "pull_request",
-      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_sha": "2b6426eda85fb78a1908432263032fe674b45613",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:25:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609768439",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:25:36Z",
-      "database_id": 25609768438,
-      "display_title": "Dedupe comparison dashboard rows by rank",
-      "event": "pull_request",
-      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_sha": "2b6426eda85fb78a1908432263032fe674b45613",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:25:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609768438",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:01:07Z",
-      "database_id": 25609286937,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "05346dc890fb69791fcb402a088f0dc3ee340f0a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609286937",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T19:00:45Z",
-      "database_id": 25609278208,
-      "display_title": "Prefer merged latest PRs in comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "fix-comparison-dashboard-pr-selection",
-      "head_sha": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:00:46Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25609278208",
       "workflow_name": "Terminal State Report"
     }
   ]
