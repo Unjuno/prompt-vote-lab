@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T12:48:21+00:00`
+Generated at: `2026-05-10T13:41:01+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 235 | MERGED | 3 | 50/4 | Allow manual support unlock backfill windows |
 | 234 | MERGED | 14 | 957/7 | Automate support unlocks for comparison runs |
 | 233 | MERGED | 3 | 129/280 | Update root lab status for completed W20 comparison |
 | 232 | MERGED | 4 | 242/223 | Derive comparison decisions from merged PR state |
@@ -69,15 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
-| 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25630228605 | Public Results Export | push | in_progress |  | Allow manual support unlock backfill windows (#235) |
+| 25630228525 | Terminal State Report | pull_request | completed | skipped | Allow manual support unlock backfill windows |
+| 25630228274 | pages-build-deployment | dynamic | waiting |  | pages build and deployment |
+| 25630135328 | Static Site Check | pull_request | completed | success | Allow manual support unlock backfill windows |
+| 25630135324 | Lab PR Scope Check | pull_request | completed | success | Allow manual support unlock backfill windows |
+| 25630135310 | Script Check | pull_request | completed | success | Allow manual support unlock backfill windows |
+| 25629142925 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25629137359 | Terminal State Report | pull_request | completed | skipped | Automate support unlocks for comparison runs |
-| 25629137348 | Public Results Export | push | in_progress |  | Automate support unlocks for comparison runs (#234) |
-| 25629137047 | pages-build-deployment | dynamic | in_progress |  | pages build and deployment |
+| 25629137348 | Public Results Export | push | completed | success | Automate support unlocks for comparison runs (#234) |
+| 25629137047 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25629095909 | Select Eligible Test | pull_request | completed | success | Automate support unlocks for comparison runs |
 | 25629095905 | Pre-API Freeze Audit | pull_request | completed | success | Automate support unlocks for comparison runs |
 | 25629095899 | Implementation Preflight Test | pull_request | completed | success | Automate support unlocks for comparison runs |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25620944821 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
 | 25620944816 | Static Site Check | pull_request | completed | failure | Update root lab status for completed W20 comparison |
 | 25620563492 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25620559114 | Public Results Export | push | completed | success | Derive comparison decisions from merged PR state (#232) |
-| 25620559095 | Terminal State Report | pull_request | completed | skipped | Derive comparison decisions from merged PR state |
-| 25620558817 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25620524426 | Lab PR Scope Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
-| 25620524425 | Script Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
-| 25618837193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25618831334 | Terminal State Report | pull_request | completed | skipped | Add Script Check workflow contract test |
 
 ## Raw JSON
 
