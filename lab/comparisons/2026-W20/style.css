@@ -6,44 +6,15 @@
   --line: #d9d3c5;
   --card: #fffdf7;
 }
-
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-.comparison-root {
-  width: min(1120px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 40px 0;
-}
-.status {
-  color: var(--muted);
-  font-size: 0.95rem;
-  margin: 0 0 8px;
-}
+body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+.comparison-root { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0; }
+.status { color: var(--muted); font-size: 0.95rem; margin: 0 0 8px; }
 h1 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
 .note, .method { color: var(--muted); max-width: 780px; }
-.method {
-  border: 1px solid var(--line);
-  background: var(--card);
-  padding: 16px;
-  border-radius: 18px;
-  margin: 24px 0;
-}
-.rank-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-.rank-card {
-  border: 1px solid var(--line);
-  background: var(--card);
-  border-radius: 20px;
-  padding: 18px;
-}
+.method { border: 1px solid var(--line); background: var(--card); padding: 16px; border-radius: 18px; margin: 24px 0; }
+.rank-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.rank-card { border: 1px solid var(--line); background: var(--card); border-radius: 20px; padding: 18px; }
 .rank-eyebrow { margin: 0 0 6px; color: var(--muted); font-weight: 700; }
 .rank-card h2 { margin: 0 0 14px; font-size: 1.25rem; }
 .facts { display: grid; gap: 10px; margin: 0; }

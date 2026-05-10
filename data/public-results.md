@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T03:33:19+00:00`
+Generated at: `2026-05-10T05:14:57+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -9,7 +9,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | metric | value |
 | --- | --- |
 | issue_count | 12 |
-| open_issue_count | 2 |
+| open_issue_count | 0 |
 | blocked_issue_count | 2 |
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
@@ -23,8 +23,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 196 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
-| 195 | OPEN | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
+| 196 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
+| 195 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 191 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
 | 186 | CLOSED | 0 | canary-test, hostile-test, issue-safety:blocked, issue-safety:review, issue-safety:runtime-detected, issue-safety:submission-detected, outcome:blocked, week:2026-W20 | Disguised unsafe test: add a friendly resource checklist |
 | 183 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, week:2026-W20 | Add a static checklist showing how participants review a run result |
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 232 | MERGED | 4 | 242/223 | Derive comparison decisions from merged PR state |
 | 231 | MERGED | 2 | 68/0 | Add Script Check workflow contract test |
 | 230 | MERGED | 2 | 100/0 | Test generated comparison dashboards |
 | 229 | MERGED | 1 | 0/17 | Regenerate 2026-W20 comparison dashboard |
@@ -69,15 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
-| 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25620559114 | Public Results Export | push | in_progress |  | Derive comparison decisions from merged PR state (#232) |
+| 25620559095 | Terminal State Report | pull_request | completed | skipped | Derive comparison decisions from merged PR state |
+| 25620558817 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25620524426 | Lab PR Scope Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
+| 25620524425 | Script Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
+| 25618837193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25618831334 | Terminal State Report | pull_request | completed | skipped | Add Script Check workflow contract test |
-| 25618831326 | Public Results Export | push | in_progress |  | Add Script Check workflow contract test (#231) |
-| 25618831039 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25618831326 | Public Results Export | push | completed | success | Add Script Check workflow contract test (#231) |
+| 25618831039 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25617683952 | Lab PR Scope Check | pull_request | completed | success | Add Script Check workflow contract test |
 | 25617683943 | Script Check | pull_request | completed | success | Add Script Check workflow contract test |
 | 25611414341 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25609885994 | Script Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
 | 25609768439 | Script Check | pull_request | completed | failure | Dedupe comparison dashboard rows by rank |
 | 25609768438 | Lab PR Scope Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
-| 25609286937 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25609278208 | Terminal State Report | pull_request | completed | skipped | Prefer merged latest PRs in comparison dashboard |
-| 25609278182 | Public Results Export | push | completed | success | Prefer merged latest PRs in comparison dashboard (#227) |
-| 25609277773 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25609045899 | Script Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
-| 25609045890 | Lab PR Scope Check | pull_request | completed | success | Prefer merged latest PRs in comparison dashboard |
 
 ## Raw JSON
 
