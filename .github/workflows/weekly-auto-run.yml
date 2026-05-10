@@ -37,6 +37,11 @@ jobs:
           PROMPT_VOTE_LAB_NO_CHANGE_BASELINE: ${{ vars.PROMPT_VOTE_LAB_NO_CHANGE_BASELINE }}
           PROMPT_VOTE_LAB_SUPPORT_USD: ${{ vars.PROMPT_VOTE_LAB_SUPPORT_USD }}
 
+      - name: Resolve automated support unlocks
+        run: |
+          python scripts/resolve_support_unlock.py --week "$RUN_WEEK" --out .tmp/support-unlock-env.txt
+          cat .tmp/support-unlock-env.txt >> "$GITHUB_ENV"
+
       - name: Collect prompt proposal votes
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -52,6 +57,7 @@ jobs:
           python scripts/select_eligible.py \
             --candidates .tmp/weekly-candidates.json \
             --support-usd "$SUPPORT_USD" \
+            --week "$RUN_WEEK" \
             --out .tmp/eligible-candidates.json \
             --flag .tmp/has-eligible.txt \
             --meta .tmp/selection-meta.json
@@ -72,6 +78,10 @@ jobs:
             echo "## Weekly support total"
             echo ""
             echo "${SUPPORT_USD} USD"
+            echo ""
+            echo "## Support unlock source"
+            echo ""
+            echo "${SUPPORT_UNLOCK_WEEK:-unrecorded} / rank2=${RANK_2_UNLOCKED:-false} / rank3=${RANK_3_UNLOCKED:-false}"
             echo ""
             echo "## No-change baseline"
             echo ""
