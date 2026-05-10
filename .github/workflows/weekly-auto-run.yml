@@ -39,7 +39,7 @@ jobs:
 
       - name: Resolve automated support unlocks
         run: |
-          python scripts/resolve_support_unlock.py --week "$RUN_WEEK" --out .tmp/support-unlock-env.txt
+          python scripts/resolve_support_unlock.py --week "$RUN_WEEK" --require --out .tmp/support-unlock-env.txt
           cat .tmp/support-unlock-env.txt >> "$GITHUB_ENV"
 
       - name: Collect prompt proposal votes
@@ -81,7 +81,7 @@ jobs:
             echo ""
             echo "## Support unlock source"
             echo ""
-            echo "${SUPPORT_UNLOCK_WEEK:-unrecorded} / rank2=${RANK_2_UNLOCKED:-false} / rank3=${RANK_3_UNLOCKED:-false}"
+            echo "${SUPPORT_UNLOCK_WEEK:-unrecorded} / ${SUPPORT_UNLOCK_FILE:-missing} / rank2=${RANK_2_UNLOCKED:-false} / rank3=${RANK_3_UNLOCKED:-false}"
             echo ""
             echo "## No-change baseline"
             echo ""

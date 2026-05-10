@@ -32,21 +32,52 @@ def main() -> int:
                 sys.executable,
                 str(SCRIPT),
                 "--week",
-                "2026-W20",
+                "week-2026-W20",
                 "--dir",
                 str(unlock_dir),
                 "--out",
                 str(out),
+                "--require",
             ],
             cwd=ROOT,
             check=True,
         )
         text = out.read_text(encoding="utf-8")
 
-    required = ["SUPPORT_USD=10.0", "RANK_2_UNLOCKED=true", "RANK_3_UNLOCKED=true"]
+        missing_result = subprocess.run(
+            [
+                sys.executable,
+                str(SCRIPT),
+                "--week",
+                "week-2026-W21",
+                "--dir",
+                str(unlock_dir),
+                "--out",
+                str(base / "missing-env.txt"),
+                "--require",
+            ],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+
+    required = [
+        "SUPPORT_UNLOCK_WEEK=2026-W20",
+        "SUPPORT_UNLOCK_FILE=",
+        "SUPPORT_USD=10.0",
+        "RANK_2_UNLOCKED=true",
+        "RANK_3_UNLOCKED=true",
+    ]
     missing = [item for item in required if item not in text]
     if missing:
         raise SystemExit(f"missing resolver output: {missing}")
+
+    if missing_result.returncode == 0:
+        raise SystemExit("--require should fail when the weekly support unlock file is missing")
+    if "Missing required support unlock file" not in (missing_result.stdout + missing_result.stderr):
+        raise SystemExit("missing required support unlock failure message was not emitted")
 
     print("support unlock resolver test passed")
     return 0

@@ -77,6 +77,18 @@ If the generated file changes, the workflow commits it directly to `main`. If no
 
 Manual backfill must use the same privacy boundary as scheduled export: no sponsor identity, no per-supporter amount, and no raw activity payload committed.
 
+## Weekly run gate
+
+`Weekly Auto Run` must resolve the support unlock file before vote collection and candidate selection.
+
+Required file pattern:
+
+```text
+data/support-unlocks/<week-id>.json
+```
+
+If the file for `RUN_WEEK` is missing, `Weekly Auto Run` must fail before selecting eligible ranks. It must not silently treat missing support data as 0 USD, because that would undercount support and could wrongly suppress rank 2 or rank 3 comparison runs.
+
 ## CI contract
 
 Script Check must run:
@@ -97,6 +109,7 @@ Those tests verify:
 - sponsor identities from the raw fixture are not present in the public output
 - weekly selection can read `data/support-unlocks/<week-id>.json`
 - the support export workflow keeps manual `week_id`, `since`, and `until` inputs wired
+- the weekly workflow requires the support unlock file before selecting eligible ranks
 
 ## Failure mode
 
