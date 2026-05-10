@@ -55,21 +55,48 @@ SPONSORS_GRAPHQL_TOKEN
 
 The token should use the least permissions that can read sponsorship activity for the maintainer account. Do not use a token with repository administration permissions.
 
+## Manual verification and backfill
+
+After `SPONSORS_GRAPHQL_TOKEN` is configured, run `Support Unlock Export` manually with explicit inputs before trusting the scheduled path.
+
+Example for 2026-W20:
+
+```text
+week_id: 2026-W20
+since: 2026-05-04T00:00:00Z
+until: 2026-05-11T00:00:00Z
+```
+
+Expected result:
+
+```text
+data/support-unlocks/2026-W20.json
+```
+
+If the generated file changes, the workflow commits it directly to `main`. If no aggregate changed, it exits without a commit.
+
+Manual backfill must use the same privacy boundary as scheduled export: no sponsor identity, no per-supporter amount, and no raw activity payload committed.
+
 ## CI contract
 
 Script Check must run:
 
 ```text
 python scripts/test_build_support_unlocks.py
+python scripts/test_resolve_support_unlock.py
+python scripts/test_select_eligible_support_unlock.py
+python scripts/test_support_unlock_workflow_contract.py
 ```
 
-That test verifies:
+Those tests verify:
 
 - weekly totals are computed from fixture activity
 - rank 2 unlocks at 5 USD
 - rank 3 unlocks at 10 USD
 - non-new, old, and recurring support events are ignored
 - sponsor identities from the raw fixture are not present in the public output
+- weekly selection can read `data/support-unlocks/<week-id>.json`
+- the support export workflow keeps manual `week_id`, `since`, and `until` inputs wired
 
 ## Failure mode
 
