@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T14:27:41+00:00",
+  "generated_at": "2026-05-10T14:41:26+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,6 +494,43 @@
   ],
   "pull_requests": [
     {
+      "additions": 8,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nRuns public support unlock JSON validation inside `Support Unlock Export` before committing generated support unlock files.\n\n## Why\n\nScript Check validates public support unlock files on PRs, but the live export workflow should also validate the generated public JSON before it commits to `main`. Otherwise a bad live payload could be committed first and only detected later.\n\n## Changes\n\n- Add `Validate public support unlock output` step after building support unlocks and before committing them.\n- Run `python scripts/test_unlock_export_public.py` in the export workflow.\n- Extend the support unlock workflow contract test so this step is required and must appear before `Commit support unlocks`.\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes.\n- No Sponsors query behavior changes.\n- No sponsor identity or event-level data added.",
+      "body_length": 868,
+      "changed_files": 2,
+      "closed_at": "2026-05-10T14:41:02Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T14:35:12Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 3,
+          "deletions": 0,
+          "path": ".github/workflows/support-unlock-export.yml"
+        },
+        {
+          "additions": 5,
+          "deletions": 0,
+          "path": "scripts/test_support_unlock_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "validate-support-unlock-before-export-commit",
+      "head_ref_oid": "d90016ae23d179646c9d3fefbb0c0a67e7af1bf6",
+      "labels": [],
+      "merge_commit_oid": "bc63253cf8c7f13af4ca3a1cba9b4dc7d87c49d1",
+      "merged_at": "2026-05-10T14:41:02Z",
+      "merged_by": "Unjuno",
+      "number": 238,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Validate support unlock output before committing",
+      "updated_at": "2026-05-10T14:41:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/238"
+    },
+    {
       "additions": 145,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -527,7 +564,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Validate public support unlock files",
-      "updated_at": "2026-05-10T14:27:20Z",
+      "updated_at": "2026-05-10T14:28:23Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/237"
     },
     {
@@ -4494,38 +4531,6 @@
       "title": "Skip git repo check for policy agent workdir",
       "updated_at": "2026-05-06T07:27:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/141"
-    },
-    {
-      "additions": 127,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords `first-canary-007-policy-enforced-agent` as a successful policy-enforced agent canary.\n\n## Observed result\n\nPR #142 was created and merged after Codex ran inside the Docker-mounted workdir-only container and changed only `lab/index.html`.\n\n## Changed file\n\n- `runs/first-canary-007-policy-enforced-agent-success.md`\n\n## Interpretation\n\n007 is now a successful policy-enforced agent candidate path. The document keeps 005 as the current stable production-oriented writeback path until repeated 007 runs prove stability.\n\n## Scope\n\n- Records result only.\n- No `/lab/` changes.\n- No model, retry, fallback, file-scope, or policy mount changes.",
-      "body_length": 660,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T07:25:44Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T07:23:26Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 127,
-          "deletions": 0,
-          "path": "runs/first-canary-007-policy-enforced-agent-success.md"
-        }
-      ],
-      "head_ref_name": "record-007-success",
-      "head_ref_oid": "494d6063688bc8566d1dc1d2636c0d59dfe5b00c",
-      "labels": [],
-      "merge_commit_oid": "63686c193362d6f0fa8832a04b941f2468afa6c0",
-      "merged_at": "2026-05-06T07:25:44Z",
-      "merged_by": "Unjuno",
-      "number": 143,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record seventh canary success",
-      "updated_at": "2026-05-06T07:26:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/143"
     }
   ],
   "run_records": [
@@ -4672,6 +4677,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-10T14:41:04Z",
+      "database_id": 25631526962,
+      "display_title": "Validate support unlock output before committing",
+      "event": "pull_request",
+      "head_branch": "validate-support-unlock-before-export-commit",
+      "head_sha": "d90016ae23d179646c9d3fefbb0c0a67e7af1bf6",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:41:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631526962",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-10T14:41:04Z",
+      "database_id": 25631526951,
+      "display_title": "Validate support unlock output before committing (#238)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "bc63253cf8c7f13af4ca3a1cba9b4dc7d87c49d1",
+      "name": "Public Results Export",
+      "status": "in_progress",
+      "updated_at": "2026-05-10T14:41:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631526951",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "",
+      "created_at": "2026-05-10T14:41:03Z",
+      "database_id": 25631526509,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "bc63253cf8c7f13af4ca3a1cba9b4dc7d87c49d1",
+      "name": "pages build and deployment",
+      "status": "queued",
+      "updated_at": "2026-05-10T14:41:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631526509",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:35:15Z",
+      "database_id": 25631399193,
+      "display_title": "Validate support unlock output before committing",
+      "event": "pull_request",
+      "head_branch": "validate-support-unlock-before-export-commit",
+      "head_sha": "d90016ae23d179646c9d3fefbb0c0a67e7af1bf6",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:40:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631399193",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:35:15Z",
+      "database_id": 25631399190,
+      "display_title": "Validate support unlock output before committing",
+      "event": "pull_request",
+      "head_branch": "validate-support-unlock-before-export-commit",
+      "head_sha": "d90016ae23d179646c9d3fefbb0c0a67e7af1bf6",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:35:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631399190",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T14:27:44Z",
+      "database_id": 25631234746,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "1336c6d7eef31967038826d99ef1c5a3f9e724c8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:28:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631234746",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-10T14:27:22Z",
       "database_id": 25631227706,
       "display_title": "Validate public support unlock files",
@@ -4685,7 +4774,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-10T14:27:22Z",
       "database_id": 25631227704,
       "display_title": "Validate public support unlock files (#237)",
@@ -4693,13 +4782,13 @@
       "head_branch": "main",
       "head_sha": "f7572070fbbfbf40f13e078bd733baab39b9bcf8",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T14:27:32Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:27:45Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631227704",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-10T14:27:21Z",
       "database_id": 25631227376,
       "display_title": "pages build and deployment",
@@ -4707,8 +4796,8 @@
       "head_branch": "main",
       "head_sha": "f7572070fbbfbf40f13e078bd733baab39b9bcf8",
       "name": "pages build and deployment",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T14:27:36Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T14:27:46Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631227376",
       "workflow_name": "pages-build-deployment"
     },
@@ -5985,90 +6074,6 @@
       "updated_at": "2026-05-09T17:54:40Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25607870649",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T17:35:01Z",
-      "database_id": 25607411893,
-      "display_title": "Request metadata-normalized comparison run for Issue 196 rank 3",
-      "event": "pull_request",
-      "head_branch": "request-rank3-issue196-comparison-v2",
-      "head_sha": "2926d4dcf8759bc98410dace5a4e74a1329138bd",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T17:35:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25607411893",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T17:35:01Z",
-      "database_id": 25607411892,
-      "display_title": "Request metadata-normalized comparison run for Issue 196 rank 3",
-      "event": "pull_request",
-      "head_branch": "request-rank3-issue196-comparison-v2",
-      "head_sha": "2926d4dcf8759bc98410dace5a4e74a1329138bd",
-      "name": "Codex Comparison Issue Run",
-      "status": "completed",
-      "updated_at": "2026-05-09T17:38:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25607411892",
-      "workflow_name": "Codex Comparison Issue Run"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T16:01:18Z",
-      "database_id": 25605419146,
-      "display_title": "Normalize rank 2 comparison metadata",
-      "event": "pull_request",
-      "head_branch": "update-rank2-issue195-metadata-normalized",
-      "head_sha": "aee616da9e55415bf9d861dc4c49854041f81f06",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T16:01:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25605419146",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T15:29:40Z",
-      "database_id": 25604763340,
-      "display_title": "Request metadata-normalized comparison run for Issue 195 rank 2",
-      "event": "pull_request",
-      "head_branch": "request-rank2-issue195-comparison-v5",
-      "head_sha": "fd4f2d1b20d458802d760867f64e668d8d56aa05",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T15:29:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604763340",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T15:22:11Z",
-      "database_id": 25604609567,
-      "display_title": "Normalize rank 2 comparison metadata v2",
-      "event": "pull_request",
-      "head_branch": "normalize-rank2-metadata-v2",
-      "head_sha": "6ffce754a9d68ffaced6600fc519e3649aba4afd",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T15:22:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604609567",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T15:22:10Z",
-      "database_id": 25604609164,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "c2a59d5e6f7d36ea4aa450e470da9ccf685b1662",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T15:22:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25604609164",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
