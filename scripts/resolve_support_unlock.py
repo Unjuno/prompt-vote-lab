@@ -24,20 +24,26 @@ def support_unlock_path(directory: Path, week_id: str) -> Path:
     return directory / f"{week_id}.json"
 
 
+def should_try_previous_week(require: bool) -> bool:
+    if not require:
+        return False
+    return os.getenv("GITHUB_EVENT_NAME") in {"schedule", "workflow_dispatch"}
+
+
 def resolve_week_and_path(directory: Path, requested_week: str, require: bool) -> tuple[str, Path]:
     requested_id = normalize_week_id(requested_week)
     requested_path = support_unlock_path(directory, requested_id)
 
-    is_scheduled_github_run = os.getenv("GITHUB_EVENT_NAME") == "schedule"
-    if require and is_scheduled_github_run:
+    if should_try_previous_week(require):
         previous_id = previous_utc_iso_week_id()
         previous_path = support_unlock_path(directory, previous_id)
         if previous_path.exists():
             return previous_id, previous_path
-        raise SystemExit(
-            f"Missing required support unlock file for scheduled previous week: {previous_path}. "
-            "Run Support Unlock Export before Weekly Auto Run."
-        )
+        if os.getenv("GITHUB_EVENT_NAME") == "schedule":
+            raise SystemExit(
+                f"Missing required support unlock file for scheduled previous week: {previous_path}. "
+                "Run Support Unlock Export before Weekly Auto Run."
+            )
 
     if requested_path.exists():
         return requested_id, requested_path
