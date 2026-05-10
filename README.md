@@ -88,6 +88,25 @@ This cumulative pressure is part of the game and the experiment. Over time, the 
 
 Rejected, failed, unsafe, and unmerged comparison PRs do not become the next week's base state.
 
+## Weekly automation status
+
+Weekly automation is implemented but still requires live production verification.
+
+Scheduled workflows:
+
+- `Support Unlock Export`: every day at 00:17 UTC / 09:17 JST.
+- `Weekly Auto Run`: every Monday at 00:23 UTC / 09:23 JST.
+
+The weekly run requires a matching anonymized support unlock file before vote collection:
+
+```text
+data/support-unlocks/<week-id>.json
+```
+
+If the support unlock file is missing, the weekly run fails before selecting eligible ranks. Missing support data is not treated as 0 USD.
+
+See [`docs/weekly-automation.md`](docs/weekly-automation.md).
+
 ## Weekly loop
 
 1. Players submit prompts as GitHub Issues.
@@ -206,6 +225,7 @@ Key documents:
 
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
 - [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
+- [`docs/weekly-automation.md`](docs/weekly-automation.md) — weekly schedule and support unlock prerequisite
 - [`docs/usable-experiment-ops.md`](docs/usable-experiment-ops.md) — current usable manual experiment operations
 - [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
