@@ -12,6 +12,19 @@ The game is not only about getting votes. It is about earning trust by proposing
 Prompt → 20-vote gate → agent PR → public outcome → reputation memory
 ```
 
+## Start as a participant
+
+The lowest-friction first action is voting, not writing a prompt.
+
+```text
+1. Open Issues labeled prompt-proposal.
+2. Read the prompt.
+3. Add 👍 only if you trust it enough to spend one bounded implementation-agent attempt.
+4. Submit your own prompt after you understand what good prompts look like.
+```
+
+Start with [`docs/for-participants.md`](docs/for-participants.md).
+
 ## Short explanation
 
 Prompt Vote Lab is a competitive prompt market plus a constrained, cumulative implementation sandbox.
@@ -90,7 +103,7 @@ Rejected, failed, unsafe, and unmerged comparison PRs do not become the next wee
 
 ## Weekly automation status
 
-Weekly automation is implemented but still requires live production verification.
+Weekly automation is implemented. The no-eligible live path has been verified, and the eligible implementation-agent PR path still needs live E2E verification.
 
 Scheduled workflows:
 
@@ -109,8 +122,8 @@ See [`docs/weekly-automation.md`](docs/weekly-automation.md).
 
 ## Weekly loop
 
-1. Players submit prompts as GitHub Issues.
-2. Players vote with GitHub reactions.
+1. Players vote with GitHub 👍 reactions.
+2. Players submit prompts as GitHub Issues.
 3. A virtual no-change baseline is inserted with 20 virtual votes.
 4. Candidates are ranked by vote count.
 5. If the no-change baseline ranks first, no implementation run is created.
@@ -223,6 +236,7 @@ Start with [`docs/README.md`](docs/README.md).
 
 Key documents:
 
+- [`docs/for-participants.md`](docs/for-participants.md) — start by voting with 👍, then submit prompts when ready
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
 - [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
 - [`docs/weekly-automation.md`](docs/weekly-automation.md) — weekly schedule and support unlock prerequisite
@@ -230,6 +244,7 @@ Key documents:
 - [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
 - [`docs/automation-map.md`](docs/automation-map.md) — automation boundary
+- [`docs/operator-runbook.md`](docs/operator-runbook.md) — maintainer operation guide
 
 Operational rules live in [`rules/`](rules/).
 
