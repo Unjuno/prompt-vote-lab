@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T15:22:56+00:00`
+Generated at: `2026-05-10T15:54:35+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 242 | MERGED | 1 | 23/6 | Fix support unlock privacy flag validation |
 | 241 | MERGED | 2 | 54/3 | Filter non-terminal workflow runs from public results |
 | 240 | MERGED | 5 | 124/27 | Process previous week in scheduled support resolution |
 | 239 | MERGED | 4 | 218/28 | Document weekly automation schedule |
@@ -69,13 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
 | 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
 | 214 | MERGED | 3 | 427/0 | Run Codex comparison issue rank 2 |
-| 211 | CLOSED | 3 | 492/0 | Run Codex comparison issue rank 2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25633111445 | Terminal State Report | pull_request | completed | skipped | Fix support unlock privacy flag validation |
+| 25633078314 | Lab PR Scope Check | pull_request | completed | success | Fix support unlock privacy flag validation |
+| 25633078312 | Script Check | pull_request | completed | success | Fix support unlock privacy flag validation |
+| 25633003953 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 25632967598 | Support Unlock Export | workflow_dispatch | completed | failure | Support Unlock Export |
+| 25632423546 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25632415590 | Terminal State Report | pull_request | completed | skipped | Filter non-terminal workflow runs from public results |
+| 25632415581 | Public Results Export | push | completed | success | Filter non-terminal workflow runs from public results (#241) |
+| 25632415266 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25632389015 | Lab PR Scope Check | pull_request | completed | success | Filter non-terminal workflow runs from public results |
 | 25632388991 | Script Check | pull_request | completed | success | Filter non-terminal workflow runs from public results |
 | 25632204298 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -97,14 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25631722862 | Pre-API Freeze Audit | pull_request | completed | success | Document weekly automation schedule |
 | 25631722858 | Static Site Check | pull_request | completed | success | Document weekly automation schedule |
 | 25631722856 | Script Check | pull_request | completed | failure | Document weekly automation schedule |
-| 25631692335 | Pre-API Freeze Audit | pull_request | completed | success | Document weekly automation schedule |
-| 25631692321 | Lab PR Scope Check | pull_request | completed | success | Document weekly automation schedule |
-| 25631692316 | Script Check | pull_request | completed | failure | Document weekly automation schedule |
-| 25631692313 | Static Site Check | pull_request | completed | success | Document weekly automation schedule |
-| 25631536234 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25631526962 | Terminal State Report | pull_request | completed | skipped | Validate support unlock output before committing |
-| 25631526951 | Public Results Export | push | completed | success | Validate support unlock output before committing (#238) |
-| 25631526509 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 

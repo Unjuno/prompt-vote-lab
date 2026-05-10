@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T15:22:56+00:00",
+  "generated_at": "2026-05-10T15:54:35+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,6 +494,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 23,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes a false positive in public support unlock validation.\n\n## Why\n\nThe live `Support Unlock Export` reached `Build support unlocks`, but failed at `Validate public support unlock output` because the validator searched the raw JSON text for `sponsor_login`.\n\nThat incorrectly flags the allowed privacy flag name `raw_sponsor_logins_included` as leaked sponsor identity data.\n\n## Changes\n\n- Stop scanning the raw JSON text for forbidden fragments.\n- Keep strict forbidden key checks for identity-shaped keys such as `login`, `email`, `name`, and `sponsor_login`.\n- Scan only string values for obvious leaked private fragments such as `@`, `private-sponsor`, `sponsor_login`, and `sponsorLogin`.\n- Keep privacy flags required and forced to `false`.\n\n## Scope\n\n- No root `lab/` changes.\n- No workflow behavior changes.\n- No generated support unlock JSON committed in this PR.\n- No sponsor identity or event-level data added.",
+      "body_length": 934,
+      "changed_files": 1,
+      "closed_at": "2026-05-10T15:54:18Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T15:52:47Z",
+      "deletions": 6,
+      "files": [
+        {
+          "additions": 23,
+          "deletions": 6,
+          "path": "scripts/test_unlock_export_public.py"
+        }
+      ],
+      "head_ref_name": "fix-support-unlock-privacy-flag-validation",
+      "head_ref_oid": "5a8c560c93e1865dc4671788b2a486cecc560770",
+      "labels": [],
+      "merge_commit_oid": "b6257a4bc5f64b4f2ed41b53639ff66f49f0f768",
+      "merged_at": "2026-05-10T15:54:18Z",
+      "merged_by": "Unjuno",
+      "number": 242,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix support unlock privacy flag validation",
+      "updated_at": "2026-05-10T15:54:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/242"
+    },
+    {
       "additions": 54,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -523,7 +555,7 @@
       "merged_at": "2026-05-10T15:22:36Z",
       "merged_by": "Unjuno",
       "number": 241,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Filter non-terminal workflow runs from public results",
@@ -4539,38 +4571,6 @@
       "title": "Add policy-enforced Codex agent canary",
       "updated_at": "2026-05-06T07:27:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/136"
-    },
-    {
-      "additions": 21,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the full `first-canary-007` runner after Codex refused to create helper binaries under a temporary directory.\n\n## Observed failure\n\nThe latest run advanced past npm setup, then failed with:\n\n```text\nWARNING: proceeding, even though we could not update PATH: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/codex-home/.codex\"))\n```\n\n## Cause\n\nThe runner set `CODEX_HOME` under `/tmp`. Codex refuses to create helper binaries under temporary directories.\n\n## Fix\n\nAdd a separate runtime mount:\n\n```text\n/codex-runtime\n```\n\nand move runtime state there:\n\n```text\nHOME=/codex-runtime/home\nTMPDIR=/codex-runtime/tmp\nCODEX_HOME=/codex-runtime/codex-home\nNPM_CONFIG_USERCONFIG=/codex-runtime/npmrc\nNPM_CONFIG_PREFIX=/codex-runtime/npm-global\nNPM_CONFIG_CACHE=/codex-runtime/npm-cache\n```\n\nThe agent work area remains `/work`, and the repository root is still not mounted.\n\n## Scope\n\n- Fixes Codex runtime location only.\n- Does not change model, attempt count, retry, fallback, policy boundary, or final writable files.\n- Does not run Codex in this PR.\n- Does not modify `/lab/`.",
-      "body_length": 1138,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T06:37:58Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T06:36:52Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 21,
-          "deletions": 14,
-          "path": "scripts/run_codex_policy_agent_canary.sh"
-        }
-      ],
-      "head_ref_name": "fix-007-codex-runtime-home",
-      "head_ref_oid": "88848860b497ac54d884e76112cfebc20413790a",
-      "labels": [],
-      "merge_commit_oid": "0e8e5f7682667b7fbcbd507ea57e2bc7b5bfe0ca",
-      "merged_at": "2026-05-06T06:37:58Z",
-      "merged_by": "Unjuno",
-      "number": 140,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Move Codex runtime out of temporary directory",
-      "updated_at": "2026-05-06T07:27:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/140"
     }
   ],
   "run_records": [
@@ -4718,6 +4718,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-10T15:54:20Z",
+      "database_id": 25633111445,
+      "display_title": "Fix support unlock privacy flag validation",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-privacy-flag-validation",
+      "head_sha": "5a8c560c93e1865dc4671788b2a486cecc560770",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:54:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633111445",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:52:50Z",
+      "database_id": 25633078314,
+      "display_title": "Fix support unlock privacy flag validation",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-privacy-flag-validation",
+      "head_sha": "5a8c560c93e1865dc4671788b2a486cecc560770",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:52:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633078314",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:52:50Z",
+      "database_id": 25633078312,
+      "display_title": "Fix support unlock privacy flag validation",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-privacy-flag-validation",
+      "head_sha": "5a8c560c93e1865dc4671788b2a486cecc560770",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:53:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633078312",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:49:29Z",
+      "database_id": 25633003953,
+      "display_title": "Weekly Vote Snapshot",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "6ce6f7f99acd80ceea8e0e436922952fe8be41ea",
+      "name": "Weekly Vote Snapshot",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:49:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633003953",
+      "workflow_name": "Weekly Vote Snapshot"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-10T15:47:49Z",
+      "database_id": 25632967598,
+      "display_title": "Support Unlock Export",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "6ce6f7f99acd80ceea8e0e436922952fe8be41ea",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:48:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632967598",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:22:59Z",
+      "database_id": 25632423546,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6ce6f7f99acd80ceea8e0e436922952fe8be41ea",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:23:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632423546",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-10T15:22:38Z",
       "database_id": 25632415590,
       "display_title": "Filter non-terminal workflow runs from public results",
@@ -4729,6 +4813,34 @@
       "updated_at": "2026-05-10T15:22:39Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632415590",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:22:38Z",
+      "database_id": 25632415581,
+      "display_title": "Filter non-terminal workflow runs from public results (#241)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "c24e1ac696e36e79e1a6496c8b022c4ab5401e19",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:23:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632415581",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-10T15:22:37Z",
+      "database_id": 25632415266,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c24e1ac696e36e79e1a6496c8b022c4ab5401e19",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:23:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632415266",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -5975,118 +6087,6 @@
       "updated_at": "2026-05-10T02:29:34Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25617683943",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T20:46:21Z",
-      "database_id": 25611414341,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "91934da9766366d200c821bfc4fd70fff87908ac",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:46:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611414341",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T20:46:03Z",
-      "database_id": 25611408270,
-      "display_title": "Test generated comparison dashboards (#230)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "40482c7810d60ebfa8e2f5279ba89f875bc69ebb",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:46:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611408270",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T20:46:03Z",
-      "database_id": 25611408238,
-      "display_title": "Test generated comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "test-generated-comparison-dashboards",
-      "head_sha": "55007974d9e03d9837ffdcb7b25dc67a6f306821",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:46:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611408238",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-09T20:46:02Z",
-      "database_id": 25611407890,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "40482c7810d60ebfa8e2f5279ba89f875bc69ebb",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:46:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611407890",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T20:38:40Z",
-      "database_id": 25611259631,
-      "display_title": "Test generated comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "test-generated-comparison-dashboards",
-      "head_sha": "55007974d9e03d9837ffdcb7b25dc67a6f306821",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:39:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611259631",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T20:38:40Z",
-      "database_id": 25611259630,
-      "display_title": "Test generated comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "test-generated-comparison-dashboards",
-      "head_sha": "55007974d9e03d9837ffdcb7b25dc67a6f306821",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T20:38:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25611259630",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T19:58:39Z",
-      "database_id": 25610438195,
-      "display_title": "Regenerate 2026-W20 comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "regenerate-2026-w20-comparison-dashboard",
-      "head_sha": "1a886ef468958daf8e00b23fe42d718969b3a232",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:58:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610438195",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:58:38Z",
-      "database_id": 25610437782,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5bf0df779d4e0fb42be156902bef0aa1b0689e72",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:59:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610437782",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
