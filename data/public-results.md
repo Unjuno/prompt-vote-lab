@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T14:41:26+00:00`
+Generated at: `2026-05-10T14:53:21+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 239 | MERGED | 4 | 218/28 | Document weekly automation schedule |
 | 238 | MERGED | 2 | 8/0 | Validate support unlock output before committing |
 | 237 | MERGED | 2 | 145/5 | Validate public support unlock files |
 | 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
@@ -69,15 +70,30 @@ This file is a raw results surface for participants. It does not score prompts o
 | 211 | CLOSED | 3 | 492/0 | Run Codex comparison issue rank 2 |
 | 210 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v3 |
 | 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
-| 212 | MERGED | 4 | 132/13 | Normalize comparison rank links |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25631783322 | Terminal State Report | pull_request | completed | skipped | Document weekly automation schedule |
+| 25631783315 | Public Results Export | push | in_progress |  | Document weekly automation schedule (#239) |
+| 25631782896 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25631765813 | Script Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631765806 | Pre-API Freeze Audit | pull_request | completed | success | Document weekly automation schedule |
+| 25631765805 | Static Site Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631765804 | Lab PR Scope Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631722884 | Lab PR Scope Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631722862 | Pre-API Freeze Audit | pull_request | completed | success | Document weekly automation schedule |
+| 25631722858 | Static Site Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631722856 | Script Check | pull_request | completed | failure | Document weekly automation schedule |
+| 25631692335 | Pre-API Freeze Audit | pull_request | completed | success | Document weekly automation schedule |
+| 25631692321 | Lab PR Scope Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631692316 | Script Check | pull_request | completed | failure | Document weekly automation schedule |
+| 25631692313 | Static Site Check | pull_request | completed | success | Document weekly automation schedule |
+| 25631536234 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25631526962 | Terminal State Report | pull_request | completed | skipped | Validate support unlock output before committing |
-| 25631526951 | Public Results Export | push | in_progress |  | Validate support unlock output before committing (#238) |
-| 25631526509 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25631526951 | Public Results Export | push | completed | success | Validate support unlock output before committing (#238) |
+| 25631526509 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25631399193 | Script Check | pull_request | completed | success | Validate support unlock output before committing |
 | 25631399190 | Lab PR Scope Check | pull_request | completed | success | Validate support unlock output before committing |
 | 25631234746 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -89,22 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25630731710 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25630725467 | Public Results Export | push | completed | success | Require support unlock data before weekly runs (#236) |
 | 25630725445 | Terminal State Report | pull_request | completed | skipped | Require support unlock data before weekly runs |
-| 25630725079 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25630650663 | Pre-API Freeze Audit | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630650662 | Static Site Check | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630650650 | Select Eligible Test | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630650647 | Implementation Preflight Test | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630650642 | Lab PR Scope Check | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630650641 | Script Check | pull_request | completed | success | Require support unlock data before weekly runs |
-| 25630234272 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25630228605 | Public Results Export | push | completed | success | Allow manual support unlock backfill windows (#235) |
-| 25630228525 | Terminal State Report | pull_request | completed | skipped | Allow manual support unlock backfill windows |
-| 25630228274 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25630135328 | Static Site Check | pull_request | completed | success | Allow manual support unlock backfill windows |
-| 25630135324 | Lab PR Scope Check | pull_request | completed | success | Allow manual support unlock backfill windows |
-| 25630135310 | Script Check | pull_request | completed | success | Allow manual support unlock backfill windows |
-| 25629142925 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25629137359 | Terminal State Report | pull_request | completed | skipped | Automate support unlocks for comparison runs |
 
 ## Raw JSON
 
