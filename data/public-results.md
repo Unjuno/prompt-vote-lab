@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T16:02:25+00:00`
+Generated at: `2026-05-10T16:26:36+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 244 | MERGED | 2 | 263/20 | Add operator runbook |
 | 243 | MERGED | 1 | 8/4 | Record auto vote summary for week-2026-W19 |
 | 242 | MERGED | 1 | 23/6 | Fix support unlock privacy flag validation |
 | 241 | MERGED | 2 | 54/3 | Filter non-terminal workflow runs from public results |
@@ -69,13 +70,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
-| 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25633804632 | Terminal State Report | pull_request | completed | skipped | Add operator runbook |
+| 25633775274 | Lab PR Scope Check | pull_request | completed | success | Add operator runbook |
+| 25633775268 | Pre-API Freeze Audit | pull_request | completed | success | Add operator runbook |
+| 25633775262 | Static Site Check | pull_request | completed | success | Add operator runbook |
+| 25633291512 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25633285455 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W19 |
+| 25633285433 | Public Results Export | push | completed | success | Record auto vote summary for week-2026-W19 (#243) |
+| 25633285136 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25633205053 | Weekly Auto Run | workflow_dispatch | completed | success | Weekly Auto Run |
 | 25633134157 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25633130922 | Support Unlock Export | workflow_dispatch | completed | success | Support Unlock Export |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25632199078 | Public Results Export | push | completed | success | Process previous week in scheduled support resolution (#240) |
 | 25632198724 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25632178668 | Lab PR Scope Check | pull_request | completed | success | Process previous week in scheduled support resolution |
-| 25632178657 | Static Site Check | pull_request | completed | success | Process previous week in scheduled support resolution |
-| 25632178656 | Script Check | pull_request | completed | success | Process previous week in scheduled support resolution |
-| 25631791157 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25631783322 | Terminal State Report | pull_request | completed | skipped | Document weekly automation schedule |
-| 25631783315 | Public Results Export | push | completed | success | Document weekly automation schedule (#239) |
-| 25631782896 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25631765813 | Script Check | pull_request | completed | success | Document weekly automation schedule |
 
 ## Raw JSON
 
