@@ -41,6 +41,8 @@ The project may automate:
 - weekly public briefing draft artifact creation
 - event log artifact creation
 - HN/blog/report draft artifact creation
+- anonymized support unlock export
+- support unlock file validation before export commit
 
 ## Not automated
 
@@ -56,20 +58,40 @@ The project must not automate:
 
 ## Main workflows
 
-| Workflow | Status | Purpose | API cost |
-|---|---|---|---:|
-| `setup-labels.yml` | implemented | Create project labels | 0 |
-| `safety-check.yml` | implemented | Check lab PRs when PR-triggered checks run | 0 |
-| `static-site-check.yml` | implemented | Check public page structure, support wording, and lab smoke expectations | 0 |
-| `lab-pr-scope-check.yml` | implemented | Prevent lab implementation PRs from mixing lab and non-lab files | 0 |
-| `script-check.yml` | implemented | Check scripts, offline workflow smoke tests, and lab scope guard tests | 0 |
-| `evidence-pipeline-dry-run.yml` | implemented | Manually generate snapshot, run log, weekly summary, public briefing, and HN draft as artifact | 0 |
-| `exception-matrix-test.yml` | implemented | Test known pass/fail boundary cases | 0 |
-| `multi-fuzz-test.yml` | implemented | Run weighted random boundary mutations | 0 |
-| `weekly-mock-run.yml` | implemented | Test weekly selection and PR creation without model API calls | 0 |
-| `weekly-auto-run.yml` | implemented, not fully production-verified | Collect votes and create implementation PRs for eligible prompts | paid only if eligible |
-| `blog-report.yml` | implemented, not fully production-verified | Generate report PRs from recorded run data | paid when manually confirmed |
-| `terminal-state-report.yml` | implemented | Record final PR state from labels | 0 |
+| Workflow | Status | Schedule | Purpose | API cost |
+|---|---|---|---|---:|
+| `setup-labels.yml` | implemented | manual | Create project labels | 0 |
+| `safety-check.yml` | implemented | PR/path-triggered | Check lab PRs when PR-triggered checks run | 0 |
+| `static-site-check.yml` | implemented | PR/path-triggered | Check public page structure, support wording, and lab smoke expectations | 0 |
+| `lab-pr-scope-check.yml` | implemented | PR/path-triggered | Prevent lab implementation PRs from mixing lab and non-lab files | 0 |
+| `script-check.yml` | implemented | PR/path-triggered + manual | Check scripts, offline workflow smoke tests, and workflow contracts | 0 |
+| `support-unlock-export.yml` | implemented, live-token verification pending | daily 00:17 UTC / 09:17 JST + manual | Export anonymized support unlock aggregates and validate them before commit | 0 |
+| `weekly-auto-run.yml` | implemented, not fully production-verified | Monday 00:23 UTC / 09:23 JST + manual | Collect votes and create implementation PRs for eligible prompts | paid only if eligible |
+| `evidence-pipeline-dry-run.yml` | implemented | manual | Manually generate snapshot, run log, weekly summary, public briefing, and HN draft as artifact | 0 |
+| `exception-matrix-test.yml` | implemented | PR/manual | Test known pass/fail boundary cases | 0 |
+| `multi-fuzz-test.yml` | implemented | PR/manual | Run weighted random boundary mutations | 0 |
+| `weekly-mock-run.yml` | implemented | manual | Test weekly selection and PR creation without model API calls | 0 |
+| `blog-report.yml` | implemented, not fully production-verified | manual | Generate report PRs from recorded run data | paid when manually confirmed |
+| `terminal-state-report.yml` | implemented | PR/label-triggered | Record final PR state from labels | 0 |
+
+## Scheduled weekly path
+
+The scheduled production path is split into two workflows:
+
+```text
+Support Unlock Export
+→ data/support-unlocks/<week-id>.json
+→ Weekly Auto Run
+→ vote summary PR
+→ implementation PRs, if eligible
+→ manual review/merge
+```
+
+`Support Unlock Export` runs daily and writes only anonymized aggregate data. It validates public support unlock JSON before committing.
+
+`Weekly Auto Run` runs every Monday. It requires the matching support unlock file for `RUN_WEEK` before collecting votes. Missing support data is a hard failure, not 0 USD.
+
+See [`weekly-automation.md`](weekly-automation.md).
 
 ## Important GitHub Actions caveat
 
