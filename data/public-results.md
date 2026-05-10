@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T05:14:57+00:00`
+Generated at: `2026-05-10T05:46:30+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 233 | MERGED | 3 | 129/280 | Update root lab status for completed W20 comparison |
 | 232 | MERGED | 4 | 242/223 | Derive comparison decisions from merged PR state |
 | 231 | MERGED | 2 | 68/0 | Add Script Check workflow contract test |
 | 230 | MERGED | 2 | 100/0 | Test generated comparison dashboards |
@@ -69,15 +70,24 @@ This file is a raw results surface for participants. It does not score prompts o
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
-| 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25620559114 | Public Results Export | push | in_progress |  | Derive comparison decisions from merged PR state (#232) |
+| 25621088993 | Public Results Export | push | in_progress |  | Update root lab status for completed W20 comparison (#233) |
+| 25621088936 | Terminal State Report | pull_request | completed | skipped | Update root lab status for completed W20 comparison |
+| 25621088689 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25620968616 | Static Site Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
+| 25620968615 | Lab PR Scope Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
+| 25620968614 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
+| 25620944830 | Lab PR Scope Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
+| 25620944821 | Safety Check | pull_request | completed | success | Update root lab status for completed W20 comparison |
+| 25620944816 | Static Site Check | pull_request | completed | failure | Update root lab status for completed W20 comparison |
+| 25620563492 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25620559114 | Public Results Export | push | completed | success | Derive comparison decisions from merged PR state (#232) |
 | 25620559095 | Terminal State Report | pull_request | completed | skipped | Derive comparison decisions from merged PR state |
-| 25620558817 | pages-build-deployment | dynamic | queued |  | pages build and deployment |
+| 25620558817 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25620524426 | Lab PR Scope Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
 | 25620524425 | Script Check | pull_request | completed | success | Derive comparison decisions from merged PR state |
 | 25618837193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25610438195 | Terminal State Report | pull_request | completed | skipped | Regenerate 2026-W20 comparison dashboard |
 | 25610437782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25610227912 | Lab PR Scope Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
-| 25610227908 | Static Site Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
-| 25610227902 | Safety Check | pull_request | completed | success | Regenerate 2026-W20 comparison dashboard |
-| 25610028458 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25610023339 | Public Results Export | push | completed | success | Dedupe comparison dashboard rows by rank (#228) |
-| 25610023322 | Terminal State Report | pull_request | completed | skipped | Dedupe comparison dashboard rows by rank |
-| 25610023038 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25609885998 | Lab PR Scope Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
-| 25609885994 | Script Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
-| 25609768439 | Script Check | pull_request | completed | failure | Dedupe comparison dashboard rows by rank |
-| 25609768438 | Lab PR Scope Check | pull_request | completed | success | Dedupe comparison dashboard rows by rank |
 
 ## Raw JSON
 
