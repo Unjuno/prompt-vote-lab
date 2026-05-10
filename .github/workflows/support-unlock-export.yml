@@ -1,0 +1,73 @@
+name: Support Unlock Export
+
+on:
+  schedule:
+    - cron: "17 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    if: github.repository == 'Unjuno/prompt-vote-lab'
+    runs-on: ubuntu-latest
+    env:
+      SPONSORS_LOGIN: Unjuno
+      GH_TOKEN: ${{ secrets.SPONSORS_GRAPHQL_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve support window
+        id: window
+        shell: python
+        run: |
+          from datetime import datetime, timedelta, timezone
+          import os
+          current = datetime.now(timezone.utc)
+          iso = current.isocalendar()
+          start = current - timedelta(days=iso.weekday - 1)
+          start = start.replace(hour=0, minute=0, second=0, microsecond=0)
+          end = start + timedelta(days=7)
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
+              handle.write(f"week_id={iso.year}-W{iso.week:02d}\n")
+              handle.write(f"since={start.isoformat(timespec='seconds').replace('+00:00', 'Z')}\n")
+              handle.write(f"until={end.isoformat(timespec='seconds').replace('+00:00', 'Z')}\n")
+
+      - name: Fetch support activity
+        run: |
+          test -n "$GH_TOKEN"
+          python scripts/fetch_support_activities.py \
+            --login "$SPONSORS_LOGIN" \
+            --since "${{ steps.window.outputs.since }}" \
+            --until "${{ steps.window.outputs.until }}" \
+            --out tmp/support-activities.json
+
+      - name: Build support unlocks
+        run: |
+          python scripts/build_support_unlocks.py \
+            --input tmp/support-activities.json \
+            --week-id "${{ steps.window.outputs.week_id }}" \
+            --since "${{ steps.window.outputs.since }}" \
+            --until "${{ steps.window.outputs.until }}" \
+            --out-dir data/support-unlocks
+
+      - name: Verify support unlock tooling
+        run: python scripts/test_build_support_unlocks.py
+
+      - name: Commit support unlocks
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/support-unlocks/
+          if git diff --cached --quiet; then
+            echo "No support unlock changes."
+            exit 0
+          fi
+          git commit -m "Update support unlocks for ${{ steps.window.outputs.week_id }}"
+          git push

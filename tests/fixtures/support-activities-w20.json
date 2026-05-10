@@ -1,0 +1,65 @@
+{
+  "data": {
+    "user": {
+      "sponsorsActivities": {
+        "nodes": [
+          {
+            "action": "NEW_SPONSORSHIP",
+            "timestamp": "2026-05-05T12:00:00Z",
+            "sponsorsTier": {
+              "isOneTime": true,
+              "monthlyPriceInCents": 500
+            },
+            "sponsor": {
+              "login": "private-sponsor-one"
+            }
+          },
+          {
+            "action": "NEW_SPONSORSHIP",
+            "timestamp": "2026-05-06T12:00:00Z",
+            "sponsorsTier": {
+              "isOneTime": true,
+              "monthlyPriceInCents": 500
+            },
+            "sponsor": {
+              "login": "private-sponsor-two"
+            }
+          },
+          {
+            "action": "CANCELLED_SPONSORSHIP",
+            "timestamp": "2026-05-06T13:00:00Z",
+            "sponsorsTier": {
+              "isOneTime": true,
+              "monthlyPriceInCents": 500
+            },
+            "sponsor": {
+              "login": "ignored-cancel"
+            }
+          },
+          {
+            "action": "NEW_SPONSORSHIP",
+            "timestamp": "2026-05-01T12:00:00Z",
+            "sponsorsTier": {
+              "isOneTime": true,
+              "monthlyPriceInCents": 1000
+            },
+            "sponsor": {
+              "login": "ignored-old"
+            }
+          },
+          {
+            "action": "NEW_SPONSORSHIP",
+            "timestamp": "2026-05-07T12:00:00Z",
+            "sponsorsTier": {
+              "isOneTime": false,
+              "monthlyPriceInCents": 1000
+            },
+            "sponsor": {
+              "login": "ignored-recurring"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
