@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T15:12:47+00:00",
+  "generated_at": "2026-05-10T15:22:56+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,6 +494,43 @@
   ],
   "pull_requests": [
     {
+      "additions": 54,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFilters queued and in-progress workflow runs out of the public results export.\n\n## Why\n\n`Public Results Export` currently captures workflow runs while it is running. That can leave volatile `queued` or `in_progress` rows in `data/public-results.json` and `data/public-results.md`, even though those states may be obsolete moments later. Public evidence should prefer terminal workflow states.\n\n## Changes\n\n- Add terminal workflow-run filtering in `scripts/build_public_results_export.py`.\n- Keep only workflow runs with `status == completed`.\n- Add a scope note that queued and in-progress workflow runs are excluded.\n- Extend the public results builder test to verify `in_progress` and `queued` runs are excluded from JSON and Markdown output.\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes in this PR.\n- No workflow behavior changes.\n- No support unlock behavior changes.",
+      "body_length": 907,
+      "changed_files": 2,
+      "closed_at": "2026-05-10T15:22:36Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T15:21:21Z",
+      "deletions": 3,
+      "files": [
+        {
+          "additions": 19,
+          "deletions": 2,
+          "path": "scripts/build_public_results_export.py"
+        },
+        {
+          "additions": 35,
+          "deletions": 1,
+          "path": "scripts/test_build_public_results_export.py"
+        }
+      ],
+      "head_ref_name": "filter-non-terminal-public-workflow-runs",
+      "head_ref_oid": "9a421d19260dc637cd53747b73cc6f4dd786c34f",
+      "labels": [],
+      "merge_commit_oid": "c24e1ac696e36e79e1a6496c8b022c4ab5401e19",
+      "merged_at": "2026-05-10T15:22:36Z",
+      "merged_by": "Unjuno",
+      "number": 241,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Filter non-terminal workflow runs from public results",
+      "updated_at": "2026-05-10T15:22:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/241"
+    },
+    {
       "additions": 124,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -542,7 +579,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Process previous week in scheduled support resolution",
-      "updated_at": "2026-05-10T15:12:32Z",
+      "updated_at": "2026-05-10T15:13:38Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/240"
     },
     {
@@ -4534,38 +4571,6 @@
       "title": "Move Codex runtime out of temporary directory",
       "updated_at": "2026-05-06T07:27:01Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/140"
-    },
-    {
-      "additions": 7,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the full `first-canary-007` runner after the container failed during npm setup.\n\n## Observed failure\n\nThe latest run failed before Codex execution:\n\n```text\nnpm error code EACCES\nnpm error path /.npmrc\n```\n\n## Cause\n\nThe container runs as the host runner UID/GID. Without an explicit writable home and npm user config path, npm attempted to use root-level config/cache locations such as `/.npmrc` and `/.npm`.\n\n## Fix\n\nSet writable container-local npm and home paths before invoking npm:\n\n```text\nHOME=/tmp/codex-home\nNPM_CONFIG_USERCONFIG=/tmp/npmrc\nNPM_CONFIG_PREFIX=/tmp/npm-global\nNPM_CONFIG_CACHE=/tmp/npm-cache\nPATH=/tmp/npm-global/bin:$PATH\n```\n\nAlso removes the `npm config set ...` calls that required writing a user config before the user config path was safe.\n\n## Scope\n\n- Fixes npm environment for full 007 runner only.\n- Does not change model, attempt count, retry, fallback, policy boundary, or final writable files.\n- Does not run Codex in this PR.\n- Does not modify `/lab/`.",
-      "body_length": 1008,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T06:28:47Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T06:27:35Z",
-      "deletions": 5,
-      "files": [
-        {
-          "additions": 7,
-          "deletions": 5,
-          "path": "scripts/run_codex_policy_agent_canary.sh"
-        }
-      ],
-      "head_ref_name": "fix-007-npm-home",
-      "head_ref_oid": "73100d0b9470d4a484c37269db15cdfde01a8198",
-      "labels": [],
-      "merge_commit_oid": "e00400d4134af655db9151f8322788073ffbd25b",
-      "merged_at": "2026-05-06T06:28:47Z",
-      "merged_by": "Unjuno",
-      "number": 139,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Fix policy runner npm home",
-      "updated_at": "2026-05-06T07:27:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/139"
     }
   ],
   "run_records": [
@@ -4695,7 +4700,8 @@
     "interpretation": "none; participant analysis expected",
     "privacy": "public GitHub repository data only",
     "raw_actions_logs": "not collected",
-    "secrets": "not collected"
+    "secrets": "not collected",
+    "workflow_runs": "terminal workflow runs only; queued and in-progress runs are excluded"
   },
   "summary": {
     "authorized_canary_issue_count": 1,
@@ -4707,9 +4713,65 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 20,
-    "workflow_run_count": 100
+    "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-10T15:22:38Z",
+      "database_id": 25632415590,
+      "display_title": "Filter non-terminal workflow runs from public results",
+      "event": "pull_request",
+      "head_branch": "filter-non-terminal-public-workflow-runs",
+      "head_sha": "9a421d19260dc637cd53747b73cc6f4dd786c34f",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:22:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632415590",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:21:24Z",
+      "database_id": 25632389015,
+      "display_title": "Filter non-terminal workflow runs from public results",
+      "event": "pull_request",
+      "head_branch": "filter-non-terminal-public-workflow-runs",
+      "head_sha": "9a421d19260dc637cd53747b73cc6f4dd786c34f",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:21:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632389015",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:21:24Z",
+      "database_id": 25632388991,
+      "display_title": "Filter non-terminal workflow runs from public results",
+      "event": "pull_request",
+      "head_branch": "filter-non-terminal-public-workflow-runs",
+      "head_sha": "9a421d19260dc637cd53747b73cc6f4dd786c34f",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:21:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632388991",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T15:12:50Z",
+      "database_id": 25632204298,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "369920036841066490fc464205edd8e69eebc6c1",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:13:27Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632204298",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-10T15:12:34Z",
@@ -4725,7 +4787,7 @@
       "workflow_name": "Terminal State Report"
     },
     {
-      "conclusion": "",
+      "conclusion": "success",
       "created_at": "2026-05-10T15:12:34Z",
       "database_id": 25632199078,
       "display_title": "Process previous week in scheduled support resolution (#240)",
@@ -4733,13 +4795,13 @@
       "head_branch": "main",
       "head_sha": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
       "name": "Public Results Export",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T15:12:38Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:12:53Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632199078",
       "workflow_name": "Public Results Export"
     },
     {
-      "conclusion": "",
+      "conclusion": "cancelled",
       "created_at": "2026-05-10T15:12:33Z",
       "database_id": 25632198724,
       "display_title": "pages build and deployment",
@@ -4747,8 +4809,8 @@
       "head_branch": "main",
       "head_sha": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
       "name": "pages build and deployment",
-      "status": "in_progress",
-      "updated_at": "2026-05-10T15:12:38Z",
+      "status": "completed",
+      "updated_at": "2026-05-10T15:12:55Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25632198724",
       "workflow_name": "pages-build-deployment"
     },
@@ -6025,90 +6087,6 @@
       "updated_at": "2026-05-09T19:59:02Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610437782",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:48:19Z",
-      "database_id": 25610227912,
-      "display_title": "Regenerate 2026-W20 comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "regenerate-2026-w20-comparison-dashboard",
-      "head_sha": "1a886ef468958daf8e00b23fe42d718969b3a232",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:48:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610227912",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:48:19Z",
-      "database_id": 25610227908,
-      "display_title": "Regenerate 2026-W20 comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "regenerate-2026-w20-comparison-dashboard",
-      "head_sha": "1a886ef468958daf8e00b23fe42d718969b3a232",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:48:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610227908",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:48:19Z",
-      "database_id": 25610227902,
-      "display_title": "Regenerate 2026-W20 comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "regenerate-2026-w20-comparison-dashboard",
-      "head_sha": "1a886ef468958daf8e00b23fe42d718969b3a232",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:48:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610227902",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:38:55Z",
-      "database_id": 25610028458,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5cee78286ad608445b1ee46194316d0606adda1f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:39:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610028458",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-09T19:38:36Z",
-      "database_id": 25610023339,
-      "display_title": "Dedupe comparison dashboard rows by rank (#228)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:38:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023339",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-09T19:38:36Z",
-      "database_id": 25610023322,
-      "display_title": "Dedupe comparison dashboard rows by rank",
-      "event": "pull_request",
-      "head_branch": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_sha": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-09T19:38:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25610023322",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }
