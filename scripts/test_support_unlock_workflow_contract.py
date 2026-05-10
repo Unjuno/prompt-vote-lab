@@ -62,9 +62,11 @@ def main() -> int:
             "Resolve automated support unlocks",
             "scripts/resolve_support_unlock.py",
             "SUPPORT_UNLOCK_WEEK",
+            "SUPPORT_UNLOCK_FILE",
             "RANK_2_UNLOCKED",
             "RANK_3_UNLOCKED",
             "--week \"$RUN_WEEK\"",
+            "--require",
         ],
         "weekly workflow",
     )
