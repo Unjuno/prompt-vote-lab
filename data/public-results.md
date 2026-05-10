@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-10T16:26:36+00:00`
+Generated at: `2026-05-10T16:46:50+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 245 | MERGED | 3 | 285/25 | Add participant guide |
 | 244 | MERGED | 2 | 263/20 | Add operator runbook |
 | 243 | MERGED | 1 | 8/4 | Record auto vote summary for week-2026-W19 |
 | 242 | MERGED | 1 | 23/6 | Fix support unlock privacy flag validation |
@@ -69,13 +70,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
 | 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
-| 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25634238935 | Terminal State Report | pull_request | completed | skipped | Add participant guide |
+| 25634175707 | Lab PR Scope Check | pull_request | completed | success | Add participant guide |
+| 25634175702 | Pre-API Freeze Audit | pull_request | completed | success | Add participant guide |
+| 25634175695 | Static Site Check | pull_request | completed | success | Add participant guide |
+| 25634175692 | Script Check | pull_request | completed | success | Add participant guide |
+| 25633813001 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25633804632 | Terminal State Report | pull_request | completed | skipped | Add operator runbook |
+| 25633804613 | Public Results Export | push | completed | success | Add operator runbook (#244) |
+| 25633804285 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25633775274 | Lab PR Scope Check | pull_request | completed | success | Add operator runbook |
 | 25633775268 | Pre-API Freeze Audit | pull_request | completed | success | Add operator runbook |
 | 25633775262 | Static Site Check | pull_request | completed | success | Add operator runbook |
@@ -97,14 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25632423546 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25632415590 | Terminal State Report | pull_request | completed | skipped | Filter non-terminal workflow runs from public results |
 | 25632415581 | Public Results Export | push | completed | success | Filter non-terminal workflow runs from public results (#241) |
-| 25632415266 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25632389015 | Lab PR Scope Check | pull_request | completed | success | Filter non-terminal workflow runs from public results |
-| 25632388991 | Script Check | pull_request | completed | success | Filter non-terminal workflow runs from public results |
-| 25632204298 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25632199099 | Terminal State Report | pull_request | completed | skipped | Process previous week in scheduled support resolution |
-| 25632199078 | Public Results Export | push | completed | success | Process previous week in scheduled support resolution (#240) |
-| 25632198724 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25632178668 | Lab PR Scope Check | pull_request | completed | success | Process previous week in scheduled support resolution |
 
 ## Raw JSON
 

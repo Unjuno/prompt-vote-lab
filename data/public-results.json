@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T16:26:36+00:00",
+  "generated_at": "2026-05-10T16:46:50+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,6 +494,48 @@
   ],
   "pull_requests": [
     {
+      "additions": 285,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a participant-facing guide and makes it the first documentation entry.\n\n## Changes\n\n- Add `docs/for-participants.md`.\n- Link it from `docs/README.md`.\n- Add a short participant start section to root `README.md`.\n- Make voting with 👍 the first suggested action before prompt submission.\n\n## Scope\n\nDocumentation only. No workflow, lab, or generated evidence changes.",
+      "body_length": 382,
+      "changed_files": 3,
+      "closed_at": "2026-05-10T16:46:29Z",
+      "comment_count": 0,
+      "created_at": "2026-05-10T16:43:31Z",
+      "deletions": 25,
+      "files": [
+        {
+          "additions": 18,
+          "deletions": 3,
+          "path": "README.md"
+        },
+        {
+          "additions": 29,
+          "deletions": 22,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 238,
+          "deletions": 0,
+          "path": "docs/for-participants.md"
+        }
+      ],
+      "head_ref_name": "document-weekly-automation-schedule",
+      "head_ref_oid": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "labels": [],
+      "merge_commit_oid": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
+      "merged_at": "2026-05-10T16:46:29Z",
+      "merged_by": "Unjuno",
+      "number": 245,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add participant guide",
+      "updated_at": "2026-05-10T16:46:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/245"
+    },
+    {
       "additions": 263,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -523,7 +565,7 @@
       "merged_at": "2026-05-10T16:26:15Z",
       "merged_by": "Unjuno",
       "number": 244,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Add operator runbook",
@@ -4529,38 +4571,6 @@
       "title": "Add policy-enforced agent feasibility check",
       "updated_at": "2026-05-06T07:27:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/133"
-    },
-    {
-      "additions": 15,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the full `first-canary-007` runner so a container failure still leaves useful diagnostics for `collect_canary_diagnostics.py` and artifact upload.\n\n## Observed issue\n\nThe latest run exited with code `243`, but the workflow log did not show the underlying container/Codex failure. The runner let the non-zero `docker run` stop the script before diagnostic files were copied and normalized.\n\n## Fix\n\n- Wrap `docker run` with `set +e` and save the container exit code.\n- Copy container stdout/stderr and exit code into `.tmp/canary-diagnostics`.\n- Normalize `.tmp/codex-events.jsonl`, `.tmp/codex-last-message.txt`, `.tmp/codex-stderr.txt`, and `.tmp/codex-exit-code.txt` even on failure.\n- Compute policy diff artifacts before re-exiting with the original container exit code.\n\n## Scope\n\n- Diagnostics preservation only.\n- Does not change model, attempt count, fallback, retry, final writable files, or policy boundary.\n- Does not run Codex in this PR.\n- Does not modify `/lab/`.",
-      "body_length": 995,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T06:17:51Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T06:15:50Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 15,
-          "deletions": 2,
-          "path": "scripts/run_codex_policy_agent_canary.sh"
-        }
-      ],
-      "head_ref_name": "fix-007-diagnostics-preserve",
-      "head_ref_oid": "86bf94a408d853dacbc2bc56fc32746bd088e6ec",
-      "labels": [],
-      "merge_commit_oid": "01439da034a7a921ce0fcc3ae29d55b34985abd9",
-      "merged_at": "2026-05-06T06:17:51Z",
-      "merged_by": "Unjuno",
-      "number": 138,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Preserve policy canary diagnostics on failure",
-      "updated_at": "2026-05-06T07:27:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/138"
     }
   ],
   "run_records": [
@@ -4708,6 +4718,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-10T16:46:32Z",
+      "database_id": 25634238935,
+      "display_title": "Add participant guide",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:46:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238935",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:43:35Z",
+      "database_id": 25634175707,
+      "display_title": "Add participant guide",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:43:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634175707",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:43:35Z",
+      "database_id": 25634175702,
+      "display_title": "Add participant guide",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:43:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634175702",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:43:35Z",
+      "database_id": 25634175695,
+      "display_title": "Add participant guide",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:43:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634175695",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:43:35Z",
+      "database_id": 25634175692,
+      "display_title": "Add participant guide",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:43:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634175692",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:26:39Z",
+      "database_id": 25633813001,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "e898b5b052770edbbf84b30fb50bad256d84b147",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:27:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633813001",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-10T16:26:18Z",
       "database_id": 25633804632,
       "display_title": "Add operator runbook",
@@ -4719,6 +4813,34 @@
       "updated_at": "2026-05-10T16:26:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633804632",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:26:17Z",
+      "database_id": 25633804613,
+      "display_title": "Add operator runbook (#244)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "7058570381185cf7efa1822a69110d6433df4764",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:26:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633804613",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-10T16:26:16Z",
+      "database_id": 25633804285,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7058570381185cf7efa1822a69110d6433df4764",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:26:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25633804285",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -5965,118 +6087,6 @@
       "updated_at": "2026-05-10T06:18:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621649862",
       "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:46:34Z",
-      "database_id": 25621093532,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:47:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621093532",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:46:16Z",
-      "database_id": 25621088993,
-      "display_title": "Update root lab status for completed W20 comparison (#233)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "fffb2afa9b2f15a6c953cee19618cd90695900ae",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:46:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621088993",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-10T05:46:16Z",
-      "database_id": 25621088936,
-      "display_title": "Update root lab status for completed W20 comparison",
-      "event": "pull_request",
-      "head_branch": "update-root-lab-w20-status",
-      "head_sha": "35f965295a10f63780f93d5806529128db7337d9",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:46:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621088936",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-10T05:46:15Z",
-      "database_id": 25621088689,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "fffb2afa9b2f15a6c953cee19618cd90695900ae",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:46:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621088689",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:39:04Z",
-      "database_id": 25620968616,
-      "display_title": "Update root lab status for completed W20 comparison",
-      "event": "pull_request",
-      "head_branch": "update-root-lab-w20-status",
-      "head_sha": "35f965295a10f63780f93d5806529128db7337d9",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:39:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25620968616",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:39:04Z",
-      "database_id": 25620968615,
-      "display_title": "Update root lab status for completed W20 comparison",
-      "event": "pull_request",
-      "head_branch": "update-root-lab-w20-status",
-      "head_sha": "35f965295a10f63780f93d5806529128db7337d9",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:39:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25620968615",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:39:04Z",
-      "database_id": 25620968614,
-      "display_title": "Update root lab status for completed W20 comparison",
-      "event": "pull_request",
-      "head_branch": "update-root-lab-w20-status",
-      "head_sha": "35f965295a10f63780f93d5806529128db7337d9",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:39:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25620968614",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T05:37:35Z",
-      "database_id": 25620944830,
-      "display_title": "Update root lab status for completed W20 comparison",
-      "event": "pull_request",
-      "head_branch": "update-root-lab-w20-status",
-      "head_sha": "4900dffe81dce0408a7d22b4bb989b1f064b271c",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T05:37:45Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25620944830",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }
