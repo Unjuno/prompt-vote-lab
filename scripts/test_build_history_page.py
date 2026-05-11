@@ -40,8 +40,22 @@ def test_history_builder() -> None:
                 "state": "CLOSED",
                 "labels": ["week:2026-W19", "prompt-proposal", "normal-candidate", "issue-safety:clear", "issue-safety:runtime-detected", "outcome:implemented"],
                 "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": True},
-                "body": "normal candidate",
+                "body": "normal candidate without embedded rank metadata",
             },
+        ],
+        "pull_requests": [
+            {
+                "number": 179,
+                "title": "Run Codex fixed Issue instruction canary",
+                "url": "https://example.test/pulls/179",
+                "state": "MERGED",
+                "body": "- Issue: #191\n- Rank: 1\n- Votes: 0",
+                "files": [
+                    {"path": "lab/index.html"},
+                    {"path": "lab/style.css"},
+                    {"path": "lab/app.js"},
+                ],
+            }
         ],
     }
     with tempfile.TemporaryDirectory() as tmp:
@@ -65,8 +79,11 @@ def test_history_builder() -> None:
         "submission safety scan",
         "comparison run",
         "finalizer close",
+        "live rank output pages remain the source of truth",
         "Open weekly comparison",
         "../comparisons/2026-W20/",
+        "../comparisons/2026-W19/",
+        "<dt>Adopted</dt><dd>rank 1</dd>",
         "Generated from <code>data/public-results.json</code>",
         "connect-src 'none'",
     ]
