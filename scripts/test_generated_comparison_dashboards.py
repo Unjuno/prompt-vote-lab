@@ -13,7 +13,8 @@ RANK_TITLE_ID_RE = re.compile(r'id="(rank-[123]-title)"')
 REQUIRED_TEXT = [
     "Prompt Vote Lab comparison:",
     "Comparison dashboard · generated from public results",
-    "GitHub Issues, PRs, commits, public bundles, and run records remain the source of truth",
+    "GitHub Issues, PRs, commits, public bundles, run records, and live rank output pages remain the source of truth",
+    "Live output",
     "default-src 'self'",
     "connect-src 'none'",
     "frame-src 'none'",
@@ -75,6 +76,14 @@ def test_dashboard(path: Path) -> None:
         expected_root = f"lab/comparisons/{path.parent.name}/rank-{rank}/"
         if expected_root not in text:
             raise AssertionError(f"{rel}: missing output root for rank {rank}: {expected_root}")
+
+        expected_label = f"Open rank {rank} output"
+        if expected_label not in text:
+            raise AssertionError(f"{rel}: missing live output label for rank {rank}: {expected_label}")
+
+        expected_href = f'href="./rank-{rank}/"'
+        if expected_href not in text:
+            raise AssertionError(f"{rel}: missing live output href for rank {rank}: {expected_href}")
 
     if '<section class="rank-grid" aria-label="Comparison candidates">' not in text:
         raise AssertionError(f"{rel}: missing rank-grid section")
