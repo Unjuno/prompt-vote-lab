@@ -96,7 +96,8 @@ noscript,
 
 .evidence-nav a:hover,
 .action-link:hover,
-.run-links a:hover {
+.run-links a:hover,
+.preview-link:hover {
   border-color: rgba(25, 25, 25, 0.38);
 }
 
@@ -114,7 +115,8 @@ noscript,
   background: var(--card);
 }
 
-.action-card {
+.action-card,
+.preview-card {
   background: var(--card-strong);
 }
 
@@ -138,14 +140,16 @@ noscript,
   margin: 0;
 }
 
-.action-grid {
+.action-grid,
+.preview-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin-top: 16px;
 }
 
-.action-link {
+.action-link,
+.preview-link {
   display: grid;
   gap: 10px;
   min-height: 100%;
@@ -169,17 +173,24 @@ noscript,
   font-weight: 900;
 }
 
-.action-link strong {
+.action-link strong,
+.preview-link strong {
   font-size: 1.05rem;
   line-height: 1.15;
 }
 
-.action-link em {
+.action-link em,
+.preview-link span {
   color: var(--muted);
   font-size: 0.9rem;
   font-style: normal;
   font-weight: 650;
   line-height: 1.5;
+}
+
+.preview-link--current {
+  border-color: rgba(25, 25, 25, 0.34);
+  background: rgba(255, 255, 255, 0.82);
 }
 
 .run-links {
@@ -250,7 +261,8 @@ noscript {
 }
 
 @media (max-width: 720px) {
-  .action-grid {
+  .action-grid,
+  .preview-grid {
     grid-template-columns: 1fr;
   }
 }
