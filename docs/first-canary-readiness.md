@@ -29,7 +29,8 @@ Do not run the canary unless every required item is PASS.
 ## Required evidence state
 
 ```text
-[ ] Weekly Auto Run no-eligible production path: PASS
+[ ] Support Unlock Export live path: PASS
+[ ] Weekly Auto Run no-eligible live path: PASS
 [ ] Evidence Pipeline Dry Run source=fixture: PASS
 [ ] Evidence Pipeline Dry Run source=live: PASS
 [ ] live evidence human review: PASS
@@ -39,7 +40,7 @@ Do not run the canary unless every required item is PASS.
 ## Required canary configuration
 
 ```text
-[ ] model: gpt-5-nano
+[ ] model: gpt-5.4-nano
 [ ] candidate count: 1
 [ ] attempts per candidate: 1
 [ ] SDK max_retries: 0
@@ -49,6 +50,8 @@ Do not run the canary unless every required item is PASS.
 [ ] auto-merge: disabled
 [ ] external publishing: disabled
 ```
+
+`max output tokens: 12000` is deferred until after system completion and live eligible-path verification.
 
 ## Required prompt
 
