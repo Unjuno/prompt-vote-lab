@@ -9,7 +9,7 @@ Prompt Vote Lab evaluates prompt candidates. To compare prompts fairly, the impl
 ## Active implementation model
 
 ```text
-gpt-5-nano
+gpt-5.4-nano
 ```
 
 ## Scope
@@ -56,7 +56,7 @@ Do not run rank 1, rank 2, and rank 3 with different implementation models in th
 ## Active settings
 
 ```text
-model: gpt-5-nano
+model: gpt-5.4-nano
 temperature_policy: model-default
 top_p_policy: model-default
 max_output_tokens: 5000
@@ -69,16 +69,15 @@ The implementation runner records the temperature and top_p policies as `model-d
 
 ## Deferred settings
 
-The following settings are not active during the stabilization phase:
+The following setting is not active during the stabilization phase:
 
 ```text
-model: gpt-5.4-nano
 max_output_tokens: 12000
 ```
 
-They may be reconsidered only after the system is complete and the eligible implementation PR path has passed at least one live end-to-end run.
+It may be reconsidered only after the system is complete and the eligible implementation PR path has passed at least one live end-to-end run.
 
-Do not change the active model or token budget during stabilization merely to increase implementation capacity.
+Do not change the active token budget during stabilization merely to increase implementation capacity.
 
 ## Ranked candidates
 
@@ -102,13 +101,14 @@ If retries are introduced later, they must use the same implementation model and
 gpt-5-nano
 ```
 
-`model-policy-v1.1` keeps the same active model and makes the stabilization output budget explicit:
+`model-policy-v1.1` records the active stabilization model and output budget:
 
 ```text
+model: gpt-5.4-nano
 max_output_tokens: 5000
 ```
 
-This file also records that `gpt-5.4-nano / 12000` is deferred, not active.
+This file also records that `max_output_tokens: 12000` is deferred, not active.
 
 Do not directly compare prompt results across model or token-budget changes without noting the policy change.
 
