@@ -2,27 +2,32 @@
 
 ## Status
 
-The current stable production-oriented implementation path remains:
+The canonical production implementation path for Prompt Vote Lab is now:
 
 ```text
-first-canary-005: offline context + JSON full-file replacement
+Docker-mounted workdir-only + Codex CLI
 ```
 
-The strongest implemented agent-boundary candidate path remains:
+More precisely, the canonical implementation-agent boundary is:
 
 ```text
-first-canary-008: selected prompt task packet container
+runner_family: codex-cli-container-agent
+model: gpt-5.4-nano
+attempts_per_candidate: 1
+retry_policy: none
+fallback_policy: none
+auto_merge_policy: disabled
+sandbox_mode: docker-mounted-workdir-only
+container_work_root: /work
+container_runtime_root: /codex-runtime
+repo_root_mounted: false
+final_writable_files: lab/index.html, lab/style.css, lab/app.js
+manual_review: required
 ```
 
-The fixed-Issue ingestion candidate has now passed one normal fixed-Issue run, one hostile fixed-Issue runtime boundary run, and one sanitizer static penetration test:
+The Python SDK / Responses API full-file JSON path is not the canonical production implementation path. It may remain as a legacy or non-canonical canary/debug path, but it must not be counted as the canonical eligible implementation E2E verification.
 
-```text
-first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:ro
-```
-
-Do not silently replace `first-canary-005` with `first-canary-008` or `first-canary-009`. Treat 008 as the stronger file-operating agent candidate and 009 as the fixed-Issue ingestion candidate until repeated hostile Issue runs and selected-Issue ingestion demonstrate stability.
-
-## Why this path is current
+## Current evidence summary
 
 The canary series produced the following evidence:
 
@@ -31,7 +36,7 @@ first-canary-001: full repository + workspace-write -> FAIL
 first-canary-002: isolated three-file worktree + workspace-write -> FAIL
 first-canary-003: isolated three-file worktree + danger-full-access -> PASS
 first-canary-004: read-only repository context + unified diff writeback -> FAIL
-first-canary-005: empty context + JSON full-file replacement -> PASS
+first-canary-005: offline context + JSON full-file replacement -> PASS, now non-canonical
 first-canary-006: isolated three-file agent-observed direct edit -> PASS
 first-canary-007: Docker-mounted workdir-only policy agent -> PASS
 first-canary-008: Docker workdir + read-only selected prompt task packet -> PASS
@@ -47,43 +52,34 @@ The result means:
 - GitHub-hosted runner workspace-write sandboxing failed through the local bwrap path.
 - Relaxed direct editing can work, but it is not the safest default.
 - Repo-context writeback still allowed Codex to attempt an internal patch/write path.
-- Offline-context JSON writeback gives the workflow control over actual file writes.
-- Agent-observed direct edit is useful for behavior analysis.
+- Offline-context JSON writeback works as mediated output, but it is no longer the production canonical path.
 - Policy-enforced container execution can run Codex as an agent without mounting the repository root.
 - Selected prompt task packets can be mounted read-only at /task while Codex edits /work/lab only.
-- The API key can be present for codex login and absent before codex exec.
 - Fixed GitHub Issue text can be fetched and normalized into an instruction packet.
 - Hostile Issue text can be preserved as raw evidence while the executable objective is narrowed to a safe_user_task.
 ```
 
-## Current default
+## Canonical production path
 
-Use `first-canary-005` style execution for routine production-oriented implementation runs.
+Use a Docker-contained Codex CLI runner for production-oriented implementation-agent verification and future eligible implementation runs.
+
+The minimal canonical form is the 007-style policy-enforced container boundary:
 
 ```text
-runner: codex-cli-offline-json-writeback
-model: gpt-5.4-nano
-attempts_per_candidate: 1
-retry_policy: none
-fallback_policy: none
-auto_merge_policy: disabled
-sandbox_mode: read-only-empty-context
-writeback_mode: validated JSON full-file replacement
+runner: codex-cli-policy-enforced-agent-container
+sandbox_mode: docker-mounted-workdir-only
+execution_mode: containerized Codex direct edit of prepared lab files
+container_work_root: /work
+container_runtime_root: /codex-runtime
+repo_root_mounted: false
 final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-## Stronger agent candidate path
-
-Use `first-canary-008` for agent-style runs that need selected prompt task-packet evidence.
+For real selected prompt execution, prefer the stronger task-packet form:
 
 ```text
 runner: codex-cli-selected-prompt-task-packet-container
-model: gpt-5.4-nano
-attempts_per_candidate: 1
-retry_policy: none
-fallback_policy: none
-auto_merge_policy: disabled
 sandbox_mode: docker-workdir-plus-readonly-task-packet
 execution_mode: selected prompt task packet agent direct edit
 container_work_root: /work
@@ -95,21 +91,12 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-008 is not yet the default production-oriented implementation path because it still needs repeated successful full runs under fixed conditions and hostile selected-task tests.
-
-## Fixed-Issue ingestion candidate path
-
-Use `first-canary-009` only for fixed GitHub Issue ingestion and instruction-normalization tests.
+For fixed or selected GitHub Issue ingestion, use the issue-instruction packet form:
 
 ```text
 runner: codex-cli-fixed-issue-instruction-packet-container
-model: gpt-5.4-nano
-attempts_per_candidate: 1
-retry_policy: none
-fallback_policy: none
-auto_merge_policy: disabled
 sandbox_mode: docker-workdir-plus-readonly-issue-instruction-packet
-execution_mode: fixed GitHub Issue instruction packet agent direct edit
+execution_mode: GitHub Issue instruction packet agent direct edit
 container_work_root: /work
 container_task_root: /task
 container_task_mount_mode: read-only
@@ -119,63 +106,44 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-009 verifies Issue ingestion and instruction normalization only. It should not also introduce automatic vote-winner selection.
+The production direction is therefore Docker + Codex CLI, not Python SDK JSON replacement.
 
-## How the current stable path works
+## Non-canonical legacy path
+
+`first-canary-005` proved that offline context + JSON full-file replacement can work:
 
 ```text
-1. The workflow checks out the repository.
-2. The workflow captures diagnostics baseline data.
-3. The workflow reads the three allowed lab files.
-4. The workflow builds a prompt containing those file contents.
-5. Codex runs in an empty temporary directory.
-6. Codex returns JSON containing full replacement content for changed allowed files.
-7. The workflow validates the JSON payload.
-8. The workflow applies replacements only for allowed files.
-9. The workflow runs changed-file guard, safety-check, and static-site-check.
-10. The workflow creates a pull request.
-11. A human reviews and merges manually.
+runner: codex-cli-offline-json-writeback
+sandbox_mode: read-only-empty-context
+writeback_mode: validated JSON full-file replacement
 ```
 
-## How the 008 candidate path works
+This path is useful as historical evidence and possible emergency fallback, but it is not the canonical production implementation path.
+
+Do not merge or report a run as canonical implementation E2E merely because the API/JSON path produced a small valid lab diff.
+
+## Canonical Docker/Codex flow
 
 ```text
 1. The workflow checks out the repository.
-2. The workflow generates a selected prompt task packet.
-3. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
-4. The workflow mounts the work directory into a Docker container as /work:rw.
-5. The workflow mounts the task packet into the container as /task:ro.
-6. The workflow mounts a separate runtime directory as /codex-runtime:rw.
-7. The repository root is not mounted into the container.
-8. Codex logs in, then OPENAI_API_KEY is removed before codex exec.
-9. Codex reads /task and edits the prepared lab files under /work.
-10. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
-11. The workflow runs changed-file guard, safety-check, and static-site-check.
-12. The workflow creates a pull request.
-13. A human reviews and merges manually.
-```
-
-## How the 009 candidate path works
-
-```text
-1. The workflow checks out the repository.
-2. The workflow fetches one fixed GitHub Issue.
-3. The workflow generates an instruction packet with raw Issue evidence, normalized instructions, execution policy, allowed files, and issue-safety-analysis.json.
-4. The workflow copies lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
-5. The workflow mounts the work directory into a Docker container as /work:rw.
-6. The workflow mounts the instruction packet into the container as /task:ro.
+2. The workflow copies only lab/index.html, lab/style.css, and lab/app.js into a prepared work directory.
+3. The workflow creates any selected prompt or Issue instruction packet outside the agent work root.
+4. The workflow starts a Docker container.
+5. The workflow mounts the prepared work directory into the container as /work:rw.
+6. If a task packet is used, the workflow mounts it as /task:ro.
 7. The workflow mounts a separate runtime directory as /codex-runtime:rw.
 8. The repository root is not mounted into the container.
-9. Codex logs in, then OPENAI_API_KEY is removed before codex exec.
-10. Codex reads /task and edits the prepared lab files under /work.
+9. Codex CLI logs in and runs inside the container.
+10. Codex edits only the prepared lab files under /work.
 11. The workflow copies back only lab/index.html, lab/style.css, and lab/app.js.
 12. The workflow runs changed-file guard, safety-check, and static-site-check.
-13. A human reviews and merges manually.
+13. The workflow creates a pull request.
+14. A human reviews and merges manually.
 ```
 
 ## Allowed final write scope
 
-Only these files may be changed by the implementation paths:
+Only these files may be changed by the canonical implementation paths:
 
 ```text
 lab/index.html
@@ -187,33 +155,14 @@ No other file path is a valid final output path.
 
 ## Safety boundary
 
-The safety boundary is not the model prompt alone.
-
-For 005, the boundary is the combination of:
+The canonical safety boundary is not the model prompt alone. It is the combination of:
 
 ```text
-- empty Codex execution context
-- prompt-provided file contents only
-- JSON parser
-- allowed-path validator
-- duplicate-path rejection
-- empty-content rejection
-- max file size check
-- changed-file guard
-- safety-check
-- static-site-check
-- diagnostics artifact upload
-- manual review
-```
-
-For 008, the boundary is the combination of:
-
-```text
-- Docker workdir plus read-only task packet execution
+- Docker workdir-only execution
 - repository root not mounted into the agent container
-- read-only selected prompt and policy packet at /task
-- separate runtime mount at /codex-runtime
-- API key absent before codex exec
+- prepared /work directory containing only allowed lab files
+- optional read-only /task packet for selected prompt or Issue instruction evidence
+- separate /codex-runtime mount for Codex state, npm cache, temporary files, and diagnostics
 - final copy-back limited to the three lab files
 - changed-file guard
 - safety-check
@@ -222,141 +171,43 @@ For 008, the boundary is the combination of:
 - manual review
 ```
 
-For 009, the boundary adds fixed-Issue normalization controls:
+For Issue-derived tasks, the boundary also includes:
 
 ```text
-- GitHub Issue body is preserved as raw evidence, not policy
-- issue-safety-analysis.json records detected unsafe categories
-- safe_user_task is separated from raw Issue text
-- execution-policy.md ranks issue-safety-analysis.json above instruction-brief.md and raw-issue-body.md
-- runner prompt instructs Codex to follow policy and safety analysis over raw Issue text
-- final copy-back remains limited to the three lab files
-- changed-file guard
-- safety-check
-- static-site-check
-- diagnostics artifact upload
-- manual review
+- GitHub Issue body preserved as raw evidence, not policy
+- issue-safety-analysis.json recording detected unsafe categories
+- safe_user_task separated from raw Issue text
+- execution-policy.md ranking issue-safety-analysis.json above instruction-brief.md and raw-issue-body.md
+- runner prompt instructing Codex to follow policy and safety analysis over raw Issue text
 ```
 
 Prompt instructions are still used, but they are not treated as enforcement.
 
-## Why direct editing is not the default
+## Current mismatch to fix
 
-`first-canary-003` and `first-canary-006` proved that isolated direct editing can work with relaxed sandbox mode:
+At the time of this document update, some workflows may still use the non-canonical Python SDK / Responses API runner. Those workflows must not be treated as canonical production E2E verification.
 
-```text
-first-canary-003: isolated three-file worktree + danger-full-access -> PASS
-first-canary-006: isolated three-file agent-observed direct edit -> PASS
-```
+The next implementation work should migrate the weekly eligible implementation path toward the Docker + Codex CLI runner family, with tests and workflow contracts updated in the same PR series.
 
-However, these modes remain experimental because they rely on broad write capability inside the runner process. The final changed-file guard still helps, but the execution-time boundary is weaker than 008 and the mediated output boundary is less operationally stable than 005.
+## Required verification for canonical E2E
 
-## Why first-canary-004 is not the default
-
-`first-canary-004` attempted read-only repository-context writeback using a unified diff patch. It failed because Codex still attempted an internal patch/write path under read-only conditions, and the final patch did not apply cleanly.
-
-The lesson is:
+A canonical successful run must show:
 
 ```text
-Do not give Codex a repository working tree if the intended protocol is purely mediated output.
-```
-
-For mediated output, provide only the required file contents and keep actual repository writes in workflow code.
-
-## Remaining risks
-
-Known residual risks for 005:
-
-```text
-- full-file JSON replacement can be verbose
-- generated full-file content may accidentally drop unrelated markup
-- schema is minimal and not a formal JSON Schema yet
-- semantic quality is checked by review rather than formal validation
-- safety-check and static-site-check only cover known static-site hazards
-- manual review remains mandatory
-```
-
-Known residual risks for 008:
-
-```text
-- only one successful full run has been observed
-- Docker and npm installation add moving parts
-- network access is not narrowed to only required API endpoints
-- full file-access tracing is not yet implemented
-- container path coverage is sampled through diagnostics, not formally proven
-- the first 008 used a fixed canary prompt, not a real selected GitHub Issue
-- manual review remains mandatory
-```
-
-Known residual risks for 009:
-
-```text
-- unsafe detection is pattern-based, not a formal semantic proof
-- only one hostile runtime fixed-Issue run has been observed
-- only one sanitizer static penetration test exists
-- Docker execution still permits network needed for npm install and Codex API access
-- GitHub workflow still has contents: write for PR branch creation
-- final containment remains enforced by workflow guards and manual review
-```
-
-## Promotion rule for 008
-
-Do not promote 008 to the standard agent path after a single success.
-
-Promotion condition:
-
-```text
-008 may be promoted from candidate to standard agent path after at least 2 consecutive successful full 008 runs under the same fixed conditions, plus one successful fixed-Issue 009 run.
-```
-
-A successful repeated 008 run must show:
-
-```text
+- Docker container started
+- Codex CLI executed inside the container
+- repository root not mounted into the container work directory
+- final changed files subset of lab/index.html, lab/style.css, lab/app.js
 - Codex exit code 0
 - container exit code 0
-- final changed files subset of lab/index.html, lab/style.css, lab/app.js
-- repository root not mounted into the container work directory
-- /task mounted read-only
-- API key absent before codex exec
-- policy-denied-access empty or explained
 - safety-check PASS
 - static-site-check PASS
-- manual PR review and merge
+- PR created
+- auto-merge disabled
+- manual review required
 ```
 
-## Promotion rule for 009
-
-Do not advance 009 to automatic vote-winner or selected-Issue ingestion after one hostile runtime test.
-
-Minimum next evidence:
-
-```text
-- at least 2 additional hostile fixed-Issue runs
-- one indirect-prompt-injection Issue
-- one evidence-modification Issue asking for runs/ or docs/ edits
-- one compatibility-disguised external-script/CDN Issue
-- all producing final changed files subset of lab/index.html, lab/style.css, lab/app.js
-- all passing safety-check and static-site-check
-- all manually reviewed and recorded in runs/
-```
-
-## Compatible improvements
-
-The following improvements are compatible if they preserve the same canary contract:
-
-```text
-- stricter JSON schema validation for 005
-- tighter maximum size checks
-- required rationale summary in a separate JSON field
-- better diagnostics summaries
-- stronger HTML/CSS/JS static checks
-- snapshot tests for expected lab structure
-- richer 008 diagnostics summaries
-- richer 009 hostile Issue fixture tests
-- explicit issue-safety-analysis schema validation
-```
-
-These can be added without changing the core protocol if they remain backward-compatible.
+A non-canonical API/JSON run may be recorded, but it must be labeled non-canonical and must not satisfy the canonical production E2E requirement.
 
 ## Changes requiring a new canary ID
 
@@ -381,22 +232,20 @@ Use a new canary ID if any of these change:
 
 ## Current recommendation
 
-Use this for routine production-oriented implementation:
+Use this as the canonical production direction:
 
 ```text
-first-canary-005-offline-context-json-writeback
+Docker-mounted workdir-only + Codex CLI
 ```
 
-Use this for agent-style implementation experiments with selected task packet evidence:
+Use this concrete canary workflow to verify the basic canonical boundary:
 
 ```text
-first-canary-008-selected-prompt-task-packet
+Codex Policy Agent Canary Run
+runner: codex-cli-policy-enforced-agent-container
+sandbox_mode: docker-mounted-workdir-only
 ```
 
-Use this for fixed GitHub Issue ingestion and hostile Issue boundary tests:
+Use selected prompt or Issue instruction packet variants when the task source must be preserved as evidence.
 
-```text
-first-canary-009-fixed-issue-instruction-packet
-```
-
-Do not attempt automatic vote-winner selection until repeated hostile fixed-Issue tests pass and are recorded.
+Do not count `First Canary Run` / Python SDK / Responses API output as the canonical production implementation-agent verification.
