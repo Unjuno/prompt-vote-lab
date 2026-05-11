@@ -13,7 +13,7 @@ permissions:
 env:
   DEFAULT_NO_CHANGE_BASELINE: "20"
   DEFAULT_SUPPORT_USD: "0"
-  AUTO_IMPLEMENTATION_MODEL: "gpt-5-nano"
+  AUTO_IMPLEMENTATION_MODEL: "gpt-5.4-nano"
 
 concurrency:
   group: weekly-auto-run
@@ -146,7 +146,7 @@ jobs:
           OPENAI_API_KEY_: ${{ secrets.OPENAI_API_KEY_ }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_IMPLEMENTATION_API_KEY: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
-          IMPLEMENTATION_MODEL: gpt-5-nano
+          IMPLEMENTATION_MODEL: gpt-5.4-nano
           MAX_OUTPUT_TOKENS: "5000"
           SDK_MAX_RETRIES: "0"
         run: |
@@ -169,7 +169,7 @@ jobs:
           OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
           OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
-          IMPLEMENTATION_MODEL: gpt-5-nano
+          IMPLEMENTATION_MODEL: gpt-5.4-nano
           MAX_OUTPUT_TOKENS: "5000"
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -236,8 +236,8 @@ jobs:
                   f'- Votes: {votes}',
                   f'- Run reason: {reason}',
                   f'- Inherited lab base: `{base_sha}`',
-                  '- Implementation model: `gpt-5-nano`',
-                  '- Model policy: `rules/model-policy-v1.0.md`',
+                  '- Implementation model: `gpt-5.4-nano`',
+                  '- Model policy: `rules/model-policy-v1.1.md`',
                   '- Agent-run policy: `rules/agent-run-policy-v1.0.md`',
                   '- Internal checks: `safety-check` and `static-site-check` passed before PR creation',
                   '- Created by: `Weekly Auto Run`',
