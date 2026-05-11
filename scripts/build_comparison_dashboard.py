@@ -164,23 +164,32 @@ def link(url: str, label: str) -> str:
     return f'<a href="{html.escape(url, quote=True)}">{label}</a>' if url else label
 
 
+def run_record_url(week_id: str, rank: int, issue_no: int) -> str:
+    record = f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
+    return f"https://github.com/Unjuno/prompt-vote-lab/blob/main/{record}"
+
+
 def render_dashboard(data: dict[str, Any], week_id: str) -> str:
     cards = []
     for row in rows(data, week_id):
         files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in row['files']) or '<li>not run yet</li>'
         pr_label = f"PR #{row['pr_no']}" if row['pr_no'] else 'not run yet'
+        rank = int(row['rank'])
+        issue_no = int(row['issue_no'])
+        output_root = f"lab/comparisons/{week_id}/rank-{rank}/"
+        record_path = f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
         cards.append(f'''
-      <article class="rank-card" aria-labelledby="rank-{row['rank']}-title">
-        <p class="rank-eyebrow">Rank {row['rank']}</p>
-        <h2 id="rank-{row['rank']}-title">{html.escape(row['issue_title'])}</h2>
+      <article class="rank-card" aria-labelledby="rank-{rank}-title">
+        <p class="rank-eyebrow">Rank {rank}</p>
+        <h2 id="rank-{rank}-title">{html.escape(row['issue_title'])}</h2>
         <dl class="facts">
-          <div><dt>Issue</dt><dd>{link(row['issue_url'], f"Issue #{row['issue_no']}")} · {html.escape(row['issue_state'])}</dd></div>
+          <div><dt>Issue</dt><dd>{link(row['issue_url'], f"Issue #{issue_no}")} · {html.escape(row['issue_state'])}</dd></div>
           <div><dt>Votes</dt><dd>{row['votes']}</dd></div>
           <div><dt>Safety</dt><dd>{html.escape(row['safety'])}</dd></div>
           <div><dt>Runtime scan</dt><dd>{'detected' if row['runtime'] else 'not recorded'}</dd></div>
           <div><dt>Implementation PR</dt><dd>{link(row['pr_url'], pr_label)} · {html.escape(row['pr_state'])}</dd></div>
-          <div><dt>Output root</dt><dd><code>lab/comparisons/{html.escape(week_id)}/rank-{row['rank']}/</code></dd></div>
-          <div><dt>Run record</dt><dd><code>runs/{html.escape(week_id)}-rank-{row['rank']}-issue-{row['issue_no']}.md</code></dd></div>
+          <div><dt>Live output</dt><dd><a href="./rank-{rank}/">Open rank {rank} output</a> · <code>{html.escape(output_root)}</code></dd></div>
+          <div><dt>Run record</dt><dd><a href="{html.escape(run_record_url(week_id, rank, issue_no), quote=True)}"><code>{html.escape(record_path)}</code></a></dd></div>
           <div><dt>Decision</dt><dd>{html.escape(row['decision'])}</dd></div>
         </dl>
         <h3>Changed files</h3>
@@ -201,7 +210,7 @@ def render_dashboard(data: dict[str, Any], week_id: str) -> str:
   <main class="comparison-root" aria-labelledby="comparison-title">
     <p class="status">Comparison dashboard · generated from public results</p>
     <h1 id="comparison-title">Prompt Vote Lab comparison: {html.escape(week_id)}</h1>
-    <p class="note">GitHub Issues, PRs, commits, public bundles, and run records remain the source of truth. This page is an index that makes the evidence readable.</p>
+    <p class="note">GitHub Issues, PRs, commits, public bundles, run records, and live rank output pages remain the source of truth. This page is an index that makes the evidence readable.</p>
     <section class="method" aria-labelledby="method-title">
       <h2 id="method-title">Evaluation focus</h2>
       <p>Primary: participant evidence comprehension. Secondary: constrained static implementation quality, small diffs, and no forbidden runtime behavior.</p>
