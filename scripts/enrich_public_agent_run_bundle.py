@@ -26,6 +26,19 @@ SANITIZED_PUBLIC_FILES = [
     "container-runtime-dirs-before.txt",
 ]
 
+# These are not treated as hidden/private provider internals. They are exposed run artifacts.
+# If they contain reasoning/COT-like text, that text is part of the public lab evidence after sanitization.
+REASONING_TRACE_FILES = [
+    "codex-events.jsonl",
+    "codex-last-message.txt",
+    "codex-stdout.txt",
+    "codex-stderr.txt",
+    "policy-agent-container-stdout.txt",
+    "policy-agent-container-stderr.txt",
+    "issue-instruction-container-stdout.txt",
+    "issue-instruction-container-stderr.txt",
+]
+
 SECRET_PATTERNS = [
     ("openai_key", re.compile(r"sk-[A-Za-z0-9_\-]{12,}")),
     ("github_classic_token", re.compile(r"gh[pousr]_[A-Za-z0-9_]{12,}")),
@@ -42,6 +55,31 @@ PATH_PATTERNS = [
     ("tmp_path", "[REDACTED_TMP_PATH]", re.compile(r"/tmp/[^\s:'\"]+")),
     ("github_workspace", "[REDACTED_GITHUB_WORKSPACE]", re.compile(r"/github/workspace[^\s:'\"]*")),
 ]
+
+REASONING_TERMS = [
+    "reasoning",
+    "reason",
+    "thought",
+    "think",
+    "plan",
+    "decide",
+    "decision",
+    "inspect",
+    "read",
+    "modify",
+    "change",
+    "because",
+    "therefore",
+    "step",
+    "next",
+]
+
+REASONING_KEYWORD_GROUPS = {
+    "visible_copy_terms": ["copy", "hero", "text", "wording", "visible", "explanation", "content", "label"],
+    "interaction_terms": ["state", "toggle", "click", "button", "interaction", "app.js", "javascript", "event"],
+    "style_terms": ["style", "css", "layout", "responsive", "color", "spacing"],
+    "scope_terms": ["allowed", "policy", "static", "no network", "lab/index.html", "lab/style.css", "lab/app.js"],
+}
 
 
 def utc_now() -> str:
@@ -72,6 +110,10 @@ def line_list(path: Path) -> list[str]:
     return [line.strip() for line in read_text(path).splitlines() if line.strip()]
 
 
+def event_count(path: Path) -> int:
+    return len(line_list(path))
+
+
 def redact_for_public(text: str) -> tuple[str, list[dict[str, Any]]]:
     out = text
     redactions: list[dict[str, Any]] = []
@@ -90,6 +132,16 @@ def redact_for_public(text: str) -> tuple[str, list[dict[str, Any]]]:
             redactions.append({"kind": name, "count": count})
 
     return out, redactions
+
+
+def count_terms(text: str, terms: list[str]) -> dict[str, int]:
+    lowered = text.lower()
+    return {term: lowered.count(term) for term in terms}
+
+
+def count_reasoning_keyword_groups(text: str) -> dict[str, int]:
+    lowered = text.lower()
+    return {name: sum(lowered.count(term) for term in terms) for name, terms in REASONING_KEYWORD_GROUPS.items()}
 
 
 def copy_sanitized_files(diag: Path, bundle: Path) -> list[dict[str, Any]]:
@@ -117,6 +169,37 @@ def copy_sanitized_files(diag: Path, bundle: Path) -> list[dict[str, Any]]:
             }
         )
     return manifest
+
+
+def copy_reasoning_trace_files(diag: Path, bundle: Path) -> tuple[list[dict[str, Any]], str]:
+    out_dir = bundle / "reasoning-traces"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    manifest: list[dict[str, Any]] = []
+    combined = []
+    for name in REASONING_TRACE_FILES:
+        source = diag / name
+        if not source.exists() or not source.is_file():
+            manifest.append({"name": name, "included": False, "reason": "not_found"})
+            continue
+        raw = read_text(source)
+        sanitized, redactions = redact_for_public(raw)
+        dest = out_dir / name
+        dest.write_text(sanitized, encoding="utf-8")
+        combined.append(f"\n--- {name} ---\n{sanitized}")
+        term_counts = count_terms(sanitized, REASONING_TERMS)
+        manifest.append(
+            {
+                "name": name,
+                "included": True,
+                "path": f"reasoning-traces/{name}",
+                "source_size_bytes": source.stat().st_size,
+                "public_size_bytes": dest.stat().st_size,
+                "redactions": redactions,
+                "reasoning_term_counts": term_counts,
+                "contains_reasoning_like_terms": any(count > 0 for count in term_counts.values()),
+            }
+        )
+    return manifest, "\n".join(combined)
 
 
 def patch_stats(patch: str) -> dict[str, dict[str, int]]:
@@ -148,7 +231,66 @@ def first_existing(diag: Path, names: list[str]) -> Path | None:
     return None
 
 
-def build_observation_summary(diag: Path, bundle: Path, sanitized_manifest: list[dict[str, Any]]) -> dict[str, Any]:
+def build_reasoning_effect_hypotheses(reasoning_group_counts: dict[str, int], changed_files: list[str], file_activity: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    hypotheses: list[dict[str, Any]] = []
+    changed = set(changed_files)
+    app_changed = "lab/app.js" in changed
+    css_changed = "lab/style.css" in changed
+    index_changed = "lab/index.html" in changed
+
+    if index_changed and not app_changed and reasoning_group_counts.get("visible_copy_terms", 0) > reasoning_group_counts.get("interaction_terms", 0):
+        hypotheses.append(
+            {
+                "hypothesis": "The exposed reasoning trace emphasizes visible copy/content more than interaction behavior, matching an index.html-only or index-heavy change.",
+                "evidence": [
+                    "visible_copy_terms > interaction_terms",
+                    "lab/index.html changed",
+                    "lab/app.js did not change",
+                ],
+                "confidence": "medium",
+                "participant_prompt_adjustment": "If interaction was desired, explicitly require app.js behavior/state changes and define the expected user action.",
+            }
+        )
+    if reasoning_group_counts.get("interaction_terms", 0) > 0 and not app_changed:
+        hypotheses.append(
+            {
+                "hypothesis": "The exposed reasoning trace mentions interaction-related concepts, but app.js did not change.",
+                "evidence": [
+                    "interaction_terms > 0",
+                    "lab/app.js changed=false",
+                ],
+                "confidence": "low",
+                "participant_prompt_adjustment": "Make the required JavaScript behavior explicit and state that copy-only changes are insufficient.",
+            }
+        )
+    if reasoning_group_counts.get("style_terms", 0) > 0 and css_changed:
+        hypotheses.append(
+            {
+                "hypothesis": "The exposed reasoning trace mentions styling/layout and style.css changed.",
+                "evidence": [
+                    "style_terms > 0",
+                    "lab/style.css changed=true",
+                ],
+                "confidence": "medium",
+                "participant_prompt_adjustment": "If layout quality matters, add responsive acceptance criteria and failure examples.",
+            }
+        )
+    if not hypotheses:
+        hypotheses.append(
+            {
+                "hypothesis": "No strong reasoning-to-behavior hypothesis was inferred from the exposed trace and file activity.",
+                "evidence": [
+                    f"changed_files={sorted(changed)}",
+                    f"reasoning_group_counts={reasoning_group_counts}",
+                ],
+                "confidence": "low",
+                "participant_prompt_adjustment": "Inspect reasoning-traces/ and diff files directly before revising the prompt.",
+            }
+        )
+    return hypotheses
+
+
+def build_observation_summary(diag: Path, bundle: Path, sanitized_manifest: list[dict[str, Any]], reasoning_manifest: list[dict[str, Any]], reasoning_text: str) -> dict[str, Any]:
     index = read_json(bundle / "index.json", {})
     policy = read_json(diag / "policy-allowed-paths.json", {})
     check_results = read_json(diag / "check-results.json", {})
@@ -191,6 +333,9 @@ def build_observation_summary(diag: Path, bundle: Path, sanitized_manifest: list
         )
 
     final_summary, final_summary_redactions = redact_for_public(read_text(diag / "codex-last-message.txt"))
+    reasoning_group_counts = count_reasoning_keyword_groups(reasoning_text)
+    reasoning_available = any(item.get("included") for item in reasoning_manifest)
+    reasoning_contains_terms = any(item.get("contains_reasoning_like_terms") for item in reasoning_manifest if item.get("included"))
     return {
         "schema_version": OBSERVATION_SCHEMA_VERSION,
         "generated_at": utc_now(),
@@ -214,13 +359,27 @@ def build_observation_summary(diag: Path, bundle: Path, sanitized_manifest: list
             "agent_final_action_summary": final_summary[:4000],
             "agent_final_action_summary_redactions": final_summary_redactions,
         },
+        "reasoning_trace": {
+            "available": reasoning_available,
+            "public_trace_available": reasoning_available,
+            "sanitized": True,
+            "published_directory": "reasoning-traces/",
+            "files": reasoning_manifest,
+            "contains_reasoning_like_terms": reasoning_contains_terms,
+            "keyword_group_counts": reasoning_group_counts,
+            "used_for_behavior_evaluation": True,
+            "exposed_reasoning_trace_published": reasoning_available,
+            "unexposed_provider_private_cot_available": "unknown",
+            "unexposed_provider_private_cot_published": False,
+        },
+        "reasoning_effect_hypotheses": build_reasoning_effect_hypotheses(reasoning_group_counts, changed_files, file_activity),
         "file_activity": file_activity,
         "sanitized_logs": sanitized_manifest,
         "limits": {
             "exact_read_order_observed": False,
-            "exact_read_order_reason": "This summary records visible files, changed files, copied files, diffs, hashes, and event counts. Exact file read sequence is not guaranteed unless the Codex event schema exposes it and is reviewed separately.",
-            "raw_private_reasoning_collected": False,
-            "raw_private_reasoning_policy": "Raw private chain-of-thought is not collected or published. The public record uses final action summary plus objective artifacts.",
+            "exact_read_order_reason": "This summary records visible files, changed files, copied files, diffs, hashes, event counts, and exposed reasoning trace artifacts. Exact file read sequence is not guaranteed unless the event schema exposes it and is reviewed separately.",
+            "unexposed_provider_private_cot_collected": False,
+            "unexposed_provider_private_cot_policy": "Do not pretend unavailable provider-private internals are observable. Publish exposed reasoning/COT-like traces that appear in run artifacts after sanitization.",
             "sanitizer_guarantee": "Best-effort pattern redaction before publication. A public leak must still be treated as an incident and rotated if a real token is found.",
         },
     }
@@ -236,14 +395,16 @@ def render_table(headers: list[str], rows: list[list[Any]]) -> str:
 def render_observation_md(summary: dict[str, Any]) -> str:
     path_model = summary["path_model"]
     agent = summary["agent_observation"]
+    reasoning = summary["reasoning_trace"]
     files = summary["file_activity"]
     sanitized = summary["sanitized_logs"]
+    hypotheses = summary["reasoning_effect_hypotheses"]
     return "\n".join(
         [
             "# Agent observation summary",
             "",
-            "This is a participant-facing observation index. It describes visible files, changed files, copied files, sanitized logs, and the agent final action summary.",
-            "It is not raw private reasoning.",
+            "This is a participant-facing observation index. It describes visible files, changed files, copied files, sanitized logs, exposed reasoning traces, and the agent final action summary.",
+            "It does not invent hidden provider-private CoT. It publishes exposed reasoning/COT-like run artifacts when they exist.",
             "",
             "## Path model",
             "",
@@ -266,6 +427,32 @@ def render_observation_md(summary: dict[str, Any]) -> str:
                 [[item.get("file"), item.get("visible_before"), item.get("visible_after"), item.get("changed"), item.get("copied_back"), item.get("additions"), item.get("deletions")] for item in files],
             ),
             "",
+            "## Reasoning / CoT-like trace evidence",
+            "",
+            render_table(
+                ["field", "value"],
+                [
+                    ["available", reasoning.get("available")],
+                    ["published_directory", reasoning.get("published_directory")],
+                    ["contains_reasoning_like_terms", reasoning.get("contains_reasoning_like_terms")],
+                    ["used_for_behavior_evaluation", reasoning.get("used_for_behavior_evaluation")],
+                    ["unexposed_provider_private_cot_available", reasoning.get("unexposed_provider_private_cot_available")],
+                    ["unexposed_provider_private_cot_published", reasoning.get("unexposed_provider_private_cot_published")],
+                ],
+            ),
+            "",
+            render_table(
+                ["trace file", "included", "reasoning-like", "redactions"],
+                [[item.get("name"), item.get("included"), item.get("contains_reasoning_like_terms"), ", ".join(f"{r.get('kind')}:{r.get('count')}" for r in item.get("redactions", []))] for item in reasoning.get("files", [])],
+            ),
+            "",
+            "## Reasoning effect hypotheses",
+            "",
+            render_table(
+                ["hypothesis", "confidence", "prompt adjustment"],
+                [[item.get("hypothesis"), item.get("confidence"), item.get("participant_prompt_adjustment")] for item in hypotheses],
+            ),
+            "",
             "## Sanitized logs",
             "",
             render_table(
@@ -280,9 +467,10 @@ def render_observation_md(summary: dict[str, Any]) -> str:
             "## Evidence limits",
             "",
             "- Exact file read order is not guaranteed by this summary.",
-            "- Raw private chain-of-thought is not collected or published.",
+            "- Exposed reasoning/COT-like trace files are published under reasoning-traces/ after sanitization when present.",
+            "- Unexposed provider-private internals are not claimed to be available.",
             "- Sanitization is best-effort. Real token discovery still requires rotation.",
-            "- Use raw/codex-events.jsonl and sanitized/* logs for deeper inspection.",
+            "- Use reasoning-traces/, raw/codex-events.jsonl, sanitized/* logs, and diff files for deeper inspection.",
             "",
         ]
     )
@@ -301,6 +489,8 @@ def append_readme(bundle: Path) -> None:
             "```text",
             "path model",
             "file activity",
+            "reasoning / CoT-like trace evidence",
+            "reasoning effect hypotheses",
             "sanitized logs",
             "agent final action summary",
             "evidence limits",
@@ -308,6 +498,7 @@ def append_readme(bundle: Path) -> None:
             "",
             "Use `observation-summary.json` for machine-readable analysis.",
             "Sanitized diagnostic logs are under `sanitized/`.",
+            "Sanitized exposed reasoning/COT-like traces are under `reasoning-traces/` when present.",
             "",
         ]
     )
@@ -326,13 +517,15 @@ def main() -> int:
         raise SystemExit(f"bundle dir not found: {bundle}")
 
     sanitized_manifest = copy_sanitized_files(diag, bundle)
-    summary = build_observation_summary(diag, bundle, sanitized_manifest)
+    reasoning_manifest, reasoning_text = copy_reasoning_trace_files(diag, bundle)
+    summary = build_observation_summary(diag, bundle, sanitized_manifest, reasoning_manifest, reasoning_text)
     write_json(bundle / "observation-summary.json", summary)
     (bundle / "observation-summary.md").write_text(render_observation_md(summary), encoding="utf-8")
 
     index_path = bundle / "index.json"
     index = read_json(index_path, {})
     index["sanitized_files"] = sanitized_manifest
+    index["reasoning_trace_files"] = reasoning_manifest
     index["observation_summary"] = {
         "json": "observation-summary.json",
         "markdown": "observation-summary.md",
@@ -340,6 +533,7 @@ def main() -> int:
     }
     policy = index.setdefault("policy", {})
     policy["sanitized_diagnostic_logs_included"] = True
+    policy["sanitized_reasoning_traces_included"] = True
     policy["sanitizer_guarantee"] = "best_effort_pattern_redaction"
     write_json(index_path, index)
     append_readme(bundle)
