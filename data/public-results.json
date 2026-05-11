@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T09:46:15+00:00",
+  "generated_at": "2026-05-11T10:09:35+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 54,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a live preview hub to `/lab/` so participants can open rendered pages, not source files.\n\n## Changes\n\n- Add a `Live previews` nav item.\n- Add a `Live previews` section linking to:\n  - current accepted lab\n  - 2026-W20 rank 1 output\n  - 2026-W20 rank 2 output\n  - 2026-W20 rank 3 output\n  - 2026-W20 comparison dashboard\n  - history\n- Add responsive preview-card styles.\n\n## Scope\n\nRoot lab UI only: `lab/index.html` and `lab/style.css`.\n\nNo generated evidence, scripts, workflows, docs, model, token-budget, or W0 reset changes.",
+      "body_length": 545,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T10:09:10Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T10:03:44Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 35,
+          "deletions": 0,
+          "path": "lab/index.html"
+        },
+        {
+          "additions": 19,
+          "deletions": 7,
+          "path": "lab/style.css"
+        }
+      ],
+      "head_ref_name": "add-lab-live-preview-hub",
+      "head_ref_oid": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "labels": [],
+      "merge_commit_oid": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
+      "merged_at": "2026-05-11T10:09:10Z",
+      "merged_by": "Unjuno",
+      "number": 257,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add live preview hub to lab page",
+      "updated_at": "2026-05-11T10:09:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/257"
+    },
     {
       "additions": 69,
       "author": "Unjuno",
@@ -4639,48 +4676,6 @@
       "title": "Add selected prompt task packet canary",
       "updated_at": "2026-05-06T10:30:39Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/147"
-    },
-    {
-      "additions": 207,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds CI tests for the `first-canary-008` task packet generator and runner contract.\n\n## Changed files\n\n- `scripts/test_create_codex_task_packet.py`\n- `scripts/test_task_packet_runner_contract.py`\n- `.github/workflows/script-check.yml`\n\n## What this guards\n\n- task packet file set\n- task packet hashes\n- selected prompt canary identity\n- fixed model/attempt/retry/fallback/auto-merge values\n- `/task:ro`, `/work:rw`, `/codex-runtime:rw`, `/diagnostics:rw` mounts\n- `OPENAI_API_KEY` is unset before `codex exec`\n- 008 workflow runner metadata\n\n## Scope\n\n- Tests only.\n- Does not run Codex.\n- Does not modify `/lab/`.",
-      "body_length": 626,
-      "changed_files": 3,
-      "closed_at": "2026-05-06T08:57:34Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T08:55:27Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 6,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 123,
-          "deletions": 0,
-          "path": "scripts/test_create_codex_task_packet.py"
-        },
-        {
-          "additions": 78,
-          "deletions": 0,
-          "path": "scripts/test_task_packet_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "test-008-task-packet",
-      "head_ref_oid": "1d8b71318ad469f9aaeb6c96b753fd09a68763e9",
-      "labels": [],
-      "merge_commit_oid": "9b389b9654ed602e8e165a76a69d0d4e39eb0af6",
-      "merged_at": "2026-05-06T08:57:34Z",
-      "merged_by": "Unjuno",
-      "number": 148,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add task packet canary contract tests",
-      "updated_at": "2026-05-06T10:30:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/148"
     }
   ],
   "run_records": [
@@ -4828,6 +4823,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-11T10:09:13Z",
+      "database_id": 25663816990,
+      "display_title": "Add live preview hub to lab page",
+      "event": "pull_request",
+      "head_branch": "add-lab-live-preview-hub",
+      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:09:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663816990",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:03:48Z",
+      "database_id": 25663571129,
+      "display_title": "Add live preview hub to lab page",
+      "event": "pull_request",
+      "head_branch": "add-lab-live-preview-hub",
+      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:03:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571129",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:03:48Z",
+      "database_id": 25663571114,
+      "display_title": "Add live preview hub to lab page",
+      "event": "pull_request",
+      "head_branch": "add-lab-live-preview-hub",
+      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:04:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571114",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:03:48Z",
+      "database_id": 25663571068,
+      "display_title": "Add live preview hub to lab page",
+      "event": "pull_request",
+      "head_branch": "add-lab-live-preview-hub",
+      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "name": "Safety Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:04:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571068",
+      "workflow_name": "Safety Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T09:46:18Z",
+      "database_id": 25662749077,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0e8f25c507d58b6893e4516ce5c83f21fefe10b2",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T09:47:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25662749077",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-11T09:45:59Z",
       "database_id": 25662731773,
       "display_title": "Fix history adopted rank inference",
@@ -4839,6 +4904,34 @@
       "updated_at": "2026-05-11T09:46:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25662731773",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T09:45:59Z",
+      "database_id": 25662731771,
+      "display_title": "Fix history adopted rank inference (#256)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "f2d2737dd77b77f144e9707517bce8841c9da022",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T09:46:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25662731771",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-11T09:45:57Z",
+      "database_id": 25662730449,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f2d2737dd77b77f144e9707517bce8841c9da022",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T09:46:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25662730449",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6099,104 +6192,6 @@
       "updated_at": "2026-05-11T03:25:36Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648649736",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:23:44Z",
-      "database_id": 25648606407,
-      "display_title": "Add safe dev artifact reset script",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:24:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648606407",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:23:44Z",
-      "database_id": 25648606406,
-      "display_title": "Add safe dev artifact reset script",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:23:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648606406",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T16:46:53Z",
-      "database_id": 25634245435,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "523b1f03b248f1c3af734cdadf8050b72860cfe5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T16:47:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634245435",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-10T16:46:32Z",
-      "database_id": 25634238935,
-      "display_title": "Add participant guide",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-10T16:46:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238935",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T16:46:32Z",
-      "database_id": 25634238916,
-      "display_title": "Add participant guide (#245)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-10T16:46:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238916",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T16:46:31Z",
-      "database_id": 25634238674,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T16:46:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238674",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T16:43:35Z",
-      "database_id": 25634175707,
-      "display_title": "Add participant guide",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T16:43:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634175707",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

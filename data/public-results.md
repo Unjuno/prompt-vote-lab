@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T09:46:15+00:00`
+Generated at: `2026-05-11T10:09:35+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
 | 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
 | 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
 | 254 | MERGED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
@@ -69,13 +70,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
 | 200 | MERGED | 5 | 645/6 | Add history page generator |
 | 225 | CLOSED | 2 | 5/0 | Add timeouts to comparison runs |
-| 223 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 196 rank 3 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25663816990 | Terminal State Report | pull_request | completed | skipped | Add live preview hub to lab page |
+| 25663571129 | Lab PR Scope Check | pull_request | completed | success | Add live preview hub to lab page |
+| 25663571114 | Static Site Check | pull_request | completed | success | Add live preview hub to lab page |
+| 25663571068 | Safety Check | pull_request | completed | success | Add live preview hub to lab page |
+| 25662749077 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25662731773 | Terminal State Report | pull_request | completed | skipped | Fix history adopted rank inference |
+| 25662731771 | Public Results Export | push | completed | success | Fix history adopted rank inference (#256) |
+| 25662730449 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25662494071 | Script Check | pull_request | completed | success | Fix history adopted rank inference |
 | 25662494054 | Lab PR Scope Check | pull_request | completed | success | Fix history adopted rank inference |
 | 25661992788 | Terminal State Report | pull_request | completed | skipped | Add W19 rank 1 live output snapshot |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25658376956 | Lab PR Scope Check | pull_request | completed | success | Update generated dashboard live output contract |
 | 25657698790 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
 | 25657589279 | Script Check | pull_request | completed | failure | Add W20 rank 1 live output snapshot |
-| 25657589249 | Lab PR Scope Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25657589246 | Safety Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25657589228 | Static Site Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25656214671 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25656199103 | Terminal State Report | pull_request | completed | skipped | Generate live output links in comparison dashboards |
-| 25656199093 | Public Results Export | push | completed | success | Generate live output links in comparison dashboards (#251) |
-| 25656198290 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
