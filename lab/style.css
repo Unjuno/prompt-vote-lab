@@ -5,6 +5,7 @@
   --muted: #62615c;
   --line: #deded8;
   --card: rgba(255, 255, 255, 0.68);
+  --card-strong: rgba(255, 255, 255, 0.88);
 }
 
 * {
@@ -77,7 +78,8 @@ noscript,
   margin: 24px 0 0;
 }
 
-.evidence-nav a {
+.evidence-nav a,
+.run-links a {
   display: inline-flex;
   align-items: center;
   min-height: 40px;
@@ -92,8 +94,16 @@ noscript,
   text-decoration: none;
 }
 
-.evidence-nav a:hover {
+.evidence-nav a:hover,
+.action-link:hover,
+.run-links a:hover {
   border-color: rgba(25, 25, 25, 0.38);
+}
+
+.evidence-nav .primary-link {
+  border-color: rgba(25, 25, 25, 0.5);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .summary-card {
@@ -102,6 +112,10 @@ noscript,
   border: 1px solid rgba(25, 25, 25, 0.14);
   border-radius: 22px;
   background: var(--card);
+}
+
+.action-card {
+  background: var(--card-strong);
 }
 
 .eyebrow {
@@ -122,6 +136,57 @@ noscript,
 
 .summary-card p {
   margin: 0;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.action-link {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 16px;
+  border: 1px solid rgba(25, 25, 25, 0.14);
+  border-radius: 18px;
+  background: rgba(247, 247, 244, 0.62);
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.action-link span {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.action-link strong {
+  font-size: 1.05rem;
+  line-height: 1.15;
+}
+
+.action-link em {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.run-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .status-list,
@@ -184,15 +249,23 @@ noscript {
   margin-top: 18px;
 }
 
+@media (max-width: 720px) {
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 560px) {
   .lab-root {
     width: min(100% - 22px, 920px);
     padding: 30px 0;
   }
 
-  .evidence-nav a {
+  .evidence-nav a,
+  .run-links a {
     width: 100%;
     justify-content: center;
+    text-align: center;
   }
 
   .summary-card {
