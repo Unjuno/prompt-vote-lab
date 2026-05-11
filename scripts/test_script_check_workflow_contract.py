@@ -24,6 +24,10 @@ REQUIRED_TEXT = [
     "python scripts/test_public_results_export_workflow_contract.py",
     "Run script-check workflow contract test",
     "python scripts/test_script_check_workflow_contract.py",
+    "Run public agent run bundle verifier test",
+    "python scripts/test_verify_public_agent_run_bundle.py",
+    "Run policy agent public bundle contract test",
+    "python scripts/test_policy_agent_public_bundle_contract.py",
     "Run lab PR scope guard self-test",
     "bash scripts/test-lab-pr-scope.sh",
 ]
@@ -58,6 +62,12 @@ def main() -> int:
 
     if text.index("lab/comparisons/**") > text.index("runs/**"):
         raise SystemExit("runs/** should be tracked near generated/evidence paths")
+
+    if text.index("Run public agent run bundle enrichment test") > text.index("Run public agent run bundle verifier test"):
+        raise SystemExit("Public bundle verifier test should run after enrichment test")
+
+    if text.index("Run public agent run bundle verifier test") > text.index("Run policy agent public bundle contract test"):
+        raise SystemExit("Policy agent public bundle contract test should run after verifier test")
 
     if text.index("Run comparison dashboard builder test") > text.index("Run comparison dashboard decision test"):
         raise SystemExit("Comparison dashboard decision test should run after the builder test")
