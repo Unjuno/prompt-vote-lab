@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T05:57:56+00:00",
+  "generated_at": "2026-05-11T06:51:14+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -4783,9 +4783,37 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 20,
-    "workflow_run_count": 98
+    "workflow_run_count": 99
   },
   "workflow_runs": [
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-11T06:48:43Z",
+      "database_id": 25654824871,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "d86b3bddbc70960d2be9dbab26125c6895e132e8",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T06:48:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25654824871",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T05:57:59Z",
+      "database_id": 25653031829,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "d86b3bddbc70960d2be9dbab26125c6895e132e8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T05:58:27Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25653031829",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-11T05:57:38Z",
@@ -4799,6 +4827,34 @@
       "updated_at": "2026-05-11T05:57:39Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25653019975",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T05:57:38Z",
+      "database_id": 25653019939,
+      "display_title": "Fix root prompt template links (#249)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "dae69e50c1513b14ec39ed9fb707f9923338e991",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T05:58:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25653019939",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-11T05:57:37Z",
+      "database_id": 25653019537,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "dae69e50c1513b14ec39ed9fb707f9923338e991",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T05:58:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25653019537",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6115,48 +6171,6 @@
       "updated_at": "2026-05-10T14:53:04Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631783322",
       "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T14:53:03Z",
-      "database_id": 25631783315,
-      "display_title": "Document weekly automation schedule (#239)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "e91a498bdbdd07ec333371bed8327976dea56b2b",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-10T14:53:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631783315",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-10T14:53:02Z",
-      "database_id": 25631782896,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "e91a498bdbdd07ec333371bed8327976dea56b2b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T14:53:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631782896",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T14:52:13Z",
-      "database_id": 25631765813,
-      "display_title": "Document weekly automation schedule",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "7adb74340d759c2f93ccc2a52f93b896b0b4b954",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T14:52:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25631765813",
-      "workflow_name": "Script Check"
     }
   ]
 }
