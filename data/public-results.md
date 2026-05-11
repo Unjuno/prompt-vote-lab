@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T13:08:07+00:00`
+Generated at: `2026-05-11T13:26:33+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,10 +14,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 1 |
+| open_pr_count | 0 |
 | merged_pr_count | 85 |
 | workflow_run_count | 98 |
-| run_record_count | 20 |
+| run_record_count | 21 |
 
 ## Recent Issues
 
@@ -40,8 +40,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
+| 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
-| 263 | OPEN | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
@@ -69,13 +70,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
 | 211 | CLOSED | 3 | 492/0 | Run Codex comparison issue rank 2 |
 | 212 | MERGED | 4 | 132/13 | Normalize comparison rank links |
-| 214 | MERGED | 3 | 427/0 | Run Codex comparison issue rank 2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25673046395 | Terminal State Report | pull_request | completed | skipped | Record first-canary-007 evidence-only result |
+| 25672856373 | Lab PR Scope Check | pull_request | completed | success | Record first-canary-007 evidence-only result |
+| 25672526358 | Terminal State Report | pull_request | completed | skipped | Run Codex policy-enforced agent canary |
+| 25672096366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25672077550 | Public Results Export | push | completed | success | Document policy-agent reasoning traces in PR body (#264) |
 | 25672076035 | Terminal State Report | pull_request | completed | skipped | Document policy-agent reasoning traces in PR body |
+| 25672074769 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25671857788 | Script Check | pull_request | completed | success | Document policy-agent reasoning traces in PR body |
 | 25671857736 | Lab PR Scope Check | pull_request | completed | success | Document policy-agent reasoning traces in PR body |
 | 25670780249 | Codex Policy Agent Canary Run | workflow_dispatch | completed | success | Codex Policy Agent Canary Run |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25668900889 | Script Check | pull_request | completed | failure | Expand public agent observation logs |
 | 25668900888 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
 | 25668900840 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
-| 25668454824 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
-| 25668454813 | Script Check | pull_request | completed | failure | Expand public agent observation logs |
-| 25668454794 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
-| 25666859511 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25666845129 | Terminal State Report | pull_request | completed | skipped | Publish redacted policy-agent public bundle |
-| 25666845125 | Public Results Export | push | completed | success | Publish redacted policy-agent public bundle (#260) |
 
 ## Raw JSON
 
