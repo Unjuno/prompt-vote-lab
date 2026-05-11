@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T13:51:33+00:00",
+  "generated_at": "2026-05-11T14:42:15+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,73 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 493,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a public agent run bundle verifier and wires it into the canonical Docker/Codex public bundle workflows.\n\n## Why\n\nThe previous check proved that artifacts existed, but it did not prove the uploaded public bundle contained the required participant evidence structure:\n\n- `index.json`\n- `README.md`\n- `observation-summary.md`\n- `observation-summary.json`\n- `raw/`\n- `sanitized/`\n- `reasoning-traces/`\n\nIt also did not check public bundle text for common unredacted token-like strings.\n\n## Changes\n\n- Add `scripts/verify_public_agent_run_bundle.py`.\n- Add `scripts/test_verify_public_agent_run_bundle.py`.\n- Verify required bundle files and directories.\n- Verify observation summary schema and reasoning-trace fields.\n- Verify `reasoning_effect_hypotheses` exists.\n- Verify public text does not contain common token-like strings.\n- Allow already-redacted env assignments such as `OPENAI_API_KEY=[REDACTED_SECRET]`.\n- Add verifier step to `Codex Policy Agent Canary Run` before public bundle upload.\n- Add enrichment and verifier steps to `Codex Fixed Issue Instruction Canary Run` before public bundle upload.\n- Add verifier test to Script Check.\n- Lock workflow order and verifier requirements in contract tests.\n\n## Boundary\n\nThis verifies the bundle directory before upload. It does not download and re-verify the uploaded ZIP after GitHub artifact packaging.\n\n## Scope\n\nWorkflow verification and tests only.\n\nNo lab UI changes, no model/token-budget changes, no auto-merge changes.",
+      "body_length": 1499,
+      "changed_files": 8,
+      "closed_at": "2026-05-11T14:41:51Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T14:33:10Z",
+      "deletions": 8,
+      "files": [
+        {
+          "additions": 31,
+          "deletions": 2,
+          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
+        },
+        {
+          "additions": 10,
+          "deletions": 1,
+          "path": ".github/workflows/codex-policy-agent-canary-run.yml"
+        },
+        {
+          "additions": 3,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 15,
+          "deletions": 2,
+          "path": "scripts/test_issue_instruction_runner_contract.py"
+        },
+        {
+          "additions": 24,
+          "deletions": 3,
+          "path": "scripts/test_policy_agent_public_bundle_contract.py"
+        },
+        {
+          "additions": 10,
+          "deletions": 0,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        },
+        {
+          "additions": 167,
+          "deletions": 0,
+          "path": "scripts/test_verify_public_agent_run_bundle.py"
+        },
+        {
+          "additions": 233,
+          "deletions": 0,
+          "path": "scripts/verify_public_agent_run_bundle.py"
+        }
+      ],
+      "head_ref_name": "verify-public-agent-run-bundle-contents",
+      "head_ref_oid": "60115a108b07bc2bdeb9be4dfcd10e54db12a176",
+      "labels": [],
+      "merge_commit_oid": "3da69ae3b7b1769211e5532918e346588e80f4de",
+      "merged_at": "2026-05-11T14:41:51Z",
+      "merged_by": "Unjuno",
+      "number": 267,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Verify public agent run bundle contents",
+      "updated_at": "2026-05-11T14:41:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/267"
+    },
     {
       "additions": 7,
       "author": "Unjuno",
@@ -4690,38 +4757,6 @@
       "title": "Reset lab to clean baseline",
       "updated_at": "2026-05-06T15:02:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/158"
-    },
-    {
-      "additions": 188,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords `first-canary-009-fixed-issue-instruction-packet` as a successful fixed GitHub Issue instruction packet canary.\n\n## Observed result\n\n- Source Issue: #156\n- Implementation PR: #157\n- Merge commit: `2d92458d01e0122c119690d24355aba911e14df2`\n- Lab cleanup after run: #158\n\n## Changed file\n\n- `runs/first-canary-009-fixed-issue-instruction-packet-success.md`\n\n## Scope\n\n- Records result only.\n- No `/lab/` changes.\n- No workflow, runner, model, retry, fallback, mount, or file-scope changes.",
-      "body_length": 507,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T13:00:17Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T12:58:16Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 188,
-          "deletions": 0,
-          "path": "runs/first-canary-009-fixed-issue-instruction-packet-success.md"
-        }
-      ],
-      "head_ref_name": "record-009-success",
-      "head_ref_oid": "fa6681f74cb8c2aaf75b99d6d388e4d53191f4fd",
-      "labels": [],
-      "merge_commit_oid": "6a20c99aef37c33b9af54e694092e17f09c42fed",
-      "merged_at": "2026-05-06T13:00:17Z",
-      "merged_by": "Unjuno",
-      "number": 159,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record ninth canary success",
-      "updated_at": "2026-05-06T15:02:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/159"
     }
   ],
   "run_records": [
@@ -4875,6 +4910,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-11T14:41:59Z",
+      "database_id": 25677124038,
+      "display_title": "Verify public agent run bundle contents",
+      "event": "pull_request",
+      "head_branch": "verify-public-agent-run-bundle-contents",
+      "head_sha": "60115a108b07bc2bdeb9be4dfcd10e54db12a176",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T14:42:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25677124038",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T14:33:18Z",
+      "database_id": 25676638107,
+      "display_title": "Verify public agent run bundle contents",
+      "event": "pull_request",
+      "head_branch": "verify-public-agent-run-bundle-contents",
+      "head_sha": "60115a108b07bc2bdeb9be4dfcd10e54db12a176",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T14:33:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25676638107",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T14:33:18Z",
+      "database_id": 25676638051,
+      "display_title": "Verify public agent run bundle contents",
+      "event": "pull_request",
+      "head_branch": "verify-public-agent-run-bundle-contents",
+      "head_sha": "60115a108b07bc2bdeb9be4dfcd10e54db12a176",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T14:33:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25676638051",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:51:38Z",
+      "database_id": 25674402253,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "5328e0221a0aaff50d5cc8ad75e5f4ebf04f7b27",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:52:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25674402253",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-11T13:51:16Z",
       "database_id": 25674382312,
       "display_title": "Run Script Check for all run records",
@@ -4886,6 +4977,34 @@
       "updated_at": "2026-05-11T13:51:18Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25674382312",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:51:16Z",
+      "database_id": 25674381907,
+      "display_title": "Run Script Check for all run records (#266)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "fa984ae4f72cefaa53328d0e72dbb4ac28189fcd",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:51:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25674381907",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-11T13:51:14Z",
+      "database_id": 25674380307,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "fa984ae4f72cefaa53328d0e72dbb4ac28189fcd",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:51:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25674380307",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6160,90 +6279,6 @@
       "updated_at": "2026-05-11T07:55:20Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25657589249",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:55:12Z",
-      "database_id": 25657589246,
-      "display_title": "Add W20 rank 1 live output snapshot",
-      "event": "pull_request",
-      "head_branch": "add-w20-rank1-live-output",
-      "head_sha": "2db12c456f5c6587fe874d51753fad2ebae695ff",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:55:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25657589246",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:55:12Z",
-      "database_id": 25657589228,
-      "display_title": "Add W20 rank 1 live output snapshot",
-      "event": "pull_request",
-      "head_branch": "add-w20-rank1-live-output",
-      "head_sha": "2db12c456f5c6587fe874d51753fad2ebae695ff",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:55:23Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25657589228",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:23:38Z",
-      "database_id": 25656214671,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "cfce28a587879f2b8ff1d8ec413dc77293e014ab",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:24:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656214671",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T07:23:16Z",
-      "database_id": 25656199103,
-      "display_title": "Generate live output links in comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "generate-comparison-live-output-links",
-      "head_sha": "be64c9f264f1c6c04c89d71db8d2989ab265722c",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:23:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656199103",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:23:16Z",
-      "database_id": 25656199093,
-      "display_title": "Generate live output links in comparison dashboards (#251)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "879ea3f7bf8c0c12372f7cba6ec904d30f872a33",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:23:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656199093",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-11T07:23:15Z",
-      "database_id": 25656198290,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "879ea3f7bf8c0c12372f7cba6ec904d30f872a33",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:23:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656198290",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T13:51:33+00:00`
+Generated at: `2026-05-11T14:42:15+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
@@ -69,13 +70,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
 | 210 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v3 |
 | 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
-| 211 | CLOSED | 3 | 492/0 | Run Codex comparison issue rank 2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25677124038 | Terminal State Report | pull_request | completed | skipped | Verify public agent run bundle contents |
+| 25676638107 | Lab PR Scope Check | pull_request | completed | success | Verify public agent run bundle contents |
+| 25676638051 | Script Check | pull_request | completed | success | Verify public agent run bundle contents |
+| 25674402253 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25674382312 | Terminal State Report | pull_request | completed | skipped | Run Script Check for all run records |
+| 25674381907 | Public Results Export | push | completed | success | Run Script Check for all run records (#266) |
+| 25674380307 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25673870955 | Lab PR Scope Check | pull_request | completed | success | Run Script Check for all run records |
 | 25673870782 | Script Check | pull_request | completed | success | Run Script Check for all run records |
 | 25673063721 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25670484336 | Script Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
 | 25670484327 | Lab PR Scope Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
 | 25670346692 | Static Site Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
-| 25670346648 | Lab PR Scope Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
-| 25670346641 | Script Check | pull_request | completed | failure | Publish sanitized reasoning trace evidence |
-| 25669201787 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25669185787 | Public Results Export | push | completed | success | Expand public agent observation logs (#261) |
-| 25669185706 | Terminal State Report | pull_request | completed | skipped | Expand public agent observation logs |
-| 25669184419 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
