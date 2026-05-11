@@ -52,7 +52,7 @@ On scheduled runs, support export defaults to the previous UTC ISO week. Manual 
 1. checkout repository
 2. set an initial RUN_WEEK
 3. resolve the required support unlock file
-4. on scheduled runs, rewrite RUN_WEEK to the previous UTC ISO week resolved from the support unlock file
+4. prefer the previous UTC ISO week when its support unlock file exists
 5. collect prompt proposal votes
 6. insert no-change baseline
 7. select eligible ranks
@@ -98,13 +98,13 @@ target = current UTC time - 7 days
 
 This writes the previous ISO week by default.
 
-`Weekly Auto Run` also resolves to the previous UTC ISO week when the GitHub event is `schedule`. The resolver writes this resolved week back into the job environment as:
+`Weekly Auto Run` resolves the support unlock file before vote collection. When a previous-week support unlock file exists, the resolver writes this resolved week back into the job environment as:
 
 ```text
 RUN_WEEK=week-<previous-ISO-year>-W<previous-ISO-week>
 ```
 
-This prevents the Monday morning scheduled run from recording the newly started week by mistake.
+This prevents the Monday morning run from recording the newly started week by mistake.
 
 `Support Unlock Export` writes:
 
@@ -122,12 +122,36 @@ The weekly workflow requires the matching support unlock file for its resolved `
 
 ## Manual verification
 
-Before trusting the scheduled path, run `Support Unlock Export` manually after `SPONSORS_GRAPHQL_TOKEN` is configured.
+The live no-eligible path has been verified.
 
-Example:
+Verified support export evidence:
 
 ```text
-week_id: 2026-W20
+Support Unlock Export: PASS
+data/support-unlocks/2026-W19.json
+support_total_usd: 0.0
+rank_2_unlocked: false
+rank_3_unlocked: false
+privacy flags: all false
+```
+
+Verified weekly automation evidence:
+
+```text
+Weekly Auto Run: PASS
+runs/week-2026-W19-vote-summary.md
+PR #243 merged
+baseline_won: true
+eligible_count: 0
+implementation PR: none
+```
+
+Manual verification is still useful after token rotation, workflow changes, or backfills.
+
+Example support export input:
+
+```text
+week_id: 2026-W19
 since: 2026-05-04T00:00:00Z
 until: 2026-05-11T00:00:00Z
 ```
@@ -135,7 +159,7 @@ until: 2026-05-11T00:00:00Z
 Expected public output:
 
 ```text
-data/support-unlocks/2026-W20.json
+data/support-unlocks/2026-W19.json
 ```
 
 Then run `Weekly Auto Run` manually and confirm that it reads the support unlock file before vote collection.
@@ -148,11 +172,13 @@ Automation may create PRs, but it must not merge them.
 
 ## Current production status
 
-The schedules and gates are implemented.
+Implemented and live-verified:
 
-Still required before calling this fully production-verified:
+- `SPONSORS_GRAPHQL_TOKEN` can read support activity for the export path.
+- `Support Unlock Export` can generate and validate an anonymized support unlock file.
+- `Weekly Auto Run` can read that unlock file and create a no-eligible vote summary PR.
+- The no-change baseline path can complete without creating an implementation PR.
 
-- configure `SPONSORS_GRAPHQL_TOKEN`
-- run `Support Unlock Export` against live Sponsors data
-- confirm public support unlock JSON validation passes
-- run `Weekly Auto Run` end-to-end with the generated unlock file
+Still not fully production-verified:
+
+- eligible prompt -> implementation-agent preflight -> implementation-agent run -> lab-only implementation PR
