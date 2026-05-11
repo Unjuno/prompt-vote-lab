@@ -33,6 +33,8 @@ first-canary-run
 weekly-auto-run eligible implementation path
 ```
 
+Historical canary evidence may still mention earlier isolated paths, including `first-canary-009`, but current active paid implementation settings are defined by this file and the current workflows.
+
 The eligible implementation path has not yet been live-verified end-to-end. The no-eligible weekly path has been live-verified.
 
 ## Fixed comparison rule
@@ -109,6 +111,8 @@ max_output_tokens: 5000
 ```
 
 This file also records that `max_output_tokens: 12000` is deferred, not active.
+
+Do not directly compare prompt results across v1.0 and v1.1 without noting the model-policy change.
 
 Do not directly compare prompt results across model or token-budget changes without noting the policy change.
 
