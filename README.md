@@ -167,7 +167,7 @@ See [`docs/no-change-baseline.md`](docs/no-change-baseline.md).
 Current active implementation condition:
 
 ```text
-model-policy-v1.1: gpt-5-nano
+model-policy-v1.1: gpt-5.4-nano
 max_output_tokens: 5000
 ```
 
@@ -175,7 +175,7 @@ The implementation model and output budget are fixed by `rules/model-policy-v1.1
 
 All ranked candidates in the same weekly vote must use the same implementation condition.
 
-`gpt-5.4-nano / 12000` is not active. It may be reconsidered only after the system is complete and the eligible implementation PR path has passed live E2E verification.
+`max_output_tokens: 12000` is not active. It may be reconsidered only after the system is complete and the eligible implementation PR path has passed live E2E verification.
 
 A stronger model may be used only for evaluation and blog/report writing. The evaluation model must not modify `lab/`.
 
