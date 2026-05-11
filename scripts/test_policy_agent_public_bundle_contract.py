@@ -24,8 +24,11 @@ REQUIRED_WORKFLOW_TEXT = [
     "Upload redacted public agent run bundle",
     "codex-policy-agent-canary-diagnostics-",
     "codex-policy-agent-canary-public-log-",
-    "Observation summary files: `observation-summary.md`, `observation-summary.json`",
-    "Sanitized diagnostic logs directory: `sanitized/`",
+    "Observation summary files:",
+    "observation-summary.md",
+    "observation-summary.json",
+    "Sanitized diagnostic logs directory:",
+    "sanitized/",
     "Public artifacts are redacted, sanitized, and indexed for participant review.",
 ]
 
