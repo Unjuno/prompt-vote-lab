@@ -6,7 +6,7 @@ Prompt Vote Lab is an experiment where prompts influence agent behavior.
 
 Participants need inspectable behavior evidence, not only final results.
 
-The public agent run bundle exposes a redacted raw evidence bundle for each fixed-Issue 009 agent run.
+The public agent run bundle exposes a redacted raw evidence bundle for canonical Docker/Codex policy-agent runs and fixed-Issue agent runs.
 
 ## Core rule
 
@@ -30,6 +30,10 @@ Examples:
 codex-events.jsonl
 codex-last-message.txt
 codex-exit-code.txt
+policy-agent-container-exit-code.txt
+policy-agent-diff.patch
+policy-agent-diff-name-only.txt
+policy-agent-copied-files.txt
 issue-instruction-container-exit-code.txt
 issue-instruction-diff.patch
 issue-instruction-diff-name-only.txt
@@ -71,6 +75,29 @@ container-visible-files-after.txt
 
 The exact allowlist is enforced by `scripts/build_public_agent_run_bundle.py`.
 
+## Why policy-agent files are included
+
+The canonical Docker/Codex policy-agent run must publish enough evidence to let participants verify that the runner edited prepared lab files rather than the repository root.
+
+These files provide that linkage:
+
+```text
+policy-agent-container-exit-code.txt
+policy-agent-diff-name-only.txt
+policy-agent-diff.patch
+policy-agent-copied-files.txt
+policy-allowed-paths.json
+policy-denied-access.txt
+container-visible-files-before.txt
+container-visible-files-after.txt
+```
+
+The uploaded artifact name for this canonical policy-agent public bundle begins with:
+
+```text
+codex-policy-agent-canary-public-bundle-
+```
+
 ## Why runtime scan and execution-gate files are included
 
 The public bundle must let participants connect prompt text to execution behavior.
@@ -98,6 +125,8 @@ codex-login-stdout.txt
 codex-login-stderr.txt
 codex-stderr.txt
 codex-stdout.txt
+policy-agent-container-stdout.txt
+policy-agent-container-stderr.txt
 issue-instruction-container-stdout.txt
 issue-instruction-container-stderr.txt
 npm-install-codex.txt
@@ -143,6 +172,23 @@ raw/<allowlisted-file>
 
 `README.md` is a human navigation file. It is not an interpretation layer.
 
+## 007 policy-agent workflow integration
+
+The canonical policy-agent workflow builds the bundle after diagnostics collection:
+
+```text
+Collect diagnostics artifact
+→ Build redacted public agent run bundle
+→ Upload redacted public agent run bundle
+→ Upload internal diagnostics artifact
+```
+
+The uploaded artifact name begins with:
+
+```text
+codex-policy-agent-canary-public-bundle-
+```
+
 ## 009 workflow integration
 
 The fixed-Issue 009 workflow builds the bundle after diagnostics collection:
@@ -172,6 +218,7 @@ which files changed
 what diff was produced
 whether forbidden files changed
 whether the task mount was read-only
+whether the repository root was withheld from /work
 what final agent message was produced
 how many JSONL events were emitted
 whether runtime scan was clear/blocked/review

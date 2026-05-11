@@ -18,6 +18,10 @@ PUBLIC_RAW_ALLOWLIST = [
     "codex-events.jsonl",
     "codex-last-message.txt",
     "codex-exit-code.txt",
+    "policy-agent-container-exit-code.txt",
+    "policy-agent-diff-name-only.txt",
+    "policy-agent-diff.patch",
+    "policy-agent-copied-files.txt",
     "issue-instruction-container-exit-code.txt",
     "issue-instruction-diff-name-only.txt",
     "issue-instruction-diff.patch",
@@ -57,13 +61,15 @@ PUBLIC_RAW_ALLOWLIST = [
     "container-visible-files-after.txt",
 ]
 
-# Files that can contain login flows, package manager noise, full mount paths, or stderr details.
+# Files that can contain login flows, package manager noise, full mount paths, stderr details, or environment details.
 # They remain internal diagnostics unless a later review explicitly promotes them.
 PUBLIC_RAW_DENYLIST = [
     "codex-login-stdout.txt",
     "codex-login-stderr.txt",
     "codex-stderr.txt",
     "codex-stdout.txt",
+    "policy-agent-container-stdout.txt",
+    "policy-agent-container-stderr.txt",
     "issue-instruction-container-stdout.txt",
     "issue-instruction-container-stderr.txt",
     "npm-install-codex.txt",
@@ -214,7 +220,7 @@ def build_bundle(diag: Path, out_dir: Path, run_id: str, issue_number: str, pr_n
         },
         "quick_index": {
             "codex_event_lines": event_count(diag / "codex-events.jsonl"),
-            "changed_files": check_results.get("changed_files") or line_list(diag / "issue-instruction-diff-name-only.txt"),
+            "changed_files": check_results.get("changed_files") or line_list(diag / "policy-agent-diff-name-only.txt") or line_list(diag / "issue-instruction-diff-name-only.txt"),
             "forbidden_changed_files": check_results.get("forbidden_changed_files"),
             "unsafe_instruction_count": safety.get("unsafe_instruction_count"),
             "unsafe_categories": [item.get("id") for item in safety.get("unsafe_instructions_detected", []) if isinstance(item, dict)],

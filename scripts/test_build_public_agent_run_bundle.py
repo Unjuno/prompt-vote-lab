@@ -30,6 +30,10 @@ def main() -> int:
         write(diag / "codex-events.jsonl", '{"type":"session.started"}\n{"type":"turn.completed"}\n')
         write(diag / "codex-last-message.txt", "Inspected /task files and changed lab/index.html only.\n")
         write(diag / "codex-exit-code.txt", "0\n")
+        write(diag / "policy-agent-container-exit-code.txt", "0\n")
+        write(diag / "policy-agent-diff-name-only.txt", "lab/index.html\n")
+        write(diag / "policy-agent-diff.patch", "diff --git a/lab/index.html b/lab/index.html\n")
+        write(diag / "policy-agent-copied-files.txt", "lab/index.html\n")
         write(diag / "issue-instruction-container-exit-code.txt", "0\n")
         write(diag / "issue-instruction-diff-name-only.txt", "lab/index.html\n")
         write(diag / "issue-instruction-diff.patch", "diff --git a/lab/index.html b/lab/index.html\n")
@@ -49,6 +53,8 @@ def main() -> int:
         write(diag / "issue-execution-gate.md", "Execution gate: PASS\n")
         write(diag / "codex-login-stderr.txt", "login noise should be omitted\n")
         write(diag / "codex-stderr.txt", "stderr should be omitted even if safe\n")
+        write(diag / "policy-agent-container-stdout.txt", "container stdout should be omitted\n")
+        write(diag / "policy-agent-container-stderr.txt", "container stderr should be omitted\n")
         write(diag / "issue-instruction-container-stderr.txt", "container stderr should be omitted\n")
 
         write_json(diag / "check-results.json", {"changed_files": ["lab/index.html"], "forbidden_changed_files": []})
@@ -120,6 +126,10 @@ def main() -> int:
         raw_names = {path.name for path in (out / "raw").iterdir()}
         assert "codex-events.jsonl" in raw_names
         assert "codex-last-message.txt" in raw_names
+        assert "policy-agent-container-exit-code.txt" in raw_names
+        assert "policy-agent-diff-name-only.txt" in raw_names
+        assert "policy-agent-diff.patch" in raw_names
+        assert "policy-agent-copied-files.txt" in raw_names
         assert "task-raw-issue-body.md" in raw_names
         assert "source-issue.raw.json" in raw_names
         assert "runtime-issue-safety-scan.json" in raw_names
@@ -128,6 +138,8 @@ def main() -> int:
         assert "issue-execution-gate.md" in raw_names
         assert "codex-login-stderr.txt" not in raw_names
         assert "codex-stderr.txt" not in raw_names
+        assert "policy-agent-container-stdout.txt" not in raw_names
+        assert "policy-agent-container-stderr.txt" not in raw_names
         assert "issue-instruction-container-stderr.txt" not in raw_names
 
         raw_issue = (out / "raw" / "task-raw-issue-body.md").read_text(encoding="utf-8")
@@ -142,6 +154,7 @@ def main() -> int:
         readme = (out / "README.md").read_text(encoding="utf-8")
         assert "redacted raw evidence" in readme
         assert "It does not replace raw evidence" in readme
+        assert "policy-agent-container-stderr.txt" in readme
         assert "codex-login-stderr.txt" in readme
 
     print("public agent run bundle builder test passed")
