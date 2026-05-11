@@ -6,13 +6,21 @@ Prompt Vote Lab is an experiment where prompts influence agent behavior.
 
 Participants need inspectable behavior evidence, not only final results.
 
-The public agent run bundle exposes a redacted raw evidence bundle for canonical Docker/Codex policy-agent runs and fixed-Issue agent runs.
+The public agent run bundle exposes:
+
+```text
+redacted raw evidence
+sanitized diagnostic logs
+agent observation summaries
+```
+
+for canonical Docker/Codex policy-agent runs and fixed-Issue agent runs.
 
 ## Core rule
 
 ```text
-Primary evidence: redacted raw files
-Secondary evidence: index and manifest
+Primary evidence: redacted raw files and sanitized logs
+Secondary evidence: observation summary, index, and manifest
 Model-written summary: not primary evidence
 ```
 
@@ -20,7 +28,7 @@ Do not replace raw evidence with a model-written summary.
 
 Summaries can hide failure modes, reflect prompt or model bias, and make participants miss important behavior.
 
-## What is published
+## What is published as raw evidence
 
 The bundle publishes allowlisted raw diagnostic files after secret-pattern redaction.
 
@@ -75,6 +83,69 @@ container-visible-files-after.txt
 
 The exact allowlist is enforced by `scripts/build_public_agent_run_bundle.py`.
 
+## What is published as sanitized diagnostics
+
+Some logs are useful for prompt improvement but too noisy or risky to publish as raw evidence. These are published after sanitizer replacement under `sanitized/`.
+
+Examples:
+
+```text
+sanitized/codex-login-stdout.txt
+sanitized/codex-login-stderr.txt
+sanitized/codex-stderr.txt
+sanitized/codex-stdout.txt
+sanitized/policy-agent-container-stdout.txt
+sanitized/policy-agent-container-stderr.txt
+sanitized/issue-instruction-container-stdout.txt
+sanitized/issue-instruction-container-stderr.txt
+sanitized/npm-install-codex.txt
+sanitized/npm-install-codex-stderr.txt
+sanitized/policy-container-mounts.txt
+sanitized/container-runtime-files-after.txt
+sanitized/container-runtime-dirs-before.txt
+```
+
+The sanitizer replaces token-like, environment-like, and path-like strings before publication.
+
+Examples:
+
+```text
+[REDACTED_SECRET]
+[REDACTED_RUNNER_WORKDIR]
+[REDACTED_RUNNER_TEMP]
+[REDACTED_TMP_PATH]
+[REDACTED_GITHUB_WORKSPACE]
+```
+
+Sanitization is a best-effort publication guard. If a real token is discovered in a public artifact, rotate it and treat it as an incident.
+
+## Agent observation summary
+
+The enriched bundle contains:
+
+```text
+observation-summary.md
+observation-summary.json
+```
+
+These files summarize:
+
+```text
+path model
+/work, /task, and /codex-runtime roles
+whether the repository root was mounted
+visible files before and after
+changed files
+copied-back files
+additions and deletions by file
+hashes before and after
+sanitized logs and redaction counts
+agent final action summary
+known evidence limits
+```
+
+The observation summary is a navigation index over evidence. It is not private reasoning.
+
 ## Why policy-agent files are included
 
 The canonical Docker/Codex policy-agent run must publish enough evidence to let participants verify that the runner edited prepared lab files rather than the repository root.
@@ -114,33 +185,9 @@ issue-execution-gate.md
 
 Without them, a participant can see the diff and Codex events but cannot independently verify whether the Issue was clear, blocked, authorized, or stopped before execution.
 
-## What is omitted
-
-The bundle omits diagnostics that are more likely to contain credentials, package-manager noise, login flow details, raw stderr, or environment details.
-
-Examples:
-
-```text
-codex-login-stdout.txt
-codex-login-stderr.txt
-codex-stderr.txt
-codex-stdout.txt
-policy-agent-container-stdout.txt
-policy-agent-container-stderr.txt
-issue-instruction-container-stdout.txt
-issue-instruction-container-stderr.txt
-npm-install-codex.txt
-npm-install-codex-stderr.txt
-policy-container-mounts.txt
-container-runtime-files-after.txt
-container-runtime-dirs-before.txt
-```
-
-These remain internal diagnostics unless a later manual review explicitly promotes a file class.
-
 ## Redaction
 
-The builder redacts common secret-like patterns before publishing allowlisted raw files.
+The builder and enrichment step redact common secret-like patterns before publishing allowlisted or sanitized files.
 
 Examples:
 
@@ -152,33 +199,38 @@ Authorization bearer tokens
 OPENAI_API_KEY assignments
 GITHUB_TOKEN assignments
 GH_TOKEN assignments
+runner workspace paths
+temporary directory paths
+GitHub workspace paths
 ```
 
 Redaction is a safety net, not a proof that all secrets are impossible.
 
-Therefore the allowlist remains narrow.
-
 ## Bundle structure
 
-Each bundle contains:
+Each enriched bundle contains:
 
 ```text
 index.json
 README.md
+observation-summary.md
+observation-summary.json
 raw/<allowlisted-file>
+sanitized/<sanitized-file>
 ```
 
-`index.json` is a manifest and quick index. It is not a replacement for `raw/`.
+`index.json` is a manifest and quick index. It is not a replacement for `raw/` or `sanitized/`.
 
 `README.md` is a human navigation file. It is not an interpretation layer.
 
 ## 007 policy-agent workflow integration
 
-The canonical policy-agent workflow builds the bundle after diagnostics collection:
+The canonical policy-agent workflow builds and enriches the bundle after diagnostics collection:
 
 ```text
 Collect diagnostics artifact
 → Build redacted public agent run bundle
+→ Enrich public agent run bundle with sanitized logs
 → Upload redacted public agent run bundle
 → Upload internal diagnostics artifact
 ```
@@ -221,6 +273,7 @@ whether the task mount was read-only
 whether the repository root was withheld from /work
 what final agent message was produced
 how many JSONL events were emitted
+what stdout/stderr/install logs looked like after sanitization
 whether runtime scan was clear/blocked/review
 whether the execution gate allowed or stopped the run
 which source Issue generated the task packet
@@ -230,26 +283,33 @@ The project does not automatically explain or score these observations.
 
 ## Non-goals
 
-Do not add these to the public bundle without a separate review:
+Do not publish these without sanitizer or separate review:
 
 ```text
-raw Actions logs
-raw container stderr
-raw login stdout/stderr
-full package-manager install logs
+unsanitized raw Actions logs
+unsanitized raw container stderr
+unsanitized login stdout/stderr
+unsanitized full package-manager install logs
 secrets
 private data
 payment identifiers
 automatic prompt advice
 model-written causal explanation
+raw private chain-of-thought
 ```
 
 ## Schema
 
-Current schema:
+Current raw bundle schema:
 
 ```text
 prompt-vote-lab-public-agent-run-bundle-v1
+```
+
+Current observation summary schema:
+
+```text
+prompt-vote-lab-agent-observation-summary-v1
 ```
 
 Breaking changes should use a new schema version.

@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "codex-policy-agent-canary-run.yml"
 BUNDLE = ROOT / "scripts" / "build_public_agent_run_bundle.py"
+ENRICH = ROOT / "scripts" / "enrich_public_agent_run_bundle.py"
 DOC = ROOT / "docs" / "public-agent-run-bundle.md"
 
 REQUIRED_WORKFLOW_TEXT = [
@@ -14,14 +15,21 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/collect_canary_diagnostics.py",
     "Build redacted public agent run bundle",
     "python scripts/build_public_agent_run_bundle.py",
+    "Enrich public agent run bundle with sanitized logs",
+    "python scripts/enrich_public_agent_run_bundle.py",
     "--diagnostics-dir .tmp/canary-diagnostics",
+    "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
     "codex-policy-agent-canary-public-bundle-",
     "Upload redacted public agent run bundle",
     "codex-policy-agent-canary-diagnostics-",
     "codex-policy-agent-canary-public-log-",
-    "Redacted public agent run bundle artifact",
-    "Public artifacts are redacted and allowlisted.",
+    "Observation summary files:",
+    "observation-summary.md",
+    "observation-summary.json",
+    "Sanitized diagnostic logs directory:",
+    "sanitized/",
+    "Public artifacts are redacted, sanitized, and indexed for participant review.",
 ]
 
 REQUIRED_BUNDLE_TEXT = [
@@ -35,14 +43,35 @@ REQUIRED_BUNDLE_TEXT = [
     'line_list(diag / "policy-agent-diff-name-only.txt")',
 ]
 
+REQUIRED_ENRICH_TEXT = [
+    "SANITIZED_PUBLIC_FILES",
+    '"codex-stderr.txt"',
+    '"codex-stdout.txt"',
+    '"policy-agent-container-stdout.txt"',
+    '"policy-agent-container-stderr.txt"',
+    '"npm-install-codex.txt"',
+    '"policy-container-mounts.txt"',
+    "observation-summary.json",
+    "observation-summary.md",
+    "[REDACTED_SECRET]",
+    "[REDACTED_RUNNER_WORKDIR]",
+    "raw_private_reasoning_collected",
+    "exact_read_order_observed",
+]
+
 REQUIRED_DOC_TEXT = [
-    "policy-agent-container-exit-code.txt",
-    "policy-agent-diff-name-only.txt",
-    "policy-agent-diff.patch",
-    "policy-agent-copied-files.txt",
-    "codex-policy-agent-canary-public-bundle-",
-    "policy-agent-container-stdout.txt",
-    "policy-agent-container-stderr.txt",
+    "redacted raw evidence",
+    "sanitized diagnostic logs",
+    "agent observation summaries",
+    "sanitized/codex-stderr.txt",
+    "sanitized/policy-agent-container-stderr.txt",
+    "sanitized/npm-install-codex.txt",
+    "observation-summary.md",
+    "observation-summary.json",
+    "[REDACTED_SECRET]",
+    "[REDACTED_RUNNER_WORKDIR]",
+    "Sanitization is a best-effort publication guard.",
+    "raw private chain-of-thought",
 ]
 
 FORBIDDEN_WORKFLOW_TEXT = [
@@ -66,17 +95,21 @@ def reject_all(text: str, forbidden: list[str], label: str) -> None:
 def main() -> int:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     bundle = BUNDLE.read_text(encoding="utf-8")
+    enrich = ENRICH.read_text(encoding="utf-8")
     doc = DOC.read_text(encoding="utf-8")
 
     require_all(workflow, REQUIRED_WORKFLOW_TEXT, "policy agent workflow")
     reject_all(workflow, FORBIDDEN_WORKFLOW_TEXT, "policy agent workflow")
     require_all(bundle, REQUIRED_BUNDLE_TEXT, "public bundle builder")
+    require_all(enrich, REQUIRED_ENRICH_TEXT, "public bundle enrichment script")
     require_all(doc, REQUIRED_DOC_TEXT, "public agent run bundle doc")
 
     if workflow.index("Collect diagnostics artifact") > workflow.index("Build redacted public agent run bundle"):
         raise SystemExit("public bundle must be built after diagnostics collection")
-    if workflow.index("Build redacted public agent run bundle") > workflow.index("Upload redacted public agent run bundle"):
-        raise SystemExit("public bundle upload must occur after public bundle build")
+    if workflow.index("Build redacted public agent run bundle") > workflow.index("Enrich public agent run bundle with sanitized logs"):
+        raise SystemExit("public bundle must be enriched after bundle build")
+    if workflow.index("Enrich public agent run bundle with sanitized logs") > workflow.index("Upload redacted public agent run bundle"):
+        raise SystemExit("public bundle upload must occur after enrichment")
     if workflow.index("Upload redacted public agent run bundle") > workflow.index("Upload diagnostics artifact"):
         raise SystemExit("public bundle should be uploaded before internal diagnostics artifact")
 
