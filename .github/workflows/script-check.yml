@@ -29,6 +29,7 @@ on:
       - "data/public-results.md"
       - "data/support-unlocks/**"
       - "lab/comparisons/**"
+      - "runs/**"
       - "docs/codex-runner-contract.md"
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
@@ -43,7 +44,6 @@ on:
       - "docs/canary-009-selected-issue-instructions.md"
       - "docs/usable-experiment-ops.md"
       - "rules/model-policy-v1.1.md"
-      - "runs/first-canary-009-authorized-canary-issue-170-success.md"
   workflow_dispatch:
 
 permissions:
