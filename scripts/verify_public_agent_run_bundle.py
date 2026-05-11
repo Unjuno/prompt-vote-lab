@@ -20,14 +20,16 @@ REQUIRED_DIRS = [
     "reasoning-traces",
 ]
 
+REDACTED_SECRET_VALUE = r"\[REDACTED_SECRET\]"
+
 FORBIDDEN_PUBLIC_PATTERNS = [
     ("openai_key", re.compile(r"sk-[A-Za-z0-9_\-]{12,}")),
     ("github_classic_token", re.compile(r"gh[pousr]_[A-Za-z0-9_]{12,}")),
     ("github_fine_grained_token", re.compile(r"github_pat_[A-Za-z0-9_]{12,}")),
-    ("authorization_bearer", re.compile(r"(?i)authorization:\s*bearer\s+[A-Za-z0-9_.\-]+")),
-    ("openai_env_assignment", re.compile(r"(?i)OPENAI_API_KEY\s*[:=]\s*[^\s]+")),
-    ("github_token_env_assignment", re.compile(r"(?i)GITHUB_TOKEN\s*[:=]\s*[^\s]+")),
-    ("gh_token_env_assignment", re.compile(r"(?i)GH_TOKEN\s*[:=]\s*[^\s]+")),
+    ("authorization_bearer", re.compile(rf"(?i)authorization:\s*bearer\s+(?!{REDACTED_SECRET_VALUE})[A-Za-z0-9_.\-]+")),
+    ("openai_env_assignment", re.compile(rf"(?i)OPENAI_API_KEY\s*[:=]\s*(?!{REDACTED_SECRET_VALUE})[^\s]+")),
+    ("github_token_env_assignment", re.compile(rf"(?i)GITHUB_TOKEN\s*[:=]\s*(?!{REDACTED_SECRET_VALUE})[^\s]+")),
+    ("gh_token_env_assignment", re.compile(rf"(?i)GH_TOKEN\s*[:=]\s*(?!{REDACTED_SECRET_VALUE})[^\s]+")),
 ]
 
 EXPECTED_REDACTION_MARKERS = [
