@@ -11,7 +11,9 @@ The public agent run bundle exposes:
 ```text
 redacted raw evidence
 sanitized diagnostic logs
+sanitized reasoning / CoT-like trace artifacts
 agent observation summaries
+reasoning-to-behavior hypotheses
 ```
 
 for canonical Docker/Codex policy-agent runs and fixed-Issue agent runs.
@@ -19,14 +21,16 @@ for canonical Docker/Codex policy-agent runs and fixed-Issue agent runs.
 ## Core rule
 
 ```text
-Primary evidence: redacted raw files and sanitized logs
-Secondary evidence: observation summary, index, and manifest
+Primary evidence: redacted raw files, sanitized logs, and sanitized exposed reasoning traces
+Secondary evidence: observation summary, reasoning-to-behavior hypotheses, index, and manifest
 Model-written summary: not primary evidence
 ```
 
 Do not replace raw evidence with a model-written summary.
 
 Summaries can hide failure modes, reflect prompt or model bias, and make participants miss important behavior.
+
+If a run artifact exposes reasoning / CoT-like trace text, Prompt Vote Lab treats that trace as experimental evidence after sanitizer replacement.
 
 ## What is published as raw evidence
 
@@ -119,6 +123,34 @@ Examples:
 
 Sanitization is a best-effort publication guard. If a real token is discovered in a public artifact, rotate it and treat it as an incident.
 
+## What is published as reasoning / CoT-like trace evidence
+
+If the run creates reasoning-like artifacts that are visible to the workflow, they are published after sanitizer replacement under `reasoning-traces/`.
+
+Examples:
+
+```text
+reasoning-traces/codex-events.jsonl
+reasoning-traces/codex-last-message.txt
+reasoning-traces/codex-stdout.txt
+reasoning-traces/codex-stderr.txt
+reasoning-traces/policy-agent-container-stdout.txt
+reasoning-traces/policy-agent-container-stderr.txt
+reasoning-traces/issue-instruction-container-stdout.txt
+reasoning-traces/issue-instruction-container-stderr.txt
+```
+
+This is not a proxy-only policy. Exposed reasoning / CoT-like traces are evaluation targets.
+
+If provider-private reasoning exists but is not exposed to the workflow, the bundle records:
+
+```text
+unexposed_provider_private_cot_available = unknown
+unexposed_provider_private_cot_published = false
+```
+
+The project does not pretend unavailable provider-private internals are observable. It does publish exposed reasoning traces that exist in run artifacts.
+
 ## Agent observation summary
 
 The enriched bundle contains:
@@ -140,11 +172,14 @@ copied-back files
 additions and deletions by file
 hashes before and after
 sanitized logs and redaction counts
+reasoning-traces/ files and redaction counts
+reasoning-like term counts
+reasoning-to-behavior hypotheses
 agent final action summary
 known evidence limits
 ```
 
-The observation summary is a navigation index over evidence. It is not private reasoning.
+The observation summary is a navigation index over evidence. It does not replace the published reasoning traces.
 
 ## Why policy-agent files are included
 
@@ -187,7 +222,7 @@ Without them, a participant can see the diff and Codex events but cannot indepen
 
 ## Redaction
 
-The builder and enrichment step redact common secret-like patterns before publishing allowlisted or sanitized files.
+The builder and enrichment step redact common secret-like patterns before publishing allowlisted, sanitized, or reasoning-trace files.
 
 Examples:
 
@@ -217,9 +252,10 @@ observation-summary.md
 observation-summary.json
 raw/<allowlisted-file>
 sanitized/<sanitized-file>
+reasoning-traces/<sanitized-reasoning-trace-file>
 ```
 
-`index.json` is a manifest and quick index. It is not a replacement for `raw/` or `sanitized/`.
+`index.json` is a manifest and quick index. It is not a replacement for `raw/`, `sanitized/`, or `reasoning-traces/`.
 
 `README.md` is a human navigation file. It is not an interpretation layer.
 
@@ -230,7 +266,7 @@ The canonical policy-agent workflow builds and enriches the bundle after diagnos
 ```text
 Collect diagnostics artifact
 → Build redacted public agent run bundle
-→ Enrich public agent run bundle with sanitized logs
+→ Enrich public agent run bundle with sanitized logs and reasoning traces
 → Upload redacted public agent run bundle
 → Upload internal diagnostics artifact
 ```
@@ -273,13 +309,15 @@ whether the task mount was read-only
 whether the repository root was withheld from /work
 what final agent message was produced
 how many JSONL events were emitted
+what reasoning / CoT-like traces were exposed
+whether reasoning traces mention copy, interaction, style, or scope terms
 what stdout/stderr/install logs looked like after sanitization
 whether runtime scan was clear/blocked/review
 whether the execution gate allowed or stopped the run
 which source Issue generated the task packet
 ```
 
-The project does not automatically explain or score these observations.
+The project does not automatically explain or score these observations as truth. It records hypotheses for participant review.
 
 ## Non-goals
 
@@ -290,13 +328,15 @@ unsanitized raw Actions logs
 unsanitized raw container stderr
 unsanitized login stdout/stderr
 unsanitized full package-manager install logs
+unredacted exposed reasoning traces
 secrets
 private data
 payment identifiers
 automatic prompt advice
-model-written causal explanation
-raw private chain-of-thought
+model-written causal explanation as primary evidence
 ```
+
+Provider-private reasoning that is not exposed to the workflow is not claimed to be available.
 
 ## Schema
 
