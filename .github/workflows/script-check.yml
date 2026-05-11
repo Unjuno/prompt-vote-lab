@@ -169,6 +169,9 @@ jobs:
       - name: Run public agent run bundle enrichment test
         run: python scripts/test_enrich_public_agent_run_bundle.py
 
+      - name: Run public agent run bundle verifier test
+        run: python scripts/test_verify_public_agent_run_bundle.py
+
       - name: Run policy agent public bundle contract test
         run: python scripts/test_policy_agent_public_bundle_contract.py
 
