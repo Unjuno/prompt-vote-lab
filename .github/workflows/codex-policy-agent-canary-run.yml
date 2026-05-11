@@ -91,6 +91,13 @@ jobs:
             --issue-number "0" \
             --pr-number ""
 
+      - name: Enrich public agent run bundle with sanitized logs
+        if: ${{ always() }}
+        run: |
+          python scripts/enrich_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --bundle-dir .tmp/public-agent-run-bundle
+
       - name: Upload redacted public agent run bundle
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -194,12 +201,14 @@ jobs:
           ## Public evidence
 
           - Redacted public agent run bundle artifact: \`codex-policy-agent-canary-public-bundle-${{ github.run_number }}\`
+          - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
+          - Sanitized diagnostic logs directory: \`sanitized/\`
           - Public run log artifact: \`codex-policy-agent-canary-public-log-${{ github.run_number }}\`
           - Internal diagnostics artifact: \`codex-policy-agent-canary-diagnostics-${{ github.run_number }}\`
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted and allowlisted.
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted, sanitized, and indexed for participant review.
 
           ## Merge policy
 
