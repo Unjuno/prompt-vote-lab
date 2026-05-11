@@ -98,7 +98,8 @@ FORBIDDEN_WORKFLOW_TEXT = [
 FORBIDDEN_DOC_TEXT = [
     "raw private chain-of-thought",
     "CoTそのものではなく",
-    "proxy-only",
+    "Only proxy behavior is evaluated",
+    "Reasoning traces are not evaluation targets",
 ]
 
 
