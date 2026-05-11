@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T03:25:30+00:00`
+Generated at: `2026-05-11T03:39:36+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 247 | MERGED | 2 | 128/14 | Improve lab participant and run-result links |
 | 246 | MERGED | 3 | 247/0 | Add safe dev artifact reset script |
 | 245 | MERGED | 3 | 285/25 | Add participant guide |
 | 244 | MERGED | 2 | 263/20 | Add operator runbook |
@@ -69,13 +70,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
 | 222 | MERGED | 1 | 1/1 | Normalize rank 2 comparison metadata v2 |
 | 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
-| 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25649020318 | Terminal State Report | pull_request | completed | skipped | Improve lab participant and run-result links |
+| 25648960746 | Static Site Check | pull_request | completed | success | Improve lab participant and run-result links |
+| 25648960732 | Safety Check | pull_request | completed | success | Improve lab participant and run-result links |
+| 25648960718 | Lab PR Scope Check | pull_request | completed | success | Improve lab participant and run-result links |
+| 25648902181 | Lab PR Scope Check | pull_request | completed | success | Improve lab participant and run-result links |
+| 25648902174 | Static Site Check | pull_request | completed | failure | Improve lab participant and run-result links |
+| 25648902166 | Safety Check | pull_request | completed | success | Improve lab participant and run-result links |
+| 25648657758 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25648650100 | Public Results Export | push | completed | success | Add safe dev artifact reset script (#246) |
 | 25648650091 | Terminal State Report | pull_request | completed | skipped | Add safe dev artifact reset script |
+| 25648649736 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25648606407 | Script Check | pull_request | completed | success | Add safe dev artifact reset script |
 | 25648606406 | Lab PR Scope Check | pull_request | completed | success | Add safe dev artifact reset script |
 | 25634245435 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25633775262 | Static Site Check | pull_request | completed | success | Add operator runbook |
 | 25633291512 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25633285455 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W19 |
-| 25633285433 | Public Results Export | push | completed | success | Record auto vote summary for week-2026-W19 (#243) |
-| 25633285136 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25633205053 | Weekly Auto Run | workflow_dispatch | completed | success | Weekly Auto Run |
-| 25633134157 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25633130922 | Support Unlock Export | workflow_dispatch | completed | success | Support Unlock Export |
-| 25633118293 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25633111446 | Public Results Export | push | completed | success | Fix support unlock privacy flag validation (#242) |
-| 25633111445 | Terminal State Report | pull_request | completed | skipped | Fix support unlock privacy flag validation |
-| 25633111205 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25633078314 | Lab PR Scope Check | pull_request | completed | success | Fix support unlock privacy flag validation |
 
 ## Raw JSON
 
