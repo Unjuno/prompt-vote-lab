@@ -91,7 +91,7 @@ jobs:
             --issue-number "0" \
             --pr-number ""
 
-      - name: Enrich public agent run bundle with sanitized logs
+      - name: Enrich public agent run bundle with sanitized logs and reasoning traces
         if: ${{ always() }}
         run: |
           python scripts/enrich_public_agent_run_bundle.py \
@@ -203,12 +203,17 @@ jobs:
           - Redacted public agent run bundle artifact: \`codex-policy-agent-canary-public-bundle-${{ github.run_number }}\`
           - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
           - Sanitized diagnostic logs directory: \`sanitized/\`
+          - Sanitized exposed reasoning / CoT-like trace directory: \`reasoning-traces/\`
           - Public run log artifact: \`codex-policy-agent-canary-public-log-${{ github.run_number }}\`
           - Internal diagnostics artifact: \`codex-policy-agent-canary-diagnostics-${{ github.run_number }}\`
 
+          ## Reasoning trace policy
+
+          If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.
+
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted, sanitized, and indexed for participant review.
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted, sanitized, indexed, and include exposed reasoning traces when present.
 
           ## Merge policy
 
