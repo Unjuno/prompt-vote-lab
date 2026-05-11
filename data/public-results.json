@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T16:46:50+00:00",
+  "generated_at": "2026-05-11T03:25:30+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,48 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 247,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a safe development artifact reset script.\n\n## Changes\n\n- Add `scripts/reset_dev_artifacts.py`.\n- Add `scripts/test_reset_dev_artifacts.py`.\n- Run the reset test from `Script Check`.\n\n## Safety model\n\n- Dry-run by default.\n- `--apply` is required to remove anything.\n- Only `.tmp/` and `tmp/` are allowed cleanup roots.\n- Public evidence paths such as `data/`, `runs/`, `lab/comparisons/`, and `lab/history/` are protected.\n\n## Scope\n\nNo workflow behavior changes beyond adding the test step. No lab or generated evidence changes.",
+      "body_length": 546,
+      "changed_files": 3,
+      "closed_at": "2026-05-11T03:25:14Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T03:23:40Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 3,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 149,
+          "deletions": 0,
+          "path": "scripts/reset_dev_artifacts.py"
+        },
+        {
+          "additions": 95,
+          "deletions": 0,
+          "path": "scripts/test_reset_dev_artifacts.py"
+        }
+      ],
+      "head_ref_name": "document-weekly-automation-schedule",
+      "head_ref_oid": "6ae31b39d530440e32c019d611101923863ada39",
+      "labels": [],
+      "merge_commit_oid": "2eb6bf303106780b4987496f06fb1223dee9f07f",
+      "merged_at": "2026-05-11T03:25:14Z",
+      "merged_by": "Unjuno",
+      "number": 246,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add safe dev artifact reset script",
+      "updated_at": "2026-05-11T03:25:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/246"
+    },
     {
       "additions": 285,
       "author": "Unjuno",
@@ -4529,48 +4571,6 @@
       "title": "Fix policy feasibility container permissions",
       "updated_at": "2026-05-06T07:27:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/134"
-    },
-    {
-      "additions": 271,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds the design document and manual feasibility workflow for `first-canary-007-policy-enforced-agent`.\n\n## Changed files\n\n- `docs/canary-007-policy-enforced-agent.md`\n- `.github/workflows/canary-007-policy-feasibility.yml`\n- `.github/workflows/script-check.yml`\n\n## Why\n\n`first-canary-006` observes Codex as a file-operating agent, but it does not prove that unauthorized repository files are unavailable at the execution-environment boundary.\n\n`first-canary-007` should test agent behavior plus policy-enforced filesystem isolation. Before implementing the full canary, this PR adds a manual feasibility workflow for Docker isolation and file-access tracing primitives on GitHub-hosted runners.\n\n## Scope\n\n- Design and feasibility only.\n- Does not run Codex.\n- Does not implement the full 007 canary.\n- Does not modify `/lab/`.\n- No model, retry, fallback, or sandbox changes to existing canaries.\n\n## Feasibility checks\n\nThe manual workflow checks:\n\n- Docker availability\n- isolated work directory mount behavior\n- whether repo root paths are absent from the container-visible work directory\n- host strace availability\n- artifact upload for feasibility evidence\n\n## Next step after merge\n\nRun `Canary 007 Policy Feasibility` manually on `main`, inspect the uploaded artifact, and record the result before implementing the full 007 canary.",
-      "body_length": 1352,
-      "changed_files": 3,
-      "closed_at": "2026-05-06T05:12:26Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T05:10:48Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 104,
-          "deletions": 0,
-          "path": ".github/workflows/canary-007-policy-feasibility.yml"
-        },
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 165,
-          "deletions": 0,
-          "path": "docs/canary-007-policy-enforced-agent.md"
-        }
-      ],
-      "head_ref_name": "canary-007-policy-agent",
-      "head_ref_oid": "7fce4d499d52e95517e8e41914cdab204a397d64",
-      "labels": [],
-      "merge_commit_oid": "8e9d1dbfdeabc5902e3955c222fbcc25a0e389d0",
-      "merged_at": "2026-05-06T05:12:26Z",
-      "merged_by": "Unjuno",
-      "number": 133,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add policy-enforced agent feasibility check",
-      "updated_at": "2026-05-06T07:27:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/133"
     }
   ],
   "run_records": [
@@ -4718,6 +4718,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-11T03:25:16Z",
+      "database_id": 25648650091,
+      "display_title": "Add safe dev artifact reset script",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T03:25:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648650091",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T03:23:44Z",
+      "database_id": 25648606407,
+      "display_title": "Add safe dev artifact reset script",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T03:24:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648606407",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T03:23:44Z",
+      "database_id": 25648606406,
+      "display_title": "Add safe dev artifact reset script",
+      "event": "pull_request",
+      "head_branch": "document-weekly-automation-schedule",
+      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T03:23:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648606406",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:46:53Z",
+      "database_id": 25634245435,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "523b1f03b248f1c3af734cdadf8050b72860cfe5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:47:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634245435",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-10T16:46:32Z",
       "database_id": 25634238935,
       "display_title": "Add participant guide",
@@ -4729,6 +4785,34 @@
       "updated_at": "2026-05-10T16:46:33Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238935",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:46:32Z",
+      "database_id": 25634238916,
+      "display_title": "Add participant guide (#245)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:46:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238916",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-10T16:46:31Z",
+      "database_id": 25634238674,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-10T16:46:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25634238674",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6003,90 +6087,6 @@
       "updated_at": "2026-05-10T12:46:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25629095899",
       "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T12:46:04Z",
-      "database_id": 25629095897,
-      "display_title": "Automate support unlocks for comparison runs",
-      "event": "pull_request",
-      "head_branch": "automate-support-unlocks",
-      "head_sha": "7a001ccf8cf052f769f23f7a258f8834a0d56e12",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T12:46:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25629095897",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T12:46:04Z",
-      "database_id": 25629095892,
-      "display_title": "Automate support unlocks for comparison runs",
-      "event": "pull_request",
-      "head_branch": "automate-support-unlocks",
-      "head_sha": "7a001ccf8cf052f769f23f7a258f8834a0d56e12",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T12:46:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25629095892",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T12:46:04Z",
-      "database_id": 25629095883,
-      "display_title": "Automate support unlocks for comparison runs",
-      "event": "pull_request",
-      "head_branch": "automate-support-unlocks",
-      "head_sha": "7a001ccf8cf052f769f23f7a258f8834a0d56e12",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T12:46:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25629095883",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T06:20:34Z",
-      "database_id": 25621692906,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "751a05ad6d1df8c6d098af978b3549b2bd11b52d",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-10T06:21:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621692906",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-10T06:20:12Z",
-      "database_id": 25621685408,
-      "display_title": "Public Results Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-10T06:20:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621685408",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-10T06:18:10Z",
-      "database_id": 25621649862,
-      "display_title": "GitHub Pages Smoke Check",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "3d6e3de57e14ae0e4b6db76148d8c44c117b1457",
-      "name": "GitHub Pages Smoke Check",
-      "status": "completed",
-      "updated_at": "2026-05-10T06:18:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25621649862",
-      "workflow_name": "GitHub Pages Smoke Check"
     }
   ]
 }
