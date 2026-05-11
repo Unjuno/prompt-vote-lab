@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T10:44:38+00:00`
+Generated at: `2026-05-11T11:17:02+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
 | 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
@@ -69,13 +70,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
 | 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
-| 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25666845129 | Terminal State Report | pull_request | completed | skipped | Publish redacted policy-agent public bundle |
+| 25666681185 | Lab PR Scope Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
+| 25666681126 | Script Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
+| 25666681119 | Static Site Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
+| 25666335778 | Lab PR Scope Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
+| 25666335759 | Script Check | pull_request | completed | failure | Publish redacted policy-agent public bundle |
+| 25666335752 | Static Site Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
+| 25665402650 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25665385222 | Terminal State Report | pull_request | completed | skipped | Document canonical Docker Codex runner |
+| 25665385199 | Public Results Export | push | completed | success | Document canonical Docker Codex runner (#259) |
+| 25665384339 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25665304844 | Static Site Check | pull_request | completed | success | Document canonical Docker Codex runner |
 | 25665304843 | Lab PR Scope Check | pull_request | completed | success | Document canonical Docker Codex runner |
 | 25665304835 | Script Check | pull_request | completed | success | Document canonical Docker Codex runner |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25662494071 | Script Check | pull_request | completed | success | Fix history adopted rank inference |
 | 25662494054 | Lab PR Scope Check | pull_request | completed | success | Fix history adopted rank inference |
 | 25661992788 | Terminal State Report | pull_request | completed | skipped | Add W19 rank 1 live output snapshot |
-| 25661991785 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25661678626 | Lab PR Scope Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
-| 25661678611 | Script Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
-| 25661678573 | Safety Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
-| 25661678562 | Static Site Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
-| 25659597888 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
-| 25659596802 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25659418452 | Safety Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25659418451 | Script Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25659418446 | Lab PR Scope Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
 
 ## Raw JSON
 
