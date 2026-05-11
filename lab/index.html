@@ -16,17 +16,55 @@
 
     <h1 id="lab-title">Prompt Vote Lab</h1>
     <p class="note">
-      A constrained implementation target where prompt proposals become small static UI changes. Accepted experiment runs may change this page, while the Issue, safety scan, PR, run record, and public result are preserved for review.
+      A constrained implementation target where prompt proposals become small static UI changes. Start by voting with GitHub 👍 reactions, then submit prompts once you understand what good prompts look like.
     </p>
 
-    <nav class="evidence-nav" aria-label="Public evidence navigation">
+    <nav class="evidence-nav" aria-label="Primary participant navigation">
+      <a class="primary-link" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Vote on prompt Issues</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">Submit prompt</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/docs/for-participants.md">Participant guide</a>
       <a href="./comparisons/2026-W20/">Latest comparison</a>
       <a href="./history/">History</a>
       <a href="../data/public-results.md">Public results</a>
-      <a href="../data/public-results.json">Public JSON</a>
-      <a href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">Propose prompt</a>
-      <a href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">Vote on Issues</a>
+      <a href="https://github.com/Unjuno/prompt-vote-lab/actions/workflows/weekly-auto-run.yml">Weekly runs</a>
     </nav>
+
+    <section class="summary-card action-card" aria-labelledby="start-title">
+      <p class="eyebrow">Start here</p>
+      <h2 id="start-title">Vote first. Submit second. Watch the run trail.</h2>
+      <div class="action-grid" aria-label="Participant actions">
+        <a class="action-link" href="https://github.com/Unjuno/prompt-vote-lab/issues?q=is%3Aissue+label%3Aprompt-proposal">
+          <span>1</span>
+          <strong>Vote with 👍</strong>
+          <em>Support only prompts specific enough to deserve one bounded implementation-agent attempt.</em>
+        </a>
+        <a class="action-link" href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">
+          <span>2</span>
+          <strong>Submit a small prompt</strong>
+          <em>Ask for a visible static-lab change and say what would count as a bad implementation.</em>
+        </a>
+        <a class="action-link" href="https://github.com/Unjuno/prompt-vote-lab/actions/workflows/weekly-auto-run.yml">
+          <span>3</span>
+          <strong>Watch weekly runs</strong>
+          <em>See the workflow that turns votes into a vote summary or an implementation PR.</em>
+        </a>
+      </div>
+    </section>
+
+    <section class="summary-card" aria-labelledby="live-run-title">
+      <p class="eyebrow">Live run trail</p>
+      <h2 id="live-run-title">The latest verified path is visible.</h2>
+      <p>
+        The no-eligible live path has been verified: support export produced a public unlock file, weekly automation read it, and the no-change baseline won without creating an implementation PR.
+      </p>
+      <div class="run-links" aria-label="Live run evidence links">
+        <a href="https://github.com/Unjuno/prompt-vote-lab/actions/workflows/support-unlock-export.yml">Support Unlock Export workflow</a>
+        <a href="../data/support-unlocks/2026-W19.json">2026-W19 support unlock JSON</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/actions/workflows/weekly-auto-run.yml">Weekly Auto Run workflow</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/blob/main/runs/week-2026-W19-vote-summary.md">2026-W19 vote summary</a>
+        <a href="https://github.com/Unjuno/prompt-vote-lab/pull/243">Vote summary PR #243</a>
+      </div>
+    </section>
 
     <section class="summary-card" aria-labelledby="current-status-title">
       <p class="eyebrow">Current public state</p>
@@ -42,13 +80,13 @@
     </section>
 
     <section class="summary-card" aria-labelledby="participant-action-title">
-      <p class="eyebrow">Participant action</p>
-      <h2 id="participant-action-title">Inspect evidence first; then propose or vote.</h2>
+      <p class="eyebrow">Prompt quality</p>
+      <h2 id="participant-action-title">A good prompt is small, specific, and reviewable.</h2>
       <ol class="review-order">
-        <li>Open the latest comparison dashboard.</li>
-        <li>Check the selected Issue, safety labels, implementation PR, and run record.</li>
-        <li>Use GitHub 👍 reactions on prompt Issues to vote.</li>
-        <li>Create a new prompt Issue only if the requested change fits the static lab scope.</li>
+        <li>Explain the visible change you want.</li>
+        <li>Keep the request inside the static lab scope.</li>
+        <li>Say what should not change.</li>
+        <li>Do not ask for login, payment, external APIs, trackers, or broad redesigns.</li>
       </ol>
     </section>
 
