@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T12:08:50+00:00",
+  "generated_at": "2026-05-11T12:39:47+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,53 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 317,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nPublishes exposed reasoning / CoT-like trace artifacts as sanitized public evidence when they exist in Docker/Codex run diagnostics.\n\n## Correction\n\nThis PR intentionally avoids weakening the lab requirement into a proxy-only policy. If reasoning / CoT-like text is exposed in run artifacts, it is part of the experiment and should be available for participant analysis after sanitizer replacement.\n\n## Changes\n\n- Add `reasoning-traces/` output in `enrich_public_agent_run_bundle.py`.\n- Publish sanitized copies of exposed trace-bearing artifacts such as:\n  - `codex-events.jsonl`\n  - `codex-last-message.txt`\n  - `codex-stdout.txt`\n  - `codex-stderr.txt`\n  - `policy-agent-container-stdout.txt`\n  - `policy-agent-container-stderr.txt`\n  - `issue-instruction-container-stdout.txt`\n  - `issue-instruction-container-stderr.txt`\n- Add `reasoning_trace` to `observation-summary.json`.\n- Add `reasoning_effect_hypotheses` to connect exposed trace terms with file behavior.\n- Update `observation-summary.md` with a Reasoning / CoT-like trace evidence section.\n- Update docs and contract tests so exposed reasoning traces remain publication targets.\n\n## Boundary\n\nThis does not claim unexposed provider-private internals are observable.\n\nIt does publish exposed reasoning / CoT-like traces that exist in run artifacts after sanitizer replacement.\n\n## Scope\n\nDocs and public bundle enrichment scripts/tests only.\n\nNo lab UI changes, no workflow changes, no generated evidence changes, no weekly-auto-run migration, and no model/token-budget changes.",
+      "body_length": 1553,
+      "changed_files": 4,
+      "closed_at": "2026-05-11T12:39:22Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T12:33:07Z",
+      "deletions": 25,
+      "files": [
+        {
+          "additions": 49,
+          "deletions": 9,
+          "path": "docs/public-agent-run-bundle.md"
+        },
+        {
+          "additions": 203,
+          "deletions": 9,
+          "path": "scripts/enrich_public_agent_run_bundle.py"
+        },
+        {
+          "additions": 38,
+          "deletions": 4,
+          "path": "scripts/test_enrich_public_agent_run_bundle.py"
+        },
+        {
+          "additions": 27,
+          "deletions": 3,
+          "path": "scripts/test_policy_agent_public_bundle_contract.py"
+        }
+      ],
+      "head_ref_name": "add-reasoning-signal-evaluation",
+      "head_ref_oid": "9facc4def2aa532e5158becf84862d531864a3cb",
+      "labels": [],
+      "merge_commit_oid": "2c419d3eaa1abacac742f722733c867a8b447abe",
+      "merged_at": "2026-05-11T12:39:22Z",
+      "merged_by": "Unjuno",
+      "number": 262,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Publish sanitized reasoning trace evidence",
+      "updated_at": "2026-05-11T12:39:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/262"
+    },
     {
       "additions": 648,
       "author": "Unjuno",
@@ -4669,38 +4716,6 @@
       "title": "Restore PR50 minimal lab surface",
       "updated_at": "2026-05-06T14:32:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/161"
-    },
-    {
-      "additions": 153,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords `first-canary-008-selected-prompt-task-packet` as a successful selected-prompt task packet canary.\n\n## Observed result\n\nPR #152 was created and merged after Codex ran inside the Docker task-packet container, read `/task:ro`, and changed only `lab/index.html`.\n\n## Changed file\n\n- `runs/first-canary-008-selected-prompt-task-packet-success.md`\n\n## Interpretation\n\n008 is now a successful selected-prompt task-packet agent candidate path. The record keeps 005 as the current stable production-oriented path and identifies 009 as the next candidate for real GitHub Issue prompt ingestion.\n\n## Scope\n\n- Records result only.\n- No `/lab/` changes.\n- No model, retry, fallback, file-scope, or mount changes.",
-      "body_length": 720,
-      "changed_files": 1,
-      "closed_at": "2026-05-06T10:39:50Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T10:37:57Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 153,
-          "deletions": 0,
-          "path": "runs/first-canary-008-selected-prompt-task-packet-success.md"
-        }
-      ],
-      "head_ref_name": "record-008-success",
-      "head_ref_oid": "f1be04127dc63e5407ace9fbeb55ab0b41b1940d",
-      "labels": [],
-      "merge_commit_oid": "bd3aee9e3fc9c4383a492051d44628ee7c3e343f",
-      "merged_at": "2026-05-06T10:39:50Z",
-      "merged_by": "Unjuno",
-      "number": 153,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record eighth canary success",
-      "updated_at": "2026-05-06T10:43:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/153"
     }
   ],
   "run_records": [
@@ -4848,6 +4863,132 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-11T12:39:25Z",
+      "database_id": 25670650209,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "9facc4def2aa532e5158becf84862d531864a3cb",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:39:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670650209",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:36:01Z",
+      "database_id": 25670484648,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "9facc4def2aa532e5158becf84862d531864a3cb",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:36:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670484648",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:36:01Z",
+      "database_id": 25670484336,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "9facc4def2aa532e5158becf84862d531864a3cb",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:36:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670484336",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:36:01Z",
+      "database_id": 25670484327,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "9facc4def2aa532e5158becf84862d531864a3cb",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:36:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670484327",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:33:12Z",
+      "database_id": 25670346692,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "41a359b4fbe346002e0e2acdfc8ee21168a76ec4",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:33:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670346692",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:33:12Z",
+      "database_id": 25670346648,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "41a359b4fbe346002e0e2acdfc8ee21168a76ec4",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:33:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670346648",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-11T12:33:12Z",
+      "database_id": 25670346641,
+      "display_title": "Publish sanitized reasoning trace evidence",
+      "event": "pull_request",
+      "head_branch": "add-reasoning-signal-evaluation",
+      "head_sha": "41a359b4fbe346002e0e2acdfc8ee21168a76ec4",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:33:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670346641",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:08:54Z",
+      "database_id": 25669201787,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "d68134d61867a87ce20fa9ddb95ae18dd631e975",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:09:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669201787",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T12:08:33Z",
+      "database_id": 25669185787,
+      "display_title": "Expand public agent observation logs (#261)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "019c4f3b6e8c856742a853253fee531205560720",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:08:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669185787",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-11T12:08:33Z",
       "database_id": 25669185706,
       "display_title": "Expand public agent observation logs",
@@ -4859,6 +5000,20 @@
       "updated_at": "2026-05-11T12:08:34Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669185706",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-11T12:08:31Z",
+      "database_id": 25669184419,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "019c4f3b6e8c856742a853253fee531205560720",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T12:09:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669184419",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6077,146 +6232,6 @@
       "updated_at": "2026-05-11T05:08:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651480869",
       "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-11T05:08:04Z",
-      "database_id": 25651480436,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "e71e35f9fad4b6d7881b4e104b38066212c7e15a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:08:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651480436",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432481,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432481",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432478,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432478",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432477,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:31Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432477",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432476,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432476",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432474,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432474",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:06:21Z",
-      "database_id": 25651432473,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:06:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651432473",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:00:14Z",
-      "database_id": 25651251137,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "17298d95d354c25ca090d9fb620131198a1e249d",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:00:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651251137",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:00:14Z",
-      "database_id": 25651251124,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "17298d95d354c25ca090d9fb620131198a1e249d",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:00:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651251124",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T05:00:14Z",
-      "database_id": 25651251121,
-      "display_title": "Reconcile active implementation model and verification docs",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "17298d95d354c25ca090d9fb620131198a1e249d",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T05:00:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25651251121",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

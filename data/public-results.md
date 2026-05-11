@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T12:08:50+00:00`
+Generated at: `2026-05-11T12:39:47+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
@@ -69,13 +70,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 214 | MERGED | 3 | 427/0 | Run Codex comparison issue rank 2 |
 | 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
-| 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25670650209 | Terminal State Report | pull_request | completed | skipped | Publish sanitized reasoning trace evidence |
+| 25670484648 | Static Site Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
+| 25670484336 | Script Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
+| 25670484327 | Lab PR Scope Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
+| 25670346692 | Static Site Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
+| 25670346648 | Lab PR Scope Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
+| 25670346641 | Script Check | pull_request | completed | failure | Publish sanitized reasoning trace evidence |
+| 25669201787 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25669185787 | Public Results Export | push | completed | success | Expand public agent observation logs (#261) |
 | 25669185706 | Terminal State Report | pull_request | completed | skipped | Expand public agent observation logs |
+| 25669184419 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25669057691 | Script Check | pull_request | completed | success | Expand public agent observation logs |
 | 25669057647 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
 | 25669057642 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
@@ -95,16 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25666335778 | Lab PR Scope Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
 | 25666335759 | Script Check | pull_request | completed | failure | Publish redacted policy-agent public bundle |
 | 25666335752 | Static Site Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
-| 25665402650 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25665385222 | Terminal State Report | pull_request | completed | skipped | Document canonical Docker Codex runner |
-| 25665385199 | Public Results Export | push | completed | success | Document canonical Docker Codex runner (#259) |
-| 25665384339 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25665304844 | Static Site Check | pull_request | completed | success | Document canonical Docker Codex runner |
-| 25665304843 | Lab PR Scope Check | pull_request | completed | success | Document canonical Docker Codex runner |
-| 25665304835 | Script Check | pull_request | completed | success | Document canonical Docker Codex runner |
-| 25664941687 | Terminal State Report | pull_request | completed | skipped | Run fixed first canary |
-| 25664331320 | First Canary Run | workflow_dispatch | completed | success | First Canary Run |
-| 25663835042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
