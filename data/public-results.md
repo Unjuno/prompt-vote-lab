@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T08:17:29+00:00`
+Generated at: `2026-05-11T09:46:15+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 84 |
+| merged_pr_count | 86 |
 | workflow_run_count | 98 |
 | run_record_count | 20 |
 
@@ -40,6 +40,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
+| 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
+| 254 | MERGED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 | 253 | MERGED | 1 | 10/1 | Update generated dashboard live output contract |
 | 252 | CLOSED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 | 251 | MERGED | 2 | 22/7 | Generate live output links in comparison dashboards |
@@ -67,15 +70,30 @@ This file is a raw results surface for participants. It does not score prompts o
 | 200 | MERGED | 5 | 645/6 | Add history page generator |
 | 225 | CLOSED | 2 | 5/0 | Add timeouts to comparison runs |
 | 223 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 196 rank 3 |
-| 219 | CLOSED | 3 | 491/0 | Run Codex comparison issue rank 2 |
-| 220 | CLOSED | 1 | 1/1 | Normalize rank 2 comparison metadata |
-| 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25662731773 | Terminal State Report | pull_request | completed | skipped | Fix history adopted rank inference |
+| 25662494071 | Script Check | pull_request | completed | success | Fix history adopted rank inference |
+| 25662494054 | Lab PR Scope Check | pull_request | completed | success | Fix history adopted rank inference |
+| 25661992788 | Terminal State Report | pull_request | completed | skipped | Add W19 rank 1 live output snapshot |
+| 25661991785 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25661678626 | Lab PR Scope Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
+| 25661678611 | Script Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
+| 25661678573 | Safety Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
+| 25661678562 | Static Site Check | pull_request | completed | success | Add W19 rank 1 live output snapshot |
+| 25659597888 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
+| 25659596802 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25659418452 | Safety Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25659418451 | Script Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25659418446 | Lab PR Scope Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25659418422 | Static Site Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25658572020 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25658556921 | Terminal State Report | pull_request | completed | skipped | Update generated dashboard live output contract |
+| 25658556918 | Public Results Export | push | completed | success | Update generated dashboard live output contract (#253) |
+| 25658556126 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25658376995 | Script Check | pull_request | completed | success | Update generated dashboard live output contract |
 | 25658376956 | Lab PR Scope Check | pull_request | completed | success | Update generated dashboard live output contract |
 | 25657698790 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
@@ -87,24 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25656199103 | Terminal State Report | pull_request | completed | skipped | Generate live output links in comparison dashboards |
 | 25656199093 | Public Results Export | push | completed | success | Generate live output links in comparison dashboards (#251) |
 | 25656198290 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25656110307 | Lab PR Scope Check | pull_request | completed | success | Generate live output links in comparison dashboards |
-| 25656110273 | Script Check | pull_request | completed | success | Generate live output links in comparison dashboards |
-| 25655746664 | Terminal State Report | pull_request | completed | skipped | Add live previews for rank outputs |
-| 25655603377 | Safety Check | pull_request | completed | failure | Add live previews for rank outputs |
-| 25655603317 | Script Check | pull_request | completed | failure | Add live previews for rank outputs |
-| 25655603307 | Static Site Check | pull_request | completed | success | Add live previews for rank outputs |
-| 25655603303 | Lab PR Scope Check | pull_request | completed | failure | Add live previews for rank outputs |
-| 25654925938 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25654911974 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25654824871 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25653031829 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25653019975 | Terminal State Report | pull_request | completed | skipped | Fix root prompt template links |
-| 25653019939 | Public Results Export | push | completed | success | Fix root prompt template links (#249) |
-| 25653019537 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25652698214 | Static Site Check | pull_request | completed | success | Fix root prompt template links |
-| 25652698204 | Lab PR Scope Check | pull_request | completed | success | Fix root prompt template links |
-| 25651488488 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25651480883 | Public Results Export | push | completed | success | Reconcile active implementation model and verification docs (#248) |
 
 ## Raw JSON
 
