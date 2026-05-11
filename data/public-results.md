@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T10:09:35+00:00`
+Generated at: `2026-05-11T10:44:38+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 86 |
+| merged_pr_count | 85 |
 | workflow_run_count | 98 |
 | run_record_count | 20 |
 
@@ -40,15 +40,17 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
-| 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
-| 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
-| 254 | MERGED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
+| 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
+| 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
+| 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
+| 250 | CLOSED | 8 | 463/21 | Add live previews for rank outputs |
 | 253 | MERGED | 1 | 10/1 | Update generated dashboard live output contract |
 | 252 | CLOSED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 | 251 | MERGED | 2 | 22/7 | Generate live output links in comparison dashboards |
-| 250 | CLOSED | 8 | 463/21 | Add live previews for rank outputs |
-| 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
+| 254 | MERGED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
+| 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
+| 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
+| 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
@@ -68,14 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
 | 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
 | 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
-| 200 | MERGED | 5 | 645/6 | Add history page generator |
-| 225 | CLOSED | 2 | 5/0 | Add timeouts to comparison runs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25665385222 | Terminal State Report | pull_request | completed | skipped | Document canonical Docker Codex runner |
+| 25665304844 | Static Site Check | pull_request | completed | success | Document canonical Docker Codex runner |
+| 25665304843 | Lab PR Scope Check | pull_request | completed | success | Document canonical Docker Codex runner |
+| 25665304835 | Script Check | pull_request | completed | success | Document canonical Docker Codex runner |
+| 25664941687 | Terminal State Report | pull_request | completed | skipped | Run fixed first canary |
+| 25664331320 | First Canary Run | workflow_dispatch | completed | success | First Canary Run |
+| 25663835042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25663816990 | Terminal State Report | pull_request | completed | skipped | Add live preview hub to lab page |
+| 25663816979 | Public Results Export | push | completed | success | Add live preview hub to lab page (#257) |
+| 25663815972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25663571129 | Lab PR Scope Check | pull_request | completed | success | Add live preview hub to lab page |
 | 25663571114 | Static Site Check | pull_request | completed | success | Add live preview hub to lab page |
 | 25663571068 | Safety Check | pull_request | completed | success | Add live preview hub to lab page |
@@ -96,15 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25659418452 | Safety Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
 | 25659418451 | Script Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
 | 25659418446 | Lab PR Scope Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25659418422 | Static Site Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
-| 25658572020 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25658556921 | Terminal State Report | pull_request | completed | skipped | Update generated dashboard live output contract |
-| 25658556918 | Public Results Export | push | completed | success | Update generated dashboard live output contract (#253) |
-| 25658556126 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25658376995 | Script Check | pull_request | completed | success | Update generated dashboard live output contract |
-| 25658376956 | Lab PR Scope Check | pull_request | completed | success | Update generated dashboard live output contract |
-| 25657698790 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
-| 25657589279 | Script Check | pull_request | completed | failure | Add W20 rank 1 live output snapshot |
 
 ## Raw JSON
 

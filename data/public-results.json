@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T10:09:35+00:00",
+  "generated_at": "2026-05-11T10:44:38+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,273 +494,110 @@
   ],
   "pull_requests": [
     {
-      "additions": 54,
+      "additions": 110,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a live preview hub to `/lab/` so participants can open rendered pages, not source files.\n\n## Changes\n\n- Add a `Live previews` nav item.\n- Add a `Live previews` section linking to:\n  - current accepted lab\n  - 2026-W20 rank 1 output\n  - 2026-W20 rank 2 output\n  - 2026-W20 rank 3 output\n  - 2026-W20 comparison dashboard\n  - history\n- Add responsive preview-card styles.\n\n## Scope\n\nRoot lab UI only: `lab/index.html` and `lab/style.css`.\n\nNo generated evidence, scripts, workflows, docs, model, token-budget, or W0 reset changes.",
-      "body_length": 545,
+      "body": "## Summary\n\nUpdates the current implementation-path documentation to make Docker-mounted workdir-only + Codex CLI the canonical production implementation path.\n\n## Why\n\nThe repository still documented `first-canary-005` / offline JSON replacement as the routine production-oriented default. That conflicts with the intended canonical production path:\n\n```text\nDocker-mounted workdir-only + Codex CLI\n```\n\n## Changes\n\n- Make Docker + Codex CLI the canonical production implementation-agent boundary.\n- Mark the Python SDK / Responses API / JSON replacement path as non-canonical legacy/debug evidence.\n- Require canonical E2E verification to show Docker container execution, Codex CLI execution, no repo-root mount, final 3-file copyback, safety/static checks, PR creation, and manual review.\n- Update `scripts/test_current_codex_path_doc.py` so the outdated 005-as-default wording cannot return silently.\n\n## Scope\n\nDocs and contract test only.\n\nThis PR does not migrate `weekly-auto-run.yml`. That must be a separate PR after the canonical Docker/Codex canary path is verified again under current repo state.",
+      "body_length": 1109,
       "changed_files": 2,
-      "closed_at": "2026-05-11T10:09:10Z",
+      "closed_at": "2026-05-11T10:44:14Z",
       "comment_count": 0,
-      "created_at": "2026-05-11T10:03:44Z",
-      "deletions": 7,
+      "created_at": "2026-05-11T10:42:24Z",
+      "deletions": 249,
       "files": [
         {
-          "additions": 35,
+          "additions": 84,
+          "deletions": 235,
+          "path": "docs/current-codex-implementation-path.md"
+        },
+        {
+          "additions": 26,
+          "deletions": 14,
+          "path": "scripts/test_current_codex_path_doc.py"
+        }
+      ],
+      "head_ref_name": "document-canonical-docker-codex-runner",
+      "head_ref_oid": "642b91195cb0083591ceaa40080d91c11a3fe701",
+      "labels": [],
+      "merge_commit_oid": "04e266a15670625c78ed55c0d4c4cdefccd4939e",
+      "merged_at": "2026-05-11T10:44:14Z",
+      "merged_by": "Unjuno",
+      "number": 259,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Document canonical Docker Codex runner",
+      "updated_at": "2026-05-11T10:44:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/259"
+    },
+    {
+      "additions": 27,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Closed intentionally.\n\nThis PR was created by the `First Canary Run` path, which uses the Python SDK / Responses API runner.\n\nThe canonical production implementation path for Prompt Vote Lab is now defined as:\n\n```text\nDocker-mounted workdir-only + Codex CLI\n```\n\nTherefore this PR is useful as evidence that the non-canonical API canary path can produce a small lab diff, but it must not be merged or counted as the canonical eligible implementation E2E verification.\n\nRequired next verification path:\n\n```text\nCodex Policy Agent Canary Run\n→ codex-cli-policy-enforced-agent-container\n→ docker-mounted-workdir-only\n→ lab/index.html, lab/style.css, lab/app.js only\n→ safety-check\n→ static-site-check\n→ PR creation\n```\n",
+      "body_length": 718,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T10:34:14Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T10:21:30Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 5,
           "deletions": 0,
           "path": "lab/index.html"
         },
         {
-          "additions": 19,
-          "deletions": 7,
+          "additions": 22,
+          "deletions": 0,
           "path": "lab/style.css"
         }
       ],
-      "head_ref_name": "add-lab-live-preview-hub",
-      "head_ref_oid": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
-      "labels": [],
-      "merge_commit_oid": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
-      "merged_at": "2026-05-11T10:09:10Z",
-      "merged_by": "Unjuno",
-      "number": 257,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add live preview hub to lab page",
-      "updated_at": "2026-05-11T10:09:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/257"
-    },
-    {
-      "additions": 69,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes history page generation so `Adopted` rank can be inferred from merged implementation PR metadata, not only from Issue text.\n\n## Problem\n\nSome implemented Issues do not include rank metadata in the Issue title/body. The matching merged PR does include metadata such as:\n\n```text\n- Issue: #191\n- Rank: 1\n```\n\nThe previous history generator counted the Issue as implemented but still rendered `Adopted: not decided`.\n\n## Changes\n\n- Parse merged PR bodies for `- Issue: #N` and `- Rank: N`.\n- Use the merged PR rank as a fallback for implemented Issues.\n- Update the history source-of-truth sentence to include live rank output pages.\n- Extend the history builder test to require `Adopted: rank 1` from PR metadata.\n\n## Scope\n\nScripts/tests only. No generated history page in this PR; Public Results Export should regenerate it after merge.",
-      "body_length": 854,
-      "changed_files": 2,
-      "closed_at": "2026-05-11T09:45:55Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T09:40:42Z",
-      "deletions": 9,
-      "files": [
-        {
-          "additions": 51,
-          "deletions": 8,
-          "path": "scripts/build_history_page.py"
-        },
-        {
-          "additions": 18,
-          "deletions": 1,
-          "path": "scripts/test_build_history_page.py"
-        }
-      ],
-      "head_ref_name": "fix-history-adopted-rank",
-      "head_ref_oid": "536a3c46ed8d6513bf4eca32d703050f9ef523b3",
-      "labels": [],
-      "merge_commit_oid": "f2d2737dd77b77f144e9707517bce8841c9da022",
-      "merged_at": "2026-05-11T09:45:55Z",
-      "merged_by": "Unjuno",
-      "number": 256,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Fix history adopted rank inference",
-      "updated_at": "2026-05-11T09:45:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/256"
-    },
-    {
-      "additions": 292,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds the missing live-rendered output snapshot for the 2026-W19 rank-1 candidate.\n\n## Problem\n\nThe W19 comparison dashboard links to:\n\n```text\nlab/comparisons/2026-W19/rank-1/\n```\n\nbut that output root did not exist on `main`.\n\n## Change\n\n- Add `lab/comparisons/2026-W19/rank-1/index.html`.\n- Add `lab/comparisons/2026-W19/rank-1/style.css`.\n- Add `lab/comparisons/2026-W19/rank-1/app.js`.\n\nThese files snapshot the merged W19 rank-1 implementation from PR #179.\n\n## Scope\n\nGenerated comparison evidence only. No root lab changes, no scripts, no workflows, no docs, no model or token-budget changes.",
-      "body_length": 611,
-      "changed_files": 3,
-      "closed_at": "2026-05-11T09:30:03Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T09:23:31Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 69,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W19/rank-1/app.js"
-        },
-        {
-          "additions": 57,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W19/rank-1/index.html"
-        },
-        {
-          "additions": 166,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W19/rank-1/style.css"
-        }
-      ],
-      "head_ref_name": "add-w19-rank1-live-output",
-      "head_ref_oid": "97bb5c9969ec214e1ca9e619fb7af5434e527bbb",
-      "labels": [],
-      "merge_commit_oid": "fac2360d3636bca83490db13d07cd42303a53118",
-      "merged_at": "2026-05-11T09:30:03Z",
-      "merged_by": "Unjuno",
-      "number": 255,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add W19 rank 1 live output snapshot",
-      "updated_at": "2026-05-11T09:30:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/255"
-    },
-    {
-      "additions": 380,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds the missing live-rendered output snapshot for the 2026-W20 rank-1 candidate.\n\n## Problem\n\nThe W20 comparison dashboard links rank outputs as live pages. Rank 2 and rank 3 already have live output roots, but rank 1 was missing:\n\n```text\nlab/comparisons/2026-W20/rank-1/\n```\n\n## Change\n\n- Add `lab/comparisons/2026-W20/rank-1/index.html`.\n- Add `lab/comparisons/2026-W20/rank-1/style.css`.\n- Add `lab/comparisons/2026-W20/rank-1/app.js`.\n\nThese files snapshot the merged rank-1 implementation from PR #192.\n\n## Scope\n\nGenerated comparison evidence only. No root lab changes, no scripts, no workflows, no docs, no model or token-budget changes.",
-      "body_length": 658,
-      "changed_files": 3,
-      "closed_at": "2026-05-11T08:40:01Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T08:36:09Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 69,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/app.js"
-        },
-        {
-          "additions": 73,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/index.html"
-        },
-        {
-          "additions": 238,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/style.css"
-        }
-      ],
-      "head_ref_name": "add-w20-rank1-live-output-v2",
-      "head_ref_oid": "88f3c5dc5d26ef39d98b68d1633b5206fec768f4",
-      "labels": [],
-      "merge_commit_oid": "d28818da2e601d83edb35eaa5aa701452d71c1d1",
-      "merged_at": "2026-05-11T08:40:01Z",
-      "merged_by": "Unjuno",
-      "number": 254,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add W20 rank 1 live output snapshot",
-      "updated_at": "2026-05-11T08:40:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/254"
-    },
-    {
-      "additions": 10,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nUpdates the generated comparison dashboard contract after #251 changed dashboards to expose rank outputs as live preview links.\n\n## Why\n\n#251 updated the dashboard generator to render:\n\n```text\nLive output -> ./rank-N/\n```\n\nPublic Results Export then regenerated the dashboards with the new wording:\n\n```text\nlive rank output pages remain the source of truth\n```\n\nThe generated-dashboard test still expected the older wording, so it failed after regeneration.\n\n## Changes\n\n- Require the new `live rank output pages` source-of-truth sentence.\n- Require `Live output` text.\n- Require each generated rank card to include `Open rank N output` and `href=\"./rank-N/\"`.\n\n## Scope\n\nTest contract only. No lab UI, generated evidence, workflow, model, or token-budget changes.",
-      "body_length": 778,
-      "changed_files": 1,
-      "closed_at": "2026-05-11T08:17:09Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T08:13:08Z",
-      "deletions": 1,
-      "files": [
-        {
-          "additions": 10,
-          "deletions": 1,
-          "path": "scripts/test_generated_comparison_dashboards.py"
-        }
-      ],
-      "head_ref_name": "update-generated-dashboard-live-output-contract",
-      "head_ref_oid": "2749b0103a0c79874d73f7daffd739c33107b697",
-      "labels": [],
-      "merge_commit_oid": "a7f479c5fe26b0b6dc6065115d3e8474a897a2ad",
-      "merged_at": "2026-05-11T08:17:09Z",
-      "merged_by": "Unjuno",
-      "number": 253,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Update generated dashboard live output contract",
-      "updated_at": "2026-05-11T08:17:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/253"
-    },
-    {
-      "additions": 380,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "Closed temporarily because Script Check exposed a separate contract-test drift after PR #251. The generated dashboards were regenerated with the new `live rank output pages` wording, but `scripts/test_generated_comparison_dashboards.py` still expected the older text. Fix the generated-dashboard contract test first, then reopen/recreate the rank-1 snapshot PR.",
-      "body_length": 361,
-      "changed_files": 3,
-      "closed_at": "2026-05-11T07:57:40Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T07:55:08Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 69,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/app.js"
-        },
-        {
-          "additions": 73,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/index.html"
-        },
-        {
-          "additions": 238,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-1/style.css"
-        }
-      ],
-      "head_ref_name": "add-w20-rank1-live-output",
-      "head_ref_oid": "2db12c456f5c6587fe874d51753fad2ebae695ff",
+      "head_ref_name": "first-canary-001-2",
+      "head_ref_oid": "50a99900a0fafcfe0aa6fd3c11b8f3fc03fa8113",
       "labels": [],
       "merge_commit_oid": null,
       "merged_at": null,
       "merged_by": null,
-      "number": 252,
+      "number": 258,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "CLOSED",
-      "title": "Add W20 rank 1 live output snapshot",
-      "updated_at": "2026-05-11T07:57:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/252"
+      "title": "Run fixed first canary",
+      "updated_at": "2026-05-11T10:34:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/258"
     },
     {
-      "additions": 22,
+      "additions": 3,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n\nUpdates the comparison dashboard generator so rank output roots are rendered as live preview links, not just plain code paths.\n\n## Changes\n\n- Render `Live output` links as `./rank-N/` for each comparison rank.\n- Link run records to GitHub-rendered Markdown.\n- Update the dashboard builder test to require the live output link contract.\n\n## Scope\n\nScripts/tests only. No root lab UI changes. No generated evidence changes. No workflow, model, or token-budget changes.",
-      "body_length": 478,
-      "changed_files": 2,
-      "closed_at": "2026-05-11T07:23:13Z",
+      "body": "## Summary\n\nFixes broken prompt submission links on the root landing page.\n\n## Problem\n\nThe root `index.html` linked to `template=prompt_proposal.yml`, but the repository issue template is `.github/ISSUE_TEMPLATE/prompt.yml`.\n\nThe `/lab/` page already uses `template=prompt.yml` correctly.\n\n## Change\n\n- Replace root landing page `template=prompt_proposal.yml` links with `template=prompt.yml`.\n\n## Scope\n\nRoot landing page only. No workflow, lab, script, rule, or generated evidence changes.",
+      "body_length": 492,
+      "changed_files": 1,
+      "closed_at": "2026-05-11T05:57:35Z",
       "comment_count": 0,
-      "created_at": "2026-05-11T07:21:04Z",
-      "deletions": 7,
+      "created_at": "2026-05-11T05:47:48Z",
+      "deletions": 3,
       "files": [
         {
-          "additions": 16,
-          "deletions": 7,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 6,
-          "deletions": 0,
-          "path": "scripts/test_build_comparison_dashboard.py"
+          "additions": 3,
+          "deletions": 3,
+          "path": "index.html"
         }
       ],
-      "head_ref_name": "generate-comparison-live-output-links",
-      "head_ref_oid": "be64c9f264f1c6c04c89d71db8d2989ab265722c",
+      "head_ref_name": "fix-root-prompt-template-links",
+      "head_ref_oid": "b37455cacc06cba97382868d83a0ef7f1d314bd1",
       "labels": [],
-      "merge_commit_oid": "879ea3f7bf8c0c12372f7cba6ec904d30f872a33",
-      "merged_at": "2026-05-11T07:23:13Z",
+      "merge_commit_oid": "dae69e50c1513b14ec39ed9fb707f9923338e991",
+      "merged_at": "2026-05-11T05:57:35Z",
       "merged_by": "Unjuno",
-      "number": 251,
-      "reaction_plus_one_count": 0,
+      "number": 249,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Generate live output links in comparison dashboards",
-      "updated_at": "2026-05-11T07:23:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/251"
+      "title": "Fix root prompt template links",
+      "updated_at": "2026-05-11T10:20:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/249"
     },
     {
       "additions": 463,
@@ -826,40 +663,277 @@
       "review_decision": null,
       "state": "CLOSED",
       "title": "Add live previews for rank outputs",
-      "updated_at": "2026-05-11T07:12:13Z",
+      "updated_at": "2026-05-11T10:20:08Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/250"
     },
     {
-      "additions": 3,
+      "additions": 10,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n\nFixes broken prompt submission links on the root landing page.\n\n## Problem\n\nThe root `index.html` linked to `template=prompt_proposal.yml`, but the repository issue template is `.github/ISSUE_TEMPLATE/prompt.yml`.\n\nThe `/lab/` page already uses `template=prompt.yml` correctly.\n\n## Change\n\n- Replace root landing page `template=prompt_proposal.yml` links with `template=prompt.yml`.\n\n## Scope\n\nRoot landing page only. No workflow, lab, script, rule, or generated evidence changes.",
-      "body_length": 492,
+      "body": "## Summary\n\nUpdates the generated comparison dashboard contract after #251 changed dashboards to expose rank outputs as live preview links.\n\n## Why\n\n#251 updated the dashboard generator to render:\n\n```text\nLive output -> ./rank-N/\n```\n\nPublic Results Export then regenerated the dashboards with the new wording:\n\n```text\nlive rank output pages remain the source of truth\n```\n\nThe generated-dashboard test still expected the older wording, so it failed after regeneration.\n\n## Changes\n\n- Require the new `live rank output pages` source-of-truth sentence.\n- Require `Live output` text.\n- Require each generated rank card to include `Open rank N output` and `href=\"./rank-N/\"`.\n\n## Scope\n\nTest contract only. No lab UI, generated evidence, workflow, model, or token-budget changes.",
+      "body_length": 778,
       "changed_files": 1,
-      "closed_at": "2026-05-11T05:57:35Z",
+      "closed_at": "2026-05-11T08:17:09Z",
       "comment_count": 0,
-      "created_at": "2026-05-11T05:47:48Z",
-      "deletions": 3,
+      "created_at": "2026-05-11T08:13:08Z",
+      "deletions": 1,
       "files": [
         {
-          "additions": 3,
-          "deletions": 3,
-          "path": "index.html"
+          "additions": 10,
+          "deletions": 1,
+          "path": "scripts/test_generated_comparison_dashboards.py"
         }
       ],
-      "head_ref_name": "fix-root-prompt-template-links",
-      "head_ref_oid": "b37455cacc06cba97382868d83a0ef7f1d314bd1",
+      "head_ref_name": "update-generated-dashboard-live-output-contract",
+      "head_ref_oid": "2749b0103a0c79874d73f7daffd739c33107b697",
       "labels": [],
-      "merge_commit_oid": "dae69e50c1513b14ec39ed9fb707f9923338e991",
-      "merged_at": "2026-05-11T05:57:35Z",
+      "merge_commit_oid": "a7f479c5fe26b0b6dc6065115d3e8474a897a2ad",
+      "merged_at": "2026-05-11T08:17:09Z",
       "merged_by": "Unjuno",
-      "number": 249,
+      "number": 253,
       "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Fix root prompt template links",
-      "updated_at": "2026-05-11T05:57:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/249"
+      "title": "Update generated dashboard live output contract",
+      "updated_at": "2026-05-11T10:20:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/253"
+    },
+    {
+      "additions": 380,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "Closed temporarily because Script Check exposed a separate contract-test drift after PR #251. The generated dashboards were regenerated with the new `live rank output pages` wording, but `scripts/test_generated_comparison_dashboards.py` still expected the older text. Fix the generated-dashboard contract test first, then reopen/recreate the rank-1 snapshot PR.",
+      "body_length": 361,
+      "changed_files": 3,
+      "closed_at": "2026-05-11T07:57:40Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T07:55:08Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 69,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/app.js"
+        },
+        {
+          "additions": 73,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/index.html"
+        },
+        {
+          "additions": 238,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/style.css"
+        }
+      ],
+      "head_ref_name": "add-w20-rank1-live-output",
+      "head_ref_oid": "2db12c456f5c6587fe874d51753fad2ebae695ff",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 252,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Add W20 rank 1 live output snapshot",
+      "updated_at": "2026-05-11T10:20:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/252"
+    },
+    {
+      "additions": 22,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nUpdates the comparison dashboard generator so rank output roots are rendered as live preview links, not just plain code paths.\n\n## Changes\n\n- Render `Live output` links as `./rank-N/` for each comparison rank.\n- Link run records to GitHub-rendered Markdown.\n- Update the dashboard builder test to require the live output link contract.\n\n## Scope\n\nScripts/tests only. No root lab UI changes. No generated evidence changes. No workflow, model, or token-budget changes.",
+      "body_length": 478,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T07:23:13Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T07:21:04Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 16,
+          "deletions": 7,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 6,
+          "deletions": 0,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "generate-comparison-live-output-links",
+      "head_ref_oid": "be64c9f264f1c6c04c89d71db8d2989ab265722c",
+      "labels": [],
+      "merge_commit_oid": "879ea3f7bf8c0c12372f7cba6ec904d30f872a33",
+      "merged_at": "2026-05-11T07:23:13Z",
+      "merged_by": "Unjuno",
+      "number": 251,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Generate live output links in comparison dashboards",
+      "updated_at": "2026-05-11T10:20:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/251"
+    },
+    {
+      "additions": 380,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds the missing live-rendered output snapshot for the 2026-W20 rank-1 candidate.\n\n## Problem\n\nThe W20 comparison dashboard links rank outputs as live pages. Rank 2 and rank 3 already have live output roots, but rank 1 was missing:\n\n```text\nlab/comparisons/2026-W20/rank-1/\n```\n\n## Change\n\n- Add `lab/comparisons/2026-W20/rank-1/index.html`.\n- Add `lab/comparisons/2026-W20/rank-1/style.css`.\n- Add `lab/comparisons/2026-W20/rank-1/app.js`.\n\nThese files snapshot the merged rank-1 implementation from PR #192.\n\n## Scope\n\nGenerated comparison evidence only. No root lab changes, no scripts, no workflows, no docs, no model or token-budget changes.",
+      "body_length": 658,
+      "changed_files": 3,
+      "closed_at": "2026-05-11T08:40:01Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T08:36:09Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 69,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/app.js"
+        },
+        {
+          "additions": 73,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/index.html"
+        },
+        {
+          "additions": 238,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W20/rank-1/style.css"
+        }
+      ],
+      "head_ref_name": "add-w20-rank1-live-output-v2",
+      "head_ref_oid": "88f3c5dc5d26ef39d98b68d1633b5206fec768f4",
+      "labels": [],
+      "merge_commit_oid": "d28818da2e601d83edb35eaa5aa701452d71c1d1",
+      "merged_at": "2026-05-11T08:40:01Z",
+      "merged_by": "Unjuno",
+      "number": 254,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add W20 rank 1 live output snapshot",
+      "updated_at": "2026-05-11T10:20:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/254"
+    },
+    {
+      "additions": 69,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes history page generation so `Adopted` rank can be inferred from merged implementation PR metadata, not only from Issue text.\n\n## Problem\n\nSome implemented Issues do not include rank metadata in the Issue title/body. The matching merged PR does include metadata such as:\n\n```text\n- Issue: #191\n- Rank: 1\n```\n\nThe previous history generator counted the Issue as implemented but still rendered `Adopted: not decided`.\n\n## Changes\n\n- Parse merged PR bodies for `- Issue: #N` and `- Rank: N`.\n- Use the merged PR rank as a fallback for implemented Issues.\n- Update the history source-of-truth sentence to include live rank output pages.\n- Extend the history builder test to require `Adopted: rank 1` from PR metadata.\n\n## Scope\n\nScripts/tests only. No generated history page in this PR; Public Results Export should regenerate it after merge.",
+      "body_length": 854,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T09:45:55Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T09:40:42Z",
+      "deletions": 9,
+      "files": [
+        {
+          "additions": 51,
+          "deletions": 8,
+          "path": "scripts/build_history_page.py"
+        },
+        {
+          "additions": 18,
+          "deletions": 1,
+          "path": "scripts/test_build_history_page.py"
+        }
+      ],
+      "head_ref_name": "fix-history-adopted-rank",
+      "head_ref_oid": "536a3c46ed8d6513bf4eca32d703050f9ef523b3",
+      "labels": [],
+      "merge_commit_oid": "f2d2737dd77b77f144e9707517bce8841c9da022",
+      "merged_at": "2026-05-11T09:45:55Z",
+      "merged_by": "Unjuno",
+      "number": 256,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix history adopted rank inference",
+      "updated_at": "2026-05-11T10:20:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/256"
+    },
+    {
+      "additions": 292,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds the missing live-rendered output snapshot for the 2026-W19 rank-1 candidate.\n\n## Problem\n\nThe W19 comparison dashboard links to:\n\n```text\nlab/comparisons/2026-W19/rank-1/\n```\n\nbut that output root did not exist on `main`.\n\n## Change\n\n- Add `lab/comparisons/2026-W19/rank-1/index.html`.\n- Add `lab/comparisons/2026-W19/rank-1/style.css`.\n- Add `lab/comparisons/2026-W19/rank-1/app.js`.\n\nThese files snapshot the merged W19 rank-1 implementation from PR #179.\n\n## Scope\n\nGenerated comparison evidence only. No root lab changes, no scripts, no workflows, no docs, no model or token-budget changes.",
+      "body_length": 611,
+      "changed_files": 3,
+      "closed_at": "2026-05-11T09:30:03Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T09:23:31Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 69,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W19/rank-1/app.js"
+        },
+        {
+          "additions": 57,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W19/rank-1/index.html"
+        },
+        {
+          "additions": 166,
+          "deletions": 0,
+          "path": "lab/comparisons/2026-W19/rank-1/style.css"
+        }
+      ],
+      "head_ref_name": "add-w19-rank1-live-output",
+      "head_ref_oid": "97bb5c9969ec214e1ca9e619fb7af5434e527bbb",
+      "labels": [],
+      "merge_commit_oid": "fac2360d3636bca83490db13d07cd42303a53118",
+      "merged_at": "2026-05-11T09:30:03Z",
+      "merged_by": "Unjuno",
+      "number": 255,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add W19 rank 1 live output snapshot",
+      "updated_at": "2026-05-11T10:20:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/255"
+    },
+    {
+      "additions": 54,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a live preview hub to `/lab/` so participants can open rendered pages, not source files.\n\n## Changes\n\n- Add a `Live previews` nav item.\n- Add a `Live previews` section linking to:\n  - current accepted lab\n  - 2026-W20 rank 1 output\n  - 2026-W20 rank 2 output\n  - 2026-W20 rank 3 output\n  - 2026-W20 comparison dashboard\n  - history\n- Add responsive preview-card styles.\n\n## Scope\n\nRoot lab UI only: `lab/index.html` and `lab/style.css`.\n\nNo generated evidence, scripts, workflows, docs, model, token-budget, or W0 reset changes.",
+      "body_length": 545,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T10:09:10Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T10:03:44Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 35,
+          "deletions": 0,
+          "path": "lab/index.html"
+        },
+        {
+          "additions": 19,
+          "deletions": 7,
+          "path": "lab/style.css"
+        }
+      ],
+      "head_ref_name": "add-lab-live-preview-hub",
+      "head_ref_oid": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
+      "labels": [],
+      "merge_commit_oid": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
+      "merged_at": "2026-05-11T10:09:10Z",
+      "merged_by": "Unjuno",
+      "number": 257,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add live preview hub to lab page",
+      "updated_at": "2026-05-11T10:19:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/257"
     },
     {
       "additions": 20,
@@ -4587,95 +4661,6 @@
       "title": "Add Codex path comparison table",
       "updated_at": "2026-05-06T10:30:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/145"
-    },
-    {
-      "additions": 255,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nUpdates the Codex implementation path documents after the successful `first-canary-007-policy-enforced-agent` run.\n\n## Changed files\n\n- `docs/current-codex-implementation-path.md`\n- `docs/canary-007-policy-enforced-agent.md`\n- `scripts/test_current_codex_path_doc.py`\n\n## What changed\n\n- Records 007 as a successful policy-enforced agent candidate path.\n- Keeps 005 as the current stable production-oriented writeback path.\n- Adds a promotion rule: 007 needs at least 2 consecutive successful full runs with matching policy diagnostics before becoming the standard agent path.\n- Updates the CI doc guard so the 007 classification is not accidentally removed.\n\n## Scope\n\n- Documentation and test update only.\n- No canary execution.\n- No `/lab/` changes.\n- No model, retry, fallback, file-scope, or policy mount changes.",
-      "body_length": 830,
-      "changed_files": 3,
-      "closed_at": "2026-05-06T07:39:11Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T07:36:17Z",
-      "deletions": 96,
-      "files": [
-        {
-          "additions": 127,
-          "deletions": 76,
-          "path": "docs/canary-007-policy-enforced-agent.md"
-        },
-        {
-          "additions": 121,
-          "deletions": 18,
-          "path": "docs/current-codex-implementation-path.md"
-        },
-        {
-          "additions": 7,
-          "deletions": 2,
-          "path": "scripts/test_current_codex_path_doc.py"
-        }
-      ],
-      "head_ref_name": "docs-007-after-success",
-      "head_ref_oid": "8cc35d8771e48917d7a1c85094882f6724d7f08b",
-      "labels": [],
-      "merge_commit_oid": "f1a170c7049c828f7760fae6cd054827a86fec61",
-      "merged_at": "2026-05-06T07:39:11Z",
-      "merged_by": "Unjuno",
-      "number": 144,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Update Codex path docs after seventh canary",
-      "updated_at": "2026-05-06T10:30:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/144"
-    },
-    {
-      "additions": 526,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds the full `first-canary-008-selected-prompt-task-packet` implementation path.\n\n## Changed files\n\n- `.github/workflows/codex-task-packet-canary-run.yml`\n- `.github/workflows/script-check.yml`\n- `scripts/create_codex_task_packet.py`\n- `scripts/run_codex_task_packet_canary.sh`\n\n## What this adds\n\n- selected prompt task packet generator\n- `/task:ro` task packet mount\n- `/work:rw` lab work mount\n- `/codex-runtime:rw` runtime mount\n- `/diagnostics:rw` evidence mount\n- API key presence check with `OPENAI_API_KEY` unset before `codex exec`\n- task packet hash artifacts\n- task packet read-only write test\n\n## Fixed conditions\n\n- model: `gpt-5.4-nano`\n- attempts: `1`\n- retry policy: `none`\n- fallback policy: `none`\n- auto-merge: disabled\n- final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Scope\n\n- Adds 008 workflow and runner.\n- Does not run the canary in this PR.\n- Does not modify `/lab/`.",
-      "body_length": 931,
-      "changed_files": 4,
-      "closed_at": "2026-05-06T08:33:26Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T08:31:35Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 191,
-          "deletions": 0,
-          "path": ".github/workflows/codex-task-packet-canary-run.yml"
-        },
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 136,
-          "deletions": 0,
-          "path": "scripts/create_codex_task_packet.py"
-        },
-        {
-          "additions": 197,
-          "deletions": 0,
-          "path": "scripts/run_codex_task_packet_canary.sh"
-        }
-      ],
-      "head_ref_name": "canary-008-task-packet",
-      "head_ref_oid": "f991c4d2268d6a03c960a94e1cb247e1ec50db45",
-      "labels": [],
-      "merge_commit_oid": "3beef94872ff2c2709562eaa26137c794af1f2cc",
-      "merged_at": "2026-05-06T08:33:26Z",
-      "merged_by": "Unjuno",
-      "number": 147,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add selected prompt task packet canary",
-      "updated_at": "2026-05-06T10:30:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/147"
     }
   ],
   "run_records": [
@@ -4813,7 +4798,7 @@
     "blocked_issue_count": 2,
     "clear_issue_count": 5,
     "issue_count": 12,
-    "merged_pr_count": 86,
+    "merged_pr_count": 85,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -4821,6 +4806,104 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-11T10:44:17Z",
+      "database_id": 25665385222,
+      "display_title": "Document canonical Docker Codex runner",
+      "event": "pull_request",
+      "head_branch": "document-canonical-docker-codex-runner",
+      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:44:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665385222",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:42:28Z",
+      "database_id": 25665304844,
+      "display_title": "Document canonical Docker Codex runner",
+      "event": "pull_request",
+      "head_branch": "document-canonical-docker-codex-runner",
+      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:42:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304844",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:42:28Z",
+      "database_id": 25665304843,
+      "display_title": "Document canonical Docker Codex runner",
+      "event": "pull_request",
+      "head_branch": "document-canonical-docker-codex-runner",
+      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:42:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304843",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:42:28Z",
+      "database_id": 25665304835,
+      "display_title": "Document canonical Docker Codex runner",
+      "event": "pull_request",
+      "head_branch": "document-canonical-docker-codex-runner",
+      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:42:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304835",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-11T10:34:16Z",
+      "database_id": 25664941687,
+      "display_title": "Run fixed first canary",
+      "event": "pull_request",
+      "head_branch": "first-canary-001-2",
+      "head_sha": "50a99900a0fafcfe0aa6fd3c11b8f3fc03fa8113",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:34:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25664941687",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:20:44Z",
+      "database_id": 25664331320,
+      "display_title": "First Canary Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "342af571693470832cc4ff95683326c5e8d5e4c5",
+      "name": "First Canary Run",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:21:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25664331320",
+      "workflow_name": "First Canary Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:09:38Z",
+      "database_id": 25663835042,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "342af571693470832cc4ff95683326c5e8d5e4c5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:10:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663835042",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-11T10:09:13Z",
@@ -4834,6 +4917,34 @@
       "updated_at": "2026-05-11T10:09:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663816990",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:09:13Z",
+      "database_id": 25663816979,
+      "display_title": "Add live preview hub to lab page (#257)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:09:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663816979",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T10:09:12Z",
+      "database_id": 25663815972,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T10:09:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663815972",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6066,132 +6177,6 @@
       "updated_at": "2026-05-11T03:37:12Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648960746",
       "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:37:03Z",
-      "database_id": 25648960732,
-      "display_title": "Improve lab participant and run-result links",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "f0a4f77513c1d15f7ff5a8213957f56bf0d39bcb",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:37:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648960732",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:37:03Z",
-      "database_id": 25648960718,
-      "display_title": "Improve lab participant and run-result links",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "f0a4f77513c1d15f7ff5a8213957f56bf0d39bcb",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:37:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648960718",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:34:49Z",
-      "database_id": 25648902181,
-      "display_title": "Improve lab participant and run-result links",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "d87dc8c7befb32770ef43bf02919061320c21d61",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:35:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648902181",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T03:34:49Z",
-      "database_id": 25648902174,
-      "display_title": "Improve lab participant and run-result links",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "d87dc8c7befb32770ef43bf02919061320c21d61",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:34:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648902174",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:34:49Z",
-      "database_id": 25648902166,
-      "display_title": "Improve lab participant and run-result links",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "d87dc8c7befb32770ef43bf02919061320c21d61",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:34:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648902166",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:25:32Z",
-      "database_id": 25648657758,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a957b91b572da3d5044f9bc3b42b34ec0a939d8a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:26:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648657758",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T03:25:16Z",
-      "database_id": 25648650100,
-      "display_title": "Add safe dev artifact reset script (#246)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "2eb6bf303106780b4987496f06fb1223dee9f07f",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:25:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648650100",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T03:25:16Z",
-      "database_id": 25648650091,
-      "display_title": "Add safe dev artifact reset script",
-      "event": "pull_request",
-      "head_branch": "document-weekly-automation-schedule",
-      "head_sha": "6ae31b39d530440e32c019d611101923863ada39",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:25:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648650091",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-11T03:25:16Z",
-      "database_id": 25648649736,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "2eb6bf303106780b4987496f06fb1223dee9f07f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T03:25:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25648649736",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
