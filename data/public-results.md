@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T03:39:36+00:00`
+Generated at: `2026-05-11T05:08:18+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 248 | MERGED | 14 | 162/72 | Reconcile active implementation model and verification docs |
 | 247 | MERGED | 2 | 128/14 | Improve lab participant and run-result links |
 | 246 | MERGED | 3 | 247/0 | Add safe dev artifact reset script |
 | 245 | MERGED | 3 | 285/25 | Add participant guide |
@@ -69,42 +70,41 @@ This file is a raw results surface for participants. It does not score prompts o
 | 219 | CLOSED | 3 | 491/0 | Run Codex comparison issue rank 2 |
 | 218 | CLOSED | 1 | 7/0 | Request metadata-normalized comparison run for Issue 195 rank 2 |
 | 222 | MERGED | 1 | 1/1 | Normalize rank 2 comparison metadata v2 |
-| 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
-| 25649020318 | Terminal State Report | pull_request | completed | skipped | Improve lab participant and run-result links |
-| 25648960746 | Static Site Check | pull_request | completed | success | Improve lab participant and run-result links |
-| 25648960732 | Safety Check | pull_request | completed | success | Improve lab participant and run-result links |
-| 25648960718 | Lab PR Scope Check | pull_request | completed | success | Improve lab participant and run-result links |
-| 25648902181 | Lab PR Scope Check | pull_request | completed | success | Improve lab participant and run-result links |
-| 25648902174 | Static Site Check | pull_request | completed | failure | Improve lab participant and run-result links |
-| 25648902166 | Safety Check | pull_request | completed | success | Improve lab participant and run-result links |
-| 25648657758 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25648650100 | Public Results Export | push | completed | success | Add safe dev artifact reset script (#246) |
-| 25648650091 | Terminal State Report | pull_request | completed | skipped | Add safe dev artifact reset script |
-| 25648649736 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25648606407 | Script Check | pull_request | completed | success | Add safe dev artifact reset script |
-| 25648606406 | Lab PR Scope Check | pull_request | completed | success | Add safe dev artifact reset script |
-| 25634245435 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25634238935 | Terminal State Report | pull_request | completed | skipped | Add participant guide |
-| 25634238916 | Public Results Export | push | completed | success | Add participant guide (#245) |
-| 25634238674 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25634175707 | Lab PR Scope Check | pull_request | completed | success | Add participant guide |
-| 25634175702 | Pre-API Freeze Audit | pull_request | completed | success | Add participant guide |
-| 25634175695 | Static Site Check | pull_request | completed | success | Add participant guide |
-| 25634175692 | Script Check | pull_request | completed | success | Add participant guide |
-| 25633813001 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25633804632 | Terminal State Report | pull_request | completed | skipped | Add operator runbook |
-| 25633804613 | Public Results Export | push | completed | success | Add operator runbook (#244) |
-| 25633804285 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25633775274 | Lab PR Scope Check | pull_request | completed | success | Add operator runbook |
-| 25633775268 | Pre-API Freeze Audit | pull_request | completed | success | Add operator runbook |
-| 25633775262 | Static Site Check | pull_request | completed | success | Add operator runbook |
-| 25633291512 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25633285455 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W19 |
+| 25651480869 | Terminal State Report | pull_request | completed | skipped | Reconcile active implementation model and verification docs |
+| 25651432481 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651432478 | Implementation Preflight Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651432477 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651432476 | Select Eligible Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651432474 | Static Site Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651432473 | Script Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251137 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251124 | Implementation Preflight Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251121 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251110 | Select Eligible Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251107 | Static Site Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651251104 | Script Check | pull_request | completed | failure | Reconcile active implementation model and verification docs |
+| 25651182120 | Select Eligible Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651182119 | Static Site Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651182116 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651182113 | Implementation Preflight Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651182100 | Script Check | pull_request | completed | failure | Reconcile active implementation model and verification docs |
+| 25651182096 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651112849 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651112840 | Select Eligible Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651112839 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25651112837 | Script Check | pull_request | completed | failure | Reconcile active implementation model and verification docs |
+| 25651112836 | Implementation Preflight Test | pull_request | completed | failure | Reconcile active implementation model and verification docs |
+| 25651112835 | Static Site Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
+| 25650606228 | Weekly Auto Run | schedule | completed | failure | Weekly Auto Run |
+| 25650531058 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25650527467 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25649027441 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25649020328 | Public Results Export | push | completed | success | Improve lab participant and run-result links (#247) |
 
 ## Raw JSON
 
