@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T11:17:02+00:00`
+Generated at: `2026-05-11T12:08:50+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
@@ -69,13 +70,25 @@ This file is a raw results surface for participants. It does not score prompts o
 | 215 | CLOSED | 1 | 7/0 | Request comparison run for Issue 196 rank 3 |
 | 216 | CLOSED | 3 | 672/0 | Run Codex comparison issue rank 3 |
 | 217 | MERGED | 4 | 61/17 | Normalize comparison rank metadata |
-| 236 | MERGED | 5 | 58/4 | Require support unlock data before weekly runs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25669185706 | Terminal State Report | pull_request | completed | skipped | Expand public agent observation logs |
+| 25669057691 | Script Check | pull_request | completed | success | Expand public agent observation logs |
+| 25669057647 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
+| 25669057642 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
+| 25668900889 | Script Check | pull_request | completed | failure | Expand public agent observation logs |
+| 25668900888 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
+| 25668900840 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
+| 25668454824 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
+| 25668454813 | Script Check | pull_request | completed | failure | Expand public agent observation logs |
+| 25668454794 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
+| 25666859511 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25666845129 | Terminal State Report | pull_request | completed | skipped | Publish redacted policy-agent public bundle |
+| 25666845125 | Public Results Export | push | completed | success | Publish redacted policy-agent public bundle (#260) |
+| 25666844200 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25666681185 | Lab PR Scope Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
 | 25666681126 | Script Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
 | 25666681119 | Static Site Check | pull_request | completed | success | Publish redacted policy-agent public bundle |
@@ -92,19 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25664941687 | Terminal State Report | pull_request | completed | skipped | Run fixed first canary |
 | 25664331320 | First Canary Run | workflow_dispatch | completed | success | First Canary Run |
 | 25663835042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25663816990 | Terminal State Report | pull_request | completed | skipped | Add live preview hub to lab page |
-| 25663816979 | Public Results Export | push | completed | success | Add live preview hub to lab page (#257) |
-| 25663815972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25663571129 | Lab PR Scope Check | pull_request | completed | success | Add live preview hub to lab page |
-| 25663571114 | Static Site Check | pull_request | completed | success | Add live preview hub to lab page |
-| 25663571068 | Safety Check | pull_request | completed | success | Add live preview hub to lab page |
-| 25662749077 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25662731773 | Terminal State Report | pull_request | completed | skipped | Fix history adopted rank inference |
-| 25662731771 | Public Results Export | push | completed | success | Fix history adopted rank inference (#256) |
-| 25662730449 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25662494071 | Script Check | pull_request | completed | success | Fix history adopted rank inference |
-| 25662494054 | Lab PR Scope Check | pull_request | completed | success | Fix history adopted rank inference |
-| 25661992788 | Terminal State Report | pull_request | completed | skipped | Add W19 rank 1 live output snapshot |
 
 ## Raw JSON
 
