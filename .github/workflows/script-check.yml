@@ -106,6 +106,9 @@ jobs:
       - name: Run evidence artifact smoke test
         run: node scripts/run-evidence-artifact-smoke.mjs
 
+      - name: Run reset dev artifacts test
+        run: python scripts/test_reset_dev_artifacts.py
+
       - name: Run pre-API freeze audit self-test
         run: python scripts/test_pre_api_freeze_audit.py
 
