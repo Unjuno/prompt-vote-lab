@@ -81,6 +81,24 @@ jobs:
             --allowed-file lab/style.css \
             --allowed-file lab/app.js
 
+      - name: Build redacted public agent run bundle
+        if: ${{ always() }}
+        run: |
+          python scripts/build_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --out-dir .tmp/public-agent-run-bundle \
+            --run-id "codex-policy-agent-canary-${{ github.run_number }}" \
+            --issue-number "0" \
+            --pr-number ""
+
+      - name: Upload redacted public agent run bundle
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-policy-agent-canary-public-bundle-${{ github.run_number }}
+          path: .tmp/public-agent-run-bundle
+          if-no-files-found: error
+
       - name: Upload diagnostics artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -173,9 +191,15 @@ jobs:
           - safety-check passed before PR creation
           - static-site-check passed before PR creation
 
+          ## Public evidence
+
+          - Redacted public agent run bundle artifact: \`codex-policy-agent-canary-public-bundle-${{ github.run_number }}\`
+          - Public run log artifact: \`codex-policy-agent-canary-public-log-${{ github.run_number }}\`
+          - Internal diagnostics artifact: \`codex-policy-agent-canary-diagnostics-${{ github.run_number }}\`
+
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis.
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted and allowlisted.
 
           ## Merge policy
 
