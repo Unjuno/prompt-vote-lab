@@ -33,6 +33,10 @@ REQUIRED_FILES = [
     ".github/workflows/evidence-pipeline-dry-run.yml",
 ]
 
+ACTIVE_MODEL = "gpt-5.4-nano"
+ACTIVE_MAX_OUTPUT_TOKENS = "5000"
+DEFERRED_MAX_OUTPUT_TOKENS = "12000"
+
 REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "docs/pre-api-freeze.md": [
         "no automatic merge",
@@ -40,13 +44,14 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "no fallback model",
         "Weekly Auto Run no-eligible workflow",
         "Evidence Pipeline Dry Run with `source=live`",
-        "PR #81",
-        "gpt-5-nano",
+        "Support Unlock Export live path",
+        "PR #243",
+        ACTIVE_MODEL,
         "max output tokens: 5000",
         "workflow attempts to auto-merge",
     ],
     "docs/canary-policy.md": [
-        "model: gpt-5-nano",
+        f"model: {ACTIVE_MODEL}",
         "attempts per candidate: 1",
         "SDK max_retries: 0",
         "fallback model: none",
@@ -73,7 +78,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "Do not run the canary unless every required item is PASS.",
         "open PRs: 0",
         "remote branches: main only",
-        "model: gpt-5-nano",
+        f"model: {ACTIVE_MODEL}",
         "SDK max_retries: 0",
         "API call limit per candidate: 1",
         "max output tokens: 5000",
@@ -96,8 +101,11 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "docs/current-features.md": [
         "no-eligible production workflow path: verified",
+        "Support Unlock Export live path: verified",
         "real implementation-agent canary: not yet executed",
         "production autonomy: not complete",
+        ACTIVE_MODEL,
+        "max output tokens capped at 5000",
         "Evidence Pipeline Dry Run",
         "source=live",
     ],
@@ -137,7 +145,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "safe_canary_no_external_publishing",
     ],
     "scripts/preflight_implementation_agent.py": [
-        "ALLOWED_MODELS = {\"gpt-5-nano\"}",
+        f"ALLOWED_MODELS = {{\"{ACTIVE_MODEL}\"}}",
         "MAX_OUTPUT_TOKENS_LIMIT = 5000",
         "if sdk_max_retries != 0",
         "api_call_limit != 1",
@@ -151,6 +159,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "MAX_OUTPUT_TOKENS",
         "5000",
         "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
+        f"gpt-5.4-nano",
         "This is one bounded implementation-agent attempt.",
         "Do not create additional files.",
     ],
@@ -196,7 +205,8 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "no_change_baseline_candidate",
     ],
     ".github/workflows/weekly-auto-run.yml": [
-        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
+        f"AUTO_IMPLEMENTATION_MODEL: \"{ACTIVE_MODEL}\"",
+        f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
         "MAX_OUTPUT_TOKENS: \"5000\"",
         "SDK_MAX_RETRIES: \"0\"",
         "--api-call-limit-per-candidate 1",
@@ -207,7 +217,7 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     ".github/workflows/first-canary-run.yml": [
         "workflow_dispatch",
-        "IMPLEMENTATION_MODEL: gpt-5-nano",
+        f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
         "MAX_OUTPUT_TOKENS: \"5000\"",
         "SDK_MAX_RETRIES: \"0\"",
         "RUN_WEEK: first-canary-001",
@@ -240,6 +250,7 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "SDK_MAX_RETRIES: \"2\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
+        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
     ],
     ".github/workflows/first-canary-run.yml": [
         "enable-auto-merge",
@@ -247,17 +258,20 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "MAX_OUTPUT_TOKENS: \"12000\"",
         "SDK_MAX_RETRIES: \"1\"",
         "SDK_MAX_RETRIES: \"2\"",
+        "IMPLEMENTATION_MODEL: gpt-5-nano",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
     ],
     "scripts/preflight_implementation_agent.py": [
         "ALLOWED_MODELS = {\"gpt-5\"}",
         "ALLOWED_MODELS = {\"gpt-5-mini\"}",
+        "ALLOWED_MODELS = {\"gpt-5-nano\"}",
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
         "api_call_performed\": True",
         "sdk_max_retries != 1",
     ],
     "scripts/openai_lab_run.py": [
+        "os.getenv(\"IMPLEMENTATION_MODEL\", \"gpt-5-nano\")",
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
         "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
         "args.max_output_tokens > 12000",
