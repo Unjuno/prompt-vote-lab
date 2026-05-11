@@ -71,7 +71,13 @@ def main() -> int:
             diag / "policy-agent-diff.patch",
             "diff --git a/lab/index.html b/lab/index.html\n--- a/lab/index.html\n+++ b/lab/index.html\n@@ -1 +1,2 @@\n-old\n+new\n+line\n",
         )
+        write(
+            diag / "codex-events.jsonl",
+            '{"type":"reasoning","message":"I will inspect visible copy, then change lab/index.html because the prompt asks for hero wording."}\n'
+            '{"type":"action","message":"modify lab/index.html"}\n',
+        )
         write(diag / "codex-last-message.txt", "I changed lab/index.html and did not touch app.js. token sk-FAKEFAKEFAKEFAKE should redact.\n")
+        write(diag / "codex-stdout.txt", "reasoning trace says inspect visible copy and change index.html because content is requested\n")
         write(diag / "codex-stderr.txt", "stderr path /home/runner/work/prompt-vote-lab/prompt-vote-lab and key sk-FAKEFAKEFAKEFAKEFAKEFAKEFAKE\n")
         write(diag / "policy-agent-container-stderr.txt", "container stderr from /tmp/pvl-secret\n")
         write(diag / "npm-install-codex.txt", "npm installed in /github/workspace with GH_TOKEN=ghp_FAKEFAKEFAKEFAKEFAKE\n")
@@ -88,9 +94,11 @@ def main() -> int:
 
         index = json.loads((bundle / "index.json").read_text(encoding="utf-8"))
         assert index["policy"]["sanitized_diagnostic_logs_included"] is True
+        assert index["policy"]["sanitized_reasoning_traces_included"] is True
         assert index["policy"]["sanitizer_guarantee"] == "best_effort_pattern_redaction"
         assert index["observation_summary"]["json"] == "observation-summary.json"
         assert index["observation_summary"]["markdown"] == "observation-summary.md"
+        assert "reasoning_trace_files" in index
 
         sanitized_stderr = (bundle / "sanitized" / "codex-stderr.txt").read_text(encoding="utf-8")
         assert "sk-FAKE" not in sanitized_stderr
@@ -104,6 +112,13 @@ def main() -> int:
         assert "[REDACTED_SECRET]" in npm_log
         assert "[REDACTED_GITHUB_WORKSPACE]" in npm_log
 
+        reasoning_events = (bundle / "reasoning-traces" / "codex-events.jsonl").read_text(encoding="utf-8")
+        assert "reasoning" in reasoning_events
+        assert "hero wording" in reasoning_events
+        reasoning_stderr = (bundle / "reasoning-traces" / "codex-stderr.txt").read_text(encoding="utf-8")
+        assert "sk-FAKE" not in reasoning_stderr
+        assert "[REDACTED_SECRET]" in reasoning_stderr
+
         summary = json.loads((bundle / "observation-summary.json").read_text(encoding="utf-8"))
         assert summary["schema_version"] == "prompt-vote-lab-agent-observation-summary-v1"
         assert summary["path_model"]["repo_root_mounted"] is False
@@ -113,8 +128,23 @@ def main() -> int:
         assert summary["agent_observation"]["denied_access_paths"] == ["/repo/private-file.txt"]
         assert "sk-FAKE" not in summary["agent_observation"]["agent_final_action_summary"]
         assert "[REDACTED_SECRET]" in summary["agent_observation"]["agent_final_action_summary"]
-        assert summary["limits"]["raw_private_reasoning_collected"] is False
-        assert summary["limits"]["exact_read_order_observed"] is False
+
+        reasoning = summary["reasoning_trace"]
+        assert reasoning["available"] is True
+        assert reasoning["public_trace_available"] is True
+        assert reasoning["sanitized"] is True
+        assert reasoning["published_directory"] == "reasoning-traces/"
+        assert reasoning["used_for_behavior_evaluation"] is True
+        assert reasoning["exposed_reasoning_trace_published"] is True
+        assert reasoning["unexposed_provider_private_cot_available"] == "unknown"
+        assert reasoning["unexposed_provider_private_cot_published"] is False
+        assert reasoning["contains_reasoning_like_terms"] is True
+        assert reasoning["keyword_group_counts"]["visible_copy_terms"] > reasoning["keyword_group_counts"]["interaction_terms"]
+        assert any(item["name"] == "codex-events.jsonl" and item["included"] for item in reasoning["files"])
+        assert any(item["name"] == "codex-stdout.txt" and item["included"] for item in reasoning["files"])
+        assert summary["reasoning_effect_hypotheses"]
+        assert "visible copy" in summary["reasoning_effect_hypotheses"][0]["hypothesis"]
+        assert summary["limits"]["unexposed_provider_private_cot_collected"] is False
 
         by_file = {item["file"]: item for item in summary["file_activity"]}
         assert by_file["lab/index.html"]["changed"] is True
@@ -125,12 +155,16 @@ def main() -> int:
 
         md = (bundle / "observation-summary.md").read_text(encoding="utf-8")
         assert "Agent observation summary" in md
+        assert "Reasoning / CoT-like trace evidence" in md
+        assert "reasoning-traces/" in md
+        assert "Reasoning effect hypotheses" in md
         assert "Sanitized logs" in md
-        assert "Exact file read order is not guaranteed" in md
+        assert "Unexposed provider-private internals are not claimed to be available" in md
 
         readme = (bundle / "README.md").read_text(encoding="utf-8")
         assert "Agent observation summary" in readme
-        assert "Sanitized diagnostic logs" in readme
+        assert "reasoning / CoT-like trace evidence" in readme
+        assert "reasoning-traces/" in readme
 
     print("public agent run bundle enrichment test passed")
     return 0
