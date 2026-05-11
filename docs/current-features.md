@@ -72,9 +72,11 @@ baseline itself is never eligible
 
 Implemented:
 
+- `Support Unlock Export`
 - `Weekly Auto Run`
 - `Weekly Mock Run`
 - `Weekly Report Draft`
+- support unlock JSON generation under `data/support-unlocks/`
 - synthetic mock vote summary PR
 - synthetic mock implementation PR
 - model-free weekly report draft PR
@@ -83,11 +85,14 @@ Implemented:
 
 Verified:
 
-- Weekly Auto Run no-eligible production path created only `runs/week-2026-W19-vote-summary.md` in PR #81.
+- Support Unlock Export live path: verified.
+- `data/support-unlocks/2026-W19.json` was generated and validated as anonymized aggregate output.
+- Weekly Auto Run no-eligible production path created only `runs/week-2026-W19-vote-summary.md` in PR #243.
 - The recorded summary had baseline rank 1 with 20 virtual votes.
 - `eligible_count` was 0.
 - `eligible_ranks` was empty.
 - No implementation PR was created during that no-eligible run.
+- Earlier no-eligible evidence also exists in PR #81, before the support-unlock prerequisite was added.
 
 Not implemented:
 
@@ -101,7 +106,7 @@ Not implemented:
 
 Prepared but not yet executed:
 
-- fixed implementation model: `gpt-5-nano`
+- fixed implementation model: `gpt-5.4-nano`
 - one implementation attempt per candidate
 - SDK retry must be 0
 - no fallback model
@@ -109,6 +114,10 @@ Prepared but not yet executed:
 - eligible candidate secret requirement
 - no-eligible path does not require implementation-agent secret
 - preflight script before API dependency install
+
+Deferred:
+
+- raising max output tokens to 12000
 
 Not yet done:
 
@@ -221,6 +230,7 @@ Implemented:
 - pre-API freeze checklist
 - pre-API freeze audit script
 - pre-API freeze audit CI
+- Support Unlock Export live path verification
 - Weekly Auto Run no-eligible production path verification
 - Evidence Pipeline Dry Run fixture path verification
 - Evidence Pipeline Dry Run live path verification
@@ -238,6 +248,7 @@ Current state:
 ```text
 MVP structure: mostly complete
 offline verification: strong
+support unlock live path: verified
 no-eligible production workflow path: verified
 fixture evidence dry-run path: verified
 live evidence dry-run path: verified
