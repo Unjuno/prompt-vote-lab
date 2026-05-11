@@ -11,6 +11,7 @@ REQUIRED_TEXT = [
     "pull_request:",
     "paths:",
     "lab/comparisons/**",
+    "runs/**",
     "workflow_dispatch:",
     "contents: read",
     "Run comparison dashboard builder test",
@@ -21,6 +22,8 @@ REQUIRED_TEXT = [
     "python scripts/test_generated_comparison_dashboards.py",
     "Run public results export workflow contract test",
     "python scripts/test_public_results_export_workflow_contract.py",
+    "Run script-check workflow contract test",
+    "python scripts/test_script_check_workflow_contract.py",
     "Run lab PR scope guard self-test",
     "bash scripts/test-lab-pr-scope.sh",
 ]
@@ -52,6 +55,9 @@ def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
+
+    if text.index("lab/comparisons/**") > text.index("runs/**"):
+        raise SystemExit("runs/** should be tracked near generated/evidence paths")
 
     if text.index("Run comparison dashboard builder test") > text.index("Run comparison dashboard decision test"):
         raise SystemExit("Comparison dashboard decision test should run after the builder test")
