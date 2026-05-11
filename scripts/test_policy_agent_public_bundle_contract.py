@@ -45,38 +45,60 @@ REQUIRED_BUNDLE_TEXT = [
 
 REQUIRED_ENRICH_TEXT = [
     "SANITIZED_PUBLIC_FILES",
+    "REASONING_TRACE_FILES",
+    '"codex-events.jsonl"',
+    '"codex-last-message.txt"',
     '"codex-stderr.txt"',
     '"codex-stdout.txt"',
     '"policy-agent-container-stdout.txt"',
     '"policy-agent-container-stderr.txt"',
     '"npm-install-codex.txt"',
     '"policy-container-mounts.txt"',
+    "reasoning-traces/",
+    "copy_reasoning_trace_files",
+    "reasoning_trace_files",
+    "reasoning_effect_hypotheses",
+    "exposed_reasoning_trace_published",
+    "unexposed_provider_private_cot_available",
+    "unexposed_provider_private_cot_published",
     "observation-summary.json",
     "observation-summary.md",
     "[REDACTED_SECRET]",
     "[REDACTED_RUNNER_WORKDIR]",
-    "raw_private_reasoning_collected",
     "exact_read_order_observed",
 ]
 
 REQUIRED_DOC_TEXT = [
     "redacted raw evidence",
     "sanitized diagnostic logs",
-    "agent observation summaries",
+    "sanitized reasoning / CoT-like trace artifacts",
     "sanitized/codex-stderr.txt",
     "sanitized/policy-agent-container-stderr.txt",
     "sanitized/npm-install-codex.txt",
+    "reasoning-traces/codex-events.jsonl",
+    "reasoning-traces/codex-last-message.txt",
+    "reasoning-traces/codex-stdout.txt",
+    "reasoning-traces/codex-stderr.txt",
+    "This is not a proxy-only policy. Exposed reasoning / CoT-like traces are evaluation targets.",
+    "unexposed_provider_private_cot_available = unknown",
+    "unexposed_provider_private_cot_published = false",
+    "reasoning-to-behavior hypotheses",
     "observation-summary.md",
     "observation-summary.json",
     "[REDACTED_SECRET]",
     "[REDACTED_RUNNER_WORKDIR]",
     "Sanitization is a best-effort publication guard.",
-    "raw private chain-of-thought",
 ]
 
 FORBIDDEN_WORKFLOW_TEXT = [
     "cat .tmp/canary-diagnostics/codex-stderr.txt",
     "Upload raw public agent run bundle",
+]
+
+FORBIDDEN_DOC_TEXT = [
+    "raw private chain-of-thought",
+    "CoTそのものではなく",
+    "proxy-only",
 ]
 
 
@@ -103,6 +125,7 @@ def main() -> int:
     require_all(bundle, REQUIRED_BUNDLE_TEXT, "public bundle builder")
     require_all(enrich, REQUIRED_ENRICH_TEXT, "public bundle enrichment script")
     require_all(doc, REQUIRED_DOC_TEXT, "public agent run bundle doc")
+    reject_all(doc, FORBIDDEN_DOC_TEXT, "public agent run bundle doc")
 
     if workflow.index("Collect diagnostics artifact") > workflow.index("Build redacted public agent run bundle"):
         raise SystemExit("public bundle must be built after diagnostics collection")
