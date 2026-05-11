@@ -34,16 +34,57 @@ def _week_labels(issue: dict[str, Any]) -> set[str]:
     return {label.split(":", 1)[1] for label in _labels(issue) if label.startswith("week:")}
 
 
-def _rank_from_text(issue: dict[str, Any]) -> int | None:
-    text = f"{issue.get('title', '')}\n{issue.get('body', '')}".lower()
+def _rank_from_text_blob(text: str) -> int | None:
+    lowered = text.lower()
     for rank in (1, 2, 3):
-        if f"rank {rank}" in text or f"rank-{rank}" in text or f"rank:{rank}" in text:
+        if f"rank {rank}" in lowered or f"rank-{rank}" in lowered or f"rank:{rank}" in lowered:
+            return rank
+        if f"- rank: {rank}" in lowered or f"candidate_rank: {rank}" in lowered:
             return rank
     return None
 
 
+def _rank_from_issue(issue: dict[str, Any]) -> int | None:
+    return _rank_from_text_blob(f"{issue.get('title', '')}\n{issue.get('body', '')}")
+
+
+def _pr_issue(pr: dict[str, Any]) -> int | None:
+    body = str(pr.get("body", ""))
+    for marker in ("- Issue: #", "Issue: #"):
+        if marker in body:
+            tail = body.split(marker, 1)[1]
+            digits = []
+            for ch in tail:
+                if ch.isdigit():
+                    digits.append(ch)
+                else:
+                    break
+            return int("".join(digits)) if digits else None
+    return None
+
+
+def _pr_rank(pr: dict[str, Any]) -> int | None:
+    return _rank_from_text_blob(str(pr.get("body", "")))
+
+
+def _merged_pr_rank_by_issue(public_results: dict[str, Any]) -> dict[int, int]:
+    ranks: dict[int, int] = {}
+    for pr in public_results.get("pull_requests", []):
+        if str(pr.get("state", "")).upper() != "MERGED":
+            continue
+        issue_no = _pr_issue(pr)
+        rank = _pr_rank(pr)
+        if issue_no is None or rank is None:
+            continue
+        old = ranks.get(issue_no)
+        if old is None or rank < old:
+            ranks[issue_no] = rank
+    return ranks
+
+
 def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
     issues = list(public_results.get("issues", []))
+    pr_rank_by_issue = _merged_pr_rank_by_issue(public_results)
     week_ids = sorted({week for issue in issues for week in _week_labels(issue)}, reverse=True)
     summaries: list[WeekSummary] = []
 
@@ -56,7 +97,7 @@ def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
         implemented_count = 0
         not_selected_count = 0
         open_count = 0
-        adopted_rank: str | None = None
+        adopted_ranks: list[int] = []
 
         for issue in week_issues:
             labels = _labels(issue)
@@ -71,14 +112,16 @@ def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
                 runtime_count += 1
             if "outcome:implemented" in labels:
                 implemented_count += 1
-                rank = _rank_from_text(issue)
+                issue_no = int(issue.get("number"))
+                rank = pr_rank_by_issue.get(issue_no) or _rank_from_issue(issue)
                 if rank is not None:
-                    adopted_rank = f"rank {rank}"
+                    adopted_ranks.append(rank)
             if "outcome:not-selected" in labels:
                 not_selected_count += 1
             if str(issue.get("state", "")).upper() == "OPEN":
                 open_count += 1
 
+        adopted_rank = f"rank {min(adopted_ranks)}" if adopted_ranks else "not decided"
         summaries.append(
             WeekSummary(
                 week_id=week_id,
@@ -90,7 +133,7 @@ def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
                 implemented_count=implemented_count,
                 not_selected_count=not_selected_count,
                 open_count=open_count,
-                adopted_rank=adopted_rank or "not decided",
+                adopted_rank=adopted_rank,
                 comparison_href=f"../comparisons/{week_id}/",
             )
         )
@@ -137,7 +180,7 @@ def render_history(public_results: dict[str, Any]) -> str:
   <main class="history-root" aria-labelledby="history-title">
     <p class="status">History · generated from public results</p>
     <h1 id="history-title">Prompt Vote Lab history</h1>
-    <p class="note">This page summarizes weekly progression. GitHub Issues, PRs, commits, public bundles, and run records remain the source of truth.</p>
+    <p class="note">This page summarizes weekly progression. GitHub Issues, PRs, commits, public bundles, run records, and live rank output pages remain the source of truth.</p>
     <section class="method" aria-labelledby="flow-title">
       <h2 id="flow-title">Candidate state flow</h2>
       <ol class="flow">
