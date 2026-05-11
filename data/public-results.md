@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T07:23:34+00:00`
+Generated at: `2026-05-11T08:17:29+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 85 |
+| merged_pr_count | 84 |
 | workflow_run_count | 98 |
 | run_record_count | 20 |
 
@@ -40,6 +40,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 253 | MERGED | 1 | 10/1 | Update generated dashboard live output contract |
+| 252 | CLOSED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 | 251 | MERGED | 2 | 22/7 | Generate live output links in comparison dashboards |
 | 250 | CLOSED | 8 | 463/21 | Add live previews for rank outputs |
 | 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
@@ -68,14 +70,23 @@ This file is a raw results surface for participants. It does not score prompts o
 | 219 | CLOSED | 3 | 491/0 | Run Codex comparison issue rank 2 |
 | 220 | CLOSED | 1 | 1/1 | Normalize rank 2 comparison metadata |
 | 221 | MERGED | 2 | 61/20 | Allow generated lab evidence paths in scope guard |
-| 224 | MERGED | 3 | 540/0 | Run Codex comparison issue rank 3 |
-| 222 | MERGED | 1 | 1/1 | Normalize rank 2 comparison metadata v2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25658556921 | Terminal State Report | pull_request | completed | skipped | Update generated dashboard live output contract |
+| 25658376995 | Script Check | pull_request | completed | success | Update generated dashboard live output contract |
+| 25658376956 | Lab PR Scope Check | pull_request | completed | success | Update generated dashboard live output contract |
+| 25657698790 | Terminal State Report | pull_request | completed | skipped | Add W20 rank 1 live output snapshot |
+| 25657589279 | Script Check | pull_request | completed | failure | Add W20 rank 1 live output snapshot |
+| 25657589249 | Lab PR Scope Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25657589246 | Safety Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25657589228 | Static Site Check | pull_request | completed | success | Add W20 rank 1 live output snapshot |
+| 25656214671 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25656199103 | Terminal State Report | pull_request | completed | skipped | Generate live output links in comparison dashboards |
+| 25656199093 | Public Results Export | push | completed | success | Generate live output links in comparison dashboards (#251) |
+| 25656198290 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25656110307 | Lab PR Scope Check | pull_request | completed | success | Generate live output links in comparison dashboards |
 | 25656110273 | Script Check | pull_request | completed | success | Generate live output links in comparison dashboards |
 | 25655746664 | Terminal State Report | pull_request | completed | skipped | Add live previews for rank outputs |
@@ -94,17 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25652698204 | Lab PR Scope Check | pull_request | completed | success | Fix root prompt template links |
 | 25651488488 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25651480883 | Public Results Export | push | completed | success | Reconcile active implementation model and verification docs (#248) |
-| 25651480869 | Terminal State Report | pull_request | completed | skipped | Reconcile active implementation model and verification docs |
-| 25651480436 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25651432481 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651432478 | Implementation Preflight Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651432477 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651432476 | Select Eligible Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651432474 | Static Site Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651432473 | Script Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651251137 | Pre-API Freeze Audit | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651251124 | Implementation Preflight Test | pull_request | completed | success | Reconcile active implementation model and verification docs |
-| 25651251121 | Lab PR Scope Check | pull_request | completed | success | Reconcile active implementation model and verification docs |
 
 ## Raw JSON
 
