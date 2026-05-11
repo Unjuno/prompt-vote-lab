@@ -37,7 +37,8 @@ All of these must pass before the first real canary run.
 | Lean Proof Test | PASS | CI |
 | Weekly Report Draft workflow | PASS, report PR only | completed before canary |
 | Weekly Mock Run workflow | PASS, summary PR + mock implementation PR only | completed before canary |
-| Weekly Auto Run no-eligible workflow | PASS, summary PR only | PR #81 |
+| Support Unlock Export live path | PASS, anonymized JSON only | `data/support-unlocks/2026-W19.json` |
+| Weekly Auto Run no-eligible workflow | PASS, summary PR only | PR #243 / `runs/week-2026-W19-vote-summary.md` |
 | Evidence Pipeline Dry Run with `source=fixture` | PASS, validator and artifact upload | run `25335321720` |
 | Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | `runs/dry-run-001-evidence-review.md` |
 
@@ -46,21 +47,25 @@ All of these must pass before the first real canary run.
 A real implementation-agent canary is allowed only after:
 
 ```text
+Support Unlock Export live path has produced anonymized support unlock JSON
 Weekly Auto Run no-eligible path has produced only a summary PR
 Evidence Pipeline Dry Run source=fixture has passed the workflow validator
 Evidence Pipeline Dry Run source=live has produced reviewable artifacts
 the live artifact review passes docs/evidence-artifact-review.md
 ```
 
-The no-eligible production path was verified in PR #81:
+The latest no-eligible production path was verified in PR #243:
 
 ```text
+support unlock file: data/support-unlocks/2026-W19.json
 changed file: runs/week-2026-W19-vote-summary.md
 baseline_won: true
 eligible_count: 0
 eligible_ranks: []
 implementation PR created: no
 ```
+
+Earlier no-eligible evidence also exists in PR #81. PR #243 is the current live path because it includes the support-unlock prerequisite.
 
 The fixture evidence dry-run path was verified in Actions run `25335321720`:
 
@@ -99,7 +104,7 @@ Add a small visible canary panel to lab/ explaining that this is the first bound
 Required canary run constraints:
 
 ```text
-model: gpt-5-nano
+model: gpt-5.4-nano
 one agent attempt
 one model
 no retry
@@ -112,6 +117,8 @@ safety-check PASS
 static-site-check PASS
 manual review before merge
 ```
+
+`max output tokens: 12000` is deferred until after system completion and live eligible-path verification.
 
 ## Stop conditions
 
