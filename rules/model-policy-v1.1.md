@@ -2,11 +2,11 @@
 
 ## Purpose
 
-This policy fixes the current implementation model for Prompt Vote Lab canary execution paths.
+This policy fixes the active implementation model for Prompt Vote Lab stabilization runs.
 
-Prompt Vote Lab evaluates prompt candidates. To compare prompts fairly, the implementation model must remain fixed within the same comparison period.
+Prompt Vote Lab evaluates prompt candidates. To compare prompts fairly, the implementation model and output budget must remain fixed within the same comparison period.
 
-## Implementation model
+## Active implementation model
 
 ```text
 gpt-5.4-nano
@@ -24,15 +24,18 @@ lab/style.css
 lab/app.js
 ```
 
-## Current canary paths covered
+## Active canary and weekly automation paths covered
 
-This policy applies to the currently active canary execution paths that record `model: gpt-5.4-nano`:
+This policy applies to the currently active implementation paths that are guarded by preflight checks and CI:
 
 ```text
-first-canary-005: offline context + JSON full-file replacement
-first-canary-008: selected prompt task packet container
-first-canary-009: fixed GitHub Issue -> normalized instruction packet -> /task:ro
+first-canary-run
+weekly-auto-run eligible implementation path
 ```
+
+Historical canary evidence may still mention earlier isolated paths, including `first-canary-009`, but current active paid implementation settings are defined by this file and the current workflows.
+
+The eligible implementation path has not yet been live-verified end-to-end. The no-eligible weekly path has been live-verified.
 
 ## Fixed comparison rule
 
@@ -52,19 +55,31 @@ manual review policy
 
 Do not run rank 1, rank 2, and rank 3 with different implementation models in the same comparison set.
 
-## Initial settings
+## Active settings
 
 ```text
 model: gpt-5.4-nano
 temperature_policy: model-default
 top_p_policy: model-default
-max_output_tokens: 12000
+max_output_tokens: 5000
 retry_count: 0
 fallback_policy: none
 auto_merge_policy: disabled
 ```
 
 The implementation runner records the temperature and top_p policies as `model-default` rather than passing unsupported or unstable sampling overrides.
+
+## Deferred settings
+
+The following setting is not active during the stabilization phase:
+
+```text
+max_output_tokens: 12000
+```
+
+It may be reconsidered only after the system is complete and the eligible implementation PR path has passed at least one live end-to-end run.
+
+Do not change the active token budget during stabilization merely to increase implementation capacity.
 
 ## Ranked candidates
 
@@ -80,7 +95,7 @@ A failed implementation should normally be recorded as a result instead of silen
 
 If retries are introduced later, they must use the same implementation model and must be recorded in the weekly log.
 
-## Model change from v1.0
+## Relationship to v1.0
 
 `model-policy-v1.0` recorded:
 
@@ -88,15 +103,18 @@ If retries are introduced later, they must use the same implementation model and
 gpt-5-nano
 ```
 
-The current implemented canary workflows and documentation use:
+`model-policy-v1.1` records the active stabilization model and output budget:
 
 ```text
-gpt-5.4-nano
+model: gpt-5.4-nano
+max_output_tokens: 5000
 ```
 
-This file exists so the current comparison period has an explicit model-policy version rather than silently mutating v1.0.
+This file also records that `max_output_tokens: 12000` is deferred, not active.
 
 Do not directly compare prompt results across v1.0 and v1.1 without noting the model-policy change.
+
+Do not directly compare prompt results across model or token-budget changes without noting the policy change.
 
 ## Separation from evaluation model
 
@@ -106,8 +124,8 @@ A stronger model may be used for analysis and blog/report writing under a separa
 
 ## Rationale
 
-If the implementation model changes between candidates, the experiment no longer evaluates only prompt quality.
+If the implementation model or output budget changes between candidates, the experiment no longer evaluates only prompt quality.
 
-The result becomes a mixture of prompt quality, model capability, context size, and retry behavior.
+The result becomes a mixture of prompt quality, model capability, context size, output budget, and retry behavior.
 
-To evaluate prompts, keep the implementation model fixed within each comparison period.
+To evaluate prompts, keep the implementation model and budget fixed within each comparison period.

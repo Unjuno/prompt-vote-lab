@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "preflight_implementation_agent.py"
+ACTIVE_MODEL = "gpt-5.4-nano"
 
 
 def run(args: list[str], env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
@@ -71,17 +72,17 @@ def main() -> int:
             ],
         )
 
-        no_eligible = run(["--eligible", str(empty), "--model", "gpt-5-nano"])
+        no_eligible = run(["--eligible", str(empty), "--model", ACTIVE_MODEL])
         if no_eligible.returncode != 0:
             print(no_eligible.stdout)
             raise SystemExit("empty eligible list should pass without secret")
 
-        needs_secret = run(["--eligible", str(eligible), "--model", "gpt-5-nano"])
+        needs_secret = run(["--eligible", str(eligible), "--model", ACTIVE_MODEL])
         if needs_secret.returncode == 0:
             raise SystemExit("eligible candidates without secret should fail")
 
         with_secret = run(
-            ["--eligible", str(eligible), "--model", "gpt-5-nano"],
+            ["--eligible", str(eligible), "--model", ACTIVE_MODEL],
             env={"OPENAI_API_KEY_": "test-secret-placeholder"},
         )
         if with_secret.returncode != 0:
@@ -96,21 +97,21 @@ def main() -> int:
             raise SystemExit("wrong model should fail")
 
         too_many_tokens = run(
-            ["--eligible", str(eligible), "--model", "gpt-5-nano", "--max-output-tokens", "12001"],
+            ["--eligible", str(eligible), "--model", ACTIVE_MODEL, "--max-output-tokens", "5001"],
             env={"OPENAI_API_KEY_": "test-secret-placeholder"},
         )
         if too_many_tokens.returncode == 0:
             raise SystemExit("too many output tokens should fail")
 
         retry_enabled = run(
-            ["--eligible", str(eligible), "--model", "gpt-5-nano", "--sdk-max-retries", "1"],
+            ["--eligible", str(eligible), "--model", ACTIVE_MODEL, "--sdk-max-retries", "1"],
             env={"OPENAI_API_KEY_": "test-secret-placeholder"},
         )
         if retry_enabled.returncode == 0:
             raise SystemExit("sdk retries should fail")
 
         bad_reason = run(
-            ["--eligible", str(bad_model), "--model", "gpt-5-nano"],
+            ["--eligible", str(bad_model), "--model", ACTIVE_MODEL],
             env={"OPENAI_API_KEY_": "test-secret-placeholder"},
         )
         if bad_reason.returncode == 0:

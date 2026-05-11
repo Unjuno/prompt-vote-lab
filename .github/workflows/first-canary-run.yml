@@ -15,7 +15,7 @@ jobs:
   first-canary-run:
     runs-on: ubuntu-latest
     env:
-      IMPLEMENTATION_MODEL: gpt-5-nano
+      IMPLEMENTATION_MODEL: gpt-5.4-nano
       MAX_OUTPUT_TOKENS: "5000"
       SDK_MAX_RETRIES: "0"
       RUN_WEEK: first-canary-001
@@ -28,7 +28,7 @@ jobs:
       - name: Verify clean first-canary state
         shell: bash
         run: |
-          if [ "${IMPLEMENTATION_MODEL}" != "gpt-5-nano" ]; then
+          if [ "${IMPLEMENTATION_MODEL}" != "gpt-5.4-nano" ]; then
             echo "Unexpected model: ${IMPLEMENTATION_MODEL}"
             exit 1
           fi
@@ -141,7 +141,7 @@ jobs:
           - Issue: #0
           - Votes: 0
           - Inherited lab base: \`$base_sha\`
-          - Implementation model: \`gpt-5-nano\`
+          - Implementation model: \`gpt-5.4-nano\`
           - Max output tokens: \`5000\`
           - SDK max retries: \`0\`
           - API call limit per candidate: \`1\`

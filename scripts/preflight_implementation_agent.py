@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 
-ALLOWED_MODELS = {"gpt-5-nano"}
+ALLOWED_MODELS = {"gpt-5.4-nano"}
 MAX_OUTPUT_TOKENS_LIMIT = 5000
 REQUIRED_RUN_REASONS = {"normal-weekly-run", "support-unlocked-run"}
 
@@ -70,7 +70,7 @@ def validate_candidate(candidate: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--eligible", default=".tmp/eligible-candidates.json")
-    parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5-nano"))
+    parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5.4-nano"))
     parser.add_argument("--max-output-tokens", default=os.getenv("MAX_OUTPUT_TOKENS", "5000"))
     parser.add_argument("--sdk-max-retries", default=os.getenv("SDK_MAX_RETRIES", "0"))
     parser.add_argument("--api-call-limit-per-candidate", default="1")
