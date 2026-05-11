@@ -32,7 +32,7 @@ Add a small visible canary panel to the lab page explaining that this is the fir
 The canary must use:
 
 ```text
-model: gpt-5-nano
+model: gpt-5.4-nano
 candidate count: 1
 attempts per candidate: 1
 SDK max_retries: 0
@@ -40,6 +40,8 @@ fallback model: none
 max_output_tokens: 5000
 automatic merge: no
 ```
+
+`max_output_tokens: 12000` is deferred until after system completion and live eligible-path verification.
 
 ## Allowed output
 
