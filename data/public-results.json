@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T13:26:33+00:00",
+  "generated_at": "2026-05-11T13:51:33+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 7,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds `runs/**` to the Script Check pull_request path filter and locks it with the script-check workflow contract test.\n\n## Why\n\nPR #265 added `runs/first-canary-007-policy-agent-evidence-only.md`, but Script Check did not run because only one specific run record path was included. Run records are public evidence and must trigger the same script/workflow contract checks.\n\n## Changes\n\n- Add `runs/**` to `.github/workflows/script-check.yml`.\n- Require `runs/**` in `scripts/test_script_check_workflow_contract.py`.\n- Keep Script Check read-only and without OpenAI/Codex execution.\n\n## Scope\n\nWorkflow path filter and contract test only.\n\nNo lab UI changes, no generated evidence changes, no model/token changes.",
+      "body_length": 724,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T13:51:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T13:41:37Z",
+      "deletions": 1,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 1,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 6,
+          "deletions": 0,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "run-script-check-for-run-records",
+      "head_ref_oid": "e7c527da768f6f24370eaa15f0ffacf6734a1783",
+      "labels": [],
+      "merge_commit_oid": "fa984ae4f72cefaa53328d0e72dbb4ac28189fcd",
+      "merged_at": "2026-05-11T13:51:12Z",
+      "merged_by": "Unjuno",
+      "number": 266,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Run Script Check for all run records",
+      "updated_at": "2026-05-11T13:51:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/266"
+    },
     {
       "additions": 202,
       "author": "Unjuno",
@@ -4685,43 +4722,6 @@
       "title": "Record ninth canary success",
       "updated_at": "2026-05-06T15:02:41Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/159"
-    },
-    {
-      "additions": 18,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRestores the early single-card lab baseline shape without restoring canary/run metadata into the lab UI.\n\n## Changed files\n\n- `lab/index.html`\n- `lab/style.css`\n\n## What changed\n\n- Adds one small baseline card after the status line.\n- Reuses the early card style pattern from the first useful lab UI state.\n- Uses neutral text instead of `Canary (...)` metadata.\n\n## Why\n\nThe lab should keep a clean experiment-target shape. Previous experiment outputs and canary records belong in `runs/`, but the active lab baseline can still include a simple card that makes the page feel initialized rather than empty.\n\n## Scope\n\n- Lab UI baseline only.\n- No timer.\n- No canary metadata.\n- No workflow, docs, rules, or runner changes.",
-      "body_length": 734,
-      "changed_files": 2,
-      "closed_at": "2026-05-06T13:32:56Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T13:28:35Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 15,
-          "deletions": 0,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "restore-single-card-lab-baseline",
-      "head_ref_oid": "968872c63020a188738360815d4fa77ee397ef72",
-      "labels": [],
-      "merge_commit_oid": "52f09e27570c5ae2fd347fa6fb7e22ba2199931c",
-      "merged_at": "2026-05-06T13:32:56Z",
-      "merged_by": "Unjuno",
-      "number": 160,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Restore single-card lab baseline",
-      "updated_at": "2026-05-06T15:02:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/160"
     }
   ],
   "run_records": [
@@ -4875,6 +4875,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-11T13:51:16Z",
+      "database_id": 25674382312,
+      "display_title": "Run Script Check for all run records",
+      "event": "pull_request",
+      "head_branch": "run-script-check-for-run-records",
+      "head_sha": "e7c527da768f6f24370eaa15f0ffacf6734a1783",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:51:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25674382312",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:41:42Z",
+      "database_id": 25673870955,
+      "display_title": "Run Script Check for all run records",
+      "event": "pull_request",
+      "head_branch": "run-script-check-for-run-records",
+      "head_sha": "e7c527da768f6f24370eaa15f0ffacf6734a1783",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:41:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673870955",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:41:42Z",
+      "database_id": 25673870782,
+      "display_title": "Run Script Check for all run records",
+      "event": "pull_request",
+      "head_branch": "run-script-check-for-run-records",
+      "head_sha": "e7c527da768f6f24370eaa15f0ffacf6734a1783",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:42:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673870782",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:26:37Z",
+      "database_id": 25673063721,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "5f8245e5da61f534411b04f9694115ca5ab7b4e3",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:27:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673063721",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-11T13:26:17Z",
       "database_id": 25673046395,
       "display_title": "Record first-canary-007 evidence-only result",
@@ -4886,6 +4942,34 @@
       "updated_at": "2026-05-11T13:26:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673046395",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-11T13:26:17Z",
+      "database_id": 25673046328,
+      "display_title": "Record first-canary-007 evidence-only result (#265)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "4bd31bcc907e886c299c0fb6afa7de3590a72cc0",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:26:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673046328",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-11T13:26:15Z",
+      "database_id": 25673044464,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "4bd31bcc907e886c299c0fb6afa7de3590a72cc0",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-11T13:26:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25673044464",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6160,90 +6244,6 @@
       "updated_at": "2026-05-11T07:23:53Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656198290",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:21:09Z",
-      "database_id": 25656110307,
-      "display_title": "Generate live output links in comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "generate-comparison-live-output-links",
-      "head_sha": "be64c9f264f1c6c04c89d71db8d2989ab265722c",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:21:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656110307",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:21:08Z",
-      "database_id": 25656110273,
-      "display_title": "Generate live output links in comparison dashboards",
-      "event": "pull_request",
-      "head_branch": "generate-comparison-live-output-links",
-      "head_sha": "be64c9f264f1c6c04c89d71db8d2989ab265722c",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:21:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25656110273",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T07:12:15Z",
-      "database_id": 25655746664,
-      "display_title": "Add live previews for rank outputs",
-      "event": "pull_request",
-      "head_branch": "add-rank-live-preview-hub",
-      "head_sha": "d33586fcb0aa38f431ec9cf03ce3314da074b8ce",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:12:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25655746664",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T07:08:43Z",
-      "database_id": 25655603377,
-      "display_title": "Add live previews for rank outputs",
-      "event": "pull_request",
-      "head_branch": "add-rank-live-preview-hub",
-      "head_sha": "d33586fcb0aa38f431ec9cf03ce3314da074b8ce",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:08:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25655603377",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T07:08:43Z",
-      "database_id": 25655603317,
-      "display_title": "Add live previews for rank outputs",
-      "event": "pull_request",
-      "head_branch": "add-rank-live-preview-hub",
-      "head_sha": "d33586fcb0aa38f431ec9cf03ce3314da074b8ce",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:09:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25655603317",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T07:08:43Z",
-      "database_id": 25655603307,
-      "display_title": "Add live previews for rank outputs",
-      "event": "pull_request",
-      "head_branch": "add-rank-live-preview-hub",
-      "head_sha": "d33586fcb0aa38f431ec9cf03ce3314da074b8ce",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T07:09:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25655603307",
-      "workflow_name": "Static Site Check"
     }
   ]
 }

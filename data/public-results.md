@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T13:26:33+00:00`
+Generated at: `2026-05-11T13:51:33+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
@@ -69,13 +70,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 210 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v3 |
 | 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
 | 211 | CLOSED | 3 | 492/0 | Run Codex comparison issue rank 2 |
-| 212 | MERGED | 4 | 132/13 | Normalize comparison rank links |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25674382312 | Terminal State Report | pull_request | completed | skipped | Run Script Check for all run records |
+| 25673870955 | Lab PR Scope Check | pull_request | completed | success | Run Script Check for all run records |
+| 25673870782 | Script Check | pull_request | completed | success | Run Script Check for all run records |
+| 25673063721 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25673046395 | Terminal State Report | pull_request | completed | skipped | Record first-canary-007 evidence-only result |
+| 25673046328 | Public Results Export | push | completed | success | Record first-canary-007 evidence-only result (#265) |
+| 25673044464 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25672856373 | Lab PR Scope Check | pull_request | completed | success | Record first-canary-007 evidence-only result |
 | 25672526358 | Terminal State Report | pull_request | completed | skipped | Run Codex policy-enforced agent canary |
 | 25672096366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25669185787 | Public Results Export | push | completed | success | Expand public agent observation logs (#261) |
 | 25669185706 | Terminal State Report | pull_request | completed | skipped | Expand public agent observation logs |
 | 25669184419 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25669057691 | Script Check | pull_request | completed | success | Expand public agent observation logs |
-| 25669057647 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
-| 25669057642 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
-| 25668900889 | Script Check | pull_request | completed | failure | Expand public agent observation logs |
-| 25668900888 | Static Site Check | pull_request | completed | success | Expand public agent observation logs |
-| 25668900840 | Lab PR Scope Check | pull_request | completed | success | Expand public agent observation logs |
 
 ## Raw JSON
 
