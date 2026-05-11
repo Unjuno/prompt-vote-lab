@@ -15,7 +15,7 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/collect_canary_diagnostics.py",
     "Build redacted public agent run bundle",
     "python scripts/build_public_agent_run_bundle.py",
-    "Enrich public agent run bundle with sanitized logs",
+    "Enrich public agent run bundle with sanitized logs and reasoning traces",
     "python scripts/enrich_public_agent_run_bundle.py",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
@@ -29,7 +29,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "observation-summary.json",
     "Sanitized diagnostic logs directory:",
     "sanitized/",
-    "Public artifacts are redacted, sanitized, and indexed for participant review.",
+    "Sanitized exposed reasoning / CoT-like trace directory:",
+    "reasoning-traces/",
+    "If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement.",
+    "Public artifacts are redacted, sanitized, indexed, and include exposed reasoning traces when present.",
 ]
 
 REQUIRED_BUNDLE_TEXT = [
@@ -130,9 +133,9 @@ def main() -> int:
 
     if workflow.index("Collect diagnostics artifact") > workflow.index("Build redacted public agent run bundle"):
         raise SystemExit("public bundle must be built after diagnostics collection")
-    if workflow.index("Build redacted public agent run bundle") > workflow.index("Enrich public agent run bundle with sanitized logs"):
+    if workflow.index("Build redacted public agent run bundle") > workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces"):
         raise SystemExit("public bundle must be enriched after bundle build")
-    if workflow.index("Enrich public agent run bundle with sanitized logs") > workflow.index("Upload redacted public agent run bundle"):
+    if workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow.index("Upload redacted public agent run bundle"):
         raise SystemExit("public bundle upload must occur after enrichment")
     if workflow.index("Upload redacted public agent run bundle") > workflow.index("Upload diagnostics artifact"):
         raise SystemExit("public bundle should be uploaded before internal diagnostics artifact")
