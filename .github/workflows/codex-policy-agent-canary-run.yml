@@ -98,6 +98,14 @@ jobs:
             --diagnostics-dir .tmp/canary-diagnostics \
             --bundle-dir .tmp/public-agent-run-bundle
 
+      - name: Verify public agent run bundle contents
+        if: ${{ always() }}
+        run: |
+          python scripts/verify_public_agent_run_bundle.py \
+            --bundle-dir .tmp/public-agent-run-bundle \
+            --report .tmp/public-agent-run-bundle-verification.json
+          cp .tmp/public-agent-run-bundle-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-verification.json
+
       - name: Upload redacted public agent run bundle
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -201,6 +209,7 @@ jobs:
           ## Public evidence
 
           - Redacted public agent run bundle artifact: \`codex-policy-agent-canary-public-bundle-${{ github.run_number }}\`
+          - Public bundle content verification report: \`public-agent-run-bundle-verification.json\` inside diagnostics
           - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
           - Sanitized diagnostic logs directory: \`sanitized/\`
           - Sanitized exposed reasoning / CoT-like trace directory: \`reasoning-traces/\`
@@ -213,7 +222,7 @@ jobs:
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for mount, policy, Codex event, and diff analysis. Public artifacts are redacted, sanitized, indexed, and include exposed reasoning traces when present.
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, diff, and public bundle verification analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, and include exposed reasoning traces when present.
 
           ## Merge policy
 

@@ -183,6 +183,21 @@ jobs:
             --run-id "${{ github.run_number }}" \
             --issue-number "$ISSUE_NUMBER"
 
+      - name: Enrich public agent run bundle with sanitized logs and reasoning traces
+        if: ${{ always() }}
+        run: |
+          python scripts/enrich_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --bundle-dir .tmp/public-agent-run-bundle
+
+      - name: Verify public agent run bundle contents
+        if: ${{ always() }}
+        run: |
+          python scripts/verify_public_agent_run_bundle.py \
+            --bundle-dir .tmp/public-agent-run-bundle \
+            --report .tmp/public-agent-run-bundle-verification.json
+          cp .tmp/public-agent-run-bundle-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-verification.json
+
       - name: Upload redacted public agent run bundle
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -297,11 +312,25 @@ jobs:
           - safety-check passed before PR creation
           - static-site-check passed before PR creation
 
+          ## Public evidence
+
+          - Redacted public agent run bundle artifact: \`codex-fixed-issue-public-agent-run-bundle-${{ github.run_number }}\`
+          - Public bundle content verification report: \`public-agent-run-bundle-verification.json\` inside diagnostics
+          - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
+          - Sanitized diagnostic logs directory: \`sanitized/\`
+          - Sanitized exposed reasoning / CoT-like trace directory: \`reasoning-traces/\`
+          - Public run log artifact: \`codex-fixed-issue-instruction-canary-public-log-${{ github.run_number }}\`
+          - Internal diagnostics artifact: \`codex-fixed-issue-instruction-canary-diagnostics-${{ github.run_number }}\`
+
+          ## Reasoning trace policy
+
+          If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.
+
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, and diff analysis.
+          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, diff, and public bundle verification analysis.
 
-          A redacted public agent run bundle is also uploaded for participant analysis. It exposes allowlisted raw evidence files after secret-pattern redaction and omits denylisted diagnostics such as login stderr/stdout and raw container stderr.
+          A redacted public agent run bundle is also uploaded for participant analysis. It exposes allowlisted raw evidence files after secret-pattern redaction, sanitized diagnostic logs, exposed reasoning traces when present, and machine-readable verification metadata.
 
           ## Merge policy
 

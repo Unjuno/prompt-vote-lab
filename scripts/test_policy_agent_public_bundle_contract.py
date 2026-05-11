@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "codex-policy-agent-canary-run.yml"
 BUNDLE = ROOT / "scripts" / "build_public_agent_run_bundle.py"
 ENRICH = ROOT / "scripts" / "enrich_public_agent_run_bundle.py"
+VERIFY = ROOT / "scripts" / "verify_public_agent_run_bundle.py"
 DOC = ROOT / "docs" / "public-agent-run-bundle.md"
 
 REQUIRED_WORKFLOW_TEXT = [
@@ -17,6 +18,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/build_public_agent_run_bundle.py",
     "Enrich public agent run bundle with sanitized logs and reasoning traces",
     "python scripts/enrich_public_agent_run_bundle.py",
+    "Verify public agent run bundle contents",
+    "python scripts/verify_public_agent_run_bundle.py",
+    "--report .tmp/public-agent-run-bundle-verification.json",
+    "public-agent-run-bundle-verification.json",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
@@ -32,7 +37,7 @@ REQUIRED_WORKFLOW_TEXT = [
     "Sanitized exposed reasoning / CoT-like trace directory:",
     "reasoning-traces/",
     "If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement.",
-    "Public artifacts are redacted, sanitized, indexed, and include exposed reasoning traces when present.",
+    "Public artifacts are redacted, sanitized, indexed, verified for required structure, and include exposed reasoning traces when present.",
 ]
 
 REQUIRED_BUNDLE_TEXT = [
@@ -69,6 +74,18 @@ REQUIRED_ENRICH_TEXT = [
     "[REDACTED_SECRET]",
     "[REDACTED_RUNNER_WORKDIR]",
     "exact_read_order_observed",
+]
+
+REQUIRED_VERIFY_TEXT = [
+    "REQUIRED_ROOT_FILES",
+    "REQUIRED_DIRS",
+    "observation-summary.md",
+    "observation-summary.json",
+    "reasoning-traces",
+    "sanitized",
+    "FORBIDDEN_PUBLIC_PATTERNS",
+    "verify_public_agent_run_bundle",
+    "public agent run bundle verification passed",
 ]
 
 REQUIRED_DOC_TEXT = [
@@ -122,12 +139,14 @@ def main() -> int:
     workflow = WORKFLOW.read_text(encoding="utf-8")
     bundle = BUNDLE.read_text(encoding="utf-8")
     enrich = ENRICH.read_text(encoding="utf-8")
+    verify = VERIFY.read_text(encoding="utf-8")
     doc = DOC.read_text(encoding="utf-8")
 
     require_all(workflow, REQUIRED_WORKFLOW_TEXT, "policy agent workflow")
     reject_all(workflow, FORBIDDEN_WORKFLOW_TEXT, "policy agent workflow")
     require_all(bundle, REQUIRED_BUNDLE_TEXT, "public bundle builder")
     require_all(enrich, REQUIRED_ENRICH_TEXT, "public bundle enrichment script")
+    require_all(verify, REQUIRED_VERIFY_TEXT, "public bundle verifier")
     require_all(doc, REQUIRED_DOC_TEXT, "public agent run bundle doc")
     reject_all(doc, FORBIDDEN_DOC_TEXT, "public agent run bundle doc")
 
@@ -135,8 +154,10 @@ def main() -> int:
         raise SystemExit("public bundle must be built after diagnostics collection")
     if workflow.index("Build redacted public agent run bundle") > workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces"):
         raise SystemExit("public bundle must be enriched after bundle build")
-    if workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow.index("Upload redacted public agent run bundle"):
-        raise SystemExit("public bundle upload must occur after enrichment")
+    if workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow.index("Verify public agent run bundle contents"):
+        raise SystemExit("public bundle must be verified after enrichment")
+    if workflow.index("Verify public agent run bundle contents") > workflow.index("Upload redacted public agent run bundle"):
+        raise SystemExit("public bundle upload must occur after verification")
     if workflow.index("Upload redacted public agent run bundle") > workflow.index("Upload diagnostics artifact"):
         raise SystemExit("public bundle should be uploaded before internal diagnostics artifact")
 
