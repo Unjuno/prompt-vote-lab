@@ -71,6 +71,28 @@ noscript,
   font-size: 1.05rem;
 }
 
+.canary-panel {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed rgba(25, 25, 25, 0.28);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.canary-label {
+  margin: 0 0 6px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(25, 25, 25, 0.74);
+  font-size: 0.78rem;
+}
+
+.canary-text {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
 .evidence-nav {
   display: flex;
   flex-wrap: wrap;
