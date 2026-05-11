@@ -37,10 +37,10 @@ SECRET_PATTERNS = [
 ]
 
 PATH_PATTERNS = [
-    ("runner_workdir", re.compile(r"/home/runner/work/[^\s:'\"]+")),
-    ("runner_temp", re.compile(r"/home/runner/[^\s:'\"]+")),
-    ("tmp_path", re.compile(r"/tmp/[^\s:'\"]+")),
-    ("github_workspace", re.compile(r"/github/workspace[^\s:'\"]*")),
+    ("runner_workdir", "[REDACTED_RUNNER_WORKDIR]", re.compile(r"/home/runner/work/[^\s:'\"]+")),
+    ("runner_temp", "[REDACTED_RUNNER_TEMP]", re.compile(r"/home/runner/[^\s:'\"]+")),
+    ("tmp_path", "[REDACTED_TMP_PATH]", re.compile(r"/tmp/[^\s:'\"]+")),
+    ("github_workspace", "[REDACTED_GITHUB_WORKSPACE]", re.compile(r"/github/workspace[^\s:'\"]*")),
 ]
 
 
@@ -84,8 +84,8 @@ def redact_for_public(text: str) -> tuple[str, list[dict[str, Any]]]:
         if count:
             redactions.append({"kind": name, "count": count})
 
-    for name, pattern in PATH_PATTERNS:
-        out, count = pattern.subn(f"[REDACTED_{name.upper()}]", out)
+    for name, token, pattern in PATH_PATTERNS:
+        out, count = pattern.subn(token, out)
         if count:
             redactions.append({"kind": name, "count": count})
 
