@@ -91,7 +91,7 @@ def build_prompt(args: argparse.Namespace) -> str:
     for rel in [
         "rules/static-ui-v1.0.md",
         "rules/agent-run-policy-v1.0.md",
-        "rules/model-policy-v1.0.md",
+        "rules/model-policy-v1.1.md",
         "rules/merge-policy-v1.0.md",
         "rules/operational-decisions-v1.1.md",
         "rules/no-external-resources-v1.0.md",
@@ -146,7 +146,7 @@ def main() -> int:
     parser.add_argument("--voted-prompt", required=True)
     parser.add_argument("--vote-count", default="unrecorded")
     parser.add_argument("--run-reason", default="normal-weekly-run")
-    parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5-nano"))
+    parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5.4-nano"))
     parser.add_argument("--max-output-tokens", type=int, default=int(os.getenv("MAX_OUTPUT_TOKENS", "5000")))
     parser.add_argument("--temperature-policy", default=os.getenv("TEMPERATURE_POLICY", "model-default"))
     parser.add_argument("--top-p-policy", default=os.getenv("TOP_P_POLICY", "model-default"))
