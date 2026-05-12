@@ -40,7 +40,7 @@ REASONING_TRACE_FILES = [
 ]
 
 SECRET_PATTERNS = [
-    ("openai_key", re.compile(r"sk-[A-Za-z0-9_\-]{12,}")),
+    ("openai_key", re.compile(r"(?<![A-Za-z0-9])sk-[A-Za-z0-9_\-]{12,}")),
     ("github_classic_token", re.compile(r"gh[pousr]_[A-Za-z0-9_]{12,}")),
     ("github_fine_grained_token", re.compile(r"github_pat_[A-Za-z0-9_]{12,}")),
     ("authorization_bearer", re.compile(r"(?i)(authorization:\s*bearer\s+)[A-Za-z0-9_.\-]+")),
