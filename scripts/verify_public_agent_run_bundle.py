@@ -23,7 +23,7 @@ REQUIRED_DIRS = [
 REDACTED_SECRET_VALUE = r"\[REDACTED_SECRET\]"
 
 FORBIDDEN_PUBLIC_PATTERNS = [
-    ("openai_key", re.compile(r"sk-[A-Za-z0-9_\-]{12,}")),
+    ("openai_key", re.compile(r"(?<![A-Za-z0-9])sk-[A-Za-z0-9_\-]{12,}")),
     ("github_classic_token", re.compile(r"gh[pousr]_[A-Za-z0-9_]{12,}")),
     ("github_fine_grained_token", re.compile(r"github_pat_[A-Za-z0-9_]{12,}")),
     ("authorization_bearer", re.compile(rf"(?i)authorization:\s*bearer\s+(?!{REDACTED_SECRET_VALUE})[A-Za-z0-9_.\-]+")),
