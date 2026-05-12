@@ -30,9 +30,11 @@ jobs:
 
       - name: Prepare weekly variables
         run: |
-          echo "RUN_WEEK=week-$(date -u +%G-W%V)" >> "$GITHUB_ENV"
-          echo "NO_CHANGE_BASELINE=${PROMPT_VOTE_LAB_NO_CHANGE_BASELINE:-$DEFAULT_NO_CHANGE_BASELINE}" >> "$GITHUB_ENV"
-          echo "SUPPORT_USD=${PROMPT_VOTE_LAB_SUPPORT_USD:-$DEFAULT_SUPPORT_USD}" >> "$GITHUB_ENV"
+          {
+            echo "RUN_WEEK=week-$(date -u +%G-W%V)"
+            echo "NO_CHANGE_BASELINE=${PROMPT_VOTE_LAB_NO_CHANGE_BASELINE:-$DEFAULT_NO_CHANGE_BASELINE}"
+            echo "SUPPORT_USD=${PROMPT_VOTE_LAB_SUPPORT_USD:-$DEFAULT_SUPPORT_USD}"
+          } >> "$GITHUB_ENV"
         env:
           PROMPT_VOTE_LAB_NO_CHANGE_BASELINE: ${{ vars.PROMPT_VOTE_LAB_NO_CHANGE_BASELINE }}
           PROMPT_VOTE_LAB_SUPPORT_USD: ${{ vars.PROMPT_VOTE_LAB_SUPPORT_USD }}
