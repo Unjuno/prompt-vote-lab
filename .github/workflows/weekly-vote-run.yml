@@ -85,18 +85,19 @@ jobs:
         run: |
           mkdir -p "runs"
           cp .tmp/weekly-vote-summary.md "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "## Manual weekly support total" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "${{ inputs.support_usd }} USD" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "## No-change baseline" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "${{ inputs.no_change_baseline }} virtual votes" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "## Eligible implementation ranks" >> "runs/${{ inputs.week }}-vote-summary.md"
-          echo "" >> "runs/${{ inputs.week }}-vote-summary.md"
-          python - <<'PY' >> "runs/${{ inputs.week }}-vote-summary.md"
+          {
+            echo ""
+            echo "## Manual weekly support total"
+            echo ""
+            echo "${{ inputs.support_usd }} USD"
+            echo ""
+            echo "## No-change baseline"
+            echo ""
+            echo "${{ inputs.no_change_baseline }} virtual votes"
+            echo ""
+            echo "## Eligible implementation ranks"
+            echo ""
+            python - <<'PY'
           import json
           from pathlib import Path
           items = json.loads(Path('.tmp/eligible-candidates.json').read_text())
@@ -105,6 +106,7 @@ jobs:
           for item in items:
               print(f"- rank {item['rank']}: issue #{item['issue_number']} ({item['run_reason']})")
           PY
+          } >> "runs/${{ inputs.week }}-vote-summary.md"
 
       - name: Commit vote report
         run: |

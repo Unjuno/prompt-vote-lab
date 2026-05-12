@@ -56,6 +56,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Run actionlint
+        uses: raven-actions/actionlint@v2
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
