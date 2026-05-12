@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-12T03:23:06+00:00`
+Generated at: `2026-05-12T05:02:56+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
@@ -69,13 +70,31 @@ This file is a raw results surface for participants. It does not score prompts o
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 | 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
-| 210 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v3 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25714495666 | Terminal State Report | pull_request | completed | skipped | Add actionlint to Script Check |
+| 25714427077 | Pre-API Freeze Audit | pull_request | completed | success | Add actionlint to Script Check |
+| 25714427060 | Select Eligible Test | pull_request | completed | success | Add actionlint to Script Check |
+| 25714427055 | Implementation Preflight Test | pull_request | completed | success | Add actionlint to Script Check |
+| 25714427052 | Script Check | pull_request | completed | success | Add actionlint to Script Check |
+| 25714427050 | Lab PR Scope Check | pull_request | completed | success | Add actionlint to Script Check |
+| 25714172383 | Script Check | pull_request | completed | failure | Add actionlint to Script Check |
+| 25714172382 | Pre-API Freeze Audit | pull_request | completed | success | Add actionlint to Script Check |
+| 25714172381 | Implementation Preflight Test | pull_request | completed | success | Add actionlint to Script Check |
+| 25714172380 | Lab PR Scope Check | pull_request | completed | success | Add actionlint to Script Check |
+| 25714172377 | Select Eligible Test | pull_request | completed | success | Add actionlint to Script Check |
+| 25713643434 | Script Check | pull_request | completed | failure | Add actionlint to Script Check |
+| 25713643423 | Lab PR Scope Check | pull_request | completed | success | Add actionlint to Script Check |
+| 25712668692 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25712661123 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25712050368 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
+| 25711346130 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25711337050 | Terminal State Report | pull_request | completed | skipped | Verify uploaded public agent bundles |
+| 25711337038 | Public Results Export | push | completed | success | Verify uploaded public agent bundles (#268) |
+| 25711336471 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25711268923 | Lab PR Scope Check | pull_request | completed | success | Verify uploaded public agent bundles |
 | 25711268912 | Script Check | pull_request | completed | success | Verify uploaded public agent bundles |
 | 25677596028 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
@@ -86,25 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25676638107 | Lab PR Scope Check | pull_request | completed | success | Verify public agent run bundle contents |
 | 25676638051 | Script Check | pull_request | completed | success | Verify public agent run bundle contents |
 | 25674402253 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25674382312 | Terminal State Report | pull_request | completed | skipped | Run Script Check for all run records |
-| 25674381907 | Public Results Export | push | completed | success | Run Script Check for all run records (#266) |
-| 25674380307 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25673870955 | Lab PR Scope Check | pull_request | completed | success | Run Script Check for all run records |
-| 25673870782 | Script Check | pull_request | completed | success | Run Script Check for all run records |
-| 25673063721 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25673046395 | Terminal State Report | pull_request | completed | skipped | Record first-canary-007 evidence-only result |
-| 25673046328 | Public Results Export | push | completed | success | Record first-canary-007 evidence-only result (#265) |
-| 25673044464 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25672856373 | Lab PR Scope Check | pull_request | completed | success | Record first-canary-007 evidence-only result |
-| 25672526358 | Terminal State Report | pull_request | completed | skipped | Run Codex policy-enforced agent canary |
-| 25672096366 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25672077550 | Public Results Export | push | completed | success | Document policy-agent reasoning traces in PR body (#264) |
-| 25672076035 | Terminal State Report | pull_request | completed | skipped | Document policy-agent reasoning traces in PR body |
-| 25672074769 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25671857788 | Script Check | pull_request | completed | success | Document policy-agent reasoning traces in PR body |
-| 25671857736 | Lab PR Scope Check | pull_request | completed | success | Document policy-agent reasoning traces in PR body |
-| 25670780249 | Codex Policy Agent Canary Run | workflow_dispatch | completed | success | Codex Policy Agent Canary Run |
-| 25670671181 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
