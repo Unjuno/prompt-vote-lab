@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T06:45:09+00:00",
+  "generated_at": "2026-05-12T09:02:14+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,48 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 12,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nFixes a false positive in the public bundle verifier and sanitizer for strings like `task-static-ui-v1.0.md`.\n\n## Failure observed\n\n`Codex Policy Agent Canary Run #10` failed in `verify_public_agent_run_bundle.py` with:\n\n```text\nERROR: Forbidden public pattern openai_key found in index.json\n```\n\nGitleaks then scanned the same bundle and reported:\n\n```text\nno leaks found\n```\n\nThe custom OpenAI-key regex was too broad and matched `sk-` inside ordinary words such as `task-static...`.\n\n## Changes\n\n- Change OpenAI key regex from:\n\n```text\nsk-[A-Za-z0-9_\\-]{12,}\n```\n\n- To a boundary-aware pattern:\n\n```text\n(?<![A-Za-z0-9])sk-[A-Za-z0-9_\\-]{12,}\n```\n\n- Apply the same boundary in:\n  - `scripts/verify_public_agent_run_bundle.py`\n  - `scripts/enrich_public_agent_run_bundle.py`\n- Add a regression test proving `task-static-ui-v1.0.md` does not trigger OpenAI key detection.\n- Keep detection for actual standalone `sk-...` token-like strings.\n\n## Scope\n\nVerifier/sanitizer false-positive fix only.\n\nNo workflow changes, no lab UI changes, no model/token-budget changes.",
+      "body_length": 1080,
+      "changed_files": 3,
+      "closed_at": "2026-05-12T09:01:54Z",
+      "comment_count": 0,
+      "created_at": "2026-05-12T08:53:17Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 1,
+          "path": "scripts/enrich_public_agent_run_bundle.py"
+        },
+        {
+          "additions": 10,
+          "deletions": 0,
+          "path": "scripts/test_verify_public_agent_run_bundle.py"
+        },
+        {
+          "additions": 1,
+          "deletions": 1,
+          "path": "scripts/verify_public_agent_run_bundle.py"
+        }
+      ],
+      "head_ref_name": "fix-openai-key-false-positive",
+      "head_ref_oid": "182293da527cc07ae8722ce7bae39fafb5f346fe",
+      "labels": [],
+      "merge_commit_oid": "a185a5ff96e2ba8f565a400304589ebf5ab83d20",
+      "merged_at": "2026-05-12T09:01:54Z",
+      "merged_by": "Unjuno",
+      "number": 271,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix OpenAI key false positive in public bundle verifier",
+      "updated_at": "2026-05-12T09:01:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/271"
+    },
     {
       "additions": 289,
       "author": "Unjuno",
@@ -4710,58 +4752,6 @@
       "title": "Record Issue 191 template-normal success",
       "updated_at": "2026-05-07T19:21:18Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/193"
-    },
-    {
-      "additions": 499,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nDocuments the next canary after successful `first-canary-008`: a fixed GitHub Issue instruction packet canary.\n\n## Changed files\n\n- `docs/canary-009-selected-issue-instructions.md`\n- `docs/current-codex-implementation-path.md`\n- `docs/codex-path-005-vs-007.md`\n- `docs/README.md`\n- `scripts/test_current_codex_path_doc.py`\n\n## What this does\n\n- Records 008 as the strongest implemented agent-boundary candidate path.\n- Keeps 005 as the current stable production-oriented implementation path.\n- Defines 009 as a fixed GitHub Issue ingestion and instruction-normalization canary.\n- Explicitly separates selection, instruction-building, execution, and review layers.\n- Updates the current-path doc guard so the 008/009 classification is preserved.\n\n## Scope\n\n- Documentation and doc test only.\n- No 009 workflow implementation yet.\n- No Codex run.\n- No `/lab/` changes.",
-      "body_length": 878,
-      "changed_files": 5,
-      "closed_at": "2026-05-06T11:06:29Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T11:04:40Z",
-      "deletions": 114,
-      "files": [
-        {
-          "additions": 5,
-          "deletions": 4,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 312,
-          "deletions": 0,
-          "path": "docs/canary-009-selected-issue-instructions.md"
-        },
-        {
-          "additions": 116,
-          "deletions": 69,
-          "path": "docs/codex-path-005-vs-007.md"
-        },
-        {
-          "additions": 58,
-          "deletions": 35,
-          "path": "docs/current-codex-implementation-path.md"
-        },
-        {
-          "additions": 8,
-          "deletions": 6,
-          "path": "scripts/test_current_codex_path_doc.py"
-        }
-      ],
-      "head_ref_name": "docs-009-selected-issue-instructions",
-      "head_ref_oid": "34b6c726dbef82a62d4b3fb946f4585e04f5ce5a",
-      "labels": [],
-      "merge_commit_oid": "8a3b08d80725ee20d353359787bcdff33cb6ae03",
-      "merged_at": "2026-05-06T11:06:29Z",
-      "merged_by": "Unjuno",
-      "number": 154,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Document fixed Issue instruction canary",
-      "updated_at": "2026-05-06T15:02:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/154"
     }
   ],
   "run_records": [
@@ -4915,6 +4905,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-12T09:01:57Z",
+      "database_id": 25724466429,
+      "display_title": "Fix OpenAI key false positive in public bundle verifier",
+      "event": "pull_request",
+      "head_branch": "fix-openai-key-false-positive",
+      "head_sha": "182293da527cc07ae8722ce7bae39fafb5f346fe",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-12T09:01:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724466429",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T08:53:21Z",
+      "database_id": 25724034333,
+      "display_title": "Fix OpenAI key false positive in public bundle verifier",
+      "event": "pull_request",
+      "head_branch": "fix-openai-key-false-positive",
+      "head_sha": "182293da527cc07ae8722ce7bae39fafb5f346fe",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T08:53:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724034333",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T08:53:21Z",
+      "database_id": 25724034331,
+      "display_title": "Fix OpenAI key false positive in public bundle verifier",
+      "event": "pull_request",
+      "head_branch": "fix-openai-key-false-positive",
+      "head_sha": "182293da527cc07ae8722ce7bae39fafb5f346fe",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T08:53:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724034331",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-12T06:51:18Z",
+      "database_id": 25718461471,
+      "display_title": "Codex Policy Agent Canary Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "6b24d9ab767bfc508fe5034dc092d96e5cb3b435",
+      "name": "Codex Policy Agent Canary Run",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:52:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718461471",
+      "workflow_name": "Codex Policy Agent Canary Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:45:12Z",
+      "database_id": 25718214991,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6b24d9ab767bfc508fe5034dc092d96e5cb3b435",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:45:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718214991",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-12T06:44:53Z",
       "database_id": 25718201613,
       "display_title": "Scan public agent bundles with Gitleaks",
@@ -4926,6 +4986,34 @@
       "updated_at": "2026-05-12T06:44:54Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201613",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:44:53Z",
+      "database_id": 25718201576,
+      "display_title": "Scan public agent bundles with Gitleaks (#270)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "285c07aa893b01bbf088bce3097383bd68f3da04",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:45:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201576",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-12T06:44:52Z",
+      "database_id": 25718201000,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "285c07aa893b01bbf088bce3097383bd68f3da04",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:45:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201000",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6186,104 +6274,6 @@
       "updated_at": "2026-05-11T10:45:25Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665402650",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T10:44:17Z",
-      "database_id": 25665385222,
-      "display_title": "Document canonical Docker Codex runner",
-      "event": "pull_request",
-      "head_branch": "document-canonical-docker-codex-runner",
-      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:44:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665385222",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:44:17Z",
-      "database_id": 25665385199,
-      "display_title": "Document canonical Docker Codex runner (#259)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "04e266a15670625c78ed55c0d4c4cdefccd4939e",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:44:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665385199",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-11T10:44:16Z",
-      "database_id": 25665384339,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "04e266a15670625c78ed55c0d4c4cdefccd4939e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:44:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665384339",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:42:28Z",
-      "database_id": 25665304844,
-      "display_title": "Document canonical Docker Codex runner",
-      "event": "pull_request",
-      "head_branch": "document-canonical-docker-codex-runner",
-      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:42:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304844",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:42:28Z",
-      "database_id": 25665304843,
-      "display_title": "Document canonical Docker Codex runner",
-      "event": "pull_request",
-      "head_branch": "document-canonical-docker-codex-runner",
-      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:42:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304843",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:42:28Z",
-      "database_id": 25665304835,
-      "display_title": "Document canonical Docker Codex runner",
-      "event": "pull_request",
-      "head_branch": "document-canonical-docker-codex-runner",
-      "head_sha": "642b91195cb0083591ceaa40080d91c11a3fe701",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:42:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665304835",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T10:34:16Z",
-      "database_id": 25664941687,
-      "display_title": "Run fixed first canary",
-      "event": "pull_request",
-      "head_branch": "first-canary-001-2",
-      "head_sha": "50a99900a0fafcfe0aa6fd3c11b8f3fc03fa8113",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:34:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25664941687",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }

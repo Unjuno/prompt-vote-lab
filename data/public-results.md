@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-12T06:45:09+00:00`
+Generated at: `2026-05-12T09:02:14+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 | 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
@@ -69,13 +70,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
-| 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25724466429 | Terminal State Report | pull_request | completed | skipped | Fix OpenAI key false positive in public bundle verifier |
+| 25724034333 | Lab PR Scope Check | pull_request | completed | success | Fix OpenAI key false positive in public bundle verifier |
+| 25724034331 | Script Check | pull_request | completed | success | Fix OpenAI key false positive in public bundle verifier |
+| 25718461471 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
+| 25718214991 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25718201613 | Terminal State Report | pull_request | completed | skipped | Scan public agent bundles with Gitleaks |
+| 25718201576 | Public Results Export | push | completed | success | Scan public agent bundles with Gitleaks (#270) |
+| 25718201000 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25717773526 | Script Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
 | 25717773502 | Lab PR Scope Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
 | 25717327783 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25713643434 | Script Check | pull_request | completed | failure | Add actionlint to Script Check |
 | 25713643423 | Lab PR Scope Check | pull_request | completed | success | Add actionlint to Script Check |
 | 25712668692 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25712661123 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25712050368 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
-| 25711346130 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25711337050 | Terminal State Report | pull_request | completed | skipped | Verify uploaded public agent bundles |
-| 25711337038 | Public Results Export | push | completed | success | Verify uploaded public agent bundles (#268) |
-| 25711336471 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25711268923 | Lab PR Scope Check | pull_request | completed | success | Verify uploaded public agent bundles |
 
 ## Raw JSON
 
