@@ -14,6 +14,8 @@ REQUIRED_TEXT = [
     "runs/**",
     "workflow_dispatch:",
     "contents: read",
+    "Run actionlint",
+    "raven-actions/actionlint@v2",
     "Run comparison dashboard builder test",
     "python scripts/test_build_comparison_dashboard.py",
     "Run comparison dashboard decision test",
@@ -59,6 +61,12 @@ def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
+
+    if text.index("Checkout") > text.index("Run actionlint"):
+        raise SystemExit("actionlint should run after checkout")
+
+    if text.index("Run actionlint") > text.index("Setup Node"):
+        raise SystemExit("actionlint should run before language-specific script checks")
 
     if text.index("lab/comparisons/**") > text.index("runs/**"):
         raise SystemExit("runs/** should be tracked near generated/evidence paths")
