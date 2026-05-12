@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T09:02:14+00:00",
+  "generated_at": "2026-05-12T11:20:08+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,70 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 2,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `062e20bc8d6a06223c29a59e552608f0b60dcfc1`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Public evidence\n\n- Redacted public agent run bundle artifact: `codex-policy-agent-canary-public-bundle-11`\n- Public bundle content verification report: `public-agent-run-bundle-verification.json` inside diagnostics\n- Public bundle Gitleaks report: `public-agent-run-bundle-gitleaks.json` inside diagnostics\n- Uploaded public bundle verification report: `public-agent-run-bundle-uploaded-verification.json` inside diagnostics\n- Uploaded public bundle Gitleaks report: `public-agent-run-bundle-uploaded-gitleaks.json` inside diagnostics\n- Observation summary files: `observation-summary.md`, `observation-summary.json`\n- Sanitized diagnostic logs directory: `sanitized/`\n- Sanitized exposed reasoning / CoT-like trace directory: `reasoning-traces/`\n- Public run log artifact: `codex-policy-agent-canary-public-log-11`\n- Internal diagnostics artifact: `codex-policy-agent-canary-diagnostics-11`\n\n## Reasoning trace policy\n\nIf the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for mount, policy, Codex event, diff, public bundle pre-upload verification, public bundle Gitleaks scan, uploaded artifact verification, and uploaded artifact Gitleaks scan analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, scanned for secret-like strings, and include exposed reasoning traces when present.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
+      "body_length": 2604,
+      "changed_files": 1,
+      "closed_at": "2026-05-12T11:19:31Z",
+      "comment_count": 0,
+      "created_at": "2026-05-12T09:17:12Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "lab/index.html"
+        }
+      ],
+      "head_ref_name": "codex-policy-agent-canary-007-11",
+      "head_ref_oid": "ff170d5372fb87088ad805547e888e673fcc9c40",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 272,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Run Codex policy-enforced agent canary",
+      "updated_at": "2026-05-12T11:19:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/272"
+    },
+    {
+      "additions": 200,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nRecords `Codex Policy Agent Canary Run #11` as a successful evidence-only `first-canary-007` run after the public evidence pipeline hardening.\n\n## Why\n\nPR #272 proves the canonical Docker/Codex policy-agent path reached PR creation after the hardened evidence checks:\n\n```text\npublic bundle verifier\npublic bundle Gitleaks scan\nartifact upload\nartifact download\nuploaded bundle verifier\nuploaded bundle Gitleaks scan\n```\n\nThe visible lab diff in #272 is a canary marker, not a product feature. This PR records the result before deciding whether to close #272 as evidence-only.\n\n## Added\n\n- `runs/first-canary-007-policy-agent-canary-11-success.md`\n\n## Scope\n\nRun record only.\n\nNo lab UI changes, no workflow changes, no model/token-budget changes.",
+      "body_length": 759,
+      "changed_files": 1,
+      "closed_at": "2026-05-12T11:19:30Z",
+      "comment_count": 0,
+      "created_at": "2026-05-12T11:15:33Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 200,
+          "deletions": 0,
+          "path": "runs/first-canary-007-policy-agent-canary-11-success.md"
+        }
+      ],
+      "head_ref_name": "record-policy-agent-canary-11-success",
+      "head_ref_oid": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
+      "labels": [],
+      "merge_commit_oid": "757656aa4178ae4a09b19eb7cd747d7211579b82",
+      "merged_at": "2026-05-12T11:19:30Z",
+      "merged_by": "Unjuno",
+      "number": 273,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Record policy-agent canary 11 success",
+      "updated_at": "2026-05-12T11:19:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/273"
+    },
     {
       "additions": 12,
       "author": "Unjuno",
@@ -4683,75 +4747,6 @@
       "title": "Harden prompt proposal issue template",
       "updated_at": "2026-05-07T19:21:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/190"
-    },
-    {
-      "additions": 5,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the Weekly Issue Finalizer close step so internal close reasons are mapped to GitHub CLI reason strings before calling `gh issue close`.\n\n## Problem\n\nThe finalizer plan uses internal machine-readable values such as:\n\n```text\nnot_planned\n```\n\nThe workflow passed that value directly to:\n\n```text\ngh issue close --reason <value>\n```\n\nThis allowed the comment step to succeed while the close step could fail for blocked/not-planned outcomes.\n\n## Fix\n\nThe workflow now maps underscore-separated internal reasons to CLI-facing reason strings at the final shell-command generation step:\n\n```text\ngh_reason = reason.replace('_', ' ')\n```\n\nSo the plan can continue using stable internal values while the CLI receives its expected format.\n\n## Tests\n\nUpdates the weekly finalizer workflow contract test to require:\n\n```text\ngh_reason = reason.replace('_', ' ')\n--reason {shlex.quote(gh_reason)}\n```\n\n## Non-goals\n\n- No `/lab/` changes.\n- No model/API run.\n- No schedule/auto-run changes.\n- No change to finalizer eligibility policy.",
-      "body_length": 1040,
-      "changed_files": 2,
-      "closed_at": "2026-05-07T17:38:37Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T17:37:04Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 2,
-          "path": ".github/workflows/weekly-issue-finalizer.yml"
-        },
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": "scripts/test_weekly_issue_finalizer_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "fix-weekly-finalizer-reason",
-      "head_ref_oid": "9fdd5368ec60c1b38feb86d77e6b227d98af37fb",
-      "labels": [],
-      "merge_commit_oid": "15daac63fd9fc437cf21e76747412914a9404fe9",
-      "merged_at": "2026-05-07T17:38:37Z",
-      "merged_by": "Unjuno",
-      "number": 189,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Fix weekly finalizer close reason mapping",
-      "updated_at": "2026-05-07T19:21:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/189"
-    },
-    {
-      "additions": 140,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords the successful fixed-Issue 009 run for Issue #191, which was created from the hardened prompt proposal template.\n\n## Evidence recorded\n\nAdds:\n\n```text\nruns/first-canary-009-issue-191-template-normal-success.md\n```\n\nThe record captures:\n\n- source Issue #191\n- hardened template fields present\n- posting/editing scan: CLEAR\n- runtime scan: CLEAR\n- issue execution gate: PASS\n- implementation PR #192\n- merge commit for PR #192\n- changed files limited to `lab/app.js`, `lab/index.html`, and `lab/style.css`\n- visible reviewer orientation panel result\n- safety review notes\n\n## Result\n\nThis supports the limited claim that a normal candidate from the hardened prompt proposal template can pass scan/gate checks and generate a mergeable lab-only PR.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No workflow changes.\n- No model/API run.\n- No Issue close.",
-      "body_length": 862,
-      "changed_files": 1,
-      "closed_at": "2026-05-07T18:46:33Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T18:45:33Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 140,
-          "deletions": 0,
-          "path": "runs/first-canary-009-issue-191-template-normal-success.md"
-        }
-      ],
-      "head_ref_name": "record-issue-191-template-run",
-      "head_ref_oid": "7cf6ee4fa7bbff63bcf1bcc16df9f5100d8cc34f",
-      "labels": [],
-      "merge_commit_oid": "5c9d418799bbf1f665530bbec756c1b318120640",
-      "merged_at": "2026-05-07T18:46:33Z",
-      "merged_by": "Unjuno",
-      "number": 193,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record Issue 191 template-normal success",
-      "updated_at": "2026-05-07T19:21:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/193"
     }
   ],
   "run_records": [
@@ -4814,6 +4809,12 @@
       "path": "runs/first-canary-006-agent-observed-success.md",
       "size_bytes": 3456,
       "title": "first-canary-006 agent-observed direct-edit success"
+    },
+    {
+      "content": "# first-canary-007 policy-agent canary 11 success\n\n## Status\n\nPASS, evidence-only.\n\n## Fixed conditions\n\n```text\ncanary_id: first-canary-007\nrun_number: 11\nsource_issue: none / issue_number=0\nresult_pr: #272 Run Codex policy-enforced agent canary\nrunner: codex-cli-policy-enforced-agent-container\nmodel: gpt-5.4-nano\nattempts_per_candidate: 1\nretry_policy: none\nfallback_policy: none\nauto_merge_policy: disabled\nsandbox_mode: docker-mounted-workdir-only\nexecution_mode: policy-enforced Codex CLI agent direct edit\ncontainer_work_root: /work\ncontainer_runtime_root: /codex-runtime\ndiagnostics_root: /diagnostics\nrepo_root_mounted: false\nvisible_work_files: lab/index.html, lab/style.css, lab/app.js\nfinal_writable_files: lab/index.html, lab/style.css, lab/app.js\nmanual_review: required\n```\n\n## Purpose\n\nThis canary verified the current canonical Docker/Codex implementation-agent path after the public evidence pipeline was hardened.\n\nIt specifically checked that the policy-agent workflow can proceed through:\n\n```text\nCodex container execution\n-> changed-file guard\n-> safety-check\n-> static-site-check\n-> public bundle build\n-> public bundle enrichment\n-> public bundle verifier\n-> public bundle Gitleaks scan\n-> public bundle upload\n-> uploaded bundle download\n-> uploaded bundle verifier\n-> uploaded bundle Gitleaks scan\n-> diagnostics upload\n-> public log upload\n-> PR creation\n```\n\nThis canary did not test automatic vote-winner selection.\n\n## Observed result\n\nThe workflow completed far enough to create PR #272.\n\n```text\nPR: #272 Run Codex policy-enforced agent canary\nbranch: codex-policy-agent-canary-007-11\nhead_sha: ff170d5372fb87088ad805547e888e673fcc9c40\nbase_sha: 062e20bc8d6a06223c29a59e552608f0b60dcfc1\nchanged_files: lab/index.html\nadditions: 2\ndeletions: 0\nmergeable: true\n```\n\nThe PR body records these public evidence artifacts:\n\n```text\ncodex-policy-agent-canary-public-bundle-11\ncodex-policy-agent-canary-diagnostics-11\ncodex-policy-agent-canary-public-log-11\n```\n\nThe PR body also records these diagnostics reports as expected inside the diagnostics artifact:\n\n```text\npublic-agent-run-bundle-verification.json\npublic-agent-run-bundle-gitleaks.json\npublic-agent-run-bundle-uploaded-verification.json\npublic-agent-run-bundle-uploaded-gitleaks.json\n```\n\n## Implemented lab result\n\nThe Codex run made a minimal canary-marker edit to `lab/index.html`.\n\n```text\n- added a meta tag: codex-canary=seventh-bounded-codex-implementation-agent-canary-7\n- added a visible pill: Bounded Codex implementation-agent canary #7\n```\n\nThis visible lab diff is not adopted as a product feature by this run record. It is only evidence that the canonical policy-agent path can create a constrained PR after the hardened public evidence checks.\n\n## Diagnostics summary\n\nThe workflow reached PR creation after the following gates, because those gates occur before the PR creation step:\n\n```text\npolicy-enforced container runner completed\nchanged-file guard passed\nsafety-check passed\nstatic-site-check passed\npublic bundle pre-upload verifier passed\npublic bundle pre-upload Gitleaks scan passed\nuploaded public bundle verifier passed\nuploaded public bundle Gitleaks scan passed\n```\n\nThe preceding failed run #10 failed at `verify_public_agent_run_bundle.py` because the custom OpenAI-key regex treated the ordinary path-like string `task-static-ui-v1.0.md` as an `sk-*` token. PR #271 fixed that false positive by requiring `sk-` not to be preceded by an alphanumeric character.\n\n## Access-log interpretation\n\nThis record does not claim a full OS-level file access audit.\n\nThe relevant evidence is the workflow/container boundary and public diagnostics pipeline:\n\n```text\n- repository root is not mounted into the Codex editing container\n- only the prepared `/work` directory is mounted read/write\n- `/work` contains only the allowed lab files\n- final copyback is restricted to lab/index.html, lab/style.css, lab/app.js\n- public bundle evidence is sanitized, verified, scanned, uploaded, downloaded, and verified/scanned again\n```\n\n## Checks passed\n\n```text\npolicy-enforced container runner completed before PR creation\nchanged-file guard passed before PR creation\nsafety-check passed before PR creation\nstatic-site-check passed before PR creation\npublic bundle content verification passed before PR creation\npublic bundle Gitleaks scan passed before PR creation\nuploaded public bundle verification passed before PR creation\nuploaded public bundle Gitleaks scan passed before PR creation\n```\n\n## Interpretation\n\nThis is the first successful `first-canary-007` run after the evidence pipeline added:\n\n```text\n- observation-summary.md/json\n- sanitized/ public diagnostics\n- reasoning-traces/ public traces\n- public bundle verifier\n- uploaded artifact re-download verifier\n- Gitleaks scan before upload\n- Gitleaks scan after artifact download\n- actionlint-protected workflow checks\n```\n\nThe successful run supports these claims:\n\n```text\n- The canonical Docker/Codex policy-agent path can still create a PR under current main.\n- The public evidence bundle can pass the custom verifier after the false-positive fix.\n- The generated public bundle can pass Gitleaks scanning.\n- The uploaded-and-downloaded artifact can pass the same verifier and Gitleaks scan before diagnostics upload and PR creation.\n```\n\n## Not proven\n\nThis single run does not prove:\n\n```text\n- automatic vote-winner selection\n- repeated-run stability\n- fixed GitHub Issue ingestion\n- hostile prompt-injection resistance\n- full OS-level file access tracing\n- long-term artifact availability after retention expiry\n- that the canary-marker UI diff should be merged into the live lab\n```\n\n## Current classification\n\n```text\nfirst-canary-007: canonical Docker/Codex policy-agent path verified after public bundle hardening\nfirst-canary-009: successful fixed GitHub Issue instruction-packet agent candidate\nweekly-auto-run: still not migrated to canonical Docker/Codex path\n```\n\n## Recommended next step\n\nTreat PR #272 as evidence-only unless there is a specific reason to adopt the visible canary marker into `main`.\n\nThen proceed to the next production-hardening step:\n\n```text\n1. Close or annotate #272 as evidence-only.\n2. Migrate weekly-auto-run away from the legacy Python SDK implementation path only after deciding the fixed Issue / selected prompt ingestion route.\n3. Run a fixed-Issue or selected-prompt canary through the same public bundle verifier + Gitleaks pipeline.\n```\n",
+      "path": "runs/first-canary-007-policy-agent-canary-11-success.md",
+      "size_bytes": 6449,
+      "title": "first-canary-007 policy-agent canary 11 success"
     },
     {
       "content": "# first-canary-007 policy-agent evidence-only result\n\n## Status\n\nPASS as canonical Docker/Codex policy-agent E2E evidence.\n\nNot adopted into `main` as a lab UI change.\n\nThis record closes the evidence loop for workflow run `25670780249` and PR #263.\n\n## Source\n\n```text\nWorkflow: Codex Policy Agent Canary Run\nWorkflow run id: 25670780249\nEvent: workflow_dispatch\nHead branch at run time: main\nHead SHA at run time: 7f0a34f763b76a3a4ccb2a05890d1edcb7c0e643\nConclusion: success\n```\n\n## Runner configuration\n\n```text\nCanary id: first-canary-007\nProvider: openai-codex\nRunner: codex-cli-policy-enforced-agent-container\nSandbox mode: docker-mounted-workdir-only\nModel: gpt-5.4-nano\nAttempts: 1\nRetry policy: none\nFallback policy: none\nAuto-merge: disabled\nFinal writable files: lab/index.html, lab/style.css, lab/app.js\n```\n\nThe intended boundary for this run was:\n\n```text\n- repository root is not mounted into the Codex work directory\n- Codex edits a prepared /work directory\n- final copyback is limited to lab/index.html, lab/style.css, and lab/app.js\n- manual review is required before any adoption\n```\n\n## PR result\n\n```text\nPR: #263\nTitle: Run Codex policy-enforced agent canary\nState: CLOSED\nMerged: false\nHead branch: codex-policy-agent-canary-007-7\nHead commit: b00a5852d1d4972c0d0207dea4462644d72dab0a\nBase commit at PR creation: 7f0a34f763b76a3a4ccb2a05890d1edcb7c0e643\nChanged files: 1\nAdditions: 1\nDeletions: 0\n```\n\nChanged file:\n\n```text\nlab/index.html\n```\n\nDiff summary:\n\n```text\nAdded one status pill:\nCodex bounded implementation-agent Canary #7\n```\n\n## Internal checks\n\nThe PR body records that the workflow completed these checks before PR creation:\n\n```text\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n```\n\nNo PR-side follow-up CI status was observed on the PR head commit. This is expected for a branch pushed by `GITHUB_TOKEN` in some GitHub Actions configurations, but it means the pre-PR workflow checks are the recorded verification source for this canary PR.\n\n## Public artifacts\n\nThe workflow run uploaded these artifacts:\n\n```text\ncodex-policy-agent-canary-public-bundle-7\nartifact_id: 6918707781\nsize: 28859 bytes\nexpired: false\n\naction artifact digest:\nsha256:b73cab169e98d9599ba4b6e50d805ca836146f0f002e42cc084bae48f1beb19f\n```\n\n```text\ncodex-policy-agent-canary-public-log-7\nartifact_id: 6918708759\nsize: 584 bytes\nexpired: false\n\naction artifact digest:\nsha256:cc25992185d90a7ab467bf5dfd54ea2410f36b6e4ec10f47793a16124c47b7cc\n```\n\n```text\ncodex-policy-agent-canary-diagnostics-7\nartifact_id: 6918708255\nsize: 14352 bytes\nexpired: false\n\naction artifact digest:\nsha256:24a2815363a100a5367e084573a16f8c41af4570382e695fad316528a9f1b220\n```\n\nExpected public bundle contents include:\n\n```text\nindex.json\nREADME.md\nobservation-summary.md\nobservation-summary.json\nraw/\nsanitized/\nreasoning-traces/\n```\n\n## Reasoning trace evidence policy\n\nFor this canary series, exposed reasoning / CoT-like trace artifacts are part of the experiment when they exist in run artifacts.\n\nThe intended publication rule is:\n\n```text\nif a run artifact exposes reasoning / CoT-like trace text:\n    publish it under reasoning-traces/ after sanitizer replacement\nelse:\n    record it as unavailable\n```\n\nProvider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Verification limit\n\nArtifact existence and metadata were verified through the GitHub Actions artifact listing.\n\nZIP contents were not manually inspected in this review environment. Therefore this record does not claim manual inspection of:\n\n```text\nobservation-summary.md\nobservation-summary.json\nsanitized/\nreasoning-traces/\n```\n\nThis is a narrow evidence record, not an overclaim.\n\n## Disposition\n\nPR #263 was closed as evidence-only and not merged.\n\nReason:\n\n```text\n- the Docker/Codex canary path completed and produced a bounded lab PR\n- the visible lab change was only a canary status pill\n- later publication fixes landed after the canary PR was created\n- force-updating the PR branch would weaken the original Codex-generated head commit evidence\n- the visible canary pill is not needed in the accepted live lab\n```\n\n## Interpretation\n\nThis run supports the following limited claim:\n\n```text\nThe canonical Docker/Codex policy-agent canary path can complete on GitHub Actions, create a lab-scoped PR, and upload public/internal evidence artifacts without auto-merging.\n```\n\nIt does not prove:\n\n```text\n- production readiness for weekly-auto-run migration\n- correctness of every public bundle file without manual ZIP inspection\n- general prompt-injection safety\n- semantic quality of the generated lab change\n- readiness for auto-merge\n```\n\n## Follow-up work\n\n```text\n1. Add an automated artifact-content verification path, or manually inspect the public bundle ZIP for a future run.\n2. Migrate weekly eligible implementation path to the canonical Docker/Codex runner only after artifact verification is repeatable.\n3. Keep auto-merge disabled.\n4. Keep generated implementation PRs separate from evidence/docs/test changes.\n```\n",
@@ -4895,14 +4896,98 @@
     "blocked_issue_count": 2,
     "clear_issue_count": 5,
     "issue_count": 12,
-    "merged_pr_count": 85,
+    "merged_pr_count": 84,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
-    "run_record_count": 21,
+    "run_record_count": 22,
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-12T11:19:33Z",
+      "database_id": 25731078685,
+      "display_title": "Run Codex policy-enforced agent canary",
+      "event": "pull_request",
+      "head_branch": "codex-policy-agent-canary-007-11",
+      "head_sha": "ff170d5372fb87088ad805547e888e673fcc9c40",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:19:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078685",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-12T11:19:33Z",
+      "database_id": 25731078683,
+      "display_title": "Record policy-agent canary 11 success",
+      "event": "pull_request",
+      "head_branch": "record-policy-agent-canary-11-success",
+      "head_sha": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:19:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078683",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T11:15:38Z",
+      "database_id": 25730896040,
+      "display_title": "Record policy-agent canary 11 success",
+      "event": "pull_request",
+      "head_branch": "record-policy-agent-canary-11-success",
+      "head_sha": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:15:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25730896040",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T11:15:38Z",
+      "database_id": 25730896012,
+      "display_title": "Record policy-agent canary 11 success",
+      "event": "pull_request",
+      "head_branch": "record-policy-agent-canary-11-success",
+      "head_sha": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:16:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25730896012",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T09:15:58Z",
+      "database_id": 25725153947,
+      "display_title": "Codex Policy Agent Canary Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "062e20bc8d6a06223c29a59e552608f0b60dcfc1",
+      "name": "Codex Policy Agent Canary Run",
+      "status": "completed",
+      "updated_at": "2026-05-12T09:17:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25725153947",
+      "workflow_name": "Codex Policy Agent Canary Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T09:02:18Z",
+      "database_id": 25724483355,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "062e20bc8d6a06223c29a59e552608f0b60dcfc1",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T09:02:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724483355",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-12T09:01:57Z",
@@ -4916,6 +5001,34 @@
       "updated_at": "2026-05-12T09:01:59Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724466429",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T09:01:57Z",
+      "database_id": 25724466428,
+      "display_title": "Fix OpenAI key false positive in public bundle verifier (#271)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "a185a5ff96e2ba8f565a400304589ebf5ab83d20",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-12T09:02:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724466428",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-12T09:01:56Z",
+      "database_id": 25724464879,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a185a5ff96e2ba8f565a400304589ebf5ab83d20",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T09:02:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724464879",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6162,118 +6275,6 @@
       "updated_at": "2026-05-11T11:17:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666845125",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-11T11:16:44Z",
-      "database_id": 25666844200,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "61f1c4b555027b5c8f3dc1c2e1dbe9a011269588",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:17:10Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666844200",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:12:58Z",
-      "database_id": 25666681185,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "3cc2a8210de5af9e1888353867e0e6c9c66e9fc6",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:13:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666681185",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:12:58Z",
-      "database_id": 25666681126,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "3cc2a8210de5af9e1888353867e0e6c9c66e9fc6",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:13:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666681126",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:12:58Z",
-      "database_id": 25666681119,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "3cc2a8210de5af9e1888353867e0e6c9c66e9fc6",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:13:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666681119",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:05:15Z",
-      "database_id": 25666335778,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "b16111d6aecd3301311b316f4df9d1a515686de8",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:05:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666335778",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T11:05:15Z",
-      "database_id": 25666335759,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "b16111d6aecd3301311b316f4df9d1a515686de8",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:05:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666335759",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:05:15Z",
-      "database_id": 25666335752,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "b16111d6aecd3301311b316f4df9d1a515686de8",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:05:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666335752",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:44:41Z",
-      "database_id": 25665402650,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "976c12adc2e400ff43d540482459f9a868c5f3b0",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:45:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25665402650",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
