@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-11T14:42:15+00:00`
+Generated at: `2026-05-12T03:23:06+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
@@ -69,13 +70,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
 | 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
 | 210 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v3 |
-| 213 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v4 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25711337050 | Terminal State Report | pull_request | completed | skipped | Verify uploaded public agent bundles |
+| 25711268923 | Lab PR Scope Check | pull_request | completed | success | Verify uploaded public agent bundles |
+| 25711268912 | Script Check | pull_request | completed | success | Verify uploaded public agent bundles |
+| 25677596028 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
+| 25677144282 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25677124038 | Terminal State Report | pull_request | completed | skipped | Verify public agent run bundle contents |
+| 25677122350 | Public Results Export | push | completed | success | Verify public agent run bundle contents (#267) |
+| 25677119539 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25676638107 | Lab PR Scope Check | pull_request | completed | success | Verify public agent run bundle contents |
 | 25676638051 | Script Check | pull_request | completed | success | Verify public agent run bundle contents |
 | 25674402253 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -98,13 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25671857736 | Lab PR Scope Check | pull_request | completed | success | Document policy-agent reasoning traces in PR body |
 | 25670780249 | Codex Policy Agent Canary Run | workflow_dispatch | completed | success | Codex Policy Agent Canary Run |
 | 25670671181 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25670650209 | Terminal State Report | pull_request | completed | skipped | Publish sanitized reasoning trace evidence |
-| 25670650195 | Public Results Export | push | completed | success | Publish sanitized reasoning trace evidence (#262) |
-| 25670649425 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25670484648 | Static Site Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
-| 25670484336 | Script Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
-| 25670484327 | Lab PR Scope Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
-| 25670346692 | Static Site Check | pull_request | completed | success | Publish sanitized reasoning trace evidence |
 
 ## Raw JSON
 
