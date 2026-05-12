@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T06:22:44+00:00",
+  "generated_at": "2026-05-12T06:45:09+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -493,6 +493,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 289,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nAdds a Gitleaks-based secret-like string scan for generated public agent run bundles.\n\n## Why\n\nThe repository already has a custom sanitizer and verifier for public bundles. That is necessary, but it is still a custom regex layer.\n\nThis adds a second defense layer using Gitleaks, scoped only to generated public agent run bundles.\n\n## Design choice\n\nThis intentionally does **not** scan the whole repository. The repo contains intentional fake-token fixtures for verifier tests, so repo-wide scans would likely create false positives. The risk being controlled here is public evidence artifact leakage, so the scan scope is the generated bundle directory only.\n\n## Changes\n\n- Add `scripts/run_gitleaks_public_bundle_scan.sh`.\n- Scan the pre-upload public bundle directory.\n- Scan the uploaded-and-downloaded public bundle directory.\n- Store scan reports and findings in diagnostics:\n  - `public-agent-run-bundle-gitleaks.json`\n  - `public-agent-run-bundle-gitleaks-findings.json`\n  - `public-agent-run-bundle-uploaded-gitleaks.json`\n  - `public-agent-run-bundle-uploaded-gitleaks-findings.json`\n- Apply the scan to:\n  - `Codex Policy Agent Canary Run`\n  - `Codex Fixed Issue Instruction Canary Run`\n- Update contract tests to lock the scan order.\n\n## Boundary\n\nGitleaks is a second defense layer, not a proof of no secrets. The custom sanitizer/verifier remains in place.\n\n## Scope\n\nWorkflow and public bundle leak-scan hardening only.\n\nNo lab UI changes, no model/token-budget changes, no auto-merge changes.",
+      "body_length": 1522,
+      "changed_files": 5,
+      "closed_at": "2026-05-12T06:44:50Z",
+      "comment_count": 0,
+      "created_at": "2026-05-12T06:34:07Z",
+      "deletions": 30,
+      "files": [
+        {
+          "additions": 30,
+          "deletions": 2,
+          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
+        },
+        {
+          "additions": 29,
+          "deletions": 1,
+          "path": ".github/workflows/codex-policy-agent-canary-run.yml"
+        },
+        {
+          "additions": 142,
+          "deletions": 0,
+          "path": "scripts/run_gitleaks_public_bundle_scan.sh"
+        },
+        {
+          "additions": 36,
+          "deletions": 5,
+          "path": "scripts/test_issue_instruction_runner_contract.py"
+        },
+        {
+          "additions": 52,
+          "deletions": 22,
+          "path": "scripts/test_policy_agent_public_bundle_contract.py"
+        }
+      ],
+      "head_ref_name": "scan-public-bundles-with-gitleaks",
+      "head_ref_oid": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
+      "labels": [],
+      "merge_commit_oid": "285c07aa893b01bbf088bce3097383bd68f3da04",
+      "merged_at": "2026-05-12T06:44:50Z",
+      "merged_by": "Unjuno",
+      "number": 270,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Scan public agent bundles with Gitleaks",
+      "updated_at": "2026-05-12T06:44:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/270"
+    },
     {
       "additions": 30,
       "author": "Unjuno",
@@ -4710,63 +4762,6 @@
       "title": "Document fixed Issue instruction canary",
       "updated_at": "2026-05-06T15:02:50Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/154"
-    },
-    {
-      "additions": 927,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds the full `first-canary-009-fixed-issue-instruction-packet` implementation path.\n\n## Changed files\n\n- `.github/workflows/codex-fixed-issue-instruction-canary-run.yml`\n- `.github/workflows/script-check.yml`\n- `scripts/create_codex_issue_instruction_packet.py`\n- `scripts/run_codex_issue_instruction_canary.sh`\n- `scripts/test_create_codex_issue_instruction_packet.py`\n- `scripts/test_issue_instruction_runner_contract.py`\n\n## What this adds\n\n- workflow-dispatch input for a fixed GitHub Issue number\n- `gh issue view` source Issue fetch\n- source Issue JSON artifact capture\n- instruction packet generator:\n  - `instruction-brief.md`\n  - `selected-issue.json`\n  - `raw-issue-body.md`\n  - `selected-prompt.md` compatibility file\n  - policy snapshots and hashes\n- 008-style `/task:ro`, `/work:rw`, `/codex-runtime:rw`, `/diagnostics:rw` container runner\n- API key presence check with `OPENAI_API_KEY` unset before `codex exec`\n- CI tests for generator and runner/workflow contract\n\n## Fixed conditions\n\n- model: `gpt-5.4-nano`\n- attempts: `1`\n- retry policy: `none`\n- fallback policy: `none`\n- auto-merge: disabled\n- final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Scope\n\n- Adds 009 fixed-Issue instruction packet workflow and runner.\n- Does not run Codex in this PR.\n- Does not implement vote-winner selection.\n- Does not modify `/lab/`.",
-      "body_length": 1376,
-      "changed_files": 6,
-      "closed_at": "2026-05-06T11:34:25Z",
-      "comment_count": 0,
-      "created_at": "2026-05-06T11:24:37Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 222,
-          "deletions": 0,
-          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
-        },
-        {
-          "additions": 8,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 242,
-          "deletions": 0,
-          "path": "scripts/create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 215,
-          "deletions": 0,
-          "path": "scripts/run_codex_issue_instruction_canary.sh"
-        },
-        {
-          "additions": 152,
-          "deletions": 0,
-          "path": "scripts/test_create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 88,
-          "deletions": 0,
-          "path": "scripts/test_issue_instruction_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "canary-009-fixed-issue-packet",
-      "head_ref_oid": "baa8a124ff363730c7a31a19ebc3b6c1aa640889",
-      "labels": [],
-      "merge_commit_oid": "c26149facf895c018e5811d7e92ae361fe58c6c2",
-      "merged_at": "2026-05-06T11:34:25Z",
-      "merged_by": "Unjuno",
-      "number": 155,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add fixed Issue instruction canary",
-      "updated_at": "2026-05-06T15:02:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/155"
     }
   ],
   "run_records": [
@@ -4915,9 +4910,79 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 21,
-    "workflow_run_count": 99
+    "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-12T06:44:53Z",
+      "database_id": 25718201613,
+      "display_title": "Scan public agent bundles with Gitleaks",
+      "event": "pull_request",
+      "head_branch": "scan-public-bundles-with-gitleaks",
+      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:44:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201613",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:34:10Z",
+      "database_id": 25717773526,
+      "display_title": "Scan public agent bundles with Gitleaks",
+      "event": "pull_request",
+      "head_branch": "scan-public-bundles-with-gitleaks",
+      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:34:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717773526",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:34:10Z",
+      "database_id": 25717773502,
+      "display_title": "Scan public agent bundles with Gitleaks",
+      "event": "pull_request",
+      "head_branch": "scan-public-bundles-with-gitleaks",
+      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:34:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717773502",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:22:46Z",
+      "database_id": 25717327783,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0ce3478c399795d46c2b9c50adc3e2ddda09c40f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:23:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717327783",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T06:22:28Z",
+      "database_id": 25717316218,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:22:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717316218",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "failure",
       "created_at": "2026-05-12T06:20:37Z",
@@ -6219,90 +6284,6 @@
       "updated_at": "2026-05-11T10:34:18Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25664941687",
       "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:20:44Z",
-      "database_id": 25664331320,
-      "display_title": "First Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "342af571693470832cc4ff95683326c5e8d5e4c5",
-      "name": "First Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:21:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25664331320",
-      "workflow_name": "First Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:09:38Z",
-      "database_id": 25663835042,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "342af571693470832cc4ff95683326c5e8d5e4c5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:10:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663835042",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T10:09:13Z",
-      "database_id": 25663816990,
-      "display_title": "Add live preview hub to lab page",
-      "event": "pull_request",
-      "head_branch": "add-lab-live-preview-hub",
-      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:09:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663816990",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:09:13Z",
-      "database_id": 25663816979,
-      "display_title": "Add live preview hub to lab page (#257)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:09:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663816979",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:09:12Z",
-      "database_id": 25663815972,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "dbcdab5fc709157302eccb15f2246fe1cb4fac88",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:09:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663815972",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:03:48Z",
-      "database_id": 25663571129,
-      "display_title": "Add live preview hub to lab page",
-      "event": "pull_request",
-      "head_branch": "add-lab-live-preview-hub",
-      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:03:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571129",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

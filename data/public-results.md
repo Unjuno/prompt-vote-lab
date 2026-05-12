@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-12T06:22:44+00:00`
+Generated at: `2026-05-12T06:45:09+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 85 |
-| workflow_run_count | 99 |
+| workflow_run_count | 98 |
 | run_record_count | 21 |
 
 ## Recent Issues
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
@@ -69,12 +70,16 @@ This file is a raw results surface for participants. It does not score prompts o
 | 206 | MERGED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 |
 | 209 | MERGED | 2 | 44/93 | Simplify comparison workflow and detect new rank files |
 | 207 | MERGED | 2 | 47/0 | Allow comparison runs from request PRs |
-| 208 | CLOSED | 1 | 7/0 | Request comparison run for Issue 195 rank 2 v2 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25718201613 | Terminal State Report | pull_request | completed | skipped | Scan public agent bundles with Gitleaks |
+| 25717773526 | Script Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
+| 25717773502 | Lab PR Scope Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
+| 25717327783 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25717316218 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25717244415 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25714507921 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25714495705 | Public Results Export | push | completed | success | Add actionlint to Script Check (#269) |
@@ -100,11 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25711337038 | Public Results Export | push | completed | success | Verify uploaded public agent bundles (#268) |
 | 25711336471 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25711268923 | Lab PR Scope Check | pull_request | completed | success | Verify uploaded public agent bundles |
-| 25711268912 | Script Check | pull_request | completed | success | Verify uploaded public agent bundles |
-| 25677596028 | Codex Policy Agent Canary Run | workflow_dispatch | completed | failure | Codex Policy Agent Canary Run |
-| 25677144282 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25677124038 | Terminal State Report | pull_request | completed | skipped | Verify public agent run bundle contents |
-| 25677122350 | Public Results Export | push | completed | success | Verify public agent run bundle contents (#267) |
 
 ## Raw JSON
 
