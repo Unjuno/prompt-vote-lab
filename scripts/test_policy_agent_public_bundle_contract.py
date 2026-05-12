@@ -22,6 +22,13 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/verify_public_agent_run_bundle.py",
     "--report .tmp/public-agent-run-bundle-verification.json",
     "public-agent-run-bundle-verification.json",
+    "Download uploaded public agent run bundle",
+    "actions/download-artifact@v4",
+    "path: .tmp/public-agent-run-bundle-uploaded",
+    "Verify uploaded public agent run bundle contents",
+    "--bundle-dir .tmp/public-agent-run-bundle-uploaded",
+    "--report .tmp/public-agent-run-bundle-uploaded-verification.json",
+    "public-agent-run-bundle-uploaded-verification.json",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
@@ -36,8 +43,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "sanitized/",
     "Sanitized exposed reasoning / CoT-like trace directory:",
     "reasoning-traces/",
+    "Uploaded public bundle verification report:",
     "If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement.",
     "Public artifacts are redacted, sanitized, indexed, verified for required structure, and include exposed reasoning traces when present.",
+    "uploaded artifact verification analysis",
 ]
 
 REQUIRED_BUNDLE_TEXT = [
@@ -157,9 +166,13 @@ def main() -> int:
     if workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow.index("Verify public agent run bundle contents"):
         raise SystemExit("public bundle must be verified after enrichment")
     if workflow.index("Verify public agent run bundle contents") > workflow.index("Upload redacted public agent run bundle"):
-        raise SystemExit("public bundle upload must occur after verification")
-    if workflow.index("Upload redacted public agent run bundle") > workflow.index("Upload diagnostics artifact"):
-        raise SystemExit("public bundle should be uploaded before internal diagnostics artifact")
+        raise SystemExit("public bundle upload must occur after pre-upload verification")
+    if workflow.index("Upload redacted public agent run bundle") > workflow.index("Download uploaded public agent run bundle"):
+        raise SystemExit("uploaded public bundle must be downloaded after upload")
+    if workflow.index("Download uploaded public agent run bundle") > workflow.index("Verify uploaded public agent run bundle contents"):
+        raise SystemExit("uploaded public bundle must be verified after download")
+    if workflow.index("Verify uploaded public agent run bundle contents") > workflow.index("Upload diagnostics artifact"):
+        raise SystemExit("diagnostics upload must include uploaded bundle verification")
 
     print("policy agent public bundle contract test passed")
     return 0

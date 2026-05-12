@@ -206,6 +206,21 @@ jobs:
           path: .tmp/public-agent-run-bundle
           if-no-files-found: warn
 
+      - name: Download uploaded public agent run bundle
+        if: ${{ always() }}
+        uses: actions/download-artifact@v4
+        with:
+          name: codex-fixed-issue-public-agent-run-bundle-${{ github.run_number }}
+          path: .tmp/public-agent-run-bundle-uploaded
+
+      - name: Verify uploaded public agent run bundle contents
+        if: ${{ always() }}
+        run: |
+          python scripts/verify_public_agent_run_bundle.py \
+            --bundle-dir .tmp/public-agent-run-bundle-uploaded \
+            --report .tmp/public-agent-run-bundle-uploaded-verification.json
+          cp .tmp/public-agent-run-bundle-uploaded-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-verification.json
+
       - name: Upload diagnostics artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -316,6 +331,7 @@ jobs:
 
           - Redacted public agent run bundle artifact: \`codex-fixed-issue-public-agent-run-bundle-${{ github.run_number }}\`
           - Public bundle content verification report: \`public-agent-run-bundle-verification.json\` inside diagnostics
+          - Uploaded public bundle verification report: \`public-agent-run-bundle-uploaded-verification.json\` inside diagnostics
           - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
           - Sanitized diagnostic logs directory: \`sanitized/\`
           - Sanitized exposed reasoning / CoT-like trace directory: \`reasoning-traces/\`
@@ -328,7 +344,7 @@ jobs:
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, diff, and public bundle verification analysis.
+          Internal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, diff, public bundle pre-upload verification, and uploaded artifact verification analysis.
 
           A redacted public agent run bundle is also uploaded for participant analysis. It exposes allowlisted raw evidence files after secret-pattern redaction, sanitized diagnostic logs, exposed reasoning traces when present, and machine-readable verification metadata.
 
