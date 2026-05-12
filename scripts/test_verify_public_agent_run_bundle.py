@@ -136,6 +136,16 @@ def main() -> int:
         assert "sanitized" in result["checked_directories"]
         assert "reasoning-traces" in result["checked_directories"]
 
+        false_positive = tmp / "false-positive"
+        make_valid_bundle(false_positive)
+        index = json.loads((false_positive / "index.json").read_text(encoding="utf-8"))
+        index["included_files"] = [
+            {"path": "raw/task-static-ui-v1.0.md", "note": "task-static-ui-v1.0.md must not match sk-* secret detection inside a word"}
+        ]
+        write_json(false_positive / "index.json", index)
+        ok_false_positive = run_verify(false_positive)
+        assert ok_false_positive.returncode == 0, ok_false_positive.stdout + ok_false_positive.stderr
+
         missing = tmp / "missing"
         make_valid_bundle(missing)
         (missing / "reasoning-traces" / "codex-events.jsonl").unlink()
