@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "scripts" / "run_codex_issue_instruction_canary.sh"
 WORKFLOW = ROOT / ".github" / "workflows" / "codex-fixed-issue-instruction-canary-run.yml"
+GITLEAKS = ROOT / "scripts" / "run_gitleaks_public_bundle_scan.sh"
 
 REQUIRED_RUNNER_TEXT = [
     "python scripts/create_codex_issue_instruction_packet.py",
@@ -66,6 +67,11 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/verify_public_agent_run_bundle.py",
     "--report .tmp/public-agent-run-bundle-verification.json",
     "public-agent-run-bundle-verification.json",
+    "Scan public agent run bundle with Gitleaks",
+    "bash scripts/run_gitleaks_public_bundle_scan.sh",
+    "--report .tmp/public-agent-run-bundle-gitleaks.json",
+    "public-agent-run-bundle-gitleaks.json",
+    "public-agent-run-bundle-gitleaks-findings.json",
     "Download uploaded public agent run bundle",
     "actions/download-artifact@v4",
     "path: .tmp/public-agent-run-bundle-uploaded",
@@ -73,6 +79,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "--bundle-dir .tmp/public-agent-run-bundle-uploaded",
     "--report .tmp/public-agent-run-bundle-uploaded-verification.json",
     "public-agent-run-bundle-uploaded-verification.json",
+    "Scan uploaded public agent run bundle with Gitleaks",
+    "--report .tmp/public-agent-run-bundle-uploaded-gitleaks.json",
+    "public-agent-run-bundle-uploaded-gitleaks.json",
+    "public-agent-run-bundle-uploaded-gitleaks-findings.json",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
@@ -83,8 +93,11 @@ REQUIRED_WORKFLOW_TEXT = [
     "reasoning-traces/",
     "observation-summary.md",
     "observation-summary.json",
+    "Public bundle Gitleaks report:",
     "Uploaded public bundle verification report:",
-    "uploaded artifact verification analysis",
+    "Uploaded public bundle Gitleaks report:",
+    "uploaded artifact Gitleaks scan analysis",
+    "Gitleaks scan metadata",
     "codex-fixed-issue-instruction-canary-diagnostics-",
     "codex-fixed-issue-instruction-canary-public-log-",
     "codex-fixed-issue-runtime-safety-scan-",
@@ -95,6 +108,18 @@ REQUIRED_WORKFLOW_TEXT = [
     "--retry-policy none",
     "--fallback-policy none",
     "--auto-merge-policy disabled",
+]
+
+REQUIRED_GITLEAKS_TEXT = [
+    "scan_scope",
+    "public-agent-run-bundle-only",
+    "repo_wide_scan",
+    "False",
+    "ghcr.io/gitleaks/gitleaks:v8.30.1",
+    "--no-git",
+    "--redact",
+    "--report-format=json",
+    "public bundle Gitleaks scan passed",
 ]
 
 FORBIDDEN_RUNNER_TEXT = [
@@ -126,11 +151,13 @@ def reject_all(text: str, forbidden: list[str], label: str) -> None:
 def main() -> int:
     runner_text = RUNNER.read_text(encoding="utf-8")
     workflow_text = WORKFLOW.read_text(encoding="utf-8")
+    gitleaks_text = GITLEAKS.read_text(encoding="utf-8")
 
     require_all(runner_text, REQUIRED_RUNNER_TEXT, "runner")
     reject_all(runner_text, FORBIDDEN_RUNNER_TEXT, "runner")
     require_all(workflow_text, REQUIRED_WORKFLOW_TEXT, "workflow")
     reject_all(workflow_text, FORBIDDEN_WORKFLOW_TEXT, "workflow")
+    require_all(gitleaks_text, REQUIRED_GITLEAKS_TEXT, "public bundle Gitleaks scanner")
 
     if workflow_text.index("Validate dispatch inputs") > workflow_text.index("Capture diagnostics baseline"):
         raise SystemExit("Dispatch inputs must be validated before diagnostics baseline")
@@ -142,14 +169,18 @@ def main() -> int:
         raise SystemExit("Public agent run bundle must be enriched after it is built")
     if workflow_text.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow_text.index("Verify public agent run bundle contents"):
         raise SystemExit("Public agent run bundle must be verified after enrichment")
-    if workflow_text.index("Verify public agent run bundle contents") > workflow_text.index("Upload redacted public agent run bundle"):
-        raise SystemExit("Public agent run bundle upload must happen after pre-upload verification")
+    if workflow_text.index("Verify public agent run bundle contents") > workflow_text.index("Scan public agent run bundle with Gitleaks"):
+        raise SystemExit("Public agent run bundle must be scanned after pre-upload verification")
+    if workflow_text.index("Scan public agent run bundle with Gitleaks") > workflow_text.index("Upload redacted public agent run bundle"):
+        raise SystemExit("Public agent run bundle upload must happen after pre-upload Gitleaks scan")
     if workflow_text.index("Upload redacted public agent run bundle") > workflow_text.index("Download uploaded public agent run bundle"):
         raise SystemExit("Uploaded public agent run bundle must be downloaded after upload")
     if workflow_text.index("Download uploaded public agent run bundle") > workflow_text.index("Verify uploaded public agent run bundle contents"):
         raise SystemExit("Uploaded public agent run bundle must be verified after download")
-    if workflow_text.index("Verify uploaded public agent run bundle contents") > workflow_text.index("Upload diagnostics artifact"):
-        raise SystemExit("Diagnostics upload must include uploaded bundle verification")
+    if workflow_text.index("Verify uploaded public agent run bundle contents") > workflow_text.index("Scan uploaded public agent run bundle with Gitleaks"):
+        raise SystemExit("Uploaded public agent run bundle must be scanned after uploaded verification")
+    if workflow_text.index("Scan uploaded public agent run bundle with Gitleaks") > workflow_text.index("Upload diagnostics artifact"):
+        raise SystemExit("Diagnostics upload must include uploaded bundle Gitleaks report")
     if runner_text.index("codex login --with-api-key") > runner_text.index("unset OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY is unset before login, not after login")
     if runner_text.index("unset OPENAI_API_KEY") > runner_text.index("codex exec"):

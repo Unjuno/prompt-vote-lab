@@ -106,6 +106,19 @@ jobs:
             --report .tmp/public-agent-run-bundle-verification.json
           cp .tmp/public-agent-run-bundle-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-verification.json
 
+      - name: Scan public agent run bundle with Gitleaks
+        if: ${{ always() }}
+        run: |
+          set +e
+          bash scripts/run_gitleaks_public_bundle_scan.sh \
+            --bundle-dir .tmp/public-agent-run-bundle \
+            --report .tmp/public-agent-run-bundle-gitleaks.json \
+            --findings .tmp/public-agent-run-bundle-gitleaks-findings.json
+          rc=$?
+          cp .tmp/public-agent-run-bundle-gitleaks.json .tmp/canary-diagnostics/public-agent-run-bundle-gitleaks.json 2>/dev/null || true
+          cp .tmp/public-agent-run-bundle-gitleaks-findings.json .tmp/canary-diagnostics/public-agent-run-bundle-gitleaks-findings.json 2>/dev/null || true
+          exit "$rc"
+
       - name: Upload redacted public agent run bundle
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -128,6 +141,19 @@ jobs:
             --bundle-dir .tmp/public-agent-run-bundle-uploaded \
             --report .tmp/public-agent-run-bundle-uploaded-verification.json
           cp .tmp/public-agent-run-bundle-uploaded-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-verification.json
+
+      - name: Scan uploaded public agent run bundle with Gitleaks
+        if: ${{ always() }}
+        run: |
+          set +e
+          bash scripts/run_gitleaks_public_bundle_scan.sh \
+            --bundle-dir .tmp/public-agent-run-bundle-uploaded \
+            --report .tmp/public-agent-run-bundle-uploaded-gitleaks.json \
+            --findings .tmp/public-agent-run-bundle-uploaded-gitleaks-findings.json
+          rc=$?
+          cp .tmp/public-agent-run-bundle-uploaded-gitleaks.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-gitleaks.json 2>/dev/null || true
+          cp .tmp/public-agent-run-bundle-uploaded-gitleaks-findings.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-gitleaks-findings.json 2>/dev/null || true
+          exit "$rc"
 
       - name: Upload diagnostics artifact
         if: ${{ always() }}
@@ -225,7 +251,9 @@ jobs:
 
           - Redacted public agent run bundle artifact: \`codex-policy-agent-canary-public-bundle-${{ github.run_number }}\`
           - Public bundle content verification report: \`public-agent-run-bundle-verification.json\` inside diagnostics
+          - Public bundle Gitleaks report: \`public-agent-run-bundle-gitleaks.json\` inside diagnostics
           - Uploaded public bundle verification report: \`public-agent-run-bundle-uploaded-verification.json\` inside diagnostics
+          - Uploaded public bundle Gitleaks report: \`public-agent-run-bundle-uploaded-gitleaks.json\` inside diagnostics
           - Observation summary files: \`observation-summary.md\`, \`observation-summary.json\`
           - Sanitized diagnostic logs directory: \`sanitized/\`
           - Sanitized exposed reasoning / CoT-like trace directory: \`reasoning-traces/\`
@@ -238,7 +266,7 @@ jobs:
 
           ## Diagnostics
 
-          Internal diagnostics artifact is uploaded for mount, policy, Codex event, diff, public bundle pre-upload verification, and uploaded artifact verification analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, and include exposed reasoning traces when present.
+          Internal diagnostics artifact is uploaded for mount, policy, Codex event, diff, public bundle pre-upload verification, public bundle Gitleaks scan, uploaded artifact verification, and uploaded artifact Gitleaks scan analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, scanned for secret-like strings, and include exposed reasoning traces when present.
 
           ## Merge policy
 
