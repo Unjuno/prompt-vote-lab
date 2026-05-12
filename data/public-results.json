@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T05:02:56+00:00",
+  "generated_at": "2026-05-12T06:22:44+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -4915,9 +4915,51 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 21,
-    "workflow_run_count": 98
+    "workflow_run_count": 99
   },
   "workflow_runs": [
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-12T06:20:37Z",
+      "database_id": 25717244415,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T06:20:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717244415",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T05:02:59Z",
+      "database_id": 25714507921,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T05:03:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714507921",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T05:02:36Z",
+      "database_id": 25714495705,
+      "display_title": "Add actionlint to Script Check (#269)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "6bb2e5f472b158c83b56334df613831fec811c94",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-12T05:03:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495705",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-12T05:02:36Z",
@@ -4931,6 +4973,20 @@
       "updated_at": "2026-05-12T05:02:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495666",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-12T05:02:35Z",
+      "database_id": 25714495158,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6bb2e5f472b158c83b56334df613831fec811c94",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T05:03:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495158",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6247,48 +6303,6 @@
       "updated_at": "2026-05-11T10:03:59Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571129",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:03:48Z",
-      "database_id": 25663571114,
-      "display_title": "Add live preview hub to lab page",
-      "event": "pull_request",
-      "head_branch": "add-lab-live-preview-hub",
-      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:04:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571114",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T10:03:48Z",
-      "database_id": 25663571068,
-      "display_title": "Add live preview hub to lab page",
-      "event": "pull_request",
-      "head_branch": "add-lab-live-preview-hub",
-      "head_sha": "62cfdbfd7e609de4035af4eced71a74cffbaa651",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T10:04:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25663571068",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T09:46:18Z",
-      "database_id": 25662749077,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0e8f25c507d58b6893e4516ce5c83f21fefe10b2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T09:47:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25662749077",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }

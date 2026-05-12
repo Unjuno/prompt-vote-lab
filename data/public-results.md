@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-12T05:02:56+00:00`
+Generated at: `2026-05-12T06:22:44+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 85 |
-| workflow_run_count | 98 |
+| workflow_run_count | 99 |
 | run_record_count | 21 |
 
 ## Recent Issues
@@ -75,7 +75,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25717244415 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25714507921 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25714495705 | Public Results Export | push | completed | success | Add actionlint to Script Check (#269) |
 | 25714495666 | Terminal State Report | pull_request | completed | skipped | Add actionlint to Script Check |
+| 25714495158 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25714427077 | Pre-API Freeze Audit | pull_request | completed | success | Add actionlint to Script Check |
 | 25714427060 | Select Eligible Test | pull_request | completed | success | Add actionlint to Script Check |
 | 25714427055 | Implementation Preflight Test | pull_request | completed | success | Add actionlint to Script Check |
@@ -101,10 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25677144282 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25677124038 | Terminal State Report | pull_request | completed | skipped | Verify public agent run bundle contents |
 | 25677122350 | Public Results Export | push | completed | success | Verify public agent run bundle contents (#267) |
-| 25677119539 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25676638107 | Lab PR Scope Check | pull_request | completed | success | Verify public agent run bundle contents |
-| 25676638051 | Script Check | pull_request | completed | success | Verify public agent run bundle contents |
-| 25674402253 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
