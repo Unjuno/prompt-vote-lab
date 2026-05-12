@@ -8,6 +8,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+DEFAULT_CANARY_PROMPT = """Make a small static lab change that clearly marks this as the eighth bounded Codex implementation-agent canary.
+
+The change should be minimal, reviewable, and confined to the allowed lab files.
+"""
+
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -24,39 +29,88 @@ def read_required(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def resolve_prompt_body(prompt_body: str, prompt_file: str) -> str:
+    if prompt_body and prompt_file:
+        raise SystemExit("Use only one of --prompt-body or --prompt-file")
+    if prompt_file:
+        return read_required(Path(prompt_file)).strip()
+    if prompt_body:
+        return prompt_body.strip()
+    return DEFAULT_CANARY_PROMPT.strip()
+
+
+def render_selected_prompt(
+    *,
+    issue_number: int,
+    issue_title: str,
+    issue_url: str,
+    candidate_rank: int,
+    vote_count: int,
+    selection_policy: str,
+    prompt_body: str,
+) -> str:
+    title = issue_title.strip() or "unrecorded"
+    url = issue_url.strip()
+    source = f"#{issue_number}" if issue_number else "#0"
+    lines = [
+        "# Selected Prompt",
+        "",
+        f"Source issue: {source}",
+        f"Issue title: {title}",
+    ]
+    if url:
+        lines.append(f"Issue URL: {url}")
+    lines.extend(
+        [
+            f"Candidate rank: {candidate_rank}",
+            f"Vote count: {vote_count}",
+            f"Selection policy: {selection_policy}",
+            "",
+            "## Prompt Body",
+            "",
+            prompt_body.strip(),
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--canary-id", default="first-canary-008")
     parser.add_argument("--run-week", default="first-canary-008")
     parser.add_argument("--issue-number", type=int, default=0)
+    parser.add_argument("--issue-title", default="")
+    parser.add_argument("--issue-url", default="")
     parser.add_argument("--candidate-rank", type=int, default=1)
     parser.add_argument("--vote-count", type=int, default=0)
     parser.add_argument("--selection-policy", default="fixed-canary-prompt")
+    parser.add_argument("--prompt-body", default="")
+    parser.add_argument("--prompt-file", default="")
     parser.add_argument("--model", default="gpt-5.4-nano")
     args = parser.parse_args()
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
 
-    selected_prompt = """# Selected Prompt
-
-Source issue: #0
-Candidate rank: 1
-Vote count: 0
-Selection policy: fixed-canary-prompt
-
-## Prompt Body
-
-Make a small static lab change that clearly marks this as the eighth bounded Codex implementation-agent canary.
-
-The change should be minimal, reviewable, and confined to the allowed lab files.
-"""
+    prompt_body = resolve_prompt_body(args.prompt_body, args.prompt_file)
+    selected_prompt = render_selected_prompt(
+        issue_number=args.issue_number,
+        issue_title=args.issue_title,
+        issue_url=args.issue_url,
+        candidate_rank=args.candidate_rank,
+        vote_count=args.vote_count,
+        selection_policy=args.selection_policy,
+        prompt_body=prompt_body,
+    )
 
     manifest = {
         "canary_id": args.canary_id,
         "run_week": args.run_week,
         "issue_number": args.issue_number,
+        "issue_title": args.issue_title,
+        "issue_url": args.issue_url,
         "candidate_rank": args.candidate_rank,
         "vote_count": args.vote_count,
         "selection_policy": args.selection_policy,
