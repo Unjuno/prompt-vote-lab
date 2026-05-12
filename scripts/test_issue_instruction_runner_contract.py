@@ -66,6 +66,13 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/verify_public_agent_run_bundle.py",
     "--report .tmp/public-agent-run-bundle-verification.json",
     "public-agent-run-bundle-verification.json",
+    "Download uploaded public agent run bundle",
+    "actions/download-artifact@v4",
+    "path: .tmp/public-agent-run-bundle-uploaded",
+    "Verify uploaded public agent run bundle contents",
+    "--bundle-dir .tmp/public-agent-run-bundle-uploaded",
+    "--report .tmp/public-agent-run-bundle-uploaded-verification.json",
+    "public-agent-run-bundle-uploaded-verification.json",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
@@ -76,6 +83,8 @@ REQUIRED_WORKFLOW_TEXT = [
     "reasoning-traces/",
     "observation-summary.md",
     "observation-summary.json",
+    "Uploaded public bundle verification report:",
+    "uploaded artifact verification analysis",
     "codex-fixed-issue-instruction-canary-diagnostics-",
     "codex-fixed-issue-instruction-canary-public-log-",
     "codex-fixed-issue-runtime-safety-scan-",
@@ -134,7 +143,13 @@ def main() -> int:
     if workflow_text.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow_text.index("Verify public agent run bundle contents"):
         raise SystemExit("Public agent run bundle must be verified after enrichment")
     if workflow_text.index("Verify public agent run bundle contents") > workflow_text.index("Upload redacted public agent run bundle"):
-        raise SystemExit("Public agent run bundle upload must happen after verification")
+        raise SystemExit("Public agent run bundle upload must happen after pre-upload verification")
+    if workflow_text.index("Upload redacted public agent run bundle") > workflow_text.index("Download uploaded public agent run bundle"):
+        raise SystemExit("Uploaded public agent run bundle must be downloaded after upload")
+    if workflow_text.index("Download uploaded public agent run bundle") > workflow_text.index("Verify uploaded public agent run bundle contents"):
+        raise SystemExit("Uploaded public agent run bundle must be verified after download")
+    if workflow_text.index("Verify uploaded public agent run bundle contents") > workflow_text.index("Upload diagnostics artifact"):
+        raise SystemExit("Diagnostics upload must include uploaded bundle verification")
     if runner_text.index("codex login --with-api-key") > runner_text.index("unset OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY is unset before login, not after login")
     if runner_text.index("unset OPENAI_API_KEY") > runner_text.index("codex exec"):
