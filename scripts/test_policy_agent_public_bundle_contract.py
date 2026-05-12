@@ -8,6 +8,7 @@ WORKFLOW = ROOT / ".github" / "workflows" / "codex-policy-agent-canary-run.yml"
 BUNDLE = ROOT / "scripts" / "build_public_agent_run_bundle.py"
 ENRICH = ROOT / "scripts" / "enrich_public_agent_run_bundle.py"
 VERIFY = ROOT / "scripts" / "verify_public_agent_run_bundle.py"
+GITLEAKS = ROOT / "scripts" / "run_gitleaks_public_bundle_scan.sh"
 DOC = ROOT / "docs" / "public-agent-run-bundle.md"
 
 REQUIRED_WORKFLOW_TEXT = [
@@ -22,6 +23,11 @@ REQUIRED_WORKFLOW_TEXT = [
     "python scripts/verify_public_agent_run_bundle.py",
     "--report .tmp/public-agent-run-bundle-verification.json",
     "public-agent-run-bundle-verification.json",
+    "Scan public agent run bundle with Gitleaks",
+    "bash scripts/run_gitleaks_public_bundle_scan.sh",
+    "--report .tmp/public-agent-run-bundle-gitleaks.json",
+    "public-agent-run-bundle-gitleaks.json",
+    "public-agent-run-bundle-gitleaks-findings.json",
     "Download uploaded public agent run bundle",
     "actions/download-artifact@v4",
     "path: .tmp/public-agent-run-bundle-uploaded",
@@ -29,6 +35,10 @@ REQUIRED_WORKFLOW_TEXT = [
     "--bundle-dir .tmp/public-agent-run-bundle-uploaded",
     "--report .tmp/public-agent-run-bundle-uploaded-verification.json",
     "public-agent-run-bundle-uploaded-verification.json",
+    "Scan uploaded public agent run bundle with Gitleaks",
+    "--report .tmp/public-agent-run-bundle-uploaded-gitleaks.json",
+    "public-agent-run-bundle-uploaded-gitleaks.json",
+    "public-agent-run-bundle-uploaded-gitleaks-findings.json",
     "--diagnostics-dir .tmp/canary-diagnostics",
     "--bundle-dir .tmp/public-agent-run-bundle",
     "--out-dir .tmp/public-agent-run-bundle",
@@ -43,34 +53,36 @@ REQUIRED_WORKFLOW_TEXT = [
     "sanitized/",
     "Sanitized exposed reasoning / CoT-like trace directory:",
     "reasoning-traces/",
+    "Public bundle Gitleaks report:",
     "Uploaded public bundle verification report:",
+    "Uploaded public bundle Gitleaks report:",
     "If the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement.",
-    "Public artifacts are redacted, sanitized, indexed, verified for required structure, and include exposed reasoning traces when present.",
-    "uploaded artifact verification analysis",
+    "Public artifacts are redacted, sanitized, indexed, verified for required structure, scanned for secret-like strings, and include exposed reasoning traces when present.",
+    "uploaded artifact Gitleaks scan analysis",
 ]
 
 REQUIRED_BUNDLE_TEXT = [
-    '"policy-agent-container-exit-code.txt"',
-    '"policy-agent-diff-name-only.txt"',
-    '"policy-agent-diff.patch"',
-    '"policy-agent-copied-files.txt"',
-    '"policy-agent-container-stdout.txt"',
-    '"policy-agent-container-stderr.txt"',
-    '"policy-container-mounts.txt"',
-    'line_list(diag / "policy-agent-diff-name-only.txt")',
+    '\"policy-agent-container-exit-code.txt\"',
+    '\"policy-agent-diff-name-only.txt\"',
+    '\"policy-agent-diff.patch\"',
+    '\"policy-agent-copied-files.txt\"',
+    '\"policy-agent-container-stdout.txt\"',
+    '\"policy-agent-container-stderr.txt\"',
+    '\"policy-container-mounts.txt\"',
+    'line_list(diag / \"policy-agent-diff-name-only.txt\")',
 ]
 
 REQUIRED_ENRICH_TEXT = [
     "SANITIZED_PUBLIC_FILES",
     "REASONING_TRACE_FILES",
-    '"codex-events.jsonl"',
-    '"codex-last-message.txt"',
-    '"codex-stderr.txt"',
-    '"codex-stdout.txt"',
-    '"policy-agent-container-stdout.txt"',
-    '"policy-agent-container-stderr.txt"',
-    '"npm-install-codex.txt"',
-    '"policy-container-mounts.txt"',
+    '\"codex-events.jsonl\"',
+    '\"codex-last-message.txt\"',
+    '\"codex-stderr.txt\"',
+    '\"codex-stdout.txt\"',
+    '\"policy-agent-container-stdout.txt\"',
+    '\"policy-agent-container-stderr.txt\"',
+    '\"npm-install-codex.txt\"',
+    '\"policy-container-mounts.txt\"',
     "reasoning-traces/",
     "copy_reasoning_trace_files",
     "reasoning_trace_files",
@@ -95,6 +107,18 @@ REQUIRED_VERIFY_TEXT = [
     "FORBIDDEN_PUBLIC_PATTERNS",
     "verify_public_agent_run_bundle",
     "public agent run bundle verification passed",
+]
+
+REQUIRED_GITLEAKS_TEXT = [
+    "scan_scope",
+    "public-agent-run-bundle-only",
+    "repo_wide_scan",
+    "False",
+    "ghcr.io/gitleaks/gitleaks:v8.30.1",
+    "--no-git",
+    "--redact",
+    "--report-format=json",
+    "public bundle Gitleaks scan passed",
 ]
 
 REQUIRED_DOC_TEXT = [
@@ -149,6 +173,7 @@ def main() -> int:
     bundle = BUNDLE.read_text(encoding="utf-8")
     enrich = ENRICH.read_text(encoding="utf-8")
     verify = VERIFY.read_text(encoding="utf-8")
+    gitleaks = GITLEAKS.read_text(encoding="utf-8")
     doc = DOC.read_text(encoding="utf-8")
 
     require_all(workflow, REQUIRED_WORKFLOW_TEXT, "policy agent workflow")
@@ -156,6 +181,7 @@ def main() -> int:
     require_all(bundle, REQUIRED_BUNDLE_TEXT, "public bundle builder")
     require_all(enrich, REQUIRED_ENRICH_TEXT, "public bundle enrichment script")
     require_all(verify, REQUIRED_VERIFY_TEXT, "public bundle verifier")
+    require_all(gitleaks, REQUIRED_GITLEAKS_TEXT, "public bundle Gitleaks scanner")
     require_all(doc, REQUIRED_DOC_TEXT, "public agent run bundle doc")
     reject_all(doc, FORBIDDEN_DOC_TEXT, "public agent run bundle doc")
 
@@ -165,14 +191,18 @@ def main() -> int:
         raise SystemExit("public bundle must be enriched after bundle build")
     if workflow.index("Enrich public agent run bundle with sanitized logs and reasoning traces") > workflow.index("Verify public agent run bundle contents"):
         raise SystemExit("public bundle must be verified after enrichment")
-    if workflow.index("Verify public agent run bundle contents") > workflow.index("Upload redacted public agent run bundle"):
-        raise SystemExit("public bundle upload must occur after pre-upload verification")
+    if workflow.index("Verify public agent run bundle contents") > workflow.index("Scan public agent run bundle with Gitleaks"):
+        raise SystemExit("public bundle must be scanned after pre-upload verification")
+    if workflow.index("Scan public agent run bundle with Gitleaks") > workflow.index("Upload redacted public agent run bundle"):
+        raise SystemExit("public bundle upload must occur after pre-upload Gitleaks scan")
     if workflow.index("Upload redacted public agent run bundle") > workflow.index("Download uploaded public agent run bundle"):
         raise SystemExit("uploaded public bundle must be downloaded after upload")
     if workflow.index("Download uploaded public agent run bundle") > workflow.index("Verify uploaded public agent run bundle contents"):
         raise SystemExit("uploaded public bundle must be verified after download")
-    if workflow.index("Verify uploaded public agent run bundle contents") > workflow.index("Upload diagnostics artifact"):
-        raise SystemExit("diagnostics upload must include uploaded bundle verification")
+    if workflow.index("Verify uploaded public agent run bundle contents") > workflow.index("Scan uploaded public agent run bundle with Gitleaks"):
+        raise SystemExit("uploaded public bundle must be scanned after uploaded verification")
+    if workflow.index("Scan uploaded public agent run bundle with Gitleaks") > workflow.index("Upload diagnostics artifact"):
+        raise SystemExit("diagnostics upload must include uploaded bundle Gitleaks report")
 
     print("policy agent public bundle contract test passed")
     return 0
