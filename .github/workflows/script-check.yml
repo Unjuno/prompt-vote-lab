@@ -202,6 +202,9 @@ jobs:
       - name: Run task packet runner contract test
         run: python scripts/test_task_packet_runner_contract.py
 
+      - name: Run selected prompt runner contract test
+        run: python scripts/test_selected_prompt_runner_contract.py
+
       - name: Run fixed Issue instruction packet generator test
         run: python scripts/test_create_codex_issue_instruction_packet.py
 

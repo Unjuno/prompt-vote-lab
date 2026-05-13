@@ -30,6 +30,12 @@ REQUIRED_TEXT = [
     "python scripts/test_verify_public_agent_run_bundle.py",
     "Run policy agent public bundle contract test",
     "python scripts/test_policy_agent_public_bundle_contract.py",
+    "Run task packet runner contract test",
+    "python scripts/test_task_packet_runner_contract.py",
+    "Run selected prompt runner contract test",
+    "python scripts/test_selected_prompt_runner_contract.py",
+    "Run fixed Issue instruction packet generator test",
+    "python scripts/test_create_codex_issue_instruction_packet.py",
     "Run lab PR scope guard self-test",
     "bash scripts/test-lab-pr-scope.sh",
 ]
@@ -76,6 +82,12 @@ def main() -> int:
 
     if text.index("Run public agent run bundle verifier test") > text.index("Run policy agent public bundle contract test"):
         raise SystemExit("Policy agent public bundle contract test should run after verifier test")
+
+    if text.index("Run task packet runner contract test") > text.index("Run selected prompt runner contract test"):
+        raise SystemExit("Selected prompt runner contract test should run after task packet runner contract test")
+
+    if text.index("Run selected prompt runner contract test") > text.index("Run fixed Issue instruction packet generator test"):
+        raise SystemExit("Fixed Issue generator test should run after selected prompt runner contract test")
 
     if text.index("Run comparison dashboard builder test") > text.index("Run comparison dashboard decision test"):
         raise SystemExit("Comparison dashboard decision test should run after the builder test")
