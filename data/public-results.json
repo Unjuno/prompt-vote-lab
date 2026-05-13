@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-13T06:24:33+00:00",
+  "generated_at": "2026-05-13T06:33:57+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -537,7 +537,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Add reusable selected-prompt Codex runner",
-      "updated_at": "2026-05-13T06:24:15Z",
+      "updated_at": "2026-05-13T06:27:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/275"
     },
     {
@@ -4901,9 +4901,37 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 22,
-    "workflow_run_count": 98
+    "workflow_run_count": 99
   },
   "workflow_runs": [
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-13T06:31:58Z",
+      "database_id": 25782579169,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "f6578a82422a7934aa4ca49ee5d7a75bb7fca5f8",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-05-13T06:32:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25782579169",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-13T06:24:35Z",
+      "database_id": 25782295120,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f6578a82422a7934aa4ca49ee5d7a75bb7fca5f8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-13T06:25:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25782295120",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-13T06:24:18Z",
@@ -4917,6 +4945,34 @@
       "updated_at": "2026-05-13T06:24:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25782283965",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-13T06:24:18Z",
+      "database_id": 25782283947,
+      "display_title": "Add reusable selected-prompt Codex runner (#275)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "61bdd5df6a4eb0249846c5a2b0b9faa056417b7e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-13T06:24:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25782283947",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-13T06:24:17Z",
+      "database_id": 25782283289,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "61bdd5df6a4eb0249846c5a2b0b9faa056417b7e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-13T06:24:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25782283289",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6233,48 +6289,6 @@
       "updated_at": "2026-05-11T12:33:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670346648",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T12:33:12Z",
-      "database_id": 25670346641,
-      "display_title": "Publish sanitized reasoning trace evidence",
-      "event": "pull_request",
-      "head_branch": "add-reasoning-signal-evaluation",
-      "head_sha": "41a359b4fbe346002e0e2acdfc8ee21168a76ec4",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T12:33:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25670346641",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T12:08:54Z",
-      "database_id": 25669201787,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "d68134d61867a87ce20fa9ddb95ae18dd631e975",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T12:09:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669201787",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T12:08:33Z",
-      "database_id": 25669185787,
-      "display_title": "Expand public agent observation logs (#261)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "019c4f3b6e8c856742a853253fee531205560720",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T12:08:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25669185787",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
