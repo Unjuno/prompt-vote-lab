@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-12T11:20:08+00:00",
+  "generated_at": "2026-05-13T04:13:20+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -494,6 +494,43 @@
   ],
   "pull_requests": [
     {
+      "additions": 219,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\nExtend `create_codex_task_packet.py` so task packets can represent selected weekly prompts instead of only the fixed canary prompt.\n\n## Why\n\nThe project goal is not only canary evidence recording. The long-term target is:\n\n```text\nweekly vote selection\n-> selected prompt task packet\n-> canonical Docker/Codex runner\n-> bounded implementation PR\n```\n\nCurrent state:\n\n```text\nweekly-auto-run\n  eligible selection exists\n  implementation path still uses legacy openai_lab_run.py\n```\n\nThis PR prepares the reusable task-packet layer required before connecting weekly selected prompts to the canonical Docker/Codex runner.\n\n## Changes\n\n### create_codex_task_packet.py\n\nAdds support for:\n\n```text\n--prompt-body\n--prompt-file\n--issue-title\n--issue-url\n--selection-policy\n--issue-number\n--candidate-rank\n--vote-count\n```\n\nBehavior:\n\n- default behavior remains compatible with the existing fixed canary prompt\n- selected-prompt.md becomes parameterized\n- manifest now records issue metadata\n- prompt-file input is supported\n- conflicting prompt-body + prompt-file is rejected\n\n### test_create_codex_task_packet.py\n\nAdds regression coverage for:\n\n```text\n- existing canary compatibility\n- weekly selected prompt metadata\n- prompt-file support\n- prompt-body/prompt-file conflict rejection\n- hash accounting\n- secret-like marker rejection\n```\n\n## Scope\n\nTask-packet parameterization only.\n\nNo workflow execution-path changes yet.\nNo weekly-auto-run migration yet.\nNo Docker runner changes yet.",
+      "body_length": 1494,
+      "changed_files": 2,
+      "closed_at": "2026-05-13T04:12:56Z",
+      "comment_count": 0,
+      "created_at": "2026-05-12T12:44:57Z",
+      "deletions": 85,
+      "files": [
+        {
+          "additions": 67,
+          "deletions": 13,
+          "path": "scripts/create_codex_task_packet.py"
+        },
+        {
+          "additions": 152,
+          "deletions": 72,
+          "path": "scripts/test_create_codex_task_packet.py"
+        }
+      ],
+      "head_ref_name": "parameterize-selected-prompt-task-packet-v2",
+      "head_ref_oid": "f0ed44c4580b7ff1ca5a915ef9f4c2a1e0555420",
+      "labels": [],
+      "merge_commit_oid": "8a50bf1fd19a25b4c8364eed927a35904dd91b56",
+      "merged_at": "2026-05-13T04:12:56Z",
+      "merged_by": "Unjuno",
+      "number": 274,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Parameterize selected prompt task packets",
+      "updated_at": "2026-05-13T04:12:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/274"
+    },
+    {
       "additions": 2,
       "author": "github-actions",
       "base_ref_name": "main",
@@ -501,7 +538,7 @@
       "body_length": 2604,
       "changed_files": 1,
       "closed_at": "2026-05-12T11:19:31Z",
-      "comment_count": 0,
+      "comment_count": 1,
       "created_at": "2026-05-12T09:17:12Z",
       "deletions": 0,
       "files": [
@@ -522,7 +559,7 @@
       "review_decision": null,
       "state": "CLOSED",
       "title": "Run Codex policy-enforced agent canary",
-      "updated_at": "2026-05-12T11:19:31Z",
+      "updated_at": "2026-05-12T11:21:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/272"
     },
     {
@@ -4705,48 +4742,6 @@
       "title": "Fix storage policy overblocking",
       "updated_at": "2026-05-07T19:21:20Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/188"
-    },
-    {
-      "additions": 143,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nHardens the prompt proposal Issue template so weekly candidate Issues start with clearer structure and scope boundaries.\n\n## Changes\n\nUpdates `.github/ISSUE_TEMPLATE/prompt.yml` to require:\n\n- Goal\n- Requested visible change\n- Expected result\n- Acceptance checks\n- Allowed scope confirmations\n- Disallowed scope confirmations\n\nIt also clarifies that maintainers assign operational labels such as:\n\n```text\nweek:<week_id>\nnormal-candidate\ncarryover\noutcome:*\n```\n\n## Scope boundary\n\nThe template now explicitly states:\n\n- implementation should stay within `lab/index.html`, `lab/style.css`, and `lab/app.js`\n- browser-local UI state is allowed only when it does not store credentials, tokens, secrets, tracking identifiers, or cookies\n- proposals must not require backend services, login, payment, database changes, external APIs, external scripts, network calls, cookies, credential handling, analytics, tracking, iframes, dynamic code execution, workflow/rule/doc/run-record/policy changes, branches, commits, PRs, or merge behavior\n\n## Tests\n\nAdds:\n\n```text\nscripts/test_prompt_issue_template_contract.py\n```\n\nRegisters it in Script Check and includes `.github/ISSUE_TEMPLATE/**` in the Script Check path filter.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No workflow execution behavior changes.\n- No model/API run.\n- No auto-merge.",
-      "body_length": 1342,
-      "changed_files": 3,
-      "closed_at": "2026-05-07T17:55:25Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T17:51:52Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 65,
-          "deletions": 14,
-          "path": ".github/ISSUE_TEMPLATE/prompt.yml"
-        },
-        {
-          "additions": 4,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 74,
-          "deletions": 0,
-          "path": "scripts/test_prompt_issue_template_contract.py"
-        }
-      ],
-      "head_ref_name": "harden-prompt-template-contract",
-      "head_ref_oid": "1930f021587c1567a9578d8417ad364242dbac21",
-      "labels": [],
-      "merge_commit_oid": "3a60254a7e8384fe76d265b273714e3c708213df",
-      "merged_at": "2026-05-07T17:55:25Z",
-      "merged_by": "Unjuno",
-      "number": 190,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Harden prompt proposal issue template",
-      "updated_at": "2026-05-07T19:21:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/190"
     }
   ],
   "run_records": [
@@ -4906,6 +4901,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-13T04:12:59Z",
+      "database_id": 25777816081,
+      "display_title": "Parameterize selected prompt task packets",
+      "event": "pull_request",
+      "head_branch": "parameterize-selected-prompt-task-packet-v2",
+      "head_sha": "f0ed44c4580b7ff1ca5a915ef9f4c2a1e0555420",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-13T04:13:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25777816081",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-13T04:12:25Z",
+      "database_id": 25777798088,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a397f97d68577fd657426c9623122cef396542be",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-13T04:12:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25777798088",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-13T04:12:16Z",
+      "database_id": 25777793507,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "88587bd9fea2c6afc2b1ee079795ae59befcb5e6",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-05-13T04:12:27Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25777793507",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T12:45:01Z",
+      "database_id": 25735251876,
+      "display_title": "Parameterize selected prompt task packets",
+      "event": "pull_request",
+      "head_branch": "parameterize-selected-prompt-task-packet-v2",
+      "head_sha": "f0ed44c4580b7ff1ca5a915ef9f4c2a1e0555420",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T12:46:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25735251876",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T12:45:01Z",
+      "database_id": 25735251865,
+      "display_title": "Parameterize selected prompt task packets",
+      "event": "pull_request",
+      "head_branch": "parameterize-selected-prompt-task-packet-v2",
+      "head_sha": "f0ed44c4580b7ff1ca5a915ef9f4c2a1e0555420",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-12T12:45:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25735251865",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T11:20:12Z",
+      "database_id": 25731109392,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "88587bd9fea2c6afc2b1ee079795ae59befcb5e6",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:20:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731109392",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-12T11:19:33Z",
       "database_id": 25731078685,
       "display_title": "Run Codex policy-enforced agent canary",
@@ -4931,6 +5010,34 @@
       "updated_at": "2026-05-12T11:19:35Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078683",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T11:19:33Z",
+      "database_id": 25731078668,
+      "display_title": "Record policy-agent canary 11 success (#273)",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "757656aa4178ae4a09b19eb7cd747d7211579b82",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:20:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078668",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-12T11:19:32Z",
+      "database_id": 25731077542,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "757656aa4178ae4a09b19eb7cd747d7211579b82",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-12T11:20:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731077542",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6163,118 +6270,6 @@
       "updated_at": "2026-05-11T12:02:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668900889",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T12:02:25Z",
-      "database_id": 25668900888,
-      "display_title": "Expand public agent observation logs",
-      "event": "pull_request",
-      "head_branch": "expand-public-agent-observation-logs",
-      "head_sha": "96e745c5457212647a28e3b7a845f806972ca095",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T12:02:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668900888",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T12:02:25Z",
-      "database_id": 25668900840,
-      "display_title": "Expand public agent observation logs",
-      "event": "pull_request",
-      "head_branch": "expand-public-agent-observation-logs",
-      "head_sha": "96e745c5457212647a28e3b7a845f806972ca095",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T12:02:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668900840",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:52:47Z",
-      "database_id": 25668454824,
-      "display_title": "Expand public agent observation logs",
-      "event": "pull_request",
-      "head_branch": "expand-public-agent-observation-logs",
-      "head_sha": "8f34e51e8e79144421e7d3641ecebdd2dbd8c366",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:53:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668454824",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-11T11:52:47Z",
-      "database_id": 25668454813,
-      "display_title": "Expand public agent observation logs",
-      "event": "pull_request",
-      "head_branch": "expand-public-agent-observation-logs",
-      "head_sha": "8f34e51e8e79144421e7d3641ecebdd2dbd8c366",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:53:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668454813",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:52:47Z",
-      "database_id": 25668454794,
-      "display_title": "Expand public agent observation logs",
-      "event": "pull_request",
-      "head_branch": "expand-public-agent-observation-logs",
-      "head_sha": "8f34e51e8e79144421e7d3641ecebdd2dbd8c366",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:53:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25668454794",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:17:05Z",
-      "database_id": 25666859511,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "15ad5f1ca7baa69a100871e4519c78c120e055f5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:17:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666859511",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-11T11:16:45Z",
-      "database_id": 25666845129,
-      "display_title": "Publish redacted policy-agent public bundle",
-      "event": "pull_request",
-      "head_branch": "publish-canonical-codex-public-bundle",
-      "head_sha": "3cc2a8210de5af9e1888353867e0e6c9c66e9fc6",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:16:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666845129",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-11T11:16:45Z",
-      "database_id": 25666845125,
-      "display_title": "Publish redacted policy-agent public bundle (#260)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "61f1c4b555027b5c8f3dc1c2e1dbe9a011269588",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-11T11:17:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25666845125",
-      "workflow_name": "Public Results Export"
     }
   ]
 }

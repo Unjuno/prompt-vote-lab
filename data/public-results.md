@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-12T11:20:08+00:00`
+Generated at: `2026-05-13T04:13:20+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
@@ -69,14 +70,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 | 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
-| 204 | MERGED | 2 | 66/2 | Allow comparison run request files |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25777816081 | Terminal State Report | pull_request | completed | skipped | Parameterize selected prompt task packets |
+| 25777798088 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25777793507 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25735251876 | Script Check | pull_request | completed | success | Parameterize selected prompt task packets |
+| 25735251865 | Lab PR Scope Check | pull_request | completed | success | Parameterize selected prompt task packets |
+| 25731109392 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25731078685 | Terminal State Report | pull_request | completed | skipped | Run Codex policy-enforced agent canary |
 | 25731078683 | Terminal State Report | pull_request | completed | skipped | Record policy-agent canary 11 success |
+| 25731078668 | Public Results Export | push | completed | success | Record policy-agent canary 11 success (#273) |
+| 25731077542 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25730896040 | Lab PR Scope Check | pull_request | completed | success | Record policy-agent canary 11 success |
 | 25730896012 | Script Check | pull_request | completed | success | Record policy-agent canary 11 success |
 | 25725153947 | Codex Policy Agent Canary Run | workflow_dispatch | completed | success | Codex Policy Agent Canary Run |
@@ -97,14 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25717316218 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25717244415 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25714507921 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25714495705 | Public Results Export | push | completed | success | Add actionlint to Script Check (#269) |
-| 25714495666 | Terminal State Report | pull_request | completed | skipped | Add actionlint to Script Check |
-| 25714495158 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25714427077 | Pre-API Freeze Audit | pull_request | completed | success | Add actionlint to Script Check |
-| 25714427060 | Select Eligible Test | pull_request | completed | success | Add actionlint to Script Check |
-| 25714427055 | Implementation Preflight Test | pull_request | completed | success | Add actionlint to Script Check |
-| 25714427052 | Script Check | pull_request | completed | success | Add actionlint to Script Check |
-| 25714427050 | Lab PR Scope Check | pull_request | completed | success | Add actionlint to Script Check |
 
 ## Raw JSON
 
