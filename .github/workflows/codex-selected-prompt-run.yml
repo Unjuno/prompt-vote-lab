@@ -1,0 +1,260 @@
+name: Codex Selected Prompt Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt_body:
+        description: "Selected prompt body to run through the canonical Docker/Codex selected-prompt runner"
+        required: true
+        type: string
+      issue_number:
+        description: "Source Issue number. Use 0 for manual/no Issue."
+        required: true
+        default: "0"
+        type: number
+      issue_title:
+        description: "Source Issue title or manual prompt title"
+        required: false
+        default: "manual selected prompt"
+        type: string
+      issue_url:
+        description: "Source Issue URL, optional"
+        required: false
+        default: ""
+        type: string
+      candidate_rank:
+        description: "Candidate rank. Use 1 for the selected winner, 2/3 for comparison candidates."
+        required: true
+        default: "1"
+        type: number
+      vote_count:
+        description: "Vote count recorded for the candidate at selection time"
+        required: true
+        default: "0"
+        type: number
+      selection_policy:
+        description: "Selection policy label"
+        required: false
+        default: "manual-selected-prompt"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-selected-prompt-run
+  cancel-in-progress: false
+
+jobs:
+  codex-selected-prompt-run:
+    runs-on: ubuntu-latest
+    env:
+      CODEX_MODEL: gpt-5.4-nano
+      RUN_WEEK: manual-selected-prompt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate dispatch inputs
+        run: |
+          set -euo pipefail
+          case "${{ inputs.candidate_rank }}" in
+            1|2|3) ;;
+            *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;;
+          esac
+          case "${{ inputs.vote_count }}" in
+            ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;;
+            *) ;;
+          esac
+          case "${{ inputs.issue_number }}" in
+            ''|*[!0-9]*) echo "issue_number must be a non-negative integer"; exit 1 ;;
+            *) ;;
+          esac
+
+      - name: Capture diagnostics baseline
+        run: |
+          mkdir -p .tmp/canary-diagnostics
+          git status --porcelain > .tmp/canary-diagnostics/git-status-before.txt
+          python - <<'PY' > .tmp/canary-diagnostics/file-hashes-before.json
+          import hashlib
+          import json
+          from pathlib import Path
+          files = ["lab/index.html", "lab/style.css", "lab/app.js"]
+          out = {}
+          for name in files:
+              p = Path(name)
+              out[name] = {"exists": p.exists(), "sha256": hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None, "size_bytes": p.stat().st_size if p.exists() else None}
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
+
+      - name: Run selected prompt Codex runner once
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_ }}
+        run: |
+          set +e
+          bash scripts/run_codex_selected_prompt.sh \
+            --canary-id manual-selected-prompt \
+            --run-week "$RUN_WEEK" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --issue-title "${{ inputs.issue_title }}" \
+            --issue-url "${{ inputs.issue_url }}" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --selection-policy "${{ inputs.selection_policy }}" \
+            --prompt-body "${{ inputs.prompt_body }}" \
+            --work-label selected-prompt
+          rc=$?
+          echo "$rc" > .tmp/codex-exit-code.txt
+          exit "$rc"
+
+      - name: Validate changed files and checks
+        run: |
+          changed_files="$(git diff --name-only --)"
+          if [ -z "$changed_files" ]; then
+            echo "Codex produced no changes."
+            exit 1
+          fi
+          echo "$changed_files" | while read -r file; do
+            case "$file" in
+              lab/index.html|lab/style.css|lab/app.js) ;;
+              *) echo "Forbidden changed file: $file"; exit 1 ;;
+            esac
+          done
+          bash scripts/safety-check.sh origin/main HEAD
+          bash scripts/static-site-check.sh
+
+      - name: Collect diagnostics artifact
+        if: ${{ always() }}
+        run: |
+          chmod -R u+rwX .tmp 2>/dev/null || true
+          python scripts/collect_canary_diagnostics.py \
+            --out-dir .tmp/canary-diagnostics \
+            --canary-id manual-selected-prompt \
+            --model "$CODEX_MODEL" \
+            --runner-mode codex-cli-selected-prompt-packet-container \
+            --sandbox-mode docker-workdir-plus-readonly-selected-prompt-packet \
+            --status "${{ job.status }}" \
+            --failure-step codex_or_selected_prompt_or_validation \
+            --allowed-file lab/index.html \
+            --allowed-file lab/style.css \
+            --allowed-file lab/app.js
+
+      - name: Build redacted public agent run bundle
+        if: ${{ always() }}
+        run: |
+          python scripts/build_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --out-dir .tmp/public-agent-run-bundle \
+            --run-id "codex-selected-prompt-${{ github.run_number }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --pr-number ""
+
+      - name: Enrich public agent run bundle with sanitized logs and reasoning traces
+        if: ${{ always() }}
+        run: |
+          python scripts/enrich_public_agent_run_bundle.py \
+            --diagnostics-dir .tmp/canary-diagnostics \
+            --bundle-dir .tmp/public-agent-run-bundle
+
+      - name: Verify public agent run bundle contents
+        if: ${{ always() }}
+        run: |
+          python scripts/verify_public_agent_run_bundle.py \
+            --bundle-dir .tmp/public-agent-run-bundle \
+            --report .tmp/public-agent-run-bundle-verification.json
+          cp .tmp/public-agent-run-bundle-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-verification.json
+
+      - name: Scan public agent run bundle with Gitleaks
+        if: ${{ always() }}
+        run: |
+          set +e
+          bash scripts/run_gitleaks_public_bundle_scan.sh \
+            --bundle-dir .tmp/public-agent-run-bundle \
+            --report .tmp/public-agent-run-bundle-gitleaks.json \
+            --findings .tmp/public-agent-run-bundle-gitleaks-findings.json
+          rc=$?
+          cp .tmp/public-agent-run-bundle-gitleaks.json .tmp/canary-diagnostics/public-agent-run-bundle-gitleaks.json 2>/dev/null || true
+          cp .tmp/public-agent-run-bundle-gitleaks-findings.json .tmp/canary-diagnostics/public-agent-run-bundle-gitleaks-findings.json 2>/dev/null || true
+          exit "$rc"
+
+      - name: Upload redacted public agent run bundle
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-selected-prompt-public-bundle-${{ github.run_number }}
+          path: .tmp/public-agent-run-bundle
+          if-no-files-found: error
+
+      - name: Download uploaded public agent run bundle
+        if: ${{ always() }}
+        uses: actions/download-artifact@v4
+        with:
+          name: codex-selected-prompt-public-bundle-${{ github.run_number }}
+          path: .tmp/public-agent-run-bundle-uploaded
+
+      - name: Verify uploaded public agent run bundle contents
+        if: ${{ always() }}
+        run: |
+          python scripts/verify_public_agent_run_bundle.py \
+            --bundle-dir .tmp/public-agent-run-bundle-uploaded \
+            --report .tmp/public-agent-run-bundle-uploaded-verification.json
+          cp .tmp/public-agent-run-bundle-uploaded-verification.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-verification.json
+
+      - name: Scan uploaded public agent run bundle with Gitleaks
+        if: ${{ always() }}
+        run: |
+          set +e
+          bash scripts/run_gitleaks_public_bundle_scan.sh \
+            --bundle-dir .tmp/public-agent-run-bundle-uploaded \
+            --report .tmp/public-agent-run-bundle-uploaded-gitleaks.json \
+            --findings .tmp/public-agent-run-bundle-uploaded-gitleaks-findings.json
+          rc=$?
+          cp .tmp/public-agent-run-bundle-uploaded-gitleaks.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-gitleaks.json 2>/dev/null || true
+          cp .tmp/public-agent-run-bundle-uploaded-gitleaks-findings.json .tmp/canary-diagnostics/public-agent-run-bundle-uploaded-gitleaks-findings.json 2>/dev/null || true
+          exit "$rc"
+
+      - name: Upload diagnostics artifact
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-selected-prompt-diagnostics-${{ github.run_number }}
+          path: .tmp/canary-diagnostics
+          if-no-files-found: warn
+
+      - name: Write public run log
+        if: ${{ always() }}
+        run: |
+          mkdir -p .tmp
+          base_sha="$(git rev-parse origin/main 2>/dev/null || echo unrecorded)"
+          changed_csv="$(git diff --name-only -- 2>/dev/null | paste -sd, -)"
+          status="passed"
+          if [ "${{ job.status }}" != "success" ]; then status="failed"; fi
+          python scripts/write_public_run_log.py \
+            --out .tmp/public-run-log.json \
+            --provider openai-codex \
+            --runner codex-cli-selected-prompt-packet-container \
+            --model "$CODEX_MODEL" \
+            --workflow "Codex Selected Prompt Run" \
+            --run-number "${{ github.run_number }}" \
+            --week "$RUN_WEEK" \
+            --candidate-rank "${{ inputs.candidate_rank }}" \
+            --issue-number "${{ inputs.issue_number }}" \
+            --vote-count "${{ inputs.vote_count }}" \
+            --base-sha "$base_sha" \
+            --branch "manual-selected-prompt-${{ github.run_number }}" \
+            --attempt-count 1 \
+            --retry-policy none \
+            --fallback-policy none \
+            --auto-merge-policy disabled \
+            --status "$status" \
+            --changed-files "$changed_csv"
+
+      - name: Upload public run log
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-selected-prompt-public-log-${{ github.run_number }}
+          path: .tmp/public-run-log.json
+          if-no-files-found: warn
