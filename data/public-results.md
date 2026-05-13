@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-13T04:13:20+00:00`
+Generated at: `2026-05-13T06:24:33+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
@@ -69,13 +70,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 | 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
-| 205 | MERGED | 2 | 3/2 | Fix comparison safety check base |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25782283965 | Terminal State Report | pull_request | completed | skipped | Add reusable selected-prompt Codex runner |
+| 25782217426 | Script Check | pull_request | completed | success | Add reusable selected-prompt Codex runner |
+| 25782217410 | Lab PR Scope Check | pull_request | completed | success | Add reusable selected-prompt Codex runner |
+| 25777829429 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25777816081 | Terminal State Report | pull_request | completed | skipped | Parameterize selected prompt task packets |
+| 25777816043 | Public Results Export | push | completed | success | Parameterize selected prompt task packets (#274) |
+| 25777815380 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25777798088 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25777793507 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 25735251876 | Script Check | pull_request | completed | success | Parameterize selected prompt task packets |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25718201613 | Terminal State Report | pull_request | completed | skipped | Scan public agent bundles with Gitleaks |
 | 25718201576 | Public Results Export | push | completed | success | Scan public agent bundles with Gitleaks (#270) |
 | 25718201000 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25717773526 | Script Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
-| 25717773502 | Lab PR Scope Check | pull_request | completed | success | Scan public agent bundles with Gitleaks |
-| 25717327783 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25717316218 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25717244415 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25714507921 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
