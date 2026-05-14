@@ -51,6 +51,13 @@ jobs:
     env:
       CODEX_MODEL: gpt-5.4-nano
       RUN_WEEK: manual-selected-prompt
+      INPUT_PROMPT_BODY: ${{ inputs.prompt_body }}
+      INPUT_ISSUE_NUMBER: ${{ inputs.issue_number }}
+      INPUT_ISSUE_TITLE: ${{ inputs.issue_title }}
+      INPUT_ISSUE_URL: ${{ inputs.issue_url }}
+      INPUT_CANDIDATE_RANK: ${{ inputs.candidate_rank }}
+      INPUT_VOTE_COUNT: ${{ inputs.vote_count }}
+      INPUT_SELECTION_POLICY: ${{ inputs.selection_policy }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -60,15 +67,15 @@ jobs:
       - name: Validate dispatch inputs
         run: |
           set -euo pipefail
-          case "${{ inputs.candidate_rank }}" in
+          case "$INPUT_CANDIDATE_RANK" in
             1|2|3) ;;
             *) echo "candidate_rank must be 1, 2, or 3"; exit 1 ;;
           esac
-          case "${{ inputs.vote_count }}" in
+          case "$INPUT_VOTE_COUNT" in
             ''|*[!0-9]*) echo "vote_count must be a non-negative integer"; exit 1 ;;
             *) ;;
           esac
-          case "${{ inputs.issue_number }}" in
+          case "$INPUT_ISSUE_NUMBER" in
             ''|*[!0-9]*) echo "issue_number must be a non-negative integer"; exit 1 ;;
             *) ;;
           esac
@@ -97,13 +104,13 @@ jobs:
           bash scripts/run_codex_selected_prompt.sh \
             --canary-id manual-selected-prompt \
             --run-week "$RUN_WEEK" \
-            --issue-number "${{ inputs.issue_number }}" \
-            --issue-title "${{ inputs.issue_title }}" \
-            --issue-url "${{ inputs.issue_url }}" \
-            --candidate-rank "${{ inputs.candidate_rank }}" \
-            --vote-count "${{ inputs.vote_count }}" \
-            --selection-policy "${{ inputs.selection_policy }}" \
-            --prompt-body "${{ inputs.prompt_body }}" \
+            --issue-number "$INPUT_ISSUE_NUMBER" \
+            --issue-title "$INPUT_ISSUE_TITLE" \
+            --issue-url "$INPUT_ISSUE_URL" \
+            --candidate-rank "$INPUT_CANDIDATE_RANK" \
+            --vote-count "$INPUT_VOTE_COUNT" \
+            --selection-policy "$INPUT_SELECTION_POLICY" \
+            --prompt-body "$INPUT_PROMPT_BODY" \
             --work-label selected-prompt
           rc=$?
           echo "$rc" > .tmp/codex-exit-code.txt
@@ -148,7 +155,7 @@ jobs:
             --diagnostics-dir .tmp/canary-diagnostics \
             --out-dir .tmp/public-agent-run-bundle \
             --run-id "codex-selected-prompt-${{ github.run_number }}" \
-            --issue-number "${{ inputs.issue_number }}" \
+            --issue-number "$INPUT_ISSUE_NUMBER" \
             --pr-number ""
 
       - name: Enrich public agent run bundle with sanitized logs and reasoning traces
@@ -239,9 +246,9 @@ jobs:
             --workflow "Codex Selected Prompt Run" \
             --run-number "${{ github.run_number }}" \
             --week "$RUN_WEEK" \
-            --candidate-rank "${{ inputs.candidate_rank }}" \
-            --issue-number "${{ inputs.issue_number }}" \
-            --vote-count "${{ inputs.vote_count }}" \
+            --candidate-rank "$INPUT_CANDIDATE_RANK" \
+            --issue-number "$INPUT_ISSUE_NUMBER" \
+            --vote-count "$INPUT_VOTE_COUNT" \
             --base-sha "$base_sha" \
             --branch "manual-selected-prompt-${{ github.run_number }}" \
             --attempt-count 1 \
