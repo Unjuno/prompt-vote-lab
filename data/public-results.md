@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T18:32:59+00:00`
+Generated at: `2026-05-14T19:11:22+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
 | 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 | 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
@@ -71,13 +72,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
-| 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25880048404 | Terminal State Report | pull_request | completed | skipped | Shorten operator default-on release gate |
+| 25879627971 | Script Check | pull_request | completed | success | Shorten operator default-on release gate |
+| 25879627947 | Lab PR Scope Check | pull_request | completed | success | Shorten operator default-on release gate |
+| 25879627945 | Static Site Check | pull_request | completed | success | Shorten operator default-on release gate |
+| 25878137631 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25878120685 | Public Results Export | push | completed | success | Consolidate canonical status doc sources |
 | 25878112387 | Terminal State Report | pull_request | completed | skipped | Consolidate canonical status doc sources |
+| 25878107410 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25877778601 | Script Check | pull_request | completed | success | Consolidate canonical status doc sources |
 | 25877778576 | Static Site Check | pull_request | completed | success | Consolidate canonical status doc sources |
 | 25877778566 | Lab PR Scope Check | pull_request | completed | success | Consolidate canonical status doc sources |
@@ -100,13 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25875256100 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
 | 25875256086 | Script Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
 | 25874878934 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
-| 25874878911 | Script Check | pull_request | completed | failure | Mark OpenAI lab runner as legacy fallback |
-| 25872806742 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25872787809 | Terminal State Report | pull_request | completed | skipped | Add workflow family map |
-| 25872787535 | Public Results Export | push | completed | success | Add workflow family map |
-| 25872783415 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25872706126 | Lab PR Scope Check | pull_request | completed | success | Add workflow family map |
-| 25872706120 | Pre-API Freeze Audit | pull_request | completed | success | Add workflow family map |
 
 ## Raw JSON
 

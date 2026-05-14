@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T18:32:59+00:00",
+  "generated_at": "2026-05-14T19:11:22+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 26,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Shorten the operator runbook default-on release gate to avoid duplicating the full checklist.\n- Keep the complete release-gate checklist in `docs/canonical-status-drift-check.md` as the status source of truth.\n- Preserve the operator stop rule: feature-flag cleanup documented, manual review required, and auto-merge disabled.\n- Update `test_weekly_operator_docs.py` so the runbook remains concise while the drift doc still owns the full checklist.\n\n## Scope\n- `docs/operator-runbook.md`\n- `scripts/test_weekly_operator_docs.py`\n\n## 5S mapping\n- Sorted: full release-gate checklist is separated from operator stop-rule instructions.\n- Set in order: canonical status drift check owns the full gate; operator runbook owns operating procedure.\n- Shined: duplicate release-gate wording is reduced.\n- Standardized: runbook now points to the source-of-truth document.\n- Sustained by: weekly operator docs test and canonical status drift test.\n\n## Non-goals\n- No runner behavior change.\n- No workflow default change.\n- No workflow deletion.\n- No legacy fallback removal.\n- No auto-merge.\n- No API call.\n- No generated snapshot edit.\n\n## Verification expected\n- Script Check\n- weekly operator docs test\n- canonical status drift test\n- Lab PR Scope Check",
+      "body_length": 1258,
+      "changed_files": 2,
+      "closed_at": "2026-05-14T19:11:04Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T19:02:34Z",
+      "deletions": 9,
+      "files": [
+        {
+          "additions": 3,
+          "deletions": 9,
+          "path": "docs/operator-runbook.md"
+        },
+        {
+          "additions": 23,
+          "deletions": 0,
+          "path": "scripts/test_weekly_operator_docs.py"
+        }
+      ],
+      "head_ref_name": "shorten-operator-release-gate",
+      "head_ref_oid": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
+      "labels": [],
+      "merge_commit_oid": "f67126f89d2faf9c17de6ba3602fac29c561f00f",
+      "merged_at": "2026-05-14T19:11:04Z",
+      "merged_by": "Unjuno",
+      "number": 294,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Shorten operator default-on release gate",
+      "updated_at": "2026-05-14T19:11:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/294"
+    },
     {
       "additions": 37,
       "author": "Unjuno",
@@ -4744,78 +4781,6 @@
       "title": "Run Codex fixed Issue instruction canary",
       "updated_at": "2026-05-07T19:21:46Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/165"
-    },
-    {
-      "additions": 896,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a raw public results export so participants can analyze Prompt Vote Lab outcomes themselves.\n\n## Scope\n\nThis intentionally does not add AI analysis, recommendations, prompt advice, author scoring, or reputation calculation.\n\nIt only collects public repository data and exposes it as JSON plus a Markdown table view.\n\n## Changes\n\n- Adds `scripts/build_public_results_export.py`.\n- Adds `.github/workflows/public-results-export.yml`.\n- Adds initial `data/public-results.json` and `data/public-results.md` snapshots.\n- Adds `docs/public-results-export.md`.\n- Links the public results export from `docs/README.md`.\n- Adds tests for the export builder and workflow contract.\n- Registers the tests in `Script Check`.\n\n## Collected public data\n\nThe export collects:\n\n```text\nIssues\nPull Requests\nIssue labels\nPR labels\nIssue reactions\nPR reactions\nIssue comment counts\nPR comment counts\nPR changed file counts\nPR additions/deletions\nPR changed file paths\nworkflow run metadata\nrun record markdown files under runs/\n```\n\n## Explicitly not collected\n\n```text\nAPI keys\nGitHub tokens\nsecrets\nraw Actions logs\npayment identifiers\nprivate user data\nunpublished local files\nraw model stderr\nraw Codex JSONL beyond committed public artifacts\n```\n\n## Participant behavior\n\nParticipants can download or inspect `data/public-results.json` and run their own analysis.\n\nThe repository does not automatically score prompts, explain success, or recommend prompt rewrites.\n\n## Tests expected\n\n- `python scripts/test_build_public_results_export.py`\n- `python scripts/test_public_results_export_workflow_contract.py`\n- Existing Script Check workflow\n\n## Non-goals\n\n- No `/lab/` changes.\n- No Codex/model/API run.\n- No scoring.\n- No automated prompt advice.\n- No auto-merge.",
-      "body_length": 1765,
-      "changed_files": 9,
-      "closed_at": "2026-05-07T04:30:51Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T04:29:53Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 166,
-          "deletions": 0,
-          "path": ".github/workflows/public-results-export.yml"
-        },
-        {
-          "additions": 10,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 26,
-          "deletions": 0,
-          "path": "data/public-results.json"
-        },
-        {
-          "additions": 18,
-          "deletions": 0,
-          "path": "data/public-results.md"
-        },
-        {
-          "additions": 29,
-          "deletions": 14,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 111,
-          "deletions": 0,
-          "path": "docs/public-results-export.md"
-        },
-        {
-          "additions": 288,
-          "deletions": 0,
-          "path": "scripts/build_public_results_export.py"
-        },
-        {
-          "additions": 164,
-          "deletions": 0,
-          "path": "scripts/test_build_public_results_export.py"
-        },
-        {
-          "additions": 84,
-          "deletions": 0,
-          "path": "scripts/test_public_results_export_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-participant-analysis-logs",
-      "head_ref_oid": "8d27fd820f60a32df10c22ffb2c715d8026b2938",
-      "labels": [],
-      "merge_commit_oid": "91c019d631ccd7cf8f89e96fb12d6ff889c92f89",
-      "merged_at": "2026-05-07T04:30:51Z",
-      "merged_by": "Unjuno",
-      "number": 175,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add public results export for participant analysis",
-      "updated_at": "2026-05-07T19:21:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/175"
     }
   ],
   "run_records": [
@@ -4975,6 +4940,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T19:11:07Z",
+      "database_id": 25880048404,
+      "display_title": "Shorten operator default-on release gate",
+      "event": "pull_request",
+      "head_branch": "shorten-operator-release-gate",
+      "head_sha": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T19:11:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25880048404",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T19:02:39Z",
+      "database_id": 25879627971,
+      "display_title": "Shorten operator default-on release gate",
+      "event": "pull_request",
+      "head_branch": "shorten-operator-release-gate",
+      "head_sha": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T19:03:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25879627971",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T19:02:39Z",
+      "database_id": 25879627947,
+      "display_title": "Shorten operator default-on release gate",
+      "event": "pull_request",
+      "head_branch": "shorten-operator-release-gate",
+      "head_sha": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T19:02:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25879627947",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T19:02:39Z",
+      "database_id": 25879627945,
+      "display_title": "Shorten operator default-on release gate",
+      "event": "pull_request",
+      "head_branch": "shorten-operator-release-gate",
+      "head_sha": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T19:02:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25879627945",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:33:02Z",
+      "database_id": 25878137631,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b01a0a96fdbb89840b5167569025626d3232e74a",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:34:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878137631",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:32:43Z",
+      "database_id": 25878120685,
+      "display_title": "Consolidate canonical status doc sources",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "7bcfbc008af78ad5f3d9c52e89b80a8f5251d87d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:33:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878120685",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T18:32:34Z",
       "database_id": 25878112387,
       "display_title": "Consolidate canonical status doc sources",
@@ -4986,6 +5035,20 @@
       "updated_at": "2026-05-14T18:32:35Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878112387",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:32:27Z",
+      "database_id": 25878107410,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7bcfbc008af78ad5f3d9c52e89b80a8f5251d87d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:33:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878107410",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6246,104 +6309,6 @@
       "updated_at": "2026-05-14T10:29:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126699",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T10:28:43Z",
-      "database_id": 25855126635,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:28:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126635",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T10:28:42Z",
-      "database_id": 25855126094,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5ee225601f4fc71761af553a7ad2b0989695f018",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:29:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126094",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872249,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872249",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872163,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872163",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872144,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:23:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872144",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872136,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872136",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872113,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872113",
-      "workflow_name": "Pre-API Freeze Audit"
     }
   ]
 }
