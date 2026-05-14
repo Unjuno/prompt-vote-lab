@@ -1,6 +1,35 @@
 {
-  "generated_at": "2026-05-14T10:29:03+00:00",
+  "generated_at": "2026-05-14T12:32:37+00:00",
   "issues": [
+    {
+      "author": "Unjuno",
+      "body": "## Voted prompt\n\nAdd a tiny static note to the lab page saying the canonical weekly runner can be verified with public evidence. Keep the change minimal and accessible.\n\n## Expected result\n\nA reviewer can see one small note explaining that the weekly canonical runner is evidence-backed.\n\n## Constraints\n\n- Use only local static HTML and CSS.\n- Do not add network calls.\n- Do not add external scripts or CDNs.\n- Do not use cookies, login, forms, payments, iframes, eval, analytics, tracking, or dynamic code execution.\n- Do not change workflows, docs, rules, run records, repository policy, branches, commits, pull requests, or merge behavior.\n- Only `lab/index.html`, `lab/style.css`, or `lab/app.js` may change.\n\n## Acceptance criteria\n\n- The lab page shows a small visible note about canonical weekly runner evidence.\n- The wording is understandable without login.\n- The implementation remains static.\n- Only `lab/index.html`, `lab/style.css`, or `lab/app.js` are changed.\n\n## Canary purpose\n\nThis Issue is a minimal safe candidate for verifying the weekly selected-prompt canonical Docker/Codex runner path after the manual selected-prompt smoke test passed.",
+      "body_length": 1162,
+      "closed_at": "2026-05-14T12:15:23Z",
+      "comment_count": 2,
+      "created_at": "2026-05-14T11:39:16Z",
+      "labels": [
+        "issue-safety:clear",
+        "issue-safety:submission-detected",
+        "normal-candidate",
+        "prompt-proposal"
+      ],
+      "number": 282,
+      "reaction_minus_one_count": 0,
+      "reaction_plus_one_count": 1,
+      "safety": {
+        "authorized_canary": false,
+        "blocked": false,
+        "clear": true,
+        "review": false,
+        "runtime_detected": false,
+        "submission_detected": true
+      },
+      "state": "CLOSED",
+      "title": "[Prompt][Canary]: Add a tiny canonical weekly runner note",
+      "updated_at": "2026-05-14T12:15:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/282"
+    },
     {
       "author": "Unjuno",
       "body": "## Problem\n\nThe weekly canonical selected-prompt runner is now integrated behind a default-off feature flag, but the follow-up evidence behavior should be hardened before treating the weekly canonical path as release-quality.\n\nThe canonical weekly artifact and evidence steps should still run after failures in the canonical implementation step, so diagnostics and available evidence are preserved for inspection.\n\n## Target\n\nUpdate `.github/workflows/weekly-auto-run.yml` so the canonical evidence/artifact steps use an `always()`-guarded condition while preserving the existing eligibility and feature-flag checks.\n\nAffected steps:\n\n- Upload weekly selected-prompt diagnostics\n- Upload weekly selected-prompt public bundles\n- Download uploaded weekly selected-prompt public bundles\n- Verify uploaded weekly selected-prompt public bundles\n- Upload weekly selected-prompt uploaded bundle verification\n\n## Contract test\n\nUpdate `scripts/test_weekly_auto_run_workflow_contract.py` so it requires at least five occurrences of the canonical artifact/evidence condition with `always()`.\n\n## Constraints\n\n- Do not change the default feature flag value.\n- Do not enable canonical weekly execution by default.\n- Do not add auto-merge.\n- Keep legacy weekly behavior unchanged when the feature flag is unset or false.\n\n## Acceptance criteria\n\n- Script Check passes.\n- actionlint passes.\n- weekly auto-run workflow contract test passes.\n- Existing weekly default behavior remains unchanged.\n- Canonical evidence steps are no longer skipped solely because the canonical implementation step failed.",
@@ -533,6 +562,144 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 74,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Document that the weekly selected-prompt canonical path is the Docker/Codex selected-prompt task-packet runner when explicitly enabled.\n- Record the successful weekly canonical canary evidence from run `25858202166`.\n- Clarify that the legacy `scripts/openai_lab_run.py` weekly path remains only as a default-off migration fallback and is non-canonical.\n- Extend the current Codex path doc contract test so the weekly canonical evidence and non-canonical legacy fallback statements stay fixed.\n\n## Scope\n- `docs/current-codex-implementation-path.md`\n- `scripts/test_current_codex_path_doc.py`\n\n## Non-goals\n- No workflow behavior change.\n- No removal of `scripts/openai_lab_run.py`.\n- No canonical default flip.\n- No auto-merge.\n\n## Verification expected\n- Script Check\n- current Codex path doc test\n- Lab PR Scope Check",
+      "body_length": 833,
+      "changed_files": 2,
+      "closed_at": "2026-05-14T12:32:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T12:30:06Z",
+      "deletions": 3,
+      "files": [
+        {
+          "additions": 52,
+          "deletions": 3,
+          "path": "docs/current-codex-implementation-path.md"
+        },
+        {
+          "additions": 22,
+          "deletions": 0,
+          "path": "scripts/test_current_codex_path_doc.py"
+        }
+      ],
+      "head_ref_name": "document-legacy-weekly-runner-noncanonical",
+      "head_ref_oid": "1e8fd313976d73cdb0c39ea4a18d6c142b7e9226",
+      "labels": [],
+      "merge_commit_oid": "0c81770412dc39e6674329774849d74a117dc0f1",
+      "merged_at": "2026-05-14T12:32:12Z",
+      "merged_by": "Unjuno",
+      "number": 285,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Document legacy weekly runner as non-canonical fallback",
+      "updated_at": "2026-05-14T12:32:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/285"
+    },
+    {
+      "additions": 6,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements the selected ranked prompt candidate with the implementation agent.\n\n## Candidate\n\n- Week: week-2026-W19\n- Rank: 1\n- Issue: #282\n- Votes: 1\n- Run reason: normal-weekly-run\n- Inherited lab base: `2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395`\n- Runner: `codex-cli-selected-prompt-packet-container`\n- Canonical selected-prompt runner: `true`\n- Implementation model: `gpt-5.4-nano`\n- Model policy: `rules/model-policy-v1.1.md`\n- Agent-run policy: `rules/agent-run-policy-v1.0.md`\n- Internal checks: `safety-check` and `static-site-check` passed before PR creation\n- Created by: `Weekly Auto Run`\n\n## Selected prompt\n\nAdd a tiny static note to the lab page saying the canonical weekly runner can be verified with public evidence. Keep the change minimal and accessible.\n\n## Implementation summary\n\nImplementation summary was not written.\n\n## Evidence\n\nWhen the canonical selected-prompt runner is enabled, weekly diagnostics and public bundles are uploaded as workflow artifacts.\n\n## Merge policy\n\nRank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates. Merge remains manual. Only merged PRs become the inherited lab state for later weeks.",
+      "body_length": 1172,
+      "changed_files": 2,
+      "closed_at": "2026-05-14T12:26:33Z",
+      "comment_count": 2,
+      "created_at": "2026-05-14T11:47:05Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 0,
+          "path": "lab/index.html"
+        },
+        {
+          "additions": 5,
+          "deletions": 0,
+          "path": "lab/style.css"
+        }
+      ],
+      "head_ref_name": "codex-lab-week-2026-W19-rank-1-7",
+      "head_ref_oid": "b300af776386079f89f417f94c160bc7b60c29bf",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 284,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Agent lab run for week-2026-W19 rank 1",
+      "updated_at": "2026-05-14T12:26:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/284"
+    },
+    {
+      "additions": 14,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": "2026-05-14T12:18:28Z",
+      "comment_count": 1,
+      "created_at": "2026-05-14T11:44:44Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 14,
+          "deletions": 7,
+          "path": "runs/week-2026-W19-vote-summary.md"
+        }
+      ],
+      "head_ref_name": "weekly-auto-summary-week-2026-W19-7",
+      "head_ref_oid": "4674c5ae077ee71723172d5c7103c586fe2f9925",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 283,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Record auto vote summary for week-2026-W19",
+      "updated_at": "2026-05-14T12:18:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/283"
+    },
+    {
+      "additions": 4,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": "2026-05-14T12:10:52Z",
+      "comment_count": 1,
+      "created_at": "2026-05-14T11:31:47Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": "runs/week-2026-W19-vote-summary.md"
+        }
+      ],
+      "head_ref_name": "weekly-auto-summary-week-2026-W19-6",
+      "head_ref_oid": "bf3dce787b7965a325676c95b2c47821fd946819",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 281,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Record auto vote summary for week-2026-W19",
+      "updated_at": "2026-05-14T12:10:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/281"
+    },
     {
       "additions": 19,
       "author": "Unjuno",
@@ -4579,199 +4746,6 @@
       "title": "Record authorized canary result and usable ops",
       "updated_at": "2026-05-07T19:21:28Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/174"
-    },
-    {
-      "additions": 176,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the ninth Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies a fixed GitHub Issue can be fetched, normalized into an instruction packet, mounted read-only at /task, and implemented through the 008-style policy container.\n\n## Configuration\n\n- Week: first-canary-009\n- Issue: #170\n- Issue title: Canary gate test: blocked Issue should stop before agent execution\n- Rank: 1\n- Votes: 0\n- Inherited lab base: `d9d8416d47708745c5191232607a1b14d418557a`\n- Provider: `openai-codex`\n- Runner: `codex-cli-fixed-issue-instruction-packet-container`\n- Sandbox mode: `docker-workdir-plus-readonly-issue-instruction-packet`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Task packet: `/task:ro`\n- Work dir: `/work:rw`\n- Runtime: `/codex-runtime:rw`\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/app.js,lab/index.html lab/style.css\n\n## Internal checks\n\n- fixed Issue fetched before task packet generation\n- runtime Issue safety scan completed before task packet execution\n- issue execution gate passed before Codex execution\n- instruction packet runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, and diff analysis.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 1607,
-      "changed_files": 3,
-      "closed_at": "2026-05-07T03:43:38Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T03:16:06Z",
-      "deletions": 3,
-      "files": [
-        {
-          "additions": 64,
-          "deletions": 0,
-          "path": "lab/app.js"
-        },
-        {
-          "additions": 25,
-          "deletions": 3,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 87,
-          "deletions": 0,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "codex-fixed-issue-canary-009-4",
-      "head_ref_oid": "9ae716a6676bdc45d4ce7467c862376ff0b0b5c7",
-      "labels": [],
-      "merge_commit_oid": "c60f3ca3e01c9a90f632c5f30a4e643a47be2bf8",
-      "merged_at": "2026-05-07T03:43:38Z",
-      "merged_by": "Unjuno",
-      "number": 173,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Run Codex fixed Issue instruction canary",
-      "updated_at": "2026-05-07T19:21:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/173"
-    },
-    {
-      "additions": 655,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds redacted raw agent-run evidence bundles for fixed-Issue 009 runs.\n\n## Correction from earlier direction\n\nThis does **not** replace raw behavior evidence with a model-written summary. The primary evidence is the redacted raw bundle. The index and README are only navigation/manifest files.\n\n## Changes\n\n- Adds `scripts/build_public_agent_run_bundle.py`.\n- Adds `scripts/test_build_public_agent_run_bundle.py`.\n- Updates the fixed-Issue 009 workflow to build and upload `codex-fixed-issue-public-agent-run-bundle-*` after diagnostics collection.\n- Updates the 009 workflow contract test to require the bundle generation/upload order.\n- Adds `docs/public-agent-run-bundle.md`.\n- Links the documentation from `docs/README.md`.\n- Registers the new test in Script Check.\n\n## Public bundle policy\n\nPublished evidence:\n\n```text\nredacted allowlisted raw files\nindex.json manifest\nREADME.md navigation file\n```\n\nNot primary evidence:\n\n```text\nsummary\nmodel-written explanation\nautomatic prompt advice\n```\n\nOmitted from public bundle by default:\n\n```text\ncodex login stdout/stderr\nraw codex stderr/stdout\ncontainer stdout/stderr\nnpm install logs\nmount dump\nruntime file listing\nraw Actions logs\nsecrets\npayment data\nprivate data\n```\n\n## Redaction\n\nThe builder redacts common secret-like patterns from allowlisted raw files before publishing the bundle.\n\n## Tests expected\n\n- `python scripts/test_build_public_agent_run_bundle.py`\n- `python scripts/test_issue_instruction_runner_contract.py`\n- Existing Script Check workflow\n\n## Scope\n\n- No `/lab/` changes.\n- No model/API run.\n- No auto-merge.\n- No scoring or prompt advice.",
-      "body_length": 1630,
-      "changed_files": 7,
-      "closed_at": "2026-05-07T12:12:19Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T12:08:39Z",
-      "deletions": 15,
-      "files": [
-        {
-          "additions": 20,
-          "deletions": 1,
-          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
-        },
-        {
-          "additions": 4,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 21,
-          "deletions": 14,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 176,
-          "deletions": 0,
-          "path": "docs/public-agent-run-bundle.md"
-        },
-        {
-          "additions": 295,
-          "deletions": 0,
-          "path": "scripts/build_public_agent_run_bundle.py"
-        },
-        {
-          "additions": 129,
-          "deletions": 0,
-          "path": "scripts/test_build_public_agent_run_bundle.py"
-        },
-        {
-          "additions": 10,
-          "deletions": 0,
-          "path": "scripts/test_issue_instruction_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "add-agent-run-summaries",
-      "head_ref_oid": "8dc416b737b6e929eafc0ba375fb5029211925d2",
-      "labels": [],
-      "merge_commit_oid": "1c9cfebc1aeb73af1c6a7010b3a59b6899885995",
-      "merged_at": "2026-05-07T12:12:19Z",
-      "merged_by": "Unjuno",
-      "number": 176,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add redacted raw agent run bundles",
-      "updated_at": "2026-05-07T19:21:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/176"
-    },
-    {
-      "additions": 300,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nCloses the first normal clear-Issue 009 run and expands the public agent-run evidence bundle with missing execution-linkage files.\n\n## Context\n\nIssue #177 passed both submission and runtime safety scans as CLEAR after PR #178 fixed false positives for negated safety constraints.\n\nPR #179 was generated by the fixed-Issue 009 workflow, changed only the allowed lab files, and was manually merged.\n\nThe uploaded artifact `codex-fixed-issue-public-agent-run-bundle-5` was inspected and confirmed:\n\n```text\nschema: prompt-vote-lab-public-agent-run-bundle-v1\nrun_id: 5\nissue_number: 177\ncodex_event_lines: 64\nexecution_allowed: true\nfailure_type: none\nunsafe_instruction_count: 0\nunsafe_categories: []\nchanged_files:\n- lab/app.js\n- lab/index.html\n- lab/style.css\nforbidden_changed_files: []\ncodex_exit_code: 0\ncontainer_exit_code: 0\nrepo_root_mounted: false\n/task mount: read-only\n```\n\n## Changes\n\n- Adds `runs/first-canary-009-clear-issue-177-success.md`.\n- Expands `scripts/build_public_agent_run_bundle.py` allowlist to include runtime scan, execution gate, and source Issue evidence.\n- Updates `scripts/test_build_public_agent_run_bundle.py` to require the expanded evidence files.\n- Updates `docs/public-agent-run-bundle.md` to document the expanded public raw evidence set.\n\n## Newly allowlisted raw evidence files\n\n```text\nissue-execution-gate.json\nissue-execution-gate.md\nruntime-issue-safety-scan.json\nruntime-issue-safety-comment.md\nsource-issue.raw.json\n```\n\nThese are needed so participants can independently link source Issue → runtime scan → execution gate → agent run → diff.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No model/API run.\n- No auto-merge.\n- No AI-written analysis or prompt advice.\n\n## Tests expected\n\n- `python scripts/test_build_public_agent_run_bundle.py`\n- Existing Script Check workflow",
-      "body_length": 1825,
-      "changed_files": 4,
-      "closed_at": "2026-05-07T13:46:19Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T13:40:53Z",
-      "deletions": 1,
-      "files": [
-        {
-          "additions": 32,
-          "deletions": 0,
-          "path": "docs/public-agent-run-bundle.md"
-        },
-        {
-          "additions": 239,
-          "deletions": 0,
-          "path": "runs/first-canary-009-clear-issue-177-success.md"
-        },
-        {
-          "additions": 5,
-          "deletions": 0,
-          "path": "scripts/build_public_agent_run_bundle.py"
-        },
-        {
-          "additions": 24,
-          "deletions": 1,
-          "path": "scripts/test_build_public_agent_run_bundle.py"
-        }
-      ],
-      "head_ref_name": "record-177-clear-run-and-bundle-logs",
-      "head_ref_oid": "921a59828fa07cd9fcba71d3c67038bcc0eab77e",
-      "labels": [],
-      "merge_commit_oid": "a6618b029753e7736b234f553ccb8eb50a6d6556",
-      "merged_at": "2026-05-07T13:46:19Z",
-      "merged_by": "Unjuno",
-      "number": 180,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record clear Issue run and expand public agent bundle logs",
-      "updated_at": "2026-05-07T19:21:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/180"
-    },
-    {
-      "additions": 33,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the ninth Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies a fixed GitHub Issue can be fetched, normalized into an instruction packet, mounted read-only at /task, and implemented through the 008-style policy container.\n\n## Configuration\n\n- Week: first-canary-009\n- Issue: #177\n- Issue title: Add a static card showing current experiment status and next action\n- Rank: 1\n- Votes: 0\n- Inherited lab base: `e1f871c0ffef041e297e83090dadcd2f3f90d754`\n- Provider: `openai-codex`\n- Runner: `codex-cli-fixed-issue-instruction-packet-container`\n- Sandbox mode: `docker-workdir-plus-readonly-issue-instruction-packet`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Task packet: `/task:ro`\n- Work dir: `/work:rw`\n- Runtime: `/codex-runtime:rw`\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/app.js,lab/index.html lab/style.css\n\n## Internal checks\n\n- fixed Issue fetched before task packet generation\n- runtime Issue safety scan completed before task packet execution\n- issue execution gate passed before Codex execution\n- instruction packet runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for source Issue, runtime Issue safety scan, issue execution gate, instruction packet, credential presence, mount, Codex event, and diff analysis.\n\nA redacted public agent run bundle is also uploaded for participant analysis. It exposes allowlisted raw evidence files after secret-pattern redaction and omits denylisted diagnostics such as login stderr/stdout and raw container stderr.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 1847,
-      "changed_files": 3,
-      "closed_at": "2026-05-07T13:25:53Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T13:13:07Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 10,
-          "deletions": 7,
-          "path": "lab/app.js"
-        },
-        {
-          "additions": 17,
-          "deletions": 7,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 6,
-          "deletions": 0,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "codex-fixed-issue-canary-009-5",
-      "head_ref_oid": "b4aed1230a29ca51d5d67b620a959880d8bcd280",
-      "labels": [],
-      "merge_commit_oid": "e1eb468bc953a17d92c6cd0bfc0462d3133c2894",
-      "merged_at": "2026-05-07T13:25:53Z",
-      "merged_by": "Unjuno",
-      "number": 179,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Run Codex fixed Issue instruction canary",
-      "updated_at": "2026-05-07T19:21:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/179"
     }
   ],
   "run_records": [
@@ -4919,9 +4893,9 @@
   "summary": {
     "authorized_canary_issue_count": 1,
     "blocked_issue_count": 3,
-    "clear_issue_count": 5,
-    "issue_count": 13,
-    "merged_pr_count": 84,
+    "clear_issue_count": 6,
+    "issue_count": 14,
+    "merged_pr_count": 81,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -4929,6 +4903,188 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-14T12:32:15Z",
+      "database_id": 25860156648,
+      "display_title": "Document legacy weekly runner as non-canonical fallback",
+      "event": "pull_request",
+      "head_branch": "document-legacy-weekly-runner-noncanonical",
+      "head_sha": "1e8fd313976d73cdb0c39ea4a18d6c142b7e9226",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:32:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860156648",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T12:30:10Z",
+      "database_id": 25860067028,
+      "display_title": "Document legacy weekly runner as non-canonical fallback",
+      "event": "pull_request",
+      "head_branch": "document-legacy-weekly-runner-noncanonical",
+      "head_sha": "1e8fd313976d73cdb0c39ea4a18d6c142b7e9226",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:30:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860067028",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T12:30:10Z",
+      "database_id": 25860066975,
+      "display_title": "Document legacy weekly runner as non-canonical fallback",
+      "event": "pull_request",
+      "head_branch": "document-legacy-weekly-runner-noncanonical",
+      "head_sha": "1e8fd313976d73cdb0c39ea4a18d6c142b7e9226",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:30:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860066975",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T12:30:10Z",
+      "database_id": 25860066954,
+      "display_title": "Document legacy weekly runner as non-canonical fallback",
+      "event": "pull_request",
+      "head_branch": "document-legacy-weekly-runner-noncanonical",
+      "head_sha": "1e8fd313976d73cdb0c39ea4a18d6c142b7e9226",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:30:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860066954",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-14T12:26:36Z",
+      "database_id": 25859913705,
+      "display_title": "Agent lab run for week-2026-W19 rank 1",
+      "event": "pull_request",
+      "head_branch": "codex-lab-week-2026-W19-rank-1-7",
+      "head_sha": "b300af776386079f89f417f94c160bc7b60c29bf",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:26:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25859913705",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-14T12:18:30Z",
+      "database_id": 25859570350,
+      "display_title": "Record auto vote summary for week-2026-W19",
+      "event": "pull_request",
+      "head_branch": "weekly-auto-summary-week-2026-W19-7",
+      "head_sha": "4674c5ae077ee71723172d5c7103c586fe2f9925",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:18:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25859570350",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-14T12:10:54Z",
+      "database_id": 25859261582,
+      "display_title": "Record auto vote summary for week-2026-W19",
+      "event": "pull_request",
+      "head_branch": "weekly-auto-summary-week-2026-W19-6",
+      "head_sha": "bf3dce787b7965a325676c95b2c47821fd946819",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:10:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25859261582",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T11:44:35Z",
+      "database_id": 25858202166,
+      "display_title": "Weekly Auto Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
+      "name": "Weekly Auto Run",
+      "status": "completed",
+      "updated_at": "2026-05-14T11:47:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25858202166",
+      "workflow_name": "Weekly Auto Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T11:39:19Z",
+      "database_id": 25857992969,
+      "display_title": "[Prompt][Canary]: Add a tiny canonical weekly runner note",
+      "event": "issues",
+      "head_branch": "main",
+      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
+      "name": "Issue Safety Scan",
+      "status": "completed",
+      "updated_at": "2026-05-14T11:39:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25857992969",
+      "workflow_name": "Issue Safety Scan"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T11:31:34Z",
+      "database_id": 25857688875,
+      "display_title": "Weekly Auto Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
+      "name": "Weekly Auto Run",
+      "status": "completed",
+      "updated_at": "2026-05-14T11:31:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25857688875",
+      "workflow_name": "Weekly Auto Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:44:41Z",
+      "database_id": 25855778352,
+      "display_title": "Codex Selected Prompt Run",
+      "event": "workflow_dispatch",
+      "head_branch": "main",
+      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
+      "name": "Codex Selected Prompt Run",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:46:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855778352",
+      "workflow_name": "Codex Selected Prompt Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:29:06Z",
+      "database_id": 25855142477,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:29:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855142477",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:28:43Z",
+      "database_id": 25855126699,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "5ee225601f4fc71761af553a7ad2b0989695f018",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:29:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126699",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-14T10:28:43Z",
@@ -4942,6 +5098,20 @@
       "updated_at": "2026-05-14T10:28:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126635",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T10:28:42Z",
+      "database_id": 25855126094,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "5ee225601f4fc71761af553a7ad2b0989695f018",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:29:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126094",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6104,202 +6274,6 @@
       "updated_at": "2026-05-12T08:53:59Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25724034331",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-12T06:51:18Z",
-      "database_id": 25718461471,
-      "display_title": "Codex Policy Agent Canary Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "6b24d9ab767bfc508fe5034dc092d96e5cb3b435",
-      "name": "Codex Policy Agent Canary Run",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:52:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718461471",
-      "workflow_name": "Codex Policy Agent Canary Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:45:12Z",
-      "database_id": 25718214991,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "6b24d9ab767bfc508fe5034dc092d96e5cb3b435",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:45:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718214991",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-12T06:44:53Z",
-      "database_id": 25718201613,
-      "display_title": "Scan public agent bundles with Gitleaks",
-      "event": "pull_request",
-      "head_branch": "scan-public-bundles-with-gitleaks",
-      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:44:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201613",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:44:53Z",
-      "database_id": 25718201576,
-      "display_title": "Scan public agent bundles with Gitleaks (#270)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "285c07aa893b01bbf088bce3097383bd68f3da04",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:45:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201576",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-12T06:44:52Z",
-      "database_id": 25718201000,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "285c07aa893b01bbf088bce3097383bd68f3da04",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:45:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25718201000",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:34:10Z",
-      "database_id": 25717773526,
-      "display_title": "Scan public agent bundles with Gitleaks",
-      "event": "pull_request",
-      "head_branch": "scan-public-bundles-with-gitleaks",
-      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:34:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717773526",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:34:10Z",
-      "database_id": 25717773502,
-      "display_title": "Scan public agent bundles with Gitleaks",
-      "event": "pull_request",
-      "head_branch": "scan-public-bundles-with-gitleaks",
-      "head_sha": "692e180f6d7d46dded48ce2c7c706599bbc4ca0e",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:34:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717773502",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:22:46Z",
-      "database_id": 25717327783,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0ce3478c399795d46c2b9c50adc3e2ddda09c40f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:23:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717327783",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T06:22:28Z",
-      "database_id": 25717316218,
-      "display_title": "Public Results Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:22:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717316218",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-12T06:20:37Z",
-      "database_id": 25717244415,
-      "display_title": "GitHub Pages Smoke Check",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
-      "name": "GitHub Pages Smoke Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T06:20:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25717244415",
-      "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:02:59Z",
-      "database_id": 25714507921,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "75b9c892fcde1ad33d9bc3ef33018a6feacebd4e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:03:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714507921",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:02:36Z",
-      "database_id": 25714495705,
-      "display_title": "Add actionlint to Script Check (#269)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "6bb2e5f472b158c83b56334df613831fec811c94",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:03:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495705",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-12T05:02:36Z",
-      "database_id": 25714495666,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:02:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495666",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-12T05:02:35Z",
-      "database_id": 25714495158,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "6bb2e5f472b158c83b56334df613831fec811c94",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:03:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495158",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
