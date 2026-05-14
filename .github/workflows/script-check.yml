@@ -37,6 +37,7 @@ on:
       - "docs/canonical-runner-evidence-guide.md"
       - "docs/repository-5s-and-language-policy.md"
       - "docs/repository-cleanup-inventory.md"
+      - "docs/workflow-family-map.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
       - "docs/public-results-export.md"
@@ -153,6 +154,9 @@ jobs:
 
       - name: Run repository cleanup inventory test
         run: python scripts/test_repository_cleanup_inventory.py
+
+      - name: Run workflow family map test
+        run: python scripts/test_workflow_family_map.py
 
       - name: Run weekly operator docs test
         run: python scripts/test_weekly_operator_docs.py
