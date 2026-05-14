@@ -35,6 +35,8 @@ on:
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
       - "docs/canonical-runner-evidence-guide.md"
+      - "docs/operator-runbook.md"
+      - "docs/weekly-automation.md"
       - "docs/public-results-export.md"
       - "docs/public-agent-run-bundle.md"
       - "docs/issue-lifecycle.md"
@@ -143,6 +145,9 @@ jobs:
 
       - name: Run canonical runner evidence guide test
         run: python scripts/test_canonical_runner_evidence_guide.py
+
+      - name: Run weekly operator docs test
+        run: python scripts/test_weekly_operator_docs.py
 
       - name: Run usable experiment ops doc test
         run: python scripts/test_usable_experiment_ops_doc.py
