@@ -33,6 +33,8 @@ REQUIRED_TEXT = [
     "python scripts/test_repository_cleanup_inventory.py",
     "Run workflow family map test",
     "python scripts/test_workflow_family_map.py",
+    "Run OpenAI lab runner legacy contract test",
+    "python scripts/test_openai_lab_run_legacy_contract.py",
     "Run weekly operator docs test",
     "python scripts/test_weekly_operator_docs.py",
     "Run comparison dashboard builder test",
@@ -130,8 +132,11 @@ def main() -> int:
     if text.index("Run repository cleanup inventory test") > text.index("Run workflow family map test"):
         raise SystemExit("Workflow family map test should run after the repository cleanup inventory test")
 
-    if text.index("Run workflow family map test") > text.index("Run weekly operator docs test"):
-        raise SystemExit("Weekly operator docs test should run after the workflow family map test")
+    if text.index("Run workflow family map test") > text.index("Run OpenAI lab runner legacy contract test"):
+        raise SystemExit("OpenAI lab runner legacy contract test should run after the workflow family map test")
+
+    if text.index("Run OpenAI lab runner legacy contract test") > text.index("Run weekly operator docs test"):
+        raise SystemExit("Weekly operator docs test should run after the OpenAI lab runner legacy contract test")
 
     if text.index("Run weekly operator docs test") > text.index("Run usable experiment ops doc test"):
         raise SystemExit("Usable experiment ops doc test should run after the weekly operator docs test")
