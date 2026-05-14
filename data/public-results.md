@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T18:11:32+00:00`
+Generated at: `2026-05-14T18:32:59+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
 | 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 | 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
 | 290 | MERGED | 5 | 284/24 | Add workflow family map |
@@ -71,13 +72,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
-| 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25878112387 | Terminal State Report | pull_request | completed | skipped | Consolidate canonical status doc sources |
+| 25877778601 | Script Check | pull_request | completed | success | Consolidate canonical status doc sources |
+| 25877778576 | Static Site Check | pull_request | completed | success | Consolidate canonical status doc sources |
+| 25877778566 | Lab PR Scope Check | pull_request | completed | success | Consolidate canonical status doc sources |
+| 25877069034 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25877050929 | Terminal State Report | pull_request | completed | skipped | Add canonical status drift check |
+| 25877050457 | Public Results Export | push | completed | success | Add canonical status drift check |
+| 25877049596 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25876965410 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
 | 25876965331 | Script Check | pull_request | completed | success | Add canonical status drift check |
 | 25876965328 | Static Site Check | pull_request | completed | success | Add canonical status drift check |
@@ -100,13 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25872783415 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25872706126 | Lab PR Scope Check | pull_request | completed | success | Add workflow family map |
 | 25872706120 | Pre-API Freeze Audit | pull_request | completed | success | Add workflow family map |
-| 25872706085 | Static Site Check | pull_request | completed | success | Add workflow family map |
-| 25872706075 | Script Check | pull_request | completed | success | Add workflow family map |
-| 25868121406 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25868099615 | Terminal State Report | pull_request | completed | skipped | Add repository cleanup inventory |
-| 25868097754 | Public Results Export | push | completed | success | Add repository cleanup inventory |
-| 25868096134 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25868040743 | Pre-API Freeze Audit | pull_request | completed | success | Add repository cleanup inventory |
 
 ## Raw JSON
 

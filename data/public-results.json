@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T18:11:32+00:00",
+  "generated_at": "2026-05-14T18:32:59+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,53 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 37,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add a source-of-truth map to the canonical status drift check.\n- Mark weekly automation and operator runbook as pointer/operation docs, not second status sources of truth.\n- Extend the canonical status drift contract test to require those source-of-truth pointers.\n\n## Scope\n- `docs/canonical-status-drift-check.md`\n- `docs/weekly-automation.md`\n- `docs/operator-runbook.md`\n- `scripts/test_canonical_status_drift.py`\n\n## 5S mapping\n- Sorted: repository-wide status ownership is separated from workflow operation and maintainer procedure.\n- Set in order: canonical status drift check owns status; weekly automation owns workflow operation; operator runbook owns maintainer procedure.\n- Shined: duplicate status-source ambiguity becomes visible.\n- Standardized: pointer docs may summarize status, but must not become a second release-gate source of truth.\n- Sustained by: canonical status drift test and Script Check.\n\n## Non-goals\n- No runner behavior change.\n- No workflow default change.\n- No workflow deletion.\n- No legacy fallback removal.\n- No auto-merge.\n- No API call.\n- No generated snapshot edit.\n\n## Verification expected\n- Script Check\n- canonical status drift test\n- weekly operator docs test\n- Lab PR Scope Check",
+      "body_length": 1238,
+      "changed_files": 4,
+      "closed_at": "2026-05-14T18:32:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T18:25:49Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 15,
+          "deletions": 0,
+          "path": "docs/canonical-status-drift-check.md"
+        },
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "docs/operator-runbook.md"
+        },
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "docs/weekly-automation.md"
+        },
+        {
+          "additions": 18,
+          "deletions": 0,
+          "path": "scripts/test_canonical_status_drift.py"
+        }
+      ],
+      "head_ref_name": "consolidate-status-doc-sources",
+      "head_ref_oid": "6f843dbee00da54846b085ae1f76ec1c8170936e",
+      "labels": [],
+      "merge_commit_oid": "7bcfbc008af78ad5f3d9c52e89b80a8f5251d87d",
+      "merged_at": "2026-05-14T18:32:25Z",
+      "merged_by": "Unjuno",
+      "number": 293,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Consolidate canonical status doc sources",
+      "updated_at": "2026-05-14T18:32:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/293"
+    },
     {
       "additions": 335,
       "author": "Unjuno",
@@ -4769,43 +4816,6 @@
       "title": "Add public results export for participant analysis",
       "updated_at": "2026-05-07T19:21:41Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/175"
-    },
-    {
-      "additions": 310,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRecords the first-canary-009 hostile Issue boundary result and the sanitizer hardening/penetration-test result after PRs #165 and #166.\n\n## Changes\n\n- Adds `runs/first-canary-009-hostile-issue-boundary-and-sanitizer-success.md`.\n- Updates `docs/current-codex-implementation-path.md` so 009 is no longer described as only the next candidate.\n- Records that 009 has now passed:\n  - one normal fixed-Issue run,\n  - one hostile fixed-Issue runtime boundary run,\n  - one sanitizer static penetration test.\n- Keeps 005 as the stable production-oriented default.\n- Keeps 008 as the strongest file-operating agent candidate.\n- Keeps 009 limited to fixed-Issue ingestion and hostile Issue boundary tests.\n\n## Security interpretation\n\nThe record explicitly says the result is not a proof of general prompt-injection safety. 009 remains a candidate path requiring repeated hostile fixed-Issue tests before vote-winner ingestion.\n\n## Tests expected\n\n- Existing Script Check workflow, especially `test_current_codex_path_doc.py`.\n\n## Scope\n\n- Documentation and run record only.\n- No `/lab/` changes.\n- No workflow changes.\n- No model/API run.",
-      "body_length": 1141,
-      "changed_files": 2,
-      "closed_at": "2026-05-07T02:13:29Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T02:12:00Z",
-      "deletions": 8,
-      "files": [
-        {
-          "additions": 102,
-          "deletions": 8,
-          "path": "docs/current-codex-implementation-path.md"
-        },
-        {
-          "additions": 208,
-          "deletions": 0,
-          "path": "runs/first-canary-009-hostile-issue-boundary-and-sanitizer-success.md"
-        }
-      ],
-      "head_ref_name": "record-009-hostile-sanitizer-results",
-      "head_ref_oid": "db0d822e126e307757dc1f6d1612f52a898e62ce",
-      "labels": [],
-      "merge_commit_oid": "0d9b606f71f5c51279f48e7a9e41dd3bf6c7dac9",
-      "merged_at": "2026-05-07T02:13:29Z",
-      "merged_by": "Unjuno",
-      "number": 167,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record 009 hostile Issue sanitizer results",
-      "updated_at": "2026-05-07T19:21:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/167"
     }
   ],
   "run_records": [
@@ -4965,6 +4975,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T18:32:34Z",
+      "database_id": 25878112387,
+      "display_title": "Consolidate canonical status doc sources",
+      "event": "pull_request",
+      "head_branch": "consolidate-status-doc-sources",
+      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:32:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878112387",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:25:55Z",
+      "database_id": 25877778601,
+      "display_title": "Consolidate canonical status doc sources",
+      "event": "pull_request",
+      "head_branch": "consolidate-status-doc-sources",
+      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:26:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778601",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:25:55Z",
+      "database_id": 25877778576,
+      "display_title": "Consolidate canonical status doc sources",
+      "event": "pull_request",
+      "head_branch": "consolidate-status-doc-sources",
+      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:26:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778576",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:25:55Z",
+      "database_id": 25877778566,
+      "display_title": "Consolidate canonical status doc sources",
+      "event": "pull_request",
+      "head_branch": "consolidate-status-doc-sources",
+      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:26:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778566",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:11:37Z",
+      "database_id": 25877069034,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "4dd1262ea3745f788ea8e234ff32207886d45855",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:12:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877069034",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T18:11:14Z",
       "database_id": 25877050929,
       "display_title": "Add canonical status drift check",
@@ -4976,6 +5056,34 @@
       "updated_at": "2026-05-14T18:11:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877050929",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T18:11:13Z",
+      "database_id": 25877050457,
+      "display_title": "Add canonical status drift check",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "a1d5b14ac115e3fd3e4c480ff3dbfbccd04b3bae",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:11:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877050457",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T18:11:12Z",
+      "database_id": 25877049596,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a1d5b14ac115e3fd3e4c480ff3dbfbccd04b3bae",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T18:11:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877049596",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6236,104 +6344,6 @@
       "updated_at": "2026-05-14T10:22:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872113",
       "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:04:30Z",
-      "database_id": 25854135870,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "0dae21c1cf03a6dcbfb073b30fb96d947a6b586a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:04:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854135870",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:59:38Z",
-      "database_id": 25853931076,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0dae21c1cf03a6dcbfb073b30fb96d947a6b586a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:00:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853931076",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:59:09Z",
-      "database_id": 25853912126,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "32e21f2f8191a899f4c28ee1ea5aab398fb3c7c7",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:59:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853912126",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T09:59:09Z",
-      "database_id": 25853912013,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "fb8559ae608a53fa2d3482dc74a05ee74c8e0ef6",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:59:10Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853912013",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:59:08Z",
-      "database_id": 25853911072,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "32e21f2f8191a899f4c28ee1ea5aab398fb3c7c7",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:59:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853911072",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:46:52Z",
-      "database_id": 25853391984,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "fb8559ae608a53fa2d3482dc74a05ee74c8e0ef6",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:47:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853391984",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:46:52Z",
-      "database_id": 25853391978,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "fb8559ae608a53fa2d3482dc74a05ee74c8e0ef6",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:47:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853391978",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }
