@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T08:19:56+00:00`
+Generated at: `2026-05-14T08:40:05+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 277 | MERGED | 2 | 77/18 | Harden selected-prompt workflow input handling |
 | 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
 | 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
@@ -69,13 +70,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
 | 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
-| 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25850575959 | Terminal State Report | pull_request | completed | skipped | Harden selected-prompt workflow input handling |
+| 25850179734 | Lab PR Scope Check | pull_request | completed | success | Harden selected-prompt workflow input handling |
+| 25850179711 | Script Check | pull_request | completed | success | Harden selected-prompt workflow input handling |
+| 25849764585 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25849751368 | Public Results Export | push | completed | success | Add manual selected-prompt workflow |
 | 25849751300 | Terminal State Report | pull_request | completed | skipped | Add manual selected-prompt workflow |
+| 25849750872 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25849661057 | Script Check | pull_request | completed | success | Add manual selected-prompt workflow |
 | 25849661021 | Lab PR Scope Check | pull_request | completed | success | Add manual selected-prompt workflow |
 | 25845706762 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -99,12 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25777798088 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25777793507 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 25735251876 | Script Check | pull_request | completed | success | Parameterize selected prompt task packets |
-| 25735251865 | Lab PR Scope Check | pull_request | completed | success | Parameterize selected prompt task packets |
-| 25731109392 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25731078685 | Terminal State Report | pull_request | completed | skipped | Run Codex policy-enforced agent canary |
-| 25731078683 | Terminal State Report | pull_request | completed | skipped | Record policy-agent canary 11 success |
-| 25731078668 | Public Results Export | push | completed | success | Record policy-agent canary 11 success (#273) |
-| 25731077542 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
