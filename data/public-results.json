@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T16:46:01+00:00",
+  "generated_at": "2026-05-14T17:44:47+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -563,6 +563,53 @@
   ],
   "pull_requests": [
     {
+      "additions": 110,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Mark `scripts/openai_lab_run.py` as a legacy non-canonical migration fallback in code.\n- Add explicit runner classification metadata to the legacy prompt and summary output.\n- Add a contract test that prevents the legacy runner from being presented as canonical selected-prompt evidence.\n- Register the contract test in Script Check and the Script Check self-contract.\n\n## Scope\n- `scripts/openai_lab_run.py`\n- `scripts/test_openai_lab_run_legacy_contract.py`\n- `.github/workflows/script-check.yml`\n- `scripts/test_script_check_workflow_contract.py`\n\n## 5S mapping\n- Sorted: legacy fallback is separated from canonical selected-prompt runner code.\n- Set in order: the script itself now names the canonical runner that supersedes it.\n- Shined: ambiguous implementation-agent wording is made explicit.\n- Standardized: legacy/non-canonical metadata is written into prompt and summary text.\n- Sustained by: OpenAI lab runner legacy contract test and Script Check.\n\n## Non-goals\n- No runner deletion.\n- No workflow behavior change.\n- No default flag change.\n- No auto-merge.\n- No API call.\n- No generated snapshot edit.\n\n## Verification expected\n- Script Check\n- OpenAI lab runner legacy contract test\n- script-check workflow contract test\n- Lab PR Scope Check",
+      "body_length": 1268,
+      "changed_files": 4,
+      "closed_at": "2026-05-14T17:44:27Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T17:27:09Z",
+      "deletions": 6,
+      "files": [
+        {
+          "additions": 3,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 19,
+          "deletions": 4,
+          "path": "scripts/openai_lab_run.py"
+        },
+        {
+          "additions": 81,
+          "deletions": 0,
+          "path": "scripts/test_openai_lab_run_legacy_contract.py"
+        },
+        {
+          "additions": 7,
+          "deletions": 2,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "mark-openai-lab-run-legacy",
+      "head_ref_oid": "311e8a81150b1ccc518d3043d09b351f89db0da2",
+      "labels": [],
+      "merge_commit_oid": "68a17a4ed8e60b6d522fc298376729afb6823143",
+      "merged_at": "2026-05-14T17:44:27Z",
+      "merged_by": "Unjuno",
+      "number": 291,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Mark OpenAI lab runner as legacy fallback",
+      "updated_at": "2026-05-14T17:44:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/291"
+    },
+    {
       "additions": 284,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -611,7 +658,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Add workflow family map",
-      "updated_at": "2026-05-14T16:45:35Z",
+      "updated_at": "2026-05-14T16:46:54Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/290"
     },
     {
@@ -4749,38 +4796,6 @@
       "title": "Run Codex fixed Issue instruction canary",
       "updated_at": "2026-05-07T19:21:40Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/192"
-    },
-    {
-      "additions": 210,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a run record for the second normal clear-Issue 009 path validation.\n\n## Record\n\n```text\nruns/first-canary-009-clear-issue-183-success.md\n```\n\n## Evidence recorded\n\n- Issue #183 submission safety scan: CLEAR / unsafe categories 0.\n- Issue #183 runtime safety scan: CLEAR / unsafe categories 0.\n- Execution gate: PASS.\n- PR #184 changed only:\n  - `lab/app.js`\n  - `lab/index.html`\n  - `lab/style.css`\n- PR #184 was manually squash merged.\n- Public agent run bundle `codex-fixed-issue-public-agent-run-bundle-6` was inspected and passed.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No model/API run.\n- No public-results refresh in this PR.\n- No Issue close in this PR.",
-      "body_length": 677,
-      "changed_files": 1,
-      "closed_at": "2026-05-07T16:15:44Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T16:03:33Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 210,
-          "deletions": 0,
-          "path": "runs/first-canary-009-clear-issue-183-success.md"
-        }
-      ],
-      "head_ref_name": "record-183-clear-run-success",
-      "head_ref_oid": "52c9b551699381a409a443a0713a520ac8e23682",
-      "labels": [],
-      "merge_commit_oid": "c09a7ac41df7344878d6539adb114da007d135cc",
-      "merged_at": "2026-05-07T16:15:43Z",
-      "merged_by": "Unjuno",
-      "number": 185,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Record second clear Issue run",
-      "updated_at": "2026-05-07T19:21:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/185"
     }
   ],
   "run_records": [
@@ -4940,6 +4955,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T17:44:31Z",
+      "database_id": 25875730498,
+      "display_title": "Mark OpenAI lab runner as legacy fallback",
+      "event": "pull_request",
+      "head_branch": "mark-openai-lab-run-legacy",
+      "head_sha": "311e8a81150b1ccc518d3043d09b351f89db0da2",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T17:44:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875730498",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T17:34:50Z",
+      "database_id": 25875256100,
+      "display_title": "Mark OpenAI lab runner as legacy fallback",
+      "event": "pull_request",
+      "head_branch": "mark-openai-lab-run-legacy",
+      "head_sha": "311e8a81150b1ccc518d3043d09b351f89db0da2",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T17:34:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875256100",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T17:34:50Z",
+      "database_id": 25875256086,
+      "display_title": "Mark OpenAI lab runner as legacy fallback",
+      "event": "pull_request",
+      "head_branch": "mark-openai-lab-run-legacy",
+      "head_sha": "311e8a81150b1ccc518d3043d09b351f89db0da2",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T17:35:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875256086",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T17:27:16Z",
+      "database_id": 25874878934,
+      "display_title": "Mark OpenAI lab runner as legacy fallback",
+      "event": "pull_request",
+      "head_branch": "mark-openai-lab-run-legacy",
+      "head_sha": "a0480f7de444c8a4ae5b3217b5ec942f5625aa50",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T17:27:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25874878934",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-14T17:27:16Z",
+      "database_id": 25874878911,
+      "display_title": "Mark OpenAI lab runner as legacy fallback",
+      "event": "pull_request",
+      "head_branch": "mark-openai-lab-run-legacy",
+      "head_sha": "a0480f7de444c8a4ae5b3217b5ec942f5625aa50",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T17:27:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25874878911",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:46:05Z",
+      "database_id": 25872806742,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "804ba3ed83a3b972391b83fea94caa523f748257",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:46:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872806742",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T16:45:42Z",
       "database_id": 25872787809,
       "display_title": "Add workflow family map",
@@ -4951,6 +5050,34 @@
       "updated_at": "2026-05-14T16:45:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872787809",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:45:41Z",
+      "database_id": 25872787535,
+      "display_title": "Add workflow family map",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "f8464a7ff96b6bc05e6e264a86dbe8eb552ded12",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:46:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872787535",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:45:37Z",
+      "database_id": 25872783415,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f8464a7ff96b6bc05e6e264a86dbe8eb552ded12",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:46:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872783415",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6197,118 +6324,6 @@
       "updated_at": "2026-05-14T09:02:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851468258",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:01:30Z",
-      "database_id": 25851468246,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "4e2bb327f041c8d6a0b8dd7184efdb4a7621b0cc",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851468246",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:59:47Z",
-      "database_id": 25851391935,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "d9fab8fac6d3a29893fc0bf7a049de1aa1d55b00",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:00:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851391935",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T08:59:47Z",
-      "database_id": 25851391933,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "d9fab8fac6d3a29893fc0bf7a049de1aa1d55b00",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:00:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851391933",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:59:47Z",
-      "database_id": 25851391932,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "d9fab8fac6d3a29893fc0bf7a049de1aa1d55b00",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:59:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851391932",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:59:47Z",
-      "database_id": 25851391919,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "d9fab8fac6d3a29893fc0bf7a049de1aa1d55b00",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:59:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851391919",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:59:47Z",
-      "database_id": 25851391903,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "d9fab8fac6d3a29893fc0bf7a049de1aa1d55b00",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:00:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851391903",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:58:28Z",
-      "database_id": 25851338877,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "27708166cfe86fa89f617528730056dbd2df5632",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:58:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338877",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:58:28Z",
-      "database_id": 25851338870,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "27708166cfe86fa89f617528730056dbd2df5632",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:58:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338870",
-      "workflow_name": "Select Eligible Test"
     }
   ]
 }

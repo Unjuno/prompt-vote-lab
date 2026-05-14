@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T16:46:01+00:00`
+Generated at: `2026-05-14T17:44:47+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
 | 290 | MERGED | 5 | 284/24 | Add workflow family map |
 | 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
 | 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
@@ -71,13 +72,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
-| 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25875730498 | Terminal State Report | pull_request | completed | skipped | Mark OpenAI lab runner as legacy fallback |
+| 25875256100 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
+| 25875256086 | Script Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
+| 25874878934 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
+| 25874878911 | Script Check | pull_request | completed | failure | Mark OpenAI lab runner as legacy fallback |
+| 25872806742 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25872787809 | Terminal State Report | pull_request | completed | skipped | Add workflow family map |
+| 25872787535 | Public Results Export | push | completed | success | Add workflow family map |
+| 25872783415 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25872706126 | Lab PR Scope Check | pull_request | completed | success | Add workflow family map |
 | 25872706120 | Pre-API Freeze Audit | pull_request | completed | success | Add workflow family map |
 | 25872706085 | Static Site Check | pull_request | completed | success | Add workflow family map |
@@ -99,14 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25864811348 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
 | 25864811333 | Script Check | pull_request | completed | success | Add repository 5S and language policy |
 | 25864661398 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
-| 25864661367 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864661347 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
-| 25864661342 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864541546 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
-| 25864541510 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
-| 25864541503 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864541489 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864372181 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
 
 ## Raw JSON
 
