@@ -1,0 +1,144 @@
+# Workflow family map
+
+## Purpose
+
+This map classifies GitHub Actions workflows before cleanup or deletion work.
+
+It is not a removal plan.
+
+It answers one question first:
+
+```text
+Which workflows are evidence-bearing, and which workflows are historical scaffolding?
+```
+
+## Family states
+
+| State | Meaning | Default action |
+|---|---|---|
+| Canonical active | Current canonical implementation, verification, or evidence path | Keep and harden |
+| Weekly active | Scheduled or manually runnable weekly operation | Keep and harden |
+| Public generated snapshot | Owns generated public data or pages evidence | Keep; edit through owning generator |
+| Safety gate | Blocks unsafe or out-of-scope execution | Keep |
+| Canary evidence | Historical or controlled canary path with evidence value | Keep until replacement evidence is documented |
+| Legacy fallback | Non-canonical migration fallback | Keep with explicit legacy wording |
+| Test and guard | CI guard, scope guard, or contract verification | Keep |
+| Cleanup candidate | Candidate for later consolidation or retirement | Do not delete until a removal gate is recorded |
+
+## Canonical active workflows
+
+| Workflow | Path | Reason |
+|---|---|---|
+| Codex Selected Prompt Run | `.github/workflows/codex-selected-prompt-run.yml` | Manual canonical selected-prompt Docker/Codex runner smoke path |
+| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and feature-flagged canonical selected-prompt implementation path |
+
+Canonical evidence requires the selected-prompt Docker/Codex runner evidence:
+
+```text
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+```
+
+## Weekly active workflows
+
+| Workflow | Path | Reason |
+|---|---|---|
+| Support Unlock Export | `.github/workflows/support-unlock-export.yml` | Produces anonymized weekly support unlock data |
+| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Reads support unlock data and prompt votes |
+| Weekly Issue Finalizer | `.github/workflows/weekly-issue-finalizer.yml` | Closes weekly Issues after public results membership and outcome labeling |
+
+These workflows are not cleanup candidates while weekly operation depends on them.
+
+## Public generated snapshot workflows
+
+| Workflow | Path | Reason |
+|---|---|---|
+| Public Results Export | `.github/workflows/public-results-export.yml` | Owns `data/public-results.json`, `data/public-results.md`, and derived public evidence surfaces |
+
+Generated snapshot files should be changed through the owning workflow or generator, not by unrelated cleanup PRs.
+
+## Safety gate workflows
+
+| Workflow | Path | Reason |
+|---|---|---|
+| Issue Safety Scan | `.github/workflows/issue-safety-scan.yml` | Scans Issue text and labels unsafe or review-required Issues before execution |
+
+Safety gate workflows are not optional cleanup targets.
+
+## Test and guard workflows
+
+| Workflow | Path | Reason |
+|---|---|---|
+| Script Check | `.github/workflows/script-check.yml` | Runs syntax, contract, doc, runner, bundle, and cleanup guards |
+
+Script Check is the primary sustain mechanism for repository 5S.
+
+## Canary evidence workflows
+
+These workflows are evidence-bearing historical or controlled canary paths.
+
+They should not be deleted merely because the selected-prompt runner is now canonical.
+
+| Workflow | Path | Current role |
+|---|---|---|
+| Codex First Canary Run | `.github/workflows/codex-first-canary-run.yml` | Historical first canary path |
+| Codex Isolated 3file Canary Run | `.github/workflows/codex-isolated-3file-canary-run.yml` | Historical isolated three-file canary path |
+| Codex Isolated 3file Relaxed Canary Run | `.github/workflows/codex-isolated-3file-relaxed-canary-run.yml` | Historical relaxed canary path |
+| Codex Writeback Canary Run | `.github/workflows/codex-writeback-canary-run.yml` | Historical writeback canary path |
+| Codex Offline JSON Canary Run | `.github/workflows/codex-offline-json-canary-run.yml` | Historical non-canonical JSON writeback path |
+| Codex Agent Observed Canary Run | `.github/workflows/codex-agent-observed-canary-run.yml` | Historical agent-observed canary path |
+| Canary 007 Policy Feasibility | `.github/workflows/canary-007-policy-feasibility.yml` | Feasibility check for policy-enforced container execution |
+| Codex Policy Agent Canary Run | `.github/workflows/codex-policy-agent-canary-run.yml` | Policy-agent public bundle and diagnostics evidence path |
+| Codex Task Packet Canary Run | `.github/workflows/codex-task-packet-canary-run.yml` | Task-packet boundary evidence path |
+| Codex Fixed Issue Instruction Canary Run | `.github/workflows/codex-fixed-issue-instruction-canary-run.yml` | Fixed-Issue instruction packet and safety-gate evidence path |
+
+## Legacy fallback workflows and paths
+
+The legacy fallback is primarily a script path, not a separate workflow family:
+
+```text
+scripts/openai_lab_run.py
+```
+
+It may still be reachable through weekly migration behavior when the canonical selected-prompt runner flag is unset or false.
+
+It is non-canonical.
+
+It should not be removed until the default-on release gate explicitly approves removal.
+
+## Cleanup candidates
+
+These are candidates for future consolidation. They are not deletion instructions.
+
+| Candidate | Why it may be cleaned later | Required removal gate |
+|---|---|---|
+| Older canary workflow family | Many historical canary workflows make the active path harder to see | Replacement evidence map exists and release record approves retirement |
+| Offline JSON canary workflow | Non-canonical path can be confused with canonical evidence | Legacy fallback policy is finalized and references are updated |
+| First canary workflow family | Superseded by Docker/Codex selected-prompt task-packet evidence | Historical evidence remains linked from docs and run records |
+
+## Removal gate for workflows
+
+A workflow removal PR must state:
+
+```text
+Evidence role:
+Canonical or legacy role:
+Generated snapshot ownership:
+Replacement path:
+Affected docs:
+Affected contract tests:
+Rollback path:
+```
+
+A workflow should not be removed if any public doc still lists it as required active evidence.
+
+## Current safe next actions
+
+The next safe cleanup work is:
+
+```text
+1. Add explicit legacy fallback comments to scripts/openai_lab_run.py.
+2. Add doc-drift checks for canonical runner status across README, operator runbook, weekly automation, and evidence guide.
+3. Consolidate duplicate status wording only after the drift checks are present.
+4. Defer workflow deletion until a release readiness record approves it.
+```
