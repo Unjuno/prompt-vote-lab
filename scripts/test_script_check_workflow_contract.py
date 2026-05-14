@@ -13,6 +13,8 @@ REQUIRED_TEXT = [
     "lab/comparisons/**",
     "runs/**",
     "docs/canonical-runner-evidence-guide.md",
+    "docs/operator-runbook.md",
+    "docs/weekly-automation.md",
     ".github/workflows/codex-selected-prompt-run.yml",
     "workflow_dispatch:",
     "contents: read",
@@ -22,6 +24,8 @@ REQUIRED_TEXT = [
     "python scripts/test_current_codex_path_doc.py",
     "Run canonical runner evidence guide test",
     "python scripts/test_canonical_runner_evidence_guide.py",
+    "Run weekly operator docs test",
+    "python scripts/test_weekly_operator_docs.py",
     "Run comparison dashboard builder test",
     "python scripts/test_build_comparison_dashboard.py",
     "Run comparison dashboard decision test",
@@ -90,11 +94,20 @@ def main() -> int:
     if text.index("docs/current-codex-implementation-path.md") > text.index("docs/canonical-runner-evidence-guide.md"):
         raise SystemExit("canonical runner evidence guide should be tracked near current Codex path docs")
 
+    if text.index("docs/canonical-runner-evidence-guide.md") > text.index("docs/operator-runbook.md"):
+        raise SystemExit("operator runbook should be tracked after the canonical runner evidence guide")
+
+    if text.index("docs/operator-runbook.md") > text.index("docs/weekly-automation.md"):
+        raise SystemExit("weekly automation doc should be tracked after the operator runbook")
+
     if text.index("Run current Codex path doc test") > text.index("Run canonical runner evidence guide test"):
         raise SystemExit("Canonical runner evidence guide test should run after the current Codex path doc test")
 
-    if text.index("Run canonical runner evidence guide test") > text.index("Run usable experiment ops doc test"):
-        raise SystemExit("Usable experiment ops doc test should run after the canonical runner evidence guide test")
+    if text.index("Run canonical runner evidence guide test") > text.index("Run weekly operator docs test"):
+        raise SystemExit("Weekly operator docs test should run after the canonical runner evidence guide test")
+
+    if text.index("Run weekly operator docs test") > text.index("Run usable experiment ops doc test"):
+        raise SystemExit("Usable experiment ops doc test should run after the weekly operator docs test")
 
     if text.index("Run public agent run bundle enrichment test") > text.index("Run public agent run bundle verifier test"):
         raise SystemExit("Public bundle verifier test should run after enrichment test")
