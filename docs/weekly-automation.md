@@ -60,11 +60,78 @@ On scheduled runs, support export defaults to the previous UTC ISO week. Manual 
 9. if eligible candidates exist, require implementation secret
 10. preflight the implementation run
 11. create implementation PRs for eligible candidates
+12. upload canonical weekly diagnostics and public evidence when the canonical feature flag is enabled
+13. reverify uploaded canonical public bundles
 ```
 
 The support unlock file is required before vote collection and rank selection.
 
 If the file is missing, the weekly workflow fails before selecting eligible ranks. It must not silently treat missing support data as 0 USD.
+
+## Canonical selected-prompt feature flag
+
+The weekly canonical selected-prompt path is controlled by:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
+```
+
+The default remains non-canonical during migration:
+
+```text
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+```
+
+When the variable is unset or `false`, `Weekly Auto Run` keeps the legacy fallback path.
+
+When the variable is `true` and at least one prompt proposal beats the no-change baseline, `Weekly Auto Run` uses the canonical Docker/Codex selected-prompt runner:
+
+```text
+scripts/run_codex_selected_prompt.sh
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+```
+
+The legacy `scripts/openai_lab_run.py` path is non-canonical and does not satisfy the selected-prompt canonical runner requirement.
+
+## Canonical weekly evidence artifacts
+
+A successful canonical weekly selected-prompt run should produce:
+
+```text
+weekly-selected-prompt-diagnostics-<run_number>
+weekly-selected-prompt-public-bundles-<run_number>
+weekly-selected-prompt-uploaded-bundle-verification-<run_number>
+```
+
+The evidence chain must include:
+
+```text
+public bundle verification: ok
+uploaded bundle verification: ok
+Gitleaks finding count: 0
+changed files subset of lab/index.html, lab/style.css, lab/app.js
+repo_root_mounted: false
+OPENAI_API_KEY present before codex exec: no
+```
+
+## Temporary canary settings
+
+A controlled weekly canonical canary may temporarily set:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0
+```
+
+After the canary, reset or remove them:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false or unset
+PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset
+```
+
+Leaving `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` changes selection behavior and is not acceptable for normal scheduled operation.
 
 ## Why support export is separate
 
@@ -84,6 +151,7 @@ Weekly auto run:
 - reads the weekly support unlock file
 - creates vote summary PRs
 - creates implementation PRs only when candidates are eligible
+- may use the canonical Docker/Codex selected-prompt runner only when explicitly enabled during migration
 - must not merge PRs automatically
 
 ## Time-window caveat
@@ -135,7 +203,7 @@ rank_3_unlocked: false
 privacy flags: all false
 ```
 
-Verified weekly automation evidence:
+Verified no-eligible weekly automation evidence:
 
 ```text
 Weekly Auto Run: PASS
@@ -146,7 +214,27 @@ eligible_count: 0
 implementation PR: none
 ```
 
-Manual verification is still useful after token rotation, workflow changes, or backfills.
+Verified canonical weekly selected-prompt canary evidence:
+
+```text
+Weekly Auto Run: PASS
+run: 25858202166
+selected Issue: #282
+summary PR: #283
+implementation PR: #284
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+artifacts:
+  - weekly-selected-prompt-diagnostics-7
+  - weekly-selected-prompt-public-bundles-7
+  - weekly-selected-prompt-uploaded-bundle-verification-7
+bounded lab diff: PASS
+auto-merge: disabled
+```
+
+The canary Issue and PRs were closed without merge because they were evidence-only artifacts, not product changes.
+
+Manual verification is still useful after token rotation, workflow changes, backfills, or changes to the canonical runner boundary.
 
 Example support export input:
 
@@ -170,6 +258,24 @@ Automation may create PRs, but it must not merge them.
 
 `main` merge remains manual.
 
+## Default-on release gate
+
+Do not make the canonical selected-prompt runner the weekly default until all of these remain true:
+
+```text
+manual selected-prompt smoke: PASS
+weekly feature-flag canary with eligible candidate: PASS
+weekly diagnostics artifact: present
+weekly public bundle artifact: present
+weekly uploaded bundle verification artifact: present
+bounded lab diff: PASS
+legacy fallback documented as non-canonical
+participant evidence guide published
+operator runbook feature-flag cleanup documented
+manual review remains required
+auto-merge remains disabled
+```
+
 ## Current production status
 
 Implemented and live-verified:
@@ -178,7 +284,10 @@ Implemented and live-verified:
 - `Support Unlock Export` can generate and validate an anonymized support unlock file.
 - `Weekly Auto Run` can read that unlock file and create a no-eligible vote summary PR.
 - The no-change baseline path can complete without creating an implementation PR.
+- The weekly canonical selected-prompt feature-flag path can create a bounded lab-only implementation PR with diagnostics, public bundle, and uploaded bundle reverification artifacts.
 
-Still not fully production-verified:
+Still not default-on:
 
-- eligible prompt -> implementation-agent preflight -> implementation-agent run -> lab-only implementation PR
+- ordinary scheduled weekly canonical execution without a controlled canary flag
+- removal of the legacy fallback
+- auto-merge
