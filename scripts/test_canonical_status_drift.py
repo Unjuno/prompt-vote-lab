@@ -74,6 +74,14 @@ def main() -> int:
     require_all(docs["drift_check"], [
         "# Canonical status drift check",
         "Stable status contract",
+        "## Source-of-truth map",
+        "Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status",
+        "Technical implementation boundary",
+        "Participant/reviewer evidence decision rule",
+        "Weekly workflow operation",
+        "Maintainer operating procedure and stop rules",
+        "Cleanup and deletion boundaries",
+        "Pointer docs may summarize status, but they should not become a second source of truth for release-gate wording.",
         "legacy fallback status: non-canonical migration fallback",
         "weekly default status: default-off during migration",
         "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
@@ -85,6 +93,16 @@ def main() -> int:
         "Do not treat a useful lab diff as sufficient canonical evidence.",
         "A PR that changes any canonical/legacy/default status should state:",
     ], "canonical status drift doc")
+
+    require_all(docs["weekly_automation"], [
+        "Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md).",
+        "This page is the weekly workflow operation detail, not a second status source of truth.",
+    ], "weekly automation status source pointer")
+
+    require_all(docs["operator_runbook"], [
+        "Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md).",
+        "This runbook is the operating procedure, not a second status source of truth.",
+    ], "operator runbook status source pointer")
 
     for name in ["readme", "current_path", "evidence_guide", "weekly_automation", "operator_runbook"]:
         require_marker_pair(docs[name], name)
