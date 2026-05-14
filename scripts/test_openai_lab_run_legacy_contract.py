@@ -35,9 +35,10 @@ FORBIDDEN_SCRIPT_TEXT = [
 ]
 
 REQUIRED_DOC_TEXT = [
-    "legacy `scripts/openai_lab_run.py` path remains only as a non-canonical default-off migration fallback",
     "scripts/openai_lab_run.py",
-    "It is non-canonical.",
+    "non-canonical",
+    "fallback",
+    "codex-cli-selected-prompt-packet-container",
 ]
 
 
@@ -57,10 +58,11 @@ def main() -> int:
     script = SCRIPT.read_text(encoding="utf-8")
     current_path_doc = CURRENT_PATH_DOC.read_text(encoding="utf-8")
     workflow_map = WORKFLOW_MAP.read_text(encoding="utf-8")
+    docs_text = current_path_doc + "\n" + workflow_map
 
     require_all(script, REQUIRED_SCRIPT_TEXT, "openai_lab_run legacy contract")
     reject_all(script, FORBIDDEN_SCRIPT_TEXT, "openai_lab_run legacy contract")
-    require_all(current_path_doc + "\n" + workflow_map, REQUIRED_DOC_TEXT, "legacy fallback docs")
+    require_all(docs_text, REQUIRED_DOC_TEXT, "legacy fallback docs")
 
     if script.index("Legacy non-canonical") > script.index("from __future__ import annotations"):
         raise SystemExit("legacy classification should appear in the module docstring before imports")
