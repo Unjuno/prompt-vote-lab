@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T06:32:30+00:00`
+Generated at: `2026-05-14T08:19:56+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 84 |
-| workflow_run_count | 99 |
+| workflow_run_count | 98 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
 | 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
@@ -69,12 +70,16 @@ This file is a raw results surface for participants. It does not score prompts o
 | 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
 | 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 | 203 | MERGED | 2 | 94/20 | Allow comparison runs from Issue comments |
-| 202 | MERGED | 2 | 47/0 | Add lab evidence navigation |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25849751300 | Terminal State Report | pull_request | completed | skipped | Add manual selected-prompt workflow |
+| 25849661057 | Script Check | pull_request | completed | success | Add manual selected-prompt workflow |
+| 25849661021 | Lab PR Scope Check | pull_request | completed | success | Add manual selected-prompt workflow |
+| 25845706762 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25845689686 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25845632148 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25841207145 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25841203098 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -100,11 +105,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25731078683 | Terminal State Report | pull_request | completed | skipped | Record policy-agent canary 11 success |
 | 25731078668 | Public Results Export | push | completed | success | Record policy-agent canary 11 success (#273) |
 | 25731077542 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25730896040 | Lab PR Scope Check | pull_request | completed | success | Record policy-agent canary 11 success |
-| 25730896012 | Script Check | pull_request | completed | success | Record policy-agent canary 11 success |
-| 25725153947 | Codex Policy Agent Canary Run | workflow_dispatch | completed | success | Codex Policy Agent Canary Run |
-| 25724483355 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25724466429 | Terminal State Report | pull_request | completed | skipped | Fix OpenAI key false positive in public bundle verifier |
 
 ## Raw JSON
 
