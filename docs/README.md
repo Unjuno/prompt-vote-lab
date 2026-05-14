@@ -4,6 +4,8 @@ This directory contains the stable public explanation layer for Prompt Vote Lab.
 
 The landing page should stay short. Details belong here.
 
+This README is a navigation entry point, not a release-gate source of truth.
+
 Prompt Vote Lab is a prompt game and experiment. Players compete by writing prompts that other players trust enough to spend a bounded implementation-agent attempt.
 
 ## Start here
@@ -13,7 +15,7 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
 5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-off, auto-merge, and release-gate status contract.
-6. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
+6. [Repository 5S and language policy](./repository-5S-and-language-policy.md) — cleanup, English-only, and sustain rules.
 7. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
 8. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
 9. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
@@ -53,7 +55,7 @@ The first useful action is usually voting with 👍 on an existing `prompt-propo
 
 Maintainer-authored repository content should be English.
 
-The [Repository 5S and language policy](./repository-5s-and-language-policy.md) defines Sort, Set in order, Shine, Standardize, and Sustain rules for cleanup PRs.
+The [Repository 5S and language policy](./repository-5S-and-language-policy.md) defines Sort, Set in order, Shine, Standardize, and Sustain rules for cleanup PRs.
 
 The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
 
@@ -120,43 +122,20 @@ Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
-The repository has scheduled weekly automation and support-unlock gates implemented, but broad default-on canonical weekly execution still requires release hardening.
+The repository has scheduled weekly automation, support-unlock gates, and a verified canonical selected-prompt feature-flag path.
 
-The live no-eligible path is verified:
+Broad default-on canonical weekly execution is not approved yet.
 
-```text
-Support Unlock Export -> data/support-unlocks/2026-W19.json
-Weekly Auto Run -> runs/week-2026-W19-vote-summary.md
-baseline_won: true
-eligible_count: 0
-implementation PR: none
-```
-
-The weekly selected-prompt canonical feature-flag path is verified by a controlled canary:
+Status ownership:
 
 ```text
-Weekly Auto Run -> run 25858202166
-selected Issue #282
-summary PR #283
-implementation PR #284
-canonical runner: true
-artifacts present: diagnostics, public bundle, uploaded bundle verification
-result: PASS
+current status contract -> docs/canonical-status-drift-check.md
+weekly workflow operation -> docs/weekly-automation.md
+maintainer operating procedure -> docs/operator-runbook.md
+canonical evidence decision rule -> docs/canonical-runner-evidence-guide.md
 ```
 
-manual canary experiments and comparison operations remain available:
-
-```text
-Issue safety scan
-→ optional manual rescan
-→ fixed-Issue 009 runtime scan
-→ execution gate
-→ Codex implementation PR
-→ manual review/merge
-→ runs/ record
-```
-
-Scheduled weekly automation is documented in [Weekly automation](./weekly-automation.md). Maintainer operation is documented in [Operator runbook](./operator-runbook.md).
+Manual canary experiments and comparison operations remain available through [Usable experiment operations](./usable-experiment-ops.md).
 
 ## Pre-API freeze status
 
