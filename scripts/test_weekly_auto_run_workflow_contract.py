@@ -6,6 +6,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "weekly-auto-run.yml"
 
+CANONICAL_RUNNER_CALL = "display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}'"
+PUBLIC_BUNDLE_BUILD_CALL = "                  build_public_bundle(rank, issue)"
+DIAGNOSTICS_COPY_CALL = "                  copy_rank_diagnostics(rank)"
+
 REQUIRED_TEXT = [
     "name: Weekly Auto Run",
     "workflow_dispatch:",
@@ -25,8 +29,9 @@ REQUIRED_TEXT = [
     "else:",
     "scripts/run_codex_selected_prompt.sh",
     "--prompt-file",
-    "build_public_bundle(rank, issue)",
-    "copy_rank_diagnostics(rank)",
+    CANONICAL_RUNNER_CALL,
+    PUBLIC_BUNDLE_BUILD_CALL,
+    DIAGNOSTICS_COPY_CALL,
     "weekly-selected-prompt-diagnostics",
     "weekly-selected-prompt-public-bundles",
     "weekly-selected-prompt-public-bundles-uploaded",
@@ -100,14 +105,14 @@ def main() -> int:
     )
     require_block_order(
         text,
-        "scripts/run_codex_selected_prompt.sh",
-        "build_public_bundle(rank, issue)",
+        CANONICAL_RUNNER_CALL,
+        PUBLIC_BUNDLE_BUILD_CALL,
         "canonical runner invocation should precede the public bundle build call",
     )
     require_block_order(
         text,
-        "build_public_bundle(rank, issue)",
-        "copy_rank_diagnostics(rank)",
+        PUBLIC_BUNDLE_BUILD_CALL,
+        DIAGNOSTICS_COPY_CALL,
         "rank diagnostics copy should include public bundle verification reports",
     )
     require_block_order(
