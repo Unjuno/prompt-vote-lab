@@ -23,30 +23,12 @@ PHASE_LABELS = [POST_DETECTED_LABEL, RUNTIME_DETECTED_LABEL]
 ALL_LABELS = STATUS_LABELS + PHASE_LABELS
 
 LABEL_METADATA = {
-    CLEAR_LABEL: {
-        "color": "2ea043",
-        "description": "Issue safety scan found no unsafe instruction categories.",
-    },
-    REVIEW_LABEL: {
-        "color": "d29922",
-        "description": "Issue safety scan found unsafe instruction categories; human review required.",
-    },
-    BLOCKED_LABEL: {
-        "color": "cf222e",
-        "description": "Issue should not be used for an agent run until unsafe instructions are corrected.",
-    },
-    POST_DETECTED_LABEL: {
-        "color": "fbca04",
-        "description": "Unsafe instruction categories were detected when the Issue was posted or edited.",
-    },
-    RUNTIME_DETECTED_LABEL: {
-        "color": "a371f7",
-        "description": "Unsafe instruction categories were detected during a fixed-Issue runtime packet run.",
-    },
-    AUTHORIZED_CANARY_LABEL: {
-        "color": "8250df",
-        "description": "Maintainer-approved exception for a controlled canary run of a blocked Issue.",
-    },
+    CLEAR_LABEL: {"color": "2ea043", "description": "Issue safety scan found no unsafe instruction categories."},
+    REVIEW_LABEL: {"color": "d29922", "description": "Issue safety scan found unsafe instruction categories; human review required."},
+    BLOCKED_LABEL: {"color": "cf222e", "description": "Issue should not be used for an agent run until unsafe instructions are corrected."},
+    POST_DETECTED_LABEL: {"color": "fbca04", "description": "Unsafe instruction categories were detected when the Issue was posted or edited."},
+    RUNTIME_DETECTED_LABEL: {"color": "a371f7", "description": "Unsafe instruction categories were detected during a fixed-Issue runtime packet run."},
+    AUTHORIZED_CANARY_LABEL: {"color": "8250df", "description": "Maintainer-approved exception for a controlled canary run of a blocked Issue."},
 }
 
 
@@ -77,10 +59,7 @@ def issue_from_event(path: Path) -> dict[str, Any]:
 def issue_from_raw_json(path: Path) -> dict[str, Any]:
     raw = read_json(path)
     author = raw.get("author") or raw.get("user") or {}
-    if isinstance(author, dict):
-        author_login = str(author.get("login") or "unknown")
-    else:
-        author_login = str(author or "unknown")
+    author_login = str(author.get("login") or "unknown") if isinstance(author, dict) else str(author or "unknown")
     return {
         "issue_number": int(raw.get("number") or raw.get("issue_number") or 0),
         "issue_title": str(raw.get("title") or raw.get("issue_title") or "").strip(),
@@ -96,23 +75,22 @@ def issue_from_raw_json(path: Path) -> dict[str, Any]:
 def labels_for_scan(unsafe_count: int, phase: str) -> tuple[list[str], list[str]]:
     status_to_add = [CLEAR_LABEL] if unsafe_count == 0 else [REVIEW_LABEL, BLOCKED_LABEL]
     phase_to_add = [POST_DETECTED_LABEL] if phase == "issue_event" else [RUNTIME_DETECTED_LABEL]
-
-    labels_to_add = status_to_add + phase_to_add
-
-    # Status labels are mutually exclusive and should reflect the latest scan result.
-    # Phase labels are cumulative evidence: a runtime scan must not erase prior posting/edit detection,
-    # and a posting/edit scan must not erase prior runtime evidence.
     labels_to_remove = [label for label in STATUS_LABELS if label not in status_to_add]
-    return labels_to_add, labels_to_remove
+    return status_to_add + phase_to_add, labels_to_remove
+
+
+def recommended_action(unsafe_count: int, phase: str) -> str:
+    if unsafe_count == 0:
+        return "No unsafe instruction categories were detected. The Issue can proceed to normal review."
+    if phase == "issue_event":
+        return "Revise the Issue before using it for an agent run, or keep it as an explicitly authorized canary."
+    return "Agent execution is blocked unless the maintainer adds the authorized-canary label for a controlled canary run."
 
 
 def scan_issue(issue: dict[str, Any], phase: str) -> dict[str, Any]:
     findings = packet.detect_unsafe_instructions(issue["issue_title"], issue["body"])
-    safe_task = packet.make_safe_task(issue["issue_title"], issue["body"])
     unsafe_count = len(findings)
-    severity = "clear" if unsafe_count == 0 else "blocked"
     labels_to_add, labels_to_remove = labels_for_scan(unsafe_count, phase)
-
     return {
         "schema_version": "issue-safety-scan-v1",
         "phase": phase,
@@ -124,8 +102,8 @@ def scan_issue(issue: dict[str, Any], phase: str) -> dict[str, Any]:
         "author": issue["author"],
         "unsafe_instruction_count": unsafe_count,
         "unsafe_instructions_detected": findings,
-        "safe_user_task": safe_task,
-        "severity": severity,
+        "safe_user_task": packet.make_safe_task(issue["issue_title"], issue["body"]),
+        "severity": "clear" if unsafe_count == 0 else "blocked",
         "labels_to_add": labels_to_add,
         "labels_to_remove": labels_to_remove,
         "label_metadata": LABEL_METADATA,
@@ -140,20 +118,11 @@ def scan_issue(issue: dict[str, Any], phase: str) -> dict[str, Any]:
     }
 
 
-def recommended_action(unsafe_count: int, phase: str) -> str:
-    if unsafe_count == 0:
-        return "No unsafe instruction categories were detected. The Issue can proceed to normal review."
-    if phase == "issue_event":
-        return "Revise the Issue before using it for an agent run, or keep it as an explicitly authorized canary."
-    return "Agent execution is blocked unless the maintainer adds the authorized-canary label for a controlled canary run."
-
-
 def render_comment(scan: dict[str, Any]) -> str:
-    marker = scan["comment_marker"]
-    phase_label = "投稿/編集時検知" if scan["phase"] == "issue_event" else "実行時検知"
+    phase_label = "submission/edit-time detection" if scan["phase"] == "issue_event" else "runtime detection"
     status = "CLEAR" if scan["unsafe_instruction_count"] == 0 else "BLOCKED / REVIEW REQUIRED"
     lines = [
-        marker,
+        scan["comment_marker"],
         "## Issue safety scan",
         "",
         f"**Phase:** {phase_label}",
@@ -166,35 +135,30 @@ def render_comment(scan: dict[str, Any]) -> str:
         f"> {scan['safe_user_task']}",
         "",
     ]
-
     if scan["unsafe_instruction_count"]:
         lines.extend(["### Detected unsafe categories", ""])
         for finding in scan["unsafe_instructions_detected"]:
             lines.append(f"- `{finding['id']}` — {finding['label']}")
-        lines.extend(
-            [
-                "",
-                "### Required correction",
-                "",
-                "Remove or reword the unsafe instructions if this Issue is intended for a normal agent run.",
-                "Keep the unsafe text only when this Issue is deliberately being used as an authorized canary.",
-                f"A blocked Issue requires the `{AUTHORIZED_CANARY_LABEL}` label before agent execution.",
-                "",
-            ]
-        )
+        lines.extend([
+            "",
+            "### Required correction",
+            "",
+            "Remove or reword the unsafe instructions if this Issue is intended for a normal agent run.",
+            "Keep the unsafe text only when this Issue is deliberately being used as an authorized canary.",
+            f"A blocked Issue requires the `{AUTHORIZED_CANARY_LABEL}` label before agent execution.",
+            "",
+        ])
     else:
         lines.extend(["No unsafe instruction categories were detected by the current pattern-based scanner.", ""])
 
-    lines.extend(
-        [
-            "### Detection meaning",
-            "",
-            "- `投稿/編集時検知`: detected immediately when the Issue was opened or edited.",
-            "- `実行時検知`: detected later when the fixed-Issue runtime packet was generated or executed.",
-            "",
-            f"**Recommended action:** {scan['recommended_action']}",
-        ]
-    )
+    lines.extend([
+        "### Detection meaning",
+        "",
+        "- `submission/edit-time detection`: detected immediately when the Issue was opened or edited.",
+        "- `runtime detection`: detected later when the fixed-Issue runtime packet was generated or executed.",
+        "",
+        f"**Recommended action:** {scan['recommended_action']}",
+    ])
     return "\n".join(lines) + "\n"
 
 
@@ -206,20 +170,13 @@ def main() -> int:
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     args = parser.parse_args()
-
     if bool(args.issue_event_json) == bool(args.issue_json):
         raise SystemExit("Provide exactly one of --issue-event-json or --issue-json")
-
-    if args.issue_event_json:
-        issue = issue_from_event(Path(args.issue_event_json))
-    else:
-        issue = issue_from_raw_json(Path(args.issue_json))
-
+    issue = issue_from_event(Path(args.issue_event_json)) if args.issue_event_json else issue_from_raw_json(Path(args.issue_json))
     if issue["issue_number"] <= 0:
         raise SystemExit("Issue number must be positive")
     if not issue["issue_title"]:
         raise SystemExit("Issue title is required")
-
     scan = scan_issue(issue, args.phase)
     Path(args.out_json).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out_json).write_text(json.dumps(scan, indent=2, sort_keys=True) + "\n", encoding="utf-8")

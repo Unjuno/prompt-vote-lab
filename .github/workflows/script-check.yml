@@ -35,6 +35,7 @@ on:
       - "docs/canary-log-policy.md"
       - "docs/current-codex-implementation-path.md"
       - "docs/canonical-runner-evidence-guide.md"
+      - "docs/repository-5s-and-language-policy.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
       - "docs/public-results-export.md"
@@ -145,6 +146,9 @@ jobs:
 
       - name: Run canonical runner evidence guide test
         run: python scripts/test_canonical_runner_evidence_guide.py
+
+      - name: Run repository language policy test
+        run: python scripts/test_repository_language_policy.py
 
       - name: Run weekly operator docs test
         run: python scripts/test_weekly_operator_docs.py

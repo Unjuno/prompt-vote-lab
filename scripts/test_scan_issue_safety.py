@@ -63,7 +63,7 @@ def test_issue_event_hostile_feedback() -> None:
     detected = {item["id"] for item in scan["unsafe_instructions_detected"]}
     assert {"policy_override", "file_scope_escalation", "network_behavior", "cookie_or_tracking"}.issubset(detected)
     assert "<!-- prompt-vote-lab:issue-safety-scan:v1 -->" in comment
-    assert "投稿/編集時検知" in comment
+    assert "submission/edit-time detection" in comment
     assert "BLOCKED / REVIEW REQUIRED" in comment
     assert "Remove or reword the unsafe instructions" in comment
 
@@ -88,7 +88,7 @@ def test_runtime_hostile_feedback_marker_is_separate() -> None:
     detected = {item["id"] for item in scan["unsafe_instructions_detected"]}
     assert {"network_behavior", "self_merge_or_repo_mutation"}.issubset(detected)
     assert "<!-- prompt-vote-lab:issue-runtime-safety-scan:v1 -->" in comment
-    assert "実行時検知" in comment
+    assert "runtime detection" in comment
 
 
 def test_clear_issue_feedback() -> None:
