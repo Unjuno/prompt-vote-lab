@@ -13,6 +13,7 @@ permissions:
 env:
   DEFAULT_NO_CHANGE_BASELINE: "20"
   DEFAULT_SUPPORT_USD: "0"
+  DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: "false"
   AUTO_IMPLEMENTATION_MODEL: "gpt-5.4-nano"
 
 concurrency:
@@ -29,15 +30,25 @@ jobs:
           fetch-depth: 0
 
       - name: Prepare weekly variables
+        id: weekly-vars
         run: |
+          set -euo pipefail
+          use_canonical="${PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER:-$DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
+          case "$use_canonical" in
+            true|false) ;;
+            *) echo "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER must be true or false"; exit 1 ;;
+          esac
           {
             echo "RUN_WEEK=week-$(date -u +%G-W%V)"
             echo "NO_CHANGE_BASELINE=${PROMPT_VOTE_LAB_NO_CHANGE_BASELINE:-$DEFAULT_NO_CHANGE_BASELINE}"
             echo "SUPPORT_USD=${PROMPT_VOTE_LAB_SUPPORT_USD:-$DEFAULT_SUPPORT_USD}"
+            echo "USE_CANONICAL_SELECTED_PROMPT_RUNNER=$use_canonical"
           } >> "$GITHUB_ENV"
+          echo "use_canonical=$use_canonical" >> "$GITHUB_OUTPUT"
         env:
           PROMPT_VOTE_LAB_NO_CHANGE_BASELINE: ${{ vars.PROMPT_VOTE_LAB_NO_CHANGE_BASELINE }}
           PROMPT_VOTE_LAB_SUPPORT_USD: ${{ vars.PROMPT_VOTE_LAB_SUPPORT_USD }}
+          PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER: ${{ vars.PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER }}
 
       - name: Resolve automated support unlocks
         run: |
@@ -88,6 +99,10 @@ jobs:
             echo "## No-change baseline"
             echo ""
             echo "${NO_CHANGE_BASELINE} virtual votes"
+            echo ""
+            echo "## Canonical selected-prompt runner"
+            echo ""
+            echo "${USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
             echo ""
             echo "## Eligible implementation ranks"
             echo ""
@@ -160,7 +175,7 @@ jobs:
             --api-call-limit-per-candidate 1
 
       - name: Install Python dependency
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical != 'true' }}
         run: |
           python -m pip install --upgrade pip
           python -m pip install openai
@@ -176,22 +191,67 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           export OPENAI_API_KEY_="${OPENAI_API_KEY_TRAILING:-${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}}"
+          export OPENAI_API_KEY="$OPENAI_API_KEY_"
           python - <<'PY'
           import json
+          import os
+          import shutil
           import subprocess
           from pathlib import Path
-          import os
 
           week = os.environ['RUN_WEEK']
           run_number = "${{ github.run_number }}"
+          use_canonical = os.environ.get('USE_CANONICAL_SELECTED_PROMPT_RUNNER') == 'true'
           candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not candidates:
               print('No eligible candidates to implement')
               raise SystemExit(0)
 
-          def sh(cmd):
-              print('+', ' '.join(cmd))
+          def sh(cmd, *, display=None):
+              print('+', display or ' '.join(cmd))
               subprocess.run(cmd, check=True)
+
+          def copy_rank_diagnostics(rank):
+              src = Path('.tmp/canary-diagnostics')
+              dst = Path(f'.tmp/weekly-selected-prompt-diagnostics/rank-{rank}')
+              if dst.exists():
+                  shutil.rmtree(dst)
+              if src.exists():
+                  shutil.copytree(src, dst)
+              else:
+                  dst.mkdir(parents=True, exist_ok=True)
+                  (dst / 'missing-diagnostics.txt').write_text('No .tmp/canary-diagnostics directory was produced.\n', encoding='utf-8')
+
+          def build_public_bundle(rank, issue):
+              diagnostics_dir = Path('.tmp/canary-diagnostics')
+              bundle_dir = Path(f'.tmp/weekly-selected-prompt-public-bundles/rank-{rank}')
+              if bundle_dir.exists():
+                  shutil.rmtree(bundle_dir)
+              sh([
+                  'python', 'scripts/build_public_agent_run_bundle.py',
+                  '--diagnostics-dir', str(diagnostics_dir),
+                  '--out-dir', str(bundle_dir),
+                  '--run-id', f'weekly-selected-prompt-{week}-rank-{rank}-{run_number}',
+                  '--issue-number', str(issue),
+                  '--pr-number', '',
+              ])
+              sh([
+                  'python', 'scripts/enrich_public_agent_run_bundle.py',
+                  '--diagnostics-dir', str(diagnostics_dir),
+                  '--bundle-dir', str(bundle_dir),
+              ])
+              verification_report = diagnostics_dir / 'public-agent-run-bundle-verification.json'
+              sh([
+                  'python', 'scripts/verify_public_agent_run_bundle.py',
+                  '--bundle-dir', str(bundle_dir),
+                  '--report', str(verification_report),
+              ])
+              sh([
+                  'bash', 'scripts/run_gitleaks_public_bundle_scan.sh',
+                  '--bundle-dir', str(bundle_dir),
+                  '--report', str(diagnostics_dir / 'public-agent-run-bundle-gitleaks.json'),
+                  '--findings', str(diagnostics_dir / 'public-agent-run-bundle-gitleaks-findings.json'),
+              ])
 
           base_sha = subprocess.check_output(['git', 'rev-parse', 'origin/main'], text=True).strip()
 
@@ -199,21 +259,46 @@ jobs:
               rank = str(item['rank'])
               branch = f"codex-lab-{week}-rank-{rank}-{run_number}"
               issue = str(item['issue_number'])
+              title = str(item.get('title') or 'unrecorded')
+              url = str(item.get('url') or '')
               votes = str(item['vote_count'])
               prompt = item['body']
               reason = item.get('run_reason', 'normal-weekly-run')
+              runner = 'codex-cli-selected-prompt-packet-container' if use_canonical else 'legacy-openai-lab-run'
 
               sh(['git', 'checkout', 'main'])
               sh(['git', 'checkout', '-B', branch])
-              sh([
-                  'python', 'scripts/openai_lab_run.py',
-                  '--week', week,
-                  '--candidate-rank', rank,
-                  '--issue-number', issue,
-                  '--voted-prompt', prompt,
-                  '--vote-count', votes,
-                  '--run-reason', reason,
-              ])
+              if use_canonical:
+                  prompt_file = Path(f'.tmp/weekly-selected-prompt-rank-{rank}.md')
+                  prompt_file.parent.mkdir(parents=True, exist_ok=True)
+                  prompt_file.write_text(str(prompt), encoding='utf-8')
+                  if Path('.tmp/canary-diagnostics').exists():
+                      shutil.rmtree('.tmp/canary-diagnostics')
+                  sh([
+                      'bash', 'scripts/run_codex_selected_prompt.sh',
+                      '--canary-id', 'weekly-selected-prompt',
+                      '--run-week', week,
+                      '--issue-number', issue,
+                      '--issue-title', title,
+                      '--issue-url', url,
+                      '--candidate-rank', rank,
+                      '--vote-count', votes,
+                      '--selection-policy', reason,
+                      '--prompt-file', str(prompt_file),
+                      '--work-label', f'weekly-selected-prompt-rank-{rank}',
+                  ], display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}')
+                  build_public_bundle(rank, issue)
+                  copy_rank_diagnostics(rank)
+              else:
+                  sh([
+                      'python', 'scripts/openai_lab_run.py',
+                      '--week', week,
+                      '--candidate-rank', rank,
+                      '--issue-number', issue,
+                      '--voted-prompt', prompt,
+                      '--vote-count', votes,
+                      '--run-reason', reason,
+                  ], display=f'python scripts/openai_lab_run.py --week {week} --candidate-rank {rank} --issue-number {issue} --voted-prompt <redacted>')
               sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
               sh(['bash', 'scripts/static-site-check.sh'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
@@ -228,7 +313,7 @@ jobs:
               body_path = Path(f'.tmp/pr-body-rank-{rank}.md')
               summary_path = Path('.tmp/implementation-summary.md')
               body = [
-                  'Implements the selected ranked prompt candidate with the fixed implementation agent.',
+                  'Implements the selected ranked prompt candidate with the implementation agent.',
                   '',
                   '## Candidate',
                   '',
@@ -238,6 +323,8 @@ jobs:
                   f'- Votes: {votes}',
                   f'- Run reason: {reason}',
                   f'- Inherited lab base: `{base_sha}`',
+                  f'- Runner: `{runner}`',
+                  f'- Canonical selected-prompt runner: `{str(use_canonical).lower()}`',
                   '- Implementation model: `gpt-5.4-nano`',
                   '- Model policy: `rules/model-policy-v1.1.md`',
                   '- Agent-run policy: `rules/agent-run-policy-v1.0.md`',
@@ -252,6 +339,10 @@ jobs:
                   '',
                   summary_path.read_text() if summary_path.exists() else 'Implementation summary was not written.',
                   '',
+                  '## Evidence',
+                  '',
+                  'When the canonical selected-prompt runner is enabled, weekly diagnostics and public bundles are uploaded as workflow artifacts.',
+                  '',
                   '## Merge policy',
                   '',
                   'Rank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates. Merge remains manual. Only merged PRs become the inherited lab state for later weeks.',
@@ -265,3 +356,19 @@ jobs:
                   '--head', branch,
               ])
           PY
+
+      - name: Upload weekly selected-prompt diagnostics
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-selected-prompt-diagnostics-${{ github.run_number }}
+          path: .tmp/weekly-selected-prompt-diagnostics
+          if-no-files-found: error
+
+      - name: Upload weekly selected-prompt public bundles
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
+          path: .tmp/weekly-selected-prompt-public-bundles
+          if-no-files-found: error
