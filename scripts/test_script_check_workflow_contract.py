@@ -15,6 +15,7 @@ REQUIRED_TEXT = [
     "docs/canonical-runner-evidence-guide.md",
     "docs/repository-5s-and-language-policy.md",
     "docs/repository-cleanup-inventory.md",
+    "docs/workflow-family-map.md",
     "docs/operator-runbook.md",
     "docs/weekly-automation.md",
     ".github/workflows/codex-selected-prompt-run.yml",
@@ -30,6 +31,8 @@ REQUIRED_TEXT = [
     "python scripts/test_repository_language_policy.py",
     "Run repository cleanup inventory test",
     "python scripts/test_repository_cleanup_inventory.py",
+    "Run workflow family map test",
+    "python scripts/test_workflow_family_map.py",
     "Run weekly operator docs test",
     "python scripts/test_weekly_operator_docs.py",
     "Run comparison dashboard builder test",
@@ -106,8 +109,11 @@ def main() -> int:
     if text.index("docs/repository-5s-and-language-policy.md") > text.index("docs/repository-cleanup-inventory.md"):
         raise SystemExit("repository cleanup inventory should be tracked after the repository 5S language policy")
 
-    if text.index("docs/repository-cleanup-inventory.md") > text.index("docs/operator-runbook.md"):
-        raise SystemExit("operator runbook should be tracked after the repository cleanup inventory")
+    if text.index("docs/repository-cleanup-inventory.md") > text.index("docs/workflow-family-map.md"):
+        raise SystemExit("workflow family map should be tracked after the repository cleanup inventory")
+
+    if text.index("docs/workflow-family-map.md") > text.index("docs/operator-runbook.md"):
+        raise SystemExit("operator runbook should be tracked after the workflow family map")
 
     if text.index("docs/operator-runbook.md") > text.index("docs/weekly-automation.md"):
         raise SystemExit("weekly automation doc should be tracked after the operator runbook")
@@ -121,8 +127,11 @@ def main() -> int:
     if text.index("Run repository language policy test") > text.index("Run repository cleanup inventory test"):
         raise SystemExit("Repository cleanup inventory test should run after the repository language policy test")
 
-    if text.index("Run repository cleanup inventory test") > text.index("Run weekly operator docs test"):
-        raise SystemExit("Weekly operator docs test should run after the repository cleanup inventory test")
+    if text.index("Run repository cleanup inventory test") > text.index("Run workflow family map test"):
+        raise SystemExit("Workflow family map test should run after the repository cleanup inventory test")
+
+    if text.index("Run workflow family map test") > text.index("Run weekly operator docs test"):
+        raise SystemExit("Weekly operator docs test should run after the workflow family map test")
 
     if text.index("Run weekly operator docs test") > text.index("Run usable experiment ops doc test"):
         raise SystemExit("Usable experiment ops doc test should run after the weekly operator docs test")
