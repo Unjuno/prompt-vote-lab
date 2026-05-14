@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T15:13:57+00:00",
+  "generated_at": "2026-05-14T16:46:01+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -563,6 +563,58 @@
   ],
   "pull_requests": [
     {
+      "additions": 284,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add a workflow-family map before any workflow deletion or consolidation work.\n- Classify workflows as canonical active, weekly active, public generated snapshot, safety gate, canary evidence, legacy fallback, test and guard, or cleanup candidate.\n- Link the map from the docs index.\n- Add a workflow-family map contract test.\n- Register the test in Script Check and the Script Check self-contract.\n\n## Scope\n- `docs/workflow-family-map.md`\n- `docs/README.md`\n- `.github/workflows/script-check.yml`\n- `scripts/test_workflow_family_map.py`\n- `scripts/test_script_check_workflow_contract.py`\n\n## 5S mapping\n- Sorted: workflow families are classified before deletion work.\n- Set in order: canonical and weekly active workflows are separated from canary evidence and cleanup candidates.\n- Shined: historical scaffolding is made visible without deleting evidence-bearing workflows.\n- Standardized: workflow removal PRs must state evidence role, replacement path, affected docs/tests, and rollback path.\n- Sustained by: Script Check, workflow family map test, and script-check workflow contract test.\n\n## Non-goals\n- No workflow deletion.\n- No workflow behavior change.\n- No runner implementation change.\n- No default flag change.\n- No legacy fallback removal.\n- No auto-merge.\n- No generated snapshot edits.\n\n## Verification expected\n- Script Check\n- workflow family map test\n- script-check workflow contract test\n- Lab PR Scope Check",
+      "body_length": 1441,
+      "changed_files": 5,
+      "closed_at": "2026-05-14T16:45:35Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T16:44:02Z",
+      "deletions": 24,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 23,
+          "deletions": 20,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 144,
+          "deletions": 0,
+          "path": "docs/workflow-family-map.md"
+        },
+        {
+          "additions": 13,
+          "deletions": 4,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        },
+        {
+          "additions": 100,
+          "deletions": 0,
+          "path": "scripts/test_workflow_family_map.py"
+        }
+      ],
+      "head_ref_name": "add-workflow-family-map",
+      "head_ref_oid": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "labels": [],
+      "merge_commit_oid": "f8464a7ff96b6bc05e6e264a86dbe8eb552ded12",
+      "merged_at": "2026-05-14T16:45:35Z",
+      "merged_by": "Unjuno",
+      "number": 290,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add workflow family map",
+      "updated_at": "2026-05-14T16:45:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/290"
+    },
+    {
       "additions": 276,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -607,7 +659,7 @@
       "merged_at": "2026-05-14T15:13:29Z",
       "merged_by": "Unjuno",
       "number": 289,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Add repository cleanup inventory",
@@ -4729,48 +4781,6 @@
       "title": "Record second clear Issue run",
       "updated_at": "2026-05-07T19:21:40Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/185"
-    },
-    {
-      "additions": 177,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes a false positive found during the clear-Issue normal-path test with Issue #177.\n\n## Problem\n\nIssue #177 was intended to be a normal safe candidate, but the scanner marked it blocked because it matched forbidden words inside negative constraints:\n\n```text\nDo not add network calls.\nDo not add external scripts or CDNs.\nDo not use cookies, login, forms, payments, iframes, eval, or dynamic code execution.\n```\n\nThese are prohibitions, not unsafe implementation requests.\n\n## Changes\n\n- Changes unsafe detection from whole-text matching to line-level matching.\n- Skips negated/prohibitive constraint lines such as `do not`, `must not`, `no`, `without`, `avoid`, `forbidden`.\n- Requires an action/request-like line before unsafe patterns become findings.\n- Preserves hostile detection for direct unsafe requests such as `Add external network behavior` and `Modify docs/`.\n- Adds regression tests for the Issue #177 style clear request.\n- Strengthens the task-packet generator test so benign `Do not add network calls` has `unsafe_instruction_count == 0`.\n\n## Tests expected\n\n- `python scripts/test_create_codex_issue_instruction_packet.py`\n- `python scripts/test_scan_issue_safety.py`\n- Existing Script Check workflow\n\n## Scope\n\n- No `/lab/` changes.\n- No model/API run.\n- No auto-merge.\n- This only fixes scanner false positives for negated safety constraints.",
-      "body_length": 1375,
-      "changed_files": 3,
-      "closed_at": "2026-05-07T13:02:16Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T12:50:07Z",
-      "deletions": 13,
-      "files": [
-        {
-          "additions": 83,
-          "deletions": 13,
-          "path": "scripts/create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 45,
-          "deletions": 0,
-          "path": "scripts/test_create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 49,
-          "deletions": 0,
-          "path": "scripts/test_scan_issue_safety.py"
-        }
-      ],
-      "head_ref_name": "fix-negated-safety-constraints",
-      "head_ref_oid": "f40b43e2264b87524798fffb504a24a88e30cbf4",
-      "labels": [],
-      "merge_commit_oid": "e1f871c0ffef041e297e83090dadcd2f3f90d754",
-      "merged_at": "2026-05-07T13:02:15Z",
-      "merged_by": "Unjuno",
-      "number": 178,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Ignore negated safety constraints in Issue scanner",
-      "updated_at": "2026-05-07T19:21:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/178"
     }
   ],
   "run_records": [
@@ -4930,6 +4940,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T16:45:42Z",
+      "database_id": 25872787809,
+      "display_title": "Add workflow family map",
+      "event": "pull_request",
+      "head_branch": "add-workflow-family-map",
+      "head_sha": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:45:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872787809",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:44:06Z",
+      "database_id": 25872706126,
+      "display_title": "Add workflow family map",
+      "event": "pull_request",
+      "head_branch": "add-workflow-family-map",
+      "head_sha": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:44:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872706126",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:44:06Z",
+      "database_id": 25872706120,
+      "display_title": "Add workflow family map",
+      "event": "pull_request",
+      "head_branch": "add-workflow-family-map",
+      "head_sha": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:44:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872706120",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:44:06Z",
+      "database_id": 25872706085,
+      "display_title": "Add workflow family map",
+      "event": "pull_request",
+      "head_branch": "add-workflow-family-map",
+      "head_sha": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:44:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872706085",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T16:44:06Z",
+      "database_id": 25872706075,
+      "display_title": "Add workflow family map",
+      "event": "pull_request",
+      "head_branch": "add-workflow-family-map",
+      "head_sha": "cfecee0388e9aa2e3cf6fa9ae6e4e1dc63d947ed",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T16:44:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25872706075",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:14:00Z",
+      "database_id": 25868121406,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a658fd7eca605b8eab364928aed6f73f05ed2fac",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:14:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868121406",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T15:13:34Z",
       "database_id": 25868099615,
       "display_title": "Add repository cleanup inventory",
@@ -4941,6 +5035,34 @@
       "updated_at": "2026-05-14T15:13:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868099615",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:13:32Z",
+      "database_id": 25868097754,
+      "display_title": "Add repository cleanup inventory",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "ed0a561e938c076eaf2f5dff11443bb79b02fe64",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:14:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868097754",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T15:13:30Z",
+      "database_id": 25868096134,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ed0a561e938c076eaf2f5dff11443bb79b02fe64",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:14:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868096134",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6187,118 +6309,6 @@
       "updated_at": "2026-05-14T08:58:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338870",
       "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T08:58:28Z",
-      "database_id": 25851338869,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "27708166cfe86fa89f617528730056dbd2df5632",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:58:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338869",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:58:28Z",
-      "database_id": 25851338856,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "27708166cfe86fa89f617528730056dbd2df5632",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:58:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338856",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:58:28Z",
-      "database_id": 25851338848,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "27708166cfe86fa89f617528730056dbd2df5632",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:58:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851338848",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:40:09Z",
-      "database_id": 25850591205,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "4baaa94c3d3e10b5bf0b78743bf78d4a68169c9c",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:40:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850591205",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T08:39:48Z",
-      "database_id": 25850575959,
-      "display_title": "Harden selected-prompt workflow input handling",
-      "event": "pull_request",
-      "head_branch": "fix-selected-prompt-workflow-input-env",
-      "head_sha": "e9d12d2d06c6ce4672289cb39f382c0fa7b08fa8",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:39:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850575959",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:39:48Z",
-      "database_id": 25850575821,
-      "display_title": "Harden selected-prompt workflow input handling",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "c29ee6c426ea4caa3f78bc2b39866c5b2912cafe",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:40:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850575821",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T08:39:47Z",
-      "database_id": 25850574754,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "c29ee6c426ea4caa3f78bc2b39866c5b2912cafe",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:40:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850574754",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:30:08Z",
-      "database_id": 25850179734,
-      "display_title": "Harden selected-prompt workflow input handling",
-      "event": "pull_request",
-      "head_branch": "fix-selected-prompt-workflow-input-env",
-      "head_sha": "e9d12d2d06c6ce4672289cb39f382c0fa7b08fa8",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:30:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850179734",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }
