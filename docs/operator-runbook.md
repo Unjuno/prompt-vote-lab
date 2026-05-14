@@ -126,17 +126,11 @@ Never leave the canonical weekly runner enabled unintentionally before default-o
 
 ## Default-on release gate
 
-Do not make the canonical weekly runner default-on until all of these are true:
+The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).
+
+Operator stop rule before default-on:
 
 ```text
-manual selected-prompt smoke: PASS
-weekly feature-flag canary with eligible candidate: PASS
-weekly diagnostics artifact: present
-weekly public bundle artifact: present
-weekly uploaded bundle verification artifact: present
-bounded lab diff: PASS
-legacy fallback documented as non-canonical
-participant evidence guide published
 operator runbook feature-flag cleanup documented
 manual review remains required
 auto-merge remains disabled
