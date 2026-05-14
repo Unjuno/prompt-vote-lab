@@ -54,10 +54,17 @@ GUIDE_FORBIDDEN_TEXT = [
 ]
 
 INDEX_REQUIRED_TEXT = [
+    "This README is a navigation entry point, not a release-gate source of truth.",
     "[Canonical runner evidence guide](./canonical-runner-evidence-guide.md)",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
     "The legacy `scripts/openai_lab_run.py` path is non-canonical",
+    "current status contract -> docs/canonical-status-drift-check.md",
+    "weekly workflow operation -> docs/weekly-automation.md",
+    "canonical evidence decision rule -> docs/canonical-runner-evidence-guide.md",
+]
+
+INDEX_FORBIDDEN_TEXT = [
     "Weekly Auto Run -> run 25858202166",
     "artifacts present: diagnostics, public bundle, uploaded bundle verification",
 ]
@@ -81,6 +88,7 @@ def main() -> int:
     require_all(guide, GUIDE_REQUIRED_TEXT, "canonical runner evidence guide")
     reject_all(guide, GUIDE_FORBIDDEN_TEXT, "canonical runner evidence guide")
     require_all(index, INDEX_REQUIRED_TEXT, "docs index")
+    reject_all(index, INDEX_FORBIDDEN_TEXT, "docs index detailed canary evidence")
 
     if guide.index("What to inspect first") > guide.index("Expected artifacts"):
         raise SystemExit("inspection order should be described before artifact names")
