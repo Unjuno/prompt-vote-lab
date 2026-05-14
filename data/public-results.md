@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T09:59:35+00:00`
+Generated at: `2026-05-14T10:29:03+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,9 +8,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 12 |
+| issue_count | 13 |
 | open_issue_count | 0 |
-| blocked_issue_count | 2 |
+| blocked_issue_count | 3 |
 | clear_issue_count | 5 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
@@ -23,6 +23,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 279 | CLOSED | 0 | hardening, issue-safety:blocked, issue-safety:review, issue-safety:submission-detected, weekly-auto-run | Harden weekly canonical evidence artifacts on failure paths |
 | 196 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
 | 195 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 2]: Add an evidence map for reviewing weekly runs |
 | 191 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt]: Add a static reviewer orientation panel |
@@ -40,6 +41,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 280 | MERGED | 2 | 19/5 | Harden weekly canonical evidence artifacts on failure paths |
 | 278 | MERGED | 5 | 341/21 | Add weekly canonical selected-prompt runner feature flag |
 | 277 | MERGED | 2 | 77/18 | Harden selected-prompt workflow input handling |
 | 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
@@ -69,13 +71,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 254 | MERGED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 | 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
 | 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
-| 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25855126635 | Terminal State Report | pull_request | completed | skipped | Harden weekly canonical evidence artifacts on failure paths |
+| 25854872249 | Implementation Preflight Test | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25854872163 | Lab PR Scope Check | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25854872144 | Script Check | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25854872136 | Select Eligible Test | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25854872113 | Pre-API Freeze Audit | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25854135870 | Issue Safety Scan | issues | completed | success | Harden weekly canonical evidence artifacts on failure paths |
+| 25853931076 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25853912126 | Public Results Export | push | completed | success | Add weekly canonical selected-prompt runner feature flag |
 | 25853912013 | Terminal State Report | pull_request | completed | skipped | Add weekly canonical selected-prompt runner feature flag |
+| 25853911072 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25853391984 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
 | 25853391978 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
 | 25853391977 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
@@ -95,16 +106,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25851391933 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
 | 25851391932 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
 | 25851391919 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25851391903 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25851338877 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25851338870 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25851338869 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
-| 25851338856 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25851338848 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25850591205 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25850575959 | Terminal State Report | pull_request | completed | skipped | Harden selected-prompt workflow input handling |
-| 25850575821 | Public Results Export | push | completed | success | Harden selected-prompt workflow input handling |
-| 25850574754 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 

@@ -1,6 +1,36 @@
 {
-  "generated_at": "2026-05-14T09:59:35+00:00",
+  "generated_at": "2026-05-14T10:29:03+00:00",
   "issues": [
+    {
+      "author": "Unjuno",
+      "body": "## Problem\n\nThe weekly canonical selected-prompt runner is now integrated behind a default-off feature flag, but the follow-up evidence behavior should be hardened before treating the weekly canonical path as release-quality.\n\nThe canonical weekly artifact and evidence steps should still run after failures in the canonical implementation step, so diagnostics and available evidence are preserved for inspection.\n\n## Target\n\nUpdate `.github/workflows/weekly-auto-run.yml` so the canonical evidence/artifact steps use an `always()`-guarded condition while preserving the existing eligibility and feature-flag checks.\n\nAffected steps:\n\n- Upload weekly selected-prompt diagnostics\n- Upload weekly selected-prompt public bundles\n- Download uploaded weekly selected-prompt public bundles\n- Verify uploaded weekly selected-prompt public bundles\n- Upload weekly selected-prompt uploaded bundle verification\n\n## Contract test\n\nUpdate `scripts/test_weekly_auto_run_workflow_contract.py` so it requires at least five occurrences of the canonical artifact/evidence condition with `always()`.\n\n## Constraints\n\n- Do not change the default feature flag value.\n- Do not enable canonical weekly execution by default.\n- Do not add auto-merge.\n- Keep legacy weekly behavior unchanged when the feature flag is unset or false.\n\n## Acceptance criteria\n\n- Script Check passes.\n- actionlint passes.\n- weekly auto-run workflow contract test passes.\n- Existing weekly default behavior remains unchanged.\n- Canonical evidence steps are no longer skipped solely because the canonical implementation step failed.",
+      "body_length": 1585,
+      "closed_at": "2026-05-14T10:28:41Z",
+      "comment_count": 1,
+      "created_at": "2026-05-14T10:04:27Z",
+      "labels": [
+        "hardening",
+        "issue-safety:blocked",
+        "issue-safety:review",
+        "issue-safety:submission-detected",
+        "weekly-auto-run"
+      ],
+      "number": 279,
+      "reaction_minus_one_count": 0,
+      "reaction_plus_one_count": 0,
+      "safety": {
+        "authorized_canary": false,
+        "blocked": true,
+        "clear": false,
+        "review": true,
+        "runtime_detected": false,
+        "submission_detected": true
+      },
+      "state": "CLOSED",
+      "title": "Harden weekly canonical evidence artifacts on failure paths",
+      "updated_at": "2026-05-14T10:28:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/279"
+    },
     {
       "author": "Unjuno",
       "body": "## Goal\n\nHelp participants decide what to do after reviewing a weekly Prompt Vote Lab result.\n\n## Requested visible change\n\n- Add a compact static participant decision card to the lab page.\n- The card should explain three possible next actions: trust the run, inspect more evidence, or propose a better prompt.\n- Include short criteria for each action using plain language.\n\n## Expected result\n\nA participant can move from passive viewing to a concrete next action after inspecting the weekly evidence.\n\n## Acceptance checks\n\n- The page has a visible participant decision card.\n- The card lists three next actions: trust, inspect, or propose a better prompt.\n- The card gives simple criteria for choosing each action.\n- The wording is understandable without login.\n- Only lab/index.html, lab/style.css, or lab/app.js are changed.\n- The change remains small enough to review manually.\n\n## Allowed scope\n\n- This can be prototyped with static HTML/CSS/vanilla JS.\n- The implementation can stay within `lab/index.html`, `lab/style.css`, and `lab/app.js`.\n- Browser-local UI state is not required.\n\n## Disallowed scope confirmation\n\n- This does not require backend services, login, payment, database changes, external APIs, external scripts, or network calls.\n- This does not require cookies, credential handling, secrets, analytics, tracking, iframes, or dynamic code execution.\n- This does not request changes to workflows, rules, docs, run records, repository policy, branches, commits, pull requests, or merge behavior.\n\n## Comparison metadata\n\n- Intended comparison rank: 3\n- Primary evaluation: participant evidence comprehension and next-action clarity\n- Secondary evaluation: constrained static implementation quality\n\n## Optional context\n\nThis is a rank-3 comparison candidate. It should be run with the same model policy, retry policy, fallback policy, and file-scope constraints as rank 1 and rank 2.",
@@ -490,9 +520,56 @@
       "color": "ededed",
       "description": "",
       "name": "outcome:blocked"
+    },
+    {
+      "color": "ededed",
+      "description": "",
+      "name": "hardening"
+    },
+    {
+      "color": "ededed",
+      "description": "",
+      "name": "weekly-auto-run"
     }
   ],
   "pull_requests": [
+    {
+      "additions": 19,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Run weekly canonical selected-prompt evidence/artifact steps under `always()` while preserving the existing eligibility and feature-flag checks.\n- Extend the weekly auto-run workflow contract test so the `always()` evidence guard is required for at least the five canonical artifact/evidence steps.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Constraints preserved\n- The canonical weekly runner remains default-off.\n- Legacy weekly behavior remains unchanged when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is unset or `false`.\n- No auto-merge is added.\n- No legacy runner removal.\n\n## Related\n- Closes #279\n\n## Verification expected\n- Script Check\n- actionlint\n- weekly auto-run workflow contract test\n- Lab PR Scope Check",
+      "body_length": 814,
+      "changed_files": 2,
+      "closed_at": "2026-05-14T10:28:40Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T10:22:24Z",
+      "deletions": 5,
+      "files": [
+        {
+          "additions": 5,
+          "deletions": 5,
+          "path": ".github/workflows/weekly-auto-run.yml"
+        },
+        {
+          "additions": 14,
+          "deletions": 0,
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "harden-weekly-canonical-evidence-artifacts",
+      "head_ref_oid": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "labels": [],
+      "merge_commit_oid": "5ee225601f4fc71761af553a7ad2b0989695f018",
+      "merged_at": "2026-05-14T10:28:40Z",
+      "merged_by": "Unjuno",
+      "number": 280,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Harden weekly canonical evidence artifacts on failure paths",
+      "updated_at": "2026-05-14T10:28:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/280"
+    },
     {
       "additions": 341,
       "author": "Unjuno",
@@ -4695,68 +4772,6 @@
       "title": "Run Codex fixed Issue instruction canary",
       "updated_at": "2026-05-07T19:21:25Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/179"
-    },
-    {
-      "additions": 869,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a manual weekly Issue finalizer that comments on and closes only explicitly eligible weekly Issues.\n\n## Policy\n\nIssues are closed, not deleted. The finalizer writes a close comment before closing so the record remains in the Issue thread.\n\n## Eligibility\n\nAn Issue can be closed only if it has:\n\n```text\nweek:<week_id>\nexactly one supported outcome:* label\nno protected labels\n```\n\nSupported completed outcomes:\n\n```text\noutcome:implemented\noutcome:archived-fixture\n```\n\nSupported not-planned outcomes:\n\n```text\noutcome:not-selected\noutcome:blocked\noutcome:rejected-after-run\n```\n\nProtected labels that force skip:\n\n```text\ncarryover\nfuture-candidate\ndiscussion\nbug\nadmin\ndo-not-close\npinned\n```\n\n## Workflow\n\nAdds `.github/workflows/weekly-issue-finalizer.yml`.\n\nThe workflow is manual only and defaults to dry run:\n\n```text\ndry_run: true\nrequire_public_results_membership: true\n```\n\nWhen `dry_run=true`, it uploads a plan artifact only.\n\nWhen `dry_run=false`, it posts a generated close comment and then closes eligible Issues.\n\n## Evidence order\n\nThe intended order is:\n\n```text\nrun\n→ review\n→ merge/reject\n→ runs/ record\n→ Public Results Export\n→ Weekly Issue Finalizer dry run\n→ Weekly Issue Finalizer close run\n```\n\n## Tests\n\nAdds:\n\n```text\nscripts/test_weekly_issue_finalizer.py\nscripts/test_weekly_issue_finalizer_workflow_contract.py\n```\n\nRegisters both in Script Check.\n\n## Non-goals\n\n- No schedule yet.\n- No auto-close without labels.\n- No model/API run.\n- No `/lab/` changes.\n- No deletion of Issues.",
-      "body_length": 1529,
-      "changed_files": 7,
-      "closed_at": "2026-05-07T14:37:30Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T14:34:34Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 8,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 99,
-          "deletions": 0,
-          "path": ".github/workflows/weekly-issue-finalizer.yml"
-        },
-        {
-          "additions": 30,
-          "deletions": 14,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 154,
-          "deletions": 0,
-          "path": "docs/issue-lifecycle.md"
-        },
-        {
-          "additions": 169,
-          "deletions": 0,
-          "path": "scripts/test_weekly_issue_finalizer.py"
-        },
-        {
-          "additions": 95,
-          "deletions": 0,
-          "path": "scripts/test_weekly_issue_finalizer_workflow_contract.py"
-        },
-        {
-          "additions": 314,
-          "deletions": 0,
-          "path": "scripts/weekly_issue_finalizer.py"
-        }
-      ],
-      "head_ref_name": "add-weekly-issue-finalizer",
-      "head_ref_oid": "a866132282078953561cd4379b394706617b7e64",
-      "labels": [],
-      "merge_commit_oid": "cb2efeff827965a9eba3abad73ada38ebaf6ec73",
-      "merged_at": "2026-05-07T14:37:30Z",
-      "merged_by": "Unjuno",
-      "number": 182,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add weekly Issue finalizer",
-      "updated_at": "2026-05-07T19:21:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/182"
     }
   ],
   "run_records": [
@@ -4903,9 +4918,9 @@
   },
   "summary": {
     "authorized_canary_issue_count": 1,
-    "blocked_issue_count": 2,
+    "blocked_issue_count": 3,
     "clear_issue_count": 5,
-    "issue_count": 12,
+    "issue_count": 13,
     "merged_pr_count": 84,
     "open_issue_count": 0,
     "open_pr_count": 0,
@@ -4914,6 +4929,132 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-14T10:28:43Z",
+      "database_id": 25855126635,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:28:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126635",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:22:28Z",
+      "database_id": 25854872249,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Implementation Preflight Test",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:22:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872249",
+      "workflow_name": "Implementation Preflight Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:22:28Z",
+      "database_id": 25854872163,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:22:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872163",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:22:28Z",
+      "database_id": 25854872144,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:23:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872144",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:22:28Z",
+      "database_id": 25854872136,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Select Eligible Test",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:22:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872136",
+      "workflow_name": "Select Eligible Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:22:28Z",
+      "database_id": 25854872113,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-canonical-evidence-artifacts",
+      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:22:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872113",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T10:04:30Z",
+      "database_id": 25854135870,
+      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
+      "event": "issues",
+      "head_branch": "main",
+      "head_sha": "0dae21c1cf03a6dcbfb073b30fb96d947a6b586a",
+      "name": "Issue Safety Scan",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:04:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854135870",
+      "workflow_name": "Issue Safety Scan"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T09:59:38Z",
+      "database_id": 25853931076,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0dae21c1cf03a6dcbfb073b30fb96d947a6b586a",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T10:00:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853931076",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T09:59:09Z",
+      "database_id": 25853912126,
+      "display_title": "Add weekly canonical selected-prompt runner feature flag",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "32e21f2f8191a899f4c28ee1ea5aab398fb3c7c7",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T09:59:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853912126",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-14T09:59:09Z",
@@ -4927,6 +5068,20 @@
       "updated_at": "2026-05-14T09:59:10Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853912013",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T09:59:08Z",
+      "database_id": 25853911072,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "32e21f2f8191a899f4c28ee1ea5aab398fb3c7c7",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T09:59:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25853911072",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6145,146 +6300,6 @@
       "updated_at": "2026-05-12T05:03:02Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714495158",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:00:32Z",
-      "database_id": 25714427077,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:00:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714427077",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:00:32Z",
-      "database_id": 25714427060,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:00:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714427060",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:00:32Z",
-      "database_id": 25714427055,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:00:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714427055",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:00:32Z",
-      "database_id": 25714427052,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:01:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714427052",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T05:00:32Z",
-      "database_id": 25714427050,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "3c4b728339b61ca78522c8f2fd096bf21adec16e",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T05:00:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714427050",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-12T04:52:47Z",
-      "database_id": 25714172383,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "20f30ef99f2b988d7075e52bd994640089fe62e1",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T04:53:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714172383",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T04:52:47Z",
-      "database_id": 25714172382,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "20f30ef99f2b988d7075e52bd994640089fe62e1",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-12T04:52:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714172382",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T04:52:47Z",
-      "database_id": 25714172381,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "20f30ef99f2b988d7075e52bd994640089fe62e1",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-12T04:52:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714172381",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T04:52:47Z",
-      "database_id": 25714172380,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "20f30ef99f2b988d7075e52bd994640089fe62e1",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T04:52:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714172380",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T04:52:47Z",
-      "database_id": 25714172377,
-      "display_title": "Add actionlint to Script Check",
-      "event": "pull_request",
-      "head_branch": "add-actionlint-to-script-check-v2",
-      "head_sha": "20f30ef99f2b988d7075e52bd994640089fe62e1",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-12T04:53:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25714172377",
-      "workflow_name": "Select Eligible Test"
     }
   ]
 }
