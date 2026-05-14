@@ -25,10 +25,18 @@ REQUIRED_TEXT = [
     "--prompt-file",
     "weekly-selected-prompt-diagnostics",
     "weekly-selected-prompt-public-bundles",
+    "weekly-selected-prompt-public-bundles-uploaded",
+    "weekly-selected-prompt-uploaded-bundle-verification",
+    "Download uploaded weekly selected-prompt public bundles",
+    "Verify uploaded weekly selected-prompt public bundles",
+    "Upload weekly selected-prompt uploaded bundle verification",
     "scripts/build_public_agent_run_bundle.py",
     "scripts/enrich_public_agent_run_bundle.py",
     "scripts/verify_public_agent_run_bundle.py",
     "scripts/run_gitleaks_public_bundle_scan.sh",
+    "public-agent-run-bundle-uploaded-verification.json",
+    "public-agent-run-bundle-uploaded-gitleaks.json",
+    "public-agent-run-bundle-uploaded-gitleaks-findings.json",
     "Canonical selected-prompt runner: `",
     "gh', 'pr', 'create'",
 ]
@@ -77,6 +85,15 @@ def main() -> int:
 
     if text.index("scripts/verify_public_agent_run_bundle.py") > text.index("scripts/run_gitleaks_public_bundle_scan.sh"):
         raise SystemExit("Gitleaks scan should run after public bundle verification")
+
+    if text.index("Upload weekly selected-prompt public bundles") > text.index("Download uploaded weekly selected-prompt public bundles"):
+        raise SystemExit("uploaded public bundles should be downloaded only after upload")
+
+    if text.index("Download uploaded weekly selected-prompt public bundles") > text.index("Verify uploaded weekly selected-prompt public bundles"):
+        raise SystemExit("uploaded public bundles should be verified after download")
+
+    if text.index("Verify uploaded weekly selected-prompt public bundles") > text.index("Upload weekly selected-prompt uploaded bundle verification"):
+        raise SystemExit("uploaded bundle verification artifact should upload after verification")
 
     print("weekly auto-run workflow contract test passed")
     return 0
