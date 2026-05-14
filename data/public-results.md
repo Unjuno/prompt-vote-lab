@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T19:11:22+00:00`
+Generated at: `2026-05-14T21:03:08+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
 | 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
@@ -71,13 +72,25 @@ This file is a raw results surface for participants. It does not score prompts o
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
-| 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25885547821 | Terminal State Report | pull_request | completed | skipped | Shorten weekly default-on release gate |
+| 25885480378 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25885480370 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25885480369 | Script Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25885172048 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25885172023 | Script Check | pull_request | completed | failure | Shorten weekly default-on release gate |
+| 25885172019 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25884225605 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25884225593 | Script Check | pull_request | completed | failure | Shorten weekly default-on release gate |
+| 25884225589 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
+| 25880062807 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25880048404 | Terminal State Report | pull_request | completed | skipped | Shorten operator default-on release gate |
+| 25880048163 | Public Results Export | push | completed | success | Shorten operator default-on release gate |
+| 25880047125 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25879627971 | Script Check | pull_request | completed | success | Shorten operator default-on release gate |
 | 25879627947 | Lab PR Scope Check | pull_request | completed | success | Shorten operator default-on release gate |
 | 25879627945 | Static Site Check | pull_request | completed | success | Shorten operator default-on release gate |
@@ -94,19 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25877049596 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25876965410 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
 | 25876965331 | Script Check | pull_request | completed | success | Add canonical status drift check |
-| 25876965328 | Static Site Check | pull_request | completed | success | Add canonical status drift check |
-| 25876965270 | Lab PR Scope Check | pull_request | completed | success | Add canonical status drift check |
-| 25876825682 | Script Check | pull_request | completed | failure | Add canonical status drift check |
-| 25876825668 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
-| 25876825665 | Static Site Check | pull_request | completed | success | Add canonical status drift check |
-| 25876825659 | Lab PR Scope Check | pull_request | completed | success | Add canonical status drift check |
-| 25875744765 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25875730498 | Terminal State Report | pull_request | completed | skipped | Mark OpenAI lab runner as legacy fallback |
-| 25875730438 | Public Results Export | push | completed | success | Mark OpenAI lab runner as legacy fallback |
-| 25875729289 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25875256100 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
-| 25875256086 | Script Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
-| 25874878934 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
 
 ## Raw JSON
 
