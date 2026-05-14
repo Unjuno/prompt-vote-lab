@@ -262,18 +262,16 @@ Automation may create PRs, but it must not merge them.
 
 ## Default-on release gate
 
-Do not make the canonical selected-prompt runner the weekly default until all of these remain true:
+The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).
+
+Weekly workflow stop rule before default-on:
 
 ```text
-manual selected-prompt smoke: PASS
 weekly feature-flag canary with eligible candidate: PASS
 weekly diagnostics artifact: present
 weekly public bundle artifact: present
 weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
-legacy fallback documented as non-canonical
-participant evidence guide published
-operator runbook feature-flag cleanup documented
 manual review remains required
 auto-merge remains disabled
 ```
