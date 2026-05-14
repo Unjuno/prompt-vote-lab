@@ -37,6 +37,8 @@ REQUIRED_TEXT = [
     "python scripts/test_selected_prompt_runner_contract.py",
     "Run selected prompt workflow contract test",
     "python scripts/test_selected_prompt_workflow_contract.py",
+    "Run weekly auto-run workflow contract test",
+    "python scripts/test_weekly_auto_run_workflow_contract.py",
     "Run fixed Issue instruction packet generator test",
     "python scripts/test_create_codex_issue_instruction_packet.py",
     "Run lab PR scope guard self-test",
@@ -92,8 +94,11 @@ def main() -> int:
     if text.index("Run selected prompt runner contract test") > text.index("Run selected prompt workflow contract test"):
         raise SystemExit("Selected prompt workflow contract test should run after selected prompt runner contract test")
 
-    if text.index("Run selected prompt workflow contract test") > text.index("Run fixed Issue instruction packet generator test"):
-        raise SystemExit("Fixed Issue generator test should run after selected prompt workflow contract test")
+    if text.index("Run selected prompt workflow contract test") > text.index("Run weekly auto-run workflow contract test"):
+        raise SystemExit("Weekly auto-run workflow contract test should run after selected prompt workflow contract test")
+
+    if text.index("Run weekly auto-run workflow contract test") > text.index("Run fixed Issue instruction packet generator test"):
+        raise SystemExit("Fixed Issue generator test should run after weekly auto-run workflow contract test")
 
     if text.index("Run comparison dashboard builder test") > text.index("Run comparison dashboard decision test"):
         raise SystemExit("Comparison dashboard decision test should run after the builder test")
