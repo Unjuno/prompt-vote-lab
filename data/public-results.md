@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T12:32:37+00:00`
+Generated at: `2026-05-14T12:50:40+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 286 | MERGED | 5 | 335/21 | Add canonical runner evidence guide |
 | 285 | MERGED | 2 | 74/3 | Document legacy weekly runner as non-canonical fallback |
 | 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
 | 283 | CLOSED | 1 | 14/7 | Record auto vote summary for week-2026-W19 |
@@ -71,13 +72,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
 | 250 | CLOSED | 8 | 463/21 | Add live previews for rank outputs |
 | 253 | MERGED | 1 | 10/1 | Update generated dashboard live output contract |
-| 252 | CLOSED | 3 | 380/0 | Add W20 rank 1 live output snapshot |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25860940385 | Terminal State Report | pull_request | completed | skipped | Add canonical runner evidence guide |
+| 25860849314 | Lab PR Scope Check | pull_request | completed | success | Add canonical runner evidence guide |
+| 25860849310 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical runner evidence guide |
+| 25860849308 | Script Check | pull_request | completed | success | Add canonical runner evidence guide |
+| 25860849302 | Static Site Check | pull_request | completed | success | Add canonical runner evidence guide |
+| 25860174518 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25860156658 | Public Results Export | push | completed | success | Document legacy weekly runner as non-canonical fallback |
 | 25860156648 | Terminal State Report | pull_request | completed | skipped | Document legacy weekly runner as non-canonical fallback |
+| 25860155861 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25860067028 | Lab PR Scope Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
 | 25860066975 | Static Site Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
 | 25860066954 | Script Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
@@ -99,14 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25854872113 | Pre-API Freeze Audit | pull_request | completed | success | Harden weekly canonical evidence artifacts on failure paths |
 | 25854135870 | Issue Safety Scan | issues | completed | success | Harden weekly canonical evidence artifacts on failure paths |
 | 25853931076 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25853912126 | Public Results Export | push | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25853912013 | Terminal State Report | pull_request | completed | skipped | Add weekly canonical selected-prompt runner feature flag |
-| 25853911072 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25853391984 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25853391978 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25853391977 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25853391973 | Script Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
-| 25853391963 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
 
 ## Raw JSON
 
