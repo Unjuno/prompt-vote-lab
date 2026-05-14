@@ -9,6 +9,7 @@ WORKFLOW = ROOT / ".github" / "workflows" / "weekly-auto-run.yml"
 CANONICAL_RUNNER_CALL = "display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}'"
 PUBLIC_BUNDLE_BUILD_CALL = "                  build_public_bundle(rank, issue)"
 DIAGNOSTICS_COPY_CALL = "                  copy_rank_diagnostics(rank)"
+ALWAYS_CANONICAL_ARTIFACT_CONDITION = "always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true'"
 
 REQUIRED_TEXT = [
     "name: Weekly Auto Run",
@@ -25,6 +26,7 @@ REQUIRED_TEXT = [
     "steps.weekly-vars.outputs.use_canonical != 'true'",
     "scripts/openai_lab_run.py",
     "steps.weekly-vars.outputs.use_canonical == 'true'",
+    ALWAYS_CANONICAL_ARTIFACT_CONDITION,
     "if use_canonical:",
     "else:",
     "scripts/run_codex_selected_prompt.sh",
@@ -74,10 +76,22 @@ def require_block_order(text: str, first: str, second: str, message: str) -> Non
         raise SystemExit(message)
 
 
+def require_count_at_least(text: str, marker: str, minimum: int, message: str) -> None:
+    count = text.count(marker)
+    if count < minimum:
+        raise SystemExit(f"{message}: found {count}, expected at least {minimum}")
+
+
 def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
+    require_count_at_least(
+        text,
+        ALWAYS_CANONICAL_ARTIFACT_CONDITION,
+        5,
+        "weekly canonical artifact/evidence steps should run under always()",
+    )
 
     require_block_order(
         text,
