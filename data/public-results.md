@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T17:44:47+00:00`
+Generated at: `2026-05-14T18:11:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 | 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
 | 290 | MERGED | 5 | 284/24 | Add workflow family map |
 | 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
@@ -71,13 +72,24 @@ This file is a raw results surface for participants. It does not score prompts o
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
-| 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25877050929 | Terminal State Report | pull_request | completed | skipped | Add canonical status drift check |
+| 25876965410 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
+| 25876965331 | Script Check | pull_request | completed | success | Add canonical status drift check |
+| 25876965328 | Static Site Check | pull_request | completed | success | Add canonical status drift check |
+| 25876965270 | Lab PR Scope Check | pull_request | completed | success | Add canonical status drift check |
+| 25876825682 | Script Check | pull_request | completed | failure | Add canonical status drift check |
+| 25876825668 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
+| 25876825665 | Static Site Check | pull_request | completed | success | Add canonical status drift check |
+| 25876825659 | Lab PR Scope Check | pull_request | completed | success | Add canonical status drift check |
+| 25875744765 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25875730498 | Terminal State Report | pull_request | completed | skipped | Mark OpenAI lab runner as legacy fallback |
+| 25875730438 | Public Results Export | push | completed | success | Mark OpenAI lab runner as legacy fallback |
+| 25875729289 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25875256100 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
 | 25875256086 | Script Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
 | 25874878934 | Lab PR Scope Check | pull_request | completed | success | Mark OpenAI lab runner as legacy fallback |
@@ -95,18 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25868097754 | Public Results Export | push | completed | success | Add repository cleanup inventory |
 | 25868096134 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25868040743 | Pre-API Freeze Audit | pull_request | completed | success | Add repository cleanup inventory |
-| 25868040737 | Lab PR Scope Check | pull_request | completed | success | Add repository cleanup inventory |
-| 25868040726 | Static Site Check | pull_request | completed | success | Add repository cleanup inventory |
-| 25868040711 | Script Check | pull_request | completed | success | Add repository cleanup inventory |
-| 25866043468 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25866025889 | Public Results Export | push | completed | success | Add repository cleanup standards |
-| 25866025833 | Terminal State Report | pull_request | completed | skipped | Add repository 5S and language policy |
-| 25866024244 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25864811425 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864811409 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
-| 25864811348 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864811333 | Script Check | pull_request | completed | success | Add repository 5S and language policy |
-| 25864661398 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
 
 ## Raw JSON
 
