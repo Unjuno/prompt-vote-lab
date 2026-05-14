@@ -21,6 +21,8 @@ REQUIRED_TEXT = [
     "steps.weekly-vars.outputs.use_canonical != 'true'",
     "scripts/openai_lab_run.py",
     "steps.weekly-vars.outputs.use_canonical == 'true'",
+    "if use_canonical:",
+    "else:",
     "scripts/run_codex_selected_prompt.sh",
     "--prompt-file",
     "weekly-selected-prompt-diagnostics",
@@ -60,40 +62,82 @@ def reject_all(text: str, forbidden: list[str]) -> None:
         raise SystemExit(f"Forbidden weekly auto-run workflow text found: {found}")
 
 
+def require_block_order(text: str, first: str, second: str, message: str) -> None:
+    if text.index(first) > text.index(second):
+        raise SystemExit(message)
+
+
 def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
 
-    if text.index("DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"") > text.index("Prepare weekly variables"):
-        raise SystemExit("canonical selected-prompt runner default should be declared before weekly variables")
-
-    if text.index("steps.weekly-vars.outputs.use_canonical != 'true'") > text.index("python -m pip install openai"):
-        raise SystemExit("legacy OpenAI dependency install should be gated before the install command")
-
-    if text.index("scripts/openai_lab_run.py") > text.index("scripts/run_codex_selected_prompt.sh"):
-        raise SystemExit("legacy path should remain before the feature-flagged canonical path in the implementation branch")
-
-    if text.index("scripts/run_codex_selected_prompt.sh") > text.index("scripts/build_public_agent_run_bundle.py"):
-        raise SystemExit("canonical runner should execute before public bundle build")
-
-    if text.index("scripts/build_public_agent_run_bundle.py") > text.index("scripts/enrich_public_agent_run_bundle.py"):
-        raise SystemExit("public bundle enrichment should run after bundle build")
-
-    if text.index("scripts/enrich_public_agent_run_bundle.py") > text.index("scripts/verify_public_agent_run_bundle.py"):
-        raise SystemExit("public bundle verification should run after enrichment")
-
-    if text.index("scripts/verify_public_agent_run_bundle.py") > text.index("scripts/run_gitleaks_public_bundle_scan.sh"):
-        raise SystemExit("Gitleaks scan should run after public bundle verification")
-
-    if text.index("Upload weekly selected-prompt public bundles") > text.index("Download uploaded weekly selected-prompt public bundles"):
-        raise SystemExit("uploaded public bundles should be downloaded only after upload")
-
-    if text.index("Download uploaded weekly selected-prompt public bundles") > text.index("Verify uploaded weekly selected-prompt public bundles"):
-        raise SystemExit("uploaded public bundles should be verified after download")
-
-    if text.index("Verify uploaded weekly selected-prompt public bundles") > text.index("Upload weekly selected-prompt uploaded bundle verification"):
-        raise SystemExit("uploaded bundle verification artifact should upload after verification")
+    require_block_order(
+        text,
+        "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
+        "Prepare weekly variables",
+        "canonical selected-prompt runner default should be declared before weekly variables",
+    )
+    require_block_order(
+        text,
+        "steps.weekly-vars.outputs.use_canonical != 'true'",
+        "python -m pip install openai",
+        "legacy OpenAI dependency install should be gated before the install command",
+    )
+    require_block_order(
+        text,
+        "if use_canonical:",
+        "scripts/run_codex_selected_prompt.sh",
+        "canonical runner invocation should be inside the feature-flag branch",
+    )
+    require_block_order(
+        text,
+        "else:",
+        "scripts/openai_lab_run.py",
+        "legacy runner invocation should be inside the non-canonical branch",
+    )
+    require_block_order(
+        text,
+        "scripts/run_codex_selected_prompt.sh",
+        "scripts/build_public_agent_run_bundle.py",
+        "canonical runner should execute before public bundle build",
+    )
+    require_block_order(
+        text,
+        "scripts/build_public_agent_run_bundle.py",
+        "scripts/enrich_public_agent_run_bundle.py",
+        "public bundle enrichment should run after bundle build",
+    )
+    require_block_order(
+        text,
+        "scripts/enrich_public_agent_run_bundle.py",
+        "scripts/verify_public_agent_run_bundle.py",
+        "public bundle verification should run after enrichment",
+    )
+    require_block_order(
+        text,
+        "scripts/verify_public_agent_run_bundle.py",
+        "scripts/run_gitleaks_public_bundle_scan.sh",
+        "Gitleaks scan should run after public bundle verification",
+    )
+    require_block_order(
+        text,
+        "Upload weekly selected-prompt public bundles",
+        "Download uploaded weekly selected-prompt public bundles",
+        "uploaded public bundles should be downloaded only after upload",
+    )
+    require_block_order(
+        text,
+        "Download uploaded weekly selected-prompt public bundles",
+        "Verify uploaded weekly selected-prompt public bundles",
+        "uploaded public bundles should be verified after download",
+    )
+    require_block_order(
+        text,
+        "Verify uploaded weekly selected-prompt public bundles",
+        "Upload weekly selected-prompt uploaded bundle verification",
+        "uploaded bundle verification artifact should upload after verification",
+    )
 
     print("weekly auto-run workflow contract test passed")
     return 0
