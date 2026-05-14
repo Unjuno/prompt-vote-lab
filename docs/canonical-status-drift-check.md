@@ -129,6 +129,7 @@ weekly public bundle artifact: present
 weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
 legacy fallback documented as non-canonical
+operator runbook feature-flag cleanup documented
 manual review remains required
 auto-merge remains disabled
 ```

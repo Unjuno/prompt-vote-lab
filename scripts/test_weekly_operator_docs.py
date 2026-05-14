@@ -68,7 +68,15 @@ WEEKLY_REQUIRED_TEXT = [
     "bounded lab diff: PASS",
     "auto-merge: disabled",
     "## Default-on release gate",
-    "operator runbook feature-flag cleanup documented",
+    "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
+    "Weekly workflow stop rule before default-on:",
+    "weekly feature-flag canary with eligible candidate: PASS",
+    "weekly diagnostics artifact: present",
+    "weekly public bundle artifact: present",
+    "weekly uploaded bundle verification artifact: present",
+    "bounded lab diff: PASS",
+    "manual review remains required",
+    "auto-merge remains disabled",
 ]
 
 DRIFT_REQUIRED_TEXT = [
@@ -96,6 +104,11 @@ RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT = [
     "Do not make the canonical weekly runner default-on until all of these are true:\n\n```text\nmanual selected-prompt smoke: PASS",
 ]
 
+WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT = [
+    "Do not make the canonical selected-prompt runner the weekly default until all of these remain true:\n\n```text\nmanual selected-prompt smoke: PASS",
+    "participant evidence guide published\noperator runbook feature-flag cleanup documented",
+]
+
 
 def require_all(text: str, required: list[str], label: str) -> None:
     missing = [item for item in required if item not in text]
@@ -120,6 +133,7 @@ def main() -> int:
     reject_all(runbook, FORBIDDEN_TEXT, "operator runbook")
     reject_all(weekly, FORBIDDEN_TEXT, "weekly automation doc")
     reject_all(runbook, RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT, "operator runbook release gate duplication")
+    reject_all(weekly, WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT, "weekly automation release gate duplication")
 
     if runbook.index("Canonical weekly feature flag policy") > runbook.index("Temporary canary variable policy"):
         raise SystemExit("runbook should define the feature flag before cleanup policy")
@@ -132,6 +146,9 @@ def main() -> int:
 
     if weekly.index("Temporary canary settings") > weekly.index("Manual verification"):
         raise SystemExit("weekly doc should define canary cleanup before manual verification")
+
+    if weekly.index("Merge policy") > weekly.index("Default-on release gate"):
+        raise SystemExit("weekly merge policy should precede the default-on gate")
 
     print("weekly operator docs test passed")
     return 0
