@@ -43,6 +43,8 @@ first-canary-008: Docker workdir + read-only selected prompt task packet -> PASS
 first-canary-009: fixed GitHub Issue instruction packet -> PASS
 first-canary-009 hostile Issue boundary: Issue #164 -> PR #165 -> PASS
 first-canary-009 sanitizer static penetration test: PR #166 -> PASS
+manual selected-prompt workflow smoke: run artifact diagnostics -> PASS
+weekly selected-prompt canonical canary: run 25858202166 -> PASS
 ```
 
 The result means:
@@ -57,6 +59,7 @@ The result means:
 - Selected prompt task packets can be mounted read-only at /task while Codex edits /work/lab only.
 - Fixed GitHub Issue text can be fetched and normalized into an instruction packet.
 - Hostile Issue text can be preserved as raw evidence while the executable objective is narrowed to a safe_user_task.
+- The weekly selected-prompt path can use the canonical Docker/Codex task-packet runner when explicitly enabled.
 ```
 
 ## Canonical production path
@@ -108,6 +111,43 @@ manual_review: required
 
 The production direction is therefore Docker + Codex CLI, not Python SDK JSON replacement.
 
+## Weekly selected-prompt canonical path
+
+The weekly eligible implementation path now has a default-off feature flag:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+```
+
+When that flag is explicitly set to `true` and at least one prompt-proposal candidate beats the no-change baseline, `Weekly Auto Run` routes the selected prompt through:
+
+```text
+scripts/run_codex_selected_prompt.sh
+runner: codex-cli-selected-prompt-packet-container
+sandbox_mode: docker-workdir-plus-readonly-selected-prompt-packet
+prompt_transport: --prompt-file
+repo_root_mounted: false
+final_writable_files: lab/index.html, lab/style.css, lab/app.js
+auto_merge_policy: disabled
+manual_review: required
+```
+
+The weekly canonical canary passed in workflow run `25858202166`:
+
+```text
+summary_pr: #283
+implementation_pr: #284
+selected_issue: #282
+runner: codex-cli-selected-prompt-packet-container
+artifacts:
+  - weekly-selected-prompt-diagnostics-7
+  - weekly-selected-prompt-public-bundles-7
+  - weekly-selected-prompt-uploaded-bundle-verification-7
+result: PASS
+```
+
+The canary PRs were closed without merge because they were evidence-only canary artifacts, not product changes.
+
 ## Non-canonical legacy path
 
 `first-canary-005` proved that offline context + JSON full-file replacement can work:
@@ -121,6 +161,15 @@ writeback_mode: validated JSON full-file replacement
 This path is useful as historical evidence and possible emergency fallback, but it is not the canonical production implementation path.
 
 Do not merge or report a run as canonical implementation E2E merely because the API/JSON path produced a small valid lab diff.
+
+`weekly-auto-run.yml` may still fall back to the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is unset or `false`. That default-off fallback is intentionally preserved during migration, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.
+
+A weekly run only satisfies canonical selected-prompt verification when the PR/run evidence says:
+
+```text
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+```
 
 ## Canonical Docker/Codex flow
 
@@ -183,11 +232,11 @@ For Issue-derived tasks, the boundary also includes:
 
 Prompt instructions are still used, but they are not treated as enforcement.
 
-## Current mismatch to fix
+## Current migration state
 
-At the time of this document update, some workflows may still use the non-canonical Python SDK / Responses API runner. Those workflows must not be treated as canonical production E2E verification.
+The weekly eligible implementation workflow has a canonical selected-prompt path behind a default-off feature flag. The legacy `openai_lab_run.py` path remains available only as a non-canonical fallback while migration continues.
 
-The next implementation work should migrate the weekly eligible implementation path toward the Docker + Codex CLI runner family, with tests and workflow contracts updated in the same PR series.
+The next implementation work should decide whether to make the canonical selected-prompt runner the weekly default after additional scheduled-run canary evidence, or keep it opt-in until participant docs and release hardening are complete.
 
 ## Required verification for canonical E2E
 
