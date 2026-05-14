@@ -14,26 +14,27 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
 5. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
 6. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
-7. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-8. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
-9. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-10. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-11. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
-12. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-13. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-14. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
-15. [Automation map](./automation-map.md) — workflow boundaries.
-16. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-17. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-18. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-19. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-20. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-21. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-22. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-23. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-24. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-25. [Report policy](./report-policy.md) — weekly report draft policy.
-26. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+7. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
+8. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
+9. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
+10. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+11. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+12. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+13. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+14. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+15. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+16. [Automation map](./automation-map.md) — workflow boundaries.
+17. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+18. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+19. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+20. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+21. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+22. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+23. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+24. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+25. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+26. [Report policy](./report-policy.md) — weekly report draft policy.
+27. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -54,6 +55,8 @@ Maintainer-authored repository content should be English.
 The [Repository 5S and language policy](./repository-5s-and-language-policy.md) defines Sort, Set in order, Shine, Standardize, and Sustain rules for cleanup PRs.
 
 The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
+
+The [Workflow family map](./workflow-family-map.md) classifies workflows before consolidation or deletion work so historical scaffolding is not mistaken for active canonical evidence.
 
 Generated public result snapshots and raw external evidence are treated separately because they may contain user-provided text.
 
