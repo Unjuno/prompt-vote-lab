@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T12:50:40+00:00",
+  "generated_at": "2026-05-14T13:08:40+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 391,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update the operator runbook to reflect the verified weekly canonical selected-prompt canary.\n- Document the canonical weekly feature flag policy, temporary canary variable cleanup, and default-on release gate.\n- Update weekly automation docs with canonical selected-prompt evidence artifacts, canary cleanup, and verified run `25858202166`.\n- Add a weekly operator docs contract test and register it in Script Check.\n\n## Scope\n- `docs/operator-runbook.md`\n- `docs/weekly-automation.md`\n- `.github/workflows/script-check.yml`\n- `scripts/test_weekly_operator_docs.py`\n- `scripts/test_script_check_workflow_contract.py`\n\n## Non-goals\n- No workflow behavior change.\n- No runner implementation change.\n- No default flag change.\n- No legacy runner removal.\n- No auto-merge.\n\n## Verification expected\n- Script Check\n- actionlint\n- weekly operator docs test\n- script-check workflow contract test\n- Lab PR Scope Check",
+      "body_length": 921,
+      "changed_files": 5,
+      "closed_at": "2026-05-14T13:08:22Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T13:01:16Z",
+      "deletions": 10,
+      "files": [
+        {
+          "additions": 5,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 140,
+          "deletions": 4,
+          "path": "docs/operator-runbook.md"
+        },
+        {
+          "additions": 113,
+          "deletions": 4,
+          "path": "docs/weekly-automation.md"
+        },
+        {
+          "additions": 15,
+          "deletions": 2,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        },
+        {
+          "additions": 118,
+          "deletions": 0,
+          "path": "scripts/test_weekly_operator_docs.py"
+        }
+      ],
+      "head_ref_name": "harden-weekly-operator-runbook",
+      "head_ref_oid": "e4bcc44b2ec32113cf596a784bb2807c580d1ff8",
+      "labels": [],
+      "merge_commit_oid": "3a35e3ea56217c8938c632fe13d2f18e4fc57f11",
+      "merged_at": "2026-05-14T13:08:22Z",
+      "merged_by": "Unjuno",
+      "number": 287,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Harden weekly canonical operator docs",
+      "updated_at": "2026-05-14T13:08:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/287"
+    },
     {
       "additions": 335,
       "author": "Unjuno",
@@ -4694,48 +4746,6 @@
       "title": "Preserve Issue safety phase labels",
       "updated_at": "2026-05-07T19:21:30Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/172"
-    },
-    {
-      "additions": 98,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a manual fallback path for Issue Safety Scan so maintainers can rescan any Issue by number when the automatic `issues` event does not fire or when an API-created Issue needs explicit confirmation.\n\n## Changes\n\n- Adds `workflow_dispatch` to `.github/workflows/issue-safety-scan.yml`.\n- Accepts an `issue_number` input for manual rescans.\n- Fetches the Issue via `gh issue view` and runs the same `issue_event` scan path.\n- Keeps permissions limited to `contents: read` and `issues: write`.\n- Adds `scripts/test_issue_safety_workflow_contract.py` to lock in the manual rescan contract.\n- Registers the new contract test in Script Check.\n\n## Reason\n\nIssue #170 was created as a controlled safety canary, but the immediate issue-event feedback was not visible through the connector after creation. This PR adds a deterministic manual rescan path rather than relying only on the automatic event trigger.\n\n## Tests expected\n\n- `python scripts/test_issue_safety_workflow_contract.py`\n- Existing Script Check workflow\n\n## Scope\n\n- No `/lab/` changes.\n- No Codex/model/API run.\n- No auto-merge.\n- No vote-winner selection.",
-      "body_length": 1130,
-      "changed_files": 3,
-      "closed_at": "2026-05-07T02:57:29Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T02:56:35Z",
-      "deletions": 10,
-      "files": [
-        {
-          "additions": 46,
-          "deletions": 10,
-          "path": ".github/workflows/issue-safety-scan.yml"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 49,
-          "deletions": 0,
-          "path": "scripts/test_issue_safety_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-manual-issue-safety-rescan",
-      "head_ref_oid": "4a959051d99a0b0231bfa66d9bd0cb32562f43a0",
-      "labels": [],
-      "merge_commit_oid": "b0f1b1c4645efa201af5b96da058ec1e5aa1e2af",
-      "merged_at": "2026-05-07T02:57:29Z",
-      "merged_by": "Unjuno",
-      "number": 171,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add manual Issue safety rescan",
-      "updated_at": "2026-05-07T19:21:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/171"
     }
   ],
   "run_records": [
@@ -4895,6 +4905,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T13:08:25Z",
+      "database_id": 25861760191,
+      "display_title": "Harden weekly canonical operator docs",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-operator-runbook",
+      "head_sha": "e4bcc44b2ec32113cf596a784bb2807c580d1ff8",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T13:08:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25861760191",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T13:01:21Z",
+      "database_id": 25861439033,
+      "display_title": "Harden weekly canonical operator docs",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-operator-runbook",
+      "head_sha": "e4bcc44b2ec32113cf596a784bb2807c580d1ff8",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T13:01:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25861439033",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T13:01:21Z",
+      "database_id": 25861439016,
+      "display_title": "Harden weekly canonical operator docs",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-operator-runbook",
+      "head_sha": "e4bcc44b2ec32113cf596a784bb2807c580d1ff8",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T13:01:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25861439016",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T13:01:21Z",
+      "database_id": 25861438930,
+      "display_title": "Harden weekly canonical operator docs",
+      "event": "pull_request",
+      "head_branch": "harden-weekly-operator-runbook",
+      "head_sha": "e4bcc44b2ec32113cf596a784bb2807c580d1ff8",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T13:01:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25861438930",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T12:50:44Z",
+      "database_id": 25860953921,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c2ca6ceedbdbdbd6e4d706a0081b9a609ab93e6d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:51:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860953921",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T12:50:25Z",
+      "database_id": 25860940386,
+      "display_title": "Add canonical runner evidence guide",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "16e986a541162820208b3e0cb85de5e912587547",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:50:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860940386",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T12:50:25Z",
       "database_id": 25860940385,
       "display_title": "Add canonical runner evidence guide",
@@ -4906,6 +5000,20 @@
       "updated_at": "2026-05-14T12:50:26Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860940385",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T12:50:24Z",
+      "database_id": 25860939427,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "16e986a541162820208b3e0cb85de5e912587547",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T12:50:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25860939427",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6166,104 +6274,6 @@
       "updated_at": "2026-05-12T12:46:02Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25735251876",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T12:45:01Z",
-      "database_id": 25735251865,
-      "display_title": "Parameterize selected prompt task packets",
-      "event": "pull_request",
-      "head_branch": "parameterize-selected-prompt-task-packet-v2",
-      "head_sha": "f0ed44c4580b7ff1ca5a915ef9f4c2a1e0555420",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T12:45:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25735251865",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T11:20:12Z",
-      "database_id": 25731109392,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "88587bd9fea2c6afc2b1ee079795ae59befcb5e6",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:20:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731109392",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-12T11:19:33Z",
-      "database_id": 25731078685,
-      "display_title": "Run Codex policy-enforced agent canary",
-      "event": "pull_request",
-      "head_branch": "codex-policy-agent-canary-007-11",
-      "head_sha": "ff170d5372fb87088ad805547e888e673fcc9c40",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:19:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078685",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-12T11:19:33Z",
-      "database_id": 25731078683,
-      "display_title": "Record policy-agent canary 11 success",
-      "event": "pull_request",
-      "head_branch": "record-policy-agent-canary-11-success",
-      "head_sha": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:19:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078683",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T11:19:33Z",
-      "database_id": 25731078668,
-      "display_title": "Record policy-agent canary 11 success (#273)",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "757656aa4178ae4a09b19eb7cd747d7211579b82",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:20:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731078668",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T11:19:32Z",
-      "database_id": 25731077542,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "757656aa4178ae4a09b19eb7cd747d7211579b82",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:20:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25731077542",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-12T11:15:38Z",
-      "database_id": 25730896040,
-      "display_title": "Record policy-agent canary 11 success",
-      "event": "pull_request",
-      "head_branch": "record-policy-agent-canary-11-success",
-      "head_sha": "c8460ebc6cb74c5378056e182cb7a3a916d31fe7",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-12T11:15:46Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25730896040",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }
