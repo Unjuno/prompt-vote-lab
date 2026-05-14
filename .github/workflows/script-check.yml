@@ -24,6 +24,7 @@ on:
       - ".github/workflows/codex-policy-agent-canary-run.yml"
       - ".github/workflows/codex-task-packet-canary-run.yml"
       - ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
+      - ".github/workflows/codex-selected-prompt-run.yml"
       - "README.md"
       - "data/public-results.json"
       - "data/public-results.md"
@@ -204,6 +205,9 @@ jobs:
 
       - name: Run selected prompt runner contract test
         run: python scripts/test_selected_prompt_runner_contract.py
+
+      - name: Run selected prompt workflow contract test
+        run: python scripts/test_selected_prompt_workflow_contract.py
 
       - name: Run fixed Issue instruction packet generator test
         run: python scripts/test_create_codex_issue_instruction_packet.py
