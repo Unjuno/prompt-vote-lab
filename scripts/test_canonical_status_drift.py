@@ -91,6 +91,9 @@ def main() -> int:
         "Do not imply the weekly canonical selected-prompt runner is already default-on.",
         "Do not say auto-merge is enabled.",
         "Do not treat a useful lab diff as sufficient canonical evidence.",
+        "## Required release gate language",
+        "legacy fallback documented as non-canonical",
+        "operator runbook feature-flag cleanup documented",
         "A PR that changes any canonical/legacy/default status should state:",
     ], "canonical status drift doc")
 
@@ -116,7 +119,13 @@ def main() -> int:
     require_all(docs["weekly_automation"], [
         "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
         "Still not default-on",
-        "legacy fallback documented as non-canonical",
+        "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
+        "Weekly workflow stop rule before default-on:",
+        "weekly feature-flag canary with eligible candidate: PASS",
+        "weekly diagnostics artifact: present",
+        "weekly public bundle artifact: present",
+        "weekly uploaded bundle verification artifact: present",
+        "bounded lab diff: PASS",
         "auto-merge remains disabled",
     ], "weekly automation default status")
 
