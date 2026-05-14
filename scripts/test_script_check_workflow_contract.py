@@ -13,6 +13,7 @@ REQUIRED_TEXT = [
     "lab/comparisons/**",
     "runs/**",
     "docs/canonical-runner-evidence-guide.md",
+    "docs/canonical-status-drift-check.md",
     "docs/repository-5s-and-language-policy.md",
     "docs/repository-cleanup-inventory.md",
     "docs/workflow-family-map.md",
@@ -27,6 +28,8 @@ REQUIRED_TEXT = [
     "python scripts/test_current_codex_path_doc.py",
     "Run canonical runner evidence guide test",
     "python scripts/test_canonical_runner_evidence_guide.py",
+    "Run canonical status drift test",
+    "python scripts/test_canonical_status_drift.py",
     "Run repository language policy test",
     "python scripts/test_repository_language_policy.py",
     "Run repository cleanup inventory test",
@@ -105,8 +108,11 @@ def main() -> int:
     if text.index("docs/current-codex-implementation-path.md") > text.index("docs/canonical-runner-evidence-guide.md"):
         raise SystemExit("canonical runner evidence guide should be tracked near current Codex path docs")
 
-    if text.index("docs/canonical-runner-evidence-guide.md") > text.index("docs/repository-5s-and-language-policy.md"):
-        raise SystemExit("repository 5S language policy should be tracked after the canonical runner evidence guide")
+    if text.index("docs/canonical-runner-evidence-guide.md") > text.index("docs/canonical-status-drift-check.md"):
+        raise SystemExit("canonical status drift check should be tracked after the canonical runner evidence guide")
+
+    if text.index("docs/canonical-status-drift-check.md") > text.index("docs/repository-5s-and-language-policy.md"):
+        raise SystemExit("repository 5S language policy should be tracked after the canonical status drift check")
 
     if text.index("docs/repository-5s-and-language-policy.md") > text.index("docs/repository-cleanup-inventory.md"):
         raise SystemExit("repository cleanup inventory should be tracked after the repository 5S language policy")
@@ -123,8 +129,11 @@ def main() -> int:
     if text.index("Run current Codex path doc test") > text.index("Run canonical runner evidence guide test"):
         raise SystemExit("Canonical runner evidence guide test should run after the current Codex path doc test")
 
-    if text.index("Run canonical runner evidence guide test") > text.index("Run repository language policy test"):
-        raise SystemExit("Repository language policy test should run after the canonical runner evidence guide test")
+    if text.index("Run canonical runner evidence guide test") > text.index("Run canonical status drift test"):
+        raise SystemExit("Canonical status drift test should run after the canonical runner evidence guide test")
+
+    if text.index("Run canonical status drift test") > text.index("Run repository language policy test"):
+        raise SystemExit("Repository language policy test should run after the canonical status drift test")
 
     if text.index("Run repository language policy test") > text.index("Run repository cleanup inventory test"):
         raise SystemExit("Repository cleanup inventory test should run after the repository language policy test")

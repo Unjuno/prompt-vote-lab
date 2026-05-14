@@ -12,29 +12,30 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 2. [Experiment model](./experiment-model.md) — game model and boundaries.
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
-5. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
-6. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
-7. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
-8. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-9. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
-10. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-11. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-12. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
-13. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-14. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-15. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
-16. [Automation map](./automation-map.md) — workflow boundaries.
-17. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-18. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-19. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-20. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-21. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-22. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-23. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-24. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-25. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-26. [Report policy](./report-policy.md) — weekly report draft policy.
-27. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-off, auto-merge, and release-gate status contract.
+6. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
+7. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
+8. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
+9. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
+10. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
+11. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+12. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+13. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+14. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+15. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+16. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+17. [Automation map](./automation-map.md) — workflow boundaries.
+18. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+19. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+20. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+21. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+22. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+23. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+24. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+25. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+26. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+27. [Report policy](./report-policy.md) — weekly report draft policy.
+28. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -57,6 +58,8 @@ The [Repository 5S and language policy](./repository-5s-and-language-policy.md) 
 The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
 
 The [Workflow family map](./workflow-family-map.md) classifies workflows before consolidation or deletion work so historical scaffolding is not mistaken for active canonical evidence.
+
+The [Canonical status drift check](./canonical-status-drift-check.md) keeps canonical runner, legacy fallback, default-off, auto-merge, and release-gate wording aligned across maintainer-authored docs.
 
 Generated public result snapshots and raw external evidence are treated separately because they may contain user-provided text.
 
