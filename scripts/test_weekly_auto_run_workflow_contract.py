@@ -25,6 +25,8 @@ REQUIRED_TEXT = [
     "else:",
     "scripts/run_codex_selected_prompt.sh",
     "--prompt-file",
+    "build_public_bundle(rank, issue)",
+    "copy_rank_diagnostics(rank)",
     "weekly-selected-prompt-diagnostics",
     "weekly-selected-prompt-public-bundles",
     "weekly-selected-prompt-public-bundles-uploaded",
@@ -99,8 +101,14 @@ def main() -> int:
     require_block_order(
         text,
         "scripts/run_codex_selected_prompt.sh",
-        "scripts/build_public_agent_run_bundle.py",
-        "canonical runner should execute before public bundle build",
+        "build_public_bundle(rank, issue)",
+        "canonical runner invocation should precede the public bundle build call",
+    )
+    require_block_order(
+        text,
+        "build_public_bundle(rank, issue)",
+        "copy_rank_diagnostics(rank)",
+        "rank diagnostics copy should include public bundle verification reports",
     )
     require_block_order(
         text,
