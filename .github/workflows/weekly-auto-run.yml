@@ -358,7 +358,7 @@ jobs:
           PY
 
       - name: Upload weekly selected-prompt diagnostics
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-diagnostics-${{ github.run_number }}
@@ -366,7 +366,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload weekly selected-prompt public bundles
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
@@ -374,14 +374,14 @@ jobs:
           if-no-files-found: error
 
       - name: Download uploaded weekly selected-prompt public bundles
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
         uses: actions/download-artifact@v4
         with:
           name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
           path: .tmp/weekly-selected-prompt-public-bundles-uploaded
 
       - name: Verify uploaded weekly selected-prompt public bundles
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
         run: |
           set -euo pipefail
           mkdir -p .tmp/weekly-selected-prompt-public-bundles-uploaded-verification
@@ -406,7 +406,7 @@ jobs:
           fi
 
       - name: Upload weekly selected-prompt uploaded bundle verification
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-uploaded-bundle-verification-${{ github.run_number }}
