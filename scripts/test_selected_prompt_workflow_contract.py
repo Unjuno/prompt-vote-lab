@@ -19,12 +19,21 @@ REQUIRED_TEXT = [
     "contents: read",
     "concurrency:",
     "codex-selected-prompt-run",
+    "INPUT_PROMPT_BODY: ${{ inputs.prompt_body }}",
+    "INPUT_ISSUE_NUMBER: ${{ inputs.issue_number }}",
+    "INPUT_ISSUE_TITLE: ${{ inputs.issue_title }}",
+    "INPUT_ISSUE_URL: ${{ inputs.issue_url }}",
+    "INPUT_CANDIDATE_RANK: ${{ inputs.candidate_rank }}",
+    "INPUT_VOTE_COUNT: ${{ inputs.vote_count }}",
+    "INPUT_SELECTION_POLICY: ${{ inputs.selection_policy }}",
     "OPENAI_API_KEY:",
     "scripts/run_codex_selected_prompt.sh",
-    "--prompt-body",
-    "--candidate-rank",
-    "--vote-count",
-    "--selection-policy",
+    "--prompt-body \"$INPUT_PROMPT_BODY\"",
+    "--issue-title \"$INPUT_ISSUE_TITLE\"",
+    "--issue-url \"$INPUT_ISSUE_URL\"",
+    "--candidate-rank \"$INPUT_CANDIDATE_RANK\"",
+    "--vote-count \"$INPUT_VOTE_COUNT\"",
+    "--selection-policy \"$INPUT_SELECTION_POLICY\"",
     "scripts/safety-check.sh",
     "scripts/static-site-check.sh",
     "scripts/collect_canary_diagnostics.py",
@@ -56,6 +65,16 @@ FORBIDDEN_TEXT = [
     "workflow_run:",
 ]
 
+FORBIDDEN_RUN_TEXT = [
+    "${{ inputs.prompt_body }}",
+    "${{ inputs.issue_title }}",
+    "${{ inputs.issue_url }}",
+    "${{ inputs.issue_number }}",
+    "${{ inputs.candidate_rank }}",
+    "${{ inputs.vote_count }}",
+    "${{ inputs.selection_policy }}",
+]
+
 
 def require_all(text: str, required: list[str]) -> None:
     missing = [item for item in required if item not in text]
@@ -69,10 +88,43 @@ def reject_all(text: str, forbidden: list[str]) -> None:
         raise SystemExit(f"Forbidden selected prompt workflow text found: {found}")
 
 
+def run_blocks(text: str) -> list[str]:
+    blocks: list[str] = []
+    lines = text.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if line.strip() == "run: |":
+            indent = len(line) - len(line.lstrip())
+            block: list[str] = []
+            i += 1
+            while i < len(lines):
+                child = lines[i]
+                if child.strip() and len(child) - len(child.lstrip()) <= indent:
+                    break
+                block.append(child)
+                i += 1
+            blocks.append("\n".join(block))
+            continue
+        i += 1
+    return blocks
+
+
+def reject_inputs_in_run_blocks(text: str) -> None:
+    found: list[str] = []
+    for block in run_blocks(text):
+        for item in FORBIDDEN_RUN_TEXT:
+            if item in block:
+                found.append(item)
+    if found:
+        raise SystemExit(f"Unsafe workflow input interpolation inside run blocks: {sorted(set(found))}")
+
+
 def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
+    reject_inputs_in_run_blocks(text)
 
     if text.index("scripts/run_codex_selected_prompt.sh") > text.index("scripts/safety-check.sh"):
         raise SystemExit("safety check should run after the selected prompt runner")
