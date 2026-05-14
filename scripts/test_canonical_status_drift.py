@@ -43,6 +43,17 @@ FORBIDDEN_PHRASES = [
     "remove scripts/openai_lab_run.py now",
 ]
 
+README_FORBIDDEN_STATUS_DETAILS = [
+    "Support Unlock Export -> data/support-unlocks/2026-W19.json",
+    "Weekly Auto Run -> runs/week-2026-W19-vote-summary.md",
+    "Weekly Auto Run -> run 25858202166",
+    "selected Issue #282",
+    "summary PR #283",
+    "implementation PR #284",
+    "artifacts present: diagnostics, public bundle, uploaded bundle verification",
+    "Issue safety scan\n→ optional manual rescan",
+]
+
 
 def read_docs() -> dict[str, str]:
     return {name: path.read_text(encoding="utf-8") for name, path in DOCS.items()}
@@ -70,6 +81,16 @@ def require_marker_pair(text: str, label: str) -> None:
 def main() -> int:
     docs = read_docs()
     all_text = "\n".join(docs.values())
+
+    require_all(docs["readme"], [
+        "This README is a navigation entry point, not a release-gate source of truth.",
+        "current status contract -> docs/canonical-status-drift-check.md",
+        "weekly workflow operation -> docs/weekly-automation.md",
+        "maintainer operating procedure -> docs/operator-runbook.md",
+        "canonical evidence decision rule -> docs/canonical-runner-evidence-guide.md",
+        "Broad default-on canonical weekly execution is not approved yet.",
+    ], "README source-of-truth entry status")
+    reject_all(docs["readme"], README_FORBIDDEN_STATUS_DETAILS, "README detailed release evidence")
 
     require_all(docs["drift_check"], [
         "# Canonical status drift check",

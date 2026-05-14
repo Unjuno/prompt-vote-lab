@@ -14,7 +14,6 @@ REQUIRED_TEXT = [
     "Prompt Vote Lab comparison:",
     "Comparison dashboard · generated from public results",
     "GitHub Issues, PRs, commits, public bundles, run records, and live rank output pages remain the source of truth",
-    "Live output",
     "default-src 'self'",
     "connect-src 'none'",
     "frame-src 'none'",
@@ -22,6 +21,12 @@ REQUIRED_TEXT = [
     "base-uri 'none'",
     "form-action 'none'",
 ]
+
+RANK_REQUIRED_TEXT = [
+    "Live output",
+]
+
+EMPTY_DASHBOARD_TEXT = "No comparison rows found for this week."
 
 FORBIDDEN_TEXT = [
     "OPENAI_API_KEY",
@@ -66,7 +71,14 @@ def test_dashboard(path: Path) -> None:
 
     ranks = RANK_CARD_RE.findall(text)
     if not ranks:
-        raise AssertionError(f"{rel}: no rank cards found")
+        if EMPTY_DASHBOARD_TEXT not in text:
+            raise AssertionError(f"{rel}: no rank cards found and missing empty-dashboard message")
+        return
+
+    missing_rank_text = [item for item in RANK_REQUIRED_TEXT if item not in text]
+    if missing_rank_text:
+        raise AssertionError(f"{rel}: missing rank-only required text: {missing_rank_text}")
+
     _require_unique(ranks, "rank cards", path)
 
     title_ids = RANK_TITLE_ID_RE.findall(text)

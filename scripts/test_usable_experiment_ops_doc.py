@@ -36,7 +36,7 @@ REQUIRED_README_TEXT = [
 REQUIRED_DOCS_README_TEXT = [
     "Usable experiment operations",
     "model-policy-v1.1.md",
-    "manual canary experiments",
+    "Manual canary experiments and comparison operations remain available through [Usable experiment operations](./usable-experiment-ops.md).",
 ]
 
 REQUIRED_MODEL_POLICY_TEXT = [
