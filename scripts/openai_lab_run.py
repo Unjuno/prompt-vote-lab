@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
-"""Run a constrained Prompt Vote Lab implementation-agent attempt.
+"""Legacy non-canonical Prompt Vote Lab implementation-agent fallback.
 
-This script currently uses the OpenAI Responses API as the backend for the
-implementation agent, but the public experiment concept is an agent run:
+This script uses the OpenAI Responses API and mediated JSON full-file
+replacement. It is kept as a migration fallback while the repository moves to
+the canonical Docker/Codex selected-prompt task-packet runner.
 
-Prompt → 20-vote gate → agent PR → inherited lab state
+This script is not the canonical selected-prompt evidence path.
+
+Canonical selected-prompt evidence must come from:
+- scripts/run_codex_selected_prompt.sh
+- Runner: codex-cli-selected-prompt-packet-container
+- Canonical selected-prompt runner: true
 
 This script intentionally writes only:
 - lab/index.html
@@ -38,6 +44,8 @@ LAB_FILES = {
 
 MAX_PROMPT_CHARS = int(os.getenv("MAX_IMPLEMENTATION_PROMPT_CHARS", "120000"))
 MAX_OUTPUT_TOKENS_LIMIT = 5000
+LEGACY_RUNNER_CLASSIFICATION = "legacy-non-canonical-fallback"
+CANONICAL_SELECTED_PROMPT_RUNNER = "codex-cli-selected-prompt-packet-container"
 
 
 SCHEMA = {
@@ -107,6 +115,7 @@ def build_prompt(args: argparse.Namespace) -> str:
     prompt = "\n\n".join(
         [
             "You are the implementation agent for Prompt Vote Lab.",
+            "This is the legacy non-canonical fallback runner, not the canonical selected-prompt Docker/Codex path.",
             "Modify exactly these three lab files and return their full replacement contents as JSON.",
             "Do not create additional files. Do not use network calls, external scripts, forms, login, payment, cookies, eval, or trackers.",
             "Controlled new Function(...) is allowed only when the function body is fixed by repository code and not assembled from user input, URL data, localStorage, sessionStorage, IndexedDB, imported JSON, GitHub Issue text, or any external source.",
@@ -115,6 +124,9 @@ def build_prompt(args: argparse.Namespace) -> str:
             "This is one bounded implementation-agent attempt. Do not ask for a hidden retry or another pass.",
             "The current lab files are the inherited lab state from the main branch.",
             "## Run metadata",
+            f"runner_classification: {LEGACY_RUNNER_CLASSIFICATION}",
+            f"canonical_selected_prompt_runner: false",
+            f"canonical_runner_name: {CANONICAL_SELECTED_PROMPT_RUNNER}",
             f"week: {args.week}",
             f"candidate_rank: {args.candidate_rank}",
             f"issue_number: {args.issue_number}",
@@ -203,6 +215,9 @@ def main() -> int:
     summary = [
         f"# Implementation-agent summary for {args.week} rank {args.candidate_rank}",
         "",
+        f"- runner_classification: `{LEGACY_RUNNER_CLASSIFICATION}`",
+        "- canonical_selected_prompt_runner: false",
+        f"- canonical_runner_name: `{CANONICAL_SELECTED_PROMPT_RUNNER}`",
         f"- model: `{args.model}`",
         "- agent_attempts: 1",
         "- sdk_max_retries: 0",
