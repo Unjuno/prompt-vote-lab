@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T13:08:40+00:00`
+Generated at: `2026-05-14T14:34:09+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
 | 287 | MERGED | 5 | 391/10 | Harden weekly canonical operator docs |
 | 286 | MERGED | 5 | 335/21 | Add canonical runner evidence guide |
 | 285 | MERGED | 2 | 74/3 | Document legacy weekly runner as non-canonical fallback |
@@ -71,13 +72,32 @@ This file is a raw results surface for participants. It does not score prompts o
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
 | 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
-| 250 | CLOSED | 8 | 463/21 | Add live previews for rank outputs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25866025833 | Terminal State Report | pull_request | completed | skipped | Add repository 5S and language policy |
+| 25864811425 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864811409 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
+| 25864811348 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864811333 | Script Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864661398 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
+| 25864661367 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864661347 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
+| 25864661342 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864541546 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
+| 25864541510 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
+| 25864541503 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864541489 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864372181 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
+| 25864372180 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25864372162 | Script Check | pull_request | completed | failure | Add repository 5S and language policy |
+| 25864372108 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
+| 25861774671 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25861760191 | Terminal State Report | pull_request | completed | skipped | Harden weekly canonical operator docs |
+| 25861760117 | Public Results Export | push | completed | success | Harden weekly canonical operator docs |
+| 25861759052 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25861439033 | Script Check | pull_request | completed | success | Harden weekly canonical operator docs |
 | 25861439016 | Static Site Check | pull_request | completed | success | Harden weekly canonical operator docs |
 | 25861438930 | Lab PR Scope Check | pull_request | completed | success | Harden weekly canonical operator docs |
@@ -87,26 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25860939427 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25860849314 | Lab PR Scope Check | pull_request | completed | success | Add canonical runner evidence guide |
 | 25860849310 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical runner evidence guide |
-| 25860849308 | Script Check | pull_request | completed | success | Add canonical runner evidence guide |
-| 25860849302 | Static Site Check | pull_request | completed | success | Add canonical runner evidence guide |
-| 25860174518 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25860156658 | Public Results Export | push | completed | success | Document legacy weekly runner as non-canonical fallback |
-| 25860156648 | Terminal State Report | pull_request | completed | skipped | Document legacy weekly runner as non-canonical fallback |
-| 25860155861 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25860067028 | Lab PR Scope Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
-| 25860066975 | Static Site Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
-| 25860066954 | Script Check | pull_request | completed | success | Document legacy weekly runner as non-canonical fallback |
-| 25859913705 | Terminal State Report | pull_request | completed | skipped | Agent lab run for week-2026-W19 rank 1 |
-| 25859570350 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W19 |
-| 25859261582 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W19 |
-| 25858202166 | Weekly Auto Run | workflow_dispatch | completed | success | Weekly Auto Run |
-| 25857992969 | Issue Safety Scan | issues | completed | success | [Prompt][Canary]: Add a tiny canonical weekly runner note |
-| 25857688875 | Weekly Auto Run | workflow_dispatch | completed | success | Weekly Auto Run |
-| 25855778352 | Codex Selected Prompt Run | workflow_dispatch | completed | success | Codex Selected Prompt Run |
-| 25855142477 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25855126699 | Public Results Export | push | completed | success | Harden weekly canonical evidence artifacts on failure paths |
-| 25855126635 | Terminal State Report | pull_request | completed | skipped | Harden weekly canonical evidence artifacts on failure paths |
-| 25855126094 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
