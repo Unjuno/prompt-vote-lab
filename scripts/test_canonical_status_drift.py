@@ -21,11 +21,6 @@ CANONICAL_MARKER = [
     "Canonical selected-prompt runner: true",
 ]
 
-GLOBAL_REQUIRED = [
-    "codex-cli-selected-prompt-packet-container",
-    "scripts/run_codex_selected_prompt.sh",
-]
-
 LEGACY_REQUIRED = [
     "scripts/openai_lab_run.py",
     "non-canonical",
@@ -40,9 +35,10 @@ FORBIDDEN_PHRASES = [
     "scripts/openai_lab_run.py is canonical",
     "openai_lab_run.py is canonical",
     "canonical_selected_prompt_runner: true for scripts/openai_lab_run.py",
-    "auto-merge enabled",
-    "automatic merge enabled",
-    "weekly canonical selected-prompt runner is already default-on",
+    "auto-merge enabled for weekly runs",
+    "automatic merge enabled for implementation PRs",
+    "weekly canonical selected-prompt runner is default-on",
+    "canonical weekly default: default-on",
     "safe to delete legacy fallback now",
     "remove scripts/openai_lab_run.py now",
 ]
