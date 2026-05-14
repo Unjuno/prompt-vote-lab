@@ -15,7 +15,7 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
 5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-off, auto-merge, and release-gate status contract.
-6. [Repository 5S and language policy](./repository-5S-and-language-policy.md) — cleanup, English-only, and sustain rules.
+6. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
 7. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
 8. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
 9. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
@@ -55,7 +55,7 @@ The first useful action is usually voting with 👍 on an existing `prompt-propo
 
 Maintainer-authored repository content should be English.
 
-The [Repository 5S and language policy](./repository-5S-and-language-policy.md) defines Sort, Set in order, Shine, Standardize, and Sustain rules for cleanup PRs.
+The [Repository 5S and language policy](./repository-5s-and-language-policy.md) defines Sort, Set in order, Shine, Standardize, and Sustain rules for cleanup PRs.
 
 The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
 
