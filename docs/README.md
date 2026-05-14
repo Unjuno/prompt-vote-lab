@@ -11,26 +11,27 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 1. [Participant guide](./for-participants.md) — start by voting with 👍, then submit prompts when ready.
 2. [Experiment model](./experiment-model.md) — game model and boundaries.
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
-4. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-5. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
-6. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-7. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-8. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
-9. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-10. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-11. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
-12. [Automation map](./automation-map.md) — workflow boundaries.
-13. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-14. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-15. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-16. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-17. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-18. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-19. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-20. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-21. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-22. [Report policy](./report-policy.md) — weekly report draft policy.
-23. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
+5. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
+6. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
+7. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+8. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+9. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+10. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+11. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+12. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+13. [Automation map](./automation-map.md) — workflow boundaries.
+14. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+15. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+16. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+17. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+18. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+19. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+20. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+21. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+22. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+23. [Report policy](./report-policy.md) — weekly report draft policy.
+24. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -43,6 +44,19 @@ The repository records outcomes. Workflows do not yet compute player rankings, t
 Participants should start with [Participant guide](./for-participants.md).
 
 The first useful action is usually voting with 👍 on an existing `prompt-proposal` Issue. Prompt submission is the second step, not the first step.
+
+## Canonical runner evidence status
+
+The selected-prompt Docker/Codex runner is the canonical evidence path when the weekly feature flag is explicitly enabled and the PR/run evidence says:
+
+```text
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+```
+
+Participants should use the [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) to inspect diagnostics, public bundles, uploaded bundle verification, Gitleaks results, and bounded lab diffs.
+
+The legacy `scripts/openai_lab_run.py` path is non-canonical and does not satisfy the selected-prompt canonical runner requirement.
 
 ## Report status
 
@@ -88,7 +102,7 @@ Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
-The repository has scheduled weekly automation and support-unlock gates implemented, but implementation-agent PR generation still needs a live eligible-candidate E2E verification.
+The repository has scheduled weekly automation and support-unlock gates implemented, but broad default-on canonical weekly execution still requires release hardening.
 
 The live no-eligible path is verified:
 
@@ -98,6 +112,18 @@ Weekly Auto Run -> runs/week-2026-W19-vote-summary.md
 baseline_won: true
 eligible_count: 0
 implementation PR: none
+```
+
+The weekly selected-prompt canonical feature-flag path is verified by a controlled canary:
+
+```text
+Weekly Auto Run -> run 25858202166
+selected Issue #282
+summary PR #283
+implementation PR #284
+canonical runner: true
+artifacts present: diagnostics, public bundle, uploaded bundle verification
+result: PASS
 ```
 
 manual canary experiments and comparison operations remain available:
