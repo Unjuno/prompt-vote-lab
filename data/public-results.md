@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T08:40:05+00:00`
+Generated at: `2026-05-14T09:59:35+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -40,6 +40,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 278 | MERGED | 5 | 341/21 | Add weekly canonical selected-prompt runner feature flag |
 | 277 | MERGED | 2 | 77/18 | Harden selected-prompt workflow input handling |
 | 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
 | 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
@@ -69,42 +70,41 @@ This file is a raw results surface for participants. It does not score prompts o
 | 256 | MERGED | 2 | 69/9 | Fix history adopted rank inference |
 | 255 | MERGED | 3 | 292/0 | Add W19 rank 1 live output snapshot |
 | 257 | MERGED | 2 | 54/7 | Add live preview hub to lab page |
-| 201 | MERGED | 2 | 20/4 | Auto-run public results export after main pushes |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25853912013 | Terminal State Report | pull_request | completed | skipped | Add weekly canonical selected-prompt runner feature flag |
+| 25853391984 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25853391978 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25853391977 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25853391973 | Script Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25853391963 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851780231 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851780221 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851780210 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851780206 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
+| 25851780191 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851468413 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851468299 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851468281 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851468258 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
+| 25851468246 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851391935 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851391933 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
+| 25851391932 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851391919 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851391903 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851338877 | Lab PR Scope Check | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851338870 | Select Eligible Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851338869 | Script Check | pull_request | completed | failure | Add weekly canonical selected-prompt runner feature flag |
+| 25851338856 | Pre-API Freeze Audit | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25851338848 | Implementation Preflight Test | pull_request | completed | success | Add weekly canonical selected-prompt runner feature flag |
+| 25850591205 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25850575959 | Terminal State Report | pull_request | completed | skipped | Harden selected-prompt workflow input handling |
-| 25850179734 | Lab PR Scope Check | pull_request | completed | success | Harden selected-prompt workflow input handling |
-| 25850179711 | Script Check | pull_request | completed | success | Harden selected-prompt workflow input handling |
-| 25849764585 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25849751368 | Public Results Export | push | completed | success | Add manual selected-prompt workflow |
-| 25849751300 | Terminal State Report | pull_request | completed | skipped | Add manual selected-prompt workflow |
-| 25849750872 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25849661057 | Script Check | pull_request | completed | success | Add manual selected-prompt workflow |
-| 25849661021 | Lab PR Scope Check | pull_request | completed | success | Add manual selected-prompt workflow |
-| 25845706762 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25845689686 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25845632148 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25841207145 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25841203098 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25782659021 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25782647498 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25782579169 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25782295120 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25782283965 | Terminal State Report | pull_request | completed | skipped | Add reusable selected-prompt Codex runner |
-| 25782283947 | Public Results Export | push | completed | success | Add reusable selected-prompt Codex runner (#275) |
-| 25782283289 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25782217426 | Script Check | pull_request | completed | success | Add reusable selected-prompt Codex runner |
-| 25782217410 | Lab PR Scope Check | pull_request | completed | success | Add reusable selected-prompt Codex runner |
-| 25777829429 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25777816081 | Terminal State Report | pull_request | completed | skipped | Parameterize selected prompt task packets |
-| 25777816043 | Public Results Export | push | completed | success | Parameterize selected prompt task packets (#274) |
-| 25777815380 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25777798088 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25777793507 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25735251876 | Script Check | pull_request | completed | success | Parameterize selected prompt task packets |
+| 25850575821 | Public Results Export | push | completed | success | Harden selected-prompt workflow input handling |
+| 25850574754 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
