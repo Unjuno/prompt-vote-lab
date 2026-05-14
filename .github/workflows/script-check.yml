@@ -158,6 +158,9 @@ jobs:
       - name: Run workflow family map test
         run: python scripts/test_workflow_family_map.py
 
+      - name: Run OpenAI lab runner legacy contract test
+        run: python scripts/test_openai_lab_run_legacy_contract.py
+
       - name: Run weekly operator docs test
         run: python scripts/test_weekly_operator_docs.py
 
