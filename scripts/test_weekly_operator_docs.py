@@ -13,7 +13,7 @@ RUNBOOK_REQUIRED_TEXT = [
     "manual selected-prompt workflow smoke -> PASS",
     "weekly canonical selected-prompt canary -> run 25858202166 -> PASS",
     "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
-    "runner: codex-cli-selected-prompt-container".replace("selected-prompt-container", "selected-prompt-packet-container"),
+    "runner: codex-cli-selected-prompt-packet-container",
     "weekly-selected-prompt-diagnostics-7",
     "weekly-selected-prompt-public-bundles-7",
     "weekly-selected-prompt-uploaded-bundle-verification-7",
@@ -132,10 +132,6 @@ def main() -> int:
 
     if weekly.index("Temporary canary settings") > weekly.index("Manual verification"):
         raise SystemExit("weekly doc should define canary cleanup before manual verification")
-
-    if drift.index("Required release gate language") > runbook.index("Default-on release gate"):
-        # The two files are independent; this branch should never execute, but the check keeps the intent explicit.
-        pass
 
     print("weekly operator docs test passed")
     return 0
