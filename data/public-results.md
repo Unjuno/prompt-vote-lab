@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T21:03:08+00:00`
+Generated at: `2026-05-14T21:56:38+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
@@ -71,13 +72,32 @@ This file is a raw results surface for participants. It does not score prompts o
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
-| 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25887979412 | Terminal State Report | pull_request | completed | skipped | Shorten README status entry |
+| 25887700258 | Script Check | pull_request | completed | success | Shorten README status entry |
+| 25887700255 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
+| 25887700247 | Static Site Check | pull_request | completed | success | Shorten README status entry |
+| 25887700245 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
+| 25887589412 | Static Site Check | pull_request | completed | success | Shorten README status entry |
+| 25887589380 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
+| 25887589364 | Script Check | pull_request | completed | failure | Shorten README status entry |
+| 25887589362 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
+| 25887491204 | Script Check | pull_request | completed | failure | Shorten README status entry |
+| 25887491174 | Static Site Check | pull_request | completed | success | Shorten README status entry |
+| 25887491158 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
+| 25887491148 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
+| 25887115023 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
+| 25887115017 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
+| 25887115015 | Static Site Check | pull_request | completed | success | Shorten README status entry |
+| 25887115000 | Script Check | pull_request | completed | failure | Shorten README status entry |
+| 25885564074 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25885547824 | Public Results Export | push | completed | success | Shorten weekly default-on release gate |
 | 25885547821 | Terminal State Report | pull_request | completed | skipped | Shorten weekly default-on release gate |
+| 25885546854 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25885480378 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
 | 25885480370 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
 | 25885480369 | Script Check | pull_request | completed | success | Shorten weekly default-on release gate |
@@ -87,26 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25884225605 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
 | 25884225593 | Script Check | pull_request | completed | failure | Shorten weekly default-on release gate |
 | 25884225589 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25880062807 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25880048404 | Terminal State Report | pull_request | completed | skipped | Shorten operator default-on release gate |
-| 25880048163 | Public Results Export | push | completed | success | Shorten operator default-on release gate |
-| 25880047125 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25879627971 | Script Check | pull_request | completed | success | Shorten operator default-on release gate |
-| 25879627947 | Lab PR Scope Check | pull_request | completed | success | Shorten operator default-on release gate |
-| 25879627945 | Static Site Check | pull_request | completed | success | Shorten operator default-on release gate |
-| 25878137631 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25878120685 | Public Results Export | push | completed | success | Consolidate canonical status doc sources |
-| 25878112387 | Terminal State Report | pull_request | completed | skipped | Consolidate canonical status doc sources |
-| 25878107410 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25877778601 | Script Check | pull_request | completed | success | Consolidate canonical status doc sources |
-| 25877778576 | Static Site Check | pull_request | completed | success | Consolidate canonical status doc sources |
-| 25877778566 | Lab PR Scope Check | pull_request | completed | success | Consolidate canonical status doc sources |
-| 25877069034 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25877050929 | Terminal State Report | pull_request | completed | skipped | Add canonical status drift check |
-| 25877050457 | Public Results Export | push | completed | success | Add canonical status drift check |
-| 25877049596 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25876965410 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical status drift check |
-| 25876965331 | Script Check | pull_request | completed | success | Add canonical status drift check |
 
 ## Raw JSON
 
