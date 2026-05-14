@@ -14,6 +14,7 @@ REQUIRED_TEXT = [
     "runs/**",
     "docs/canonical-runner-evidence-guide.md",
     "docs/repository-5s-and-language-policy.md",
+    "docs/repository-cleanup-inventory.md",
     "docs/operator-runbook.md",
     "docs/weekly-automation.md",
     ".github/workflows/codex-selected-prompt-run.yml",
@@ -27,6 +28,8 @@ REQUIRED_TEXT = [
     "python scripts/test_canonical_runner_evidence_guide.py",
     "Run repository language policy test",
     "python scripts/test_repository_language_policy.py",
+    "Run repository cleanup inventory test",
+    "python scripts/test_repository_cleanup_inventory.py",
     "Run weekly operator docs test",
     "python scripts/test_weekly_operator_docs.py",
     "Run comparison dashboard builder test",
@@ -100,8 +103,11 @@ def main() -> int:
     if text.index("docs/canonical-runner-evidence-guide.md") > text.index("docs/repository-5s-and-language-policy.md"):
         raise SystemExit("repository 5S language policy should be tracked after the canonical runner evidence guide")
 
-    if text.index("docs/repository-5s-and-language-policy.md") > text.index("docs/operator-runbook.md"):
-        raise SystemExit("operator runbook should be tracked after the repository 5S language policy")
+    if text.index("docs/repository-5s-and-language-policy.md") > text.index("docs/repository-cleanup-inventory.md"):
+        raise SystemExit("repository cleanup inventory should be tracked after the repository 5S language policy")
+
+    if text.index("docs/repository-cleanup-inventory.md") > text.index("docs/operator-runbook.md"):
+        raise SystemExit("operator runbook should be tracked after the repository cleanup inventory")
 
     if text.index("docs/operator-runbook.md") > text.index("docs/weekly-automation.md"):
         raise SystemExit("weekly automation doc should be tracked after the operator runbook")
@@ -112,8 +118,11 @@ def main() -> int:
     if text.index("Run canonical runner evidence guide test") > text.index("Run repository language policy test"):
         raise SystemExit("Repository language policy test should run after the canonical runner evidence guide test")
 
-    if text.index("Run repository language policy test") > text.index("Run weekly operator docs test"):
-        raise SystemExit("Weekly operator docs test should run after the repository language policy test")
+    if text.index("Run repository language policy test") > text.index("Run repository cleanup inventory test"):
+        raise SystemExit("Repository cleanup inventory test should run after the repository language policy test")
+
+    if text.index("Run repository cleanup inventory test") > text.index("Run weekly operator docs test"):
+        raise SystemExit("Weekly operator docs test should run after the repository cleanup inventory test")
 
     if text.index("Run weekly operator docs test") > text.index("Run usable experiment ops doc test"):
         raise SystemExit("Usable experiment ops doc test should run after the weekly operator docs test")
