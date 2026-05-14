@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T14:34:09+00:00`
+Generated at: `2026-05-14T15:13:57+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
 | 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
 | 287 | MERGED | 5 | 391/10 | Harden weekly canonical operator docs |
 | 286 | MERGED | 5 | 335/21 | Add canonical runner evidence guide |
@@ -71,13 +72,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
-| 249 | MERGED | 1 | 3/3 | Fix root prompt template links |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25868099615 | Terminal State Report | pull_request | completed | skipped | Add repository cleanup inventory |
+| 25868040743 | Pre-API Freeze Audit | pull_request | completed | success | Add repository cleanup inventory |
+| 25868040737 | Lab PR Scope Check | pull_request | completed | success | Add repository cleanup inventory |
+| 25868040726 | Static Site Check | pull_request | completed | success | Add repository cleanup inventory |
+| 25868040711 | Script Check | pull_request | completed | success | Add repository cleanup inventory |
+| 25866043468 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25866025889 | Public Results Export | push | completed | success | Add repository cleanup standards |
 | 25866025833 | Terminal State Report | pull_request | completed | skipped | Add repository 5S and language policy |
+| 25866024244 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25864811425 | Static Site Check | pull_request | completed | success | Add repository 5S and language policy |
 | 25864811409 | Pre-API Freeze Audit | pull_request | completed | success | Add repository 5S and language policy |
 | 25864811348 | Lab PR Scope Check | pull_request | completed | success | Add repository 5S and language policy |
@@ -99,14 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25861760117 | Public Results Export | push | completed | success | Harden weekly canonical operator docs |
 | 25861759052 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25861439033 | Script Check | pull_request | completed | success | Harden weekly canonical operator docs |
-| 25861439016 | Static Site Check | pull_request | completed | success | Harden weekly canonical operator docs |
-| 25861438930 | Lab PR Scope Check | pull_request | completed | success | Harden weekly canonical operator docs |
-| 25860953921 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25860940386 | Public Results Export | push | completed | success | Add canonical runner evidence guide |
-| 25860940385 | Terminal State Report | pull_request | completed | skipped | Add canonical runner evidence guide |
-| 25860939427 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25860849314 | Lab PR Scope Check | pull_request | completed | success | Add canonical runner evidence guide |
-| 25860849310 | Pre-API Freeze Audit | pull_request | completed | success | Add canonical runner evidence guide |
 
 ## Raw JSON
 

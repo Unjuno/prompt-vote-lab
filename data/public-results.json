@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T14:34:09+00:00",
+  "generated_at": "2026-05-14T15:13:57+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 276,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add a conservative repository cleanup inventory before any deletion work.\n- Classify protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items.\n- Link the inventory from the docs index.\n- Add a repository cleanup inventory contract test.\n- Register the test in Script Check and the Script Check self-contract.\n\n## Scope\n- `docs/repository-cleanup-inventory.md`\n- `docs/README.md`\n- `.github/workflows/script-check.yml`\n- `scripts/test_repository_cleanup_inventory.py`\n- `scripts/test_script_check_workflow_contract.py`\n\n## 5S mapping\n- Sorted: evidence, canonical active paths, legacy fallback paths, generated snapshots, and cleanup candidates are classified.\n- Set in order: canonical surfaces precede legacy fallback surfaces, which precede generated snapshots and cleanup candidates.\n- Shined: cleanup candidates are made visible without deleting files.\n- Standardized: cleanup PR bodies must record protected-evidence, canonical/legacy, generated-snapshot, removal-gate, and rollback checks before removals.\n- Sustained by: Script Check, repository cleanup inventory test, and script-check workflow contract test.\n\n## Non-goals\n- No file deletion.\n- No workflow behavior change.\n- No runner implementation change.\n- No default flag change.\n- No legacy fallback removal.\n- No auto-merge.\n- No generated snapshot edits.\n\n## Verification expected\n- Script Check\n- repository cleanup inventory test\n- script-check workflow contract test\n- Lab PR Scope Check",
+      "body_length": 1547,
+      "changed_files": 5,
+      "closed_at": "2026-05-14T15:13:29Z",
+      "comment_count": 0,
+      "created_at": "2026-05-14T15:12:21Z",
+      "deletions": 24,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 23,
+          "deletions": 20,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 147,
+          "deletions": 0,
+          "path": "docs/repository-cleanup-inventory.md"
+        },
+        {
+          "additions": 89,
+          "deletions": 0,
+          "path": "scripts/test_repository_cleanup_inventory.py"
+        },
+        {
+          "additions": 13,
+          "deletions": 4,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "add-cleanup-inventory",
+      "head_ref_oid": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "labels": [],
+      "merge_commit_oid": "ed0a561e938c076eaf2f5dff11443bb79b02fe64",
+      "merged_at": "2026-05-14T15:13:29Z",
+      "merged_by": "Unjuno",
+      "number": 289,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add repository cleanup inventory",
+      "updated_at": "2026-05-14T15:13:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/289"
+    },
     {
       "additions": 354,
       "author": "Unjuno",
@@ -4719,63 +4771,6 @@
       "title": "Ignore negated safety constraints in Issue scanner",
       "updated_at": "2026-05-07T19:21:40Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/178"
-    },
-    {
-      "additions": 264,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a runtime execution gate so blocked Issues do not proceed to Codex execution unless a maintainer explicitly marks the Issue as an authorized canary.\n\n## Changes\n\n- Adds `scripts/check_issue_execution_gate.py`.\n- Updates the 009 fixed-Issue workflow to fetch Issue labels.\n- Runs the execution gate after runtime Issue safety scan and before Codex execution.\n- Blocks execution when the runtime scan is blocked and the Issue does not have `authorized-canary`.\n- Allows execution when the scan is clear, or when the Issue is blocked but has `authorized-canary`.\n- Adds `scripts/test_check_issue_execution_gate.py`.\n- Updates the 009 workflow contract test and Script Check registration.\n- Updates Issue safety feedback text to tell maintainers that blocked Issues require `authorized-canary` before agent execution.\n\n## Operational policy\n\n- Normal Issues: must pass the Issue safety scan.\n- Blocked Issues: stop before Codex execution.\n- Controlled canary Issues: require explicit maintainer label `authorized-canary`.\n- Auto-merge remains disabled.\n- Vote-winner automatic execution remains out of scope.\n\n## Tests expected\n\n- `python scripts/test_check_issue_execution_gate.py`\n- `python scripts/test_issue_instruction_runner_contract.py`\n- Existing Script Check workflow\n\n## Scope\n\n- No `/lab/` changes.\n- No model/API run.\n- No vote-winner selection.\n- No auto-merge.",
-      "body_length": 1387,
-      "changed_files": 6,
-      "closed_at": "2026-05-07T02:46:59Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T02:46:10Z",
-      "deletions": 7,
-      "files": [
-        {
-          "additions": 25,
-          "deletions": 3,
-          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 109,
-          "deletions": 0,
-          "path": "scripts/check_issue_execution_gate.py"
-        },
-        {
-          "additions": 9,
-          "deletions": 3,
-          "path": "scripts/scan_issue_safety.py"
-        },
-        {
-          "additions": 110,
-          "deletions": 0,
-          "path": "scripts/test_check_issue_execution_gate.py"
-        },
-        {
-          "additions": 8,
-          "deletions": 1,
-          "path": "scripts/test_issue_instruction_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "gate-blocked-issues-with-hostile-canary",
-      "head_ref_oid": "aa7dfeac40d7f23b92f90253b1314fef61c38f37",
-      "labels": [],
-      "merge_commit_oid": "9f70e328dbf9d35ecc58b9ca14946c0e81d69ac1",
-      "merged_at": "2026-05-07T02:46:59Z",
-      "merged_by": "Unjuno",
-      "number": 169,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Gate blocked Issues before agent execution",
-      "updated_at": "2026-05-07T19:21:31Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/169"
     }
   ],
   "run_records": [
@@ -4935,6 +4930,104 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-14T15:13:34Z",
+      "database_id": 25868099615,
+      "display_title": "Add repository cleanup inventory",
+      "event": "pull_request",
+      "head_branch": "add-cleanup-inventory",
+      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:13:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868099615",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:12:26Z",
+      "database_id": 25868040743,
+      "display_title": "Add repository cleanup inventory",
+      "event": "pull_request",
+      "head_branch": "add-cleanup-inventory",
+      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:12:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040743",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:12:26Z",
+      "database_id": 25868040737,
+      "display_title": "Add repository cleanup inventory",
+      "event": "pull_request",
+      "head_branch": "add-cleanup-inventory",
+      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:12:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040737",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:12:26Z",
+      "database_id": 25868040726,
+      "display_title": "Add repository cleanup inventory",
+      "event": "pull_request",
+      "head_branch": "add-cleanup-inventory",
+      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:12:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040726",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T15:12:26Z",
+      "database_id": 25868040711,
+      "display_title": "Add repository cleanup inventory",
+      "event": "pull_request",
+      "head_branch": "add-cleanup-inventory",
+      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-14T15:12:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040711",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T14:34:12Z",
+      "database_id": 25866043468,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9beed1b896b00d2686e378f9453d1510276909dd",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T14:34:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866043468",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T14:33:52Z",
+      "database_id": 25866025889,
+      "display_title": "Add repository cleanup standards",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "fdbb6e4c07c654f47958ffa14fbf7503b3b649ca",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T14:34:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866025889",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T14:33:52Z",
       "database_id": 25866025833,
       "display_title": "Add repository 5S and language policy",
@@ -4946,6 +5039,20 @@
       "updated_at": "2026-05-14T14:33:53Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866025833",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T14:33:50Z",
+      "database_id": 25866024244,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "fdbb6e4c07c654f47958ffa14fbf7503b3b649ca",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T14:34:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866024244",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6192,118 +6299,6 @@
       "updated_at": "2026-05-14T08:30:25Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850179734",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:30:08Z",
-      "database_id": 25850179711,
-      "display_title": "Harden selected-prompt workflow input handling",
-      "event": "pull_request",
-      "head_branch": "fix-selected-prompt-workflow-input-env",
-      "head_sha": "e9d12d2d06c6ce4672289cb39f382c0fa7b08fa8",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:30:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25850179711",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:20:00Z",
-      "database_id": 25849764585,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "905a1bb6589b89eb1047a2f1f8e7e616fbc65473",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:20:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849764585",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:19:41Z",
-      "database_id": 25849751368,
-      "display_title": "Add manual selected-prompt workflow",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "f1d40dd57f2c82f59d7b3d9dbb4813bb86e0c15c",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:20:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849751368",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T08:19:41Z",
-      "database_id": 25849751300,
-      "display_title": "Add manual selected-prompt workflow",
-      "event": "pull_request",
-      "head_branch": "add-selected-prompt-manual-workflow",
-      "head_sha": "6757ebbfa3db6d8a665cb99848401e950f974784",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:19:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849751300",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T08:19:40Z",
-      "database_id": 25849750872,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "f1d40dd57f2c82f59d7b3d9dbb4813bb86e0c15c",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:20:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849750872",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:17:26Z",
-      "database_id": 25849661057,
-      "display_title": "Add manual selected-prompt workflow",
-      "event": "pull_request",
-      "head_branch": "add-selected-prompt-manual-workflow",
-      "head_sha": "6757ebbfa3db6d8a665cb99848401e950f974784",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:17:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849661057",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T08:17:26Z",
-      "database_id": 25849661021,
-      "display_title": "Add manual selected-prompt workflow",
-      "event": "pull_request",
-      "head_branch": "add-selected-prompt-manual-workflow",
-      "head_sha": "6757ebbfa3db6d8a665cb99848401e950f974784",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T08:17:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25849661021",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T06:32:34Z",
-      "database_id": 25845706762,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "90ea06d0bc95d537653071d2eeeed0d8115a9b9e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T06:33:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25845706762",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
