@@ -20,6 +20,10 @@ If the baseline ranks first, no implementation run should be created.
 
 20 virtual votes
 
+## Canonical selected-prompt runner
+
+true
+
 ## Eligible implementation ranks
 
 - no implementation-agent attempt: no prompt beat the no-change baseline
