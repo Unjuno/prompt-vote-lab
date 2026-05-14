@@ -4,6 +4,8 @@ This runbook is for maintainers operating Prompt Vote Lab.
 
 It describes what to check, what to merge, what to stop, and what must never be automated.
 
+Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This runbook is the operating procedure, not a second status source of truth.
+
 ## Current production status
 
 Verified live paths:

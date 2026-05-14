@@ -2,6 +2,8 @@
 
 This document explains what runs automatically, when it runs, and what must exist before each weekly run can proceed.
 
+Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This page is the weekly workflow operation detail, not a second status source of truth.
+
 ## Short answer
 
 Yes. `Weekly Auto Run` is scheduled to run every week.

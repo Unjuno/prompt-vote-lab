@@ -25,6 +25,21 @@ manual review status: required
 final write scope: lab/index.html, lab/style.css, lab/app.js
 ```
 
+## Source-of-truth map
+
+Use this map before adding or editing status text.
+
+| Topic | Source of truth | Pointer docs |
+|---|---|---|
+| Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status | `docs/canonical-status-drift-check.md` | `docs/README.md`, `docs/weekly-automation.md`, `docs/operator-runbook.md` |
+| Technical implementation boundary | `docs/current-codex-implementation-path.md` | `docs/canonical-runner-evidence-guide.md`, `docs/workflow-family-map.md` |
+| Participant/reviewer evidence decision rule | `docs/canonical-runner-evidence-guide.md` | `docs/README.md`, `docs/operator-runbook.md`, `docs/weekly-automation.md` |
+| Weekly workflow operation | `docs/weekly-automation.md` | `docs/operator-runbook.md` |
+| Maintainer operating procedure and stop rules | `docs/operator-runbook.md` | `docs/README.md` |
+| Cleanup and deletion boundaries | `docs/repository-cleanup-inventory.md`, `docs/workflow-family-map.md` | `docs/README.md`, `docs/operator-runbook.md` |
+
+Pointer docs may summarize status, but they should not become a second source of truth for release-gate wording.
+
 ## Documents covered by this drift check
 
 | Document | Required role |
