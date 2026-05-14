@@ -372,3 +372,43 @@ jobs:
           name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
           path: .tmp/weekly-selected-prompt-public-bundles
           if-no-files-found: error
+
+      - name: Download uploaded weekly selected-prompt public bundles
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
+          path: .tmp/weekly-selected-prompt-public-bundles-uploaded
+
+      - name: Verify uploaded weekly selected-prompt public bundles
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/weekly-selected-prompt-public-bundles-uploaded-verification
+          found=0
+          for bundle in .tmp/weekly-selected-prompt-public-bundles-uploaded/rank-*; do
+            [ -d "$bundle" ] || continue
+            found=1
+            rank="${bundle##*/}"
+            out=".tmp/weekly-selected-prompt-public-bundles-uploaded-verification/$rank"
+            mkdir -p "$out"
+            python scripts/verify_public_agent_run_bundle.py \
+              --bundle-dir "$bundle" \
+              --report "$out/public-agent-run-bundle-uploaded-verification.json"
+            bash scripts/run_gitleaks_public_bundle_scan.sh \
+              --bundle-dir "$bundle" \
+              --report "$out/public-agent-run-bundle-uploaded-gitleaks.json" \
+              --findings "$out/public-agent-run-bundle-uploaded-gitleaks-findings.json"
+          done
+          if [ "$found" -ne 1 ]; then
+            echo "No uploaded weekly selected-prompt public bundles found."
+            exit 1
+          fi
+
+      - name: Upload weekly selected-prompt uploaded bundle verification
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-selected-prompt-uploaded-bundle-verification-${{ github.run_number }}
+          path: .tmp/weekly-selected-prompt-public-bundles-uploaded-verification
+          if-no-files-found: error
