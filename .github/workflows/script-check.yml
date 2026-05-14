@@ -209,6 +209,9 @@ jobs:
       - name: Run selected prompt workflow contract test
         run: python scripts/test_selected_prompt_workflow_contract.py
 
+      - name: Run weekly auto-run workflow contract test
+        run: python scripts/test_weekly_auto_run_workflow_contract.py
+
       - name: Run fixed Issue instruction packet generator test
         run: python scripts/test_create_codex_issue_instruction_packet.py
 

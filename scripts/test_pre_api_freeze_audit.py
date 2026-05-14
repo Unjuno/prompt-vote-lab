@@ -61,11 +61,16 @@ def mutate_retry_relaxation(repo: Path) -> None:
 def mutate_missing_guard(repo: Path) -> None:
     path = repo / ".github/workflows/weekly-auto-run.yml"
     text = path.read_text(encoding="utf-8")
-    target = "      - name: Install Python dependency\n        if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}\n"
-    replacement = "      - name: Install Python dependency\n"
-    if target not in text:
-        raise SystemExit("test fixture could not find guarded install step")
-    path.write_text(text.replace(target, replacement, 1), encoding="utf-8")
+    step = "      - name: Install Python dependency\n"
+    start = text.find(step)
+    if start < 0:
+        raise SystemExit("test fixture could not find install step")
+    next_step = text.find("\n      - name:", start + len(step))
+    end = next_step if next_step >= 0 else len(text)
+    block = text[start:end]
+    lines = block.splitlines(keepends=True)
+    filtered = [line for line in lines if not line.lstrip().startswith("if: ")]
+    path.write_text(text[:start] + "".join(filtered) + text[end:], encoding="utf-8")
 
 
 def mutate_review_boundary(repo: Path) -> None:
