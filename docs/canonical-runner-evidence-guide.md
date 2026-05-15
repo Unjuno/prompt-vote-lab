@@ -111,6 +111,8 @@ It is non-canonical.
 
 It does not satisfy the selected-prompt canonical runner requirement, even if it produces a useful lab diff.
 
+The fallback should be used only through an explicit rollback or diagnostic override, not as the normal weekly default.
+
 ## Verified weekly canary
 
 The first verified weekly canonical selected-prompt canary used:
@@ -131,9 +133,9 @@ result: PASS
 
 The canary PRs were closed without merge because they were evidence-only canary artifacts, not product changes.
 
-## Release readiness rule
+## Release status
 
-Do not flip the weekly canonical selected-prompt runner to default-on until all of these are true:
+The weekly canonical selected-prompt runner is default-on after the release gate passed:
 
 ```text
 manual selected-prompt smoke: PASS
@@ -146,7 +148,10 @@ legacy fallback documented as non-canonical
 participant evidence guide published
 manual review remains required
 auto-merge remains disabled
+weekly canonical default-on release: approved
 ```
+
+A future rollback may set `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false`, but that run is non-canonical unless its evidence still shows the canonical marker.
 
 ## What participants should conclude
 
