@@ -41,6 +41,9 @@ on:
       - "docs/workflow-family-map.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
+      - "docs/for-participants.md"
+      - "docs/how-to-participate.md"
+      - "docs/no-change-baseline.md"
       - "docs/public-results-export.md"
       - "docs/public-agent-run-bundle.md"
       - "docs/issue-lifecycle.md"
@@ -167,6 +170,9 @@ jobs:
 
       - name: Run weekly operator docs test
         run: python scripts/test_weekly_operator_docs.py
+
+      - name: Run participant baseline support docs test
+        run: python scripts/test_participant_baseline_support_docs.py
 
       - name: Run usable experiment ops doc test
         run: python scripts/test_usable_experiment_ops_doc.py

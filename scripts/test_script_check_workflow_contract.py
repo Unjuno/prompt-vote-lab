@@ -19,6 +19,9 @@ REQUIRED_TEXT = [
     "docs/workflow-family-map.md",
     "docs/operator-runbook.md",
     "docs/weekly-automation.md",
+    "docs/for-participants.md",
+    "docs/how-to-participate.md",
+    "docs/no-change-baseline.md",
     ".github/workflows/codex-selected-prompt-run.yml",
     "workflow_dispatch:",
     "contents: read",
@@ -40,6 +43,8 @@ REQUIRED_TEXT = [
     "python scripts/test_openai_lab_run_legacy_contract.py",
     "Run weekly operator docs test",
     "python scripts/test_weekly_operator_docs.py",
+    "Run participant baseline support docs test",
+    "python scripts/test_participant_baseline_support_docs.py",
     "Run comparison dashboard builder test",
     "python scripts/test_build_comparison_dashboard.py",
     "Run comparison dashboard decision test",
@@ -126,6 +131,15 @@ def main() -> int:
     if text.index("docs/operator-runbook.md") > text.index("docs/weekly-automation.md"):
         raise SystemExit("weekly automation doc should be tracked after the operator runbook")
 
+    if text.index("docs/weekly-automation.md") > text.index("docs/for-participants.md"):
+        raise SystemExit("participant-facing docs should be tracked after weekly automation")
+
+    if text.index("docs/for-participants.md") > text.index("docs/how-to-participate.md"):
+        raise SystemExit("how-to-participate should be tracked after participant guide")
+
+    if text.index("docs/how-to-participate.md") > text.index("docs/no-change-baseline.md"):
+        raise SystemExit("no-change baseline should be tracked after how-to-participate")
+
     if text.index("Run current Codex path doc test") > text.index("Run canonical runner evidence guide test"):
         raise SystemExit("Canonical runner evidence guide test should run after the current Codex path doc test")
 
@@ -147,8 +161,11 @@ def main() -> int:
     if text.index("Run OpenAI lab runner legacy contract test") > text.index("Run weekly operator docs test"):
         raise SystemExit("Weekly operator docs test should run after the OpenAI lab runner legacy contract test")
 
-    if text.index("Run weekly operator docs test") > text.index("Run usable experiment ops doc test"):
-        raise SystemExit("Usable experiment ops doc test should run after the weekly operator docs test")
+    if text.index("Run weekly operator docs test") > text.index("Run participant baseline support docs test"):
+        raise SystemExit("Participant baseline support docs test should run after the weekly operator docs test")
+
+    if text.index("Run participant baseline support docs test") > text.index("Run usable experiment ops doc test"):
+        raise SystemExit("Usable experiment ops doc test should run after the participant baseline support docs test")
 
     if text.index("Run public agent run bundle enrichment test") > text.index("Run public agent run bundle verifier test"):
         raise SystemExit("Public bundle verifier test should run after enrichment test")
