@@ -25,7 +25,7 @@ final_writable_files: lab/index.html, lab/style.css, lab/app.js
 manual_review: required
 ```
 
-The Python SDK / Responses API full-file JSON path is not the canonical production implementation path. It may remain as a legacy or non-canonical canary/debug path, but it must not be counted as the canonical eligible implementation E2E verification.
+The Python SDK / Responses API full-file JSON path is not the canonical production implementation path. It may remain as a legacy or non-canonical rollback/debug path, but it must not be counted as canonical eligible implementation E2E verification.
 
 ## Current evidence summary
 
@@ -45,6 +45,7 @@ first-canary-009 hostile Issue boundary: Issue #164 -> PR #165 -> PASS
 first-canary-009 sanitizer static penetration test: PR #166 -> PASS
 manual selected-prompt workflow smoke: run artifact diagnostics -> PASS
 weekly selected-prompt canonical canary: run 25858202166 -> PASS
+canonical weekly default-on release: approved
 ```
 
 The result means:
@@ -59,12 +60,12 @@ The result means:
 - Selected prompt task packets can be mounted read-only at /task while Codex edits /work/lab only.
 - Fixed GitHub Issue text can be fetched and normalized into an instruction packet.
 - Hostile Issue text can be preserved as raw evidence while the executable objective is narrowed to a safe_user_task.
-- The weekly selected-prompt path can use the canonical Docker/Codex task-packet runner when explicitly enabled.
+- The weekly selected-prompt path uses the canonical Docker/Codex task-packet runner by default for eligible candidates.
 ```
 
 ## Canonical production path
 
-Use a Docker-contained Codex CLI runner for production-oriented implementation-agent verification and future eligible implementation runs.
+Use a Docker-contained Codex CLI runner for production-oriented implementation-agent verification and eligible implementation runs.
 
 The minimal canonical form is the 007-style policy-enforced container boundary:
 
@@ -113,13 +114,19 @@ The production direction is therefore Docker + Codex CLI, not Python SDK JSON re
 
 ## Weekly selected-prompt canonical path
 
-The weekly eligible implementation path now has a default-off feature flag:
+The weekly eligible implementation path now defaults to the canonical selected-prompt runner:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
 ```
 
-When that flag is explicitly set to `true` and at least one prompt-proposal candidate beats the no-change baseline, `Weekly Auto Run` routes the selected prompt through:
+The optional override remains available for emergency rollback or controlled diagnosis:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+```
+
+When the override is unset or explicitly `true`, `Weekly Auto Run` routes eligible selected prompts through:
 
 ```text
 scripts/run_codex_selected_prompt.sh
@@ -162,7 +169,7 @@ This path is useful as historical evidence and possible emergency fallback, but 
 
 Do not merge or report a run as canonical implementation E2E merely because the API/JSON path produced a small valid lab diff.
 
-`weekly-auto-run.yml` may still fall back to the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is unset or `false`. That default-off fallback is intentionally preserved during migration, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.
+`weekly-auto-run.yml` may still use the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is explicitly set to `false`. That override is preserved for emergency rollback or controlled diagnosis, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.
 
 A weekly run only satisfies canonical selected-prompt verification when the PR/run evidence says:
 
@@ -234,9 +241,9 @@ Prompt instructions are still used, but they are not treated as enforcement.
 
 ## Current migration state
 
-The weekly eligible implementation workflow has a canonical selected-prompt path behind a default-off feature flag. The legacy `openai_lab_run.py` path remains available only as a non-canonical fallback while migration continues.
+The weekly eligible implementation workflow now uses the canonical selected-prompt path by default. The legacy `openai_lab_run.py` path remains available only as a non-canonical fallback through an explicit rollback override.
 
-The next implementation work should decide whether to make the canonical selected-prompt runner the weekly default after additional scheduled-run canary evidence, or keep it opt-in until participant docs and release hardening are complete.
+The next implementation work should verify the first ordinary scheduled default-on run, then decide whether and when to remove the legacy fallback through a separate removal gate.
 
 ## Required verification for canonical E2E
 
@@ -257,44 +264,3 @@ A canonical successful run must show:
 ```
 
 A non-canonical API/JSON run may be recorded, but it must be labeled non-canonical and must not satisfy the canonical production E2E requirement.
-
-## Changes requiring a new canary ID
-
-Use a new canary ID if any of these change:
-
-```text
-- model
-- attempts
-- retry policy
-- fallback policy
-- auto-merge policy
-- final writable files
-- execution context model
-- writeback protocol
-- direct-edit versus mediated-writeback mode
-- patch versus JSON replacement protocol
-- container mount policy
-- repository root visibility
-- prompt input source
-- selected Issue ingestion behavior
-```
-
-## Current recommendation
-
-Use this as the canonical production direction:
-
-```text
-Docker-mounted workdir-only + Codex CLI
-```
-
-Use this concrete canary workflow to verify the basic canonical boundary:
-
-```text
-Codex Policy Agent Canary Run
-runner: codex-cli-policy-enforced-agent-container
-sandbox_mode: docker-mounted-workdir-only
-```
-
-Use selected prompt or Issue instruction packet variants when the task source must be preserved as evidence.
-
-Do not count `First Canary Run` / Python SDK / Responses API output as the canonical production implementation-agent verification.
