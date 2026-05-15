@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This policy fixes the active implementation model for Prompt Vote Lab stabilization runs.
+This policy fixes the active implementation model and bounded-agent operating conditions for Prompt Vote Lab stabilization runs.
 
-Prompt Vote Lab evaluates prompt candidates. To compare prompts fairly, the implementation model and output budget must remain fixed within the same comparison period.
+Prompt Vote Lab evaluates prompt candidates. To compare prompts fairly, the implementation model, attempt count, retry policy, fallback policy, editable file scope, and manual-review policy must remain fixed within the same comparison period.
 
 ## Active implementation model
 
@@ -44,7 +44,6 @@ For all candidates in the same weekly vote, use the same:
 ```text
 model
 sampling policy
-max output budget
 active rules
 editable file scope
 input context policy
@@ -53,7 +52,7 @@ fallback policy
 manual review policy
 ```
 
-Do not run rank 1, rank 2, and rank 3 with different implementation models in the same comparison set.
+Do not run rank 1, rank 2, and rank 3 with different implementation models or execution policies in the same comparison set.
 
 ## Active settings
 
@@ -61,29 +60,39 @@ Do not run rank 1, rank 2, and rank 3 with different implementation models in th
 model: gpt-5.4-nano
 temperature_policy: model-default
 top_p_policy: model-default
-max_output_tokens: 5000
+attempts_per_candidate: 1
 retry_count: 0
 fallback_policy: none
 auto_merge_policy: disabled
+output_token_cap_enforced: false
 ```
 
 The implementation runner records the temperature and top_p policies as `model-default` rather than passing unsupported or unstable sampling overrides.
 
-## Deferred settings
+## Output-token cap status
 
-The following setting is not active during the stabilization phase:
+`max_output_tokens` is not an active enforced implementation condition for the current canonical Codex CLI runner.
+
+Earlier API-oriented runner designs used a `max_output_tokens` setting. The current canonical selected-prompt path invokes the Codex CLI runner and does not enforce that API-era cap as a runtime limit.
+
+Therefore this policy treats output-token caps as non-active metadata unless a future runner can enforce them directly and records that enforcement in its runner contract.
+
+The active cost and scope guards are instead:
 
 ```text
-max_output_tokens: 12000
+attempts_per_candidate: 1
+retry_count: 0
+fallback_policy: none
+rank support unlock limits
+manual review required
+editable files limited to lab/index.html, lab/style.css, lab/app.js
 ```
 
-It may be reconsidered only after the system is complete and the eligible implementation PR path has passed at least one live end-to-end run.
-
-Do not change the active token budget during stabilization merely to increase implementation capacity.
+Do not claim a run is output-token-capped unless the runner passes and verifies an actual runtime cap.
 
 ## Ranked candidates
 
-If rank 1, rank 2, and rank 3 are executed in the same week, they must use the same implementation model settings.
+If rank 1, rank 2, and rank 3 are executed in the same week, they must use the same implementation model settings and execution policy.
 
 Rank 2 and rank 3 are comparison candidates. They are not automatically promoted if rank 1 fails review.
 
@@ -103,18 +112,19 @@ If retries are introduced later, they must use the same implementation model and
 gpt-5-nano
 ```
 
-`model-policy-v1.1` records the active stabilization model and output budget:
+`model-policy-v1.1` records the active stabilization model and execution policy:
 
 ```text
 model: gpt-5.4-nano
-max_output_tokens: 5000
+attempts_per_candidate: 1
+retry_count: 0
+fallback_policy: none
+output_token_cap_enforced: false
 ```
-
-This file also records that `max_output_tokens: 12000` is deferred, not active.
 
 Do not directly compare prompt results across v1.0 and v1.1 without noting the model-policy change.
 
-Do not directly compare prompt results across model or token-budget changes without noting the policy change.
+Do not directly compare prompt results across model, runner, retry, fallback, file-scope, or output-cap-enforcement changes without noting the policy change.
 
 ## Separation from evaluation model
 
@@ -124,8 +134,8 @@ A stronger model may be used for analysis and blog/report writing under a separa
 
 ## Rationale
 
-If the implementation model or output budget changes between candidates, the experiment no longer evaluates only prompt quality.
+If the implementation model or execution policy changes between candidates, the experiment no longer evaluates only prompt quality.
 
-The result becomes a mixture of prompt quality, model capability, context size, output budget, and retry behavior.
+The result becomes a mixture of prompt quality, model capability, context size, runner capability, retry behavior, fallback behavior, and review policy.
 
-To evaluate prompts, keep the implementation model and budget fixed within each comparison period.
+To evaluate prompts, keep the implementation model and bounded-agent policy fixed within each comparison period.
