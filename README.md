@@ -103,7 +103,9 @@ Rejected, failed, unsafe, and unmerged comparison PRs do not become the next wee
 
 ## Weekly automation status
 
-Weekly automation is implemented. The no-eligible live path has been verified, and the eligible implementation-agent PR path still needs live E2E verification.
+Weekly automation is implemented. The no-eligible live path has been verified, the canonical selected-prompt canary has passed, and canonical weekly execution is default-on for eligible candidates.
+
+The first ordinary post-default-on weekly run still needs operational observation. If the no-change baseline wins, the run should create a vote summary PR and stop before any implementation-agent attempt.
 
 Scheduled workflows:
 
