@@ -180,6 +180,14 @@ check_results or check_not_reached
 artifact_manifest
 ```
 
-## Open question
+## Diagnostics collector status
 
-Future work may add a common diagnostics collector script. It should favor collecting evidence over hiding failures, while keeping the public/private boundary intact.
+A common diagnostics collector exists:
+
+```text
+scripts/collect_canary_diagnostics.py
+```
+
+It should favor collecting evidence over hiding failures, while keeping the public/private boundary intact.
+
+Future work should consolidate common schema expectations across canary families and the canonical selected-prompt runner without rewriting historical evidence labels.
