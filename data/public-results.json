@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T17:33:55+00:00",
+  "generated_at": "2026-05-15T17:43:51+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -671,6 +671,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 2,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `rules/model-policy-v1.1.md` to match the current canonical weekly default-on status.\n- Replace the outdated eligible-path verification sentence with the current state: canonical selected-prompt canary passed, weekly canonical runner default-on, first ordinary post-default-on run still pending observation.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 538,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:43:34Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T17:40:59Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 2,
+          "path": "rules/model-policy-v1.1.md"
+        }
+      ],
+      "head_ref_name": "clarify-model-policy-verification-status",
+      "head_ref_oid": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "labels": [],
+      "merge_commit_oid": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
+      "merged_at": "2026-05-15T17:43:34Z",
+      "merged_by": "Unjuno",
+      "number": 310,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify model policy verification status",
+      "updated_at": "2026-05-15T17:43:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/310"
+    },
     {
       "additions": 2,
       "author": "Unjuno",
@@ -4903,43 +4935,6 @@
       "title": "Reconcile active implementation model and verification docs",
       "updated_at": "2026-05-11T05:22:03Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/248"
-    },
-    {
-      "additions": 128,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nImproves the `/lab/` page so participants can act and inspect real run evidence from the UI.\n\n## Changes\n\n- Make voting the primary action.\n- Add a three-step participant flow: vote, submit, watch weekly runs.\n- Add a live run trail section linking to Support Unlock Export, Weekly Auto Run, W19 support unlock JSON, W19 vote summary, and PR #243.\n- Style action cards and run evidence links.\n\n## Scope\n\nOnly `lab/index.html` and `lab/style.css` changed. No workflows, scripts, docs, rules, or generated evidence changed.",
-      "body_length": 533,
-      "changed_files": 2,
-      "closed_at": "2026-05-11T03:39:20Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T03:34:45Z",
-      "deletions": 14,
-      "files": [
-        {
-          "additions": 52,
-          "deletions": 11,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 76,
-          "deletions": 3,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "document-weekly-automation-schedule",
-      "head_ref_oid": "f0a4f77513c1d15f7ff5a8213957f56bf0d39bcb",
-      "labels": [],
-      "merge_commit_oid": "2104b313f1670f62fd258081281e4f8d065811f6",
-      "merged_at": "2026-05-11T03:39:20Z",
-      "merged_by": "Unjuno",
-      "number": 247,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Improve lab participant and run-result links",
-      "updated_at": "2026-05-11T03:39:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/247"
     }
   ],
   "run_records": [
@@ -5099,6 +5094,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T17:43:37Z",
+      "database_id": 25932511130,
+      "display_title": "Clarify model policy verification status",
+      "event": "pull_request",
+      "head_branch": "clarify-model-policy-verification-status",
+      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:43:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511130",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:41:03Z",
+      "database_id": 25932392902,
+      "display_title": "Clarify model policy verification status",
+      "event": "pull_request",
+      "head_branch": "clarify-model-policy-verification-status",
+      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:41:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392902",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:41:03Z",
+      "database_id": 25932392870,
+      "display_title": "Clarify model policy verification status",
+      "event": "pull_request",
+      "head_branch": "clarify-model-policy-verification-status",
+      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:41:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392870",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:41:03Z",
+      "database_id": 25932392838,
+      "display_title": "Clarify model policy verification status",
+      "event": "pull_request",
+      "head_branch": "clarify-model-policy-verification-status",
+      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:41:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392838",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:33:58Z",
+      "database_id": 25932062139,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "80509899b078df9986b06198e5a088053bbe1efa",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:34:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932062139",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T17:33:41Z",
       "database_id": 25932049534,
       "display_title": "Align root README with static UI function policy",
@@ -5110,6 +5175,34 @@
       "updated_at": "2026-05-15T17:33:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049534",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:33:41Z",
+      "database_id": 25932049481,
+      "display_title": "Align root README with static UI function policy",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:33:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049481",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T17:33:40Z",
+      "database_id": 25932048525,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:34:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932048525",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6370,104 +6463,6 @@
       "updated_at": "2026-05-14T21:45:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491174",
       "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:45:23Z",
-      "database_id": 25887491158,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "fdfafd53fd5a28efe1197dc76598aee9ae407401",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:45:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491158",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:45:23Z",
-      "database_id": 25887491148,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "fdfafd53fd5a28efe1197dc76598aee9ae407401",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:45:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491148",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115023,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115023",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115017,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115017",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115015,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115015",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115000,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:38:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115000",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:03:12Z",
-      "database_id": 25885564074,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0c5bd2dcb19f76c617eb948350f05e3de0823ec2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:03:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885564074",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }

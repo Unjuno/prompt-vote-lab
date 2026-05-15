@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T17:33:55+00:00`
+Generated at: `2026-05-15T17:43:51+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -46,6 +46,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
 | 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
 | 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
@@ -75,13 +76,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
 | 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
-| 287 | MERGED | 5 | 391/10 | Harden weekly canonical operator docs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25932511130 | Terminal State Report | pull_request | completed | skipped | Clarify model policy verification status |
+| 25932392902 | Static Site Check | pull_request | completed | success | Clarify model policy verification status |
+| 25932392870 | Lab PR Scope Check | pull_request | completed | success | Clarify model policy verification status |
+| 25932392838 | Script Check | pull_request | completed | success | Clarify model policy verification status |
+| 25932062139 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25932049534 | Terminal State Report | pull_request | completed | skipped | Align root README with static UI function policy |
+| 25932049481 | Public Results Export | push | completed | success | Align root README with static UI function policy |
+| 25932048525 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25931964126 | Script Check | pull_request | completed | success | Align root README with static UI function policy |
 | 25931964111 | Lab PR Scope Check | pull_request | completed | success | Align root README with static UI function policy |
 | 25930683922 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -104,13 +111,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25916818871 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25916803038 | Terminal State Report | pull_request | completed | skipped | Enable canonical weekly runner by default |
 | 25916802993 | Public Results Export | push | completed | success | Enable canonical weekly runner by default |
-| 25916802441 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25916711380 | Script Check | pull_request | completed | success | Enable canonical weekly runner by default |
-| 25916711329 | Select Eligible Test | pull_request | completed | success | Enable canonical weekly runner by default |
-| 25916711302 | Lab PR Scope Check | pull_request | completed | success | Enable canonical weekly runner by default |
-| 25916711296 | Static Site Check | pull_request | completed | success | Enable canonical weekly runner by default |
-| 25916711290 | Pre-API Freeze Audit | pull_request | completed | success | Enable canonical weekly runner by default |
-| 25916711282 | Implementation Preflight Test | pull_request | completed | success | Enable canonical weekly runner by default |
 
 ## Raw JSON
 
