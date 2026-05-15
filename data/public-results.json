@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T21:34:23+00:00",
+  "generated_at": "2026-05-15T21:42:36+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -700,6 +700,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 10,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/canary-log-policy.md` to reflect that `scripts/collect_canary_diagnostics.py` now exists.\n- Reframe remaining work as schema consolidation across canary families and the canonical selected-prompt runner.\n\n## Scope\n- `docs/canary-log-policy.md`\n\n## Non-goals\n- No workflow change.\n- No script change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 449,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T21:42:20Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T21:41:12Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 10,
+          "deletions": 2,
+          "path": "docs/canary-log-policy.md"
+        }
+      ],
+      "head_ref_name": "update-canary-log-policy-collector-status",
+      "head_ref_oid": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "labels": [],
+      "merge_commit_oid": "ac33e16c0a39c42b2d63d9f16d84272c508c921e",
+      "merged_at": "2026-05-15T21:42:20Z",
+      "merged_by": "Unjuno",
+      "number": 318,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update canary log policy collector status",
+      "updated_at": "2026-05-15T21:42:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/318"
+    },
+    {
       "additions": 88,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -733,7 +765,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Update usable ops current status",
-      "updated_at": "2026-05-15T21:34:03Z",
+      "updated_at": "2026-05-15T21:35:20Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/317"
     },
     {
@@ -4866,48 +4898,6 @@
       "title": "Validate public support unlock files",
       "updated_at": "2026-05-11T05:22:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/237"
-    },
-    {
-      "additions": 50,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds manual `week_id`, `since`, and `until` inputs to `Support Unlock Export` so support unlock aggregation can be verified and backfilled for a specific ISO week after `SPONSORS_GRAPHQL_TOKEN` is configured.\n\n## Why\n\nThe scheduled path exists, but without manual inputs it is hard to verify a known week or backfill a prior support window. That leaves the live setup step ambiguous.\n\n## Changes\n\n- Add `workflow_dispatch` inputs to `support-unlock-export.yml`:\n  - `week_id`\n  - `since`\n  - `until`\n- Keep the scheduled default as current UTC ISO week.\n- Extend the support unlock workflow contract test so those manual inputs cannot be removed silently.\n- Document the manual verification/backfill procedure in `docs/support-unlock-automation.md`.\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes.\n- No model/API run behavior changes.\n- No sponsor identities or event-level data are committed.",
-      "body_length": 927,
-      "changed_files": 3,
-      "closed_at": "2026-05-10T13:40:45Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T13:36:22Z",
-      "deletions": 4,
-      "files": [
-        {
-          "additions": 19,
-          "deletions": 3,
-          "path": ".github/workflows/support-unlock-export.yml"
-        },
-        {
-          "additions": 28,
-          "deletions": 1,
-          "path": "docs/support-unlock-automation.md"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "scripts/test_support_unlock_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-support-unlock-manual-window",
-      "head_ref_oid": "bb142f15e1b23230f66c522e43ca9d837ef8fada",
-      "labels": [],
-      "merge_commit_oid": "cb94507f6b23397d608cfb717211a26c660aa842",
-      "merged_at": "2026-05-10T13:40:45Z",
-      "merged_by": "Unjuno",
-      "number": 235,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Allow manual support unlock backfill windows",
-      "updated_at": "2026-05-11T05:22:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/235"
     }
   ],
   "run_records": [
@@ -5067,6 +5057,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T21:42:22Z",
+      "database_id": 25942825538,
+      "display_title": "Update canary log policy collector status",
+      "event": "pull_request",
+      "head_branch": "update-canary-log-policy-collector-status",
+      "head_sha": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:42:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942825538",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T21:41:16Z",
+      "database_id": 25942782675,
+      "display_title": "Update canary log policy collector status",
+      "event": "pull_request",
+      "head_branch": "update-canary-log-policy-collector-status",
+      "head_sha": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:41:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942782675",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T21:41:16Z",
+      "database_id": 25942782667,
+      "display_title": "Update canary log policy collector status",
+      "event": "pull_request",
+      "head_branch": "update-canary-log-policy-collector-status",
+      "head_sha": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:41:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942782667",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T21:41:16Z",
+      "database_id": 25942782660,
+      "display_title": "Update canary log policy collector status",
+      "event": "pull_request",
+      "head_branch": "update-canary-log-policy-collector-status",
+      "head_sha": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:41:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942782660",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T21:34:27Z",
+      "database_id": 25942522221,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "72b263af2d0cdbf2873b3054c2e1435cb0b689d0",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:34:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942522221",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T21:34:05Z",
       "database_id": 25942508018,
       "display_title": "Update usable ops current status",
@@ -5078,6 +5138,34 @@
       "updated_at": "2026-05-15T21:34:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942508018",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T21:34:05Z",
+      "database_id": 25942507964,
+      "display_title": "Update usable ops current status",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "2cd2a7bc05dfbb70dfb83a93d67894f410fd8c6d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:34:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942507964",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T21:34:04Z",
+      "database_id": 25942507147,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "2cd2a7bc05dfbb70dfb83a93d67894f410fd8c6d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T21:34:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942507147",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6338,104 +6426,6 @@
       "updated_at": "2026-05-15T07:27:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25905975592",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T06:43:38Z",
-      "database_id": 25904426081,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a23bf9ef59030035d00e09f67cff21c5b39b835e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T06:44:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25904426081",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T06:43:18Z",
-      "database_id": 25904414257,
-      "display_title": "Public Results Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "36cd0d8d670f94289d27134ef1a85e2918e3ba16",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T06:43:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25904414257",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-15T06:40:06Z",
-      "database_id": 25904304891,
-      "display_title": "GitHub Pages Smoke Check",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "36cd0d8d670f94289d27134ef1a85e2918e3ba16",
-      "name": "GitHub Pages Smoke Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T06:40:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25904304891",
-      "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T05:49:07Z",
-      "database_id": 25902648350,
-      "display_title": "Clarify lab support baseline rule",
-      "event": "pull_request",
-      "head_branch": "clarify-lab-support-baseline",
-      "head_sha": "eb8a3b776224104c7900c6c2de905710be14c4c0",
-      "name": "Safety Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T05:49:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25902648350",
-      "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T05:49:07Z",
-      "database_id": 25902648326,
-      "display_title": "Clarify lab support baseline rule",
-      "event": "pull_request",
-      "head_branch": "clarify-lab-support-baseline",
-      "head_sha": "eb8a3b776224104c7900c6c2de905710be14c4c0",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T05:49:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25902648326",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T05:49:07Z",
-      "database_id": 25902648321,
-      "display_title": "Clarify lab support baseline rule",
-      "event": "pull_request",
-      "head_branch": "clarify-lab-support-baseline",
-      "head_sha": "eb8a3b776224104c7900c6c2de905710be14c4c0",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T05:49:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25902648321",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T05:27:54Z",
-      "database_id": 25901992743,
-      "display_title": "Clarify lab support baseline rule",
-      "event": "pull_request",
-      "head_branch": "clarify-lab-support-baseline",
-      "head_sha": "2348dd71e2edd241787fb5c06936aef75c2c636a",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T05:28:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25901992743",
-      "workflow_name": "Static Site Check"
     }
   ]
 }

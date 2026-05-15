@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T21:34:23+00:00`
+Generated at: `2026-05-15T21:42:36+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 | 317 | MERGED | 2 | 88/30 | Update usable ops current status |
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
 | 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
 | 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
 | 290 | MERGED | 5 | 284/24 | Add workflow family map |
-| 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25942825538 | Terminal State Report | pull_request | completed | skipped | Update canary log policy collector status |
+| 25942782675 | Script Check | pull_request | completed | success | Update canary log policy collector status |
+| 25942782667 | Lab PR Scope Check | pull_request | completed | success | Update canary log policy collector status |
+| 25942782660 | Static Site Check | pull_request | completed | success | Update canary log policy collector status |
+| 25942522221 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25942508018 | Terminal State Report | pull_request | completed | skipped | Update usable ops current status |
+| 25942507964 | Public Results Export | push | completed | success | Update usable ops current status |
+| 25942507147 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25942471551 | Lab PR Scope Check | pull_request | completed | success | Update usable ops current status |
 | 25942471531 | Script Check | pull_request | completed | success | Update usable ops current status |
 | 25942471525 | Static Site Check | pull_request | completed | success | Update usable ops current status |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25939379376 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25938902912 | Script Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
 | 25938902909 | Lab PR Scope Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
-| 25935964195 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25935949418 | Public Results Export | push | completed | success | Gate weak historical canary workflows |
-| 25935949333 | Terminal State Report | pull_request | completed | skipped | Gate weak historical canary workflows |
-| 25935948660 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25935907251 | Static Site Check | pull_request | completed | success | Gate weak historical canary workflows |
-| 25935907229 | Script Check | pull_request | completed | success | Gate weak historical canary workflows |
-| 25935907217 | Lab PR Scope Check | pull_request | completed | success | Gate weak historical canary workflows |
 
 ## Raw JSON
 
