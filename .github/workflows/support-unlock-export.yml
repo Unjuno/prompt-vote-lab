@@ -37,6 +37,10 @@ jobs:
       - name: Resolve support window
         id: window
         shell: python
+        env:
+          INPUT_WEEK_ID: ${{ inputs.week_id }}
+          INPUT_SINCE: ${{ inputs.since }}
+          INPUT_UNTIL: ${{ inputs.until }}
         run: |
           from datetime import datetime, timedelta, timezone
           import os
@@ -46,10 +50,10 @@ jobs:
           start = target - timedelta(days=iso.weekday - 1)
           start = start.replace(hour=0, minute=0, second=0, microsecond=0)
           end = start + timedelta(days=7)
-          week_id = '''${{ inputs.week_id }}'''.strip() or f"{iso.year}-W{iso.week:02d}"
-          since = '''${{ inputs.since }}'''.strip() or start.isoformat(timespec='seconds').replace('+00:00', 'Z')
-          until = '''${{ inputs.until }}'''.strip() or end.isoformat(timespec='seconds').replace('+00:00', 'Z')
-          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as handle:
+          week_id = os.environ.get("INPUT_WEEK_ID", "").strip() or f"{iso.year}-W{iso.week:02d}"
+          since = os.environ.get("INPUT_SINCE", "").strip() or start.isoformat(timespec="seconds").replace("+00:00", "Z")
+          until = os.environ.get("INPUT_UNTIL", "").strip() or end.isoformat(timespec="seconds").replace("+00:00", "Z")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
               handle.write(f"week_id={week_id}\n")
               handle.write(f"since={since}\n")
               handle.write(f"until={until}\n")

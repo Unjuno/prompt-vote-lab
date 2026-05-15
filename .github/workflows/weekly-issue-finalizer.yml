@@ -52,8 +52,10 @@ jobs:
 
       - name: Build finalizer plan
         env:
+          WEEK_ID: ${{ inputs.week_id }}
           DRY_RUN: ${{ inputs.dry_run }}
           REQUIRE_PUBLIC_RESULTS_MEMBERSHIP: ${{ inputs.require_public_results_membership }}
+          RUN_RECORD_HINT: ${{ inputs.run_record_hint }}
         run: |
           set -euo pipefail
           dry_flag=""
@@ -63,11 +65,11 @@ jobs:
           python scripts/weekly_issue_finalizer.py \
             --issues-json .tmp/weekly-issue-finalizer/issues.json \
             --public-results data/public-results.json \
-            --week-id "${{ inputs.week_id }}" \
+            --week-id "$WEEK_ID" \
             --out-json .tmp/weekly-issue-finalizer/plan.json \
             --out-md .tmp/weekly-issue-finalizer/plan.md \
             --comments-dir .tmp/weekly-issue-finalizer/comments \
-            --run-record-hint "${{ inputs.run_record_hint }}" \
+            --run-record-hint "$RUN_RECORD_HINT" \
             $dry_flag \
             $require_flag
 
