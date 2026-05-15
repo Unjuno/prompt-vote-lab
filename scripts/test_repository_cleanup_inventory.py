@@ -15,6 +15,7 @@ REQUIRED_DOC_TEXT = [
     "Protected evidence",
     "Canonical active",
     "Legacy fallback",
+    "Historical archive evidence",
     "Generated snapshot",
     "Cleanup candidate",
     "Not-yet-removable",
@@ -23,6 +24,24 @@ REQUIRED_DOC_TEXT = [
     ".github/workflows/codex-selected-prompt-run.yml",
     "scripts/openai_lab_run.py",
     "Keep until the release plan explicitly removes it",
+    "## Historical archive evidence",
+    "Historical archive evidence explains past canary decisions, model-policy transitions, run records, and migration boundaries.",
+    "It is not active canonical status.",
+    "Canary-era names should be preserved when they identify old evidence:",
+    "first-canary",
+    "canary-007",
+    "canary-008",
+    "canary-009",
+    "fixed-issue-instruction-canary",
+    "Do not rename canary-era evidence just to make it look current.",
+    "Do not delete canary-era evidence just because the current canonical runner is different.",
+    "Do not cite historical archive evidence as current canonical evidence unless the canonical marker is present.",
+    "Historical evidence role:",
+    "Current active role, if any:",
+    "Canonical status claim: none / explicit marker present",
+    "Affected run records:",
+    "Affected public docs:",
+    "Affected contract tests:",
     "Generated snapshots are not source-of-truth policy.",
     "These are candidates for future cleanup work. They are not deletion instructions.",
     "Protected evidence check:",
@@ -49,6 +68,7 @@ FORBIDDEN_DOC_TEXT = [
     "safe to delete now",
     "auto-delete",
     "bulk delete",
+    "rename all canary evidence",
 ]
 
 
@@ -78,6 +98,8 @@ def main() -> int:
         raise SystemExit("protected evidence should be listed before active surfaces")
     if doc.index("## Canonical active surfaces") > doc.index("## Legacy fallback surfaces"):
         raise SystemExit("legacy fallback should follow canonical active surfaces")
+    if doc.index("## Legacy fallback surfaces") > doc.index("## Historical archive evidence"):
+        raise SystemExit("historical archive evidence should follow legacy fallback surfaces")
     if doc.index("## Cleanup candidates") > doc.index("## Not-yet-removable items"):
         raise SystemExit("not-yet-removable items should follow cleanup candidates")
 
