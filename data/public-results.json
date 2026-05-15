@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T07:27:10+00:00",
+  "generated_at": "2026-05-15T08:30:33+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 22,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Extend `scripts/lab-smoke-test.mjs` so the visible lab page must keep the no-change baseline and support-unlocked Rank 2/3 explanation.\n- Require the lab smoke test to verify that support only unlocks comparison runs after the baseline loses.\n- Require the lab smoke test to verify that Rank 2/3 do not independently need 20+ votes after Rank 1 beats the baseline.\n\n## Scope\n- `scripts/lab-smoke-test.mjs`\n\n## Confirmed rule protected by smoke test\n- No-change baseline has 20 votes.\n- If baseline ranks first, no implementation candidate runs, even when support exists.\n- If a real prompt ranks first, Rank 1 is eligible.\n- After baseline pass, 5 USD weekly support can unlock Rank 2.\n- After baseline pass, 10 USD weekly support can unlock Rank 2 and Rank 3.\n- Rank 2 and Rank 3 do not independently need 20+ votes after Rank 1 beats the baseline.\n\n## Non-goals\n- No lab implementation change.\n- No selection behavior change.\n- No support threshold change.\n- No workflow behavior change.\n- No runner behavior change.\n- No generated snapshot edit.\n- No auto-merge.\n- No API call.",
+      "body_length": 1093,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T08:30:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T08:01:37Z",
+      "deletions": 1,
+      "files": [
+        {
+          "additions": 22,
+          "deletions": 1,
+          "path": "scripts/lab-smoke-test.mjs"
+        }
+      ],
+      "head_ref_name": "require-lab-support-baseline-smoke",
+      "head_ref_oid": "355984383fc2f65788595968c723540dd5199565",
+      "labels": [],
+      "merge_commit_oid": "033eac56c1b33c4a51374c8d36067edd2759a26c",
+      "merged_at": "2026-05-15T08:30:12Z",
+      "merged_by": "Unjuno",
+      "number": 301,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Require lab support baseline explanation in smoke test",
+      "updated_at": "2026-05-15T08:30:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/301"
+    },
     {
       "additions": 14,
       "author": "Unjuno",
@@ -4749,53 +4781,6 @@
       "title": "Document weekly automation schedule",
       "updated_at": "2026-05-10T14:53:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/239"
-    },
-    {
-      "additions": 529,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a static comparison dashboard generator so weekly rank-based experiment evidence can be shown as a readable public index instead of requiring participants to dig through Git history manually.\n\n## Changes\n\nAdds:\n\n```text\nscripts/build_comparison_dashboard.py\nscripts/test_build_comparison_dashboard.py\ndocs/comparison-dashboard.md\n```\n\nUpdates Script Check to run the new dashboard builder test.\n\n## What the dashboard does\n\nThe generator reads:\n\n```text\ndata/public-results.json\n```\n\nand writes:\n\n```text\nlab/comparisons/<week_id>/index.html\nlab/comparisons/<week_id>/style.css\n```\n\nThe generated page shows per-rank evidence:\n\n- rank\n- Issue number/title/state\n- vote count\n- safety status\n- runtime scan status\n- implementation PR\n- changed files\n- intended output root\n- run record path\n- decision\n\n## Boundary\n\nThe dashboard is only a public evidence index. GitHub Issues, PRs, commits, public bundles, and `runs/` records remain the source of truth.\n\nThe generator does not publish raw diagnostics, raw Codex stdout/stderr, login logs, secrets, payment data, private data, iframes, external scripts, or network calls.\n\n## Tests\n\nAdds a fixture-style Python test that verifies:\n\n- rank 2 and rank 3 rows render\n- Issue and PR links render\n- output roots and run record paths render\n- the static CSP includes `connect-src 'none'`\n- forbidden raw-log/secrets/dynamic-code strings are not emitted\n\n## Non-goals\n\n- No `/lab/` generated dashboard is committed in this PR.\n- No model/API run.\n- No comparison-run workflow yet.\n- No rank-specific output-root execution yet.\n- No auto-merge.",
-      "body_length": 1604,
-      "changed_files": 4,
-      "closed_at": "2026-05-08T04:02:32Z",
-      "comment_count": 0,
-      "created_at": "2026-05-08T04:01:16Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 4,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 127,
-          "deletions": 0,
-          "path": "docs/comparison-dashboard.md"
-        },
-        {
-          "additions": 293,
-          "deletions": 0,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 105,
-          "deletions": 0,
-          "path": "scripts/test_build_comparison_dashboard.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-dashboard-generator",
-      "head_ref_oid": "42a9ce5ce5bb7b1bd110592823ce58cea3d45124",
-      "labels": [],
-      "merge_commit_oid": "43a193f546d799197ab7b2aaf101d53940e9f454",
-      "merged_at": "2026-05-08T04:02:32Z",
-      "merged_by": "Unjuno",
-      "number": 197,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add comparison dashboard generator",
-      "updated_at": "2026-05-08T14:17:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/197"
     }
   ],
   "run_records": [
@@ -4955,6 +4940,132 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T08:30:15Z",
+      "database_id": 25908234916,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "355984383fc2f65788595968c723540dd5199565",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:30:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908234916",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:27:48Z",
+      "database_id": 25908136834,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "355984383fc2f65788595968c723540dd5199565",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:27:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908136834",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:27:48Z",
+      "database_id": 25908136823,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "355984383fc2f65788595968c723540dd5199565",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:28:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908136823",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:27:48Z",
+      "database_id": 25908136819,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "355984383fc2f65788595968c723540dd5199565",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:28:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908136819",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:01:43Z",
+      "database_id": 25907212486,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "a5b8d9d59ec6bae47c9c7776799286d2e3626fd5",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:13:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25907212486",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:01:43Z",
+      "database_id": 25907212462,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "a5b8d9d59ec6bae47c9c7776799286d2e3626fd5",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:16:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25907212462",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "failure",
+      "created_at": "2026-05-15T08:01:43Z",
+      "database_id": 25907212444,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "pull_request",
+      "head_branch": "require-lab-support-baseline-smoke",
+      "head_sha": "a5b8d9d59ec6bae47c9c7776799286d2e3626fd5",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:15:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25907212444",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T07:27:13Z",
+      "database_id": 25905993543,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "10ad35f6b2a97282ca237fc0e4a6c8577648030f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T07:27:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25905993543",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T07:26:45Z",
+      "database_id": 25905976040,
+      "display_title": "Clarify lab support baseline rule",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "6be6ec3c87f493ef28707b8eba4dfd1a940ee414",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T07:27:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25905976040",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T07:26:45Z",
       "database_id": 25905976035,
       "display_title": "Clarify lab support baseline rule",
@@ -4966,6 +5077,20 @@
       "updated_at": "2026-05-15T07:26:45Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25905976035",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T07:26:44Z",
+      "database_id": 25905975592,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6be6ec3c87f493ef28707b8eba4dfd1a940ee414",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T07:27:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25905975592",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6184,146 +6309,6 @@
       "updated_at": "2026-05-14T18:09:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876965328",
       "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:09:34Z",
-      "database_id": 25876965270,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "6d0d999bc05f25b48fe6fb573bde2585f79d5008",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:09:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876965270",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T18:06:42Z",
-      "database_id": 25876825682,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "8c90b1c5149a27e2601eebc2272913dd75dbdf85",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:07:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876825682",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:06:42Z",
-      "database_id": 25876825668,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "8c90b1c5149a27e2601eebc2272913dd75dbdf85",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:06:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876825668",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:06:42Z",
-      "database_id": 25876825665,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "8c90b1c5149a27e2601eebc2272913dd75dbdf85",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:06:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876825665",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:06:42Z",
-      "database_id": 25876825659,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "8c90b1c5149a27e2601eebc2272913dd75dbdf85",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:06:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876825659",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T17:44:50Z",
-      "database_id": 25875744765,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "1ce290ec844115c1f5523d1ed8ece5debaf78419",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T17:45:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875744765",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T17:44:31Z",
-      "database_id": 25875730498,
-      "display_title": "Mark OpenAI lab runner as legacy fallback",
-      "event": "pull_request",
-      "head_branch": "mark-openai-lab-run-legacy",
-      "head_sha": "311e8a81150b1ccc518d3043d09b351f89db0da2",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T17:44:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875730498",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T17:44:31Z",
-      "database_id": 25875730438,
-      "display_title": "Mark OpenAI lab runner as legacy fallback",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "68a17a4ed8e60b6d522fc298376729afb6823143",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T17:44:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875730438",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T17:44:29Z",
-      "database_id": 25875729289,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "68a17a4ed8e60b6d522fc298376729afb6823143",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T17:44:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875729289",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T17:34:50Z",
-      "database_id": 25875256100,
-      "display_title": "Mark OpenAI lab runner as legacy fallback",
-      "event": "pull_request",
-      "head_branch": "mark-openai-lab-run-legacy",
-      "head_sha": "311e8a81150b1ccc518d3043d09b351f89db0da2",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T17:34:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25875256100",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

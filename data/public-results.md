@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T07:27:10+00:00`
+Generated at: `2026-05-15T08:30:33+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 301 | MERGED | 1 | 22/1 | Require lab support baseline explanation in smoke test |
 | 300 | MERGED | 1 | 14/0 | Clarify lab support baseline rule |
 | 299 | MERGED | 6 | 237/7 | Clarify participant support baseline docs |
 | 298 | MERGED | 2 | 110/9 | Clarify support rank baseline policy |
@@ -71,13 +72,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 | 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
-| 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25908234916 | Terminal State Report | pull_request | completed | skipped | Require lab support baseline explanation in smoke test |
+| 25908136834 | Lab PR Scope Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
+| 25908136823 | Static Site Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
+| 25908136819 | Script Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
+| 25907212486 | Static Site Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
+| 25907212462 | Script Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
+| 25907212444 | Lab PR Scope Check | pull_request | completed | failure | Require lab support baseline explanation in smoke test |
+| 25905993543 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25905976040 | Public Results Export | push | completed | success | Clarify lab support baseline rule |
 | 25905976035 | Terminal State Report | pull_request | completed | skipped | Clarify lab support baseline rule |
+| 25905975592 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25904426081 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25904414257 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25904304891 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
@@ -97,16 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25900404939 | Static Site Check | pull_request | completed | success | Clarify participant support baseline docs |
 | 25899942249 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25899938576 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25897827518 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25897795526 | Terminal State Report | pull_request | completed | skipped | Clarify support rank baseline policy |
-| 25897795516 | Public Results Export | push | completed | success | Clarify support rank baseline policy |
-| 25897795322 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25897699803 | Static Site Check | pull_request | completed | success | Clarify support rank baseline policy |
-| 25897699800 | Lab PR Scope Check | pull_request | completed | success | Clarify support rank baseline policy |
-| 25897699789 | Script Check | pull_request | completed | success | Clarify support rank baseline policy |
-| 25897070534 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25897063353 | Terminal State Report | pull_request | completed | skipped | Document canary-era archive boundary |
-| 25897063347 | Public Results Export | push | completed | success | Document canary-era archive boundary |
 
 ## Raw JSON
 
