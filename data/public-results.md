@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T17:43:51+00:00`
+Generated at: `2026-05-15T17:55:42+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -46,6 +46,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
 | 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
@@ -75,13 +76,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
-| 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25933052183 | Terminal State Report | pull_request | completed | skipped | Update experiment model active model policy reference |
+| 25932935767 | Lab PR Scope Check | pull_request | completed | success | Update experiment model active model policy reference |
+| 25932935733 | Static Site Check | pull_request | completed | success | Update experiment model active model policy reference |
+| 25932524922 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25932511134 | Public Results Export | push | completed | success | Clarify model policy verification status |
 | 25932511130 | Terminal State Report | pull_request | completed | skipped | Clarify model policy verification status |
+| 25932510085 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25932392902 | Static Site Check | pull_request | completed | success | Clarify model policy verification status |
 | 25932392870 | Lab PR Scope Check | pull_request | completed | success | Clarify model policy verification status |
 | 25932392838 | Script Check | pull_request | completed | success | Clarify model policy verification status |
@@ -105,12 +111,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25930015263 | Lab PR Scope Check | pull_request | completed | success | Harden operator workflow input handling |
 | 25928469855 | Issue Safety Scan | issues | completed | success | Review Weekly Issue Finalizer manual input handling before release |
 | 25927895520 | Issue Safety Scan | issues | completed | success | Review Support Unlock Export input handling before release |
-| 25919071413 | Issue Safety Scan | issues | completed | success | Verify first ordinary canonical weekly default-on no-eligible run |
-| 25918371213 | Issue Safety Scan | issues | completed | success | Inventory stale merged branches before cleanup |
-| 25918177364 | Issue Safety Scan | issues | completed | success | Verify first ordinary canonical weekly default-on no-eligible run |
-| 25916818871 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25916803038 | Terminal State Report | pull_request | completed | skipped | Enable canonical weekly runner by default |
-| 25916802993 | Public Results Export | push | completed | success | Enable canonical weekly runner by default |
 
 ## Raw JSON
 

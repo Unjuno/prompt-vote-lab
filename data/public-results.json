@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T17:43:51+00:00",
+  "generated_at": "2026-05-15T17:55:42+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -671,6 +671,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 3,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/experiment-model.md` from the historical `model-policy-v1.0` / `gpt-5-nano` reference to the active `model-policy-v1.1` / `gpt-5.4-nano` implementation condition.\n\n## Scope\n- `docs/experiment-model.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 397,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:55:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T17:52:54Z",
+      "deletions": 3,
+      "files": [
+        {
+          "additions": 3,
+          "deletions": 3,
+          "path": "docs/experiment-model.md"
+        }
+      ],
+      "head_ref_name": "update-experiment-model-active-model-policy",
+      "head_ref_oid": "d0213fe295e203ce98ddb72f173c0a003351596a",
+      "labels": [],
+      "merge_commit_oid": "31fca5c88d2f81e92bc059c1c71a122a6c0615bc",
+      "merged_at": "2026-05-15T17:55:25Z",
+      "merged_by": "Unjuno",
+      "number": 311,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update experiment model active model policy reference",
+      "updated_at": "2026-05-15T17:55:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/311"
+    },
     {
       "additions": 2,
       "author": "Unjuno",
@@ -4838,103 +4870,6 @@
       "title": "Record auto vote summary for week-2026-W19",
       "updated_at": "2026-05-11T05:22:04Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/243"
-    },
-    {
-      "additions": 162,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nReconciles implementation settings and documentation after live support-export and no-eligible weekly verification.\n\n## Correct active condition\n\n```text\nmodel: gpt-5.4-nano\nmax_output_tokens: 5000\n```\n\n`max_output_tokens: 12000` remains deferred until after system completion and live eligible-path verification.\n\n## Changes\n\n- Align weekly and first-canary implementation workflows to `gpt-5.4-nano / 5000`.\n- Align `openai_lab_run.py` and `preflight_implementation_agent.py` with the same active model.\n- Update pre-API freeze audit to enforce the active model and token budget.\n- Update README, model policy, canary docs, current features, pre-API freeze, and weekly automation docs.\n- Record PR #243 and `data/support-unlocks/2026-W19.json` as the current live no-eligible support-unlock evidence.\n\n## Scope\n\nNo lab UI changes. No generated evidence changes. No token-budget increase.",
-      "body_length": 901,
-      "changed_files": 14,
-      "closed_at": "2026-05-11T05:08:02Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T04:55:37Z",
-      "deletions": 72,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 3,
-          "path": ".github/workflows/first-canary-run.yml"
-        },
-        {
-          "additions": 5,
-          "deletions": 5,
-          "path": ".github/workflows/weekly-auto-run.yml"
-        },
-        {
-          "additions": 5,
-          "deletions": 2,
-          "path": "README.md"
-        },
-        {
-          "additions": 3,
-          "deletions": 1,
-          "path": "docs/canary-policy.md"
-        },
-        {
-          "additions": 13,
-          "deletions": 2,
-          "path": "docs/current-features.md"
-        },
-        {
-          "additions": 5,
-          "deletions": 2,
-          "path": "docs/first-canary-readiness.md"
-        },
-        {
-          "additions": 10,
-          "deletions": 3,
-          "path": "docs/pre-api-freeze.md"
-        },
-        {
-          "additions": 39,
-          "deletions": 13,
-          "path": "docs/weekly-automation.md"
-        },
-        {
-          "additions": 35,
-          "deletions": 17,
-          "path": "rules/model-policy-v1.1.md"
-        },
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": "scripts/openai_lab_run.py"
-        },
-        {
-          "additions": 21,
-          "deletions": 7,
-          "path": "scripts/pre_api_freeze_audit.py"
-        },
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": "scripts/preflight_implementation_agent.py"
-        },
-        {
-          "additions": 12,
-          "deletions": 7,
-          "path": "scripts/test_canary_policy_alignment.py"
-        },
-        {
-          "additions": 7,
-          "deletions": 6,
-          "path": "scripts/test_preflight_implementation_agent.py"
-        }
-      ],
-      "head_ref_name": "document-weekly-automation-schedule",
-      "head_ref_oid": "bfbbf7f1670c5a00d63056f759f6d424d6b2622f",
-      "labels": [],
-      "merge_commit_oid": "e71e35f9fad4b6d7881b4e104b38066212c7e15a",
-      "merged_at": "2026-05-11T05:08:02Z",
-      "merged_by": "Unjuno",
-      "number": 248,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Reconcile active implementation model and verification docs",
-      "updated_at": "2026-05-11T05:22:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/248"
     }
   ],
   "run_records": [
@@ -5094,6 +5029,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T17:55:28Z",
+      "database_id": 25933052183,
+      "display_title": "Update experiment model active model policy reference",
+      "event": "pull_request",
+      "head_branch": "update-experiment-model-active-model-policy",
+      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:55:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933052183",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:52:58Z",
+      "database_id": 25932935767,
+      "display_title": "Update experiment model active model policy reference",
+      "event": "pull_request",
+      "head_branch": "update-experiment-model-active-model-policy",
+      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:53:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932935767",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:52:58Z",
+      "database_id": 25932935733,
+      "display_title": "Update experiment model active model policy reference",
+      "event": "pull_request",
+      "head_branch": "update-experiment-model-active-model-policy",
+      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:53:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932935733",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:43:55Z",
+      "database_id": 25932524922,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8dc66a5f029bd8c0469a89489bcdb68ba599e135",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:44:27Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932524922",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:43:37Z",
+      "database_id": 25932511134,
+      "display_title": "Clarify model policy verification status",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:43:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511134",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T17:43:37Z",
       "database_id": 25932511130,
       "display_title": "Clarify model policy verification status",
@@ -5105,6 +5110,20 @@
       "updated_at": "2026-05-15T17:43:38Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511130",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T17:43:36Z",
+      "database_id": 25932510085,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:44:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932510085",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6379,90 +6398,6 @@
       "updated_at": "2026-05-14T21:50:09Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887700245",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:47:33Z",
-      "database_id": 25887589412,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "d0188f2f5e735ea4980f7afccd0c14f6a774bd3f",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:47:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887589412",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:47:33Z",
-      "database_id": 25887589380,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "d0188f2f5e735ea4980f7afccd0c14f6a774bd3f",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:47:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887589380",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T21:47:33Z",
-      "database_id": 25887589364,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "d0188f2f5e735ea4980f7afccd0c14f6a774bd3f",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:47:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887589364",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:47:33Z",
-      "database_id": 25887589362,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "d0188f2f5e735ea4980f7afccd0c14f6a774bd3f",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:47:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887589362",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T21:45:23Z",
-      "database_id": 25887491204,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "fdfafd53fd5a28efe1197dc76598aee9ae407401",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:45:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491204",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:45:23Z",
-      "database_id": 25887491174,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "fdfafd53fd5a28efe1197dc76598aee9ae407401",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:45:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491174",
-      "workflow_name": "Static Site Check"
     }
   ]
 }
