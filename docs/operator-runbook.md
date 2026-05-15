@@ -4,7 +4,7 @@ This runbook is for maintainers operating Prompt Vote Lab.
 
 It describes what to check, what to merge, what to stop, and what must never be automated.
 
-Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This runbook is the operating procedure, not a second status source of truth.
+Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This runbook is the operating procedure, not a second status source of truth.
 
 ## Current production status
 
@@ -16,12 +16,13 @@ Weekly Auto Run -> runs/week-2026-W19-vote-summary.md
 no-change baseline won -> no implementation PR created
 manual selected-prompt workflow smoke -> PASS
 weekly canonical selected-prompt canary -> run 25858202166 -> PASS
+canonical weekly default-on release -> approved
 ```
 
-Canonical selected-prompt implementation is verified behind a default-off feature flag:
+Canonical selected-prompt implementation is verified and default-on for eligible weekly implementation candidates:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
 runner: codex-cli-selected-prompt-packet-container
 selected Issue: #282
 summary PR: #283
@@ -32,10 +33,9 @@ artifacts:
   - weekly-selected-prompt-uploaded-bundle-verification-7
 ```
 
-Still not default-on:
+Still not automated:
 
 ```text
-scheduled weekly canonical execution for ordinary weeks
 legacy runner removal
 auto-merge
 ```
@@ -52,7 +52,7 @@ Run or confirm these in order:
 5. public evidence artifact review, if canonical implementation ran
 6. Public Results Export refresh
 7. GitHub Pages sanity check
-8. cleanup temporary canary variables and canary Issues/PRs
+8. cleanup temporary override variables and canary Issues/PRs
 ```
 
 ## Normal schedule
@@ -64,15 +64,16 @@ Run or confirm these in order:
 
 The scheduled path should process the previous completed UTC ISO week.
 
-## Canonical weekly feature flag policy
+## Canonical weekly default policy
 
-The weekly canonical selected-prompt path is controlled by a repository variable:
+The weekly canonical selected-prompt path is controlled by the workflow default and an optional repository variable override:
 
 ```text
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
 ```
 
-Allowed values:
+Allowed variable values:
 
 ```text
 true
@@ -84,9 +85,9 @@ Interpretation:
 
 | Value | Effect | Release status |
 |---|---|---|
-| unset | legacy weekly fallback path | allowed during migration |
-| `false` | legacy weekly fallback path | allowed during migration |
-| `true` | canonical Docker/Codex selected-prompt runner for eligible candidates | canary / controlled use only |
+| unset | canonical Docker/Codex selected-prompt runner for eligible candidates | normal default |
+| `true` | canonical Docker/Codex selected-prompt runner for eligible candidates | normal explicit canonical path |
+| `false` | legacy weekly fallback path | emergency rollback / controlled diagnosis only |
 
 The legacy `scripts/openai_lab_run.py` path is non-canonical. It is preserved as a migration fallback only.
 
@@ -99,21 +100,31 @@ Runner: codex-cli-selected-prompt-packet-container
 Canonical selected-prompt runner: true
 ```
 
-## Temporary canary variable policy
+## Temporary override policy
 
-Temporary canary variables must be removed or reset after verification.
+Temporary override variables must be removed or reset after verification.
 
-Variables used during the controlled weekly canonical canary:
+A controlled rollback or diagnostic run may set:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+```
+
+Required cleanup after that diagnostic run:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset
+```
+
+Variables used during controlled canaries may include:
+
+```text
 PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0
 ```
 
 Required cleanup after a canary:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false or unset
 PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset
 close canary prompt Issue
 close evidence-only canary PRs without merge unless product adoption is intended
@@ -122,21 +133,22 @@ record run URL and artifact names in durable docs or PR comments
 
 Never leave `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` after a canary. That changes weekly selection behavior.
 
-Never leave the canonical weekly runner enabled unintentionally before default-on release approval.
+Never leave `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` unintentionally after a diagnostic run. That would disable the canonical default.
 
-## Default-on release gate
+## Default-on release status
 
 The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).
 
-Operator stop rule before default-on:
+Operator release result:
 
 ```text
 operator runbook feature-flag cleanup documented
 manual review remains required
 auto-merge remains disabled
+weekly canonical default-on release: approved
 ```
 
-Default-on means changing the repository/workflow default, not just temporarily setting a repository variable for a controlled run.
+Default-on means the repository/workflow default now uses the canonical runner unless explicitly overridden for rollback.
 
 ## Manual support export verification
 
@@ -181,7 +193,7 @@ eligible_count: 0
 implementation PR: none
 ```
 
-Expected canonical eligible result when the canonical feature flag is deliberately enabled:
+Expected canonical eligible result under the default runner:
 
 ```text
 vote summary PR is created
