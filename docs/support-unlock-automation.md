@@ -59,10 +59,10 @@ The token should use the least permissions that can read sponsorship activity fo
 
 After `SPONSORS_GRAPHQL_TOKEN` is configured, run `Support Unlock Export` manually with explicit inputs before trusting the scheduled path.
 
-Example for 2026-W20:
+Example for 2026-W19:
 
 ```text
-week_id: 2026-W20
+week_id: 2026-W19
 since: 2026-05-04T00:00:00Z
 until: 2026-05-11T00:00:00Z
 ```
@@ -70,7 +70,7 @@ until: 2026-05-11T00:00:00Z
 Expected result:
 
 ```text
-data/support-unlocks/2026-W20.json
+data/support-unlocks/2026-W19.json
 ```
 
 If the generated file changes, the workflow commits it directly to `main`. If no aggregate changed, it exits without a commit.
@@ -98,6 +98,7 @@ python scripts/test_build_support_unlocks.py
 python scripts/test_resolve_support_unlock.py
 python scripts/test_select_eligible_support_unlock.py
 python scripts/test_support_unlock_workflow_contract.py
+python scripts/test_unlock_export_public.py
 ```
 
 Those tests verify:
@@ -107,6 +108,8 @@ Those tests verify:
 - rank 3 unlocks at 10 USD
 - non-new, old, and recurring support events are ignored
 - sponsor identities from the raw fixture are not present in the public output
+- committed support unlock JSON contains only the allowed public schema
+- the support export workflow passes manual inputs through environment variables before Python reads them
 - weekly selection can read `data/support-unlocks/<week-id>.json`
 - the support export workflow keeps manual `week_id`, `since`, and `until` inputs wired
 - the weekly workflow requires the support unlock file before selecting eligible ranks
