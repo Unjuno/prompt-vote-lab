@@ -42,6 +42,22 @@ If no real prompt beats the baseline, no implementation-agent attempt is created
 
 That is not failure. It means the group preferred not to spend a bounded attempt on weak prompts.
 
+Baseline passing is decided by the weekly candidate set:
+
+```text
+baseline ranks first -> no implementation candidates
+real prompt ranks first -> baseline passed -> rank 1 is eligible
+```
+
+If the baseline is passed, support can unlock extra comparison runs:
+
+```text
+5 USD weekly support -> rank 2 can also be attempted
+10 USD weekly support -> rank 2 and rank 3 can also be attempted
+```
+
+Rank 2 and rank 3 do not independently need 20+ votes after rank 1 beats the baseline. Support does not help if the baseline ranks first.
+
 ## How to vote
 
 1. Go to the repository Issues page.
@@ -135,7 +151,7 @@ unsafe dynamic code
 
 ## What support can and cannot do
 
-Support can unlock extra comparison runs for rank 2 and rank 3 when the weekly support threshold is met.
+Support can unlock extra comparison runs for rank 2 and rank 3 when the weekly support threshold is met and the real prompt set has already beaten the no-change baseline.
 
 Support cannot buy:
 
@@ -149,7 +165,7 @@ feature control
 private request handling
 ```
 
-Support increases comparison capacity. It does not override the game.
+Support increases comparison capacity. It does not override the no-change baseline.
 
 ## Where to see results
 
@@ -192,6 +208,10 @@ Yes, to vote with reactions or create Issues.
 ### Does the most popular prompt always merge?
 
 No. Votes select candidates for bounded attempts. Merge still requires review.
+
+### Can rank 2 or rank 3 run without 20 votes?
+
+Yes, but only after a real prompt beats the no-change baseline. After that, support can unlock rank 2 or rank 3 comparison runs. If the baseline ranks first, support unlocks nothing.
 
 ### Can a failed prompt be useful?
 
