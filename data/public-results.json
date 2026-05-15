@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T17:03:28+00:00",
+  "generated_at": "2026-05-15T17:33:55+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -671,6 +671,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 2,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Align the root README with `rules/static-ui-v1.0.md` and `scripts/static-site-check.sh`.\n- Clarify that `eval` remains forbidden while controlled `new Function(...)` is allowed only for fixed repository-authored logic and must not use user-controlled input.\n- Restore the final newline removed by the previous README-only update.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.",
+      "body_length": 532,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:33:38Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T17:31:44Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 2,
+          "path": "README.md"
+        }
+      ],
+      "head_ref_name": "align-readme-static-ui-function-policy",
+      "head_ref_oid": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
+      "labels": [],
+      "merge_commit_oid": "e03cec7a9939265b86a649220f551d622561ad32",
+      "merged_at": "2026-05-15T17:33:38Z",
+      "merged_by": "Unjuno",
+      "number": 309,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Align root README with static UI function policy",
+      "updated_at": "2026-05-15T17:33:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/309"
+    },
     {
       "additions": 4,
       "author": "Unjuno",
@@ -4908,48 +4940,6 @@
       "title": "Improve lab participant and run-result links",
       "updated_at": "2026-05-11T03:39:21Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/247"
-    },
-    {
-      "additions": 247,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a safe development artifact reset script.\n\n## Changes\n\n- Add `scripts/reset_dev_artifacts.py`.\n- Add `scripts/test_reset_dev_artifacts.py`.\n- Run the reset test from `Script Check`.\n\n## Safety model\n\n- Dry-run by default.\n- `--apply` is required to remove anything.\n- Only `.tmp/` and `tmp/` are allowed cleanup roots.\n- Public evidence paths such as `data/`, `runs/`, `lab/comparisons/`, and `lab/history/` are protected.\n\n## Scope\n\nNo workflow behavior changes beyond adding the test step. No lab or generated evidence changes.",
-      "body_length": 546,
-      "changed_files": 3,
-      "closed_at": "2026-05-11T03:25:14Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T03:23:40Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 149,
-          "deletions": 0,
-          "path": "scripts/reset_dev_artifacts.py"
-        },
-        {
-          "additions": 95,
-          "deletions": 0,
-          "path": "scripts/test_reset_dev_artifacts.py"
-        }
-      ],
-      "head_ref_name": "document-weekly-automation-schedule",
-      "head_ref_oid": "6ae31b39d530440e32c019d611101923863ada39",
-      "labels": [],
-      "merge_commit_oid": "2eb6bf303106780b4987496f06fb1223dee9f07f",
-      "merged_at": "2026-05-11T03:25:14Z",
-      "merged_by": "Unjuno",
-      "number": 246,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add safe dev artifact reset script",
-      "updated_at": "2026-05-11T03:25:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/246"
     }
   ],
   "run_records": [
@@ -5109,6 +5099,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T17:33:41Z",
+      "database_id": 25932049534,
+      "display_title": "Align root README with static UI function policy",
+      "event": "pull_request",
+      "head_branch": "align-readme-static-ui-function-policy",
+      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:33:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049534",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:31:50Z",
+      "database_id": 25931964126,
+      "display_title": "Align root README with static UI function policy",
+      "event": "pull_request",
+      "head_branch": "align-readme-static-ui-function-policy",
+      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:32:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25931964126",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:31:50Z",
+      "database_id": 25931964111,
+      "display_title": "Align root README with static UI function policy",
+      "event": "pull_request",
+      "head_branch": "align-readme-static-ui-function-policy",
+      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:31:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25931964111",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:03:31Z",
+      "database_id": 25930683922,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "5dd8d5a9c409c22160fe39bcd4bbd5b2a6295c9c",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:04:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930683922",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T17:03:12Z",
       "database_id": 25930669790,
       "display_title": "Clarify root README weekly automation status",
@@ -5120,6 +5166,34 @@
       "updated_at": "2026-05-15T17:03:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669790",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T17:03:12Z",
+      "database_id": 25930669780,
+      "display_title": "Clarify root README weekly automation status",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:03:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669780",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T17:03:11Z",
+      "database_id": 25930668760,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:03:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930668760",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6394,90 +6468,6 @@
       "updated_at": "2026-05-14T21:03:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885564074",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:02:50Z",
-      "database_id": 25885547824,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "466ed188c9401971d60ebc6a362dcfff4e0e143d",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:03:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885547824",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T21:02:50Z",
-      "database_id": 25885547821,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "725e9fe70ff1e2b788e5fb7437b2a6d67f9f6015",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:02:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885547821",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T21:02:49Z",
-      "database_id": 25885546854,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "466ed188c9401971d60ebc6a362dcfff4e0e143d",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:03:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885546854",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:01:21Z",
-      "database_id": 25885480378,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "725e9fe70ff1e2b788e5fb7437b2a6d67f9f6015",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:01:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885480378",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:01:21Z",
-      "database_id": 25885480370,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "725e9fe70ff1e2b788e5fb7437b2a6d67f9f6015",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:01:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885480370",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:01:21Z",
-      "database_id": 25885480369,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "725e9fe70ff1e2b788e5fb7437b2a6d67f9f6015",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:01:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885480369",
-      "workflow_name": "Script Check"
     }
   ]
 }
