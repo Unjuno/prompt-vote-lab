@@ -81,16 +81,44 @@ They should not be deleted merely because the selected-prompt runner is now cano
 
 | Workflow | Path | Current role |
 |---|---|---|
-| Codex First Canary Run | `.github/workflows/codex-first-canary-run.yml` | Historical first canary path |
-| Codex Isolated 3file Canary Run | `.github/workflows/codex-isolated-3file-canary-run.yml` | Historical isolated three-file canary path |
-| Codex Isolated 3file Relaxed Canary Run | `.github/workflows/codex-isolated-3file-relaxed-canary-run.yml` | Historical relaxed canary path |
+| Codex First Canary Run | `.github/workflows/codex-first-canary-run.yml` | Historical first canary path; gated by `ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true` |
+| Codex Isolated 3file Canary Run | `.github/workflows/codex-isolated-3file-canary-run.yml` | Historical isolated three-file canary path; gated by `ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true` |
+| Codex Isolated 3file Relaxed Canary Run | `.github/workflows/codex-isolated-3file-relaxed-canary-run.yml` | Historical relaxed canary path; gated by `ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true` |
 | Codex Writeback Canary Run | `.github/workflows/codex-writeback-canary-run.yml` | Historical writeback canary path |
 | Codex Offline JSON Canary Run | `.github/workflows/codex-offline-json-canary-run.yml` | Historical non-canonical JSON writeback path |
-| Codex Agent Observed Canary Run | `.github/workflows/codex-agent-observed-canary-run.yml` | Historical agent-observed canary path |
+| Codex Agent Observed Canary Run | `.github/workflows/codex-agent-observed-canary-run.yml` | Historical agent-observed canary path; gated by `ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true` |
 | Canary 007 Policy Feasibility | `.github/workflows/canary-007-policy-feasibility.yml` | Feasibility check for policy-enforced container execution |
 | Codex Policy Agent Canary Run | `.github/workflows/codex-policy-agent-canary-run.yml` | Policy-agent public bundle and diagnostics evidence path |
 | Codex Task Packet Canary Run | `.github/workflows/codex-task-packet-canary-run.yml` | Task-packet boundary evidence path |
 | Codex Fixed Issue Instruction Canary Run | `.github/workflows/codex-fixed-issue-instruction-canary-run.yml` | Fixed-Issue instruction packet and safety-gate evidence path |
+
+## Historical weak canary gate
+
+Some historical canary workflows are intentionally weaker than the current canonical selected-prompt boundary because they tested earlier execution designs.
+
+These weak historical canaries remain as archive evidence, but their jobs require an explicit repository variable before they run:
+
+```text
+ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true
+```
+
+Gated workflows:
+
+```text
+.github/workflows/codex-first-canary-run.yml
+.github/workflows/codex-isolated-3file-canary-run.yml
+.github/workflows/codex-isolated-3file-relaxed-canary-run.yml
+.github/workflows/codex-agent-observed-canary-run.yml
+```
+
+The gate prevents accidental reruns of old workspace-write or relaxed-sandbox experiments without deleting historical evidence surfaces.
+
+The gate does not apply to the current canonical selected-prompt path:
+
+```text
+.github/workflows/codex-selected-prompt-run.yml
+.github/workflows/weekly-auto-run.yml
+```
 
 ## Canary-era archive boundary
 
@@ -182,6 +210,7 @@ The next safe cleanup work is:
 ```text
 1. Verify the first ordinary scheduled default-on weekly run.
 2. Keep scripts/openai_lab_run.py labeled as legacy and non-canonical.
-3. Defer legacy fallback removal until a separate legacy-removal gate exists.
-4. Defer workflow deletion until a release readiness record approves it.
+3. Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.
+4. Defer legacy fallback removal until a separate legacy-removal gate exists.
+5. Defer workflow deletion until a release readiness record approves it.
 ```
