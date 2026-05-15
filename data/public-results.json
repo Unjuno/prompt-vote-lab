@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T20:39:44+00:00",
+  "generated_at": "2026-05-15T20:51:57+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 7,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Fix the manual support unlock verification example so the ISO week id matches the date window.\n- Use the existing `2026-W19` window and output path consistently.\n- Mention the public support unlock privacy/schema test in the CI contract section.\n\n## Scope\n- `docs/support-unlock-automation.md`\n\n## Non-goals\n- No workflow change.\n- No support threshold change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.",
+      "body_length": 469,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T20:51:39Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T20:42:29Z",
+      "deletions": 4,
+      "files": [
+        {
+          "additions": 7,
+          "deletions": 4,
+          "path": "docs/support-unlock-automation.md"
+        }
+      ],
+      "head_ref_name": "fix-support-unlock-example-week",
+      "head_ref_oid": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "labels": [],
+      "merge_commit_oid": "748ef18eb72e5d22ad81473873977e8303d82ede",
+      "merged_at": "2026-05-15T20:51:39Z",
+      "merged_by": "Unjuno",
+      "number": 316,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix support unlock example week",
+      "updated_at": "2026-05-15T20:51:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/316"
+    },
     {
       "additions": 4,
       "author": "Unjuno",
@@ -4876,38 +4908,6 @@
       "title": "Validate support unlock output before committing",
       "updated_at": "2026-05-11T05:22:12Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/238"
-    },
-    {
-      "additions": 23,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes a false positive in public support unlock validation.\n\n## Why\n\nThe live `Support Unlock Export` reached `Build support unlocks`, but failed at `Validate public support unlock output` because the validator searched the raw JSON text for `sponsor_login`.\n\nThat incorrectly flags the allowed privacy flag name `raw_sponsor_logins_included` as leaked sponsor identity data.\n\n## Changes\n\n- Stop scanning the raw JSON text for forbidden fragments.\n- Keep strict forbidden key checks for identity-shaped keys such as `login`, `email`, `name`, and `sponsor_login`.\n- Scan only string values for obvious leaked private fragments such as `@`, `private-sponsor`, `sponsor_login`, and `sponsorLogin`.\n- Keep privacy flags required and forced to `false`.\n\n## Scope\n\n- No root `lab/` changes.\n- No workflow behavior changes.\n- No generated support unlock JSON committed in this PR.\n- No sponsor identity or event-level data added.",
-      "body_length": 934,
-      "changed_files": 1,
-      "closed_at": "2026-05-10T15:54:18Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T15:52:47Z",
-      "deletions": 6,
-      "files": [
-        {
-          "additions": 23,
-          "deletions": 6,
-          "path": "scripts/test_unlock_export_public.py"
-        }
-      ],
-      "head_ref_name": "fix-support-unlock-privacy-flag-validation",
-      "head_ref_oid": "5a8c560c93e1865dc4671788b2a486cecc560770",
-      "labels": [],
-      "merge_commit_oid": "b6257a4bc5f64b4f2ed41b53639ff66f49f0f768",
-      "merged_at": "2026-05-10T15:54:18Z",
-      "merged_by": "Unjuno",
-      "number": 242,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Fix support unlock privacy flag validation",
-      "updated_at": "2026-05-11T05:22:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/242"
     }
   ],
   "run_records": [
@@ -5067,6 +5067,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T20:51:41Z",
+      "database_id": 25940813263,
+      "display_title": "Fix support unlock example week",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-example-week",
+      "head_sha": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:51:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940813263",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:42:32Z",
+      "database_id": 25940416205,
+      "display_title": "Fix support unlock example week",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-example-week",
+      "head_sha": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:42:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940416205",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:42:32Z",
+      "database_id": 25940416192,
+      "display_title": "Fix support unlock example week",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-example-week",
+      "head_sha": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:42:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940416192",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:42:32Z",
+      "database_id": 25940416182,
+      "display_title": "Fix support unlock example week",
+      "event": "pull_request",
+      "head_branch": "fix-support-unlock-example-week",
+      "head_sha": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:42:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940416182",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:39:49Z",
+      "database_id": 25940294085,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "77723e91fa3563101bd8b55a8ccfb98fcb03fe23",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:40:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940294085",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T20:39:28Z",
       "database_id": 25940277965,
       "display_title": "Clarify automation map current workflow status",
@@ -5078,6 +5148,34 @@
       "updated_at": "2026-05-15T20:39:30Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940277965",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:39:28Z",
+      "database_id": 25940277614,
+      "display_title": "Clarify automation map current workflow status",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "7576cda1f505729e22c4177b9513a1fefdee0b1d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:39:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940277614",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T20:39:27Z",
+      "database_id": 25940276796,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7576cda1f505729e22c4177b9513a1fefdee0b1d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:39:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940276796",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6338,104 +6436,6 @@
       "updated_at": "2026-05-15T04:42:10Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642176",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404970,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:34:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404970",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404953,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:33:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404953",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404939,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:33:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404939",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:17:33Z",
-      "database_id": 25899942249,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9824b669d8f42ab25f230c5b6c3598edca0db0c5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:17:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899942249",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:17:25Z",
-      "database_id": 25899938576,
-      "display_title": "Support Unlock Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
-      "name": "Support Unlock Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:17:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899938576",
-      "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T03:00:53Z",
-      "database_id": 25897827518,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T03:02:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897827518",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T02:59:11Z",
-      "database_id": 25897795526,
-      "display_title": "Clarify support rank baseline policy",
-      "event": "pull_request",
-      "head_branch": "clarify-support-rank-baseline-policy",
-      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:59:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795526",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }

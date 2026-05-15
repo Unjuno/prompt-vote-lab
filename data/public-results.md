@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T20:39:44+00:00`
+Generated at: `2026-05-15T20:51:57+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
 | 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
 | 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
 | 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 290 | MERGED | 5 | 284/24 | Add workflow family map |
 | 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
 | 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
-| 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25940813263 | Terminal State Report | pull_request | completed | skipped | Fix support unlock example week |
+| 25940416205 | Script Check | pull_request | completed | success | Fix support unlock example week |
+| 25940416192 | Static Site Check | pull_request | completed | success | Fix support unlock example week |
+| 25940416182 | Lab PR Scope Check | pull_request | completed | success | Fix support unlock example week |
+| 25940294085 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25940277965 | Terminal State Report | pull_request | completed | skipped | Clarify automation map current workflow status |
+| 25940277614 | Public Results Export | push | completed | success | Clarify automation map current workflow status |
+| 25940276796 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25939988603 | Lab PR Scope Check | pull_request | completed | success | Clarify automation map current workflow status |
 | 25939988582 | Static Site Check | pull_request | completed | success | Clarify automation map current workflow status |
 | 25939391555 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25933051137 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25932935767 | Lab PR Scope Check | pull_request | completed | success | Update experiment model active model policy reference |
 | 25932935733 | Static Site Check | pull_request | completed | success | Update experiment model active model policy reference |
-| 25932524922 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25932511134 | Public Results Export | push | completed | success | Clarify model policy verification status |
-| 25932511130 | Terminal State Report | pull_request | completed | skipped | Clarify model policy verification status |
-| 25932510085 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25932392902 | Static Site Check | pull_request | completed | success | Clarify model policy verification status |
-| 25932392870 | Lab PR Scope Check | pull_request | completed | success | Clarify model policy verification status |
-| 25932392838 | Script Check | pull_request | completed | success | Clarify model policy verification status |
 
 ## Raw JSON
 
