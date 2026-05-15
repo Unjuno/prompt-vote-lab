@@ -92,6 +92,49 @@ They should not be deleted merely because the selected-prompt runner is now cano
 | Codex Task Packet Canary Run | `.github/workflows/codex-task-packet-canary-run.yml` | Task-packet boundary evidence path |
 | Codex Fixed Issue Instruction Canary Run | `.github/workflows/codex-fixed-issue-instruction-canary-run.yml` | Fixed-Issue instruction packet and safety-gate evidence path |
 
+## Canary-era archive boundary
+
+Canary-era names are historical evidence labels, not active canonical status claims.
+
+Examples:
+
+```text
+first-canary
+canary-007
+canary-008
+canary-009
+isolated-3file
+writeback-canary
+offline-json-canary
+policy-agent-canary
+task-packet-canary
+fixed-issue-instruction-canary
+```
+
+Archive boundary rule:
+
+```text
+Keep the historical name when it identifies old evidence.
+Do not rename historical evidence to make it look current.
+Do not delete historical canary surfaces merely to make the active path easier to see.
+Do not cite canary-era names as canonical selected-prompt status unless the evidence also contains the canonical runner marker.
+```
+
+A PR that changes a canary-era workflow, doc, or run-record reference must state:
+
+```text
+Historical evidence role:
+Current active role, if any:
+Canonical status claim: none / explicit marker present
+Affected run records:
+Affected public docs:
+Affected contract tests:
+Replacement evidence path:
+Rollback path:
+```
+
+Retirement is allowed only after a release record says the historical evidence remains reachable through docs or run records and the canonical replacement is documented.
+
 ## Legacy fallback workflows and paths
 
 The legacy fallback is primarily a script path, not a separate workflow family:
