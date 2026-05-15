@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T21:56:38+00:00",
+  "generated_at": "2026-05-15T02:32:00+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,53 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 128,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add a canary-era archive boundary to `docs/workflow-family-map.md`.\n- Add historical archive evidence handling to `docs/repository-cleanup-inventory.md`.\n- Extend the workflow-family and cleanup-inventory contract tests so canary-era names remain historical evidence labels, not active canonical status claims.\n\n## Scope\n- `docs/workflow-family-map.md`\n- `docs/repository-cleanup-inventory.md`\n- `scripts/test_workflow_family_map.py`\n- `scripts/test_repository_cleanup_inventory.py`\n\n## 5S mapping\n- Sorted: canary-era names are separated from active canonical status.\n- Set in order: historical evidence handling now lives in the workflow map and cleanup inventory.\n- Shined: cleanup guidance now says preserve, label, and link historical canary evidence instead of deleting or renaming it.\n- Standardized: PRs touching canary-era evidence must state evidence role, canonical status claim, affected docs/tests, replacement path, and rollback path.\n- Sustained by: workflow family map and cleanup inventory contract tests.\n\n## Non-goals\n- No workflow behavior change.\n- No workflow deletion.\n- No workflow rename.\n- No generated snapshot edit.\n- No runner behavior change.\n- No canonical/default status change.\n- No auto-merge.\n- No API call.",
+      "body_length": 1255,
+      "changed_files": 4,
+      "closed_at": "2026-05-15T02:31:44Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T02:30:21Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 44,
+          "deletions": 0,
+          "path": "docs/repository-cleanup-inventory.md"
+        },
+        {
+          "additions": 43,
+          "deletions": 0,
+          "path": "docs/workflow-family-map.md"
+        },
+        {
+          "additions": 22,
+          "deletions": 0,
+          "path": "scripts/test_repository_cleanup_inventory.py"
+        },
+        {
+          "additions": 19,
+          "deletions": 0,
+          "path": "scripts/test_workflow_family_map.py"
+        }
+      ],
+      "head_ref_name": "document-canary-archive-boundary",
+      "head_ref_oid": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
+      "labels": [],
+      "merge_commit_oid": "aa5f9aba40c94e9578926ebd570db6602cec364b",
+      "merged_at": "2026-05-15T02:31:44Z",
+      "merged_by": "Unjuno",
+      "number": 297,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Document canary-era archive boundary",
+      "updated_at": "2026-05-15T02:31:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/297"
+    },
     {
       "additions": 54,
       "author": "Unjuno",
@@ -4734,53 +4781,6 @@
       "title": "Add comparison run metadata inputs",
       "updated_at": "2026-05-08T03:02:54Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/194"
-    },
-    {
-      "additions": 452,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nHardens the first-canary-009 fixed-Issue instruction packet path before further hostile testing.\n\n## Changes\n\n- Adds repository-generated `issue-safety-analysis.json` to the 009 task packet.\n- Separates `safe_user_task` from the raw Issue body.\n- Detects hostile instruction categories including policy override, file-scope escalation, network behavior, cookie/tracking behavior, dynamic code execution, and repo mutation requests.\n- Updates the execution policy priority order so `issue-safety-analysis.json` is above `instruction-brief.md` and raw Issue text.\n- Passes the safety analysis into runner diagnostics and the Codex prompt.\n- Expands the fixed-Issue generator test with a hostile Issue penetration case based on Issue #164.\n- Updates the runner contract test for the new packet file.\n\n## Security interpretation\n\nThis does not prove general prompt-injection safety. It strengthens the current 009 stage by making unsafe Issue instructions explicit machine-readable data and keeping the executable objective limited to the safe extracted task.\n\n## Tests expected\n\n- `python -m py_compile scripts/create_codex_issue_instruction_packet.py scripts/test_create_codex_issue_instruction_packet.py scripts/test_issue_instruction_runner_contract.py`\n- `python scripts/test_create_codex_issue_instruction_packet.py`\n- `python scripts/test_issue_instruction_runner_contract.py`\n- Existing Script Check workflow\n\n## Scope\n\n- No `/lab/` changes.\n- No model/API run.\n- No vote-winner selection.\n- No auto-merge.",
-      "body_length": 1522,
-      "changed_files": 4,
-      "closed_at": "2026-05-07T02:01:42Z",
-      "comment_count": 0,
-      "created_at": "2026-05-07T01:55:41Z",
-      "deletions": 123,
-      "files": [
-        {
-          "additions": 253,
-          "deletions": 16,
-          "path": "scripts/create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 4,
-          "deletions": 1,
-          "path": "scripts/run_codex_issue_instruction_canary.sh"
-        },
-        {
-          "additions": 192,
-          "deletions": 106,
-          "path": "scripts/test_create_codex_issue_instruction_packet.py"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "scripts/test_issue_instruction_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "harden-issue-instruction-sanitizer-009",
-      "head_ref_oid": "5d414b41dbb287f65cd5d3546c8c6a69d5f200d1",
-      "labels": [],
-      "merge_commit_oid": "af0364f5f46bfa6a46a6c7a9ad6b0060eee2ba4e",
-      "merged_at": "2026-05-07T02:01:42Z",
-      "merged_by": "Unjuno",
-      "number": 166,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Harden fixed Issue instruction sanitizer",
-      "updated_at": "2026-05-07T19:21:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/166"
     }
   ],
   "run_records": [
@@ -4940,6 +4940,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T02:31:47Z",
+      "database_id": 25897063353,
+      "display_title": "Document canary-era archive boundary",
+      "event": "pull_request",
+      "head_branch": "document-canary-archive-boundary",
+      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:31:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897063353",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:30:24Z",
+      "database_id": 25897023923,
+      "display_title": "Document canary-era archive boundary",
+      "event": "pull_request",
+      "head_branch": "document-canary-archive-boundary",
+      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:30:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023923",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:30:24Z",
+      "database_id": 25897023915,
+      "display_title": "Document canary-era archive boundary",
+      "event": "pull_request",
+      "head_branch": "document-canary-archive-boundary",
+      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:30:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023915",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:30:24Z",
+      "database_id": 25897023911,
+      "display_title": "Document canary-era archive boundary",
+      "event": "pull_request",
+      "head_branch": "document-canary-archive-boundary",
+      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:30:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023911",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T21:56:42Z",
+      "database_id": 25887995199,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b4beb0d7c3599a1c383d41daa4890ab60b8c2771",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T21:57:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887995199",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-14T21:56:22Z",
       "database_id": 25887979412,
       "display_title": "Shorten README status entry",
@@ -4951,6 +5021,34 @@
       "updated_at": "2026-05-14T21:56:23Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887979412",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-14T21:56:22Z",
+      "database_id": 25887979383,
+      "display_title": "Shorten README status entry",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "ac5bb9497ab38145880b9b9c643a49182adb8df3",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-14T21:56:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887979383",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-14T21:56:21Z",
+      "database_id": 25887978532,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ac5bb9497ab38145880b9b9c643a49182adb8df3",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-14T21:56:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887978532",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6211,104 +6309,6 @@
       "updated_at": "2026-05-14T14:07:30Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864661347",
       "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:07:19Z",
-      "database_id": 25864661342,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "47891fd5d7999745ecac24b9e997c1143456d8ef",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:07:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864661342",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T14:04:46Z",
-      "database_id": 25864541546,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2b6c34031eee6050567dc25f4dee75933aa5a0db",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:05:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864541546",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:04:46Z",
-      "database_id": 25864541510,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2b6c34031eee6050567dc25f4dee75933aa5a0db",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:04:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864541510",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:04:46Z",
-      "database_id": 25864541503,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2b6c34031eee6050567dc25f4dee75933aa5a0db",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:05:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864541503",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:04:46Z",
-      "database_id": 25864541489,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2b6c34031eee6050567dc25f4dee75933aa5a0db",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:04:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864541489",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:01:28Z",
-      "database_id": 25864372181,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "ea2c30f6a562b3219b46abf699bb8a78876349cb",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:01:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864372181",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:01:28Z",
-      "database_id": 25864372180,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "ea2c30f6a562b3219b46abf699bb8a78876349cb",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864372180",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

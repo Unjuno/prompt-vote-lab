@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-14T21:56:38+00:00`
+Generated at: `2026-05-15T02:32:00+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
@@ -71,13 +72,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
-| 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25897063353 | Terminal State Report | pull_request | completed | skipped | Document canary-era archive boundary |
+| 25897023923 | Lab PR Scope Check | pull_request | completed | success | Document canary-era archive boundary |
+| 25897023915 | Script Check | pull_request | completed | success | Document canary-era archive boundary |
+| 25897023911 | Static Site Check | pull_request | completed | success | Document canary-era archive boundary |
+| 25887995199 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25887979412 | Terminal State Report | pull_request | completed | skipped | Shorten README status entry |
+| 25887979383 | Public Results Export | push | completed | success | Shorten README status entry |
+| 25887978532 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25887700258 | Script Check | pull_request | completed | success | Shorten README status entry |
 | 25887700255 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
 | 25887700247 | Static Site Check | pull_request | completed | success | Shorten README status entry |
@@ -100,13 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25885546854 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25885480378 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
 | 25885480370 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25885480369 | Script Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25885172048 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25885172023 | Script Check | pull_request | completed | failure | Shorten weekly default-on release gate |
-| 25885172019 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25884225605 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25884225593 | Script Check | pull_request | completed | failure | Shorten weekly default-on release gate |
-| 25884225589 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
 
 ## Raw JSON
 
