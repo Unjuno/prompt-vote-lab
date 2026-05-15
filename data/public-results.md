@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T04:42:04+00:00`
+Generated at: `2026-05-15T06:43:34+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,9 +14,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 6 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 0 |
-| merged_pr_count | 81 |
-| workflow_run_count | 98 |
+| open_pr_count | 1 |
+| merged_pr_count | 80 |
+| workflow_run_count | 99 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 300 | OPEN | 1 | 14/0 | Clarify lab support baseline rule |
 | 299 | MERGED | 6 | 237/7 | Clarify participant support baseline docs |
 | 298 | MERGED | 2 | 110/9 | Clarify support rank baseline policy |
 | 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
@@ -71,13 +72,23 @@ This file is a raw results surface for participants. It does not score prompts o
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 | 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
-| 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25904304891 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25902648350 | Safety Check | pull_request | completed | success | Clarify lab support baseline rule |
+| 25902648326 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
+| 25902648321 | Lab PR Scope Check | pull_request | completed | success | Clarify lab support baseline rule |
+| 25901992743 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
+| 25901992737 | Script Check | pull_request | completed | success | Clarify lab support baseline rule |
+| 25901992736 | Safety Check | pull_request | completed | failure | Clarify lab support baseline rule |
+| 25901992735 | Lab PR Scope Check | pull_request | completed | failure | Clarify lab support baseline rule |
+| 25900650074 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25900642634 | Terminal State Report | pull_request | completed | skipped | Clarify participant support baseline docs |
+| 25900642624 | Public Results Export | push | completed | success | Clarify participant support baseline docs |
+| 25900642176 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25900404970 | Script Check | pull_request | completed | success | Clarify participant support baseline docs |
 | 25900404953 | Lab PR Scope Check | pull_request | completed | success | Clarify participant support baseline docs |
 | 25900404939 | Static Site Check | pull_request | completed | success | Clarify participant support baseline docs |
@@ -96,17 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25897062870 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25897023923 | Lab PR Scope Check | pull_request | completed | success | Document canary-era archive boundary |
 | 25897023915 | Script Check | pull_request | completed | success | Document canary-era archive boundary |
-| 25897023911 | Static Site Check | pull_request | completed | success | Document canary-era archive boundary |
-| 25887995199 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25887979412 | Terminal State Report | pull_request | completed | skipped | Shorten README status entry |
-| 25887979383 | Public Results Export | push | completed | success | Shorten README status entry |
-| 25887978532 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25887700258 | Script Check | pull_request | completed | success | Shorten README status entry |
-| 25887700255 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
-| 25887700247 | Static Site Check | pull_request | completed | success | Shorten README status entry |
-| 25887700245 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
-| 25887589412 | Static Site Check | pull_request | completed | success | Shorten README status entry |
-| 25887589380 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
 
 ## Raw JSON
 
