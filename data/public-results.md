@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T06:43:34+00:00`
+Generated at: `2026-05-15T07:27:10+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,9 +14,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 6 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 1 |
-| merged_pr_count | 80 |
-| workflow_run_count | 99 |
+| open_pr_count | 0 |
+| merged_pr_count | 81 |
+| workflow_run_count | 98 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -42,7 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 300 | OPEN | 1 | 14/0 | Clarify lab support baseline rule |
+| 300 | MERGED | 1 | 14/0 | Clarify lab support baseline rule |
 | 299 | MERGED | 6 | 237/7 | Clarify participant support baseline docs |
 | 298 | MERGED | 2 | 110/9 | Clarify support rank baseline policy |
 | 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
@@ -77,6 +77,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25905976035 | Terminal State Report | pull_request | completed | skipped | Clarify lab support baseline rule |
+| 25904426081 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25904414257 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25904304891 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25902648350 | Safety Check | pull_request | completed | success | Clarify lab support baseline rule |
 | 25902648326 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
@@ -104,9 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25897070534 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25897063353 | Terminal State Report | pull_request | completed | skipped | Document canary-era archive boundary |
 | 25897063347 | Public Results Export | push | completed | success | Document canary-era archive boundary |
-| 25897062870 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25897023923 | Lab PR Scope Check | pull_request | completed | success | Document canary-era archive boundary |
-| 25897023915 | Script Check | pull_request | completed | success | Document canary-era archive boundary |
 
 ## Raw JSON
 
