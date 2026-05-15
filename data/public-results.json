@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T02:32:00+00:00",
+  "generated_at": "2026-05-15T03:00:43+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -563,6 +563,43 @@
   ],
   "pull_requests": [
     {
+      "additions": 110,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Clarify the support policy for Rank 2/3 comparison runs after the no-change baseline is beaten.\n- Document that Rank 2 and Rank 3 do not independently need to exceed 20 votes once the weekly candidate set has passed the baseline rule.\n- Extend the eligible selector support-unlock test with both the positive case and the baseline-wins counterexample.\n\n## Confirmed implementation behavior\n- `collect_votes.py` inserts the no-change baseline candidate and ranks the top candidates by vote count.\n- `select_eligible.py` returns no eligible candidates when the baseline ranks first.\n- If a real prompt ranks first, Rank 1 is eligible.\n- Support >= 5 USD unlocks Rank 2.\n- Support >= 10 USD unlocks Rank 3.\n- Rank 2/3 support-unlocked candidates do not need independent 20+ votes once the baseline is beaten.\n\n## Scope\n- `docs/support-policy.md`\n- `scripts/test_select_eligible_support_unlock.py`\n\n## Non-goals\n- No selection behavior change.\n- No support threshold change.\n- No workflow behavior change.\n- No runner behavior change.\n- No generated snapshot edit.\n- No auto-merge.\n- No API call.",
+      "body_length": 1105,
+      "changed_files": 2,
+      "closed_at": "2026-05-15T02:59:09Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T02:55:37Z",
+      "deletions": 9,
+      "files": [
+        {
+          "additions": 42,
+          "deletions": 0,
+          "path": "docs/support-policy.md"
+        },
+        {
+          "additions": 68,
+          "deletions": 9,
+          "path": "scripts/test_select_eligible_support_unlock.py"
+        }
+      ],
+      "head_ref_name": "clarify-support-rank-baseline-policy",
+      "head_ref_oid": "213c832b2e292db253916742001685101e31f1b4",
+      "labels": [],
+      "merge_commit_oid": "cf927b006063a434a4e3e4ba971dcd9a682ff077",
+      "merged_at": "2026-05-15T02:59:09Z",
+      "merged_by": "Unjuno",
+      "number": 298,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify support rank baseline policy",
+      "updated_at": "2026-05-15T02:59:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/298"
+    },
+    {
       "additions": 128,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -602,7 +639,7 @@
       "merged_at": "2026-05-15T02:31:44Z",
       "merged_by": "Unjuno",
       "number": 297,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Document canary-era archive boundary",
@@ -4744,43 +4781,6 @@
       "title": "Add comparison Issue run workflow",
       "updated_at": "2026-05-08T14:17:02Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/199"
-    },
-    {
-      "additions": 50,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nPrepares the fixed-Issue 009 workflow for rank-2/rank-3 comparison runs by making candidate rank and vote count explicit workflow-dispatch inputs.\n\n## Problem\n\nThe workflow previously hardcoded comparison metadata as:\n\n```text\ncandidate_rank: 1\nvote_count: 0\n```\n\nThat is acceptable for a single normal run, but it corrupts evidence for rank-2 and rank-3 comparison runs.\n\n## Changes\n\nAdds workflow inputs:\n\n```text\ncandidate_rank: 1 | 2 | 3\nvote_count: non-negative integer\n```\n\nThen threads those values into:\n\n- dispatch input validation\n- public run log\n- generated implementation PR body\n\n## Tests\n\nUpdates the fixed-Issue runner workflow contract test to require dynamic rank/vote metadata and reject the old hardcoded rank/vote values.\n\n## Non-goals\n\n- No `/lab/` changes.\n- No model/API run.\n- No automatic candidate selection.\n- No support/payment logic.\n- No auto-merge.",
-      "body_length": 892,
-      "changed_files": 2,
-      "closed_at": "2026-05-08T02:54:51Z",
-      "comment_count": 0,
-      "created_at": "2026-05-08T02:46:28Z",
-      "deletions": 4,
-      "files": [
-        {
-          "additions": 28,
-          "deletions": 4,
-          "path": ".github/workflows/codex-fixed-issue-instruction-canary-run.yml"
-        },
-        {
-          "additions": 22,
-          "deletions": 0,
-          "path": "scripts/test_issue_instruction_runner_contract.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-run-inputs",
-      "head_ref_oid": "fe4dd452b8c8677770055c3f952e99ce17caef1c",
-      "labels": [],
-      "merge_commit_oid": "0fc6994b1377e141d034e90362a4d291f791fa8b",
-      "merged_at": "2026-05-08T02:54:51Z",
-      "merged_by": "Unjuno",
-      "number": 194,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add comparison run metadata inputs",
-      "updated_at": "2026-05-08T03:02:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/194"
     }
   ],
   "run_records": [
@@ -4935,9 +4935,93 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 22,
-    "workflow_run_count": 98
+    "workflow_run_count": 99
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-15T02:59:11Z",
+      "database_id": 25897795526,
+      "display_title": "Clarify support rank baseline policy",
+      "event": "pull_request",
+      "head_branch": "clarify-support-rank-baseline-policy",
+      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:59:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795526",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:59:11Z",
+      "database_id": 25897795322,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "cf927b006063a434a4e3e4ba971dcd9a682ff077",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T03:00:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795322",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:55:41Z",
+      "database_id": 25897699803,
+      "display_title": "Clarify support rank baseline policy",
+      "event": "pull_request",
+      "head_branch": "clarify-support-rank-baseline-policy",
+      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:55:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897699803",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:55:41Z",
+      "database_id": 25897699800,
+      "display_title": "Clarify support rank baseline policy",
+      "event": "pull_request",
+      "head_branch": "clarify-support-rank-baseline-policy",
+      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:55:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897699800",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:55:41Z",
+      "database_id": 25897699789,
+      "display_title": "Clarify support rank baseline policy",
+      "event": "pull_request",
+      "head_branch": "clarify-support-rank-baseline-policy",
+      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:56:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897699789",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:32:03Z",
+      "database_id": 25897070534,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "d6884f0687ceae8f9b81444d6eac168a82cd66bb",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:32:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897070534",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-15T02:31:47Z",
@@ -4951,6 +5035,34 @@
       "updated_at": "2026-05-15T02:31:48Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897063353",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:31:47Z",
+      "database_id": 25897063347,
+      "display_title": "Document canary-era archive boundary",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "aa5f9aba40c94e9578926ebd570db6602cec364b",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:32:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897063347",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T02:31:46Z",
+      "database_id": 25897062870,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "aa5f9aba40c94e9578926ebd570db6602cec364b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T02:32:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897062870",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6211,104 +6323,6 @@
       "updated_at": "2026-05-14T14:34:29Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866024244",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:10:14Z",
-      "database_id": 25864811425,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2cf5b7c8f3663c2a7968ceac035df06aa6091be0",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:10:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864811425",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:10:14Z",
-      "database_id": 25864811409,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2cf5b7c8f3663c2a7968ceac035df06aa6091be0",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:10:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864811409",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:10:14Z",
-      "database_id": 25864811348,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2cf5b7c8f3663c2a7968ceac035df06aa6091be0",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:10:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864811348",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:10:14Z",
-      "database_id": 25864811333,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2cf5b7c8f3663c2a7968ceac035df06aa6091be0",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:10:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864811333",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T14:07:19Z",
-      "database_id": 25864661398,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "47891fd5d7999745ecac24b9e997c1143456d8ef",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:07:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864661398",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:07:19Z",
-      "database_id": 25864661367,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "47891fd5d7999745ecac24b9e997c1143456d8ef",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:07:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864661367",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:07:19Z",
-      "database_id": 25864661347,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "47891fd5d7999745ecac24b9e997c1143456d8ef",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:07:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25864661347",
-      "workflow_name": "Pre-API Freeze Audit"
     }
   ]
 }

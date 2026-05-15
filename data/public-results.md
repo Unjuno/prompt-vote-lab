@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T02:32:00+00:00`
+Generated at: `2026-05-15T03:00:43+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 81 |
-| workflow_run_count | 98 |
+| workflow_run_count | 99 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 298 | MERGED | 2 | 110/9 | Clarify support rank baseline policy |
 | 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
@@ -71,13 +72,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
-| 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25897795526 | Terminal State Report | pull_request | completed | skipped | Clarify support rank baseline policy |
+| 25897795322 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25897699803 | Static Site Check | pull_request | completed | success | Clarify support rank baseline policy |
+| 25897699800 | Lab PR Scope Check | pull_request | completed | success | Clarify support rank baseline policy |
+| 25897699789 | Script Check | pull_request | completed | success | Clarify support rank baseline policy |
+| 25897070534 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25897063353 | Terminal State Report | pull_request | completed | skipped | Document canary-era archive boundary |
+| 25897063347 | Public Results Export | push | completed | success | Document canary-era archive boundary |
+| 25897062870 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25897023923 | Lab PR Scope Check | pull_request | completed | success | Document canary-era archive boundary |
 | 25897023915 | Script Check | pull_request | completed | success | Document canary-era archive boundary |
 | 25897023911 | Static Site Check | pull_request | completed | success | Document canary-era archive boundary |
@@ -99,14 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25887491148 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
 | 25887115023 | Pre-API Freeze Audit | pull_request | completed | success | Shorten README status entry |
 | 25887115017 | Lab PR Scope Check | pull_request | completed | success | Shorten README status entry |
-| 25887115015 | Static Site Check | pull_request | completed | success | Shorten README status entry |
-| 25887115000 | Script Check | pull_request | completed | failure | Shorten README status entry |
-| 25885564074 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25885547824 | Public Results Export | push | completed | success | Shorten weekly default-on release gate |
-| 25885547821 | Terminal State Report | pull_request | completed | skipped | Shorten weekly default-on release gate |
-| 25885546854 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25885480378 | Lab PR Scope Check | pull_request | completed | success | Shorten weekly default-on release gate |
-| 25885480370 | Static Site Check | pull_request | completed | success | Shorten weekly default-on release gate |
 
 ## Raw JSON
 
