@@ -35,7 +35,7 @@ weekly-auto-run eligible implementation path
 
 Historical canary evidence may still mention earlier isolated paths, including `first-canary-009`, but current active paid implementation settings are defined by this file and the current workflows.
 
-The eligible implementation path has not yet been live-verified end-to-end. The no-eligible weekly path has been live-verified.
+The canonical selected-prompt canary has passed, and the weekly canonical selected-prompt runner is default-on for eligible candidates. The first ordinary post-default-on weekly run still needs operational observation.
 
 ## Fixed comparison rule
 
