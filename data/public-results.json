@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T03:00:43+00:00",
+  "generated_at": "2026-05-15T04:42:04+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,63 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 237,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Clarify participant-facing docs for the no-change baseline and support-unlocked Rank 2/3 comparison runs.\n- Explain that baseline passing is a candidate-set rule: if the baseline ranks first, no implementation candidates are eligible.\n- Explain that after a real prompt ranks first, support can unlock Rank 2 and Rank 3 even if those ranks do not independently have 20+ votes.\n- Add a participant-facing docs contract test and register it in Script Check.\n\n## Scope\n- `docs/for-participants.md`\n- `docs/how-to-participate.md`\n- `docs/no-change-baseline.md`\n- `scripts/test_participant_baseline_support_docs.py`\n- `.github/workflows/script-check.yml`\n- `scripts/test_script_check_workflow_contract.py`\n\n## Confirmed rule\n- Baseline ranks first -> no implementation candidates, regardless of support.\n- Real prompt ranks first -> Rank 1 is eligible.\n- Support >= 5 USD after baseline pass -> Rank 2 may also run.\n- Support >= 10 USD after baseline pass -> Rank 2 and Rank 3 may also run.\n- Rank 2/3 do not independently need 20+ votes after Rank 1 beats the baseline.\n\n## Non-goals\n- No selection behavior change.\n- No support threshold change.\n- No workflow behavior change beyond Script Check coverage.\n- No runner behavior change.\n- No generated snapshot edit.\n- No auto-merge.\n- No API call.",
+      "body_length": 1306,
+      "changed_files": 6,
+      "closed_at": "2026-05-15T04:41:49Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T04:33:43Z",
+      "deletions": 7,
+      "files": [
+        {
+          "additions": 6,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 22,
+          "deletions": 2,
+          "path": "docs/for-participants.md"
+        },
+        {
+          "additions": 18,
+          "deletions": 2,
+          "path": "docs/how-to-participate.md"
+        },
+        {
+          "additions": 49,
+          "deletions": 1,
+          "path": "docs/no-change-baseline.md"
+        },
+        {
+          "additions": 123,
+          "deletions": 0,
+          "path": "scripts/test_participant_baseline_support_docs.py"
+        },
+        {
+          "additions": 19,
+          "deletions": 2,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "clarify-participant-support-baseline",
+      "head_ref_oid": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
+      "labels": [],
+      "merge_commit_oid": "2568b8ca0651e724f390b66b821242c9a36e5ee2",
+      "merged_at": "2026-05-15T04:41:49Z",
+      "merged_by": "Unjuno",
+      "number": 299,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify participant support baseline docs",
+      "updated_at": "2026-05-15T04:41:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/299"
+    },
     {
       "additions": 110,
       "author": "Unjuno",
@@ -4744,43 +4801,6 @@
       "title": "Auto-build comparison dashboards during public export",
       "updated_at": "2026-05-08T14:17:03Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/198"
-    },
-    {
-      "additions": 260,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a manual comparison-run workflow that writes model output into a rank-specific comparison root instead of mutating the root lab target.\n\n## Added\n\n```text\n.github/workflows/codex-comparison-issue-run.yml\nscripts/test_comparison_issue_run_workflow_contract.py\n```\n\n## Behavior\n\nThe workflow takes:\n\n```text\nweek_id\nbase_sha\nissue_number\ncandidate_rank\nvote_count\n```\n\nIt checks out the fixed comparison base, runs the existing fixed-Issue runner, copies the generated root lab files into:\n\n```text\nlab/comparisons/<week_id>/rank-<rank>/\n```\n\nThen it restores root lab files before creating the PR. The PR should only contain:\n\n```text\nlab/comparisons/<week_id>/rank-<rank>/index.html\nlab/comparisons/<week_id>/rank-<rank>/style.css\nlab/comparisons/<week_id>/rank-<rank>/app.js\n```\n\n## Safety boundary\n\n- no schedule trigger\n- no auto-merge\n- runtime Issue safety scan before execution\n- execution gate before execution\n- root lab restored before PR creation\n- changed-file guard permits only the rank-specific output root\n- manual review remains required\n\n## Note\n\nThe contract test file is added. Registration into Script Check was not included in this PR because the connector blocked the large workflow-file update; the file still receives Python syntax checking through the existing Script Check path filters.",
-      "body_length": 1329,
-      "changed_files": 2,
-      "closed_at": "2026-05-08T13:59:47Z",
-      "comment_count": 0,
-      "created_at": "2026-05-08T13:56:05Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 172,
-          "deletions": 0,
-          "path": ".github/workflows/codex-comparison-issue-run.yml"
-        },
-        {
-          "additions": 88,
-          "deletions": 0,
-          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-issue-run-workflow",
-      "head_ref_oid": "8113023df721733eec8c05bd2c1a33347b1ec6da",
-      "labels": [],
-      "merge_commit_oid": "e74cdf5f6d1f70de60c4748fc9c8b3c303385064",
-      "merged_at": "2026-05-08T13:59:46Z",
-      "merged_by": "Unjuno",
-      "number": 199,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add comparison Issue run workflow",
-      "updated_at": "2026-05-08T14:17:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/199"
     }
   ],
   "run_records": [
@@ -4935,9 +4955,107 @@
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 22,
-    "workflow_run_count": 99
+    "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-15T04:41:51Z",
+      "database_id": 25900642634,
+      "display_title": "Clarify participant support baseline docs",
+      "event": "pull_request",
+      "head_branch": "clarify-participant-support-baseline",
+      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:41:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642634",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T04:33:46Z",
+      "database_id": 25900404970,
+      "display_title": "Clarify participant support baseline docs",
+      "event": "pull_request",
+      "head_branch": "clarify-participant-support-baseline",
+      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:34:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404970",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T04:33:46Z",
+      "database_id": 25900404953,
+      "display_title": "Clarify participant support baseline docs",
+      "event": "pull_request",
+      "head_branch": "clarify-participant-support-baseline",
+      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:33:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404953",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T04:33:46Z",
+      "database_id": 25900404939,
+      "display_title": "Clarify participant support baseline docs",
+      "event": "pull_request",
+      "head_branch": "clarify-participant-support-baseline",
+      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:33:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404939",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T04:17:33Z",
+      "database_id": 25899942249,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9824b669d8f42ab25f230c5b6c3598edca0db0c5",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:17:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899942249",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T04:17:25Z",
+      "database_id": 25899938576,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T04:17:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899938576",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T03:00:53Z",
+      "database_id": 25897827518,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T03:02:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897827518",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-15T02:59:11Z",
@@ -4951,6 +5069,20 @@
       "updated_at": "2026-05-15T02:59:12Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795526",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T02:59:11Z",
+      "database_id": 25897795516,
+      "display_title": "Clarify support rank baseline policy",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "cf927b006063a434a4e3e4ba971dcd9a682ff077",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T03:00:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795516",
+      "workflow_name": "Public Results Export"
     },
     {
       "conclusion": "success",
@@ -6197,132 +6329,6 @@
       "updated_at": "2026-05-14T15:14:01Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868097754",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T15:13:30Z",
-      "database_id": 25868096134,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "ed0a561e938c076eaf2f5dff11443bb79b02fe64",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T15:14:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868096134",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T15:12:26Z",
-      "database_id": 25868040743,
-      "display_title": "Add repository cleanup inventory",
-      "event": "pull_request",
-      "head_branch": "add-cleanup-inventory",
-      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T15:12:45Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040743",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T15:12:26Z",
-      "database_id": 25868040737,
-      "display_title": "Add repository cleanup inventory",
-      "event": "pull_request",
-      "head_branch": "add-cleanup-inventory",
-      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T15:12:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040737",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T15:12:26Z",
-      "database_id": 25868040726,
-      "display_title": "Add repository cleanup inventory",
-      "event": "pull_request",
-      "head_branch": "add-cleanup-inventory",
-      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T15:12:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040726",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T15:12:26Z",
-      "database_id": 25868040711,
-      "display_title": "Add repository cleanup inventory",
-      "event": "pull_request",
-      "head_branch": "add-cleanup-inventory",
-      "head_sha": "834d087f6c85363c2792b1a6f2eca1eed423bc08",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T15:12:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25868040711",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:34:12Z",
-      "database_id": 25866043468,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9beed1b896b00d2686e378f9453d1510276909dd",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:34:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866043468",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T14:33:52Z",
-      "database_id": 25866025889,
-      "display_title": "Add repository cleanup standards",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "fdbb6e4c07c654f47958ffa14fbf7503b3b649ca",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:34:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866025889",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T14:33:52Z",
-      "database_id": 25866025833,
-      "display_title": "Add repository 5S and language policy",
-      "event": "pull_request",
-      "head_branch": "add-repo-cleanup-standards",
-      "head_sha": "2cf5b7c8f3663c2a7968ceac035df06aa6091be0",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:33:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866025833",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T14:33:50Z",
-      "database_id": 25866024244,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "fdbb6e4c07c654f47958ffa14fbf7503b3b649ca",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T14:34:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25866024244",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
