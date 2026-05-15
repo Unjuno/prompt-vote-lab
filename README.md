@@ -85,7 +85,7 @@ The AI agent must not edit:
 - config/secrets
 - files outside `lab/`
 
-The lab must not use external scripts, CDNs, hidden network calls, cookies, iframes, `eval`, `new Function(...)`, login, payment, or trackers.
+The lab must not use external scripts, CDNs, hidden network calls, cookies, iframes, `eval`, login, payment, or trackers. Controlled `new Function(...)` is allowed only for fixed repository-authored logic under `rules/static-ui-v1.0.md` and must not use user-controlled input.
 
 ## State inheritance
 
