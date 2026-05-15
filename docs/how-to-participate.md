@@ -13,8 +13,8 @@ Winning attention is only the first step. A prompt still has to survive implemen
 ```text
 Submit a prompt
 → persuade other players
-→ beat the 20-vote gate
-→ receive one bounded agent attempt
+→ beat the 20-vote no-change baseline as a candidate set
+→ receive one bounded agent attempt, or support-unlocked comparison attempts
 → review the public outcome
 → update trust for the next round
 ```
@@ -92,6 +92,22 @@ Every week includes this virtual competitor:
 If no real prompt beats 20, the lab does not move that week.
 
 Doing nothing is always in the game.
+
+Baseline passing is a candidate-set rule:
+
+```text
+no-change baseline ranks first -> no implementation candidates
+real prompt ranks first -> rank 1 is eligible
+```
+
+After a real prompt ranks first, support can unlock additional comparison candidates:
+
+```text
+5 USD weekly support -> rank 2 may also receive a bounded attempt
+10 USD weekly support -> rank 2 and rank 3 may also receive bounded attempts
+```
+
+Rank 2 and rank 3 do not independently need 20+ votes after rank 1 beats the baseline. Support does not override a baseline win.
 
 ## 5. Review outcomes
 
