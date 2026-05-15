@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T08:30:33+00:00",
+  "generated_at": "2026-05-15T12:04:31+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -562,6 +562,113 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 230,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Change `Weekly Auto Run` so eligible weekly implementation candidates use the canonical Docker/Codex selected-prompt runner by default.\n- Update canonical status docs and pointer docs from default-off migration status to default-on release status.\n- Keep `scripts/openai_lab_run.py` as a non-canonical rollback/diagnostic fallback behind an explicit override.\n- Update contract tests for the default-on state.\n\n## Status changed\n\n```text\ncanonical weekly default: default-off during migration -> default-on\nDEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false -> true\n```\n\n## Affected docs\n- `docs/canonical-status-drift-check.md`\n- `docs/README.md`\n- `docs/weekly-automation.md`\n- `docs/operator-runbook.md`\n- `docs/current-codex-implementation-path.md`\n- `docs/canonical-runner-evidence-guide.md`\n- `docs/workflow-family-map.md`\n- `docs/repository-cleanup-inventory.md`\n\n## Affected tests\n- `scripts/test_canonical_status_drift.py`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n- `scripts/test_weekly_operator_docs.py`\n- `scripts/test_current_codex_path_doc.py`\n- `scripts/test_canonical_runner_evidence_guide.py`\n- `scripts/test_workflow_family_map.py`\n- `scripts/test_repository_cleanup_inventory.py`\n\n## Evidence supporting change\n- manual selected-prompt smoke: PASS\n- weekly feature-flag canary with eligible candidate: PASS, run `25858202166`\n- weekly diagnostics artifact: present\n- weekly public bundle artifact: present\n- weekly uploaded bundle verification artifact: present\n- bounded lab diff: PASS\n- legacy fallback documented as non-canonical\n- operator cleanup/override policy documented\n- manual review remains required\n- auto-merge remains disabled\n\n## Rollback path\n- Set repository variable `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` for emergency rollback or diagnosis.\n- Revert this PR to restore `DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` if default-on operation fails.\n\n## Non-goals\n- No lab implementation change.\n- No generated snapshot edit.\n- No legacy fallback removal.\n- No workflow deletion.\n- No auto-merge.\n- No support or baseline threshold change.",
+      "body_length": 2129,
+      "changed_files": 16,
+      "closed_at": "2026-05-15T12:04:07Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T12:01:42Z",
+      "deletions": 204,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 2,
+          "path": ".github/workflows/weekly-auto-run.yml"
+        },
+        {
+          "additions": 7,
+          "deletions": 7,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 7,
+          "deletions": 2,
+          "path": "docs/canonical-runner-evidence-guide.md"
+        },
+        {
+          "additions": 14,
+          "deletions": 13,
+          "path": "docs/canonical-status-drift-check.md"
+        },
+        {
+          "additions": 16,
+          "deletions": 50,
+          "path": "docs/current-codex-implementation-path.md"
+        },
+        {
+          "additions": 35,
+          "deletions": 23,
+          "path": "docs/operator-runbook.md"
+        },
+        {
+          "additions": 12,
+          "deletions": 12,
+          "path": "docs/repository-cleanup-inventory.md"
+        },
+        {
+          "additions": 36,
+          "deletions": 22,
+          "path": "docs/weekly-automation.md"
+        },
+        {
+          "additions": 7,
+          "deletions": 7,
+          "path": "docs/workflow-family-map.md"
+        },
+        {
+          "additions": 8,
+          "deletions": 3,
+          "path": "scripts/test_canonical_runner_evidence_guide.py"
+        },
+        {
+          "additions": 26,
+          "deletions": 21,
+          "path": "scripts/test_canonical_status_drift.py"
+        },
+        {
+          "additions": 9,
+          "deletions": 8,
+          "path": "scripts/test_current_codex_path_doc.py"
+        },
+        {
+          "additions": 5,
+          "deletions": 4,
+          "path": "scripts/test_repository_cleanup_inventory.py"
+        },
+        {
+          "additions": 4,
+          "deletions": 3,
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
+        },
+        {
+          "additions": 35,
+          "deletions": 23,
+          "path": "scripts/test_weekly_operator_docs.py"
+        },
+        {
+          "additions": 7,
+          "deletions": 4,
+          "path": "scripts/test_workflow_family_map.py"
+        }
+      ],
+      "head_ref_name": "enable-canonical-weekly-default",
+      "head_ref_oid": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "labels": [],
+      "merge_commit_oid": "eed3aec2cbc218dc6f2548d58f0754703b04dc6f",
+      "merged_at": "2026-05-15T12:04:07Z",
+      "merged_by": "Unjuno",
+      "number": 302,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Enable canonical weekly runner by default",
+      "updated_at": "2026-05-15T12:04:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/302"
+    },
     {
       "additions": 22,
       "author": "Unjuno",
@@ -4734,53 +4841,6 @@
       "title": "Add operator runbook",
       "updated_at": "2026-05-10T16:26:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/244"
-    },
-    {
-      "additions": 218,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nClarifies that Prompt Vote Lab has scheduled weekly automation, and documents how it depends on the support unlock export workflow.\n\n## Why\n\nThe implementation already schedules:\n\n- `Support Unlock Export`: daily at 00:17 UTC / 09:17 JST\n- `Weekly Auto Run`: Mondays at 00:23 UTC / 09:23 JST\n\nBut the public docs did not clearly explain the relationship between the daily support export, the weekly run, the required `data/support-unlocks/<week-id>.json` file, and the still-pending live verification status.\n\n## Changes\n\n- Add `docs/weekly-automation.md` with the schedule, run order, support unlock prerequisite, and production-verification status.\n- Update root `README.md` with a concise weekly automation section.\n- Update `docs/README.md` to link the new document and clarify current usable status.\n- Update `docs/automation-map.md` to list `support-unlock-export.yml`, schedules, and the scheduled weekly path.\n\n## Scope\n\n- Documentation only.\n- No root `lab/` changes.\n- No workflow behavior changes.\n- No generated evidence changes.",
-      "body_length": 1053,
-      "changed_files": 4,
-      "closed_at": "2026-05-10T14:53:00Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T14:48:51Z",
-      "deletions": 28,
-      "files": [
-        {
-          "additions": 20,
-          "deletions": 0,
-          "path": "README.md"
-        },
-        {
-          "additions": 17,
-          "deletions": 14,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 36,
-          "deletions": 14,
-          "path": "docs/automation-map.md"
-        },
-        {
-          "additions": 145,
-          "deletions": 0,
-          "path": "docs/weekly-automation.md"
-        }
-      ],
-      "head_ref_name": "document-weekly-automation-schedule",
-      "head_ref_oid": "7adb74340d759c2f93ccc2a52f93b896b0b4b954",
-      "labels": [],
-      "merge_commit_oid": "e91a498bdbdd07ec333371bed8327976dea56b2b",
-      "merged_at": "2026-05-10T14:53:00Z",
-      "merged_by": "Unjuno",
-      "number": 239,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Document weekly automation schedule",
-      "updated_at": "2026-05-10T14:53:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/239"
     }
   ],
   "run_records": [
@@ -4940,6 +5000,132 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T12:04:10Z",
+      "database_id": 25916803038,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:04:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916803038",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711380,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:02:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711380",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711329,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Select Eligible Test",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:01:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711329",
+      "workflow_name": "Select Eligible Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711302,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:01:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711302",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711296,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:01:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711296",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711290,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:01:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711290",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T12:01:47Z",
+      "database_id": 25916711282,
+      "display_title": "Enable canonical weekly runner by default",
+      "event": "pull_request",
+      "head_branch": "enable-canonical-weekly-default",
+      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
+      "name": "Implementation Preflight Test",
+      "status": "completed",
+      "updated_at": "2026-05-15T12:01:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916711282",
+      "workflow_name": "Implementation Preflight Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:30:37Z",
+      "database_id": 25908252067,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8e5b172f2eb12b7ce850d03f40f5b6c5f57e2408",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:31:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908252067",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T08:30:15Z",
+      "database_id": 25908235234,
+      "display_title": "Require lab support baseline explanation in smoke test",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "033eac56c1b33c4a51374c8d36067edd2759a26c",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:30:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908235234",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T08:30:15Z",
       "database_id": 25908234916,
       "display_title": "Require lab support baseline explanation in smoke test",
@@ -4951,6 +5137,20 @@
       "updated_at": "2026-05-15T08:30:16Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908234916",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T08:30:14Z",
+      "database_id": 25908234134,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "033eac56c1b33c4a51374c8d36067edd2759a26c",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T08:30:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25908234134",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6169,146 +6369,6 @@
       "updated_at": "2026-05-14T18:33:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25878107410",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:25:55Z",
-      "database_id": 25877778601,
-      "display_title": "Consolidate canonical status doc sources",
-      "event": "pull_request",
-      "head_branch": "consolidate-status-doc-sources",
-      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:26:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778601",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:25:55Z",
-      "database_id": 25877778576,
-      "display_title": "Consolidate canonical status doc sources",
-      "event": "pull_request",
-      "head_branch": "consolidate-status-doc-sources",
-      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:26:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778576",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:25:55Z",
-      "database_id": 25877778566,
-      "display_title": "Consolidate canonical status doc sources",
-      "event": "pull_request",
-      "head_branch": "consolidate-status-doc-sources",
-      "head_sha": "6f843dbee00da54846b085ae1f76ec1c8170936e",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:26:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877778566",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:11:37Z",
-      "database_id": 25877069034,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "4dd1262ea3745f788ea8e234ff32207886d45855",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:12:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877069034",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T18:11:14Z",
-      "database_id": 25877050929,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "6d0d999bc05f25b48fe6fb573bde2585f79d5008",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:11:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877050929",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:11:13Z",
-      "database_id": 25877050457,
-      "display_title": "Add canonical status drift check",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "a1d5b14ac115e3fd3e4c480ff3dbfbccd04b3bae",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:11:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877050457",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T18:11:12Z",
-      "database_id": 25877049596,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a1d5b14ac115e3fd3e4c480ff3dbfbccd04b3bae",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:11:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25877049596",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:09:34Z",
-      "database_id": 25876965410,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "6d0d999bc05f25b48fe6fb573bde2585f79d5008",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:09:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876965410",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:09:34Z",
-      "database_id": 25876965331,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "6d0d999bc05f25b48fe6fb573bde2585f79d5008",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:10:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876965331",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T18:09:34Z",
-      "database_id": 25876965328,
-      "display_title": "Add canonical status drift check",
-      "event": "pull_request",
-      "head_branch": "add-canonical-status-drift-check",
-      "head_sha": "6d0d999bc05f25b48fe6fb573bde2585f79d5008",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T18:09:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25876965328",
-      "workflow_name": "Static Site Check"
     }
   ]
 }

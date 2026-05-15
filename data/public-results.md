@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T08:30:33+00:00`
+Generated at: `2026-05-15T12:04:31+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -42,6 +42,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 302 | MERGED | 16 | 230/204 | Enable canonical weekly runner by default |
 | 301 | MERGED | 1 | 22/1 | Require lab support baseline explanation in smoke test |
 | 300 | MERGED | 1 | 14/0 | Clarify lab support baseline rule |
 | 299 | MERGED | 6 | 237/7 | Clarify participant support baseline docs |
@@ -71,13 +72,22 @@ This file is a raw results surface for participants. It does not score prompts o
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
-| 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25916803038 | Terminal State Report | pull_request | completed | skipped | Enable canonical weekly runner by default |
+| 25916711380 | Script Check | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25916711329 | Select Eligible Test | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25916711302 | Lab PR Scope Check | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25916711296 | Static Site Check | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25916711290 | Pre-API Freeze Audit | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25916711282 | Implementation Preflight Test | pull_request | completed | success | Enable canonical weekly runner by default |
+| 25908252067 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25908235234 | Public Results Export | push | completed | success | Require lab support baseline explanation in smoke test |
 | 25908234916 | Terminal State Report | pull_request | completed | skipped | Require lab support baseline explanation in smoke test |
+| 25908234134 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25908136834 | Lab PR Scope Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
 | 25908136823 | Static Site Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
 | 25908136819 | Script Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
@@ -97,16 +107,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25901992743 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
 | 25901992737 | Script Check | pull_request | completed | success | Clarify lab support baseline rule |
 | 25901992736 | Safety Check | pull_request | completed | failure | Clarify lab support baseline rule |
-| 25901992735 | Lab PR Scope Check | pull_request | completed | failure | Clarify lab support baseline rule |
-| 25900650074 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25900642634 | Terminal State Report | pull_request | completed | skipped | Clarify participant support baseline docs |
-| 25900642624 | Public Results Export | push | completed | success | Clarify participant support baseline docs |
-| 25900642176 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25900404970 | Script Check | pull_request | completed | success | Clarify participant support baseline docs |
-| 25900404953 | Lab PR Scope Check | pull_request | completed | success | Clarify participant support baseline docs |
-| 25900404939 | Static Site Check | pull_request | completed | success | Clarify participant support baseline docs |
-| 25899942249 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25899938576 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 
 ## Raw JSON
 
