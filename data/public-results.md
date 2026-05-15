@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T17:55:42+00:00`
+Generated at: `2026-05-15T19:00:06+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,9 +8,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 18 |
-| open_issue_count | 2 |
-| blocked_issue_count | 4 |
+| issue_count | 19 |
+| open_issue_count | 3 |
+| blocked_issue_count | 5 |
 | clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
@@ -23,6 +23,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 312 | OPEN | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Decide whether to gate historical Codex canary workflows before release |
 | 306 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Review Weekly Issue Finalizer manual input handling before release |
 | 305 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Review Support Unlock Export input handling before release |
 | 304 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Inventory stale merged branches before cleanup |
@@ -46,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
 | 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
@@ -75,13 +77,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
-| 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25935949333 | Terminal State Report | pull_request | completed | skipped | Gate weak historical canary workflows |
+| 25935907251 | Static Site Check | pull_request | completed | success | Gate weak historical canary workflows |
+| 25935907229 | Script Check | pull_request | completed | success | Gate weak historical canary workflows |
+| 25935907217 | Lab PR Scope Check | pull_request | completed | success | Gate weak historical canary workflows |
+| 25933263913 | Issue Safety Scan | issues | completed | success | Decide whether to gate historical Codex canary workflows before release |
+| 25933064468 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25933052183 | Terminal State Report | pull_request | completed | skipped | Update experiment model active model policy reference |
+| 25933052121 | Public Results Export | push | completed | success | Update experiment model active model policy reference |
+| 25933051137 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25932935767 | Lab PR Scope Check | pull_request | completed | success | Update experiment model active model policy reference |
 | 25932935733 | Static Site Check | pull_request | completed | success | Update experiment model active model policy reference |
 | 25932524922 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -103,14 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25930668760 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25930468167 | Script Check | pull_request | completed | success | Clarify root README weekly automation status |
 | 25930468158 | Lab PR Scope Check | pull_request | completed | success | Clarify root README weekly automation status |
-| 25930126533 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25930111688 | Public Results Export | push | completed | success | Harden operator workflow input handling |
-| 25930111686 | Terminal State Report | pull_request | completed | skipped | Harden operator workflow input handling |
-| 25930111027 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25930015267 | Script Check | pull_request | completed | success | Harden operator workflow input handling |
-| 25930015263 | Lab PR Scope Check | pull_request | completed | success | Harden operator workflow input handling |
-| 25928469855 | Issue Safety Scan | issues | completed | success | Review Weekly Issue Finalizer manual input handling before release |
-| 25927895520 | Issue Safety Scan | issues | completed | success | Review Support Unlock Export input handling before release |
 
 ## Raw JSON
 
