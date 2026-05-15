@@ -105,10 +105,10 @@ As rounds accumulate, the three files become harder to modify cleanly. That risi
 
 Prompt candidates should be compared under the same implementation condition.
 
-The implementation model is fixed by `rules/model-policy-v1.0.md`:
+The active implementation model is fixed by `rules/model-policy-v1.1.md`:
 
 ```text
-gpt-5-nano
+gpt-5.4-nano
 ```
 
 A stronger model may be used for reports, but it must not modify `lab/`.
