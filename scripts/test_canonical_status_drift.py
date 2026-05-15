@@ -177,14 +177,15 @@ def main() -> int:
 
     require_all(docs["workflow_family_map"], [
         "It is non-canonical.",
-        "It should not be removed until the default-on release gate explicitly approves removal.",
+        "It should not be removed merely because the canonical weekly runner is default-on.",
+        "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
         "They are not deletion instructions.",
     ], "workflow family map legacy status")
 
     require_all(docs["cleanup_inventory"], [
         "Not-yet-removable",
         "scripts/openai_lab_run.py",
-        "Broad canonical selected-prompt weekly execution is default-on and verified across normal operation",
+        "First ordinary scheduled canonical default-on run is verified, rollback need is reviewed, and a separate legacy-removal PR updates docs/tests",
     ], "cleanup inventory removal gate")
 
     reject_all(all_text, FORBIDDEN_PHRASES, "canonical status docs")
