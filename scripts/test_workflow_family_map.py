@@ -8,6 +8,15 @@ DOC = ROOT / "docs" / "workflow-family-map.md"
 README = ROOT / "docs" / "README.md"
 INVENTORY = ROOT / "docs" / "repository-cleanup-inventory.md"
 
+WEAK_CANARY_WORKFLOWS = [
+    ROOT / ".github" / "workflows" / "codex-first-canary-run.yml",
+    ROOT / ".github" / "workflows" / "codex-isolated-3file-canary-run.yml",
+    ROOT / ".github" / "workflows" / "codex-isolated-3file-relaxed-canary-run.yml",
+    ROOT / ".github" / "workflows" / "codex-agent-observed-canary-run.yml",
+]
+
+GATE = "if: vars.ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS == 'true'"
+
 REQUIRED_DOC_TEXT = [
     "# Workflow family map",
     "It is not a removal plan.",
@@ -32,6 +41,10 @@ REQUIRED_DOC_TEXT = [
     ".github/workflows/codex-policy-agent-canary-run.yml",
     ".github/workflows/codex-task-packet-canary-run.yml",
     ".github/workflows/codex-fixed-issue-instruction-canary-run.yml",
+    "## Historical weak canary gate",
+    "ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true",
+    "The gate prevents accidental reruns of old workspace-write or relaxed-sandbox experiments without deleting historical evidence surfaces.",
+    "The gate does not apply to the current canonical selected-prompt path:",
     "## Canary-era archive boundary",
     "Canary-era names are historical evidence labels, not active canonical status claims.",
     "first-canary",
@@ -59,6 +72,7 @@ REQUIRED_DOC_TEXT = [
     "Affected docs:",
     "Affected contract tests:",
     "Rollback path:",
+    "Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.",
     "Defer legacy fallback removal until a separate legacy-removal gate exists.",
 ]
 
@@ -93,6 +107,15 @@ def reject_all(text: str, forbidden: list[str], label: str) -> None:
         raise SystemExit(f"Forbidden {label} text found: {found}")
 
 
+def require_weak_canary_gates() -> None:
+    for path in WEAK_CANARY_WORKFLOWS:
+        text = path.read_text(encoding="utf-8")
+        if GATE not in text:
+            raise SystemExit(f"Weak historical canary workflow is not gated: {path.relative_to(ROOT)}")
+        if text.index(GATE) > text.index("runs-on: ubuntu-latest"):
+            raise SystemExit(f"Weak canary gate must appear before runs-on: {path.relative_to(ROOT)}")
+
+
 def main() -> int:
     doc = DOC.read_text(encoding="utf-8")
     readme = README.read_text(encoding="utf-8")
@@ -102,6 +125,7 @@ def main() -> int:
     reject_all(doc, FORBIDDEN_DOC_TEXT, "workflow family map")
     require_all(inventory, REQUIRED_INVENTORY_TEXT, "repository cleanup inventory")
     require_all(readme, ["Repository cleanup inventory"], "docs README")
+    require_weak_canary_gates()
 
     if doc.index("## Canonical active workflows") > doc.index("## Weekly active workflows"):
         raise SystemExit("canonical workflows should be listed before weekly active workflows")
@@ -109,8 +133,10 @@ def main() -> int:
         raise SystemExit("public generated snapshot workflows should follow weekly active workflows")
     if doc.index("## Test and guard workflows") > doc.index("## Canary evidence workflows"):
         raise SystemExit("canary evidence workflows should follow test and guard workflows")
-    if doc.index("## Canary evidence workflows") > doc.index("## Canary-era archive boundary"):
-        raise SystemExit("canary-era archive boundary should follow canary evidence workflows")
+    if doc.index("## Canary evidence workflows") > doc.index("## Historical weak canary gate"):
+        raise SystemExit("historical weak canary gate should follow canary evidence workflows")
+    if doc.index("## Historical weak canary gate") > doc.index("## Canary-era archive boundary"):
+        raise SystemExit("canary-era archive boundary should follow weak canary gate")
     if doc.index("## Cleanup candidates") > doc.index("## Removal gate for workflows"):
         raise SystemExit("workflow removal gate should follow cleanup candidates")
 
