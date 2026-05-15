@@ -2,7 +2,7 @@
 
 This document explains what runs automatically, when it runs, and what must exist before each weekly run can proceed.
 
-Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This page is the weekly workflow operation detail, not a second status source of truth.
+Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This page is the weekly workflow operation detail, not a second status source of truth.
 
 ## Short answer
 
@@ -62,7 +62,7 @@ On scheduled runs, support export defaults to the previous UTC ISO week. Manual 
 9. if eligible candidates exist, require implementation secret
 10. preflight the implementation run
 11. create implementation PRs for eligible candidates
-12. upload canonical weekly diagnostics and public evidence when the canonical feature flag is enabled
+12. upload canonical weekly diagnostics and public evidence for canonical runs
 13. reverify uploaded canonical public bundles
 ```
 
@@ -70,29 +70,31 @@ The support unlock file is required before vote collection and rank selection.
 
 If the file is missing, the weekly workflow fails before selecting eligible ranks. It must not silently treat missing support data as 0 USD.
 
-## Canonical selected-prompt feature flag
+## Canonical selected-prompt default
 
-The weekly canonical selected-prompt path is controlled by:
+The weekly selected-prompt path now defaults to the canonical Docker/Codex runner:
+
+```text
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+```
+
+The repository variable can still override the default for an explicit rollback or diagnostic run:
 
 ```text
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
 ```
 
-The default remains non-canonical during migration:
-
-```text
-DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
-```
-
-When the variable is unset or `false`, `Weekly Auto Run` keeps the legacy fallback path.
-
-When the variable is `true` and at least one prompt proposal beats the no-change baseline, `Weekly Auto Run` uses the canonical Docker/Codex selected-prompt runner:
+When the variable is unset, `Weekly Auto Run` uses the canonical Docker/Codex selected-prompt runner for eligible implementation candidates:
 
 ```text
 scripts/run_codex_selected_prompt.sh
 Runner: codex-cli-selected-prompt-packet-container
 Canonical selected-prompt runner: true
 ```
+
+When the variable is explicitly set to `true`, the same canonical path is used.
+
+When the variable is explicitly set to `false`, `Weekly Auto Run` uses the legacy fallback path for emergency rollback or controlled diagnosis only.
 
 The legacy `scripts/openai_lab_run.py` path is non-canonical and does not satisfy the selected-prompt canonical runner requirement.
 
@@ -117,19 +119,29 @@ repo_root_mounted: false
 OPENAI_API_KEY present before codex exec: no
 ```
 
-## Temporary canary settings
+## Override and rollback settings
 
-A controlled weekly canonical canary may temporarily set:
+A controlled diagnostic run may temporarily set:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+```
+
+After the diagnostic run, remove the override or set it back to:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset
+```
+
+A controlled canary may temporarily set:
+
+```text
 PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0
 ```
 
-After the canary, reset or remove them:
+After the canary, reset or remove it:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false or unset
 PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset
 ```
 
@@ -153,7 +165,8 @@ Weekly auto run:
 - reads the weekly support unlock file
 - creates vote summary PRs
 - creates implementation PRs only when candidates are eligible
-- may use the canonical Docker/Codex selected-prompt runner only when explicitly enabled during migration
+- uses the canonical Docker/Codex selected-prompt runner by default
+- may use the legacy fallback only through an explicit rollback override
 - must not merge PRs automatically
 
 ## Time-window caveat
@@ -260,11 +273,11 @@ Automation may create PRs, but it must not merge them.
 
 `main` merge remains manual.
 
-## Default-on release gate
+## Default-on release status
 
 The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).
 
-Weekly workflow stop rule before default-on:
+Weekly workflow default-on release result:
 
 ```text
 weekly feature-flag canary with eligible candidate: PASS
@@ -274,6 +287,7 @@ weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
 manual review remains required
 auto-merge remains disabled
+weekly canonical default-on release: approved
 ```
 
 ## Current production status
@@ -284,10 +298,10 @@ Implemented and live-verified:
 - `Support Unlock Export` can generate and validate an anonymized support unlock file.
 - `Weekly Auto Run` can read that unlock file and create a no-eligible vote summary PR.
 - The no-change baseline path can complete without creating an implementation PR.
-- The weekly canonical selected-prompt feature-flag path can create a bounded lab-only implementation PR with diagnostics, public bundle, and uploaded bundle reverification artifacts.
+- The weekly canonical selected-prompt path can create a bounded lab-only implementation PR with diagnostics, public bundle, and uploaded bundle reverification artifacts.
+- Canonical weekly execution is now default-on for eligible candidates.
 
-Still not default-on:
+Still not automated:
 
-- ordinary scheduled weekly canonical execution without a controlled canary flag
 - removal of the legacy fallback
 - auto-merge
