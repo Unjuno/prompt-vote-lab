@@ -65,9 +65,9 @@ The project must not automate:
 | `static-site-check.yml` | implemented | PR/path-triggered | Check public page structure, support wording, and lab smoke expectations | 0 |
 | `lab-pr-scope-check.yml` | implemented | PR/path-triggered | Prevent lab implementation PRs from mixing lab and non-lab files | 0 |
 | `script-check.yml` | implemented | PR/path-triggered + manual | Check scripts, offline workflow smoke tests, and workflow contracts | 0 |
-| `support-unlock-export.yml` | implemented, live-token verification pending | daily 00:17 UTC / 09:17 JST + manual | Export anonymized support unlock aggregates and validate them before commit | 0 |
-| `weekly-auto-run.yml` | implemented, not fully production-verified | Monday 00:23 UTC / 09:23 JST + manual | Collect votes and create implementation PRs for eligible prompts | paid only if eligible |
-| `evidence-pipeline-dry-run.yml` | implemented | manual | Manually generate snapshot, run log, weekly summary, public briefing, and HN draft as artifact | 0 |
+| `support-unlock-export.yml` | implemented, operator input hardened, live-token verification pending | daily 00:17 UTC / 09:17 JST + manual | Export anonymized support unlock aggregates and validate them before commit | 0 |
+| `weekly-auto-run.yml` | implemented, canonical default-on, first ordinary post-default-on observation pending | Monday 00:23 UTC / 09:23 JST + manual | Collect votes and create implementation PRs for eligible prompts | paid only if eligible |
+| `evidence-pipeline-dry-run.yml` | implemented, read-only, operator input hardened | manual | Manually generate snapshot, run log, weekly summary, public briefing, and HN draft as artifact | 0 |
 | `exception-matrix-test.yml` | implemented | PR/manual | Test known pass/fail boundary cases | 0 |
 | `multi-fuzz-test.yml` | implemented | PR/manual | Run weighted random boundary mutations | 0 |
 | `weekly-mock-run.yml` | implemented | manual | Test weekly selection and PR creation without model API calls | 0 |
