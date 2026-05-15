@@ -33,6 +33,11 @@ permissions:
 jobs:
   evidence-pipeline-dry-run:
     runs-on: ubuntu-latest
+    env:
+      INPUT_WEEK_ID: ${{ inputs.week_id }}
+      INPUT_SNAPSHOT_AT: ${{ inputs.snapshot_at }}
+      INPUT_SITE_URL: ${{ inputs.site_url }}
+      INPUT_SOURCE: ${{ inputs.source }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,9 +59,9 @@ jobs:
         run: |
           set -euo pipefail
 
-          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
-          SOURCE="${{ github.event.inputs.source || 'fixture' }}"
-          SNAPSHOT_AT_INPUT="${{ github.event.inputs.snapshot_at || '' }}"
+          WEEK_ID="${INPUT_WEEK_ID:-dry-run-001}"
+          SOURCE="${INPUT_SOURCE:-fixture}"
+          SNAPSHOT_AT_INPUT="${INPUT_SNAPSHOT_AT:-}"
 
           export WEEK_ID
           export SNAPSHOT_AT="$SNAPSHOT_AT_INPUT"
@@ -87,8 +92,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
-          SITE_URL="${{ github.event.inputs.site_url || 'https://unjuno.github.io/prompt-vote-lab/' }}"
+          WEEK_ID="${INPUT_WEEK_ID:-dry-run-001}"
+          SITE_URL="${INPUT_SITE_URL:-https://unjuno.github.io/prompt-vote-lab/}"
 
           export WEEK_ID
           export SNAPSHOT_INPUT="tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
@@ -105,8 +110,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
-          SITE_URL="${{ github.event.inputs.site_url || 'https://unjuno.github.io/prompt-vote-lab/' }}"
+          WEEK_ID="${INPUT_WEEK_ID:-dry-run-001}"
+          SITE_URL="${INPUT_SITE_URL:-https://unjuno.github.io/prompt-vote-lab/}"
 
           export WEEK_ID
           export SNAPSHOT_INPUT="tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
@@ -122,7 +127,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          WEEK_ID="${{ github.event.inputs.week_id || 'dry-run-001' }}"
+          WEEK_ID="${INPUT_WEEK_ID:-dry-run-001}"
 
           test -s "tmp/evidence/data/snapshots/week-${WEEK_ID}.json"
           test -s "tmp/evidence/logs/aggregation/week-${WEEK_ID}.jsonl"

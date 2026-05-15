@@ -9,6 +9,7 @@ on:
       - "tests/fixtures/**"
       - ".github/ISSUE_TEMPLATE/**"
       - ".github/workflows/script-check.yml"
+      - ".github/workflows/evidence-pipeline-dry-run.yml"
       - ".github/workflows/support-unlock-export.yml"
       - ".github/workflows/weekly-auto-run.yml"
       - ".github/workflows/issue-safety-scan.yml"
@@ -182,6 +183,9 @@ jobs:
 
       - name: Run public results export workflow contract test
         run: python scripts/test_public_results_export_workflow_contract.py
+
+      - name: Run evidence pipeline workflow contract test
+        run: python scripts/test_evidence_pipeline_workflow_contract.py
 
       - name: Run script-check workflow contract test
         run: python scripts/test_script_check_workflow_contract.py
