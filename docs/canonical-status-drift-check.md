@@ -17,9 +17,9 @@ canonical runner name: codex-cli-selected-prompt-packet-container
 canonical evidence marker: Canonical selected-prompt runner: true
 legacy fallback script: scripts/openai_lab_run.py
 legacy fallback status: non-canonical migration fallback
-weekly default status: default-off during migration
-weekly feature flag: PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
-current default constant: DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+weekly default status: canonical selected-prompt runner default-on
+weekly feature flag override: PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
+current default constant: DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
 auto-merge status: disabled
 manual review status: required
 final write scope: lab/index.html, lab/style.css, lab/app.js
@@ -31,7 +31,7 @@ Use this map before adding or editing status text.
 
 | Topic | Source of truth | Pointer docs |
 |---|---|---|
-| Repository-wide canonical, legacy, default-off, auto-merge, manual-review, and release-gate status | `docs/canonical-status-drift-check.md` | `docs/README.md`, `docs/weekly-automation.md`, `docs/operator-runbook.md` |
+| Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status | `docs/canonical-status-drift-check.md` | `docs/README.md`, `docs/weekly-automation.md`, `docs/operator-runbook.md` |
 | Technical implementation boundary | `docs/current-codex-implementation-path.md` | `docs/canonical-runner-evidence-guide.md`, `docs/workflow-family-map.md` |
 | Participant/reviewer evidence decision rule | `docs/canonical-runner-evidence-guide.md` | `docs/README.md`, `docs/operator-runbook.md`, `docs/weekly-automation.md` |
 | Weekly workflow operation | `docs/weekly-automation.md` | `docs/operator-runbook.md` |
@@ -58,11 +58,11 @@ Docs may use different wording, but they must not contradict these rules:
 
 ```text
 1. Do not call scripts/openai_lab_run.py canonical.
-2. Do not imply the weekly canonical selected-prompt runner is already default-on.
+2. Do not imply the weekly canonical selected-prompt runner is still default-off.
 3. Do not say auto-merge is enabled.
 4. Do not omit the canonical evidence marker from evidence-facing docs.
 5. Do not treat a useful lab diff as sufficient canonical evidence.
-6. Do not describe workflow or legacy runner deletion as safe without a release gate.
+6. Do not describe workflow or legacy runner deletion as safe without a separate removal gate.
 ```
 
 ## Required canonical evidence marker
@@ -98,15 +98,15 @@ The script may still exist and may still produce useful lab diffs, but those fac
 
 ## Required default status language
 
-Weekly-operation docs should preserve the default-off migration state:
+Weekly-operation docs should preserve the default-on release state:
 
 ```text
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
-DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
-Still not default-on
+DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+Canonical weekly default is default-on
 ```
 
-A future default-on release PR may change this status only if it also updates:
+A future rollback PR may change this status only if it also updates:
 
 ```text
 docs/weekly-automation.md
@@ -119,7 +119,7 @@ scripts/test_canonical_status_drift.py
 
 ## Required release gate language
 
-Docs should preserve the release-gate rule:
+Docs should preserve the release-gate result:
 
 ```text
 manual selected-prompt smoke: PASS
@@ -132,6 +132,7 @@ legacy fallback documented as non-canonical
 operator runbook feature-flag cleanup documented
 manual review remains required
 auto-merge remains disabled
+weekly canonical default-on release: approved
 ```
 
 ## Current release status
@@ -141,7 +142,7 @@ Current status is:
 ```text
 manual selected-prompt workflow: verified
 weekly canonical selected-prompt canary: verified
-canonical weekly default: not default-on
+canonical weekly default: default-on
 legacy fallback: present and non-canonical
 workflow deletion: not approved
 auto-merge: disabled

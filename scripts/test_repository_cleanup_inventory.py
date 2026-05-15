@@ -23,7 +23,7 @@ REQUIRED_DOC_TEXT = [
     "scripts/run_codex_selected_prompt.sh",
     ".github/workflows/codex-selected-prompt-run.yml",
     "scripts/openai_lab_run.py",
-    "Keep until the release plan explicitly removes it",
+    "Keep until the release plan explicitly removes it through a separate legacy-removal gate",
     "## Historical archive evidence",
     "Historical archive evidence explains past canary decisions, model-policy transitions, run records, and migration boundaries.",
     "It is not active canonical status.",
@@ -44,13 +44,14 @@ REQUIRED_DOC_TEXT = [
     "Affected contract tests:",
     "Generated snapshots are not source-of-truth policy.",
     "These are candidates for future cleanup work. They are not deletion instructions.",
+    "First ordinary scheduled canonical default-on run is verified, rollback need is reviewed, and a separate legacy-removal PR updates docs/tests",
     "Protected evidence check:",
     "Canonical/legacy check:",
     "Generated snapshot check:",
     "Removal gate:",
     "Rollback path:",
-    "Add a workflow-family map",
-    "Avoid deleting evidence or fallback code until a release gate is recorded.",
+    "Verify the first ordinary scheduled canonical default-on weekly run.",
+    "Avoid deleting evidence or fallback code until a separate legacy-removal gate is recorded.",
 ]
 
 REQUIRED_README_TEXT = [

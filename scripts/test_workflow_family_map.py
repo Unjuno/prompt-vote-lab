@@ -21,6 +21,7 @@ REQUIRED_DOC_TEXT = [
     "Cleanup candidate",
     ".github/workflows/codex-selected-prompt-run.yml",
     ".github/workflows/weekly-auto-run.yml",
+    "default-on canonical selected-prompt implementation path",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
     ".github/workflows/support-unlock-export.yml",
@@ -47,6 +48,8 @@ REQUIRED_DOC_TEXT = [
     "Replacement evidence path:",
     "scripts/openai_lab_run.py",
     "It is non-canonical.",
+    "It should not be removed merely because the canonical weekly runner is default-on.",
+    "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
     "These are candidates for future consolidation. They are not deletion instructions.",
     "A workflow removal PR must state:",
     "Evidence role:",
@@ -56,12 +59,12 @@ REQUIRED_DOC_TEXT = [
     "Affected docs:",
     "Affected contract tests:",
     "Rollback path:",
-    "Defer workflow deletion until a release readiness record approves it.",
+    "Defer legacy fallback removal until a separate legacy-removal gate exists.",
 ]
 
 REQUIRED_INVENTORY_TEXT = [
-    "Add a workflow-family map",
-    "Avoid deleting evidence or fallback code until a release gate is recorded.",
+    "Verify the first ordinary scheduled canonical default-on weekly run.",
+    "Avoid deleting evidence or fallback code until a separate legacy-removal gate is recorded.",
     "Historical archive evidence",
     "Do not rename canary-era evidence just to make it look current.",
 ]

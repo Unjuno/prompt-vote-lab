@@ -30,9 +30,11 @@ REQUIRED_TEXT = [
     "first-canary-005: offline context + JSON full-file replacement -> PASS, now non-canonical",
     "manual selected-prompt workflow smoke: run artifact diagnostics -> PASS",
     "weekly selected-prompt canonical canary: run 25858202166 -> PASS",
-    "The weekly selected-prompt path can use the canonical Docker/Codex task-packet runner when explicitly enabled.",
+    "canonical weekly default-on release: approved",
+    "The weekly selected-prompt path uses the canonical Docker/Codex task-packet runner by default for eligible candidates.",
     "## Weekly selected-prompt canonical path",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
     "scripts/run_codex_selected_prompt.sh",
     "runner: codex-cli-selected-prompt-packet-container",
     "sandbox_mode: docker-workdir-plus-readonly-selected-prompt-packet",
@@ -44,13 +46,10 @@ REQUIRED_TEXT = [
     "weekly-selected-prompt-public-bundles-7",
     "weekly-selected-prompt-uploaded-bundle-verification-7",
     "## Non-canonical legacy path",
-    "`weekly-auto-run.yml` may still fall back to the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is unset or `false`.",
-    "That default-off fallback is intentionally preserved during migration, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.",
+    "`weekly-auto-run.yml` may still use the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is explicitly set to `false`.",
+    "That override is preserved for emergency rollback or controlled diagnosis, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
-    "Use this concrete canary workflow to verify the basic canonical boundary:",
-    "Codex Policy Agent Canary Run",
-    "Do not count `First Canary Run` / Python SDK / Responses API output as the canonical production implementation-agent verification.",
     "Prompt instructions are still used, but they are not treated as enforcement.",
     "Do not merge or report a run as canonical implementation E2E merely because the API/JSON path produced a small valid lab diff.",
 ]
@@ -62,6 +61,8 @@ FORBIDDEN_TEXT = [
     "008 is not yet the default production-oriented implementation path",
     "legacy `scripts/openai_lab_run.py` path is canonical",
     "legacy `scripts/openai_lab_run.py` path satisfies the selected-prompt canonical runner requirement",
+    "default-off feature flag",
+    "fallback is intentionally preserved during migration",
 ]
 
 

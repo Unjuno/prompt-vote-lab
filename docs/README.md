@@ -14,7 +14,7 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 2. [Experiment model](./experiment-model.md) — game model and boundaries.
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
-5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-off, auto-merge, and release-gate status contract.
+5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-on, auto-merge, and release-gate status contract.
 6. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
 7. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
 8. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
@@ -61,13 +61,13 @@ The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies
 
 The [Workflow family map](./workflow-family-map.md) classifies workflows before consolidation or deletion work so historical scaffolding is not mistaken for active canonical evidence.
 
-The [Canonical status drift check](./canonical-status-drift-check.md) keeps canonical runner, legacy fallback, default-off, auto-merge, and release-gate wording aligned across maintainer-authored docs.
+The [Canonical status drift check](./canonical-status-drift-check.md) keeps canonical runner, legacy fallback, default-on, auto-merge, and release-gate wording aligned across maintainer-authored docs.
 
 Generated public result snapshots and raw external evidence are treated separately because they may contain user-provided text.
 
 ## Canonical runner evidence status
 
-The selected-prompt Docker/Codex runner is the canonical evidence path when the weekly feature flag is explicitly enabled and the PR/run evidence says:
+The selected-prompt Docker/Codex runner is the canonical evidence path for default weekly eligible implementation runs when the PR/run evidence says:
 
 ```text
 Runner: codex-cli-selected-prompt-packet-container
@@ -122,9 +122,9 @@ Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
-The repository has scheduled weekly automation, support-unlock gates, and a verified canonical selected-prompt feature-flag path.
+The repository has scheduled weekly automation, support-unlock gates, and a verified canonical selected-prompt path enabled by default for eligible weekly implementation runs.
 
-Broad default-on canonical weekly execution is not approved yet.
+Broad default-on canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.
 
 Status ownership:
 
@@ -139,7 +139,7 @@ Manual canary experiments and comparison operations remain available through [Us
 
 ## Pre-API freeze status
 
-Paid implementation-agent runs are not considered ready for broad weekly automation until the pre-API freeze checklist is green.
+Paid implementation-agent runs remain governed by preflight, bounded-run evidence, public bundle verification, and manual review.
 
 The project should prefer extra offline verification over debugging after paid API calls begin.
 

@@ -30,7 +30,7 @@ Which workflows are evidence-bearing, and which workflows are historical scaffol
 | Workflow | Path | Reason |
 |---|---|---|
 | Codex Selected Prompt Run | `.github/workflows/codex-selected-prompt-run.yml` | Manual canonical selected-prompt Docker/Codex runner smoke path |
-| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and feature-flagged canonical selected-prompt implementation path |
+| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and default-on canonical selected-prompt implementation path |
 
 Canonical evidence requires the selected-prompt Docker/Codex runner evidence:
 
@@ -143,11 +143,11 @@ The legacy fallback is primarily a script path, not a separate workflow family:
 scripts/openai_lab_run.py
 ```
 
-It may still be reachable through weekly migration behavior when the canonical selected-prompt runner flag is unset or false.
+It may still be reachable through weekly override behavior when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` is set for emergency rollback or controlled diagnosis.
 
 It is non-canonical.
 
-It should not be removed until the default-on release gate explicitly approves removal.
+It should not be removed merely because the canonical weekly runner is default-on. Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.
 
 ## Cleanup candidates
 
@@ -180,8 +180,8 @@ A workflow should not be removed if any public doc still lists it as required ac
 The next safe cleanup work is:
 
 ```text
-1. Add explicit legacy fallback comments to scripts/openai_lab_run.py.
-2. Add doc-drift checks for canonical runner status across README, operator runbook, weekly automation, and evidence guide.
-3. Consolidate duplicate status wording only after the drift checks are present.
+1. Verify the first ordinary scheduled default-on weekly run.
+2. Keep scripts/openai_lab_run.py labeled as legacy and non-canonical.
+3. Defer legacy fallback removal until a separate legacy-removal gate exists.
 4. Defer workflow deletion until a release readiness record approves it.
 ```

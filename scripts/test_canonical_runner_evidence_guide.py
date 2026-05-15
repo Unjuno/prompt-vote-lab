@@ -41,6 +41,8 @@ GUIDE_REQUIRED_TEXT = [
     "participant evidence guide published",
     "manual review remains required",
     "auto-merge remains disabled",
+    "weekly canonical default-on release: approved",
+    "The weekly canonical selected-prompt runner is default-on after the release gate passed:",
     "It does not automatically prove:",
     "The run should be merged.",
 ]
@@ -51,6 +53,7 @@ GUIDE_FORBIDDEN_TEXT = [
     "auto-merge may be enabled",
     "public bundle verification is optional",
     "uploaded bundle verification is optional",
+    "Do not flip the weekly canonical selected-prompt runner to default-on",
 ]
 
 INDEX_REQUIRED_TEXT = [
@@ -62,11 +65,13 @@ INDEX_REQUIRED_TEXT = [
     "current status contract -> docs/canonical-status-drift-check.md",
     "weekly workflow operation -> docs/weekly-automation.md",
     "canonical evidence decision rule -> docs/canonical-runner-evidence-guide.md",
+    "Broad default-on canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.",
 ]
 
 INDEX_FORBIDDEN_TEXT = [
     "Weekly Auto Run -> run 25858202166",
     "artifacts present: diagnostics, public bundle, uploaded bundle verification",
+    "Broad default-on canonical weekly execution is not approved yet.",
 ]
 
 
@@ -99,8 +104,8 @@ def main() -> int:
     if guide.index("Non-canonical fallback") > guide.index("Verified weekly canary"):
         raise SystemExit("legacy fallback warning should appear before the canary example")
 
-    if guide.index("Verified weekly canary") > guide.index("Release readiness rule"):
-        raise SystemExit("release readiness should follow the verified canary example")
+    if guide.index("Verified weekly canary") > guide.index("Release status"):
+        raise SystemExit("release status should follow the verified canary example")
 
     print("canonical runner evidence guide test passed")
     return 0

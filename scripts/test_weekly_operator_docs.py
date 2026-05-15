@@ -12,37 +12,42 @@ RUNBOOK_REQUIRED_TEXT = [
     "# Operator runbook",
     "manual selected-prompt workflow smoke -> PASS",
     "weekly canonical selected-prompt canary -> run 25858202166 -> PASS",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
+    "canonical weekly default-on release -> approved",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
     "runner: codex-cli-selected-prompt-packet-container",
     "weekly-selected-prompt-diagnostics-7",
     "weekly-selected-prompt-public-bundles-7",
     "weekly-selected-prompt-uploaded-bundle-verification-7",
-    "## Canonical weekly feature flag policy",
+    "## Canonical weekly default policy",
     "The legacy `scripts/openai_lab_run.py` path is non-canonical.",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
-    "## Temporary canary variable policy",
+    "## Temporary override policy",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset",
     "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0",
     "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset",
     "Never leave `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` after a canary.",
-    "## Default-on release gate",
+    "Never leave `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` unintentionally after a diagnostic run.",
+    "## Default-on release status",
     "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
-    "Operator stop rule before default-on:",
+    "Operator release result:",
     "operator runbook feature-flag cleanup documented",
     "manual review remains required",
     "auto-merge remains disabled",
-    "Expected canonical eligible result when the canonical feature flag is deliberately enabled:",
+    "weekly canonical default-on release: approved",
+    "Expected canonical eligible result under the default runner:",
     "canonical evidence artifacts are missing for a canonical run",
     "OPENAI_API_KEY present before codex exec: no",
 ]
 
 WEEKLY_REQUIRED_TEXT = [
     "# Weekly automation",
-    "upload canonical weekly diagnostics and public evidence when the canonical feature flag is enabled",
+    "upload canonical weekly diagnostics and public evidence for canonical runs",
     "reverify uploaded canonical public bundles",
-    "## Canonical selected-prompt feature flag",
+    "## Canonical selected-prompt default",
     "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
     "scripts/run_codex_selected_prompt.sh",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
@@ -56,7 +61,9 @@ WEEKLY_REQUIRED_TEXT = [
     "Gitleaks finding count: 0",
     "repo_root_mounted: false",
     "OPENAI_API_KEY present before codex exec: no",
-    "## Temporary canary settings",
+    "## Override and rollback settings",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset",
     "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0",
     "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset",
     "Leaving `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` changes selection behavior",
@@ -67,9 +74,9 @@ WEEKLY_REQUIRED_TEXT = [
     "implementation PR: #284",
     "bounded lab diff: PASS",
     "auto-merge: disabled",
-    "## Default-on release gate",
+    "## Default-on release status",
     "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
-    "Weekly workflow stop rule before default-on:",
+    "Weekly workflow default-on release result:",
     "weekly feature-flag canary with eligible candidate: PASS",
     "weekly diagnostics artifact: present",
     "weekly public bundle artifact: present",
@@ -77,6 +84,7 @@ WEEKLY_REQUIRED_TEXT = [
     "bounded lab diff: PASS",
     "manual review remains required",
     "auto-merge remains disabled",
+    "weekly canonical default-on release: approved",
 ]
 
 DRIFT_REQUIRED_TEXT = [
@@ -88,8 +96,10 @@ DRIFT_REQUIRED_TEXT = [
     "weekly uploaded bundle verification artifact: present",
     "bounded lab diff: PASS",
     "legacy fallback documented as non-canonical",
+    "operator runbook feature-flag cleanup documented",
     "manual review remains required",
     "auto-merge remains disabled",
+    "weekly canonical default-on release: approved",
 ]
 
 FORBIDDEN_TEXT = [
@@ -98,6 +108,8 @@ FORBIDDEN_TEXT = [
     "legacy `scripts/openai_lab_run.py` path is canonical",
     "auto-merge may be enabled",
     "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0 is acceptable for normal scheduled operation",
+    "Still not default-on",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
 ]
 
 RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT = [
@@ -135,20 +147,20 @@ def main() -> int:
     reject_all(runbook, RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT, "operator runbook release gate duplication")
     reject_all(weekly, WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT, "weekly automation release gate duplication")
 
-    if runbook.index("Canonical weekly feature flag policy") > runbook.index("Temporary canary variable policy"):
-        raise SystemExit("runbook should define the feature flag before cleanup policy")
+    if runbook.index("Canonical weekly default policy") > runbook.index("Temporary override policy"):
+        raise SystemExit("runbook should define the default policy before override policy")
 
-    if runbook.index("Temporary canary variable policy") > runbook.index("Default-on release gate"):
-        raise SystemExit("runbook cleanup policy should precede the default-on gate")
+    if runbook.index("Temporary override policy") > runbook.index("Default-on release status"):
+        raise SystemExit("runbook override policy should precede the default-on release status")
 
-    if weekly.index("Canonical selected-prompt feature flag") > weekly.index("Canonical weekly evidence artifacts"):
-        raise SystemExit("weekly doc should define the feature flag before evidence artifacts")
+    if weekly.index("Canonical selected-prompt default") > weekly.index("Canonical weekly evidence artifacts"):
+        raise SystemExit("weekly doc should define the default before evidence artifacts")
 
-    if weekly.index("Temporary canary settings") > weekly.index("Manual verification"):
-        raise SystemExit("weekly doc should define canary cleanup before manual verification")
+    if weekly.index("Override and rollback settings") > weekly.index("Manual verification"):
+        raise SystemExit("weekly doc should define rollback cleanup before manual verification")
 
-    if weekly.index("Merge policy") > weekly.index("Default-on release gate"):
-        raise SystemExit("weekly merge policy should precede the default-on gate")
+    if weekly.index("Merge policy") > weekly.index("Default-on release status"):
+        raise SystemExit("weekly merge policy should precede the default-on release status")
 
     print("weekly operator docs test passed")
     return 0
