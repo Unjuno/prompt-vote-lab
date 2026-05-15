@@ -17,6 +17,13 @@ If the no-change baseline ranks first, no implementation-agent attempt is create
 
 Only real `prompt-proposal` issues can create implementation-agent attempts.
 
+Baseline passing is decided by the weekly candidate set after the baseline is inserted and candidates are sorted by votes:
+
+```text
+no-change baseline ranks first -> no implementation candidates
+real prompt ranks first -> baseline passed -> rank 1 is eligible
+```
+
 ## Why this exists
 
 The baseline makes doing nothing a competitor.
@@ -63,7 +70,48 @@ Issue #1 becomes the normal weekly implementation candidate.
 
 Support does not override the no-change baseline.
 
-Support only opens additional comparison runs among real prompt candidates that remain eligible after the baseline is inserted.
+Support only opens additional comparison runs among real prompt candidates after the weekly candidate set has passed the baseline rule.
+
+Current support interaction:
+
+```text
+baseline ranks first -> support unlocks nothing
+real prompt ranks first and support is 0 USD -> rank 1 only
+real prompt ranks first and support is at least 5 USD -> rank 1 and rank 2
+real prompt ranks first and support is at least 10 USD -> rank 1, rank 2, and rank 3
+```
+
+Rank 2 and rank 3 do not independently need 20+ votes after rank 1 beats the baseline.
+
+## Support example
+
+| Candidate | Votes | Result |
+|---|---:|---|
+| Issue #1 | 25 | rank 1, normal weekly candidate |
+| No change baseline | 20 | loses |
+| Issue #2 | 12 | rank 2, support-unlocked at 5 USD |
+| Issue #3 | 8 | rank 3, support-unlocked at 10 USD |
+
+Result at 10 USD weekly support:
+
+```text
+Issue #1, Issue #2, and Issue #3 are eligible implementation candidates.
+```
+
+## Support counterexample
+
+| Candidate | Votes | Result |
+|---|---:|---|
+| No change baseline | 20 | wins |
+| Issue #1 | 18 | not attempted |
+| Issue #2 | 12 | not attempted |
+| Issue #3 | 8 | not attempted |
+
+Result even at 10 USD weekly support:
+
+```text
+No implementation PR is created.
+```
 
 ## Reputation interaction
 
