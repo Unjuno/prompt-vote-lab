@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   codex-isolated-3file-relaxed-canary-run:
+    if: vars.ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS == 'true'
     runs-on: ubuntu-latest
     env:
       CODEX_MODEL: gpt-5.4-nano
