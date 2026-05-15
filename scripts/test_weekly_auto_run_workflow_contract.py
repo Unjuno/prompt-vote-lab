@@ -18,7 +18,7 @@ REQUIRED_TEXT = [
     "contents: write",
     "pull-requests: write",
     "issues: read",
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"true\"",
     "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
     "USE_CANONICAL_SELECTED_PROMPT_RUNNER=$use_canonical",
     "use_canonical=$use_canonical",
@@ -53,6 +53,7 @@ REQUIRED_TEXT = [
 ]
 
 FORBIDDEN_TEXT = [
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
     "gh pr merge",
     "auto-merge",
     "--prompt-body",  # weekly canonical path should avoid command-argument prompt bodies
@@ -95,7 +96,7 @@ def main() -> int:
 
     require_block_order(
         text,
-        "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
+        "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"true\"",
         "Prepare weekly variables",
         "canonical selected-prompt runner default should be declared before weekly variables",
     )
