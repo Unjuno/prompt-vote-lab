@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T12:04:31+00:00`
+Generated at: `2026-05-15T16:51:26+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,10 +8,10 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 14 |
-| open_issue_count | 0 |
-| blocked_issue_count | 3 |
-| clear_issue_count | 6 |
+| issue_count | 18 |
+| open_issue_count | 2 |
+| blocked_issue_count | 4 |
+| clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
@@ -23,6 +23,10 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 306 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Review Weekly Issue Finalizer manual input handling before release |
+| 305 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Review Support Unlock Export input handling before release |
+| 304 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Inventory stale merged branches before cleanup |
+| 303 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Verify first ordinary canonical weekly default-on no-eligible run |
 | 282 | CLOSED | 1 | issue-safety:clear, issue-safety:submission-detected, normal-candidate, prompt-proposal | [Prompt][Canary]: Add a tiny canonical weekly runner note |
 | 279 | CLOSED | 0 | hardening, issue-safety:blocked, issue-safety:review, issue-safety:submission-detected, weekly-auto-run | Harden weekly canonical evidence artifacts on failure paths |
 | 196 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
@@ -42,42 +46,53 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 302 | MERGED | 16 | 230/204 | Enable canonical weekly runner by default |
-| 301 | MERGED | 1 | 22/1 | Require lab support baseline explanation in smoke test |
-| 300 | MERGED | 1 | 14/0 | Clarify lab support baseline rule |
-| 299 | MERGED | 6 | 237/7 | Clarify participant support baseline docs |
-| 298 | MERGED | 2 | 110/9 | Clarify support rank baseline policy |
-| 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
+| 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
+| 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
+| 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
+| 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
+| 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
+| 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
+| 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
+| 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
+| 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
+| 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
+| 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
+| 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
+| 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
+| 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
+| 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
+| 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
+| 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
+| 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
+| 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
+| 290 | MERGED | 5 | 284/24 | Add workflow family map |
+| 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
+| 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
+| 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
+| 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
 | 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 | 295 | MERGED | 4 | 32/7 | Shorten weekly default-on release gate |
-| 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
-| 293 | MERGED | 4 | 37/0 | Consolidate canonical status doc sources |
-| 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
-| 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
-| 290 | MERGED | 5 | 284/24 | Add workflow family map |
-| 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
-| 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
+| 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
 | 287 | MERGED | 5 | 391/10 | Harden weekly canonical operator docs |
 | 286 | MERGED | 5 | 335/21 | Add canonical runner evidence guide |
 | 285 | MERGED | 2 | 74/3 | Document legacy weekly runner as non-canonical fallback |
-| 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
-| 283 | CLOSED | 1 | 14/7 | Record auto vote summary for week-2026-W19 |
-| 281 | CLOSED | 1 | 4/0 | Record auto vote summary for week-2026-W19 |
-| 280 | MERGED | 2 | 19/5 | Harden weekly canonical evidence artifacts on failure paths |
-| 278 | MERGED | 5 | 341/21 | Add weekly canonical selected-prompt runner feature flag |
-| 277 | MERGED | 2 | 77/18 | Harden selected-prompt workflow input handling |
-| 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
-| 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
-| 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
-| 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
-| 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
-| 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25930111686 | Terminal State Report | pull_request | completed | skipped | Harden operator workflow input handling |
+| 25930015267 | Script Check | pull_request | completed | success | Harden operator workflow input handling |
+| 25930015263 | Lab PR Scope Check | pull_request | completed | success | Harden operator workflow input handling |
+| 25928469855 | Issue Safety Scan | issues | completed | success | Review Weekly Issue Finalizer manual input handling before release |
+| 25927895520 | Issue Safety Scan | issues | completed | success | Review Support Unlock Export input handling before release |
+| 25919071413 | Issue Safety Scan | issues | completed | success | Verify first ordinary canonical weekly default-on no-eligible run |
+| 25918371213 | Issue Safety Scan | issues | completed | success | Inventory stale merged branches before cleanup |
+| 25918177364 | Issue Safety Scan | issues | completed | success | Verify first ordinary canonical weekly default-on no-eligible run |
+| 25916818871 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25916803038 | Terminal State Report | pull_request | completed | skipped | Enable canonical weekly runner by default |
+| 25916802993 | Public Results Export | push | completed | success | Enable canonical weekly runner by default |
+| 25916802441 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25916711380 | Script Check | pull_request | completed | success | Enable canonical weekly runner by default |
 | 25916711329 | Select Eligible Test | pull_request | completed | success | Enable canonical weekly runner by default |
 | 25916711302 | Lab PR Scope Check | pull_request | completed | success | Enable canonical weekly runner by default |
@@ -96,17 +111,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25907212444 | Lab PR Scope Check | pull_request | completed | failure | Require lab support baseline explanation in smoke test |
 | 25905993543 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25905976040 | Public Results Export | push | completed | success | Clarify lab support baseline rule |
-| 25905976035 | Terminal State Report | pull_request | completed | skipped | Clarify lab support baseline rule |
-| 25905975592 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25904426081 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25904414257 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25904304891 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25902648350 | Safety Check | pull_request | completed | success | Clarify lab support baseline rule |
-| 25902648326 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
-| 25902648321 | Lab PR Scope Check | pull_request | completed | success | Clarify lab support baseline rule |
-| 25901992743 | Static Site Check | pull_request | completed | success | Clarify lab support baseline rule |
-| 25901992737 | Script Check | pull_request | completed | success | Clarify lab support baseline rule |
-| 25901992736 | Safety Check | pull_request | completed | failure | Clarify lab support baseline rule |
 
 ## Raw JSON
 
