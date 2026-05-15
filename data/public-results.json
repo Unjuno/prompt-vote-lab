@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T16:51:26+00:00",
+  "generated_at": "2026-05-15T17:03:28+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -672,6 +672,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 4,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Clarify the root README weekly automation status after canonical weekly default-on release.\n- Distinguish the verified canonical canary/default-on state from the still-pending ordinary post-default-on operational observation.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n\n## Reason\nThe root README still described the eligible implementation-agent PR path as needing live E2E verification without mentioning that the canonical selected-prompt canary has passed and weekly canonical execution is now default-on. The new wording points readers at the correct operational status while keeping the remaining ordinary-run observation explicit.",
+      "body_length": 796,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:03:09Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T16:58:47Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 2,
+          "path": "README.md"
+        }
+      ],
+      "head_ref_name": "clarify-root-readme-weekly-status",
+      "head_ref_oid": "973b414ebe99df6f4ec581552e29913778f8eaf0",
+      "labels": [],
+      "merge_commit_oid": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
+      "merged_at": "2026-05-15T17:03:09Z",
+      "merged_by": "Unjuno",
+      "number": 308,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify root README weekly automation status",
+      "updated_at": "2026-05-15T17:03:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/308"
+    },
+    {
       "additions": 110,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -715,7 +747,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Harden operator workflow input handling",
-      "updated_at": "2026-05-15T16:51:09Z",
+      "updated_at": "2026-05-15T16:52:19Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/307"
     },
     {
@@ -4918,48 +4950,6 @@
       "title": "Add safe dev artifact reset script",
       "updated_at": "2026-05-11T03:25:22Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/246"
-    },
-    {
-      "additions": 285,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a participant-facing guide and makes it the first documentation entry.\n\n## Changes\n\n- Add `docs/for-participants.md`.\n- Link it from `docs/README.md`.\n- Add a short participant start section to root `README.md`.\n- Make voting with 👍 the first suggested action before prompt submission.\n\n## Scope\n\nDocumentation only. No workflow, lab, or generated evidence changes.",
-      "body_length": 382,
-      "changed_files": 3,
-      "closed_at": "2026-05-10T16:46:29Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T16:43:31Z",
-      "deletions": 25,
-      "files": [
-        {
-          "additions": 18,
-          "deletions": 3,
-          "path": "README.md"
-        },
-        {
-          "additions": 29,
-          "deletions": 22,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 238,
-          "deletions": 0,
-          "path": "docs/for-participants.md"
-        }
-      ],
-      "head_ref_name": "document-weekly-automation-schedule",
-      "head_ref_oid": "8c93fe94d2332ccf40fe0650b07e56acb880fb91",
-      "labels": [],
-      "merge_commit_oid": "ea4f376f5b7c4692fcb8b7f6033edf6f4981feb5",
-      "merged_at": "2026-05-10T16:46:29Z",
-      "merged_by": "Unjuno",
-      "number": 245,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add participant guide",
-      "updated_at": "2026-05-10T16:46:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/245"
     }
   ],
   "run_records": [
@@ -5119,6 +5109,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-15T17:03:12Z",
+      "database_id": 25930669790,
+      "display_title": "Clarify root README weekly automation status",
+      "event": "pull_request",
+      "head_branch": "clarify-root-readme-weekly-status",
+      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T17:03:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669790",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T16:58:50Z",
+      "database_id": 25930468167,
+      "display_title": "Clarify root README weekly automation status",
+      "event": "pull_request",
+      "head_branch": "clarify-root-readme-weekly-status",
+      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T16:59:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930468167",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T16:58:50Z",
+      "database_id": 25930468158,
+      "display_title": "Clarify root README weekly automation status",
+      "event": "pull_request",
+      "head_branch": "clarify-root-readme-weekly-status",
+      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T16:59:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930468158",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T16:51:30Z",
+      "database_id": 25930126533,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "065d3ad95096356c3c1525cd5ce42b56c862688c",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T16:51:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930126533",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T16:51:12Z",
+      "database_id": 25930111688,
+      "display_title": "Harden operator workflow input handling",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T16:51:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111688",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-15T16:51:12Z",
       "database_id": 25930111686,
       "display_title": "Harden operator workflow input handling",
@@ -5130,6 +5190,20 @@
       "updated_at": "2026-05-15T16:51:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111686",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T16:51:11Z",
+      "database_id": 25930111027,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T16:51:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111027",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6404,90 +6478,6 @@
       "updated_at": "2026-05-14T21:01:47Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885480369",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:54:57Z",
-      "database_id": 25885172048,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "450040acbbd9df199cb2462daa584fc51278fa9c",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:55:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172048",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T20:54:57Z",
-      "database_id": 25885172023,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "450040acbbd9df199cb2462daa584fc51278fa9c",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:55:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172023",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:54:57Z",
-      "database_id": 25885172019,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "450040acbbd9df199cb2462daa584fc51278fa9c",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:55:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172019",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225605,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:35:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225605",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225593,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:36:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225593",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225589,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:35:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225589",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

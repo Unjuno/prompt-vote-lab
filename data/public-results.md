@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T16:51:26+00:00`
+Generated at: `2026-05-15T17:03:28+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -46,6 +46,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
 | 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
 | 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
@@ -75,13 +76,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 297 | MERGED | 4 | 128/0 | Document canary-era archive boundary |
 | 287 | MERGED | 5 | 391/10 | Harden weekly canonical operator docs |
 | 286 | MERGED | 5 | 335/21 | Add canonical runner evidence guide |
-| 285 | MERGED | 2 | 74/3 | Document legacy weekly runner as non-canonical fallback |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25930669790 | Terminal State Report | pull_request | completed | skipped | Clarify root README weekly automation status |
+| 25930468167 | Script Check | pull_request | completed | success | Clarify root README weekly automation status |
+| 25930468158 | Lab PR Scope Check | pull_request | completed | success | Clarify root README weekly automation status |
+| 25930126533 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25930111688 | Public Results Export | push | completed | success | Harden operator workflow input handling |
 | 25930111686 | Terminal State Report | pull_request | completed | skipped | Harden operator workflow input handling |
+| 25930111027 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25930015267 | Script Check | pull_request | completed | success | Harden operator workflow input handling |
 | 25930015263 | Lab PR Scope Check | pull_request | completed | success | Harden operator workflow input handling |
 | 25928469855 | Issue Safety Scan | issues | completed | success | Review Weekly Issue Finalizer manual input handling before release |
@@ -105,12 +111,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25908234134 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25908136834 | Lab PR Scope Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
 | 25908136823 | Static Site Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
-| 25908136819 | Script Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
-| 25907212486 | Static Site Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
-| 25907212462 | Script Check | pull_request | completed | success | Require lab support baseline explanation in smoke test |
-| 25907212444 | Lab PR Scope Check | pull_request | completed | failure | Require lab support baseline explanation in smoke test |
-| 25905993543 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25905976040 | Public Results Export | push | completed | success | Clarify lab support baseline rule |
 
 ## Raw JSON
 
