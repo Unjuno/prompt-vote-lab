@@ -31,6 +31,20 @@ REQUIRED_DOC_TEXT = [
     ".github/workflows/codex-policy-agent-canary-run.yml",
     ".github/workflows/codex-task-packet-canary-run.yml",
     ".github/workflows/codex-fixed-issue-instruction-canary-run.yml",
+    "## Canary-era archive boundary",
+    "Canary-era names are historical evidence labels, not active canonical status claims.",
+    "first-canary",
+    "canary-007",
+    "canary-008",
+    "canary-009",
+    "fixed-issue-instruction-canary",
+    "Do not rename historical evidence to make it look current.",
+    "Do not cite canary-era names as canonical selected-prompt status unless the evidence also contains the canonical runner marker.",
+    "Historical evidence role:",
+    "Current active role, if any:",
+    "Canonical status claim: none / explicit marker present",
+    "Affected run records:",
+    "Replacement evidence path:",
     "scripts/openai_lab_run.py",
     "It is non-canonical.",
     "These are candidates for future consolidation. They are not deletion instructions.",
@@ -48,6 +62,8 @@ REQUIRED_DOC_TEXT = [
 REQUIRED_INVENTORY_TEXT = [
     "Add a workflow-family map",
     "Avoid deleting evidence or fallback code until a release gate is recorded.",
+    "Historical archive evidence",
+    "Do not rename canary-era evidence just to make it look current.",
 ]
 
 FORBIDDEN_DOC_TEXT = [
@@ -57,6 +73,7 @@ FORBIDDEN_DOC_TEXT = [
     "auto-delete",
     "bulk delete",
     "remove all canary workflows",
+    "rename all canary workflows",
 ]
 
 
@@ -89,6 +106,8 @@ def main() -> int:
         raise SystemExit("public generated snapshot workflows should follow weekly active workflows")
     if doc.index("## Test and guard workflows") > doc.index("## Canary evidence workflows"):
         raise SystemExit("canary evidence workflows should follow test and guard workflows")
+    if doc.index("## Canary evidence workflows") > doc.index("## Canary-era archive boundary"):
+        raise SystemExit("canary-era archive boundary should follow canary evidence workflows")
     if doc.index("## Cleanup candidates") > doc.index("## Removal gate for workflows"):
         raise SystemExit("workflow removal gate should follow cleanup candidates")
 
