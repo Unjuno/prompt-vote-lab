@@ -11,7 +11,15 @@ MODEL_POLICY = ROOT / "rules" / "model-policy-v1.1.md"
 RUN_RECORD = ROOT / "runs" / "first-canary-009-authorized-canary-issue-170-success.md"
 
 REQUIRED_DOC_TEXT = [
-    "Prompt Vote Lab is currently usable as a manual canary experiment system.",
+    "Prompt Vote Lab is currently usable as a canonical weekly default-on experiment system",
+    "first ordinary post-default-on scheduled run still needs operational observation",
+    "Current usable canonical loop:",
+    "support unlock export",
+    "weekly vote collection",
+    "no-change baseline comparison",
+    "vote summary PR",
+    "canonical selected-prompt implementation PR, only if eligible",
+    "Manual canary loop, still available for controlled experiments:",
     "Issue safety scan",
     "optional manual rescan",
     "fixed-Issue 009 runtime scan",
@@ -19,11 +27,17 @@ REQUIRED_DOC_TEXT = [
     "Codex implementation PR",
     "manual review",
     "runs/ record",
+    "## 2. Weekly default-on path",
+    "canonical selected-prompt runner by default",
+    "no implementation-agent attempt is made",
+    "Codex does not run",
     "issue-safety:clear",
     "issue-safety:blocked",
     "authorized-canary",
     "Rank 1, rank 2, and rank 3 must use the same implementation model policy",
     "model-policy-v1.1: gpt-5.4-nano",
+    "Observe the first ordinary post-default-on no-eligible weekly run.",
+    "Confirm the first natural eligible canonical implementation PR after release.",
     "auto-merge",
 ]
 
@@ -43,7 +57,8 @@ REQUIRED_MODEL_POLICY_TEXT = [
     "# model-policy-v1.1",
     "gpt-5.4-nano",
     "first-canary-009",
-    "Do not directly compare prompt results across v1.0 and v1.1",
+    "canonical selected-prompt canary has passed",
+    "weekly canonical selected-prompt runner is default-on",
 ]
 
 REQUIRED_RUN_RECORD_TEXT = [
@@ -51,11 +66,6 @@ REQUIRED_RUN_RECORD_TEXT = [
     "PR: #173",
     "Merge commit: c60f3ca3e01c9a90f632c5f30a4e643a47be2bf8",
     "authorized-canary",
-    "policy_override",
-    "file_scope_escalation",
-    "network_behavior",
-    "cookie_or_tracking",
-    "dynamic_code_execution",
     "manual squash merge",
 ]
 

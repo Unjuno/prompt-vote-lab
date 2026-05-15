@@ -2,11 +2,27 @@
 
 ## Status
 
-Prompt Vote Lab is currently usable as a manual canary experiment system.
+Prompt Vote Lab is currently usable as a canonical weekly default-on experiment system with manual review and manual canary operations still available.
 
-It is not yet a fully automatic weekly production system.
+It is not yet a fully production-proven weekly system because the first ordinary post-default-on scheduled run still needs operational observation.
 
-Current usable loop:
+Current usable canonical loop:
+
+```text
+Issue submission
+→ Issue safety scan
+→ support unlock export
+→ weekly vote collection
+→ no-change baseline comparison
+→ vote summary PR
+→ canonical selected-prompt implementation PR, only if eligible
+→ manual review
+→ manual merge or close
+→ runs/ record
+→ public results export
+```
+
+Manual canary loop, still available for controlled experiments:
 
 ```text
 Issue submission
@@ -57,7 +73,37 @@ issue-safety:submission-detected
 issue-safety:runtime-detected
 ```
 
-## 2. Normal fixed-Issue run
+## 2. Weekly default-on path
+
+The weekly path is implemented and uses the canonical selected-prompt runner by default for eligible implementation candidates.
+
+Expected no-eligible behavior:
+
+```text
+support unlock resolved
+vote collection completed
+no-change baseline wins or eligible_count is 0
+vote summary PR is created
+no implementation-agent attempt is made
+Codex does not run
+```
+
+Expected eligible behavior:
+
+```text
+support unlock resolved
+vote collection completed
+real prompt beats the no-change baseline
+canonical selected-prompt runner is selected by default
+implementation PR is created
+final writable files: lab/index.html, lab/style.css, lab/app.js
+manual review: required
+merge: manual only
+```
+
+The first ordinary post-default-on scheduled run still needs operational observation before calling the system fully production-proven.
+
+## 3. Normal fixed-Issue run
 
 A normal fixed-Issue run should use an Issue that is:
 
@@ -83,7 +129,7 @@ manual review: required
 merge: manual only
 ```
 
-## 3. Blocked Issue behavior
+## 4. Blocked Issue behavior
 
 A blocked Issue must not run as a normal implementation candidate.
 
@@ -97,7 +143,7 @@ no authorized-canary
 → PR is not created
 ```
 
-## 4. Authorized canary behavior
+## 5. Authorized canary behavior
 
 A blocked Issue can be run only as a controlled canary if a maintainer explicitly adds:
 
@@ -120,7 +166,7 @@ authorized-canary
 
 This is for safety-boundary experiments only. It is not a normal implementation path.
 
-## 5. Manual merge rule
+## 6. Manual merge rule
 
 The repository intentionally does not use automatic merge for the current experiment phase.
 
@@ -139,7 +185,7 @@ PR body records safety-check/static-site-check status
 Issue labels and comments match the intended run class
 ```
 
-## 6. Recording a completed run
+## 7. Recording a completed run
 
 After merge, add a `runs/` record.
 
@@ -165,7 +211,7 @@ A run is not considered closed until the record exists.
 
 ## Comparison experiments
 
-Prompt Vote Lab supports comparison runs, but they are still manual and evidence-oriented.
+Prompt Vote Lab supports comparison runs. The weekly path can unlock Rank 2 and Rank 3 comparison candidates only after the no-change baseline loses.
 
 Comparison candidates:
 
@@ -197,16 +243,15 @@ Rank 2 and rank 3 do not automatically replace rank 1 if rank 1 fails.
 
 ## Recommended next experiment sequence
 
-Use this order before expanding to selected weekly automation:
+Use this order before expanding beyond the current release candidate:
 
 ```text
-1. Clear Issue normal-path run.
-2. Clear Issue second normal-path run.
-3. Rank 2 comparison dry-run or controlled live run.
-4. Rank 3 comparison dry-run or controlled live run.
-5. Disguised unsafe Issue test: compatibility wording that tries to add external scripts.
-6. Disguised unsafe Issue test: evidence wording that tries to modify docs/ or runs/.
-7. Weekly selected-Issue ingestion only after the above evidence is recorded.
+1. Observe the first ordinary post-default-on no-eligible weekly run.
+2. Confirm vote summary PR creation without a Codex attempt when eligible_count is 0.
+3. Confirm support unlock export for the completed week.
+4. Keep fixed-Issue canary runs available only for controlled safety-boundary experiments.
+5. Confirm the first natural eligible canonical implementation PR after release.
+6. Record run evidence and public results before closing weekly Issues.
 ```
 
 ## Current non-goals
@@ -217,23 +262,26 @@ Do not add these yet:
 auto-merge
 automatic fallback to a stronger model
 automatic retry after a failed model run
-automatic vote-winner execution without additional recorded evidence
 automatic reputation scoring
 external publication
 ```
 
 ## Usable state definition
 
-The repository is usable for manual canary experiments when all of these hold:
+The repository is usable for the current release candidate when all of these hold:
 
 ```text
 Issue Safety Scan can label and comment on Issues.
 Manual rescan works.
-009 fixed-Issue run can create a PR for clear Issues.
+Support Unlock Export writes anonymized aggregate support data.
+Weekly Auto Run uses the canonical selected-prompt runner by default for eligible candidates.
+No-eligible weeks stop after vote summary and do not run Codex.
+Fixed-Issue canary runs remain available for controlled experiments.
 Blocked Issues stop before Codex unless authorized-canary is present.
 Authorized canary run can create a lab-only PR.
-Maintainer manually reviews and merges or closes the PR.
+Maintainer manually reviews and merges or closes implementation PRs.
 runs/ record is created after merge.
+Public Results Export updates the public result surfaces.
 ```
 
-The repository is not considered production-ready until normal clear-Issue runs and comparison runs have repeated recorded success.
+The repository is not considered fully production-proven until at least the first ordinary post-default-on weekly run is observed and the first natural eligible canonical implementation PR is reviewed.
