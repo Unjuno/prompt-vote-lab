@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-05-15T19:00:06+00:00",
+  "generated_at": "2026-05-15T20:18:53+00:00",
   "issues": [
     {
       "author": "Unjuno",
       "body": "## Finding\n\nFile-by-file review found that several historical Codex canary workflows remain manually runnable with `workflow_dispatch` and repository write / PR creation permissions.\n\nThis is not an immediate canonical-runner blocker because:\n\n```text\n- they are manual only\n- they do not auto-merge\n- they create PRs rather than merging\n- they have changed-file guards for lab/index.html, lab/style.css, lab/app.js\n- current weekly default-on path uses the canonical selected-prompt runner instead\n```\n\nHowever, some old canary workflows are intentionally weaker than the current canonical boundary, including old workspace-write or relaxed-sandbox experiments.\n\n## Workflows reviewed in this group\n\n```text\n.github/workflows/codex-first-canary-run.yml\n.github/workflows/codex-isolated-3file-canary-run.yml\n.github/workflows/codex-isolated-3file-relaxed-canary-run.yml\n.github/workflows/codex-writeback-canary-run.yml\n.github/workflows/codex-offline-json-canary-run.yml\n.github/workflows/codex-agent-observed-canary-run.yml\n.github/workflows/codex-policy-agent-canary-run.yml\n.github/workflows/codex-task-packet-canary-run.yml\n.github/workflows/canary-007-policy-feasibility.yml\n```\n\n## Candidate release hardening options\n\nChoose one before public release:\n\n### Option A: Documentation-only\n\nKeep workflows runnable, but clearly document that historical canary workflows are not the normal release path.\n\n### Option B: Explicit repository variable gate\n\nRequire a repository variable such as:\n\n```text\nALLOW_HISTORICAL_CANARY_WORKFLOWS=true\n```\n\nfor older historical canary workflows to run.\n\nThis preserves the workflows as evidence surfaces while reducing accidental execution.\n\n### Option C: Disable only weaker canaries\n\nGate only the old workspace-write / relaxed-sandbox canaries, while leaving read-only feasibility and canonical selected-prompt smoke workflows available.\n\n## Non-goals\n\n- Do not delete historical canary workflows in this issue.\n- Do not remove run records or generated evidence.\n- Do not change the canonical weekly selected-prompt default-on path.\n- Do not enable auto-merge.\n\n## Current recommendation\n\nUse Option B or C if release hardening prioritizes accidental-run prevention.\n\nUse Option A if preserving easy rerun access to historical experiments is more important.",
       "body_length": 2301,
-      "closed_at": null,
+      "closed_at": "2026-05-15T19:00:37Z",
       "comment_count": 1,
       "created_at": "2026-05-15T17:59:59Z",
       "labels": [
@@ -24,9 +24,9 @@
         "runtime_detected": false,
         "submission_detected": true
       },
-      "state": "OPEN",
+      "state": "CLOSED",
       "title": "Decide whether to gate historical Codex canary workflows before release",
-      "updated_at": "2026-05-15T18:00:21Z",
+      "updated_at": "2026-05-15T19:00:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/312"
     },
     {
@@ -700,6 +700,48 @@
   ],
   "pull_requests": [
     {
+      "additions": 140,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Pass Evidence Pipeline Dry Run manual inputs through job environment variables before shell steps consume them.\n- Add a workflow contract test that rejects direct workflow input interpolation inside `run:` blocks.\n- Register the new contract test in Script Check.\n\n## Scope\n- `.github/workflows/evidence-pipeline-dry-run.yml`\n- `.github/workflows/script-check.yml`\n- `scripts/test_evidence_pipeline_workflow_contract.py`\n\n## Risk reduction\nThis workflow is read-only and does not run Codex, but it still accepts manual workflow form input. The input handling now follows the same safer pattern used by other operator workflows:\n\n```text\nworkflow input -> job env -> shell reads env\n```\n\n## Non-goals\n- No write permission added.\n- No PR creation.\n- No generated snapshot commit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 885,
+      "changed_files": 3,
+      "closed_at": "2026-05-15T20:18:37Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T20:07:13Z",
+      "deletions": 10,
+      "files": [
+        {
+          "additions": 14,
+          "deletions": 9,
+          "path": ".github/workflows/evidence-pipeline-dry-run.yml"
+        },
+        {
+          "additions": 5,
+          "deletions": 1,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 121,
+          "deletions": 0,
+          "path": "scripts/test_evidence_pipeline_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "harden-evidence-pipeline-inputs",
+      "head_ref_oid": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "labels": [],
+      "merge_commit_oid": "7e29a340e172c05bf227a046239e654689b1f959",
+      "merged_at": "2026-05-15T20:18:37Z",
+      "merged_by": "Unjuno",
+      "number": 314,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Harden evidence pipeline dry-run inputs",
+      "updated_at": "2026-05-15T20:18:37Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/314"
+    },
+    {
       "additions": 71,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -749,7 +791,7 @@
       "merged_at": "2026-05-15T18:59:48Z",
       "merged_by": "Unjuno",
       "number": 313,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Gate weak historical canary workflows",
@@ -4871,58 +4913,6 @@
       "title": "Filter non-terminal workflow runs from public results",
       "updated_at": "2026-05-11T05:22:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/241"
-    },
-    {
-      "additions": 124,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAligns scheduled support unlock resolution with the weekly operating model: Monday automation should process the UTC ISO week that just ended, not the newly started week.\n\n## Why\n\n`Weekly Auto Run` currently initializes `RUN_WEEK` from the current UTC ISO week. On Monday morning, that points at the week that just started. The support export and weekly vote evidence should instead resolve to the previous completed week.\n\nDirectly rewriting the full weekly workflow was avoided because that file contains multiple implementation secret bindings. This PR keeps workflow behavior compatible and moves the previous-week resolution into the support unlock resolver, which already writes environment variables back into `$GITHUB_ENV`.\n\n## Changes\n\n- Make `Support Unlock Export` default to the previous UTC ISO week when manual inputs are omitted.\n- Update `resolve_support_unlock.py` so scheduled and manual workflow runs can resolve the previous week's support unlock file and write the resolved `RUN_WEEK` back to the environment.\n- Add deterministic resolver tests for scheduled and manual previous-week fallback.\n- Extend the support unlock workflow contract test so previous-week support export defaults are preserved.\n- Update `docs/weekly-automation.md` to explain previous-week resolution.\n\n## Behavior\n\nScheduled path:\n\n```text\nSupport Unlock Export → previous ISO week JSON\nWeekly Auto Run → resolver finds previous ISO week JSON → RUN_WEEK is rewritten to week-<previous week>\n```\n\nManual path:\n\n```text\nSupport Unlock Export can still accept explicit week_id/since/until\nWeekly Auto Run can resolve previous week when current week support data is absent\n```\n\n## Scope\n\n- No root `lab/` changes.\n- No generated evidence changes.\n- No implementation model behavior changes.\n- No sponsor identity or event-level data changes.",
-      "body_length": 1844,
-      "changed_files": 5,
-      "closed_at": "2026-05-10T15:12:32Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T15:11:33Z",
-      "deletions": 27,
-      "files": [
-        {
-          "additions": 6,
-          "deletions": 5,
-          "path": ".github/workflows/support-unlock-export.yml"
-        },
-        {
-          "additions": 26,
-          "deletions": 13,
-          "path": "docs/weekly-automation.md"
-        },
-        {
-          "additions": 50,
-          "deletions": 8,
-          "path": "scripts/resolve_support_unlock.py"
-        },
-        {
-          "additions": 40,
-          "deletions": 1,
-          "path": "scripts/test_resolve_support_unlock.py"
-        },
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": "scripts/test_support_unlock_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "process-previous-week-on-schedule",
-      "head_ref_oid": "c2a4aee6674fb87c1944c5054dbad8b08ac6815b",
-      "labels": [],
-      "merge_commit_oid": "12abcbf8bc89005d81150c659a8a91d60d1fa888",
-      "merged_at": "2026-05-10T15:12:32Z",
-      "merged_by": "Unjuno",
-      "number": 240,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Process previous week in scheduled support resolution",
-      "updated_at": "2026-05-11T05:22:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/240"
     }
   ],
   "run_records": [
@@ -5073,13 +5063,83 @@
     "clear_issue_count": 9,
     "issue_count": 19,
     "merged_pr_count": 81,
-    "open_issue_count": 3,
+    "open_issue_count": 2,
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 22,
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-15T20:18:40Z",
+      "database_id": 25939380040,
+      "display_title": "Harden evidence pipeline dry-run inputs",
+      "event": "pull_request",
+      "head_branch": "harden-evidence-pipeline-inputs",
+      "head_sha": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:18:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939380040",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:07:17Z",
+      "database_id": 25938902912,
+      "display_title": "Harden evidence pipeline dry-run inputs",
+      "event": "pull_request",
+      "head_branch": "harden-evidence-pipeline-inputs",
+      "head_sha": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:07:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25938902912",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T20:07:17Z",
+      "database_id": 25938902909,
+      "display_title": "Harden evidence pipeline dry-run inputs",
+      "event": "pull_request",
+      "head_branch": "harden-evidence-pipeline-inputs",
+      "head_sha": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-15T20:07:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25938902909",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T19:00:09Z",
+      "database_id": 25935964195,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8047759085320d3ef71d14e9e3d6d74a9fe6ef7f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T19:00:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935964195",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-15T18:59:50Z",
+      "database_id": 25935949418,
+      "display_title": "Gate weak historical canary workflows",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "28cea6b6f3289874b39a117c0361f20fe5feb9fb",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-15T19:00:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935949418",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-15T18:59:50Z",
@@ -5093,6 +5153,20 @@
       "updated_at": "2026-05-15T18:59:51Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935949333",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-15T18:59:49Z",
+      "database_id": 25935948660,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "28cea6b6f3289874b39a117c0361f20fe5feb9fb",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-15T19:00:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935948660",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6367,90 +6441,6 @@
       "updated_at": "2026-05-15T02:32:30Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897070534",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T02:31:47Z",
-      "database_id": 25897063353,
-      "display_title": "Document canary-era archive boundary",
-      "event": "pull_request",
-      "head_branch": "document-canary-archive-boundary",
-      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:31:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897063353",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T02:31:47Z",
-      "database_id": 25897063347,
-      "display_title": "Document canary-era archive boundary",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "aa5f9aba40c94e9578926ebd570db6602cec364b",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:32:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897063347",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T02:31:46Z",
-      "database_id": 25897062870,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "aa5f9aba40c94e9578926ebd570db6602cec364b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:32:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897062870",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T02:30:24Z",
-      "database_id": 25897023923,
-      "display_title": "Document canary-era archive boundary",
-      "event": "pull_request",
-      "head_branch": "document-canary-archive-boundary",
-      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:30:31Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023923",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T02:30:24Z",
-      "database_id": 25897023915,
-      "display_title": "Document canary-era archive boundary",
-      "event": "pull_request",
-      "head_branch": "document-canary-archive-boundary",
-      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:30:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023915",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T02:30:24Z",
-      "database_id": 25897023911,
-      "display_title": "Document canary-era archive boundary",
-      "event": "pull_request",
-      "head_branch": "document-canary-archive-boundary",
-      "head_sha": "d5a74dd957ef27051c9a3fb7da064eae11c65149",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:30:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897023911",
-      "workflow_name": "Static Site Check"
     }
   ]
 }

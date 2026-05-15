@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T19:00:06+00:00`
+Generated at: `2026-05-15T20:18:53+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -9,7 +9,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | metric | value |
 | --- | --- |
 | issue_count | 19 |
-| open_issue_count | 3 |
+| open_issue_count | 2 |
 | blocked_issue_count | 5 |
 | clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
@@ -23,7 +23,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 312 | OPEN | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Decide whether to gate historical Codex canary workflows before release |
+| 312 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Decide whether to gate historical Codex canary workflows before release |
 | 306 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Review Weekly Issue Finalizer manual input handling before release |
 | 305 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Review Support Unlock Export input handling before release |
 | 304 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Inventory stale merged branches before cleanup |
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
 | 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
 | 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
@@ -76,13 +77,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 291 | MERGED | 4 | 110/6 | Mark OpenAI lab runner as legacy fallback |
 | 292 | MERGED | 5 | 335/27 | Add canonical status drift check |
 | 294 | MERGED | 2 | 26/9 | Shorten operator default-on release gate |
-| 296 | MERGED | 5 | 54/34 | Shorten README status entry |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25939380040 | Terminal State Report | pull_request | completed | skipped | Harden evidence pipeline dry-run inputs |
+| 25938902912 | Script Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
+| 25938902909 | Lab PR Scope Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
+| 25935964195 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25935949418 | Public Results Export | push | completed | success | Gate weak historical canary workflows |
 | 25935949333 | Terminal State Report | pull_request | completed | skipped | Gate weak historical canary workflows |
+| 25935948660 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25935907251 | Static Site Check | pull_request | completed | success | Gate weak historical canary workflows |
 | 25935907229 | Script Check | pull_request | completed | success | Gate weak historical canary workflows |
 | 25935907217 | Lab PR Scope Check | pull_request | completed | success | Gate weak historical canary workflows |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25932048525 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25931964126 | Script Check | pull_request | completed | success | Align root README with static UI function policy |
 | 25931964111 | Lab PR Scope Check | pull_request | completed | success | Align root README with static UI function policy |
-| 25930683922 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25930669790 | Terminal State Report | pull_request | completed | skipped | Clarify root README weekly automation status |
-| 25930669780 | Public Results Export | push | completed | success | Clarify root README weekly automation status |
-| 25930668760 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25930468167 | Script Check | pull_request | completed | success | Clarify root README weekly automation status |
-| 25930468158 | Lab PR Scope Check | pull_request | completed | success | Clarify root README weekly automation status |
 
 ## Raw JSON
 
