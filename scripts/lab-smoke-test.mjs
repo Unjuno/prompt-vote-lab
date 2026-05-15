@@ -39,6 +39,7 @@ const checks = [
     label: 'lab keeps a no-network expectation visible',
     pass: /without network access/i.test(visibleText) || /no network/i.test(visibleText)
   },
+  // Protect the participant-facing baseline/support selection rule shown in lab/index.html.
   {
     label: 'lab explains the no-change baseline has 20 votes',
     pass: /no-change baseline/i.test(visibleText) && /20 votes/i.test(visibleText)
