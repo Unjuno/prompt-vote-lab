@@ -44,7 +44,7 @@ def main() -> int:
         tmp = Path(tmp_name)
         empty = tmp / "empty.json"
         eligible = tmp / "eligible.json"
-        bad_model = tmp / "bad-model.json"
+        bad_reason_fixture = tmp / "bad-reason.json"
 
         write_json(empty, [])
         write_json(
@@ -60,7 +60,7 @@ def main() -> int:
             ],
         )
         write_json(
-            bad_model,
+            bad_reason_fixture,
             [
                 {
                     "rank": 2,
@@ -76,6 +76,9 @@ def main() -> int:
         if no_eligible.returncode != 0:
             print(no_eligible.stdout)
             raise SystemExit("empty eligible list should pass without secret")
+        if "output_token_cap_enforced" not in no_eligible.stdout:
+            print(no_eligible.stdout)
+            raise SystemExit("preflight summary should declare that no output token cap is enforced")
 
         needs_secret = run(["--eligible", str(eligible), "--model", ACTIVE_MODEL])
         if needs_secret.returncode == 0:
@@ -88,6 +91,9 @@ def main() -> int:
         if with_secret.returncode != 0:
             print(with_secret.stdout)
             raise SystemExit("eligible candidates with placeholder secret should pass preflight")
+        if '"output_token_cap_enforced": false' not in with_secret.stdout:
+            print(with_secret.stdout)
+            raise SystemExit("preflight summary should record output_token_cap_enforced=false")
 
         wrong_model = run(
             ["--eligible", str(eligible), "--model", "not-allowed-model"],
@@ -95,13 +101,6 @@ def main() -> int:
         )
         if wrong_model.returncode == 0:
             raise SystemExit("wrong model should fail")
-
-        too_many_tokens = run(
-            ["--eligible", str(eligible), "--model", ACTIVE_MODEL, "--max-output-tokens", "5001"],
-            env={"OPENAI_API_KEY_": "test-secret-placeholder"},
-        )
-        if too_many_tokens.returncode == 0:
-            raise SystemExit("too many output tokens should fail")
 
         retry_enabled = run(
             ["--eligible", str(eligible), "--model", ACTIVE_MODEL, "--sdk-max-retries", "1"],
@@ -111,7 +110,7 @@ def main() -> int:
             raise SystemExit("sdk retries should fail")
 
         bad_reason = run(
-            ["--eligible", str(bad_model), "--model", ACTIVE_MODEL],
+            ["--eligible", str(bad_reason_fixture), "--model", ACTIVE_MODEL],
             env={"OPENAI_API_KEY_": "test-secret-placeholder"},
         )
         if bad_reason.returncode == 0:
