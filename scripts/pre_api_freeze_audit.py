@@ -34,11 +34,11 @@ REQUIRED_FILES = [
 ]
 
 ACTIVE_MODEL = "gpt-5.4-nano"
-ACTIVE_MAX_OUTPUT_TOKENS = "5000"
-DEFERRED_MAX_OUTPUT_TOKENS = "12000"
 
 REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "docs/pre-api-freeze.md": [
+        "historical guardrail record",
+        "legacy API/SDK runner: present, non-canonical",
         "no automatic merge",
         "no hidden retry",
         "no fallback model",
@@ -47,17 +47,23 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "Support Unlock Export live path",
         "PR #243",
         ACTIVE_MODEL,
-        "max output tokens: 5000",
+        "legacy max output tokens: 5000",
+        "output_token_cap_enforced: false",
         "workflow attempts to auto-merge",
+        "not the release gate for the current canonical weekly selected-prompt runner",
     ],
     "docs/canary-policy.md": [
+        "# Legacy API canary policy",
+        "legacy API/SDK path",
         f"model: {ACTIVE_MODEL}",
         "attempts per candidate: 1",
         "SDK max_retries: 0",
         "fallback model: none",
-        "max_output_tokens: 5000",
+        "legacy max_output_tokens: 5000",
+        "output_token_cap_enforced: false",
         "automatic merge: no",
         "max continuation runs per candidate: 1",
+        "must not be cited as proof that the active canonical weekly path uses the API/SDK runner",
     ],
     "docs/first-canary-prompt.md": [
         "Fixed First Canary Prompt",
@@ -74,23 +80,24 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "changed files are inside lab/",
     ],
     "docs/first-canary-readiness.md": [
-        "First Canary Readiness Checklist",
-        "Do not run the canary unless every required item is PASS.",
+        "# Legacy first API canary readiness checklist",
+        "not the active readiness checklist for the current canonical weekly selected-prompt runner",
         "open PRs: 0",
         "remote branches: main only",
         f"model: {ACTIVE_MODEL}",
         "SDK max_retries: 0",
         "API call limit per candidate: 1",
-        "max output tokens: 5000",
+        "legacy max output tokens: 5000",
+        "output_token_cap_enforced: false",
         "fallback model: none",
         "auto-merge: disabled",
-        "Use only:",
         "Add a small static canary panel inside lab/ explaining that this is the first bounded implementation-agent canary.",
         "Allowed changed files:",
         "lab/index.html",
         "lab/style.css",
         "lab/app.js",
         "workflow attempts to auto-merge",
+        "not a current release checklist",
     ],
     "docs/stop-rules.md": [
         "more than one implementation-agent attempt for a single candidate",
@@ -102,10 +109,12 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "docs/current-features.md": [
         "no-eligible production workflow path: verified",
         "Support Unlock Export live path: verified",
-        "real implementation-agent canary: not yet executed",
-        "production autonomy: not complete",
+        "canonical selected-prompt canary: verified",
+        "canonical weekly default-on: approved",
+        "ordinary post-default-on weekly observation: pending",
         ACTIVE_MODEL,
-        "max output tokens capped at 5000",
+        "output_token_cap_enforced: false",
+        "Legacy API-era settings such as `max_output_tokens: 5000` must not be cited as active canonical runner enforcement",
         "Evidence Pipeline Dry Run",
         "source=live",
     ],
@@ -267,6 +276,7 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "ALLOWED_MODELS = {\"gpt-5\"}",
         "ALLOWED_MODELS = {\"gpt-5-mini\"}",
         "ALLOWED_MODELS = {\"gpt-5-nano\"}",
+        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
         "api_call_performed\": True",
         "sdk_max_retries != 1",
