@@ -1,14 +1,32 @@
-# Canary policy
+# Legacy API canary policy
 
-This policy defines the first paid implementation-agent API run.
+This document defines the historical first paid implementation-agent API run.
 
-The canary exists to test the full production path with the smallest useful change.
+It is retained as a guardrail for the legacy API/SDK path. It is not the current canonical weekly selected-prompt runner policy.
 
-It is not a feature expansion phase.
+Current active implementation path:
 
-## Entry condition
+```text
+canonical selected-prompt runner: default-on
+runner family: Docker/Codex selected-prompt task-packet runner
+legacy API/SDK runner: present, non-canonical
+manual review: required
+auto-merge: disabled
+```
 
-A real API canary may start only after:
+The active canonical runner status is governed by:
+
+```text
+docs/current-codex-implementation-path.md
+docs/weekly-automation.md
+docs/operator-runbook.md
+docs/canonical-status-drift-check.md
+rules/model-policy-v1.1.md
+```
+
+## Historical entry condition
+
+A real API canary could start only after:
 
 ```text
 Pre-API Freeze Audit: PASS
@@ -17,9 +35,9 @@ open verification PRs: none
 implementation-agent secret: configured
 ```
 
-## Allowed first canary prompt
+## Historical first canary prompt
 
-The first canary prompt must be small, visible, and easy to review.
+The old first canary prompt was small, visible, and easy to review.
 
 Recommended prompt:
 
@@ -27,9 +45,9 @@ Recommended prompt:
 Add a small visible canary panel to the lab page explaining that this is the first bounded implementation-agent test. Keep the change static, local, and inside lab/ only.
 ```
 
-## Hard limits
+## Legacy API hard limits
 
-The canary must use:
+These limits describe the old API/SDK canary path, not the canonical Codex selected-prompt runner.
 
 ```text
 model: gpt-5.4-nano
@@ -37,15 +55,23 @@ candidate count: 1
 attempts per candidate: 1
 SDK max_retries: 0
 fallback model: none
-max_output_tokens: 5000
+legacy max_output_tokens: 5000
 automatic merge: no
 ```
 
-`max_output_tokens: 12000` is deferred until after system completion and live eligible-path verification.
+The current canonical Codex CLI runner does not enforce this legacy API-era output-token cap as a runtime limit.
+
+Current active model policy records:
+
+```text
+output_token_cap_enforced: false
+```
+
+Do not claim a canonical run is output-token-capped unless a future runner contract proves runtime enforcement.
 
 ## Allowed output
 
-The canary may create one implementation PR changing only:
+The legacy API canary could create one implementation PR changing only:
 
 ```text
 lab/index.html
@@ -53,7 +79,7 @@ lab/style.css
 lab/app.js
 ```
 
-The PR must pass:
+The PR had to pass:
 
 ```text
 safety-check
@@ -62,7 +88,7 @@ static-site-check
 
 ## Forbidden output
 
-The canary must fail review if it:
+Any implementation canary must fail review if it:
 
 ```text
 edits outside lab/
@@ -151,3 +177,9 @@ Do not continue from these labels.
 ```text
 CONTINUE is a strictly bounded second run, not an iterative loop.
 ```
+
+## Current conclusion
+
+This file is a legacy API canary policy.
+
+It must not be cited as proof that the active canonical weekly path uses the API/SDK runner or enforces the old output-token cap.
