@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-15T21:42:36+00:00`
+Generated at: `2026-05-16T06:08:44+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,9 +14,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 0 |
-| merged_pr_count | 81 |
-| workflow_run_count | 98 |
+| open_pr_count | 1 |
+| merged_pr_count | 80 |
+| workflow_run_count | 99 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 319 | OPEN | 6 | 58/48 | Remove API-era output token cap from active policy |
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 | 317 | MERGED | 2 | 88/30 | Update usable ops current status |
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
@@ -76,13 +77,33 @@ This file is a raw results surface for participants. It does not score prompts o
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
 | 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
 | 289 | MERGED | 5 | 276/24 | Add repository cleanup inventory |
-| 290 | MERGED | 5 | 284/24 | Add workflow family map |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25954587143 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25953470883 | Script Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953470761 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953470758 | Static Site Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953470751 | Pre-API Freeze Audit | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953470742 | Implementation Preflight Test | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953220380 | Implementation Preflight Test | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953220362 | Script Check | pull_request | completed | failure | Remove API-era output token cap from active policy |
+| 25953220361 | Pre-API Freeze Audit | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953220360 | Static Site Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953220358 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953003454 | Static Site Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953003452 | Pre-API Freeze Audit | pull_request | completed | failure | Remove API-era output token cap from active policy |
+| 25953003451 | Script Check | pull_request | completed | failure | Remove API-era output token cap from active policy |
+| 25953003450 | Implementation Preflight Test | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25953003449 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
+| 25952245486 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25952242539 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25942834893 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25942825542 | Public Results Export | push | completed | success | Update canary log policy collector status |
 | 25942825538 | Terminal State Report | pull_request | completed | skipped | Update canary log policy collector status |
+| 25942825136 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25942782675 | Script Check | pull_request | completed | success | Update canary log policy collector status |
 | 25942782667 | Lab PR Scope Check | pull_request | completed | success | Update canary log policy collector status |
 | 25942782660 | Static Site Check | pull_request | completed | success | Update canary log policy collector status |
@@ -91,27 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25942507964 | Public Results Export | push | completed | success | Update usable ops current status |
 | 25942507147 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25942471551 | Lab PR Scope Check | pull_request | completed | success | Update usable ops current status |
-| 25942471531 | Script Check | pull_request | completed | success | Update usable ops current status |
-| 25942471525 | Static Site Check | pull_request | completed | success | Update usable ops current status |
-| 25940826072 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25940813263 | Terminal State Report | pull_request | completed | skipped | Fix support unlock example week |
-| 25940813243 | Public Results Export | push | completed | success | Fix support unlock example week |
-| 25940812588 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25940416205 | Script Check | pull_request | completed | success | Fix support unlock example week |
-| 25940416192 | Static Site Check | pull_request | completed | success | Fix support unlock example week |
-| 25940416182 | Lab PR Scope Check | pull_request | completed | success | Fix support unlock example week |
-| 25940294085 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25940277965 | Terminal State Report | pull_request | completed | skipped | Clarify automation map current workflow status |
-| 25940277614 | Public Results Export | push | completed | success | Clarify automation map current workflow status |
-| 25940276796 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25939988603 | Lab PR Scope Check | pull_request | completed | success | Clarify automation map current workflow status |
-| 25939988582 | Static Site Check | pull_request | completed | success | Clarify automation map current workflow status |
-| 25939391555 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25939380040 | Terminal State Report | pull_request | completed | skipped | Harden evidence pipeline dry-run inputs |
-| 25939380020 | Public Results Export | push | completed | success | Harden evidence pipeline dry-run inputs |
-| 25939379376 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25938902912 | Script Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
-| 25938902909 | Lab PR Scope Check | pull_request | completed | success | Harden evidence pipeline dry-run inputs |
 
 ## Raw JSON
 
