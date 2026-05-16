@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-16T06:08:44+00:00`
+Generated at: `2026-05-16T06:24:18+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,9 +14,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 1 |
-| merged_pr_count | 80 |
-| workflow_run_count | 99 |
+| open_pr_count | 0 |
+| merged_pr_count | 81 |
+| workflow_run_count | 98 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -47,7 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 319 | OPEN | 6 | 58/48 | Remove API-era output token cap from active policy |
+| 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 | 317 | MERGED | 2 | 88/30 | Update usable ops current status |
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
@@ -82,6 +82,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25954917009 | Terminal State Report | pull_request | completed | skipped | Remove API-era output token cap from active policy |
+| 25954630634 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25954624225 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25954587143 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25953470883 | Script Check | pull_request | completed | success | Remove API-era output token cap from active policy |
 | 25953470761 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
@@ -109,9 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25942782660 | Static Site Check | pull_request | completed | success | Update canary log policy collector status |
 | 25942522221 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25942508018 | Terminal State Report | pull_request | completed | skipped | Update usable ops current status |
-| 25942507964 | Public Results Export | push | completed | success | Update usable ops current status |
-| 25942507147 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25942471551 | Lab PR Scope Check | pull_request | completed | success | Update usable ops current status |
 
 ## Raw JSON
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T06:08:44+00:00",
+  "generated_at": "2026-05-16T06:24:18+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -706,7 +706,7 @@
       "body": "## Summary\n- Remove `max_output_tokens: 5000` from the active model-policy condition.\n- Treat output token caps as non-enforced for the current canonical Codex CLI runner unless a future runner contract proves runtime enforcement.\n- Keep `--max-output-tokens` accepted by `preflight_implementation_agent.py` as legacy metadata so existing workflow plumbing does not break.\n- Keep the real active controls focused on one attempt per candidate, retry 0, fallback none, manual review, support unlock rank limits, and the three-file lab scope.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n- `README.md`\n- `scripts/preflight_implementation_agent.py`\n- `scripts/test_preflight_implementation_agent.py`\n\n## Why\n`max_output_tokens` was an API-era setting. The current canonical selected-prompt path uses the Codex CLI runner and does not enforce this value as a runtime output cap. Keeping it as an active condition is misleading.\n\n## Non-goals\n- No model change.\n- No retry change.\n- No fallback change.\n- No workflow behavior change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
       "body_length": 1132,
       "changed_files": 6,
-      "closed_at": null,
+      "closed_at": "2026-05-16T06:23:59Z",
       "comment_count": 0,
       "created_at": "2026-05-16T04:41:45Z",
       "deletions": 48,
@@ -745,15 +745,15 @@
       "head_ref_name": "remove-api-output-token-cap",
       "head_ref_oid": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
       "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
+      "merge_commit_oid": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
+      "merged_at": "2026-05-16T06:23:59Z",
+      "merged_by": "Unjuno",
       "number": 319,
       "reaction_plus_one_count": 0,
       "review_decision": null,
-      "state": "OPEN",
+      "state": "MERGED",
       "title": "Remove API-era output token cap from active policy",
-      "updated_at": "2026-05-16T05:06:46Z",
+      "updated_at": "2026-05-16T06:23:59Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/319"
     },
     {
@@ -5067,14 +5067,56 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 9,
     "issue_count": 19,
-    "merged_pr_count": 80,
+    "merged_pr_count": 81,
     "open_issue_count": 2,
-    "open_pr_count": 1,
+    "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 22,
-    "workflow_run_count": 99
+    "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-16T06:24:01Z",
+      "database_id": 25954917009,
+      "display_title": "Remove API-era output token cap from active policy",
+      "event": "pull_request",
+      "head_branch": "remove-api-output-token-cap",
+      "head_sha": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:24:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954917009",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:08:48Z",
+      "database_id": 25954630634,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "685fb5be508bfa683746b45e3f2cc64316d05c38",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:09:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954630634",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:08:27Z",
+      "database_id": 25954624225,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "94bb2a8e8b54af79cbeccdc1f48930edf7ad9e17",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:08:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954624225",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "failure",
       "created_at": "2026-05-16T06:06:26Z",
@@ -6404,62 +6446,6 @@
       "updated_at": "2026-05-15T12:38:14Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25918177364",
       "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T12:04:35Z",
-      "database_id": 25916818871,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:05:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916818871",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T12:04:10Z",
-      "database_id": 25916803038,
-      "display_title": "Enable canonical weekly runner by default",
-      "event": "pull_request",
-      "head_branch": "enable-canonical-weekly-default",
-      "head_sha": "12fc119e5b48352a8a51e72fb48ab08bae5e0588",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:04:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916803038",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T12:04:10Z",
-      "database_id": 25916802993,
-      "display_title": "Enable canonical weekly runner by default",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "eed3aec2cbc218dc6f2548d58f0754703b04dc6f",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:04:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916802993",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T12:04:09Z",
-      "database_id": 25916802441,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "eed3aec2cbc218dc6f2548d58f0754703b04dc6f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:04:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25916802441",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
