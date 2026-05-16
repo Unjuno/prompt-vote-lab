@@ -1,7 +1,12 @@
-name: First Canary Run
+name: Legacy First API Canary Run
 
 on:
   workflow_dispatch:
+    inputs:
+      confirm_legacy_api_canary:
+        description: "Type RUN_LEGACY_API_CANARY to confirm this non-canonical legacy API/SDK canary."
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -19,7 +24,19 @@ jobs:
       MAX_OUTPUT_TOKENS: "5000"
       SDK_MAX_RETRIES: "0"
       RUN_WEEK: first-canary-001
+      LEGACY_API_CANARY_CONFIRMATION: ${{ inputs.confirm_legacy_api_canary }}
     steps:
+      - name: Confirm legacy API canary intent
+        shell: bash
+        run: |
+          if [ "${LEGACY_API_CANARY_CONFIRMATION}" != "RUN_LEGACY_API_CANARY" ]; then
+            echo "This is a legacy non-canonical API/SDK canary workflow."
+            echo "Use the canonical selected-prompt runner for normal weekly operation."
+            echo "To run this legacy workflow intentionally, type RUN_LEGACY_API_CANARY in the workflow input."
+            exit 1
+          fi
+          echo "Legacy API canary confirmation accepted."
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -124,11 +141,11 @@ jobs:
           git push --set-upstream origin "$branch"
 
           cat > .tmp/first-canary-pr-body.md <<EOF
-          Implements the fixed first implementation-agent canary.
+          Implements the fixed first implementation-agent canary through the legacy non-canonical API/SDK workflow.
 
           ## Purpose
 
-          This is execution-path verification, not product expansion.
+          This is historical execution-path verification, not product expansion and not the canonical selected-prompt runner.
 
           ## Fixed prompt source
 
@@ -142,13 +159,17 @@ jobs:
           - Votes: 0
           - Inherited lab base: \`$base_sha\`
           - Implementation model: \`gpt-5.4-nano\`
-          - Max output tokens: \`5000\`
+          - Legacy max output tokens metadata: \`5000\`
+          - Output token cap enforced by current canonical runner: \`false\`
           - SDK max retries: \`0\`
           - API call limit per candidate: \`1\`
+          - Canonical selected-prompt runner: \`false\`
+          - Legacy runner: \`true\`
           - Auto-merge: disabled
 
           ## Internal checks
 
+          - legacy API canary confirmation input accepted before execution
           - safety-check passed before PR creation
           - static-site-check passed before PR creation
           - changed-file guard passed before PR creation
