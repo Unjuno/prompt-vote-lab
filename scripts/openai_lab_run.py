@@ -22,6 +22,10 @@ Agent-run policy:
 - SDK retries disabled
 - no automatic fallback
 - no automatic merge
+
+Weekly fallback safety:
+- ordinary week-* runs are refused unless PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+- first-canary-* runs are historical canary evidence and are gated at the workflow level
 """
 
 from __future__ import annotations
@@ -46,6 +50,7 @@ MAX_PROMPT_CHARS = int(os.getenv("MAX_IMPLEMENTATION_PROMPT_CHARS", "120000"))
 MAX_OUTPUT_TOKENS_LIMIT = 5000
 LEGACY_RUNNER_CLASSIFICATION = "legacy-non-canonical-fallback"
 CANONICAL_SELECTED_PROMPT_RUNNER = "codex-cli-selected-prompt-packet-container"
+ALLOW_LEGACY_WEEKLY_FALLBACK_ENV = "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN"
 
 
 SCHEMA = {
@@ -92,6 +97,20 @@ def enforce_prompt_budget(prompt: str) -> None:
             f"Implementation prompt is too large: {len(prompt)} chars > {MAX_PROMPT_CHARS}. "
             "Refusing to start the implementation-agent attempt."
         )
+
+
+def enforce_legacy_weekly_fallback_gate(args: argparse.Namespace) -> None:
+    if not str(args.week).startswith("week-"):
+        return
+    if os.getenv(ALLOW_LEGACY_WEEKLY_FALLBACK_ENV) == "true":
+        return
+    print(
+        "Legacy API/SDK runner refused for ordinary weekly run. "
+        "Use the canonical selected-prompt Docker/Codex runner, or set "
+        f"{ALLOW_LEGACY_WEEKLY_FALLBACK_ENV}=true for an explicit emergency diagnosis.",
+        file=sys.stderr,
+    )
+    raise SystemExit(2)
 
 
 def build_prompt(args: argparse.Namespace) -> str:
@@ -165,6 +184,7 @@ def main() -> int:
     parser.add_argument("--summary-out", default=".tmp/implementation-summary.md")
     args = parser.parse_args()
 
+    enforce_legacy_weekly_fallback_gate(args)
     api_key = resolve_openai_api_key()
 
     if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT:
