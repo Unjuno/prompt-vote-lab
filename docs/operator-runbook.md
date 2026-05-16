@@ -87,9 +87,15 @@ Interpretation:
 |---|---|---|
 | unset | canonical Docker/Codex selected-prompt runner for eligible candidates | normal default |
 | `true` | canonical Docker/Codex selected-prompt runner for eligible candidates | normal explicit canonical path |
-| `false` | legacy weekly fallback path | emergency rollback / controlled diagnosis only |
+| `false` | can reach legacy weekly fallback path | emergency rollback / controlled diagnosis only |
 
 The legacy `scripts/openai_lab_run.py` path is non-canonical. It is preserved as a migration fallback only.
+
+For ordinary `week-*` runs, `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone must not spend a legacy API/SDK attempt. The downstream legacy runner gate also requires:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
 
 Do not treat a legacy weekly run as canonical evidence.
 
@@ -110,10 +116,17 @@ A controlled rollback or diagnostic run may set:
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
 ```
 
+For an ordinary `week-*` diagnostic to proceed through the legacy API/SDK runner, the maintainer must also set:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
+
 Required cleanup after that diagnostic run:
 
 ```text
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN unset
 ```
 
 Variables used during controlled canaries may include:
@@ -134,6 +147,8 @@ record run URL and artifact names in durable docs or PR comments
 Never leave `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` after a canary. That changes weekly selection behavior.
 
 Never leave `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` unintentionally after a diagnostic run. That would disable the canonical default.
+
+Never leave `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` after a diagnostic run. That would leave the legacy API/SDK fallback armed for ordinary weekly runs.
 
 ## Default-on release status
 
@@ -204,6 +219,17 @@ weekly-selected-prompt-diagnostics-<run_number> artifact is present
 weekly-selected-prompt-public-bundles-<run_number> artifact is present
 weekly-selected-prompt-uploaded-bundle-verification-<run_number> artifact is present
 changed files are only lab/index.html, lab/style.css, and/or lab/app.js
+auto-merge does not occur
+```
+
+Expected legacy diagnostic result only when both overrides are intentionally set:
+
+```text
+PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+legacy API/SDK runner is labeled non-canonical
+canonical selected-prompt runner evidence is absent
+manual review remains required
 auto-merge does not occur
 ```
 
@@ -301,7 +327,8 @@ canonical evidence artifacts are missing for a canonical run
 | wrong week id | resolver or manual window mismatch | Check `RUN_WEEK` and support unlock source |
 | no eligible candidates | baseline won or no votes | Merge vote summary if correct |
 | implementation secret missing | eligible candidates exist but implementation API secret is absent | Configure implementation secret or stop |
-| preflight failure | model/token/retry/candidate policy mismatch | Fix policy mismatch; do not bypass preflight |
+| preflight failure | model/retry/candidate policy mismatch | Fix policy mismatch; do not bypass preflight |
+| legacy API/SDK runner refused | rollback flag was set without the downstream legacy-runner gate | Use the canonical runner, or intentionally set `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` for emergency diagnosis only |
 | generated no lab changes | model failed to make useful change | Record failure; do not auto-rerun |
 | safety/static check failure | unsafe or invalid output | Stop and review; do not merge |
 | canonical evidence artifact missing | canonical step failed before evidence was created or upload failed | Preserve logs, do not merge, inspect diagnostics/public bundle steps |
@@ -335,6 +362,18 @@ For canonical Docker/Codex runs, the evidence should show:
 OPENAI_API_KEY present before codex exec: no
 ```
 
+## Output cap status
+
+The old API-era `MAX_OUTPUT_TOKENS` value is not an active canonical Codex runner control.
+
+Current active policy records:
+
+```text
+output_token_cap_enforced: false
+```
+
+Do not change or cite output-token caps as canonical runtime enforcement unless a future runner contract proves enforcement directly.
+
 ## Reset and cleanup policy
 
 Do not delete public evidence casually.
@@ -352,22 +391,6 @@ merged PRs and Issues
 ```
 
 Development cleanup scripts must default to dry-run and must refuse to delete protected public evidence paths.
-
-## Deferred configuration decisions
-
-`MAX_OUTPUT_TOKENS` remains at the current configured limit until the system is complete.
-
-Do not change it during the current stabilization phase.
-
-Revisit only after:
-
-```text
-participant docs are complete
-operator runbook is complete
-reset script is safe
-implementation PR path has passed at least one live E2E run
-review burden and diff size are known
-```
 
 ## Stop rule
 
