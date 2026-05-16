@@ -50,7 +50,8 @@ REQUIRED = {
         f"ALLOWED_MODELS = {{\"{ACTIVE_MODEL}\"}}",
         "if sdk_max_retries != 0",
         "api_call_limit != 1",
-        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
+        "output_token_cap_enforced",
+        "legacy_max_output_tokens_input_present",
     ],
     "scripts/openai_lab_run.py": [
         "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
@@ -111,6 +112,7 @@ FORBIDDEN = {
         "ALLOWED_MODELS = {\"gpt-5-nano\"}",
         "sdk_max_retries != 1",
         "api_call_limit != 2",
+        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
         "MAX_OUTPUT_TOKENS_LIMIT = 12000",
     ],
     "scripts/openai_lab_run.py": [
