@@ -146,12 +146,13 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "scripts/preflight_implementation_agent.py": [
         f"ALLOWED_MODELS = {{\"{ACTIVE_MODEL}\"}}",
-        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
         "if sdk_max_retries != 0",
         "api_call_limit != 1",
         "validate_env_secret(len(candidates))",
         "api_call_performed",
         "False",
+        "output_token_cap_enforced",
+        "legacy_max_output_tokens_input_present",
     ],
     "scripts/openai_lab_run.py": [
         "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",

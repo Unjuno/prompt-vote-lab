@@ -170,14 +170,17 @@ Current active implementation condition:
 
 ```text
 model-policy-v1.1: gpt-5.4-nano
-max_output_tokens: 5000
+attempts_per_candidate: 1
+retry_count: 0
+fallback_policy: none
+output_token_cap_enforced: false
 ```
 
-The implementation model and output budget are fixed by `rules/model-policy-v1.1.md` during the current stabilization phase.
+The implementation model and bounded-agent policy are fixed by `rules/model-policy-v1.1.md` during the current stabilization phase.
 
 All ranked candidates in the same weekly vote must use the same implementation condition.
 
-`max_output_tokens: 12000` is not active. It may be reconsidered only after the system is complete and the eligible implementation PR path has passed live E2E verification.
+The current canonical Codex CLI runner does not enforce the old API-era `max_output_tokens` cap as a runtime limit. Cost and scope are controlled through one attempt per candidate, no retry, no fallback, support-unlock rank limits, manual review, and the three-file lab scope.
 
 A stronger model may be used only for evaluation and blog/report writing. The evaluation model must not modify `lab/`.
 
@@ -245,7 +248,7 @@ Key documents:
 - [`docs/experiment-model.md`](docs/experiment-model.md) — project concept and boundaries
 - [`docs/how-to-participate.md`](docs/how-to-participate.md) — how to submit, vote, and review as a player
 - [`docs/weekly-automation.md`](docs/weekly-automation.md) — weekly schedule and support unlock prerequisite
-- [`docs/usable-experiment-ops.md`](docs/usable-experiment-ops.md) — current usable manual experiment operations
+- [`docs/usable-experiment-ops.md`](docs/usable-experiment-ops.md) — current usable experiment operations
 - [`docs/no-change-baseline.md`](docs/no-change-baseline.md) — no-change baseline explanation
 - [`docs/support-policy.md`](docs/support-policy.md) — support tiers and thresholds
 - [`docs/automation-map.md`](docs/automation-map.md) — automation boundary
