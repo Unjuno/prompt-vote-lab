@@ -26,6 +26,7 @@ REQUIRED_DOC_TEXT = [
     "Safety gate",
     "Canary evidence",
     "Legacy fallback",
+    "Keep with explicit legacy wording and explicit gate",
     "Test and guard",
     "Cleanup candidate",
     ".github/workflows/codex-selected-prompt-run.yml",
@@ -61,6 +62,8 @@ REQUIRED_DOC_TEXT = [
     "Replacement evidence path:",
     "scripts/openai_lab_run.py",
     "It is non-canonical.",
+    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
+    "The weekly feature flag alone must not silently spend a legacy API/SDK attempt.",
     "It should not be removed merely because the canonical weekly runner is default-on.",
     "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
     "These are candidates for future consolidation. They are not deletion instructions.",
@@ -73,6 +76,7 @@ REQUIRED_DOC_TEXT = [
     "Affected contract tests:",
     "Rollback path:",
     "Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.",
+    "Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.",
     "Defer legacy fallback removal until a separate legacy-removal gate exists.",
 ]
 

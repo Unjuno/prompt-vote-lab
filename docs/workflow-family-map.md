@@ -21,7 +21,7 @@ Which workflows are evidence-bearing, and which workflows are historical scaffol
 | Public generated snapshot | Owns generated public data or pages evidence | Keep; edit through owning generator |
 | Safety gate | Blocks unsafe or out-of-scope execution | Keep |
 | Canary evidence | Historical or controlled canary path with evidence value | Keep until replacement evidence is documented |
-| Legacy fallback | Non-canonical migration fallback | Keep with explicit legacy wording |
+| Legacy fallback | Non-canonical migration fallback | Keep with explicit legacy wording and explicit gate |
 | Test and guard | CI guard, scope guard, or contract verification | Keep |
 | Cleanup candidate | Candidate for later consolidation or retirement | Do not delete until a removal gate is recorded |
 
@@ -175,6 +175,14 @@ It may still be reachable through weekly override behavior when `PROMPT_VOTE_LAB
 
 It is non-canonical.
 
+For ordinary `week-*` runs, the legacy script has a downstream gate and refuses to proceed unless this explicit override is present:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
+
+This second gate is intentional. The weekly feature flag alone must not silently spend a legacy API/SDK attempt.
+
 It should not be removed merely because the canonical weekly runner is default-on. Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.
 
 ## Cleanup candidates
@@ -211,6 +219,7 @@ The next safe cleanup work is:
 1. Verify the first ordinary scheduled default-on weekly run.
 2. Keep scripts/openai_lab_run.py labeled as legacy and non-canonical.
 3. Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.
-4. Defer legacy fallback removal until a separate legacy-removal gate exists.
-5. Defer workflow deletion until a release readiness record approves it.
+4. Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.
+5. Defer legacy fallback removal until a separate legacy-removal gate exists.
+6. Defer workflow deletion until a release readiness record approves it.
 ```
