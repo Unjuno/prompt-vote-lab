@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-16T12:10:36+00:00`
+Generated at: `2026-05-16T15:37:45+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
 | 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
 | 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
 | 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
 | 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
 | 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
-| 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25965912683 | Terminal State Report | pull_request | completed | skipped | Update weekly operator docs for legacy gate |
+| 25965871253 | Script Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
+| 25965871252 | Lab PR Scope Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
+| 25965871250 | Static Site Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
+| 25961586414 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25961581134 | Public Results Export | push | completed | success | Document legacy OpenAI runner gate |
 | 25961581082 | Terminal State Report | pull_request | completed | skipped | Document legacy OpenAI runner gate |
+| 25961580731 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25961171448 | Script Check | pull_request | completed | success | Document legacy OpenAI runner gate |
 | 25961171442 | Static Site Check | pull_request | completed | success | Document legacy OpenAI runner gate |
 | 25961171440 | Lab PR Scope Check | pull_request | completed | success | Document legacy OpenAI runner gate |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25955577098 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25955539776 | Lab PR Scope Check | pull_request | completed | success | Mark legacy API canary docs as historical |
 | 25955539755 | Script Check | pull_request | completed | success | Mark legacy API canary docs as historical |
-| 25955539753 | Static Site Check | pull_request | completed | success | Mark legacy API canary docs as historical |
-| 25955539750 | Pre-API Freeze Audit | pull_request | completed | success | Mark legacy API canary docs as historical |
-| 25954923538 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25954917009 | Terminal State Report | pull_request | completed | skipped | Remove API-era output token cap from active policy |
-| 25954916987 | Public Results Export | push | completed | success | Remove API-era output token cap from active policy |
-| 25954916754 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25954630634 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 

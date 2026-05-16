@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T12:10:36+00:00",
+  "generated_at": "2026-05-16T15:37:45+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,48 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 76,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Document that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone must not spend a legacy API/SDK attempt.\n- Add the required downstream legacy fallback gate to weekly and operator docs: `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`.\n- Update rollback cleanup instructions to remove both temporary overrides.\n- Replace the old `MAX_OUTPUT_TOKENS` stabilization wording with the current `output_token_cap_enforced: false` status.\n- Update `scripts/test_weekly_operator_docs.py` to keep this wording fixed.\n\n## Scope\n- `docs/weekly-automation.md`\n- `docs/operator-runbook.md`\n- `scripts/test_weekly_operator_docs.py`\n\n## Why\nThe legacy OpenAI/API runner is now protected by a downstream gate. Operator-facing docs should not imply that the weekly feature flag alone authorizes a legacy API/SDK run, and should not treat old output-token cap wording as an active canonical runtime control.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1156,
+      "changed_files": 3,
+      "closed_at": "2026-05-16T15:37:29Z",
+      "comment_count": 0,
+      "created_at": "2026-05-16T15:35:34Z",
+      "deletions": 22,
+      "files": [
+        {
+          "additions": 41,
+          "deletions": 18,
+          "path": "docs/operator-runbook.md"
+        },
+        {
+          "additions": 18,
+          "deletions": 3,
+          "path": "docs/weekly-automation.md"
+        },
+        {
+          "additions": 17,
+          "deletions": 1,
+          "path": "scripts/test_weekly_operator_docs.py"
+        }
+      ],
+      "head_ref_name": "update-weekly-operator-legacy-gate-docs",
+      "head_ref_oid": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "labels": [],
+      "merge_commit_oid": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
+      "merged_at": "2026-05-16T15:37:29Z",
+      "merged_by": "Unjuno",
+      "number": 324,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update weekly operator docs for legacy gate",
+      "updated_at": "2026-05-16T15:37:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/324"
+    },
     {
       "additions": 32,
       "author": "Unjuno",
@@ -4851,43 +4893,6 @@
       "title": "Add Script Check workflow contract test",
       "updated_at": "2026-05-11T05:22:18Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/231"
-    },
-    {
-      "additions": 67,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes the comparison dashboard so it does not show stale PRs or duplicate rank cards.\n\n## Problem\n\nThe comparison dashboard had two related issues:\n\n```text\n1. Same Issue with multiple PRs could select a stale closed PR.\n2. Same rank could render multiple cards, for example two Rank 1 cards.\n```\n\nObserved examples:\n\n```text\nRank 2: stale PR #211 instead of the corrected/merged rank-2 output\nRank 3: stale PR #216 instead of merged PR #224\nRank 1: duplicate cards from Issue #183 and Issue #191\n```\n\n## Change\n\nSelection is now deterministic:\n\n```text\nPR state: MERGED > OPEN > CLOSED > unknown\nTie-break: larger PR number\nRank dedupe tie-break: PR selection key, then larger Issue number\n```\n\n## Tests\n\nAdds regression coverage for:\n\n```text\nIssue #195: choose MERGED PR #201 over CLOSED PR #199\nRank 1: choose the preferred/newer merged row and render exactly one Rank 1 card\n```\n\n## Non-goals\n\n- Does not directly edit generated comparison HTML in this PR.\n- Does not modify rank artifacts.\n- Does not change model execution workflow.",
-      "body_length": 1051,
-      "changed_files": 2,
-      "closed_at": "2026-05-09T19:38:34Z",
-      "comment_count": 0,
-      "created_at": "2026-05-09T19:25:32Z",
-      "deletions": 7,
-      "files": [
-        {
-          "additions": 20,
-          "deletions": 7,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 47,
-          "deletions": 0,
-          "path": "scripts/test_build_comparison_dashboard.py"
-        }
-      ],
-      "head_ref_name": "regenerate-comparison-dashboard-after-pr-selection-fix",
-      "head_ref_oid": "1cdd5afc29f2543c28939bbc77802a838525ef1d",
-      "labels": [],
-      "merge_commit_oid": "ddbcd5689c9286224f0197ee9a72f2e8bb6b989e",
-      "merged_at": "2026-05-09T19:38:34Z",
-      "merged_by": "Unjuno",
-      "number": 228,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Dedupe comparison dashboard rows by rank",
-      "updated_at": "2026-05-11T05:22:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/228"
     }
   ],
   "run_records": [
@@ -5047,6 +5052,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-16T15:37:32Z",
+      "database_id": 25965912683,
+      "display_title": "Update weekly operator docs for legacy gate",
+      "event": "pull_request",
+      "head_branch": "update-weekly-operator-legacy-gate-docs",
+      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T15:37:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912683",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T15:35:38Z",
+      "database_id": 25965871253,
+      "display_title": "Update weekly operator docs for legacy gate",
+      "event": "pull_request",
+      "head_branch": "update-weekly-operator-legacy-gate-docs",
+      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T15:36:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871253",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T15:35:38Z",
+      "database_id": 25965871252,
+      "display_title": "Update weekly operator docs for legacy gate",
+      "event": "pull_request",
+      "head_branch": "update-weekly-operator-legacy-gate-docs",
+      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T15:35:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871252",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T15:35:38Z",
+      "database_id": 25965871250,
+      "display_title": "Update weekly operator docs for legacy gate",
+      "event": "pull_request",
+      "head_branch": "update-weekly-operator-legacy-gate-docs",
+      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T15:35:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871250",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T12:10:39Z",
+      "database_id": 25961586414,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "13333a7ab32a515636d70fed9c3daad7010a8484",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T12:11:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961586414",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T12:10:22Z",
+      "database_id": 25961581134,
+      "display_title": "Document legacy OpenAI runner gate",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "b835e531bad9de36fdfc6d2c967f584faea39992",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T12:10:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961581134",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-16T12:10:22Z",
       "database_id": 25961581082,
       "display_title": "Document legacy OpenAI runner gate",
@@ -5058,6 +5147,20 @@
       "updated_at": "2026-05-16T12:10:24Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961581082",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-16T12:10:21Z",
+      "database_id": 25961580731,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b835e531bad9de36fdfc6d2c967f584faea39992",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T12:10:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961580731",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6318,104 +6421,6 @@
       "updated_at": "2026-05-15T17:56:14Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933064468",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T17:55:28Z",
-      "database_id": 25933052183,
-      "display_title": "Update experiment model active model policy reference",
-      "event": "pull_request",
-      "head_branch": "update-experiment-model-active-model-policy",
-      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:55:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933052183",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:55:28Z",
-      "database_id": 25933052121,
-      "display_title": "Update experiment model active model policy reference",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "31fca5c88d2f81e92bc059c1c71a122a6c0615bc",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:55:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933052121",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T17:55:27Z",
-      "database_id": 25933051137,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "31fca5c88d2f81e92bc059c1c71a122a6c0615bc",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:55:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933051137",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:52:58Z",
-      "database_id": 25932935767,
-      "display_title": "Update experiment model active model policy reference",
-      "event": "pull_request",
-      "head_branch": "update-experiment-model-active-model-policy",
-      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:53:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932935767",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:52:58Z",
-      "database_id": 25932935733,
-      "display_title": "Update experiment model active model policy reference",
-      "event": "pull_request",
-      "head_branch": "update-experiment-model-active-model-policy",
-      "head_sha": "d0213fe295e203ce98ddb72f173c0a003351596a",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:53:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932935733",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:43:55Z",
-      "database_id": 25932524922,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "8dc66a5f029bd8c0469a89489bcdb68ba599e135",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:44:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932524922",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:43:37Z",
-      "database_id": 25932511134,
-      "display_title": "Clarify model policy verification status",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:43:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511134",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
