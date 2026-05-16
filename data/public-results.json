@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T06:24:18+00:00",
+  "generated_at": "2026-05-16T06:58:40+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,63 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 205,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Mark the old API/SDK first-canary docs as historical and non-canonical.\n- Update current feature inventory to show the active canonical Docker/Codex selected-prompt runner as default-on.\n- Keep the legacy API/SDK runner and first-canary workflow as present but non-canonical.\n- Update contract tests so they no longer require old API-era canary language as active release policy.\n\n## Scope\n- `docs/pre-api-freeze.md`\n- `docs/current-features.md`\n- `docs/canary-policy.md`\n- `docs/first-canary-readiness.md`\n- `scripts/pre_api_freeze_audit.py`\n- `scripts/test_canary_policy_alignment.py`\n\n## Why\nSeveral docs still read as if the first API/SDK canary were the next active release step. That is stale after the canonical Docker/Codex selected-prompt runner became default-on. The API/SDK materials should remain as historical guardrails and emergency-diagnosis references, not active release gates.\n\n## Non-goals\n- No workflow change.\n- No model change.\n- No retry change.\n- No fallback change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1114,
+      "changed_files": 6,
+      "closed_at": "2026-05-16T06:58:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-16T06:56:27Z",
+      "deletions": 100,
+      "files": [
+        {
+          "additions": 47,
+          "deletions": 15,
+          "path": "docs/canary-policy.md"
+        },
+        {
+          "additions": 31,
+          "deletions": 23,
+          "path": "docs/current-features.md"
+        },
+        {
+          "additions": 44,
+          "deletions": 20,
+          "path": "docs/first-canary-readiness.md"
+        },
+        {
+          "additions": 50,
+          "deletions": 29,
+          "path": "docs/pre-api-freeze.md"
+        },
+        {
+          "additions": 21,
+          "deletions": 11,
+          "path": "scripts/pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 12,
+          "deletions": 2,
+          "path": "scripts/test_canary_policy_alignment.py"
+        }
+      ],
+      "head_ref_name": "mark-api-canary-docs-historical",
+      "head_ref_oid": "80356e3077263470198c58add71e3add38f5f19c",
+      "labels": [],
+      "merge_commit_oid": "c5cfec3e386ccf481bc31296e33b3d8a19551e95",
+      "merged_at": "2026-05-16T06:58:25Z",
+      "merged_by": "Unjuno",
+      "number": 320,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Mark legacy API canary docs as historical",
+      "updated_at": "2026-05-16T06:58:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/320"
+    },
     {
       "additions": 58,
       "author": "Unjuno",
@@ -4876,48 +4933,6 @@
       "title": "Automate support unlocks for comparison runs",
       "updated_at": "2026-05-11T05:22:14Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/234"
-    },
-    {
-      "additions": 129,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nUpdates the root `lab/` page so it no longer tells participants to vote on the completed Issue #191 canary/candidate state.\n\n## Why\n\nThe public evidence now shows the 2026-W20 comparison as complete, with Rank 1/2/3 implemented. The root lab page was still showing stale first-canary / Candidate #1 / Issue #191 text, which misdirected participants.\n\n## Changes\n\n- Replace stale canary status with a current W20 public-state summary.\n- Link to the latest comparison, history, public results, public JSON, prompt proposal form, and prompt Issue voting search.\n- Simplify `lab/app.js` to a minimal local enhancement marker.\n- Refresh responsive layout for the root lab page.\n\n## Scope\n\n- Only root lab implementation files changed:\n  - `lab/index.html`\n  - `lab/style.css`\n  - `lab/app.js`\n- No generated evidence changes.\n- No workflow, docs, rules, data, or run-record changes.\n- No external APIs, cookies, analytics, forms, iframes, dynamic code execution, or network calls added.",
-      "body_length": 993,
-      "changed_files": 3,
-      "closed_at": "2026-05-10T05:46:14Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T05:37:31Z",
-      "deletions": 280,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 65,
-          "path": "lab/app.js"
-        },
-        {
-          "additions": 37,
-          "deletions": 50,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 90,
-          "deletions": 165,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "update-root-lab-w20-status",
-      "head_ref_oid": "35f965295a10f63780f93d5806529128db7337d9",
-      "labels": [],
-      "merge_commit_oid": "fffb2afa9b2f15a6c953cee19618cd90695900ae",
-      "merged_at": "2026-05-10T05:46:13Z",
-      "merged_by": "Unjuno",
-      "number": 233,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Update root lab status for completed W20 comparison",
-      "updated_at": "2026-05-11T05:22:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/233"
     }
   ],
   "run_records": [
@@ -5077,6 +5092,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-16T06:58:28Z",
+      "database_id": 25955577489,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "pull_request",
+      "head_branch": "mark-api-canary-docs-historical",
+      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:58:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577489",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:56:31Z",
+      "database_id": 25955539776,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "pull_request",
+      "head_branch": "mark-api-canary-docs-historical",
+      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:56:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539776",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:56:31Z",
+      "database_id": 25955539755,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "pull_request",
+      "head_branch": "mark-api-canary-docs-historical",
+      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:57:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539755",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:56:31Z",
+      "database_id": 25955539753,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "pull_request",
+      "head_branch": "mark-api-canary-docs-historical",
+      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:56:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539753",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:56:31Z",
+      "database_id": 25955539750,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "pull_request",
+      "head_branch": "mark-api-canary-docs-historical",
+      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:56:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539750",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:24:22Z",
+      "database_id": 25954923538,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f838b81a9d6fe83abd54428d59308a49c47cc692",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:24:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954923538",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-16T06:24:01Z",
       "database_id": 25954917009,
       "display_title": "Remove API-era output token cap from active policy",
@@ -5088,6 +5187,34 @@
       "updated_at": "2026-05-16T06:24:02Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954917009",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:24:01Z",
+      "database_id": 25954916987,
+      "display_title": "Remove API-era output token cap from active policy",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:24:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954916987",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:24:00Z",
+      "database_id": 25954916754,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:24:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954916754",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6334,118 +6461,6 @@
       "updated_at": "2026-05-15T16:51:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111686",
       "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T16:51:11Z",
-      "database_id": 25930111027,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:51:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111027",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:49:07Z",
-      "database_id": 25930015267,
-      "display_title": "Harden operator workflow input handling",
-      "event": "pull_request",
-      "head_branch": "harden-operator-workflow-inputs",
-      "head_sha": "172f5f091f395725394558a9c368765d314ce3d4",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:49:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930015267",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:49:07Z",
-      "database_id": 25930015263,
-      "display_title": "Harden operator workflow input handling",
-      "event": "pull_request",
-      "head_branch": "harden-operator-workflow-inputs",
-      "head_sha": "172f5f091f395725394558a9c368765d314ce3d4",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:49:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930015263",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:15:43Z",
-      "database_id": 25928469855,
-      "display_title": "Review Weekly Issue Finalizer manual input handling before release",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:16:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25928469855",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:03:18Z",
-      "database_id": 25927895520,
-      "display_title": "Review Support Unlock Export input handling before release",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:03:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25927895520",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T12:58:28Z",
-      "database_id": 25919071413,
-      "display_title": "Verify first ordinary canonical weekly default-on no-eligible run",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:58:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25919071413",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T12:42:33Z",
-      "database_id": 25918371213,
-      "display_title": "Inventory stale merged branches before cleanup",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:42:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25918371213",
-      "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T12:37:58Z",
-      "database_id": 25918177364,
-      "display_title": "Verify first ordinary canonical weekly default-on no-eligible run",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "a67e22d781e76c40547a8124d9742fcb8177719a",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T12:38:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25918177364",
-      "workflow_name": "Issue Safety Scan"
     }
   ]
 }
