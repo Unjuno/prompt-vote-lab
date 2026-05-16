@@ -1,12 +1,37 @@
 # Pre-API freeze checklist
 
-Prompt Vote Lab must not start paid implementation-agent runs until this checklist is green.
+This document is a historical guardrail record for the earlier API/SDK implementation-agent path.
 
-The goal is to prevent a failure mode where the workflow starts using a paid model API, fails, is patched repeatedly, and burns cost while the real defect remains unclear.
+It is no longer the active release gate for the canonical weekly implementation path.
 
-## Freeze rule
+Current active status:
 
-Before enabling real implementation-agent API calls:
+```text
+canonical selected-prompt runner: default-on
+runner family: Docker/Codex selected-prompt task-packet runner
+legacy API/SDK runner: present, non-canonical
+manual review: required
+auto-merge: disabled
+```
+
+The active release-gate and drift status are maintained in:
+
+```text
+docs/canonical-status-drift-check.md
+docs/current-codex-implementation-path.md
+docs/weekly-automation.md
+docs/operator-runbook.md
+```
+
+## Historical purpose
+
+This checklist originally prevented a failure mode where the workflow starts using a paid model API, fails, is patched repeatedly, and burns cost while the real defect remains unclear.
+
+That concern is still valid for any legacy API/SDK runner, but it is not the current canonical selected-prompt implementation path.
+
+## Historical freeze rule
+
+Before enabling the old real implementation-agent API calls, the repository required:
 
 ```text
 no new feature work
@@ -18,11 +43,11 @@ no hidden retry
 no fallback model
 ```
 
-Only verification, documentation, and guardrail fixes are allowed.
+Only verification, documentation, and guardrail fixes were allowed.
 
-## Required PASS gates
+## Historical PASS gates
 
-All of these must pass before the first real canary run.
+These gates were used before the first API-style canary and before later migration to the canonical Codex runner.
 
 | Gate | Required result | Current evidence |
 |---|---|---|
@@ -42,9 +67,9 @@ All of these must pass before the first real canary run.
 | Evidence Pipeline Dry Run with `source=fixture` | PASS, validator and artifact upload | run `25335321720` |
 | Evidence Pipeline Dry Run with `source=live` | PASS, artifact review only | `runs/dry-run-001-evidence-review.md` |
 
-## Real API canary entry condition
+## Historical API canary entry condition
 
-A real implementation-agent canary is allowed only after:
+The old API canary was allowed only after:
 
 ```text
 Support Unlock Export live path has produced anonymized support unlock JSON
@@ -54,7 +79,7 @@ Evidence Pipeline Dry Run source=live has produced reviewable artifacts
 the live artifact review passes docs/evidence-artifact-review.md
 ```
 
-The latest no-eligible production path was verified in PR #243:
+The no-eligible production path was verified in PR #243:
 
 ```text
 support unlock file: data/support-unlocks/2026-W19.json
@@ -64,8 +89,6 @@ eligible_count: 0
 eligible_ranks: []
 implementation PR created: no
 ```
-
-Earlier no-eligible evidence also exists in PR #81. PR #243 is the current live path because it includes the support-unlock prerequisite.
 
 The fixture evidence dry-run path was verified in Actions run `25335321720`:
 
@@ -91,17 +114,9 @@ human_review: PASS
 final_decision: PASS
 ```
 
-## Canary constraints
+## Legacy API canary constraints
 
-The first real API canary must use one low-risk prompt only.
-
-Allowed canary shape:
-
-```text
-Add a small visible canary panel to lab/ explaining that this is the first bounded implementation-agent test.
-```
-
-Required canary run constraints:
+These constraints describe the old API/SDK path. They must not be cited as the active canonical runner contract.
 
 ```text
 model: gpt-5.4-nano
@@ -111,16 +126,22 @@ no retry
 no fallback
 SDK max_retries: 0
 API call limit per candidate: 1
-max output tokens: 5000
+legacy max output tokens: 5000
 lab/ only
 safety-check PASS
 static-site-check PASS
 manual review before merge
 ```
 
-`max output tokens: 12000` is deferred until after system completion and live eligible-path verification.
+The current canonical Codex CLI runner does not enforce this old API-era output-token cap as a runtime limit. Current active policy records:
 
-## Stop conditions
+```text
+output_token_cap_enforced: false
+```
+
+Do not claim a canonical run is output-token-capped unless a future runner contract proves runtime enforcement.
+
+## Stop conditions still valid for any implementation path
 
 Stop immediately if any of these happen:
 
@@ -135,7 +156,7 @@ safety/static check fails after model output
 workflow attempts to auto-merge
 ```
 
-## Allowed maintenance during freeze
+## Allowed maintenance
 
 Allowed:
 
@@ -159,8 +180,8 @@ add auto-merge
 relax cost or retry guards
 ```
 
-## Completion statement
+## Current conclusion
 
-The pre-API freeze is complete only when the repository has proof or CI evidence for every required gate above.
+The pre-API freeze checklist is retained as historical evidence and as a warning for legacy API/SDK paths.
 
-Until then, real implementation-agent API calls remain disabled by policy.
+It is not the release gate for the current canonical weekly selected-prompt runner.
