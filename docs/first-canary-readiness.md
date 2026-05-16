@@ -1,10 +1,22 @@
-# First Canary Readiness Checklist
+# Legacy first API canary readiness checklist
 
-Use this checklist immediately before the first real implementation-agent canary.
+This checklist is retained for the historical API/SDK implementation-agent canary path.
 
-Do not run the canary unless every required item is PASS.
+It is not the active readiness checklist for the current canonical weekly selected-prompt runner.
 
-## Required repository state
+Current active status:
+
+```text
+canonical selected-prompt runner: default-on
+runner family: Docker/Codex selected-prompt task-packet runner
+legacy API/SDK first-canary workflow: present, non-canonical
+manual review: required
+auto-merge: disabled
+```
+
+Do not run the legacy first-canary workflow as a normal release step.
+
+## Historical repository state
 
 ```text
 [ ] open PRs: 0
@@ -15,7 +27,7 @@ Do not run the canary unless every required item is PASS.
 [ ] latest main includes runs/dry-run-001-evidence-review.md with final_decision: PASS
 ```
 
-## Required CI state
+## Historical CI state
 
 ```text
 [ ] Pre-API Freeze Audit: PASS
@@ -26,7 +38,7 @@ Do not run the canary unless every required item is PASS.
 [ ] Static Site Check: PASS
 ```
 
-## Required evidence state
+## Historical evidence state
 
 ```text
 [ ] Support Unlock Export live path: PASS
@@ -37,7 +49,9 @@ Do not run the canary unless every required item is PASS.
 [ ] HN draft is not externally posted
 ```
 
-## Required canary configuration
+## Legacy API canary configuration
+
+These fields describe the old API/SDK path. They must not be cited as active canonical runner requirements.
 
 ```text
 [ ] model: gpt-5.4-nano
@@ -45,17 +59,23 @@ Do not run the canary unless every required item is PASS.
 [ ] attempts per candidate: 1
 [ ] SDK max_retries: 0
 [ ] API call limit per candidate: 1
-[ ] max output tokens: 5000
+[ ] legacy max output tokens: 5000
 [ ] fallback model: none
 [ ] auto-merge: disabled
 [ ] external publishing: disabled
 ```
 
-`max output tokens: 12000` is deferred until after system completion and live eligible-path verification.
+The current canonical Codex CLI runner records:
 
-## Required prompt
+```text
+output_token_cap_enforced: false
+```
 
-Use only:
+Do not claim a canonical run is output-token-capped unless a future runner contract proves runtime enforcement.
+
+## Historical prompt
+
+The legacy first canary used:
 
 ```text
 Add a small static canary panel inside lab/ explaining that this is the first bounded implementation-agent canary.
@@ -72,9 +92,9 @@ Constraints:
 - Do not change voting, selection, evidence, report, or canary policy logic.
 ```
 
-## Required output limit
+## Output limit
 
-The canary may create one implementation PR only.
+The legacy API canary could create one implementation PR only.
 
 Allowed changed files:
 
@@ -120,7 +140,7 @@ PR is too large to review comfortably
 
 ## PASS decision after PR creation
 
-The canary path is considered PASS only if:
+The legacy canary path was considered PASS only if:
 
 ```text
 one PR is created
@@ -137,7 +157,7 @@ manual review remains required
 
 ## Non-goals
 
-Do not attempt these in the first canary:
+Do not attempt these through the legacy first canary:
 
 ```text
 persona route UI
@@ -151,11 +171,15 @@ large redesign
 backend behavior
 ```
 
-## Final command discipline
+## Current conclusion
 
-Before pressing the workflow run button, say explicitly:
+This is a legacy API canary readiness checklist. It is not a current release checklist.
+
+For current release operations, use:
 
 ```text
-This is the first real implementation-agent canary.
-The goal is execution-path verification, not product expansion.
+docs/weekly-automation.md
+docs/operator-runbook.md
+docs/current-codex-implementation-path.md
+docs/canonical-status-drift-check.md
 ```

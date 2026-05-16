@@ -81,7 +81,8 @@ Implemented:
 - synthetic mock implementation PR
 - model-free weekly report draft PR
 - no-eligible summary PR path
-- implementation-agent preflight before model dependency install
+- canonical selected-prompt implementation PR path for eligible candidates
+- implementation-agent preflight before implementation dependency install
 
 Verified:
 
@@ -92,6 +93,8 @@ Verified:
 - `eligible_count` was 0.
 - `eligible_ranks` was empty.
 - No implementation PR was created during that no-eligible run.
+- Weekly canonical selected-prompt canary passed with the Docker/Codex task-packet runner.
+- Canonical weekly execution is default-on for eligible candidates.
 - Earlier no-eligible evidence also exists in PR #81, before the support-unlock prerequisite was added.
 
 Not implemented:
@@ -102,28 +105,29 @@ Not implemented:
 - automatic selection of fallback model
 - automatic retry after model failure
 
-## Implementation-agent API path
+## Implementation-agent path
 
-Prepared but not yet executed:
+Current active implementation path:
 
-- fixed implementation model: `gpt-5.4-nano`
-- one implementation attempt per candidate
-- SDK retry must be 0
-- no fallback model
-- max output tokens capped at 5000
-- eligible candidate secret requirement
-- no-eligible path does not require implementation-agent secret
-- preflight script before API dependency install
+```text
+runner: canonical Docker/Codex selected-prompt task-packet runner
+model: gpt-5.4-nano
+attempts_per_candidate: 1
+retry_count: 0
+fallback_policy: none
+auto_merge_policy: disabled
+output_token_cap_enforced: false
+editable files: lab/index.html, lab/style.css, lab/app.js
+```
 
-Deferred:
+The legacy API/SDK path remains present for historical evidence and emergency diagnosis, but it is non-canonical.
 
-- raising max output tokens to 12000
+Legacy API-era settings such as `max_output_tokens: 5000` must not be cited as active canonical runner enforcement unless a future runner contract proves runtime enforcement.
 
-Not yet done:
+Still needing ordinary operational observation:
 
-- real paid implementation-agent canary
-- real implementation PR from model output
-- merge of a real implementation PR
+- first ordinary post-default-on scheduled no-eligible weekly run
+- first natural eligible canonical implementation PR after release
 
 ## Lab runtime boundary
 
@@ -223,11 +227,11 @@ Not implemented:
 - $20 support tier
 - support as a maintenance or service contract
 
-## Freeze state
+## Historical freeze state
 
 Implemented:
 
-- pre-API freeze checklist
+- pre-API freeze checklist as historical guardrail record
 - pre-API freeze audit script
 - pre-API freeze audit CI
 - Support Unlock Export live path verification
@@ -238,7 +242,8 @@ Implemented:
 Current policy:
 
 ```text
-No real implementation-agent API call until all offline gates are green and a single low-risk canary candidate is selected.
+The canonical selected-prompt runner is default-on.
+Legacy API/SDK canary paths are non-canonical and should not be treated as active release gates.
 ```
 
 ## Current release judgment
@@ -252,10 +257,13 @@ support unlock live path: verified
 no-eligible production workflow path: verified
 fixture evidence dry-run path: verified
 live evidence dry-run path: verified
-real implementation-agent canary: not yet executed
-production autonomy: not complete
+canonical selected-prompt canary: verified
+canonical weekly default-on: approved
+ordinary post-default-on weekly observation: pending
+manual review: required
+auto-merge: disabled
 ```
 
 Operational recommendation:
 
-Select one low-risk canary prompt and run exactly one bounded implementation-agent attempt under `docs/pre-api-freeze.md` and `docs/canary-policy.md`.
+Observe the next ordinary weekly run. If the no-change baseline wins, confirm that it creates a vote summary PR and stops before any implementation-agent attempt.
