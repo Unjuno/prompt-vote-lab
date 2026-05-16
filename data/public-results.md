@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-16T06:58:40+00:00`
+Generated at: `2026-05-16T08:13:30+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
 | 320 | MERGED | 6 | 205/100 | Mark legacy API canary docs as historical |
 | 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 260 | MERGED | 6 | 185/4 | Publish redacted policy-agent public bundle |
 | 259 | MERGED | 2 | 110/249 | Document canonical Docker Codex runner |
 | 261 | MERGED | 6 | 648/52 | Expand public agent observation logs |
-| 288 | MERGED | 8 | 354/107 | Add repository 5S and language policy |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25957037111 | Terminal State Report | pull_request | completed | skipped | Gate legacy first API canary workflow |
+| 25956721699 | Lab PR Scope Check | pull_request | completed | success | Gate legacy first API canary workflow |
+| 25956721668 | Pre-API Freeze Audit | pull_request | completed | success | Gate legacy first API canary workflow |
+| 25956721666 | Script Check | pull_request | completed | success | Gate legacy first API canary workflow |
+| 25955583277 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25955577489 | Terminal State Report | pull_request | completed | skipped | Mark legacy API canary docs as historical |
+| 25955577443 | Public Results Export | push | completed | success | Mark legacy API canary docs as historical |
+| 25955577098 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25955539776 | Lab PR Scope Check | pull_request | completed | success | Mark legacy API canary docs as historical |
 | 25955539755 | Script Check | pull_request | completed | success | Mark legacy API canary docs as historical |
 | 25955539753 | Static Site Check | pull_request | completed | success | Mark legacy API canary docs as historical |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25953220360 | Static Site Check | pull_request | completed | success | Remove API-era output token cap from active policy |
 | 25953220358 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
 | 25953003454 | Static Site Check | pull_request | completed | success | Remove API-era output token cap from active policy |
-| 25953003452 | Pre-API Freeze Audit | pull_request | completed | failure | Remove API-era output token cap from active policy |
-| 25953003451 | Script Check | pull_request | completed | failure | Remove API-era output token cap from active policy |
-| 25953003450 | Implementation Preflight Test | pull_request | completed | success | Remove API-era output token cap from active policy |
-| 25953003449 | Lab PR Scope Check | pull_request | completed | success | Remove API-era output token cap from active policy |
-| 25952245486 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25952242539 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25942834893 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 

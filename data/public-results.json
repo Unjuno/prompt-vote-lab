@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T06:58:40+00:00",
+  "generated_at": "2026-05-16T08:13:30+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -700,6 +700,48 @@
   ],
   "pull_requests": [
     {
+      "additions": 44,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Rename the manual first-canary workflow to make its legacy API/SDK status explicit.\n- Require a manual confirmation input before the legacy non-canonical API canary job can proceed.\n- Update contract tests so the confirmation gate remains required.\n\n## Confirmation input\n\n```text\nconfirm_legacy_api_canary: RUN_LEGACY_API_CANARY\n```\n\n## Why\n`first-canary-run.yml` is a legacy API/SDK workflow. It is still useful as historical evidence or emergency diagnosis, but it should not be easy to run accidentally after the canonical Docker/Codex selected-prompt runner became default-on.\n\n## Scope\n- `.github/workflows/first-canary-run.yml`\n- `scripts/pre_api_freeze_audit.py`\n- `scripts/test_canary_policy_alignment.py`\n\n## Non-goals\n- No canonical weekly workflow change.\n- No model change.\n- No retry change.\n- No fallback change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 949,
+      "changed_files": 3,
+      "closed_at": "2026-05-16T08:13:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-16T07:56:55Z",
+      "deletions": 5,
+      "files": [
+        {
+          "additions": 26,
+          "deletions": 5,
+          "path": ".github/workflows/first-canary-run.yml"
+        },
+        {
+          "additions": 9,
+          "deletions": 0,
+          "path": "scripts/pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 9,
+          "deletions": 0,
+          "path": "scripts/test_canary_policy_alignment.py"
+        }
+      ],
+      "head_ref_name": "gate-legacy-first-api-canary",
+      "head_ref_oid": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
+      "labels": [],
+      "merge_commit_oid": "f91d433b35160ba9683bc877cdec3e5e3597a93d",
+      "merged_at": "2026-05-16T08:13:12Z",
+      "merged_by": "Unjuno",
+      "number": 321,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Gate legacy first API canary workflow",
+      "updated_at": "2026-05-16T08:13:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/321"
+    },
+    {
       "additions": 205,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -749,7 +791,7 @@
       "merged_at": "2026-05-16T06:58:25Z",
       "merged_by": "Unjuno",
       "number": 320,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Mark legacy API canary docs as historical",
@@ -4836,103 +4878,6 @@
       "title": "Add timeouts to comparison runs v3",
       "updated_at": "2026-05-11T05:22:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/226"
-    },
-    {
-      "additions": 957,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAutomates support-unlocked comparison run eligibility using anonymized weekly support aggregates.\n\n## Why\n\nThe support policy already defines these thresholds:\n\n- 5 USD total weekly one-time support unlocks rank 2 comparison run\n- 10 USD total weekly one-time support unlocks rank 3 comparison run\n\nBefore this change, weekly automation still depended on a manual `PROMPT_VOTE_LAB_SUPPORT_USD` variable. That is not fully automatic.\n\n## Changes\n\n- Add `scripts/fetch_support_activities.py` to fetch GitHub Sponsors activity through GraphQL.\n- Add `scripts/build_support_unlocks.py` to turn raw activity into an anonymized aggregate file under `data/support-unlocks/<week>.json`.\n- Add `scripts/resolve_support_unlock.py` so weekly runs can read the aggregate unlock file.\n- Update `scripts/select_eligible.py` so support unlock files override manual support amount input.\n- Add `support-unlock-export.yml` to periodically export anonymized support unlock files.\n- Update `weekly-auto-run.yml` to resolve automated support unlocks before selecting eligible ranks.\n- Add fixture and tests for support unlock totals, resolver behavior, weekly selector behavior, and workflow wiring.\n- Document the support unlock automation privacy boundary.\n\n## Privacy / safety boundary\n\n- Raw activity payload is written only under `tmp/` during workflow execution.\n- Only anonymized aggregate data is committed.\n- Public output must not include sponsor login, name, email, individual events, or per-supporter amounts.\n- Missing token or fetch failure must fail visibly; the workflow must not guess unlocks.\n\n## Required repository setup after merge\n\nConfigure repository secret:\n\n```text\nSPONSORS_GRAPHQL_TOKEN\n```\n\nThe token should use the least permissions that can read GitHub Sponsors activity for the maintainer account.\n\n## Scope\n\n- No root `lab/` implementation changes.\n- No generated comparison evidence changes in this PR.\n- No OpenAI/Codex behavior changes.\n- Merge remains manual.",
-      "body_length": 1988,
-      "changed_files": 14,
-      "closed_at": "2026-05-10T12:48:06Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T12:46:01Z",
-      "deletions": 7,
-      "files": [
-        {
-          "additions": 20,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 73,
-          "deletions": 0,
-          "path": ".github/workflows/support-unlock-export.yml"
-        },
-        {
-          "additions": 10,
-          "deletions": 0,
-          "path": ".github/workflows/weekly-auto-run.yml"
-        },
-        {
-          "additions": 76,
-          "deletions": 0,
-          "path": "docs/support-unlock-automation.md"
-        },
-        {
-          "additions": 216,
-          "deletions": 0,
-          "path": "scripts/build_support_unlocks.py"
-        },
-        {
-          "additions": 89,
-          "deletions": 0,
-          "path": "scripts/fetch_support_activities.py"
-        },
-        {
-          "additions": 50,
-          "deletions": 0,
-          "path": "scripts/resolve_support_unlock.py"
-        },
-        {
-          "additions": 61,
-          "deletions": 7,
-          "path": "scripts/select_eligible.py"
-        },
-        {
-          "additions": 75,
-          "deletions": 0,
-          "path": "scripts/test_build_support_unlocks.py"
-        },
-        {
-          "additions": 56,
-          "deletions": 0,
-          "path": "scripts/test_resolve_support_unlock.py"
-        },
-        {
-          "additions": 66,
-          "deletions": 0,
-          "path": "scripts/test_select_eligible_support_unlock.py"
-        },
-        {
-          "additions": 89,
-          "deletions": 0,
-          "path": "scripts/test_support_unlock_workflow_contract.py"
-        },
-        {
-          "additions": 11,
-          "deletions": 0,
-          "path": "scripts/test_unlock_export_public.py"
-        },
-        {
-          "additions": 65,
-          "deletions": 0,
-          "path": "tests/fixtures/support-activities-w20.json"
-        }
-      ],
-      "head_ref_name": "automate-support-unlocks",
-      "head_ref_oid": "7a001ccf8cf052f769f23f7a258f8834a0d56e12",
-      "labels": [],
-      "merge_commit_oid": "d02d510356c09b274077921304df67ec41e35e16",
-      "merged_at": "2026-05-10T12:48:06Z",
-      "merged_by": "Unjuno",
-      "number": 234,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Automate support unlocks for comparison runs",
-      "updated_at": "2026-05-11T05:22:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/234"
     }
   ],
   "run_records": [
@@ -5092,6 +5037,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-16T08:13:15Z",
+      "database_id": 25957037111,
+      "display_title": "Gate legacy first API canary workflow",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-first-api-canary",
+      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:13:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957037111",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T07:56:58Z",
+      "database_id": 25956721699,
+      "display_title": "Gate legacy first API canary workflow",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-first-api-canary",
+      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T07:57:07Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721699",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T07:56:58Z",
+      "database_id": 25956721668,
+      "display_title": "Gate legacy first API canary workflow",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-first-api-canary",
+      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-16T07:57:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721668",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T07:56:58Z",
+      "database_id": 25956721666,
+      "display_title": "Gate legacy first API canary workflow",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-first-api-canary",
+      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T07:57:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721666",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:58:43Z",
+      "database_id": 25955583277,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a144c279f59960eed7451dec81215cde4100091b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:59:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955583277",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-16T06:58:28Z",
       "database_id": 25955577489,
       "display_title": "Mark legacy API canary docs as historical",
@@ -5103,6 +5118,34 @@
       "updated_at": "2026-05-16T06:58:29Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577489",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T06:58:28Z",
+      "database_id": 25955577443,
+      "display_title": "Mark legacy API canary docs as historical",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "c5cfec3e386ccf481bc31296e33b3d8a19551e95",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:58:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577443",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-16T06:58:27Z",
+      "database_id": 25955577098,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c5cfec3e386ccf481bc31296e33b3d8a19551e95",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T06:58:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577098",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6362,104 +6405,6 @@
       "status": "completed",
       "updated_at": "2026-05-15T17:03:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669790",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:03:12Z",
-      "database_id": 25930669780,
-      "display_title": "Clarify root README weekly automation status",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:03:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669780",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T17:03:11Z",
-      "database_id": 25930668760,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:03:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930668760",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:58:50Z",
-      "database_id": 25930468167,
-      "display_title": "Clarify root README weekly automation status",
-      "event": "pull_request",
-      "head_branch": "clarify-root-readme-weekly-status",
-      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:59:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930468167",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:58:50Z",
-      "database_id": 25930468158,
-      "display_title": "Clarify root README weekly automation status",
-      "event": "pull_request",
-      "head_branch": "clarify-root-readme-weekly-status",
-      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:59:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930468158",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:51:30Z",
-      "database_id": 25930126533,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "065d3ad95096356c3c1525cd5ce42b56c862688c",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:51:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930126533",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T16:51:12Z",
-      "database_id": 25930111688,
-      "display_title": "Harden operator workflow input handling",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:51:31Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111688",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T16:51:12Z",
-      "database_id": 25930111686,
-      "display_title": "Harden operator workflow input handling",
-      "event": "pull_request",
-      "head_branch": "harden-operator-workflow-inputs",
-      "head_sha": "172f5f091f395725394558a9c368765d314ce3d4",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T16:51:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930111686",
       "workflow_name": "Terminal State Report"
     }
   ]
