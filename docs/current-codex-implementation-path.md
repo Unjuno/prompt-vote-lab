@@ -120,7 +120,7 @@ The weekly eligible implementation path now defaults to the canonical selected-p
 DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
 ```
 
-The optional override remains available for emergency rollback or controlled diagnosis:
+The optional override remains available only for emergency rollback or controlled diagnosis:
 
 ```text
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
@@ -169,7 +169,15 @@ This path is useful as historical evidence and possible emergency fallback, but 
 
 Do not merge or report a run as canonical implementation E2E merely because the API/JSON path produced a small valid lab diff.
 
-`weekly-auto-run.yml` may still use the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is explicitly set to `false`. That override is preserved for emergency rollback or controlled diagnosis, but it is non-canonical and must not satisfy the selected-prompt canonical runner requirement.
+`weekly-auto-run.yml` still contains a non-canonical branch that can call the legacy `scripts/openai_lab_run.py` path when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER` is explicitly set to `false`. That override is preserved only for emergency rollback or controlled diagnosis, and it is non-canonical.
+
+The legacy weekly fallback also has a downstream script gate. For ordinary `week-*` runs, `scripts/openai_lab_run.py` refuses to proceed unless this explicit environment override is present:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
+
+That downstream gate prevents accidental API/SDK execution if the weekly canonical feature flag is misconfigured. It does not make the API/SDK path canonical.
 
 A weekly run only satisfies canonical selected-prompt verification when the PR/run evidence says:
 
@@ -241,7 +249,7 @@ Prompt instructions are still used, but they are not treated as enforcement.
 
 ## Current migration state
 
-The weekly eligible implementation workflow now uses the canonical selected-prompt path by default. The legacy `openai_lab_run.py` path remains available only as a non-canonical fallback through an explicit rollback override.
+The weekly eligible implementation workflow now uses the canonical selected-prompt path by default. The legacy `openai_lab_run.py` path remains available only as a non-canonical fallback through an explicit rollback override plus the downstream legacy runner gate.
 
 The next implementation work should verify the first ordinary scheduled default-on run, then decide whether and when to remove the legacy fallback through a separate removal gate.
 
