@@ -14,6 +14,14 @@ REQUIRED_SCRIPT_TEXT = [
     "scripts/run_codex_selected_prompt.sh",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
+    "ordinary week-* runs are refused unless PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
+    "ALLOW_LEGACY_WEEKLY_FALLBACK_ENV = \"PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN\"",
+    "def enforce_legacy_weekly_fallback_gate(args: argparse.Namespace) -> None:",
+    "if not str(args.week).startswith(\"week-\"):",
+    "if os.getenv(ALLOW_LEGACY_WEEKLY_FALLBACK_ENV) == \"true\":",
+    "Legacy API/SDK runner refused for ordinary weekly run.",
+    "Use the canonical selected-prompt Docker/Codex runner",
+    "enforce_legacy_weekly_fallback_gate(args)",
     "LEGACY_RUNNER_CLASSIFICATION = \"legacy-non-canonical-fallback\"",
     "CANONICAL_SELECTED_PROMPT_RUNNER = \"codex-cli-selected-prompt-packet-container\"",
     "This is the legacy non-canonical fallback runner, not the canonical selected-prompt Docker/Codex path.",
@@ -69,6 +77,9 @@ def main() -> int:
 
     if script.index("LEGACY_RUNNER_CLASSIFICATION") > script.index("SCHEMA ="):
         raise SystemExit("runner classification constants should appear before schema definition")
+
+    if script.index("enforce_legacy_weekly_fallback_gate(args)") > script.index("build_prompt(args)"):
+        raise SystemExit("legacy weekly fallback gate should run before prompt construction")
 
     if script.index("runner_classification: {LEGACY_RUNNER_CLASSIFICATION}") > script.index("## Selected prompt"):
         raise SystemExit("runner classification should appear in prompt metadata before the selected prompt")
