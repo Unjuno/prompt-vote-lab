@@ -94,7 +94,13 @@ Canonical selected-prompt runner: true
 
 When the variable is explicitly set to `true`, the same canonical path is used.
 
-When the variable is explicitly set to `false`, `Weekly Auto Run` uses the legacy fallback path for emergency rollback or controlled diagnosis only.
+When the variable is explicitly set to `false`, `Weekly Auto Run` can reach the legacy fallback path for emergency rollback or controlled diagnosis only. That feature flag alone must not silently authorize a legacy API/SDK attempt.
+
+For ordinary `week-*` runs, the legacy `scripts/openai_lab_run.py` path also requires this downstream gate:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
 
 The legacy `scripts/openai_lab_run.py` path is non-canonical and does not satisfy the selected-prompt canonical runner requirement.
 
@@ -127,10 +133,17 @@ A controlled diagnostic run may temporarily set:
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
 ```
 
-After the diagnostic run, remove the override or set it back to:
+For an ordinary `week-*` run to proceed through the legacy API/SDK runner, a maintainer must also explicitly set:
+
+```text
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+```
+
+After the diagnostic run, remove both overrides or set them back to:
 
 ```text
 PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset
+PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN unset
 ```
 
 A controlled canary may temporarily set:
@@ -146,6 +159,8 @@ PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset
 ```
 
 Leaving `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` changes selection behavior and is not acceptable for normal scheduled operation.
+
+Leaving `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is not acceptable for normal scheduled operation.
 
 ## Why support export is separate
 
@@ -166,7 +181,7 @@ Weekly auto run:
 - creates vote summary PRs
 - creates implementation PRs only when candidates are eligible
 - uses the canonical Docker/Codex selected-prompt runner by default
-- may use the legacy fallback only through an explicit rollback override
+- may reach the legacy fallback only through an explicit rollback override plus `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`
 - must not merge PRs automatically
 
 ## Time-window caveat
