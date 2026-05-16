@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T08:39:11+00:00",
+  "generated_at": "2026-05-16T12:10:36+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,53 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 32,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Document that the legacy `scripts/openai_lab_run.py` weekly fallback now requires `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` for ordinary `week-*` runs.\n- Clarify that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone does not silently authorize a legacy API/SDK attempt.\n- Update contract tests so the downstream legacy runner gate remains documented.\n\n## Scope\n- `docs/current-codex-implementation-path.md`\n- `docs/workflow-family-map.md`\n- `scripts/test_current_codex_path_doc.py`\n- `scripts/test_workflow_family_map.py`\n\n## Why\nPR #322 added a downstream safety gate in `openai_lab_run.py`. The operator-facing docs should describe that gate so the legacy API/SDK fallback is not mistaken for an ordinary active weekly path.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1003,
+      "changed_files": 4,
+      "closed_at": "2026-05-16T12:10:20Z",
+      "comment_count": 0,
+      "created_at": "2026-05-16T11:49:23Z",
+      "deletions": 9,
+      "files": [
+        {
+          "additions": 12,
+          "deletions": 4,
+          "path": "docs/current-codex-implementation-path.md"
+        },
+        {
+          "additions": 12,
+          "deletions": 3,
+          "path": "docs/workflow-family-map.md"
+        },
+        {
+          "additions": 4,
+          "deletions": 2,
+          "path": "scripts/test_current_codex_path_doc.py"
+        },
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": "scripts/test_workflow_family_map.py"
+        }
+      ],
+      "head_ref_name": "document-legacy-openai-runner-gate",
+      "head_ref_oid": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "labels": [],
+      "merge_commit_oid": "b835e531bad9de36fdfc6d2c967f584faea39992",
+      "merged_at": "2026-05-16T12:10:20Z",
+      "merged_by": "Unjuno",
+      "number": 323,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Document legacy OpenAI runner gate",
+      "updated_at": "2026-05-16T12:10:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/323"
+    },
     {
       "additions": 33,
       "author": "Unjuno",
@@ -4841,43 +4888,6 @@
       "title": "Dedupe comparison dashboard rows by rank",
       "updated_at": "2026-05-11T05:22:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/228"
-    },
-    {
-      "additions": 49,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes comparison dashboard PR selection when the same Issue has multiple generated or corrective PRs.\n\n## Problem\n\nThe dashboard currently builds `prs_by_issue` with a simple assignment:\n\n```python\nprs_by_issue[issue_number] = pr\n```\n\nThat makes the selected PR depend on public-results ordering. In rerun flows, an Issue can have stale closed PRs and later merged PRs, for example:\n\n```text\nIssue #195: #211 CLOSED, #214 MERGED, #222 MERGED metadata fix\nIssue #196: #216 CLOSED, #224 MERGED\n```\n\nThe dashboard can therefore show closed stale PRs even after corrected artifacts are merged.\n\n## Change\n\nAdds PR selection logic:\n\n```text\nMERGED > OPEN > CLOSED > unknown\nthen higher PR number wins\n```\n\n## Tests\n\nUpdates `scripts/test_build_comparison_dashboard.py` with a regression case where Issue #195 has:\n\n```text\nPR #199 CLOSED\nPR #201 MERGED\n```\n\nand verifies the dashboard selects #201 and does not show #199 or stale changed files.\n\n## Non-goals\n\n- Does not regenerate public results in this PR.\n- Does not modify generated comparison HTML in this PR.\n- Does not change rank artifacts.",
-      "body_length": 1105,
-      "changed_files": 2,
-      "closed_at": "2026-05-09T19:00:42Z",
-      "comment_count": 0,
-      "created_at": "2026-05-09T18:49:23Z",
-      "deletions": 8,
-      "files": [
-        {
-          "additions": 35,
-          "deletions": 5,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 14,
-          "deletions": 3,
-          "path": "scripts/test_build_comparison_dashboard.py"
-        }
-      ],
-      "head_ref_name": "fix-comparison-dashboard-pr-selection",
-      "head_ref_oid": "78650a44aa8fb5765a5ba86e7d5d5bbc457555c3",
-      "labels": [],
-      "merge_commit_oid": "571419d9716040cc25b2b6577d62274f3a84fe0f",
-      "merged_at": "2026-05-09T19:00:42Z",
-      "merged_by": "Unjuno",
-      "number": 227,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Prefer merged latest PRs in comparison dashboard",
-      "updated_at": "2026-05-11T05:22:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/227"
     }
   ],
   "run_records": [
@@ -5037,6 +5047,90 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-16T12:10:22Z",
+      "database_id": 25961581082,
+      "display_title": "Document legacy OpenAI runner gate",
+      "event": "pull_request",
+      "head_branch": "document-legacy-openai-runner-gate",
+      "head_sha": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T12:10:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961581082",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T11:49:26Z",
+      "database_id": 25961171448,
+      "display_title": "Document legacy OpenAI runner gate",
+      "event": "pull_request",
+      "head_branch": "document-legacy-openai-runner-gate",
+      "head_sha": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T11:50:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961171448",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T11:49:26Z",
+      "database_id": 25961171442,
+      "display_title": "Document legacy OpenAI runner gate",
+      "event": "pull_request",
+      "head_branch": "document-legacy-openai-runner-gate",
+      "head_sha": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T11:49:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961171442",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T11:49:26Z",
+      "database_id": 25961171440,
+      "display_title": "Document legacy OpenAI runner gate",
+      "event": "pull_request",
+      "head_branch": "document-legacy-openai-runner-gate",
+      "head_sha": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T11:49:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961171440",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:39:13Z",
+      "database_id": 25957532529,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "d01518caaca136bb6a5196611c17dcc378c2f327",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:39:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957532529",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:38:59Z",
+      "database_id": 25957528401,
+      "display_title": "Gate legacy OpenAI runner weekly fallback",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "339acb5a642368c11931fd63ddc18bab21c0795d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:39:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957528401",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-16T08:38:59Z",
       "database_id": 25957528381,
       "display_title": "Gate legacy OpenAI runner weekly fallback",
@@ -5048,6 +5142,20 @@
       "updated_at": "2026-05-16T08:39:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957528381",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-16T08:38:58Z",
+      "database_id": 25957528141,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "339acb5a642368c11931fd63ddc18bab21c0795d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:39:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957528141",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6308,104 +6416,6 @@
       "updated_at": "2026-05-15T17:43:56Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511134",
       "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T17:43:37Z",
-      "database_id": 25932511130,
-      "display_title": "Clarify model policy verification status",
-      "event": "pull_request",
-      "head_branch": "clarify-model-policy-verification-status",
-      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:43:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932511130",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T17:43:36Z",
-      "database_id": 25932510085,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:44:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932510085",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:41:03Z",
-      "database_id": 25932392902,
-      "display_title": "Clarify model policy verification status",
-      "event": "pull_request",
-      "head_branch": "clarify-model-policy-verification-status",
-      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:41:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392902",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:41:03Z",
-      "database_id": 25932392870,
-      "display_title": "Clarify model policy verification status",
-      "event": "pull_request",
-      "head_branch": "clarify-model-policy-verification-status",
-      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:41:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392870",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:41:03Z",
-      "database_id": 25932392838,
-      "display_title": "Clarify model policy verification status",
-      "event": "pull_request",
-      "head_branch": "clarify-model-policy-verification-status",
-      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:41:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392838",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:33:58Z",
-      "database_id": 25932062139,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "80509899b078df9986b06198e5a088053bbe1efa",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:34:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932062139",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T17:33:41Z",
-      "database_id": 25932049534,
-      "display_title": "Align root README with static UI function policy",
-      "event": "pull_request",
-      "head_branch": "align-readme-static-ui-function-policy",
-      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:33:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049534",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }
