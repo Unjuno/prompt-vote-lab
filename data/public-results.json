@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T08:13:30+00:00",
+  "generated_at": "2026-05-16T08:39:11+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 33,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add a downstream safety gate to `scripts/openai_lab_run.py` for ordinary `week-*` runs.\n- Refuse the legacy API/SDK runner for weekly fallback unless `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is explicitly set.\n- Update the legacy runner contract test so the gate remains required.\n\n## Why\n`weekly-auto-run.yml` still contains a non-canonical fallback branch for `scripts/openai_lab_run.py`. The canonical Docker/Codex selected-prompt runner is default-on, but this downstream gate prevents accidental use of the legacy API/SDK path for ordinary weekly runs if the feature flag is changed or misconfigured.\n\n## Scope\n- `scripts/openai_lab_run.py`\n- `scripts/test_openai_lab_run_legacy_contract.py`\n\n## Non-goals\n- No canonical weekly workflow change.\n- No model change.\n- No retry change.\n- No fallback change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 941,
+      "changed_files": 2,
+      "closed_at": "2026-05-16T08:38:56Z",
+      "comment_count": 0,
+      "created_at": "2026-05-16T08:33:40Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 21,
+          "deletions": 1,
+          "path": "scripts/openai_lab_run.py"
+        },
+        {
+          "additions": 12,
+          "deletions": 1,
+          "path": "scripts/test_openai_lab_run_legacy_contract.py"
+        }
+      ],
+      "head_ref_name": "gate-legacy-openai-runner",
+      "head_ref_oid": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
+      "labels": [],
+      "merge_commit_oid": "339acb5a642368c11931fd63ddc18bab21c0795d",
+      "merged_at": "2026-05-16T08:38:56Z",
+      "merged_by": "Unjuno",
+      "number": 322,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Gate legacy OpenAI runner weekly fallback",
+      "updated_at": "2026-05-16T08:38:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/322"
+    },
     {
       "additions": 44,
       "author": "Unjuno",
@@ -4841,43 +4878,6 @@
       "title": "Prefer merged latest PRs in comparison dashboard",
       "updated_at": "2026-05-11T05:22:17Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/227"
-    },
-    {
-      "additions": 5,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds explicit timeouts to the comparison-run workflow so Codex runner stalls fail deterministically instead of blocking the queue indefinitely.\n\n## Change\n\n```text\n.github/workflows/codex-comparison-issue-run.yml\nscripts/test_comparison_issue_run_workflow_contract.py\n```\n\nAdds:\n\n```yaml\njobs:\n  codex-comparison-issue-run:\n    timeout-minutes: 30\n\nsteps:\n  - name: Run existing fixed-Issue runner\n    timeout-minutes: 20\n```\n\nThe workflow contract test now requires both settings.\n\n## Why\n\nComparison runs spend most of their time in:\n\n```text\nRun existing fixed-Issue runner\n```\n\nWithout a timeout, a stuck model/API/container invocation can block operational progress and leave manual cancellation as the recovery path.\n\n## Non-goals\n\n- Does not change model, prompt, fixed base, retry policy, or fallback policy.\n- Does not alter generated comparison artifacts.\n- Does not change the accepted rank2/rank3 outputs.",
-      "body_length": 929,
-      "changed_files": 2,
-      "closed_at": "2026-05-09T18:21:42Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T18:18:56Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": ".github/workflows/codex-comparison-issue-run.yml"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-run-timeouts-v3",
-      "head_ref_oid": "107a5dbb6a6d5ceed4e14b86d5388f1cfd9dcf9e",
-      "labels": [],
-      "merge_commit_oid": "6c7c4d4cb36e341256f3a2053e90a53ed94d7d68",
-      "merged_at": "2026-05-09T18:21:42Z",
-      "merged_by": "Unjuno",
-      "number": 226,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add timeouts to comparison runs v3",
-      "updated_at": "2026-05-11T05:22:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/226"
     }
   ],
   "run_records": [
@@ -5037,6 +5037,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-16T08:38:59Z",
+      "database_id": 25957528381,
+      "display_title": "Gate legacy OpenAI runner weekly fallback",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-openai-runner",
+      "head_sha": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:39:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957528381",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:33:42Z",
+      "database_id": 25957428013,
+      "display_title": "Gate legacy OpenAI runner weekly fallback",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-openai-runner",
+      "head_sha": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:33:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957428013",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:33:42Z",
+      "database_id": 25957428012,
+      "display_title": "Gate legacy OpenAI runner weekly fallback",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-openai-runner",
+      "head_sha": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:34:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957428012",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:13:33Z",
+      "database_id": 25957043141,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "1589f25f308c5d131364084954d1e95d8cba666b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:13:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957043141",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-16T08:13:15Z",
       "database_id": 25957037111,
       "display_title": "Gate legacy first API canary workflow",
@@ -5048,6 +5104,34 @@
       "updated_at": "2026-05-16T08:13:16Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957037111",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:13:15Z",
+      "database_id": 25957037092,
+      "display_title": "Gate legacy first API canary workflow",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "f91d433b35160ba9683bc877cdec3e5e3597a93d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:13:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957037092",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-16T08:13:14Z",
+      "database_id": 25957036773,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f91d433b35160ba9683bc877cdec3e5e3597a93d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-16T08:13:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957036773",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6321,90 +6405,6 @@
       "status": "completed",
       "updated_at": "2026-05-15T17:33:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049534",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:33:41Z",
-      "database_id": 25932049481,
-      "display_title": "Align root README with static UI function policy",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:33:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049481",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T17:33:40Z",
-      "database_id": 25932048525,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:34:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932048525",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:31:50Z",
-      "database_id": 25931964126,
-      "display_title": "Align root README with static UI function policy",
-      "event": "pull_request",
-      "head_branch": "align-readme-static-ui-function-policy",
-      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:32:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25931964126",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:31:50Z",
-      "database_id": 25931964111,
-      "display_title": "Align root README with static UI function policy",
-      "event": "pull_request",
-      "head_branch": "align-readme-static-ui-function-policy",
-      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:31:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25931964111",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:03:31Z",
-      "database_id": 25930683922,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5dd8d5a9c409c22160fe39bcd4bbd5b2a6295c9c",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:04:03Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930683922",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T17:03:12Z",
-      "database_id": 25930669790,
-      "display_title": "Clarify root README weekly automation status",
-      "event": "pull_request",
-      "head_branch": "clarify-root-readme-weekly-status",
-      "head_sha": "973b414ebe99df6f4ec581552e29913778f8eaf0",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:03:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25930669790",
       "workflow_name": "Terminal State Report"
     }
   ]
