@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T06:30:58+00:00`
+Generated at: `2026-05-17T08:21:26+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 81 |
-| workflow_run_count | 99 |
+| workflow_run_count | 98 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
 | 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
 | 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
 | 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
@@ -76,12 +77,17 @@ This file is a raw results surface for participants. It does not score prompts o
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
 | 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
-| 276 | MERGED | 4 | 366/2 | Add manual selected-prompt workflow |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25985725026 | Terminal State Report | pull_request | completed | skipped | Define legacy fallback removal gate |
+| 25985283427 | Static Site Check | pull_request | completed | success | Define legacy fallback removal gate |
+| 25985283422 | Script Check | pull_request | completed | success | Define legacy fallback removal gate |
+| 25985283421 | Lab PR Scope Check | pull_request | completed | success | Define legacy fallback removal gate |
+| 25983553773 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25983547922 | Public Results Export | schedule | completed | success | Public Results Export |
 | 25983514612 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
 | 25981380042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25981378124 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25957428013 | Lab PR Scope Check | pull_request | completed | success | Gate legacy OpenAI runner weekly fallback |
 | 25957428012 | Script Check | pull_request | completed | success | Gate legacy OpenAI runner weekly fallback |
 | 25957043141 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25957037111 | Terminal State Report | pull_request | completed | skipped | Gate legacy first API canary workflow |
-| 25957037092 | Public Results Export | push | completed | success | Gate legacy first API canary workflow |
-| 25957036773 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25956721699 | Lab PR Scope Check | pull_request | completed | success | Gate legacy first API canary workflow |
-| 25956721668 | Pre-API Freeze Audit | pull_request | completed | success | Gate legacy first API canary workflow |
-| 25956721666 | Script Check | pull_request | completed | success | Gate legacy first API canary workflow |
 
 ## Raw JSON
 
