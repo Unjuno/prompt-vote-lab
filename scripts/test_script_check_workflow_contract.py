@@ -5,6 +5,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "script-check.yml"
+PAGES_SMOKE_WORKFLOW = ROOT / ".github" / "workflows" / "pages-smoke-check.yml"
+PAGES_SMOKE_SCRIPT = ROOT / "scripts" / "pages-smoke-check.py"
+INDEX = ROOT / "index.html"
+LAB_INDEX = ROOT / "lab" / "index.html"
 
 REQUIRED_TEXT = [
     "name: Script Check",
@@ -73,6 +77,19 @@ REQUIRED_TEXT = [
     "bash scripts/test-lab-pr-scope.sh",
 ]
 
+PAGES_SMOKE_REQUIRED_TEXT = [
+    "ROOT_EXPECTED_TEXT",
+    "LAB_EXPECTED_TEXT",
+    "20-vote baseline",
+    "require_all(base + \"/\", ROOT_EXPECTED_TEXT)",
+    "require_all(base + \"/lab/\", LAB_EXPECTED_TEXT)",
+]
+
+PAGES_SMOKE_WORKFLOW_REQUIRED_TEXT = [
+    "name: GitHub Pages Smoke Check",
+    "python scripts/pages-smoke-check.py --base-url \"https://unjuno.github.io/prompt-vote-lab\"",
+]
+
 FORBIDDEN_TEXT = [
     "contents: write",
     "pull-requests: write",
@@ -81,6 +98,10 @@ FORBIDDEN_TEXT = [
     "OPENAI_API_KEY",
     "codex exec",
     "gh pr merge",
+]
+
+PAGES_SMOKE_FORBIDDEN_TEXT = [
+    "20 virtual votes",
 ]
 
 
@@ -98,8 +119,21 @@ def reject_all(text: str, forbidden: list[str]) -> None:
 
 def main() -> int:
     text = WORKFLOW.read_text(encoding="utf-8")
+    pages_smoke_workflow = PAGES_SMOKE_WORKFLOW.read_text(encoding="utf-8")
+    pages_smoke_script = PAGES_SMOKE_SCRIPT.read_text(encoding="utf-8")
+    index = INDEX.read_text(encoding="utf-8")
+    lab_index = LAB_INDEX.read_text(encoding="utf-8")
+
     require_all(text, REQUIRED_TEXT)
     reject_all(text, FORBIDDEN_TEXT)
+
+    require_all(pages_smoke_workflow, PAGES_SMOKE_WORKFLOW_REQUIRED_TEXT)
+    require_all(pages_smoke_script, PAGES_SMOKE_REQUIRED_TEXT)
+    require_all(index, ["Prompt Vote Lab", "20-vote baseline"])
+    require_all(lab_index, ["Prompt Vote Lab"])
+    reject_all(pages_smoke_workflow, PAGES_SMOKE_FORBIDDEN_TEXT)
+    reject_all(pages_smoke_script, PAGES_SMOKE_FORBIDDEN_TEXT)
+    reject_all(index, PAGES_SMOKE_FORBIDDEN_TEXT)
 
     if text.index("Checkout") > text.index("Run actionlint"):
         raise SystemExit("actionlint should run after checkout")
