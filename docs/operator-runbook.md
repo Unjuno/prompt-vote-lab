@@ -374,6 +374,31 @@ output_token_cap_enforced: false
 
 Do not change or cite output-token caps as canonical runtime enforcement unless a future runner contract proves enforcement directly.
 
+## Legacy fallback removal gate
+
+Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.
+
+A future legacy fallback removal PR may be opened only after the explicit legacy fallback removal gate in [Workflow family map](./workflow-family-map.md) passes.
+
+Before approving removal, confirm and record:
+
+```text
+ordinary default-on weekly no-eligible run observed
+vote summary PR created
+implementation PR: none for the no-eligible run
+no implementation-agent attempt made for the no-eligible run
+no Codex/API call made for the no-eligible run
+legacy API/SDK runner not reached for the no-eligible run
+eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan
+canonical evidence artifacts remain verified
+manual review remains required
+auto-merge remains disabled
+rollback plan exists
+maintainer explicitly approves removal
+```
+
+If any item is missing, keep the legacy fallback present, non-canonical, and gated.
+
 ## Reset and cleanup policy
 
 Do not delete public evidence casually.

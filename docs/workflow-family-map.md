@@ -185,6 +185,48 @@ This second gate is intentional. The weekly feature flag alone must not silently
 
 It should not be removed merely because the canonical weekly runner is default-on. Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.
 
+## Legacy fallback removal gate
+
+This gate defines when it is permissible to open a later PR that removes the legacy API/SDK fallback path.
+
+It does not remove `scripts/openai_lab_run.py`.
+
+It does not approve deletion by itself.
+
+A future legacy fallback removal PR must record all of these conditions:
+
+```text
+ordinary default-on weekly no-eligible run observed
+vote summary PR created
+implementation PR: none for the no-eligible run
+no implementation-agent attempt made for the no-eligible run
+no Codex/API call made for the no-eligible run
+legacy API/SDK runner not reached for the no-eligible run
+eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan
+canonical diagnostics artifact remains verified
+canonical public bundle artifact remains verified
+canonical uploaded bundle verification artifact remains verified
+manual review remains required
+auto-merge remains disabled
+rollback plan exists
+public docs no longer cite legacy fallback as an active requirement
+maintainer explicitly approves removal
+```
+
+The removal PR must also state:
+
+```text
+Legacy files removed:
+Legacy workflows or branches affected:
+Observed no-eligible run:
+Observed eligible canonical evidence or planned natural eligible observation:
+Generated snapshots intentionally untouched: true
+Rollback path:
+Contract tests updated:
+```
+
+Failing any condition means the legacy fallback remains present, non-canonical, and gated.
+
 ## Cleanup candidates
 
 These are candidates for future consolidation. They are not deletion instructions.
@@ -220,6 +262,6 @@ The next safe cleanup work is:
 2. Keep scripts/openai_lab_run.py labeled as legacy and non-canonical.
 3. Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.
 4. Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.
-5. Defer legacy fallback removal until a separate legacy-removal gate exists.
+5. Defer legacy fallback removal until a separate legacy-removal gate exists and passes.
 6. Defer workflow deletion until a release readiness record approves it.
 ```

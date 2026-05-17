@@ -66,6 +66,32 @@ REQUIRED_DOC_TEXT = [
     "The weekly feature flag alone must not silently spend a legacy API/SDK attempt.",
     "It should not be removed merely because the canonical weekly runner is default-on.",
     "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
+    "## Legacy fallback removal gate",
+    "This gate defines when it is permissible to open a later PR that removes the legacy API/SDK fallback path.",
+    "It does not remove `scripts/openai_lab_run.py`.",
+    "It does not approve deletion by itself.",
+    "ordinary default-on weekly no-eligible run observed",
+    "vote summary PR created",
+    "implementation PR: none for the no-eligible run",
+    "no implementation-agent attempt made for the no-eligible run",
+    "no Codex/API call made for the no-eligible run",
+    "legacy API/SDK runner not reached for the no-eligible run",
+    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
+    "canonical diagnostics artifact remains verified",
+    "canonical public bundle artifact remains verified",
+    "canonical uploaded bundle verification artifact remains verified",
+    "manual review remains required",
+    "auto-merge remains disabled",
+    "rollback plan exists",
+    "public docs no longer cite legacy fallback as an active requirement",
+    "maintainer explicitly approves removal",
+    "Legacy files removed:",
+    "Legacy workflows or branches affected:",
+    "Observed no-eligible run:",
+    "Observed eligible canonical evidence or planned natural eligible observation:",
+    "Generated snapshots intentionally untouched: true",
+    "Contract tests updated:",
+    "Failing any condition means the legacy fallback remains present, non-canonical, and gated.",
     "These are candidates for future consolidation. They are not deletion instructions.",
     "A workflow removal PR must state:",
     "Evidence role:",
@@ -77,7 +103,7 @@ REQUIRED_DOC_TEXT = [
     "Rollback path:",
     "Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.",
     "Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.",
-    "Defer legacy fallback removal until a separate legacy-removal gate exists.",
+    "Defer legacy fallback removal until a separate legacy-removal gate exists and passes.",
 ]
 
 REQUIRED_INVENTORY_TEXT = [
@@ -95,6 +121,7 @@ FORBIDDEN_DOC_TEXT = [
     "bulk delete",
     "remove all canary workflows",
     "rename all canary workflows",
+    "legacy fallback removal is approved",
 ]
 
 
@@ -141,6 +168,10 @@ def main() -> int:
         raise SystemExit("historical weak canary gate should follow canary evidence workflows")
     if doc.index("## Historical weak canary gate") > doc.index("## Canary-era archive boundary"):
         raise SystemExit("canary-era archive boundary should follow weak canary gate")
+    if doc.index("## Legacy fallback workflows and paths") > doc.index("## Legacy fallback removal gate"):
+        raise SystemExit("legacy fallback removal gate should follow legacy fallback paths")
+    if doc.index("## Legacy fallback removal gate") > doc.index("## Cleanup candidates"):
+        raise SystemExit("cleanup candidates should follow legacy fallback removal gate")
     if doc.index("## Cleanup candidates") > doc.index("## Removal gate for workflows"):
         raise SystemExit("workflow removal gate should follow cleanup candidates")
 
