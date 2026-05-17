@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T12:24:50+00:00`
+Generated at: `2026-05-17T12:38:31+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 330 | MERGED | 1 | 133/0 | Add script dependency map |
 | 329 | MERGED | 2 | 93/23 | Add root folder audit |
 | 328 | MERGED | 2 | 332/23 | Add release readiness review |
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
@@ -76,13 +77,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
-| 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25991074917 | Terminal State Report | pull_request | completed | skipped | Add script dependency map |
+| 25991024655 | Lab PR Scope Check | pull_request | completed | success | Add script dependency map |
+| 25991024654 | Static Site Check | pull_request | completed | success | Add script dependency map |
+| 25990775144 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25990768614 | Terminal State Report | pull_request | completed | skipped | Add root folder audit |
+| 25990768599 | Public Results Export | push | completed | success | Add root folder audit |
+| 25990768238 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25990701883 | Lab PR Scope Check | pull_request | completed | success | Add root folder audit |
 | 25990701869 | Static Site Check | pull_request | completed | success | Add root folder audit |
 | 25990701862 | Pre-API Freeze Audit | pull_request | completed | success | Add root folder audit |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25985995344 | Lab PR Scope Check | pull_request | completed | success | Fix Pages smoke baseline copy |
 | 25985995337 | Script Check | pull_request | completed | success | Fix Pages smoke baseline copy |
 | 25985730089 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25985725026 | Terminal State Report | pull_request | completed | skipped | Define legacy fallback removal gate |
-| 25985725010 | Public Results Export | push | completed | success | Define legacy fallback removal gate |
-| 25985724715 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25985283427 | Static Site Check | pull_request | completed | success | Define legacy fallback removal gate |
-| 25985283422 | Script Check | pull_request | completed | success | Define legacy fallback removal gate |
-| 25985283421 | Lab PR Scope Check | pull_request | completed | success | Define legacy fallback removal gate |
 
 ## Raw JSON
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T12:24:50+00:00",
+  "generated_at": "2026-05-17T12:38:31+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,38 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 133,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/script-dependency-map.md` to classify important script families before cleanup.\n- Record active anchors for canonical runner, weekly selection, public evidence, issue safety, and legacy fallback.\n- Define retirement prerequisites for any future script cleanup.\n\n## Scope\n- `docs/script-dependency-map.md`\n\n## Current finding\nScript cleanup is not ready for broad retirement. The repository needs ordinary default-on weekly observation before legacy or historical helpers move toward retirement.\n\n## Non-goals\n- No script deletion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
+      "body_length": 694,
+      "changed_files": 1,
+      "closed_at": "2026-05-17T12:38:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T12:35:54Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 133,
+          "deletions": 0,
+          "path": "docs/script-dependency-map.md"
+        }
+      ],
+      "head_ref_name": "add-script-dependency-map-v2",
+      "head_ref_oid": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
+      "labels": [],
+      "merge_commit_oid": "97b3de605ba242878660fe300aa90401a6f7c783",
+      "merged_at": "2026-05-17T12:38:12Z",
+      "merged_by": "Unjuno",
+      "number": 330,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add script dependency map",
+      "updated_at": "2026-05-17T12:38:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/330"
+    },
     {
       "additions": 93,
       "author": "Unjuno",
@@ -4866,48 +4898,6 @@
       "title": "Allow generated lab evidence paths in scope guard",
       "updated_at": "2026-05-11T05:22:25Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/221"
-    },
-    {
-      "additions": 540,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements a Prompt Vote Lab comparison candidate.\n\n## Configuration\n\n- Week: 2026-W20\n- Issue: #196\n- Issue title: [Prompt][Rank 3]: Add a participant decision card for weekly run review\n- Rank: 3\n- Votes: 0\n- Fixed comparison base: `0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0`\n- Output root: `lab/comparisons/2026-W20/rank-3`\n- Model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/comparisons/2026-W20/rank-3/index.html`, `lab/comparisons/2026-W20/rank-3/style.css`, `lab/comparisons/2026-W20/rank-3/app.js`\n\n## Changed files\n\nlab/comparisons/2026-W20/rank-3/app.js,lab/comparisons/2026-W20/rank-3/index.html lab/comparisons/2026-W20/rank-3/style.css\n\n## Checks\n\n- runtime Issue safety scan passed\n- issue execution gate passed\n- root lab output copied into rank-specific comparison root\n- rank-root relative links normalized\n- rank-root issue/rank metadata normalized\n- root lab files restored before PR creation\n- changed-file guard passed\n- safety-check passed\n- static-site-check passed\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 1117,
-      "changed_files": 3,
-      "closed_at": "2026-05-09T17:58:08Z",
-      "comment_count": 0,
-      "created_at": "2026-05-09T17:37:57Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 69,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/app.js"
-        },
-        {
-          "additions": 109,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/index.html"
-        },
-        {
-          "additions": 362,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/style.css"
-        }
-      ],
-      "head_ref_name": "codex-comparison-2026-W20-rank-3-9",
-      "head_ref_oid": "a490c74290e05b1ca92cb3f81c8071d05f185c95",
-      "labels": [],
-      "merge_commit_oid": "4fc9cadf879d86fee5d199a501658a0042144f15",
-      "merged_at": "2026-05-09T17:58:08Z",
-      "merged_by": "Unjuno",
-      "number": 224,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Run Codex comparison issue rank 3",
-      "updated_at": "2026-05-11T05:22:23Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/224"
     }
   ],
   "run_records": [
@@ -5067,6 +5057,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-17T12:38:14Z",
+      "database_id": 25991074917,
+      "display_title": "Add script dependency map",
+      "event": "pull_request",
+      "head_branch": "add-script-dependency-map-v2",
+      "head_sha": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:38:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991074917",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:35:57Z",
+      "database_id": 25991024655,
+      "display_title": "Add script dependency map",
+      "event": "pull_request",
+      "head_branch": "add-script-dependency-map-v2",
+      "head_sha": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:36:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991024655",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:35:57Z",
+      "database_id": 25991024654,
+      "display_title": "Add script dependency map",
+      "event": "pull_request",
+      "head_branch": "add-script-dependency-map-v2",
+      "head_sha": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:36:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991024654",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:24:53Z",
+      "database_id": 25990775144,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c1bfbb5e3dbcda3de5e4136e782f9bc43c94d703",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:25:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25990775144",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-17T12:24:36Z",
       "database_id": 25990768614,
       "display_title": "Add root folder audit",
@@ -5078,6 +5124,34 @@
       "updated_at": "2026-05-17T12:24:46Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25990768614",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:24:36Z",
+      "database_id": 25990768599,
+      "display_title": "Add root folder audit",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "b24bfa8c48dea854a827ea701a8d7ff63f832e57",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:24:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25990768599",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-17T12:24:35Z",
+      "database_id": 25990768238,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "b24bfa8c48dea854a827ea701a8d7ff63f832e57",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:24:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25990768238",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6352,90 +6426,6 @@
       "updated_at": "2026-05-16T04:41:55Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003449",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:02:05Z",
-      "database_id": 25952245486,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "94bb2a8e8b54af79cbeccdc1f48930edf7ad9e17",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:02:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25952245486",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:01:58Z",
-      "database_id": 25952242539,
-      "display_title": "Support Unlock Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "b73fbb73b26123aa4302982a845031a0fd728423",
-      "name": "Support Unlock Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:02:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25952242539",
-      "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T21:42:39Z",
-      "database_id": 25942834893,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "b73fbb73b26123aa4302982a845031a0fd728423",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:43:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942834893",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T21:42:22Z",
-      "database_id": 25942825542,
-      "display_title": "Update canary log policy collector status",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "ac33e16c0a39c42b2d63d9f16d84272c508c921e",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:42:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942825542",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T21:42:22Z",
-      "database_id": 25942825538,
-      "display_title": "Update canary log policy collector status",
-      "event": "pull_request",
-      "head_branch": "update-canary-log-policy-collector-status",
-      "head_sha": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:42:23Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942825538",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T21:42:21Z",
-      "database_id": 25942825136,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "ac33e16c0a39c42b2d63d9f16d84272c508c921e",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:42:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942825136",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
