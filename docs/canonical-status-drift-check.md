@@ -17,6 +17,7 @@ canonical runner name: codex-cli-selected-prompt-packet-container
 canonical evidence marker: Canonical selected-prompt runner: true
 legacy fallback script: scripts/openai_lab_run.py
 legacy fallback status: non-canonical migration fallback
+legacy fallback removal status: not approved until the explicit legacy fallback removal gate passes
 weekly default status: canonical selected-prompt runner default-on
 weekly feature flag override: PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
 current default constant: DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
@@ -63,6 +64,7 @@ Docs may use different wording, but they must not contradict these rules:
 4. Do not omit the canonical evidence marker from evidence-facing docs.
 5. Do not treat a useful lab diff as sufficient canonical evidence.
 6. Do not describe workflow or legacy runner deletion as safe without a separate removal gate.
+7. Do not describe legacy fallback removal as approved before the explicit legacy fallback removal gate passes.
 ```
 
 ## Required canonical evidence marker
@@ -144,10 +146,32 @@ manual selected-prompt workflow: verified
 weekly canonical selected-prompt canary: verified
 canonical weekly default: default-on
 legacy fallback: present and non-canonical
+legacy fallback removal: not approved until the explicit legacy fallback removal gate passes
 workflow deletion: not approved
 auto-merge: disabled
 manual review: required
 ```
+
+## Required legacy fallback removal gate
+
+The legacy fallback removal gate is a deletion-prevention gate, not a deletion approval by itself.
+
+`docs/workflow-family-map.md` owns the detailed checklist. Maintainer-facing docs may summarize it, but they must preserve these minimum conditions:
+
+```text
+ordinary default-on weekly no-eligible run observed
+vote summary PR created
+no implementation-agent attempt made for no-eligible run
+no Codex/API call made for no-eligible run
+legacy API/SDK runner not reached for no-eligible run
+eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan
+canonical evidence artifacts remain verified
+rollback plan exists
+public docs no longer cite legacy fallback as an active requirement
+maintainer explicitly approves removal
+```
+
+Until those conditions are recorded, `scripts/openai_lab_run.py` and related legacy API/SDK references remain present, non-canonical, and gated.
 
 ## Change discipline
 
