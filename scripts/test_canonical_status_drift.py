@@ -30,6 +30,24 @@ DEFAULT_REQUIRED = [
     "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
 ]
 
+LEGACY_REMOVAL_GATE_REQUIRED = [
+    "legacy fallback removal status: not approved until the explicit legacy fallback removal gate passes",
+    "legacy fallback removal: not approved until the explicit legacy fallback removal gate passes",
+    "## Required legacy fallback removal gate",
+    "The legacy fallback removal gate is a deletion-prevention gate, not a deletion approval by itself.",
+    "ordinary default-on weekly no-eligible run observed",
+    "vote summary PR created",
+    "no implementation-agent attempt made for no-eligible run",
+    "no Codex/API call made for no-eligible run",
+    "legacy API/SDK runner not reached for no-eligible run",
+    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
+    "canonical evidence artifacts remain verified",
+    "rollback plan exists",
+    "public docs no longer cite legacy fallback as an active requirement",
+    "maintainer explicitly approves removal",
+    "Until those conditions are recorded, `scripts/openai_lab_run.py` and related legacy API/SDK references remain present, non-canonical, and gated.",
+]
+
 FORBIDDEN_PHRASES = [
     "scripts/openai_lab_run.py path is canonical",
     "scripts/openai_lab_run.py is canonical",
@@ -42,6 +60,7 @@ FORBIDDEN_PHRASES = [
     "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
     "safe to delete legacy fallback now",
     "remove scripts/openai_lab_run.py now",
+    "legacy fallback removal is approved",
 ]
 
 README_FORBIDDEN_STATUS_DETAILS = [
@@ -113,12 +132,14 @@ def main() -> int:
         "Do not imply the weekly canonical selected-prompt runner is still default-off.",
         "Do not say auto-merge is enabled.",
         "Do not treat a useful lab diff as sufficient canonical evidence.",
+        "Do not describe legacy fallback removal as approved before the explicit legacy fallback removal gate passes.",
         "## Required release gate language",
         "legacy fallback documented as non-canonical",
         "operator runbook feature-flag cleanup documented",
         "weekly canonical default-on release: approved",
         "A PR that changes any canonical/legacy/default status should state:",
     ], "canonical status drift doc")
+    require_all(docs["drift_check"], LEGACY_REMOVAL_GATE_REQUIRED, "canonical status drift legacy removal gate")
 
     require_all(docs["weekly_automation"], [
         "Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md).",
@@ -128,6 +149,9 @@ def main() -> int:
     require_all(docs["operator_runbook"], [
         "Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md).",
         "This runbook is the operating procedure, not a second status source of truth.",
+        "Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.",
+        "A future legacy fallback removal PR may be opened only after the explicit legacy fallback removal gate in [Workflow family map](./workflow-family-map.md) passes.",
+        "If any item is missing, keep the legacy fallback present, non-canonical, and gated.",
     ], "operator runbook status source pointer")
 
     for name in ["readme", "current_path", "evidence_guide", "weekly_automation", "operator_runbook"]:
@@ -179,6 +203,10 @@ def main() -> int:
         "It is non-canonical.",
         "It should not be removed merely because the canonical weekly runner is default-on.",
         "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
+        "## Legacy fallback removal gate",
+        "It does not approve deletion by itself.",
+        "Generated snapshots intentionally untouched: true",
+        "Failing any condition means the legacy fallback remains present, non-canonical, and gated.",
         "They are not deletion instructions.",
     ], "workflow family map legacy status")
 
