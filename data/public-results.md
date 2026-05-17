@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T08:21:26+00:00`
+Generated at: `2026-05-17T08:37:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
 | 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
 | 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
 | 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
@@ -76,13 +77,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 | 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 | 274 | MERGED | 2 | 219/85 | Parameterize selected prompt task packets |
-| 275 | MERGED | 4 | 353/0 | Add reusable selected-prompt Codex runner |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25986055152 | Terminal State Report | pull_request | completed | skipped | Fix Pages smoke baseline copy |
+| 25985995344 | Lab PR Scope Check | pull_request | completed | success | Fix Pages smoke baseline copy |
+| 25985995337 | Script Check | pull_request | completed | success | Fix Pages smoke baseline copy |
+| 25985730089 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25985725026 | Terminal State Report | pull_request | completed | skipped | Define legacy fallback removal gate |
+| 25985725010 | Public Results Export | push | completed | success | Define legacy fallback removal gate |
+| 25985724715 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25985283427 | Static Site Check | pull_request | completed | success | Define legacy fallback removal gate |
 | 25985283422 | Script Check | pull_request | completed | success | Define legacy fallback removal gate |
 | 25985283421 | Lab PR Scope Check | pull_request | completed | success | Define legacy fallback removal gate |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25961171442 | Static Site Check | pull_request | completed | success | Document legacy OpenAI runner gate |
 | 25961171440 | Lab PR Scope Check | pull_request | completed | success | Document legacy OpenAI runner gate |
 | 25957532529 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25957528401 | Public Results Export | push | completed | success | Gate legacy OpenAI runner weekly fallback |
-| 25957528381 | Terminal State Report | pull_request | completed | skipped | Gate legacy OpenAI runner weekly fallback |
-| 25957528141 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25957428013 | Lab PR Scope Check | pull_request | completed | success | Gate legacy OpenAI runner weekly fallback |
-| 25957428012 | Script Check | pull_request | completed | success | Gate legacy OpenAI runner weekly fallback |
-| 25957043141 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 

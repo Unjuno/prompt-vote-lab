@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T08:21:26+00:00",
+  "generated_at": "2026-05-17T08:37:32+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 78,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `scripts/pages-smoke-check.py` to check the current landing-page baseline copy: `20-vote baseline`.\n- Remove the stale `20 virtual votes` expectation that caused the scheduled Pages smoke check to fail.\n- Add a small contract test documenting the smoke-check expectations and forbidding the stale phrase.\n\n## Why\nThe published root page still contains the intended Prompt Vote Lab and baseline messaging, but the scheduled smoke check was asserting an old LP phrase. The failure was therefore a stale smoke-test expectation, not a broken published page.\n\n## Scope\n- `scripts/pages-smoke-check.py`\n- `scripts/test_pages_smoke_check_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No workflow behavior change.\n- No generated snapshot edit.\n- No model/runner/policy change.\n- No legacy fallback change.\n- No auto-merge.\n\n## Note\nA direct `script-check.yml` wiring update was intentionally deferred because workflow full-file replacement was blocked by safety filtering. This PR still fixes the failing scheduled check path itself; the added contract test is available for explicit future wiring in a separate workflow PR if needed.",
+      "body_length": 1161,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T08:37:15Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T08:34:21Z",
+      "deletions": 3,
+      "files": [
+        {
+          "additions": 16,
+          "deletions": 3,
+          "path": "scripts/pages-smoke-check.py"
+        },
+        {
+          "additions": 62,
+          "deletions": 0,
+          "path": "scripts/test_pages_smoke_check_contract.py"
+        }
+      ],
+      "head_ref_name": "fix-pages-smoke-baseline-copy",
+      "head_ref_oid": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
+      "labels": [],
+      "merge_commit_oid": "028a124187b2d8474f63aa69897ac924774c4515",
+      "merged_at": "2026-05-17T08:37:15Z",
+      "merged_by": "Unjuno",
+      "number": 326,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix Pages smoke baseline copy",
+      "updated_at": "2026-05-17T08:37:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/326"
+    },
     {
       "additions": 189,
       "author": "Unjuno",
@@ -4881,38 +4918,6 @@
       "title": "Test generated comparison dashboards",
       "updated_at": "2026-05-11T05:22:20Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/230"
-    },
-    {
-      "additions": 0,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nRegenerates the 2026-W20 comparison dashboard after the comparison dashboard selection fixes.\n\n## Change\n\nUpdates:\n\n```text\nlab/comparisons/2026-W20/index.html\n```\n\nby removing the duplicate Rank 1 card.\n\n## Resulting dashboard rows\n\n```text\nRank 1: Issue #191 / PR #192\nRank 2: Issue #195 / PR #214\nRank 3: Issue #196 / PR #224\n```\n\n## Why\n\nThe dashboard previously rendered two Rank 1 cards:\n\n```text\nIssue #191 / PR #192\nIssue #183 / PR #184\n```\n\nAfter the builder fix, one rank should produce one comparison card.\n\n## Scope\n\nGenerated comparison dashboard only.\n\n## Non-goals\n\n- No workflow changes.\n- No rank artifact changes.\n- No public-results schema changes.",
-      "body_length": 679,
-      "changed_files": 1,
-      "closed_at": "2026-05-09T19:58:37Z",
-      "comment_count": 0,
-      "created_at": "2026-05-09T19:48:16Z",
-      "deletions": 17,
-      "files": [
-        {
-          "additions": 0,
-          "deletions": 17,
-          "path": "lab/comparisons/2026-W20/index.html"
-        }
-      ],
-      "head_ref_name": "regenerate-2026-w20-comparison-dashboard",
-      "head_ref_oid": "1a886ef468958daf8e00b23fe42d718969b3a232",
-      "labels": [],
-      "merge_commit_oid": "5bf0df779d4e0fb42be156902bef0aa1b0689e72",
-      "merged_at": "2026-05-09T19:58:37Z",
-      "merged_by": "Unjuno",
-      "number": 229,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Regenerate 2026-W20 comparison dashboard",
-      "updated_at": "2026-05-11T05:22:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/229"
     }
   ],
   "run_records": [
@@ -5072,6 +5077,62 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-17T08:37:17Z",
+      "database_id": 25986055152,
+      "display_title": "Fix Pages smoke baseline copy",
+      "event": "pull_request",
+      "head_branch": "fix-pages-smoke-baseline-copy",
+      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:37:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986055152",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:34:24Z",
+      "database_id": 25985995344,
+      "display_title": "Fix Pages smoke baseline copy",
+      "event": "pull_request",
+      "head_branch": "fix-pages-smoke-baseline-copy",
+      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:34:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985995344",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:34:24Z",
+      "database_id": 25985995337,
+      "display_title": "Fix Pages smoke baseline copy",
+      "event": "pull_request",
+      "head_branch": "fix-pages-smoke-baseline-copy",
+      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:34:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985995337",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:21:29Z",
+      "database_id": 25985730089,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "05a6fa3d44025258076eaed9fc97171af659c7ea",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:21:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985730089",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-17T08:21:14Z",
       "database_id": 25985725026,
       "display_title": "Define legacy fallback removal gate",
@@ -5083,6 +5144,34 @@
       "updated_at": "2026-05-17T08:21:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985725026",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:21:14Z",
+      "database_id": 25985725010,
+      "display_title": "Define legacy fallback removal gate",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "94384a1eefd437581dfd6dda4ae00e127a935d3f",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:21:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985725010",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-17T08:21:13Z",
+      "database_id": 25985724715,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "94384a1eefd437581dfd6dda4ae00e127a935d3f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:21:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985724715",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6356,90 +6445,6 @@
       "status": "completed",
       "updated_at": "2026-05-15T20:39:51Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940277614",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T20:39:27Z",
-      "database_id": 25940276796,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "7576cda1f505729e22c4177b9513a1fefdee0b1d",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:39:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940276796",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:32:57Z",
-      "database_id": 25939988603,
-      "display_title": "Clarify automation map current workflow status",
-      "event": "pull_request",
-      "head_branch": "clarify-automation-map-current-status",
-      "head_sha": "e155e0ce4eb12c690d78faf2016c4247f914a021",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:33:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939988603",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:32:57Z",
-      "database_id": 25939988582,
-      "display_title": "Clarify automation map current workflow status",
-      "event": "pull_request",
-      "head_branch": "clarify-automation-map-current-status",
-      "head_sha": "e155e0ce4eb12c690d78faf2016c4247f914a021",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:33:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939988582",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:18:57Z",
-      "database_id": 25939391555,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "d0de0eb9b516955e54be41aa4e70ef20f30f82ac",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:19:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939391555",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T20:18:40Z",
-      "database_id": 25939380040,
-      "display_title": "Harden evidence pipeline dry-run inputs",
-      "event": "pull_request",
-      "head_branch": "harden-evidence-pipeline-inputs",
-      "head_sha": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:18:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939380040",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:18:40Z",
-      "database_id": 25939380020,
-      "display_title": "Harden evidence pipeline dry-run inputs",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "7e29a340e172c05bf227a046239e654689b1f959",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:18:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25939380020",
       "workflow_name": "Public Results Export"
     }
   ]
