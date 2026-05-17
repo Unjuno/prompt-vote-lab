@@ -11,6 +11,15 @@ import sys
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+ROOT_EXPECTED_TEXT = [
+    "Prompt Vote Lab",
+    "20-vote baseline",
+]
+
+LAB_EXPECTED_TEXT = [
+    "Prompt Vote Lab",
+]
+
 
 def fetch(url: str) -> tuple[int, str, str]:
     req = Request(url, headers={"User-Agent": "prompt-vote-lab-pages-smoke-check"})
@@ -36,15 +45,19 @@ def require(url: str, expected: str) -> None:
     print(f"OK: {url}")
 
 
+def require_all(url: str, expected_texts: list[str]) -> None:
+    for expected in expected_texts:
+        require(url, expected)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--base-url", required=True, help="Example: https://unjuno.github.io/prompt-vote-lab")
     args = parser.parse_args()
 
     base = args.base_url.rstrip("/")
-    require(base + "/", "Prompt Vote Lab")
-    require(base + "/", "20 virtual votes")
-    require(base + "/lab/", "Prompt Vote Lab")
+    require_all(base + "/", ROOT_EXPECTED_TEXT)
+    require_all(base + "/lab/", LAB_EXPECTED_TEXT)
     return 0
 
 
