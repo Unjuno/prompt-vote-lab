@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T08:47:48+00:00",
+  "generated_at": "2026-05-17T11:49:12+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 332,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/release-readiness-review.md` as a release-facing static review of security posture, participant journey, and live preview status.\n- Link the new review from `docs/README.md`.\n- Record the current judgment: static security posture PASS with remaining operational observation, participant journey PASS, live preview PASS, and ordinary default-on weekly observation still pending.\n\n## Scope\n- `docs/release-readiness-review.md`\n- `docs/README.md`\n\n## Current review outcome\n- Security: static boundary is strong for the current public experiment, with ordinary weekly observation still pending.\n- User journey: root landing, participant guide, lab navigation, Issues, runs, history, and public results provide a coherent path.\n- Live preview: `/lab/`, comparison outputs, comparison dashboard, and history are linked from the lab page.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy fallback removal.",
+      "body_length": 1027,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T11:48:56Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T11:45:30Z",
+      "deletions": 23,
+      "files": [
+        {
+          "additions": 43,
+          "deletions": 23,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 289,
+          "deletions": 0,
+          "path": "docs/release-readiness-review.md"
+        }
+      ],
+      "head_ref_name": "add-release-readiness-review-v2",
+      "head_ref_oid": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "labels": [],
+      "merge_commit_oid": "d000221362332ae762fe1832e6df2ab412281ec9",
+      "merged_at": "2026-05-17T11:48:56Z",
+      "merged_by": "Unjuno",
+      "number": 328,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add release readiness review",
+      "updated_at": "2026-05-17T11:48:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/328"
+    },
     {
       "additions": 34,
       "author": "Unjuno",
@@ -4866,53 +4903,6 @@
       "title": "Normalize rank 2 comparison metadata v2",
       "updated_at": "2026-05-11T05:22:23Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/222"
-    },
-    {
-      "additions": 242,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes comparison dashboard decision derivation so a merged implementation PR implies an implemented decision, even if the Issue outcome label has not yet been refreshed in `data/public-results.json`.\n\n## Why\n\nThe W20 dashboard showed Rank 2 and Rank 3 implementation PRs as `MERGED`, but the decision field could remain `pending` when the Issue label snapshot lagged behind the PR state. That is a public evidence consistency bug.\n\n## Changes\n\n- Derive dashboard `Decision` from outcome labels first, then fall back to merged PR state.\n- Add `scripts/test_comparison_dashboard_decision.py` as a regression test.\n- Run the new regression test from `Script Check`.\n- Extend the Script Check workflow contract so the new test cannot be silently removed.\n\n## Scope\n\n- No root `lab/` implementation changes.\n- No generated dashboard snapshot changes in this PR.\n- Public results export should refresh `data/public-results.json`, `lab/comparisons/**`, and `lab/history/**` after merge.",
-      "body_length": 991,
-      "changed_files": 4,
-      "closed_at": "2026-05-10T05:14:41Z",
-      "comment_count": 0,
-      "created_at": "2026-05-10T05:12:38Z",
-      "deletions": 223,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 149,
-          "deletions": 221,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 83,
-          "deletions": 0,
-          "path": "scripts/test_comparison_dashboard_decision.py"
-        },
-        {
-          "additions": 7,
-          "deletions": 2,
-          "path": "scripts/test_script_check_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "fix-comparison-decision-from-merged-pr",
-      "head_ref_oid": "dc6ca978e79fca224100c62eaaa5441221c19f80",
-      "labels": [],
-      "merge_commit_oid": "3c580da2eed31ad5899c491285893523484a9132",
-      "merged_at": "2026-05-10T05:14:41Z",
-      "merged_by": "Unjuno",
-      "number": 232,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Derive comparison decisions from merged PR state",
-      "updated_at": "2026-05-11T05:22:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/232"
     }
   ],
   "run_records": [
@@ -5072,6 +5062,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-17T11:48:58Z",
+      "database_id": 25989991204,
+      "display_title": "Add release readiness review",
+      "event": "pull_request",
+      "head_branch": "add-release-readiness-review-v2",
+      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-17T11:48:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989991204",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T11:45:33Z",
+      "database_id": 25989920059,
+      "display_title": "Add release readiness review",
+      "event": "pull_request",
+      "head_branch": "add-release-readiness-review-v2",
+      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-17T11:45:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920059",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T11:45:33Z",
+      "database_id": 25989920058,
+      "display_title": "Add release readiness review",
+      "event": "pull_request",
+      "head_branch": "add-release-readiness-review-v2",
+      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T11:45:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920058",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T11:45:33Z",
+      "database_id": 25989920056,
+      "display_title": "Add release readiness review",
+      "event": "pull_request",
+      "head_branch": "add-release-readiness-review-v2",
+      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T11:45:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920056",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:47:51Z",
+      "database_id": 25986269329,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9677f2ffc3258bc345c3862e4d485f1e660aaf1b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:48:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986269329",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-17T08:47:32Z",
       "database_id": 25986263226,
       "display_title": "Cover Pages smoke copy in script-check contract",
@@ -5083,6 +5143,34 @@
       "updated_at": "2026-05-17T08:47:33Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986263226",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T08:47:32Z",
+      "database_id": 25986263215,
+      "display_title": "Cover Pages smoke copy in script-check contract",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:47:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986263215",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-17T08:47:31Z",
+      "database_id": 25986262836,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T08:47:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986262836",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6342,104 +6430,6 @@
       "status": "completed",
       "updated_at": "2026-05-15T21:34:30Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942507147",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T21:33:08Z",
-      "database_id": 25942471551,
-      "display_title": "Update usable ops current status",
-      "event": "pull_request",
-      "head_branch": "update-usable-ops-current-status",
-      "head_sha": "0bf0a1ce008a78888e0db7d4055665c19416d8ef",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:33:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942471551",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T21:33:08Z",
-      "database_id": 25942471531,
-      "display_title": "Update usable ops current status",
-      "event": "pull_request",
-      "head_branch": "update-usable-ops-current-status",
-      "head_sha": "0bf0a1ce008a78888e0db7d4055665c19416d8ef",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:33:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942471531",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T21:33:08Z",
-      "database_id": 25942471525,
-      "display_title": "Update usable ops current status",
-      "event": "pull_request",
-      "head_branch": "update-usable-ops-current-status",
-      "head_sha": "0bf0a1ce008a78888e0db7d4055665c19416d8ef",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T21:33:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25942471525",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:52:00Z",
-      "database_id": 25940826072,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "980b02ad38daf3c0ba6d4932916d4b729acd68c1",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:52:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940826072",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T20:51:41Z",
-      "database_id": 25940813263,
-      "display_title": "Fix support unlock example week",
-      "event": "pull_request",
-      "head_branch": "fix-support-unlock-example-week",
-      "head_sha": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:51:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940813263",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T20:51:41Z",
-      "database_id": 25940813243,
-      "display_title": "Fix support unlock example week",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "748ef18eb72e5d22ad81473873977e8303d82ede",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:52:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940813243",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T20:51:40Z",
-      "database_id": 25940812588,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "748ef18eb72e5d22ad81473873977e8303d82ede",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T20:52:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25940812588",
       "workflow_name": "pages-build-deployment"
     }
   ]

@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T08:47:48+00:00`
+Generated at: `2026-05-17T11:49:12+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 328 | MERGED | 2 | 332/23 | Add release readiness review |
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
 | 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
 | 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
 | 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
-| 273 | MERGED | 1 | 200/0 | Record policy-agent canary 11 success |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25989991204 | Terminal State Report | pull_request | completed | skipped | Add release readiness review |
+| 25989920059 | Pre-API Freeze Audit | pull_request | completed | success | Add release readiness review |
+| 25989920058 | Lab PR Scope Check | pull_request | completed | success | Add release readiness review |
+| 25989920056 | Static Site Check | pull_request | completed | success | Add release readiness review |
+| 25986269329 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25986263226 | Terminal State Report | pull_request | completed | skipped | Cover Pages smoke copy in script-check contract |
+| 25986263215 | Public Results Export | push | completed | success | Cover Pages smoke copy in script-check contract |
+| 25986262836 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25986218978 | Script Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
 | 25986218971 | Lab PR Scope Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
 | 25986062041 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25981378124 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 25965918113 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25965912741 | Public Results Export | push | completed | success | Update weekly operator docs for legacy gate |
-| 25965912683 | Terminal State Report | pull_request | completed | skipped | Update weekly operator docs for legacy gate |
-| 25965912408 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25965871253 | Script Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
-| 25965871252 | Lab PR Scope Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
-| 25965871250 | Static Site Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
-| 25961586414 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25961581134 | Public Results Export | push | completed | success | Document legacy OpenAI runner gate |
 
 ## Raw JSON
 
