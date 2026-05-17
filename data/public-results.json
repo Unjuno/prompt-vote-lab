@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T12:38:31+00:00",
+  "generated_at": "2026-05-17T13:18:48+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -700,6 +700,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 119,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/document-format-policy.md`.\n- Record the current decision: use `.md`, not `.mdx`, for participant-facing and maintainer-facing docs.\n- Require a separate build-system/security proposal before adopting MDX.\n\n## Why\nThe project is currently GitHub-native and static: GitHub-rendered Markdown, GitHub Pages static files, no docs build step, no React documentation runtime, and no MDX compiler. MDX would add build and security surface without addressing the current release blockers.\n\n## Scope\n- `docs/document-format-policy.md`\n\n## Non-goals\n- No conversion from `.md` to `.mdx`.\n- No docs build system.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
+      "body_length": 735,
+      "changed_files": 1,
+      "closed_at": "2026-05-17T13:18:32Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T13:13:35Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 119,
+          "deletions": 0,
+          "path": "docs/document-format-policy.md"
+        }
+      ],
+      "head_ref_name": "add-doc-format-policy-v2",
+      "head_ref_oid": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
+      "labels": [],
+      "merge_commit_oid": "6a9d37c840dc85aef0022fe86fdedaba23ea9186",
+      "merged_at": "2026-05-17T13:18:32Z",
+      "merged_by": "Unjuno",
+      "number": 331,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add document format policy",
+      "updated_at": "2026-05-17T13:18:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/331"
+    },
+    {
       "additions": 133,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -728,7 +760,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Add script dependency map",
-      "updated_at": "2026-05-17T12:38:12Z",
+      "updated_at": "2026-05-17T12:38:35Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/330"
     },
     {
@@ -4861,43 +4893,6 @@
       "title": "Normalize rank 2 comparison metadata",
       "updated_at": "2026-05-11T05:22:26Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/220"
-    },
-    {
-      "additions": 61,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nUpdates the lab PR scope guard so generated public evidence pages are allowed under `lab/comparisons/**` and `lab/history/**`.\n\n## Problem\n\nThe current scope guard only allows root lab implementation files:\n\n```text\nlab/index.html\nlab/style.css\nlab/app.js\n```\n\nThat was correct before generated public evidence pages existed, but now the project intentionally generates and updates:\n\n```text\nlab/comparisons/**\nlab/history/**\n```\n\nAs a result, valid evidence-page fixes such as #220 fail `Lab PR Scope Check`.\n\n## Change\n\nAllows generated evidence paths:\n\n```text\nlab/comparisons/**\nlab/history/**\n```\n\nwhile preserving these restrictions:\n\n- unknown `lab/*` paths still fail\n- root lab implementation changes cannot be mixed with docs/workflows/policy changes\n- root lab implementation changes cannot be mixed with generated evidence updates\n\n## Tests\n\nUpdates `scripts/test-lab-pr-scope.sh` to cover:\n\n- root lab only: pass\n- docs only: pass\n- generated comparison only: pass\n- generated history only: pass\n- root lab + docs: fail\n- root lab + generated evidence: fail\n- unknown lab file: fail\n\n## Non-goals\n\n- No generated evidence output is changed in this PR.\n- No root `/lab/` implementation output is changed.",
-      "body_length": 1228,
-      "changed_files": 2,
-      "closed_at": "2026-05-09T14:57:30Z",
-      "comment_count": 0,
-      "created_at": "2026-05-09T14:48:46Z",
-      "deletions": 20,
-      "files": [
-        {
-          "additions": 26,
-          "deletions": 13,
-          "path": "scripts/check-lab-pr-scope.sh"
-        },
-        {
-          "additions": 35,
-          "deletions": 7,
-          "path": "scripts/test-lab-pr-scope.sh"
-        }
-      ],
-      "head_ref_name": "allow-generated-lab-evidence-paths",
-      "head_ref_oid": "8129c526c2df9ad4c7c5fcb6ca616b839ee77e86",
-      "labels": [],
-      "merge_commit_oid": "75a7b665db6b7632ad9812e44ed00b48828bb78f",
-      "merged_at": "2026-05-09T14:57:29Z",
-      "merged_by": "Unjuno",
-      "number": 221,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Allow generated lab evidence paths in scope guard",
-      "updated_at": "2026-05-11T05:22:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/221"
     }
   ],
   "run_records": [
@@ -5057,6 +5052,76 @@
   "workflow_runs": [
     {
       "conclusion": "skipped",
+      "created_at": "2026-05-17T13:18:35Z",
+      "database_id": 25991974775,
+      "display_title": "Add document format policy",
+      "event": "pull_request",
+      "head_branch": "add-doc-format-policy-v2",
+      "head_sha": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:18:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991974775",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:13:38Z",
+      "database_id": 25991864934,
+      "display_title": "Add document format policy",
+      "event": "pull_request",
+      "head_branch": "add-doc-format-policy-v2",
+      "head_sha": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:13:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991864934",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:13:38Z",
+      "database_id": 25991864922,
+      "display_title": "Add document format policy",
+      "event": "pull_request",
+      "head_branch": "add-doc-format-policy-v2",
+      "head_sha": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:13:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991864922",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:38:35Z",
+      "database_id": 25991082426,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "1ae410b877da4362379083a2025647e087d84754",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:39:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991082426",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:38:15Z",
+      "database_id": 25991074943,
+      "display_title": "Add script dependency map",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "97b3de605ba242878660fe300aa90401a6f7c783",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:38:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991074943",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "skipped",
       "created_at": "2026-05-17T12:38:14Z",
       "database_id": 25991074917,
       "display_title": "Add script dependency map",
@@ -5068,6 +5133,20 @@
       "updated_at": "2026-05-17T12:38:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991074917",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T12:38:13Z",
+      "database_id": 25991074545,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "97b3de605ba242878660fe300aa90401a6f7c783",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T12:38:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991074545",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6342,90 +6421,6 @@
       "updated_at": "2026-05-16T04:53:44Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220360",
       "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:53:34Z",
-      "database_id": 25953220358,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "35d5e2c87dda6dd8b1bfdf25b0d9f1d5b6ea0697",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:53:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220358",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:41:48Z",
-      "database_id": 25953003454,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "16ca5d3282a5e4861e991a96c594b772493711ae",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:41:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003454",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-16T04:41:47Z",
-      "database_id": 25953003452,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "16ca5d3282a5e4861e991a96c594b772493711ae",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:41:54Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003452",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-16T04:41:47Z",
-      "database_id": 25953003451,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "16ca5d3282a5e4861e991a96c594b772493711ae",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:42:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003451",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:41:47Z",
-      "database_id": 25953003450,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "16ca5d3282a5e4861e991a96c594b772493711ae",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:41:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003450",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:41:47Z",
-      "database_id": 25953003449,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "16ca5d3282a5e4861e991a96c594b772493711ae",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:41:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953003449",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

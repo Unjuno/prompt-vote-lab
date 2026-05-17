@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T12:38:31+00:00`
+Generated at: `2026-05-17T13:18:48+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 331 | MERGED | 1 | 119/0 | Add document format policy |
 | 330 | MERGED | 1 | 133/0 | Add script dependency map |
 | 329 | MERGED | 2 | 93/23 | Add root folder audit |
 | 328 | MERGED | 2 | 332/23 | Add release readiness review |
@@ -76,13 +77,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
-| 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25991974775 | Terminal State Report | pull_request | completed | skipped | Add document format policy |
+| 25991864934 | Static Site Check | pull_request | completed | success | Add document format policy |
+| 25991864922 | Lab PR Scope Check | pull_request | completed | success | Add document format policy |
+| 25991082426 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25991074943 | Public Results Export | push | completed | success | Add script dependency map |
 | 25991074917 | Terminal State Report | pull_request | completed | skipped | Add script dependency map |
+| 25991074545 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25991024655 | Lab PR Scope Check | pull_request | completed | success | Add script dependency map |
 | 25991024654 | Static Site Check | pull_request | completed | success | Add script dependency map |
 | 25990775144 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25986218978 | Script Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
 | 25986218971 | Lab PR Scope Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
 | 25986062041 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25986055188 | Public Results Export | push | completed | success | Fix Pages smoke baseline copy |
-| 25986055152 | Terminal State Report | pull_request | completed | skipped | Fix Pages smoke baseline copy |
-| 25986054715 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25985995344 | Lab PR Scope Check | pull_request | completed | success | Fix Pages smoke baseline copy |
-| 25985995337 | Script Check | pull_request | completed | success | Fix Pages smoke baseline copy |
-| 25985730089 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
