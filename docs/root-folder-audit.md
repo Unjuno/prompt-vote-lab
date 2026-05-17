@@ -12,6 +12,18 @@ bulk cleanup: not recommended yet
 ordinary default-on weekly observation: pending
 ```
 
+## Related cleanup documents
+
+Use these documents together:
+
+```text
+root-folder-audit.md -> top-level surfaces and cleanup questions
+script-dependency-map.md -> script families and retirement prerequisites
+workflow-family-map.md -> workflow families and retirement gates
+document-format-policy.md -> .md versus .mdx decision
+repository-cleanup-inventory.md -> protected evidence and cleanup candidates
+```
+
 ## Top-level surfaces
 
 | Surface | Role | Status | Action |

@@ -17,6 +17,17 @@ contract tests: keep
 ordinary default-on weekly observation: pending
 ```
 
+## Related cleanup documents
+
+Use these documents together:
+
+```text
+root-folder-audit.md -> top-level surfaces and cleanup questions
+workflow-family-map.md -> workflow families and retirement gates
+document-format-policy.md -> documentation format and .md versus .mdx decision
+repository-cleanup-inventory.md -> protected evidence and cleanup candidates
+```
+
 ## Script families
 
 | Family | Examples | Current role | Cleanup posture |
