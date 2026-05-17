@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T11:49:12+00:00`
+Generated at: `2026-05-17T12:24:50+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 329 | MERGED | 2 | 93/23 | Add root folder audit |
 | 328 | MERGED | 2 | 332/23 | Add release readiness review |
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
 | 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
@@ -76,13 +77,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 | 269 | MERGED | 4 | 30/15 | Add actionlint to Script Check |
 | 270 | MERGED | 5 | 289/30 | Scan public agent bundles with Gitleaks |
-| 271 | MERGED | 3 | 12/2 | Fix OpenAI key false positive in public bundle verifier |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25990768614 | Terminal State Report | pull_request | completed | skipped | Add root folder audit |
+| 25990701883 | Lab PR Scope Check | pull_request | completed | success | Add root folder audit |
+| 25990701869 | Static Site Check | pull_request | completed | success | Add root folder audit |
+| 25990701862 | Pre-API Freeze Audit | pull_request | completed | success | Add root folder audit |
+| 25989997560 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25989991241 | Public Results Export | push | completed | success | Add release readiness review |
 | 25989991204 | Terminal State Report | pull_request | completed | skipped | Add release readiness review |
+| 25989990795 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25989920059 | Pre-API Freeze Audit | pull_request | completed | success | Add release readiness review |
 | 25989920058 | Lab PR Scope Check | pull_request | completed | success | Add release readiness review |
 | 25989920056 | Static Site Check | pull_request | completed | success | Add release readiness review |
@@ -105,13 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25985283427 | Static Site Check | pull_request | completed | success | Define legacy fallback removal gate |
 | 25985283422 | Script Check | pull_request | completed | success | Define legacy fallback removal gate |
 | 25985283421 | Lab PR Scope Check | pull_request | completed | success | Define legacy fallback removal gate |
-| 25983553773 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25983547922 | Public Results Export | schedule | completed | success | Public Results Export |
-| 25983514612 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
-| 25981380042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25981378124 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25965918113 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25965912741 | Public Results Export | push | completed | success | Update weekly operator docs for legacy gate |
 
 ## Raw JSON
 
