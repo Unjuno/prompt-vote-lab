@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-17T13:18:48+00:00",
+  "generated_at": "2026-05-17T13:32:26+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -699,6 +699,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 23,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add related-document links to `docs/root-folder-audit.md`.\n- Add related-document links to `docs/script-dependency-map.md`.\n- Improve cleanup-doc reachability without updating the large docs index.\n\n## Why\n`docs/README.md` full updates have been brittle in this environment. This small PR improves discoverability of the new cleanup and document-format docs by linking the cleanup documents to each other.\n\n## Scope\n- `docs/root-folder-audit.md`\n- `docs/script-dependency-map.md`\n\n## Non-goals\n- No README rewrite.\n- No docs format conversion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
+      "body_length": 667,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T13:32:08Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T13:30:36Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 12,
+          "deletions": 0,
+          "path": "docs/root-folder-audit.md"
+        },
+        {
+          "additions": 11,
+          "deletions": 0,
+          "path": "docs/script-dependency-map.md"
+        }
+      ],
+      "head_ref_name": "link-cleanup-docs-v2",
+      "head_ref_oid": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "labels": [],
+      "merge_commit_oid": "2d37d0bce8d03d5421c7a26bc5828b1f7a131d80",
+      "merged_at": "2026-05-17T13:32:08Z",
+      "merged_by": "Unjuno",
+      "number": 332,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Link cleanup documentation",
+      "updated_at": "2026-05-17T13:32:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/332"
+    },
     {
       "additions": 119,
       "author": "Unjuno",
@@ -4861,38 +4898,6 @@
       "title": "Run Codex comparison issue rank 2",
       "updated_at": "2026-05-11T05:22:27Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/219"
-    },
-    {
-      "additions": 1,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nFixes stale rank metadata in the existing rank-2 comparison artifact.\n\n## Why\n\n#219 generated a correct metadata-normalized rank-2 artifact, but it cannot be merged directly because `lab/comparisons/2026-W20/rank-2/` already exists on `main` from #214.\n\nThis PR applies the necessary minimal fix directly on top of current `main`.\n\n## Change\n\n```text\nlab/comparisons/2026-W20/rank-2/index.html\nCandidate #1 -> Candidate #2\n```\n\n## Scope\n\nOnly one existing rank-2 HTML file is changed.\n\n## Non-goals\n\n- No model run.\n- No rank-3 changes.\n- No root `/lab/` changes.",
-      "body_length": 575,
-      "changed_files": 1,
-      "closed_at": "2026-05-09T16:01:16Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T14:21:40Z",
-      "deletions": 1,
-      "files": [
-        {
-          "additions": 1,
-          "deletions": 1,
-          "path": "lab/comparisons/2026-W20/rank-2/index.html"
-        }
-      ],
-      "head_ref_name": "update-rank2-issue195-metadata-normalized",
-      "head_ref_oid": "aee616da9e55415bf9d861dc4c49854041f81f06",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 220,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Normalize rank 2 comparison metadata",
-      "updated_at": "2026-05-11T05:22:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/220"
     }
   ],
   "run_records": [
@@ -5042,7 +5047,7 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 9,
     "issue_count": 19,
-    "merged_pr_count": 81,
+    "merged_pr_count": 82,
     "open_issue_count": 2,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -5050,6 +5055,76 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-17T13:32:11Z",
+      "database_id": 25992282150,
+      "display_title": "Link cleanup documentation",
+      "event": "pull_request",
+      "head_branch": "link-cleanup-docs-v2",
+      "head_sha": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:32:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25992282150",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:30:39Z",
+      "database_id": 25992246408,
+      "display_title": "Link cleanup documentation",
+      "event": "pull_request",
+      "head_branch": "link-cleanup-docs-v2",
+      "head_sha": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:30:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25992246408",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:30:39Z",
+      "database_id": 25992246378,
+      "display_title": "Link cleanup documentation",
+      "event": "pull_request",
+      "head_branch": "link-cleanup-docs-v2",
+      "head_sha": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:30:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25992246378",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:18:51Z",
+      "database_id": 25991980412,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a45c5feaa5201e1af9e10b65e6dedf37b27a4275",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:19:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991980412",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-17T13:18:35Z",
+      "database_id": 25991974841,
+      "display_title": "Add document format policy",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "6a9d37c840dc85aef0022fe86fdedaba23ea9186",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:18:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991974841",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-17T13:18:35Z",
@@ -5063,6 +5138,20 @@
       "updated_at": "2026-05-17T13:18:36Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991974775",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-17T13:18:34Z",
+      "database_id": 25991974472,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6a9d37c840dc85aef0022fe86fdedaba23ea9186",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-17T13:18:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25991974472",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6336,90 +6425,6 @@
       "status": "completed",
       "updated_at": "2026-05-16T05:07:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953470758",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T05:06:51Z",
-      "database_id": 25953470751,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-16T05:06:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953470751",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T05:06:51Z",
-      "database_id": 25953470742,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-16T05:06:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953470742",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:53:34Z",
-      "database_id": 25953220380,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "35d5e2c87dda6dd8b1bfdf25b0d9f1d5b6ea0697",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:53:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220380",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-16T04:53:34Z",
-      "database_id": 25953220362,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "35d5e2c87dda6dd8b1bfdf25b0d9f1d5b6ea0697",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:53:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220362",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:53:34Z",
-      "database_id": 25953220361,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "35d5e2c87dda6dd8b1bfdf25b0d9f1d5b6ea0697",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:53:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220361",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T04:53:34Z",
-      "database_id": 25953220360,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "35d5e2c87dda6dd8b1bfdf25b0d9f1d5b6ea0697",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T04:53:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25953220360",
       "workflow_name": "Static Site Check"
     }
   ]

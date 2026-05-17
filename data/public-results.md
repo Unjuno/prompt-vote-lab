@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T13:18:48+00:00`
+Generated at: `2026-05-17T13:32:26+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 81 |
+| merged_pr_count | 82 |
 | workflow_run_count | 98 |
 | run_record_count | 22 |
 
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 332 | MERGED | 2 | 23/0 | Link cleanup documentation |
 | 331 | MERGED | 1 | 119/0 | Add document format policy |
 | 330 | MERGED | 1 | 133/0 | Add script dependency map |
 | 329 | MERGED | 2 | 93/23 | Add root folder audit |
@@ -76,13 +77,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
 | 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
-| 268 | MERGED | 4 | 66/6 | Verify uploaded public agent bundles |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25992282150 | Terminal State Report | pull_request | completed | skipped | Link cleanup documentation |
+| 25992246408 | Static Site Check | pull_request | completed | success | Link cleanup documentation |
+| 25992246378 | Lab PR Scope Check | pull_request | completed | success | Link cleanup documentation |
+| 25991980412 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25991974841 | Public Results Export | push | completed | success | Add document format policy |
 | 25991974775 | Terminal State Report | pull_request | completed | skipped | Add document format policy |
+| 25991974472 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25991864934 | Static Site Check | pull_request | completed | success | Add document format policy |
 | 25991864922 | Lab PR Scope Check | pull_request | completed | success | Add document format policy |
 | 25991082426 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25989920058 | Lab PR Scope Check | pull_request | completed | success | Add release readiness review |
 | 25989920056 | Static Site Check | pull_request | completed | success | Add release readiness review |
 | 25986269329 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25986263226 | Terminal State Report | pull_request | completed | skipped | Cover Pages smoke copy in script-check contract |
-| 25986263215 | Public Results Export | push | completed | success | Cover Pages smoke copy in script-check contract |
-| 25986262836 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25986218978 | Script Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
-| 25986218971 | Lab PR Scope Check | pull_request | completed | success | Cover Pages smoke copy in script-check contract |
-| 25986062041 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
