@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-16T15:37:45+00:00`
+Generated at: `2026-05-17T06:30:58+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 100 |
 | open_pr_count | 0 |
 | merged_pr_count | 81 |
-| workflow_run_count | 98 |
+| workflow_run_count | 99 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -82,7 +82,13 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 25983514612 | GitHub Pages Smoke Check | schedule | completed | failure | GitHub Pages Smoke Check |
+| 25981380042 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25981378124 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25965918113 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 25965912741 | Public Results Export | push | completed | success | Update weekly operator docs for legacy gate |
 | 25965912683 | Terminal State Report | pull_request | completed | skipped | Update weekly operator docs for legacy gate |
+| 25965912408 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25965871253 | Script Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
 | 25965871252 | Lab PR Scope Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
 | 25965871250 | Static Site Check | pull_request | completed | success | Update weekly operator docs for legacy gate |
@@ -106,12 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25956721699 | Lab PR Scope Check | pull_request | completed | success | Gate legacy first API canary workflow |
 | 25956721668 | Pre-API Freeze Audit | pull_request | completed | success | Gate legacy first API canary workflow |
 | 25956721666 | Script Check | pull_request | completed | success | Gate legacy first API canary workflow |
-| 25955583277 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25955577489 | Terminal State Report | pull_request | completed | skipped | Mark legacy API canary docs as historical |
-| 25955577443 | Public Results Export | push | completed | success | Mark legacy API canary docs as historical |
-| 25955577098 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25955539776 | Lab PR Scope Check | pull_request | completed | success | Mark legacy API canary docs as historical |
-| 25955539755 | Script Check | pull_request | completed | success | Mark legacy API canary docs as historical |
 
 ## Raw JSON
 
