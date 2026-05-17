@@ -46,6 +46,22 @@ RUNBOOK_REQUIRED_TEXT = [
     "## Output cap status",
     "The old API-era `MAX_OUTPUT_TOKENS` value is not an active canonical Codex runner control.",
     "output_token_cap_enforced: false",
+    "## Legacy fallback removal gate",
+    "Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.",
+    "A future legacy fallback removal PR may be opened only after the explicit legacy fallback removal gate in [Workflow family map](./workflow-family-map.md) passes.",
+    "ordinary default-on weekly no-eligible run observed",
+    "vote summary PR created",
+    "implementation PR: none for the no-eligible run",
+    "no implementation-agent attempt made for the no-eligible run",
+    "no Codex/API call made for the no-eligible run",
+    "legacy API/SDK runner not reached for the no-eligible run",
+    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
+    "canonical evidence artifacts remain verified",
+    "manual review remains required",
+    "auto-merge remains disabled",
+    "rollback plan exists",
+    "maintainer explicitly approves removal",
+    "If any item is missing, keep the legacy fallback present, non-canonical, and gated.",
     "canonical evidence artifacts are missing for a canonical run",
     "OPENAI_API_KEY present before codex exec: no",
 ]
@@ -115,6 +131,18 @@ DRIFT_REQUIRED_TEXT = [
     "manual review remains required",
     "auto-merge remains disabled",
     "weekly canonical default-on release: approved",
+    "## Required legacy fallback removal gate",
+    "The legacy fallback removal gate is a deletion-prevention gate, not a deletion approval by itself.",
+    "ordinary default-on weekly no-eligible run observed",
+    "vote summary PR created",
+    "no implementation-agent attempt made for no-eligible run",
+    "no Codex/API call made for no-eligible run",
+    "legacy API/SDK runner not reached for no-eligible run",
+    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
+    "canonical evidence artifacts remain verified",
+    "rollback plan exists",
+    "public docs no longer cite legacy fallback as an active requirement",
+    "maintainer explicitly approves removal",
 ]
 
 FORBIDDEN_TEXT = [
@@ -126,6 +154,8 @@ FORBIDDEN_TEXT = [
     "Still not default-on",
     "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
     "MAX_OUTPUT_TOKENS remains at the current configured limit until the system is complete.",
+    "safe to delete legacy fallback now",
+    "legacy fallback removal is approved",
 ]
 
 RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT = [
@@ -160,6 +190,7 @@ def main() -> int:
     require_all(drift, DRIFT_REQUIRED_TEXT, "canonical status drift release gate")
     reject_all(runbook, FORBIDDEN_TEXT, "operator runbook")
     reject_all(weekly, FORBIDDEN_TEXT, "weekly automation doc")
+    reject_all(drift, FORBIDDEN_TEXT, "canonical status drift doc")
     reject_all(runbook, RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT, "operator runbook release gate duplication")
     reject_all(weekly, WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT, "weekly automation release gate duplication")
 
@@ -168,6 +199,12 @@ def main() -> int:
 
     if runbook.index("Temporary override policy") > runbook.index("Default-on release status"):
         raise SystemExit("runbook override policy should precede the default-on release status")
+
+    if runbook.index("Output cap status") > runbook.index("Legacy fallback removal gate"):
+        raise SystemExit("runbook legacy fallback removal gate should follow output cap status")
+
+    if runbook.index("Legacy fallback removal gate") > runbook.index("Reset and cleanup policy"):
+        raise SystemExit("runbook cleanup policy should follow legacy fallback removal gate")
 
     if weekly.index("Canonical selected-prompt default") > weekly.index("Canonical weekly evidence artifacts"):
         raise SystemExit("weekly doc should define the default before evidence artifacts")
