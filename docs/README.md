@@ -15,29 +15,30 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
 5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-on, auto-merge, and release-gate status contract.
-6. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
-7. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
-8. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
-9. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-10. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
-11. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-12. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-13. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
-14. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-15. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-16. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
-17. [Automation map](./automation-map.md) — workflow boundaries.
-18. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-19. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-20. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-21. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-22. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-23. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-24. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-25. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-26. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-27. [Report policy](./report-policy.md) — weekly report draft policy.
-28. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+6. [Release readiness review](./release-readiness-review.md) — security posture, participant journey, live preview, and release decision review.
+7. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
+8. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
+9. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
+10. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
+11. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
+12. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+13. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+14. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+15. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+16. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+17. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+18. [Automation map](./automation-map.md) — workflow boundaries.
+19. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+20. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+21. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
+22. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
+23. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
+24. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+25. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+26. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+27. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+28. [Report policy](./report-policy.md) — weekly report draft policy.
+29. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
 
 ## Current reputation status
 
@@ -50,6 +51,25 @@ The repository records outcomes. Workflows do not yet compute player rankings, t
 Participants should start with [Participant guide](./for-participants.md).
 
 The first useful action is usually voting with 👍 on an existing `prompt-proposal` Issue. Prompt submission is the second step, not the first step.
+
+## Release readiness status
+
+The [Release readiness review](./release-readiness-review.md) is the release-facing check for three user-visible questions:
+
+```text
+security posture
+participant journey
+live preview
+```
+
+It currently records:
+
+```text
+security posture: PASS with remaining operational observation
+participant journey: PASS
+live preview: PASS
+ordinary default-on weekly observation: pending
+```
 
 ## Repository cleanup status
 
