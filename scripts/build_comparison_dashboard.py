@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 SAFE_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';"
+ROOT_LAB_FILES = {"lab/index.html", "lab/style.css", "lab/app.js"}
 
 
 def labels(item: dict[str, Any]) -> set[str]:
@@ -63,18 +64,43 @@ def state_score(state: str) -> int:
     return 0
 
 
-def best_prs(prs: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
-    out: dict[int, dict[str, Any]] = {}
+def changed_files(pr: dict[str, Any] | None) -> list[str]:
+    if not pr:
+        return []
+    return [str(f.get('path')) for f in pr.get('files', []) if f.get('path')]
+
+
+def implementation_scope_score(pr: dict[str, Any], week_id: str, rank: int) -> int:
+    files = changed_files(pr)
+    output_root = f"lab/comparisons/{week_id}/rank-{rank}/"
+    if any(path.startswith(output_root) for path in files):
+        return 4
+    if rank == 1 and any(path in ROOT_LAB_FILES for path in files):
+        return 3
+    body = str(pr.get('body', ''))
+    if f"Output root: `lab/comparisons/{week_id}/rank-{rank}`" in body:
+        return 2
+    return 0
+
+
+def best_pr_for_issue(prs: list[dict[str, Any]], issue_no: int, week_id: str, rank: int) -> dict[str, Any] | None:
+    best: dict[str, Any] | None = None
+    best_key = (-1, -1, -1)
     for pr in prs:
-        issue_no = pr_issue(pr)
-        if issue_no is None:
+        if pr_issue(pr) != issue_no:
             continue
-        old = out.get(issue_no)
-        key = (state_score(str(pr.get('state', ''))), pr_number(pr))
-        old_key = (state_score(str(old.get('state', ''))), pr_number(old)) if old else (-1, -1)
-        if key > old_key:
-            out[issue_no] = pr
-    return out
+        candidate_rank = pr_rank(pr)
+        if candidate_rank is not None and candidate_rank != rank:
+            continue
+        key = (
+            implementation_scope_score(pr, week_id, rank),
+            state_score(str(pr.get('state', ''))),
+            pr_number(pr),
+        )
+        if key > best_key:
+            best = pr
+            best_key = key
+    return best
 
 
 def issue_safety(issue: dict[str, Any]) -> str:
@@ -105,12 +131,6 @@ def vote_count(issue: dict[str, Any], pr: dict[str, Any] | None) -> int:
     return int(issue.get('reaction_plus_one_count') or 0)
 
 
-def changed_files(pr: dict[str, Any] | None) -> list[str]:
-    if not pr:
-        return []
-    return [str(f.get('path')) for f in pr.get('files', []) if f.get('path')]
-
-
 def live_output_files(week_id: str, rank: int) -> list[str]:
     output_root = f"lab/comparisons/{week_id}/rank-{rank}"
     return [
@@ -133,21 +153,25 @@ def decision(issue_labels: set[str], pr: dict[str, Any] | None) -> str:
 
 
 def rows(data: dict[str, Any], week_id: str) -> list[dict[str, Any]]:
-    prs_by_issue = best_prs(list(data.get('pull_requests', [])))
+    prs = list(data.get('pull_requests', []))
     best_by_rank: dict[int, dict[str, Any]] = {}
     for issue in data.get('issues', []):
         if f'week:{week_id}' not in labels(issue):
             continue
-        pr = prs_by_issue.get(int(issue.get('number')))
-        rank = pr_rank(pr) if pr else None
+        rank = rank_from_issue(issue)
+        issue_no = int(issue.get('number'))
         if rank is None:
-            rank = rank_from_issue(issue)
+            ranked_prs = [pr for pr in prs if pr_issue(pr) == issue_no and pr_rank(pr) is not None]
+            if ranked_prs:
+                rank = max(ranked_prs, key=lambda pr: (state_score(str(pr.get('state', ''))), pr_number(pr)) and pr_rank(pr) or 0)
+                rank = pr_rank(rank)
         if rank is None:
             continue
+        pr = best_pr_for_issue(prs, issue_no, week_id, rank)
         issue_labels = labels(issue)
         row = {
             'rank': rank,
-            'issue_no': int(issue.get('number')),
+            'issue_no': issue_no,
             'issue_title': str(issue.get('title', '')),
             'issue_url': str(issue.get('url', '')),
             'issue_state': str(issue.get('state', '')),
@@ -161,8 +185,13 @@ def rows(data: dict[str, Any], week_id: str) -> list[dict[str, Any]]:
             'decision': decision(issue_labels, pr),
         }
         old = best_by_rank.get(rank)
-        key = (state_score(row['pr_state']), row['pr_no'] or 0, row['issue_no'])
-        old_key = (state_score(old['pr_state']), old['pr_no'] or 0, old['issue_no']) if old else (-1, -1, -1)
+        key = (state_score(row['pr_state']), implementation_scope_score(pr, week_id, rank) if pr else -1, row['pr_no'] or 0, row['issue_no'])
+        old_key = (
+            state_score(old['pr_state']),
+            0,
+            old['pr_no'] or 0,
+            old['issue_no'],
+        ) if old else (-1, -1, -1, -1)
         if key > old_key:
             best_by_rank[rank] = row
     return [best_by_rank[n] for n in sorted(best_by_rank)]
