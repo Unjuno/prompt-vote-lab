@@ -111,6 +111,15 @@ def changed_files(pr: dict[str, Any] | None) -> list[str]:
     return [str(f.get('path')) for f in pr.get('files', []) if f.get('path')]
 
 
+def live_output_files(week_id: str, rank: int) -> list[str]:
+    output_root = f"lab/comparisons/{week_id}/rank-{rank}"
+    return [
+        f"{output_root}/index.html",
+        f"{output_root}/style.css",
+        f"{output_root}/app.js",
+    ]
+
+
 def decision(issue_labels: set[str], pr: dict[str, Any] | None) -> str:
     if 'outcome:blocked' in issue_labels:
         return 'blocked'
@@ -172,12 +181,13 @@ def run_record_url(week_id: str, rank: int, issue_no: int) -> str:
 def render_dashboard(data: dict[str, Any], week_id: str) -> str:
     cards = []
     for row in rows(data, week_id):
-        files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in row['files']) or '<li>not run yet</li>'
-        pr_label = f"PR #{row['pr_no']}" if row['pr_no'] else 'not run yet'
         rank = int(row['rank'])
         issue_no = int(row['issue_no'])
         output_root = f"lab/comparisons/{week_id}/rank-{rank}/"
         record_path = f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
+        pr_changed_files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in row['files']) or '<li>not run yet</li>'
+        snapshot_files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in live_output_files(week_id, rank))
+        pr_label = f"PR #{row['pr_no']}" if row['pr_no'] else 'not run yet'
         cards.append(f'''
       <article class="rank-card" aria-labelledby="rank-{rank}-title">
         <p class="rank-eyebrow">Rank {rank}</p>
@@ -192,8 +202,10 @@ def render_dashboard(data: dict[str, Any], week_id: str) -> str:
           <div><dt>Run record</dt><dd><a href="{html.escape(run_record_url(week_id, rank, issue_no), quote=True)}"><code>{html.escape(record_path)}</code></a></dd></div>
           <div><dt>Decision</dt><dd>{html.escape(row['decision'])}</dd></div>
         </dl>
-        <h3>Changed files</h3>
-        <ul class="changed-files">{files}</ul>
+        <h3>Implementation PR changed files</h3>
+        <ul class="changed-files">{pr_changed_files}</ul>
+        <h3>Live output snapshot files</h3>
+        <ul class="changed-files">{snapshot_files}</ul>
       </article>''')
     cards_html = '\n'.join(cards) if cards else '<p>No comparison rows found for this week.</p>'
     generated = html.escape(str(data.get('generated_at', 'unknown')))
