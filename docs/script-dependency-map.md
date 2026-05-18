@@ -14,7 +14,7 @@ canonical runner helpers: keep
 legacy fallback: keep gated
 public evidence builders: keep
 contract tests: keep
-ordinary default-on weekly observation: pending
+ordinary default-on weekly no-eligible observation: PASS
 ```
 
 ## Related cleanup documents
@@ -62,6 +62,17 @@ scripts/select_eligible.py
 scripts/resolve_support_unlock.py
 .github/workflows/weekly-auto-run.yml
 .github/workflows/support-unlock-export.yml
+```
+
+The ordinary default-on no-eligible weekly path was observed for 2026-W20:
+
+```text
+support unlock file: data/support-unlocks/2026-W20.json
+vote summary PR: #333
+merged run record: runs/week-2026-W20-vote-summary.md
+baseline_won: true
+eligible_count: 0
+implementation-agent attempt: none
 ```
 
 ### Public result and comparison evidence
@@ -120,7 +131,7 @@ maintainer approval:
 
 ## Do not retire yet
 
-Do not retire these before ordinary default-on weekly observation:
+Do not retire these before a natural eligible weekly implementation run is observed:
 
 ```text
 scripts/openai_lab_run.py
@@ -139,6 +150,6 @@ Use this map with `docs/root-folder-audit.md` and `docs/workflow-family-map.md` 
 The next cleanup work should still be:
 
 ```text
-observe ordinary default-on weekly run
+observe a natural eligible weekly implementation run when one occurs
 then decide which legacy or historical helpers can move toward retirement
 ```
