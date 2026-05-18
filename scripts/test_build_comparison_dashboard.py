@@ -17,10 +17,10 @@ def test_dashboard_builder() -> None:
         "issues": [
             {
                 "number": 183,
-                "title": "Old Rank 1 candidate",
+                "title": "Old Rank 1 non-prompt candidate",
                 "url": "https://example.test/issues/183",
                 "state": "CLOSED",
-                "labels": ["week:2026-W20", "prompt-proposal", "normal-candidate", "issue-safety:clear"],
+                "labels": ["week:2026-W20", "normal-candidate", "issue-safety:clear"],
                 "reaction_plus_one_count": 0,
                 "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": True},
                 "body": "## Comparison metadata\n\n- Intended comparison rank: 1",
@@ -177,7 +177,7 @@ def test_dashboard_builder() -> None:
 
     forbidden = [
         "<h3>Changed files</h3>",
-        "Old Rank 1 candidate",
+        "Old Rank 1 non-prompt candidate",
         "Issue #183",
         "PR #184",
         "old.html",
