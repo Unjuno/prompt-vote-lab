@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T07:45:25+00:00`
+Generated at: `2026-05-18T11:46:14+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -9,13 +9,13 @@ This file is a raw results surface for participants. It does not score prompts o
 | metric | value |
 | --- | --- |
 | issue_count | 20 |
-| open_issue_count | 3 |
+| open_issue_count | 0 |
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 83 |
+| merged_pr_count | 84 |
 | workflow_run_count | 98 |
 | run_record_count | 23 |
 
@@ -23,12 +23,12 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
-| 334 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected, maintenance | Investigate missing 2026-W20 scheduled weekly output |
+| 303 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Verify first ordinary canonical weekly default-on no-eligible run |
+| 304 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Inventory stale merged branches before cleanup |
+| 334 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected, maintenance | Investigate missing 2026-W20 scheduled weekly output |
 | 312 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Decide whether to gate historical Codex canary workflows before release |
 | 306 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Review Weekly Issue Finalizer manual input handling before release |
 | 305 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Review Support Unlock Export input handling before release |
-| 304 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Inventory stale merged branches before cleanup |
-| 303 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected | Verify first ordinary canonical weekly default-on no-eligible run |
 | 282 | CLOSED | 1 | issue-safety:clear, issue-safety:submission-detected, normal-candidate, prompt-proposal | [Prompt][Canary]: Add a tiny canonical weekly runner note |
 | 279 | CLOSED | 0 | hardening, issue-safety:blocked, issue-safety:review, issue-safety:submission-detected, weekly-auto-run | Harden weekly canonical evidence artifacts on failure paths |
 | 196 | CLOSED | 0 | issue-safety:clear, issue-safety:runtime-detected, issue-safety:submission-detected, normal-candidate, outcome:implemented, prompt-proposal, week:2026-W20 | [Prompt][Rank 3]: Add a participant decision card for weekly run review |
@@ -48,42 +48,48 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 333 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W20 |
-| 332 | MERGED | 2 | 23/0 | Link cleanup documentation |
-| 331 | MERGED | 1 | 119/0 | Add document format policy |
-| 330 | MERGED | 1 | 133/0 | Add script dependency map |
-| 329 | MERGED | 2 | 93/23 | Add root folder audit |
-| 328 | MERGED | 2 | 332/23 | Add release readiness review |
-| 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
-| 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
-| 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
-| 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
-| 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
-| 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
-| 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
-| 320 | MERGED | 6 | 205/100 | Mark legacy API canary docs as historical |
-| 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
-| 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
-| 317 | MERGED | 2 | 88/30 | Update usable ops current status |
-| 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
-| 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
-| 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
-| 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
-| 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
-| 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
+| 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
+| 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
+| 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
+| 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
+| 283 | CLOSED | 1 | 14/7 | Record auto vote summary for week-2026-W19 |
+| 281 | CLOSED | 1 | 4/0 | Record auto vote summary for week-2026-W19 |
+| 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
+| 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
 | 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
-| 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
-| 264 | MERGED | 2 | 14/6 | Document policy-agent reasoning traces in PR body |
-| 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
-| 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
-| 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
+| 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
+| 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
+| 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
+| 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
+| 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
+| 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
+| 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
+| 317 | MERGED | 2 | 88/30 | Update usable ops current status |
+| 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
+| 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
+| 320 | MERGED | 6 | 205/100 | Mark legacy API canary docs as historical |
+| 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
+| 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
+| 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
+| 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
+| 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
+| 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
+| 328 | MERGED | 2 | 332/23 | Add release readiness review |
+| 329 | MERGED | 2 | 93/23 | Add root folder audit |
+| 330 | MERGED | 1 | 133/0 | Add script dependency map |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26031482760 | Terminal State Report | pull_request | completed | skipped | Record W20 ordinary weekly observation pass |
+| 26031410947 | Lab PR Scope Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
+| 26031410933 | Static Site Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
+| 26020358039 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26020344264 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W20 |
+| 26020344218 | Public Results Export | push | completed | success | Record auto vote summary for week-2026-W20 |
+| 26020342903 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26019968000 | Issue Safety Scan | issues | completed | success | Investigate missing 2026-W20 scheduled weekly output |
 | 26018762551 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26018751741 | Public Results Export | schedule | completed | success | Public Results Export |
@@ -107,12 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25991082426 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25991074943 | Public Results Export | push | completed | success | Add script dependency map |
 | 25991074917 | Terminal State Report | pull_request | completed | skipped | Add script dependency map |
-| 25991074545 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25991024655 | Lab PR Scope Check | pull_request | completed | success | Add script dependency map |
-| 25991024654 | Static Site Check | pull_request | completed | success | Add script dependency map |
-| 25990775144 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25990768614 | Terminal State Report | pull_request | completed | skipped | Add root folder audit |
-| 25990768599 | Public Results Export | push | completed | success | Add root folder audit |
 
 ## Raw JSON
 

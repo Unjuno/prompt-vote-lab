@@ -1,12 +1,66 @@
 {
-  "generated_at": "2026-05-18T07:45:25+00:00",
+  "generated_at": "2026-05-18T11:46:14+00:00",
   "issues": [
+    {
+      "author": "Unjuno",
+      "body": "## Purpose\n\nPR #302 changed `Weekly Auto Run` so eligible weekly implementation candidates use the canonical Docker/Codex selected-prompt runner by default.\n\nThis issue now tracks the safer pre-release verification target first:\n\n```text\nordinary default-on weekly run\n→ support unlock resolved\n→ vote summary PR created\n→ no eligible candidates\n→ no implementation-agent attempt\n→ no Codex call\n```\n\nThe eligible canonical implementation path remains a later release/operation verification target, not a pre-release requirement.\n\n## Current status\n\n```text\ncanonical weekly default: default-on\nDEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true\nlegacy fallback: present and non-canonical\nauto-merge: disabled\nmanual review: required\nrelease state: not publicly launched yet\n```\n\n## Why no-eligible first\n\nThe workflow gates all implementation-agent and Codex steps behind:\n\n```text\nsteps.eligibility.outputs.has_eligible == 'true'\n```\n\nIf the no-change baseline wins or no prompt beats the baseline, the workflow should stop after the vote summary path and report:\n\n```text\nNo eligible candidates. No implementation-agent attempt will be made.\n```\n\nThis verifies default-on weekly operation without intentionally spending an implementation-agent run.\n\n## Phase 1 verification checklist: no-eligible path\n\n- [ ] `Support Unlock Export` completed for the target completed ISO week.\n- [ ] `data/support-unlocks/<week-id>.json` exists and validates.\n- [ ] `Weekly Auto Run` reads the support unlock file before vote collection.\n- [ ] Vote summary PR is created.\n- [ ] Vote summary PR records `Canonical selected-prompt runner: true` or equivalent default-on status in the weekly summary section.\n- [ ] Selection metadata shows `baseline_won: true` or `eligible_count: 0`.\n- [ ] The run logs contain `No eligible candidates. No implementation-agent attempt will be made.`\n- [ ] No implementation PR is created.\n- [ ] No Codex selected-prompt runner step executes.\n- [ ] No implementation secret is required.\n- [ ] Vote summary PR does not modify root lab implementation files.\n- [ ] Auto-merge does not occur.\n- [ ] Manual review remains required.\n\n## Phase 2 verification checklist: eligible canonical path, later only\n\nRun this only after release or when intentionally validating a real eligible prompt.\n\n- [ ] Implementation PR body contains `Runner: codex-cli-selected-prompt-packet-container`.\n- [ ] Implementation PR body contains `Canonical selected-prompt runner: true`.\n- [ ] Changed files are only `lab/index.html`, `lab/style.css`, and/or `lab/app.js`.\n- [ ] Safety check passed before PR creation.\n- [ ] Static site check passed before PR creation.\n- [ ] `weekly-selected-prompt-diagnostics-<run_number>` artifact exists.\n- [ ] `weekly-selected-prompt-public-bundles-<run_number>` artifact exists.\n- [ ] `weekly-selected-prompt-uploaded-bundle-verification-<run_number>` artifact exists.\n- [ ] Public bundle verification passed.\n- [ ] Uploaded bundle verification passed.\n- [ ] Gitleaks finding count is 0.\n- [ ] Auto-merge did not occur.\n- [ ] Manual review remains required.\n\n## Rollback signal\n\nIf default-on operation fails in a way that blocks ordinary weekly operation, set repository variable:\n\n```text\nPROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false\n```\n\nThen open a rollback PR that reverts `DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true` and updates the status docs/tests.\n\n## Non-goals\n\n- Do not force an eligible prompt just to exercise Codex before public release.\n- Do not remove `scripts/openai_lab_run.py` in this issue.\n- Do not delete canary workflows in this issue.\n- Do not enable auto-merge.\n- Do not hand-edit generated snapshots.",
+      "body_length": 3674,
+      "closed_at": "2026-05-18T11:20:33Z",
+      "comment_count": 2,
+      "created_at": "2026-05-15T12:37:54Z",
+      "labels": [
+        "issue-safety:clear",
+        "issue-safety:submission-detected"
+      ],
+      "number": 303,
+      "reaction_minus_one_count": 0,
+      "reaction_plus_one_count": 0,
+      "safety": {
+        "authorized_canary": false,
+        "blocked": false,
+        "clear": true,
+        "review": false,
+        "runtime_detected": false,
+        "submission_detected": true
+      },
+      "state": "CLOSED",
+      "title": "Verify first ordinary canonical weekly default-on no-eligible run",
+      "updated_at": "2026-05-18T11:20:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/303"
+    },
+    {
+      "author": "Unjuno",
+      "body": "## Purpose\n\nMany merged or superseded branches remain after the canonical weekly default-on release. This issue tracks a conservative branch cleanup inventory before deleting anything.\n\nDo not delete branches merely because they look old. First classify them by PR state and evidence role.\n\n## Confirmed context\n\nRecent merged PR branches still visible include:\n\n```text\nenable-canonical-weekly-default\nrequire-lab-support-baseline-smoke\nclarify-lab-support-baseline\nclarify-participant-support-baseline\nclarify-support-rank-baseline-policy\ndocument-canary-archive-boundary\nshorten-readme-status-entry\nshorten-weekly-release-gate\nshorten-operator-release-gate\nconsolidate-status-doc-sources\nadd-canonical-status-drift-check\nmark-openai-lab-run-legacy\nadd-workflow-family-map\nadd-cleanup-inventory\nadd-repo-cleanup-standards\nharden-weekly-operator-runbook\nadd-canonical-runner-evidence-guide\ndocument-legacy-weekly-runner-noncanonical\nharden-weekly-canonical-evidence-artifacts\nadd-weekly-canonical-runner-feature-flag\nfix-selected-prompt-workflow-input-env\nadd-selected-prompt-manual-workflow\nadd-selected-prompt-codex-runner-v2\nparameterize-selected-prompt-task-packet-v2\nrecord-policy-agent-canary-11-success\nfix-openai-key-false-positive\nscan-public-bundles-with-gitleaks\nverify-uploaded-public-agent-bundles\nverify-public-agent-run-bundle-contents\nrun-script-check-for-run-records\nrecord-first-canary-007-evidence-only\n```\n\nSome unmerged/superseded request branches also remain. These should be reviewed separately, not deleted in a bulk action without checking PR state.\n\n## Cleanup classification\n\nUse this classification before deletion:\n\n### Safe delete candidates after confirming merged PR\n\n- [ ] Branch has a merged PR.\n- [ ] Branch is not `main`.\n- [ ] Branch is not used by an open PR.\n- [ ] Branch is not referenced by active workflow configuration.\n- [ ] Branch is not an evidence-only branch whose name is needed to navigate historical artifacts.\n\n### Do not delete without extra review\n\n- [ ] Open PR branch.\n- [ ] Unmerged PR branch.\n- [ ] Evidence-only canary branch.\n- [ ] Generated comparison/request branch whose artifacts or PR body are still being investigated.\n- [ ] Any branch used in a pending workflow run.\n\n## Manual UI deletion steps\n\nThis connector cannot safely delete remote branches. Use GitHub UI after classification:\n\n```text\nRepository -> Branches -> filter merged branches -> delete confirmed safe branches\n```\n\nFor each deletion batch, record:\n\n```text\nDeleted branches:\nExcluded branches:\nReason for exclusions:\nRollback expectation:\n```\n\n## Non-goals\n\n- Do not delete `main`.\n- Do not delete open PR branches.\n- Do not delete canary/evidence branches unless their evidence is reachable from docs/run records.\n- Do not delete workflow files or generated snapshots in this cleanup.\n- Do not remove `scripts/openai_lab_run.py` here.",
+      "body_length": 2871,
+      "closed_at": "2026-05-18T08:16:53Z",
+      "comment_count": 3,
+      "created_at": "2026-05-15T12:42:30Z",
+      "labels": [
+        "issue-safety:clear",
+        "issue-safety:submission-detected"
+      ],
+      "number": 304,
+      "reaction_minus_one_count": 0,
+      "reaction_plus_one_count": 0,
+      "safety": {
+        "authorized_canary": false,
+        "blocked": false,
+        "clear": true,
+        "review": false,
+        "runtime_detected": false,
+        "submission_detected": true
+      },
+      "state": "CLOSED",
+      "title": "Inventory stale merged branches before cleanup",
+      "updated_at": "2026-05-18T08:16:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/304"
+    },
     {
       "author": "Unjuno",
       "body": "## Observation\n\nAs of the post-schedule check, no new scheduled `week-2026-W20` weekly output is visible through repository artifacts.\n\nObserved missing outputs:\n\n```text\ndata/support-unlocks/2026-W20.json\nRecord auto vote summary for week-2026-W20\nweekly-auto-summary-week-2026-W20-* branch\ncodex-lab-week-2026-W20-* branch\n```\n\nObserved existing prior evidence:\n\n```text\ndata/support-unlocks/2026-W19.json exists\nRecord auto vote summary for week-2026-W19 exists\ncanonical weekly selected-prompt evidence exists for run 25858202166 / PR #284\n```\n\n## Expected schedule\n\n```text\nSupport Unlock Export: 00:17 UTC / 09:17 JST\nWeekly Auto Run: 00:23 UTC / 09:23 JST\n```\n\nFor the 2026-05-18 scheduled path, support export should normally produce the previous completed UTC ISO week support file:\n\n```text\ndata/support-unlocks/2026-W20.json\n```\n\nThen Weekly Auto Run should resolve that support unlock file and either:\n\n```text\ncreate only a vote summary PR when no prompt beats the baseline\n```\n\nor:\n\n```text\ncreate canonical selected-prompt implementation evidence when eligible candidates exist\n```\n\n## Safety note\n\nThe current workflow design requires the support unlock file before vote collection. If the file is missing on a scheduled run, the weekly workflow should fail before candidate selection and before any implementation-agent attempt.\n\nThat means the likely failure mode is a missing observation/output, not an unexpected Codex/API spend.\n\n## Checks to perform\n\n```text\n1. Open Actions -> Support Unlock Export and inspect the 2026-05-18 scheduled run.\n2. Confirm whether it ran, skipped, failed, or produced no commit.\n3. Open Actions -> Weekly Auto Run and inspect the 2026-05-18 scheduled run.\n4. Confirm whether it failed at Resolve automated support unlocks.\n5. If support export failed, inspect token or workflow logs.\n6. If support export did not run, inspect repository Actions schedule status.\n7. If support export succeeded with no commit, verify why data/support-unlocks/2026-W20.json was not created.\n8. Do not trigger legacy API/SDK fallback while investigating.\n```\n\n## Pass criteria\n\n```text\ndata/support-unlocks/2026-W20.json exists\nWeekly Auto Run creates a week-2026-W20 vote summary PR\nno-eligible path stops before implementation-agent attempt when baseline wins\neligible path uses Runner: codex-cli-selected-prompt-packet-container\nCanonical selected-prompt runner: true\nauto-merge remains disabled\n```\n\n## Current status\n\n```text\nstatus: needs Actions UI/log inspection\nrelease readiness impact: ordinary default-on weekly observation remains pending\n```",
       "body_length": 2587,
-      "closed_at": null,
-      "comment_count": 1,
+      "closed_at": "2026-05-18T08:03:58Z",
+      "comment_count": 2,
       "created_at": "2026-05-18T07:36:17Z",
       "labels": [
         "issue-safety:clear",
@@ -24,9 +78,9 @@
         "runtime_detected": false,
         "submission_detected": true
       },
-      "state": "OPEN",
+      "state": "CLOSED",
       "title": "Investigate missing 2026-W20 scheduled weekly output",
-      "updated_at": "2026-05-18T07:36:34Z",
+      "updated_at": "2026-05-18T08:03:58Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/334"
     },
     {
@@ -111,60 +165,6 @@
       "title": "Review Support Unlock Export input handling before release",
       "updated_at": "2026-05-15T16:51:10Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/issues/305"
-    },
-    {
-      "author": "Unjuno",
-      "body": "## Purpose\n\nMany merged or superseded branches remain after the canonical weekly default-on release. This issue tracks a conservative branch cleanup inventory before deleting anything.\n\nDo not delete branches merely because they look old. First classify them by PR state and evidence role.\n\n## Confirmed context\n\nRecent merged PR branches still visible include:\n\n```text\nenable-canonical-weekly-default\nrequire-lab-support-baseline-smoke\nclarify-lab-support-baseline\nclarify-participant-support-baseline\nclarify-support-rank-baseline-policy\ndocument-canary-archive-boundary\nshorten-readme-status-entry\nshorten-weekly-release-gate\nshorten-operator-release-gate\nconsolidate-status-doc-sources\nadd-canonical-status-drift-check\nmark-openai-lab-run-legacy\nadd-workflow-family-map\nadd-cleanup-inventory\nadd-repo-cleanup-standards\nharden-weekly-operator-runbook\nadd-canonical-runner-evidence-guide\ndocument-legacy-weekly-runner-noncanonical\nharden-weekly-canonical-evidence-artifacts\nadd-weekly-canonical-runner-feature-flag\nfix-selected-prompt-workflow-input-env\nadd-selected-prompt-manual-workflow\nadd-selected-prompt-codex-runner-v2\nparameterize-selected-prompt-task-packet-v2\nrecord-policy-agent-canary-11-success\nfix-openai-key-false-positive\nscan-public-bundles-with-gitleaks\nverify-uploaded-public-agent-bundles\nverify-public-agent-run-bundle-contents\nrun-script-check-for-run-records\nrecord-first-canary-007-evidence-only\n```\n\nSome unmerged/superseded request branches also remain. These should be reviewed separately, not deleted in a bulk action without checking PR state.\n\n## Cleanup classification\n\nUse this classification before deletion:\n\n### Safe delete candidates after confirming merged PR\n\n- [ ] Branch has a merged PR.\n- [ ] Branch is not `main`.\n- [ ] Branch is not used by an open PR.\n- [ ] Branch is not referenced by active workflow configuration.\n- [ ] Branch is not an evidence-only branch whose name is needed to navigate historical artifacts.\n\n### Do not delete without extra review\n\n- [ ] Open PR branch.\n- [ ] Unmerged PR branch.\n- [ ] Evidence-only canary branch.\n- [ ] Generated comparison/request branch whose artifacts or PR body are still being investigated.\n- [ ] Any branch used in a pending workflow run.\n\n## Manual UI deletion steps\n\nThis connector cannot safely delete remote branches. Use GitHub UI after classification:\n\n```text\nRepository -> Branches -> filter merged branches -> delete confirmed safe branches\n```\n\nFor each deletion batch, record:\n\n```text\nDeleted branches:\nExcluded branches:\nReason for exclusions:\nRollback expectation:\n```\n\n## Non-goals\n\n- Do not delete `main`.\n- Do not delete open PR branches.\n- Do not delete canary/evidence branches unless their evidence is reachable from docs/run records.\n- Do not delete workflow files or generated snapshots in this cleanup.\n- Do not remove `scripts/openai_lab_run.py` here.",
-      "body_length": 2871,
-      "closed_at": null,
-      "comment_count": 2,
-      "created_at": "2026-05-15T12:42:30Z",
-      "labels": [
-        "issue-safety:clear",
-        "issue-safety:submission-detected"
-      ],
-      "number": 304,
-      "reaction_minus_one_count": 0,
-      "reaction_plus_one_count": 0,
-      "safety": {
-        "authorized_canary": false,
-        "blocked": false,
-        "clear": true,
-        "review": false,
-        "runtime_detected": false,
-        "submission_detected": true
-      },
-      "state": "OPEN",
-      "title": "Inventory stale merged branches before cleanup",
-      "updated_at": "2026-05-15T13:02:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/304"
-    },
-    {
-      "author": "Unjuno",
-      "body": "## Purpose\n\nPR #302 changed `Weekly Auto Run` so eligible weekly implementation candidates use the canonical Docker/Codex selected-prompt runner by default.\n\nThis issue now tracks the safer pre-release verification target first:\n\n```text\nordinary default-on weekly run\n→ support unlock resolved\n→ vote summary PR created\n→ no eligible candidates\n→ no implementation-agent attempt\n→ no Codex call\n```\n\nThe eligible canonical implementation path remains a later release/operation verification target, not a pre-release requirement.\n\n## Current status\n\n```text\ncanonical weekly default: default-on\nDEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true\nlegacy fallback: present and non-canonical\nauto-merge: disabled\nmanual review: required\nrelease state: not publicly launched yet\n```\n\n## Why no-eligible first\n\nThe workflow gates all implementation-agent and Codex steps behind:\n\n```text\nsteps.eligibility.outputs.has_eligible == 'true'\n```\n\nIf the no-change baseline wins or no prompt beats the baseline, the workflow should stop after the vote summary path and report:\n\n```text\nNo eligible candidates. No implementation-agent attempt will be made.\n```\n\nThis verifies default-on weekly operation without intentionally spending an implementation-agent run.\n\n## Phase 1 verification checklist: no-eligible path\n\n- [ ] `Support Unlock Export` completed for the target completed ISO week.\n- [ ] `data/support-unlocks/<week-id>.json` exists and validates.\n- [ ] `Weekly Auto Run` reads the support unlock file before vote collection.\n- [ ] Vote summary PR is created.\n- [ ] Vote summary PR records `Canonical selected-prompt runner: true` or equivalent default-on status in the weekly summary section.\n- [ ] Selection metadata shows `baseline_won: true` or `eligible_count: 0`.\n- [ ] The run logs contain `No eligible candidates. No implementation-agent attempt will be made.`\n- [ ] No implementation PR is created.\n- [ ] No Codex selected-prompt runner step executes.\n- [ ] No implementation secret is required.\n- [ ] Vote summary PR does not modify root lab implementation files.\n- [ ] Auto-merge does not occur.\n- [ ] Manual review remains required.\n\n## Phase 2 verification checklist: eligible canonical path, later only\n\nRun this only after release or when intentionally validating a real eligible prompt.\n\n- [ ] Implementation PR body contains `Runner: codex-cli-selected-prompt-packet-container`.\n- [ ] Implementation PR body contains `Canonical selected-prompt runner: true`.\n- [ ] Changed files are only `lab/index.html`, `lab/style.css`, and/or `lab/app.js`.\n- [ ] Safety check passed before PR creation.\n- [ ] Static site check passed before PR creation.\n- [ ] `weekly-selected-prompt-diagnostics-<run_number>` artifact exists.\n- [ ] `weekly-selected-prompt-public-bundles-<run_number>` artifact exists.\n- [ ] `weekly-selected-prompt-uploaded-bundle-verification-<run_number>` artifact exists.\n- [ ] Public bundle verification passed.\n- [ ] Uploaded bundle verification passed.\n- [ ] Gitleaks finding count is 0.\n- [ ] Auto-merge did not occur.\n- [ ] Manual review remains required.\n\n## Rollback signal\n\nIf default-on operation fails in a way that blocks ordinary weekly operation, set repository variable:\n\n```text\nPROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false\n```\n\nThen open a rollback PR that reverts `DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true` and updates the status docs/tests.\n\n## Non-goals\n\n- Do not force an eligible prompt just to exercise Codex before public release.\n- Do not remove `scripts/openai_lab_run.py` in this issue.\n- Do not delete canary workflows in this issue.\n- Do not enable auto-merge.\n- Do not hand-edit generated snapshots.",
-      "body_length": 3674,
-      "closed_at": null,
-      "comment_count": 1,
-      "created_at": "2026-05-15T12:37:54Z",
-      "labels": [
-        "issue-safety:clear",
-        "issue-safety:submission-detected"
-      ],
-      "number": 303,
-      "reaction_minus_one_count": 0,
-      "reaction_plus_one_count": 0,
-      "safety": {
-        "authorized_canary": false,
-        "blocked": false,
-        "clear": true,
-        "review": false,
-        "runtime_detected": false,
-        "submission_detected": true
-      },
-      "state": "OPEN",
-      "title": "Verify first ordinary canonical weekly default-on no-eligible run",
-      "updated_at": "2026-05-15T12:58:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/303"
     },
     {
       "author": "Unjuno",
@@ -733,463 +733,712 @@
   ],
   "pull_requests": [
     {
-      "additions": 41,
+      "additions": 46,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/release-readiness-review.md` from pending to PASS for the ordinary default-on weekly no-eligible observation.\n- Record W20 evidence: `data/support-unlocks/2026-W20.json`, PR #333, `runs/week-2026-W20-vote-summary.md`, `baseline_won: true`, `eligible_count: 0`, and no implementation-agent attempt.\n- Update cleanup docs so they no longer describe ordinary default-on weekly observation as pending.\n\n## Scope\n- `docs/release-readiness-review.md`\n- `docs/root-folder-audit.md`\n- `docs/script-dependency-map.md`\n\n## Why\nThe W20 ordinary default-on weekly no-eligible run has now been observed and merged through PR #333. The release readiness docs should reflect the current state.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.\n- No claim that the next natural eligible weekly implementation path is production-proven.",
+      "body_length": 950,
+      "changed_files": 3,
+      "closed_at": "2026-05-18T11:45:55Z",
+      "comment_count": 0,
+      "created_at": "2026-05-18T11:44:24Z",
+      "deletions": 22,
+      "files": [
+        {
+          "additions": 26,
+          "deletions": 13,
+          "path": "docs/release-readiness-review.md"
+        },
+        {
+          "additions": 6,
+          "deletions": 6,
+          "path": "docs/root-folder-audit.md"
+        },
+        {
+          "additions": 14,
+          "deletions": 3,
+          "path": "docs/script-dependency-map.md"
+        }
+      ],
+      "head_ref_name": "record-w20-observation-pass-v2",
+      "head_ref_oid": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
+      "labels": [],
+      "merge_commit_oid": "8bb17299257fa7928e5aef93fcffa7097ebabfdd",
+      "merged_at": "2026-05-18T11:45:55Z",
+      "merged_by": "Unjuno",
+      "number": 335,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Record W20 ordinary weekly observation pass",
+      "updated_at": "2026-05-18T11:45:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/335"
+    },
+    {
+      "additions": 1,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Final disposition\n\nClosed as evidence-only. Not adopted into `main`.\n\nReason:\n\n```text\n- The canonical Docker/Codex canary path completed and produced this PR.\n- The PR changed only `lab/index.html` by adding one canary pill.\n- The public artifacts were uploaded.\n- After later evidence/publication fixes landed, this PR became stale relative to current `main`.\n- Force-updating the branch would weaken the original Codex-generated head commit evidence.\n- The visible canary pill is not needed in the accepted live lab.\n```\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `7f0a34f763b76a3a4ccb2a05890d1edcb7c0e643`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Public evidence\n\n- Workflow run: `25670780249`\n- Redacted public agent run bundle artifact: `codex-policy-agent-canary-public-bundle-7`\n- Public bundle artifact id: `6918707781`\n- Observation summary files expected in bundle: `observation-summary.md`, `observation-summary.json`\n- Sanitized diagnostic logs directory expected in bundle: `sanitized/`\n- Sanitized exposed reasoning / CoT-like trace directory expected in bundle: `reasoning-traces/`\n- Public run log artifact: `codex-policy-agent-canary-public-log-7`\n- Public log artifact id: `6918708759`\n- Internal diagnostics artifact: `codex-policy-agent-canary-diagnostics-7`\n- Internal diagnostics artifact id: `6918708255`\n\n## Reasoning trace policy\n\nIf the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Diagnostics limitation\n\nArtifact existence and metadata were verified. ZIP contents were not inspected in this review environment, so this PR does not claim that `observation-summary.md`, `sanitized/`, or `reasoning-traces/` contents were manually inspected.\n\n## Merge policy\n\nNot merged. Evidence-only canary result.",
+      "body_length": 2764,
+      "changed_files": 1,
+      "closed_at": "2026-05-11T13:16:25Z",
+      "comment_count": 1,
+      "created_at": "2026-05-11T12:43:25Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 0,
+          "path": "lab/index.html"
+        }
+      ],
+      "head_ref_name": "codex-policy-agent-canary-007-7",
+      "head_ref_oid": "b00a5852d1d4972c0d0207dea4462644d72dab0a",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 263,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Run Codex policy-enforced agent canary",
+      "updated_at": "2026-05-18T07:57:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/263"
+    },
+    {
+      "additions": 27,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Closed intentionally.\n\nThis PR was created by the `First Canary Run` path, which uses the Python SDK / Responses API runner.\n\nThe canonical production implementation path for Prompt Vote Lab is now defined as:\n\n```text\nDocker-mounted workdir-only + Codex CLI\n```\n\nTherefore this PR is useful as evidence that the non-canonical API canary path can produce a small lab diff, but it must not be merged or counted as the canonical eligible implementation E2E verification.\n\nRequired next verification path:\n\n```text\nCodex Policy Agent Canary Run\n→ codex-cli-policy-enforced-agent-container\n→ docker-mounted-workdir-only\n→ lab/index.html, lab/style.css, lab/app.js only\n→ safety-check\n→ static-site-check\n→ PR creation\n```\n",
+      "body_length": 718,
+      "changed_files": 2,
+      "closed_at": "2026-05-11T10:34:14Z",
+      "comment_count": 0,
+      "created_at": "2026-05-11T10:21:30Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 5,
+          "deletions": 0,
+          "path": "lab/index.html"
+        },
+        {
+          "additions": 22,
+          "deletions": 0,
+          "path": "lab/style.css"
+        }
+      ],
+      "head_ref_name": "first-canary-001-2",
+      "head_ref_oid": "50a99900a0fafcfe0aa6fd3c11b8f3fc03fa8113",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 258,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Run fixed first canary",
+      "updated_at": "2026-05-18T07:57:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/258"
+    },
+    {
+      "additions": 2,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `062e20bc8d6a06223c29a59e552608f0b60dcfc1`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Public evidence\n\n- Redacted public agent run bundle artifact: `codex-policy-agent-canary-public-bundle-11`\n- Public bundle content verification report: `public-agent-run-bundle-verification.json` inside diagnostics\n- Public bundle Gitleaks report: `public-agent-run-bundle-gitleaks.json` inside diagnostics\n- Uploaded public bundle verification report: `public-agent-run-bundle-uploaded-verification.json` inside diagnostics\n- Uploaded public bundle Gitleaks report: `public-agent-run-bundle-uploaded-gitleaks.json` inside diagnostics\n- Observation summary files: `observation-summary.md`, `observation-summary.json`\n- Sanitized diagnostic logs directory: `sanitized/`\n- Sanitized exposed reasoning / CoT-like trace directory: `reasoning-traces/`\n- Public run log artifact: `codex-policy-agent-canary-public-log-11`\n- Internal diagnostics artifact: `codex-policy-agent-canary-diagnostics-11`\n\n## Reasoning trace policy\n\nIf the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for mount, policy, Codex event, diff, public bundle pre-upload verification, public bundle Gitleaks scan, uploaded artifact verification, and uploaded artifact Gitleaks scan analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, scanned for secret-like strings, and include exposed reasoning traces when present.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
+      "body_length": 2604,
+      "changed_files": 1,
+      "closed_at": "2026-05-12T11:19:31Z",
+      "comment_count": 1,
+      "created_at": "2026-05-12T09:17:12Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "lab/index.html"
+        }
+      ],
+      "head_ref_name": "codex-policy-agent-canary-007-11",
+      "head_ref_oid": "ff170d5372fb87088ad805547e888e673fcc9c40",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 272,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Run Codex policy-enforced agent canary",
+      "updated_at": "2026-05-18T07:57:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/272"
+    },
+    {
+      "additions": 14,
       "author": "github-actions",
       "base_ref_name": "main",
       "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
       "body_length": 77,
       "changed_files": 1,
-      "closed_at": "2026-05-18T07:45:06Z",
-      "comment_count": 0,
-      "created_at": "2026-05-18T04:44:53Z",
-      "deletions": 0,
+      "closed_at": "2026-05-14T12:18:28Z",
+      "comment_count": 1,
+      "created_at": "2026-05-14T11:44:44Z",
+      "deletions": 7,
       "files": [
         {
-          "additions": 41,
-          "deletions": 0,
-          "path": "runs/week-2026-W20-vote-summary.md"
+          "additions": 14,
+          "deletions": 7,
+          "path": "runs/week-2026-W19-vote-summary.md"
         }
       ],
-      "head_ref_name": "weekly-auto-summary-week-2026-W20-8",
-      "head_ref_oid": "e29210964fc501acaa2ab9894ba1356da9f80039",
+      "head_ref_name": "weekly-auto-summary-week-2026-W19-7",
+      "head_ref_oid": "4674c5ae077ee71723172d5c7103c586fe2f9925",
       "labels": [],
-      "merge_commit_oid": "9f689938ae718e36130f5316b7e5975f55b81546",
-      "merged_at": "2026-05-18T07:45:06Z",
-      "merged_by": "Unjuno",
-      "number": 333,
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 283,
       "reaction_plus_one_count": 0,
       "review_decision": null,
-      "state": "MERGED",
-      "title": "Record auto vote summary for week-2026-W20",
-      "updated_at": "2026-05-18T07:45:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/333"
+      "state": "CLOSED",
+      "title": "Record auto vote summary for week-2026-W19",
+      "updated_at": "2026-05-18T07:57:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/283"
     },
     {
-      "additions": 23,
-      "author": "Unjuno",
+      "additions": 4,
+      "author": "github-actions",
       "base_ref_name": "main",
-      "body": "## Summary\n- Add related-document links to `docs/root-folder-audit.md`.\n- Add related-document links to `docs/script-dependency-map.md`.\n- Improve cleanup-doc reachability without updating the large docs index.\n\n## Why\n`docs/README.md` full updates have been brittle in this environment. This small PR improves discoverability of the new cleanup and document-format docs by linking the cleanup documents to each other.\n\n## Scope\n- `docs/root-folder-audit.md`\n- `docs/script-dependency-map.md`\n\n## Non-goals\n- No README rewrite.\n- No docs format conversion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
-      "body_length": 667,
-      "changed_files": 2,
-      "closed_at": "2026-05-17T13:32:08Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T13:30:36Z",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": "2026-05-14T12:10:52Z",
+      "comment_count": 1,
+      "created_at": "2026-05-14T11:31:47Z",
       "deletions": 0,
       "files": [
         {
-          "additions": 12,
+          "additions": 4,
           "deletions": 0,
-          "path": "docs/root-folder-audit.md"
+          "path": "runs/week-2026-W19-vote-summary.md"
+        }
+      ],
+      "head_ref_name": "weekly-auto-summary-week-2026-W19-6",
+      "head_ref_oid": "bf3dce787b7965a325676c95b2c47821fd946819",
+      "labels": [],
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 281,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "CLOSED",
+      "title": "Record auto vote summary for week-2026-W19",
+      "updated_at": "2026-05-18T07:57:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/281"
+    },
+    {
+      "additions": 6,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Implements the selected ranked prompt candidate with the implementation agent.\n\n## Candidate\n\n- Week: week-2026-W19\n- Rank: 1\n- Issue: #282\n- Votes: 1\n- Run reason: normal-weekly-run\n- Inherited lab base: `2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395`\n- Runner: `codex-cli-selected-prompt-packet-container`\n- Canonical selected-prompt runner: `true`\n- Implementation model: `gpt-5.4-nano`\n- Model policy: `rules/model-policy-v1.1.md`\n- Agent-run policy: `rules/agent-run-policy-v1.0.md`\n- Internal checks: `safety-check` and `static-site-check` passed before PR creation\n- Created by: `Weekly Auto Run`\n\n## Selected prompt\n\nAdd a tiny static note to the lab page saying the canonical weekly runner can be verified with public evidence. Keep the change minimal and accessible.\n\n## Implementation summary\n\nImplementation summary was not written.\n\n## Evidence\n\nWhen the canonical selected-prompt runner is enabled, weekly diagnostics and public bundles are uploaded as workflow artifacts.\n\n## Merge policy\n\nRank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates. Merge remains manual. Only merged PRs become the inherited lab state for later weeks.",
+      "body_length": 1172,
+      "changed_files": 2,
+      "closed_at": "2026-05-14T12:26:33Z",
+      "comment_count": 2,
+      "created_at": "2026-05-14T11:47:05Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 0,
+          "path": "lab/index.html"
         },
         {
-          "additions": 11,
+          "additions": 5,
           "deletions": 0,
-          "path": "docs/script-dependency-map.md"
+          "path": "lab/style.css"
         }
       ],
-      "head_ref_name": "link-cleanup-docs-v2",
-      "head_ref_oid": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "head_ref_name": "codex-lab-week-2026-W19-rank-1-7",
+      "head_ref_oid": "b300af776386079f89f417f94c160bc7b60c29bf",
       "labels": [],
-      "merge_commit_oid": "2d37d0bce8d03d5421c7a26bc5828b1f7a131d80",
-      "merged_at": "2026-05-17T13:32:08Z",
-      "merged_by": "Unjuno",
-      "number": 332,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Link cleanup documentation",
-      "updated_at": "2026-05-17T13:32:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/332"
-    },
-    {
-      "additions": 119,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Add `docs/document-format-policy.md`.\n- Record the current decision: use `.md`, not `.mdx`, for participant-facing and maintainer-facing docs.\n- Require a separate build-system/security proposal before adopting MDX.\n\n## Why\nThe project is currently GitHub-native and static: GitHub-rendered Markdown, GitHub Pages static files, no docs build step, no React documentation runtime, and no MDX compiler. MDX would add build and security surface without addressing the current release blockers.\n\n## Scope\n- `docs/document-format-policy.md`\n\n## Non-goals\n- No conversion from `.md` to `.mdx`.\n- No docs build system.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
-      "body_length": 735,
-      "changed_files": 1,
-      "closed_at": "2026-05-17T13:18:32Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T13:13:35Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 119,
-          "deletions": 0,
-          "path": "docs/document-format-policy.md"
-        }
-      ],
-      "head_ref_name": "add-doc-format-policy-v2",
-      "head_ref_oid": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
-      "labels": [],
-      "merge_commit_oid": "6a9d37c840dc85aef0022fe86fdedaba23ea9186",
-      "merged_at": "2026-05-17T13:18:32Z",
-      "merged_by": "Unjuno",
-      "number": 331,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add document format policy",
-      "updated_at": "2026-05-17T13:18:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/331"
-    },
-    {
-      "additions": 133,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Add `docs/script-dependency-map.md` to classify important script families before cleanup.\n- Record active anchors for canonical runner, weekly selection, public evidence, issue safety, and legacy fallback.\n- Define retirement prerequisites for any future script cleanup.\n\n## Scope\n- `docs/script-dependency-map.md`\n\n## Current finding\nScript cleanup is not ready for broad retirement. The repository needs ordinary default-on weekly observation before legacy or historical helpers move toward retirement.\n\n## Non-goals\n- No script deletion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
-      "body_length": 694,
-      "changed_files": 1,
-      "closed_at": "2026-05-17T12:38:12Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T12:35:54Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 133,
-          "deletions": 0,
-          "path": "docs/script-dependency-map.md"
-        }
-      ],
-      "head_ref_name": "add-script-dependency-map-v2",
-      "head_ref_oid": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
-      "labels": [],
-      "merge_commit_oid": "97b3de605ba242878660fe300aa90401a6f7c783",
-      "merged_at": "2026-05-17T12:38:12Z",
-      "merged_by": "Unjuno",
-      "number": 330,
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 284,
       "reaction_plus_one_count": 0,
       "review_decision": null,
-      "state": "MERGED",
-      "title": "Add script dependency map",
-      "updated_at": "2026-05-17T12:38:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/330"
+      "state": "CLOSED",
+      "title": "Agent lab run for week-2026-W19 rank 1",
+      "updated_at": "2026-05-18T07:57:03Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/284"
     },
     {
-      "additions": 93,
+      "additions": 110,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Add `docs/root-folder-audit.md` to classify root-level folders before cleanup.\n- Record that bulk cleanup is not recommended yet; cleanup should be staged by gates.\n- Add maintainer questions for historical workflows, docs, formal layer, live previews, run records, scripts, and fixtures.\n- Link the audit from `docs/README.md`.\n\n## Scope\n- `docs/root-folder-audit.md`\n- `docs/README.md`\n\n## Current finding\nNo top-level folder is obviously misplaced for the current static GitHub Pages experiment. The repository is evidence-heavy, not automatically messy. Cleanup should follow explicit gates rather than broad deletion.\n\n## Non-goals\n- No deletion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
-      "body_length": 805,
-      "changed_files": 2,
-      "closed_at": "2026-05-17T12:24:33Z",
+      "body": "## Summary\n- Pass Support Unlock Export manual inputs through step environment variables before Python reads them.\n- Pass Weekly Issue Finalizer manual inputs through step environment variables before shell/Python uses them.\n- Strengthen contract tests so workflow form inputs are not interpolated directly inside `run:` blocks.\n\n## Fixes\n- Fixes #305\n- Fixes #306\n\n## Scope\n- `.github/workflows/support-unlock-export.yml`\n- `.github/workflows/weekly-issue-finalizer.yml`\n- `scripts/test_support_unlock_workflow_contract.py`\n- `scripts/test_weekly_issue_finalizer_workflow_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No support threshold change.\n- No auto-merge.\n- No legacy runner removal.\n\n## Risk reduction\nManual workflow form inputs now follow the safer repository pattern:\n\n```text\nworkflow input -> step env -> script reads env\n```\n\nThis keeps operator-provided text out of executable script bodies while preserving existing behavior.",
+      "body_length": 1005,
+      "changed_files": 4,
+      "closed_at": "2026-05-15T16:51:09Z",
       "comment_count": 0,
-      "created_at": "2026-05-17T12:21:29Z",
-      "deletions": 23,
+      "created_at": "2026-05-15T16:49:03Z",
+      "deletions": 10,
       "files": [
         {
-          "additions": 26,
-          "deletions": 23,
-          "path": "docs/README.md"
+          "additions": 9,
+          "deletions": 5,
+          "path": ".github/workflows/support-unlock-export.yml"
         },
         {
-          "additions": 67,
-          "deletions": 0,
-          "path": "docs/root-folder-audit.md"
-        }
-      ],
-      "head_ref_name": "add-root-folder-audit-v2",
-      "head_ref_oid": "d475847855d639bf40fecf6fe43ab69aeba102ec",
-      "labels": [],
-      "merge_commit_oid": "b24bfa8c48dea854a827ea701a8d7ff63f832e57",
-      "merged_at": "2026-05-17T12:24:33Z",
-      "merged_by": "Unjuno",
-      "number": 329,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add root folder audit",
-      "updated_at": "2026-05-17T12:24:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/329"
-    },
-    {
-      "additions": 332,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Add `docs/release-readiness-review.md` as a release-facing static review of security posture, participant journey, and live preview status.\n- Link the new review from `docs/README.md`.\n- Record the current judgment: static security posture PASS with remaining operational observation, participant journey PASS, live preview PASS, and ordinary default-on weekly observation still pending.\n\n## Scope\n- `docs/release-readiness-review.md`\n- `docs/README.md`\n\n## Current review outcome\n- Security: static boundary is strong for the current public experiment, with ordinary weekly observation still pending.\n- User journey: root landing, participant guide, lab navigation, Issues, runs, history, and public results provide a coherent path.\n- Live preview: `/lab/`, comparison outputs, comparison dashboard, and history are linked from the lab page.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy fallback removal.",
-      "body_length": 1027,
-      "changed_files": 2,
-      "closed_at": "2026-05-17T11:48:56Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T11:45:30Z",
-      "deletions": 23,
-      "files": [
-        {
-          "additions": 43,
-          "deletions": 23,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 289,
-          "deletions": 0,
-          "path": "docs/release-readiness-review.md"
-        }
-      ],
-      "head_ref_name": "add-release-readiness-review-v2",
-      "head_ref_oid": "37346fa4a6ab760749314b236990dde90e869eb5",
-      "labels": [],
-      "merge_commit_oid": "d000221362332ae762fe1832e6df2ab412281ec9",
-      "merged_at": "2026-05-17T11:48:56Z",
-      "merged_by": "Unjuno",
-      "number": 328,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Add release readiness review",
-      "updated_at": "2026-05-17T11:48:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/328"
-    },
-    {
-      "additions": 34,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Extend the existing `scripts/test_script_check_workflow_contract.py` contract test to cover the Pages smoke check script and workflow.\n- Require the current landing-page baseline copy: `20-vote baseline`.\n- Forbid the stale `20 virtual votes` phrase in the Pages smoke script, workflow, and root landing page.\n\n## Why\nPR #326 fixed the scheduled Pages smoke check expectation, but the new standalone contract test was not wired into `script-check.yml`. Rather than changing the workflow, this PR folds the Pages smoke invariants into an existing contract test that already runs in Script Check.\n\n## Scope\n- `scripts/test_script_check_workflow_contract.py`\n\n## Non-goals\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model/runner/policy change.\n- No legacy fallback change.\n- No auto-merge.",
-      "body_length": 845,
-      "changed_files": 1,
-      "closed_at": "2026-05-17T08:47:30Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T08:45:16Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 34,
-          "deletions": 0,
-          "path": "scripts/test_script_check_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "wire-pages-smoke-contract-through-existing-test",
-      "head_ref_oid": "747dbc3993f30a8e350bd407874e0d3fe042d213",
-      "labels": [],
-      "merge_commit_oid": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
-      "merged_at": "2026-05-17T08:47:30Z",
-      "merged_by": "Unjuno",
-      "number": 327,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Cover Pages smoke copy in script-check contract",
-      "updated_at": "2026-05-17T08:47:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/327"
-    },
-    {
-      "additions": 78,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Update `scripts/pages-smoke-check.py` to check the current landing-page baseline copy: `20-vote baseline`.\n- Remove the stale `20 virtual votes` expectation that caused the scheduled Pages smoke check to fail.\n- Add a small contract test documenting the smoke-check expectations and forbidding the stale phrase.\n\n## Why\nThe published root page still contains the intended Prompt Vote Lab and baseline messaging, but the scheduled smoke check was asserting an old LP phrase. The failure was therefore a stale smoke-test expectation, not a broken published page.\n\n## Scope\n- `scripts/pages-smoke-check.py`\n- `scripts/test_pages_smoke_check_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No workflow behavior change.\n- No generated snapshot edit.\n- No model/runner/policy change.\n- No legacy fallback change.\n- No auto-merge.\n\n## Note\nA direct `script-check.yml` wiring update was intentionally deferred because workflow full-file replacement was blocked by safety filtering. This PR still fixes the failing scheduled check path itself; the added contract test is available for explicit future wiring in a separate workflow PR if needed.",
-      "body_length": 1161,
-      "changed_files": 2,
-      "closed_at": "2026-05-17T08:37:15Z",
-      "comment_count": 0,
-      "created_at": "2026-05-17T08:34:21Z",
-      "deletions": 3,
-      "files": [
-        {
-          "additions": 16,
+          "additions": 5,
           "deletions": 3,
-          "path": "scripts/pages-smoke-check.py"
+          "path": ".github/workflows/weekly-issue-finalizer.yml"
         },
         {
-          "additions": 62,
-          "deletions": 0,
-          "path": "scripts/test_pages_smoke_check_contract.py"
+          "additions": 49,
+          "deletions": 1,
+          "path": "scripts/test_support_unlock_workflow_contract.py"
+        },
+        {
+          "additions": 47,
+          "deletions": 1,
+          "path": "scripts/test_weekly_issue_finalizer_workflow_contract.py"
         }
       ],
-      "head_ref_name": "fix-pages-smoke-baseline-copy",
-      "head_ref_oid": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
+      "head_ref_name": "harden-operator-workflow-inputs",
+      "head_ref_oid": "172f5f091f395725394558a9c368765d314ce3d4",
       "labels": [],
-      "merge_commit_oid": "028a124187b2d8474f63aa69897ac924774c4515",
-      "merged_at": "2026-05-17T08:37:15Z",
+      "merge_commit_oid": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
+      "merged_at": "2026-05-15T16:51:09Z",
       "merged_by": "Unjuno",
-      "number": 326,
-      "reaction_plus_one_count": 1,
+      "number": 307,
+      "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Fix Pages smoke baseline copy",
-      "updated_at": "2026-05-17T08:37:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/326"
+      "title": "Harden operator workflow input handling",
+      "updated_at": "2026-05-18T07:57:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/307"
     },
     {
-      "additions": 189,
+      "additions": 2,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Define the explicit legacy fallback removal gate before any deletion work.\n- Mark legacy fallback removal as not approved until the gate passes.\n- Add operator-facing removal criteria for `scripts/openai_lab_run.py`.\n- Extend contract tests so the gate, no-eligible observation requirements, manual review, auto-merge disabled state, rollback plan, and maintainer approval remain documented.\n\n## Scope\n- `docs/canonical-status-drift-check.md`\n- `docs/workflow-family-map.md`\n- `docs/operator-runbook.md`\n- `scripts/test_canonical_status_drift.py`\n- `scripts/test_workflow_family_map.py`\n- `scripts/test_weekly_operator_docs.py`\n\n## Non-goals\n- No legacy runner removal.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model, retry, fallback-policy, or token-cap change.\n- No auto-merge.\n\n## Removal gate fixed by this PR\nA later removal PR must record, at minimum:\n\n```text\nordinary default-on weekly no-eligible run observed\nvote summary PR created\nimplementation PR: none for the no-eligible run\nno implementation-agent attempt made for the no-eligible run\nno Codex/API call made for the no-eligible run\nlegacy API/SDK runner not reached for the no-eligible run\neligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan\ncanonical evidence artifacts remain verified\nmanual review remains required\nauto-merge remains disabled\nrollback plan exists\npublic docs no longer cite legacy fallback as an active requirement\nmaintainer explicitly approves removal\n```\n\n## Notes\nThis PR intentionally keeps `scripts/openai_lab_run.py` present, non-canonical, and gated. It only defines when a later removal PR may be considered.",
-      "body_length": 1745,
-      "changed_files": 6,
-      "closed_at": "2026-05-17T08:21:11Z",
+      "body": "## Summary\n- Align the root README with `rules/static-ui-v1.0.md` and `scripts/static-site-check.sh`.\n- Clarify that `eval` remains forbidden while controlled `new Function(...)` is allowed only for fixed repository-authored logic and must not use user-controlled input.\n- Restore the final newline removed by the previous README-only update.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.",
+      "body_length": 532,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:33:38Z",
       "comment_count": 0,
-      "created_at": "2026-05-17T07:59:47Z",
+      "created_at": "2026-05-15T17:31:44Z",
       "deletions": 2,
       "files": [
         {
-          "additions": 24,
-          "deletions": 0,
-          "path": "docs/canonical-status-drift-check.md"
-        },
+          "additions": 2,
+          "deletions": 2,
+          "path": "README.md"
+        }
+      ],
+      "head_ref_name": "align-readme-static-ui-function-policy",
+      "head_ref_oid": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
+      "labels": [],
+      "merge_commit_oid": "e03cec7a9939265b86a649220f551d622561ad32",
+      "merged_at": "2026-05-15T17:33:38Z",
+      "merged_by": "Unjuno",
+      "number": 309,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Align root README with static UI function policy",
+      "updated_at": "2026-05-18T07:56:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/309"
+    },
+    {
+      "additions": 4,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Clarify the root README weekly automation status after canonical weekly default-on release.\n- Distinguish the verified canonical canary/default-on state from the still-pending ordinary post-default-on operational observation.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n\n## Reason\nThe root README still described the eligible implementation-agent PR path as needing live E2E verification without mentioning that the canonical selected-prompt canary has passed and weekly canonical execution is now default-on. The new wording points readers at the correct operational status while keeping the remaining ordinary-run observation explicit.",
+      "body_length": 796,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:03:09Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T16:58:47Z",
+      "deletions": 2,
+      "files": [
         {
-          "additions": 25,
-          "deletions": 0,
-          "path": "docs/operator-runbook.md"
-        },
+          "additions": 4,
+          "deletions": 2,
+          "path": "README.md"
+        }
+      ],
+      "head_ref_name": "clarify-root-readme-weekly-status",
+      "head_ref_oid": "973b414ebe99df6f4ec581552e29913778f8eaf0",
+      "labels": [],
+      "merge_commit_oid": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
+      "merged_at": "2026-05-15T17:03:09Z",
+      "merged_by": "Unjuno",
+      "number": 308,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify root README weekly automation status",
+      "updated_at": "2026-05-18T07:56:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/308"
+    },
+    {
+      "additions": 2,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `rules/model-policy-v1.1.md` to match the current canonical weekly default-on status.\n- Replace the outdated eligible-path verification sentence with the current state: canonical selected-prompt canary passed, weekly canonical runner default-on, first ordinary post-default-on run still pending observation.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 538,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:43:34Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T17:40:59Z",
+      "deletions": 2,
+      "files": [
         {
-          "additions": 43,
+          "additions": 2,
+          "deletions": 2,
+          "path": "rules/model-policy-v1.1.md"
+        }
+      ],
+      "head_ref_name": "clarify-model-policy-verification-status",
+      "head_ref_oid": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
+      "labels": [],
+      "merge_commit_oid": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
+      "merged_at": "2026-05-15T17:43:34Z",
+      "merged_by": "Unjuno",
+      "number": 310,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify model policy verification status",
+      "updated_at": "2026-05-18T07:56:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/310"
+    },
+    {
+      "additions": 71,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add an explicit repository-variable gate to weak historical Codex canary workflows.\n- Document that those workflows remain as historical evidence, but should not run accidentally before release.\n- Strengthen the workflow-family contract test so those weak historical canaries must stay gated.\n\n## Gate\n\n```text\nALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true\n```\n\n## Gated workflows\n- `.github/workflows/codex-first-canary-run.yml`\n- `.github/workflows/codex-isolated-3file-canary-run.yml`\n- `.github/workflows/codex-isolated-3file-relaxed-canary-run.yml`\n- `.github/workflows/codex-agent-observed-canary-run.yml`\n\n## Why\nThese workflows are historical evidence surfaces and should not be deleted, but they include older workspace-write or relaxed-sandbox experiments that are weaker than the current canonical selected-prompt boundary.\n\n## Fixes\n- Addresses #312 with Option C.\n\n## Non-goals\n- No workflow deletion.\n- No run record or generated evidence deletion.\n- No canonical weekly default-on change.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1108,
+      "changed_files": 6,
+      "closed_at": "2026-05-15T18:59:48Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T18:58:47Z",
+      "deletions": 12,
+      "files": [
+        {
+          "additions": 2,
           "deletions": 1,
+          "path": ".github/workflows/codex-agent-observed-canary-run.yml"
+        },
+        {
+          "additions": 2,
+          "deletions": 1,
+          "path": ".github/workflows/codex-first-canary-run.yml"
+        },
+        {
+          "additions": 2,
+          "deletions": 1,
+          "path": ".github/workflows/codex-isolated-3file-canary-run.yml"
+        },
+        {
+          "additions": 2,
+          "deletions": 1,
+          "path": ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
+        },
+        {
+          "additions": 35,
+          "deletions": 6,
           "path": "docs/workflow-family-map.md"
         },
         {
           "additions": 28,
-          "deletions": 0,
-          "path": "scripts/test_canonical_status_drift.py"
-        },
-        {
-          "additions": 37,
-          "deletions": 0,
-          "path": "scripts/test_weekly_operator_docs.py"
-        },
-        {
-          "additions": 32,
-          "deletions": 1,
+          "deletions": 2,
           "path": "scripts/test_workflow_family_map.py"
         }
       ],
-      "head_ref_name": "define-legacy-fallback-removal-gate",
-      "head_ref_oid": "ebf4f4b164a3b9ac80e3298b5cd1484ce8f33b5d",
+      "head_ref_name": "gate-weak-historical-canaries",
+      "head_ref_oid": "e0aea41e2c8bac82f1b31a57a6cd44408b2429d1",
       "labels": [],
-      "merge_commit_oid": "94384a1eefd437581dfd6dda4ae00e127a935d3f",
-      "merged_at": "2026-05-17T08:21:11Z",
+      "merge_commit_oid": "28cea6b6f3289874b39a117c0361f20fe5feb9fb",
+      "merged_at": "2026-05-15T18:59:48Z",
       "merged_by": "Unjuno",
-      "number": 325,
-      "reaction_plus_one_count": 0,
+      "number": 313,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Define legacy fallback removal gate",
-      "updated_at": "2026-05-17T08:21:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/325"
+      "title": "Gate weak historical canary workflows",
+      "updated_at": "2026-05-18T07:56:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/313"
     },
     {
-      "additions": 76,
+      "additions": 3,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Document that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone must not spend a legacy API/SDK attempt.\n- Add the required downstream legacy fallback gate to weekly and operator docs: `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`.\n- Update rollback cleanup instructions to remove both temporary overrides.\n- Replace the old `MAX_OUTPUT_TOKENS` stabilization wording with the current `output_token_cap_enforced: false` status.\n- Update `scripts/test_weekly_operator_docs.py` to keep this wording fixed.\n\n## Scope\n- `docs/weekly-automation.md`\n- `docs/operator-runbook.md`\n- `scripts/test_weekly_operator_docs.py`\n\n## Why\nThe legacy OpenAI/API runner is now protected by a downstream gate. Operator-facing docs should not imply that the weekly feature flag alone authorizes a legacy API/SDK run, and should not treat old output-token cap wording as an active canonical runtime control.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 1156,
-      "changed_files": 3,
-      "closed_at": "2026-05-16T15:37:29Z",
+      "body": "## Summary\n- Update `docs/experiment-model.md` from the historical `model-policy-v1.0` / `gpt-5-nano` reference to the active `model-policy-v1.1` / `gpt-5.4-nano` implementation condition.\n\n## Scope\n- `docs/experiment-model.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 397,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T17:55:25Z",
       "comment_count": 0,
-      "created_at": "2026-05-16T15:35:34Z",
-      "deletions": 22,
+      "created_at": "2026-05-15T17:52:54Z",
+      "deletions": 3,
       "files": [
         {
-          "additions": 41,
-          "deletions": 18,
-          "path": "docs/operator-runbook.md"
+          "additions": 3,
+          "deletions": 3,
+          "path": "docs/experiment-model.md"
+        }
+      ],
+      "head_ref_name": "update-experiment-model-active-model-policy",
+      "head_ref_oid": "d0213fe295e203ce98ddb72f173c0a003351596a",
+      "labels": [],
+      "merge_commit_oid": "31fca5c88d2f81e92bc059c1c71a122a6c0615bc",
+      "merged_at": "2026-05-15T17:55:25Z",
+      "merged_by": "Unjuno",
+      "number": 311,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update experiment model active model policy reference",
+      "updated_at": "2026-05-18T07:56:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/311"
+    },
+    {
+      "additions": 140,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Pass Evidence Pipeline Dry Run manual inputs through job environment variables before shell steps consume them.\n- Add a workflow contract test that rejects direct workflow input interpolation inside `run:` blocks.\n- Register the new contract test in Script Check.\n\n## Scope\n- `.github/workflows/evidence-pipeline-dry-run.yml`\n- `.github/workflows/script-check.yml`\n- `scripts/test_evidence_pipeline_workflow_contract.py`\n\n## Risk reduction\nThis workflow is read-only and does not run Codex, but it still accepts manual workflow form input. The input handling now follows the same safer pattern used by other operator workflows:\n\n```text\nworkflow input -> job env -> shell reads env\n```\n\n## Non-goals\n- No write permission added.\n- No PR creation.\n- No generated snapshot commit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 885,
+      "changed_files": 3,
+      "closed_at": "2026-05-15T20:18:37Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T20:07:13Z",
+      "deletions": 10,
+      "files": [
+        {
+          "additions": 14,
+          "deletions": 9,
+          "path": ".github/workflows/evidence-pipeline-dry-run.yml"
+        },
+        {
+          "additions": 5,
+          "deletions": 1,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 121,
+          "deletions": 0,
+          "path": "scripts/test_evidence_pipeline_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "harden-evidence-pipeline-inputs",
+      "head_ref_oid": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "labels": [],
+      "merge_commit_oid": "7e29a340e172c05bf227a046239e654689b1f959",
+      "merged_at": "2026-05-15T20:18:37Z",
+      "merged_by": "Unjuno",
+      "number": 314,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Harden evidence pipeline dry-run inputs",
+      "updated_at": "2026-05-18T07:56:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/314"
+    },
+    {
+      "additions": 4,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/automation-map.md` workflow status labels to match the current release state.\n- Clarify that `weekly-auto-run.yml` is canonical default-on with first ordinary post-default-on observation still pending.\n- Clarify that `support-unlock-export.yml` and `evidence-pipeline-dry-run.yml` now use hardened operator input handling.\n\n## Scope\n- `docs/automation-map.md`\n\n## Non-goals\n- No workflow change.\n- No source-of-truth status change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 581,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T20:39:25Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T20:32:52Z",
+      "deletions": 4,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 4,
+          "path": "docs/automation-map.md"
+        }
+      ],
+      "head_ref_name": "clarify-automation-map-current-status",
+      "head_ref_oid": "e155e0ce4eb12c690d78faf2016c4247f914a021",
+      "labels": [],
+      "merge_commit_oid": "7576cda1f505729e22c4177b9513a1fefdee0b1d",
+      "merged_at": "2026-05-15T20:39:25Z",
+      "merged_by": "Unjuno",
+      "number": 315,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Clarify automation map current workflow status",
+      "updated_at": "2026-05-18T07:56:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/315"
+    },
+    {
+      "additions": 7,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Fix the manual support unlock verification example so the ISO week id matches the date window.\n- Use the existing `2026-W19` window and output path consistently.\n- Mention the public support unlock privacy/schema test in the CI contract section.\n\n## Scope\n- `docs/support-unlock-automation.md`\n\n## Non-goals\n- No workflow change.\n- No support threshold change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.",
+      "body_length": 469,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T20:51:39Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T20:42:29Z",
+      "deletions": 4,
+      "files": [
+        {
+          "additions": 7,
+          "deletions": 4,
+          "path": "docs/support-unlock-automation.md"
+        }
+      ],
+      "head_ref_name": "fix-support-unlock-example-week",
+      "head_ref_oid": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "labels": [],
+      "merge_commit_oid": "748ef18eb72e5d22ad81473873977e8303d82ede",
+      "merged_at": "2026-05-15T20:51:39Z",
+      "merged_by": "Unjuno",
+      "number": 316,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Fix support unlock example week",
+      "updated_at": "2026-05-18T07:56:42Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/316"
+    },
+    {
+      "additions": 10,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/canary-log-policy.md` to reflect that `scripts/collect_canary_diagnostics.py` now exists.\n- Reframe remaining work as schema consolidation across canary families and the canonical selected-prompt runner.\n\n## Scope\n- `docs/canary-log-policy.md`\n\n## Non-goals\n- No workflow change.\n- No script change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 449,
+      "changed_files": 1,
+      "closed_at": "2026-05-15T21:42:20Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T21:41:12Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 10,
+          "deletions": 2,
+          "path": "docs/canary-log-policy.md"
+        }
+      ],
+      "head_ref_name": "update-canary-log-policy-collector-status",
+      "head_ref_oid": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
+      "labels": [],
+      "merge_commit_oid": "ac33e16c0a39c42b2d63d9f16d84272c508c921e",
+      "merged_at": "2026-05-15T21:42:20Z",
+      "merged_by": "Unjuno",
+      "number": 318,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update canary log policy collector status",
+      "updated_at": "2026-05-18T07:56:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/318"
+    },
+    {
+      "additions": 88,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/usable-experiment-ops.md` from a manual-canary-only framing to the current canonical weekly default-on release-candidate framing.\n- Keep fixed-Issue/manual canary operations documented as controlled experiment paths.\n- Update the usable ops doc contract test to require the current default-on and post-default-on observation wording.\n\n## Scope\n- `docs/usable-experiment-ops.md`\n- `scripts/test_usable_experiment_ops_doc.py`\n\n## Non-goals\n- No workflow change.\n- No model setting change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 636,
+      "changed_files": 2,
+      "closed_at": "2026-05-15T21:34:03Z",
+      "comment_count": 0,
+      "created_at": "2026-05-15T21:33:05Z",
+      "deletions": 30,
+      "files": [
+        {
+          "additions": 70,
+          "deletions": 22,
+          "path": "docs/usable-experiment-ops.md"
         },
         {
           "additions": 18,
-          "deletions": 3,
-          "path": "docs/weekly-automation.md"
-        },
-        {
-          "additions": 17,
-          "deletions": 1,
-          "path": "scripts/test_weekly_operator_docs.py"
+          "deletions": 8,
+          "path": "scripts/test_usable_experiment_ops_doc.py"
         }
       ],
-      "head_ref_name": "update-weekly-operator-legacy-gate-docs",
-      "head_ref_oid": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "head_ref_name": "update-usable-ops-current-status",
+      "head_ref_oid": "0bf0a1ce008a78888e0db7d4055665c19416d8ef",
       "labels": [],
-      "merge_commit_oid": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
-      "merged_at": "2026-05-16T15:37:29Z",
+      "merge_commit_oid": "2cd2a7bc05dfbb70dfb83a93d67894f410fd8c6d",
+      "merged_at": "2026-05-15T21:34:03Z",
       "merged_by": "Unjuno",
-      "number": 324,
+      "number": 317,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Update weekly operator docs for legacy gate",
-      "updated_at": "2026-05-16T15:37:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/324"
+      "title": "Update usable ops current status",
+      "updated_at": "2026-05-18T07:56:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/317"
     },
     {
-      "additions": 32,
+      "additions": 58,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Document that the legacy `scripts/openai_lab_run.py` weekly fallback now requires `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` for ordinary `week-*` runs.\n- Clarify that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone does not silently authorize a legacy API/SDK attempt.\n- Update contract tests so the downstream legacy runner gate remains documented.\n\n## Scope\n- `docs/current-codex-implementation-path.md`\n- `docs/workflow-family-map.md`\n- `scripts/test_current_codex_path_doc.py`\n- `scripts/test_workflow_family_map.py`\n\n## Why\nPR #322 added a downstream safety gate in `openai_lab_run.py`. The operator-facing docs should describe that gate so the legacy API/SDK fallback is not mistaken for an ordinary active weekly path.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 1003,
-      "changed_files": 4,
-      "closed_at": "2026-05-16T12:10:20Z",
+      "body": "## Summary\n- Remove `max_output_tokens: 5000` from the active model-policy condition.\n- Treat output token caps as non-enforced for the current canonical Codex CLI runner unless a future runner contract proves runtime enforcement.\n- Keep `--max-output-tokens` accepted by `preflight_implementation_agent.py` as legacy metadata so existing workflow plumbing does not break.\n- Keep the real active controls focused on one attempt per candidate, retry 0, fallback none, manual review, support unlock rank limits, and the three-file lab scope.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n- `README.md`\n- `scripts/preflight_implementation_agent.py`\n- `scripts/test_preflight_implementation_agent.py`\n\n## Why\n`max_output_tokens` was an API-era setting. The current canonical selected-prompt path uses the Codex CLI runner and does not enforce this value as a runtime output cap. Keeping it as an active condition is misleading.\n\n## Non-goals\n- No model change.\n- No retry change.\n- No fallback change.\n- No workflow behavior change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1132,
+      "changed_files": 6,
+      "closed_at": "2026-05-16T06:23:59Z",
       "comment_count": 0,
-      "created_at": "2026-05-16T11:49:23Z",
-      "deletions": 9,
+      "created_at": "2026-05-16T04:41:45Z",
+      "deletions": 48,
       "files": [
         {
-          "additions": 12,
+          "additions": 7,
           "deletions": 4,
-          "path": "docs/current-codex-implementation-path.md"
+          "path": "README.md"
         },
         {
-          "additions": 12,
-          "deletions": 3,
-          "path": "docs/workflow-family-map.md"
+          "additions": 30,
+          "deletions": 20,
+          "path": "rules/model-policy-v1.1.md"
+        },
+        {
+          "additions": 3,
+          "deletions": 2,
+          "path": "scripts/pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 4,
+          "deletions": 9,
+          "path": "scripts/preflight_implementation_agent.py"
         },
         {
           "additions": 4,
           "deletions": 2,
-          "path": "scripts/test_current_codex_path_doc.py"
+          "path": "scripts/test_canary_policy_alignment.py"
         },
         {
-          "additions": 4,
-          "deletions": 0,
-          "path": "scripts/test_workflow_family_map.py"
+          "additions": 10,
+          "deletions": 11,
+          "path": "scripts/test_preflight_implementation_agent.py"
         }
       ],
-      "head_ref_name": "document-legacy-openai-runner-gate",
-      "head_ref_oid": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
+      "head_ref_name": "remove-api-output-token-cap",
+      "head_ref_oid": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
       "labels": [],
-      "merge_commit_oid": "b835e531bad9de36fdfc6d2c967f584faea39992",
-      "merged_at": "2026-05-16T12:10:20Z",
+      "merge_commit_oid": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
+      "merged_at": "2026-05-16T06:23:59Z",
       "merged_by": "Unjuno",
-      "number": 323,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Document legacy OpenAI runner gate",
-      "updated_at": "2026-05-16T12:10:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/323"
-    },
-    {
-      "additions": 33,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Add a downstream safety gate to `scripts/openai_lab_run.py` for ordinary `week-*` runs.\n- Refuse the legacy API/SDK runner for weekly fallback unless `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is explicitly set.\n- Update the legacy runner contract test so the gate remains required.\n\n## Why\n`weekly-auto-run.yml` still contains a non-canonical fallback branch for `scripts/openai_lab_run.py`. The canonical Docker/Codex selected-prompt runner is default-on, but this downstream gate prevents accidental use of the legacy API/SDK path for ordinary weekly runs if the feature flag is changed or misconfigured.\n\n## Scope\n- `scripts/openai_lab_run.py`\n- `scripts/test_openai_lab_run_legacy_contract.py`\n\n## Non-goals\n- No canonical weekly workflow change.\n- No model change.\n- No retry change.\n- No fallback change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 941,
-      "changed_files": 2,
-      "closed_at": "2026-05-16T08:38:56Z",
-      "comment_count": 0,
-      "created_at": "2026-05-16T08:33:40Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 21,
-          "deletions": 1,
-          "path": "scripts/openai_lab_run.py"
-        },
-        {
-          "additions": 12,
-          "deletions": 1,
-          "path": "scripts/test_openai_lab_run_legacy_contract.py"
-        }
-      ],
-      "head_ref_name": "gate-legacy-openai-runner",
-      "head_ref_oid": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
-      "labels": [],
-      "merge_commit_oid": "339acb5a642368c11931fd63ddc18bab21c0795d",
-      "merged_at": "2026-05-16T08:38:56Z",
-      "merged_by": "Unjuno",
-      "number": 322,
+      "number": 319,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Gate legacy OpenAI runner weekly fallback",
-      "updated_at": "2026-05-16T08:38:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/322"
+      "title": "Remove API-era output token cap from active policy",
+      "updated_at": "2026-05-18T07:56:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/319"
     },
     {
       "additions": 44,
@@ -1230,7 +1479,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Gate legacy first API canary workflow",
-      "updated_at": "2026-05-16T08:13:12Z",
+      "updated_at": "2026-05-18T07:56:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/321"
     },
     {
@@ -1287,472 +1536,467 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Mark legacy API canary docs as historical",
-      "updated_at": "2026-05-16T06:58:25Z",
+      "updated_at": "2026-05-18T07:56:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/320"
     },
     {
-      "additions": 58,
+      "additions": 33,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Remove `max_output_tokens: 5000` from the active model-policy condition.\n- Treat output token caps as non-enforced for the current canonical Codex CLI runner unless a future runner contract proves runtime enforcement.\n- Keep `--max-output-tokens` accepted by `preflight_implementation_agent.py` as legacy metadata so existing workflow plumbing does not break.\n- Keep the real active controls focused on one attempt per candidate, retry 0, fallback none, manual review, support unlock rank limits, and the three-file lab scope.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n- `README.md`\n- `scripts/preflight_implementation_agent.py`\n- `scripts/test_preflight_implementation_agent.py`\n\n## Why\n`max_output_tokens` was an API-era setting. The current canonical selected-prompt path uses the Codex CLI runner and does not enforce this value as a runtime output cap. Keeping it as an active condition is misleading.\n\n## Non-goals\n- No model change.\n- No retry change.\n- No fallback change.\n- No workflow behavior change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 1132,
-      "changed_files": 6,
-      "closed_at": "2026-05-16T06:23:59Z",
+      "body": "## Summary\n- Add a downstream safety gate to `scripts/openai_lab_run.py` for ordinary `week-*` runs.\n- Refuse the legacy API/SDK runner for weekly fallback unless `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is explicitly set.\n- Update the legacy runner contract test so the gate remains required.\n\n## Why\n`weekly-auto-run.yml` still contains a non-canonical fallback branch for `scripts/openai_lab_run.py`. The canonical Docker/Codex selected-prompt runner is default-on, but this downstream gate prevents accidental use of the legacy API/SDK path for ordinary weekly runs if the feature flag is changed or misconfigured.\n\n## Scope\n- `scripts/openai_lab_run.py`\n- `scripts/test_openai_lab_run_legacy_contract.py`\n\n## Non-goals\n- No canonical weekly workflow change.\n- No model change.\n- No retry change.\n- No fallback change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 941,
+      "changed_files": 2,
+      "closed_at": "2026-05-16T08:38:56Z",
       "comment_count": 0,
-      "created_at": "2026-05-16T04:41:45Z",
-      "deletions": 48,
-      "files": [
-        {
-          "additions": 7,
-          "deletions": 4,
-          "path": "README.md"
-        },
-        {
-          "additions": 30,
-          "deletions": 20,
-          "path": "rules/model-policy-v1.1.md"
-        },
-        {
-          "additions": 3,
-          "deletions": 2,
-          "path": "scripts/pre_api_freeze_audit.py"
-        },
-        {
-          "additions": 4,
-          "deletions": 9,
-          "path": "scripts/preflight_implementation_agent.py"
-        },
-        {
-          "additions": 4,
-          "deletions": 2,
-          "path": "scripts/test_canary_policy_alignment.py"
-        },
-        {
-          "additions": 10,
-          "deletions": 11,
-          "path": "scripts/test_preflight_implementation_agent.py"
-        }
-      ],
-      "head_ref_name": "remove-api-output-token-cap",
-      "head_ref_oid": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
-      "labels": [],
-      "merge_commit_oid": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
-      "merged_at": "2026-05-16T06:23:59Z",
-      "merged_by": "Unjuno",
-      "number": 319,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Remove API-era output token cap from active policy",
-      "updated_at": "2026-05-16T06:23:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/319"
-    },
-    {
-      "additions": 10,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Update `docs/canary-log-policy.md` to reflect that `scripts/collect_canary_diagnostics.py` now exists.\n- Reframe remaining work as schema consolidation across canary families and the canonical selected-prompt runner.\n\n## Scope\n- `docs/canary-log-policy.md`\n\n## Non-goals\n- No workflow change.\n- No script change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 449,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T21:42:20Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T21:41:12Z",
+      "created_at": "2026-05-16T08:33:40Z",
       "deletions": 2,
       "files": [
         {
-          "additions": 10,
-          "deletions": 2,
-          "path": "docs/canary-log-policy.md"
-        }
-      ],
-      "head_ref_name": "update-canary-log-policy-collector-status",
-      "head_ref_oid": "3f1fb3fa2c3ecaf168d3b49c812ac68140891821",
-      "labels": [],
-      "merge_commit_oid": "ac33e16c0a39c42b2d63d9f16d84272c508c921e",
-      "merged_at": "2026-05-15T21:42:20Z",
-      "merged_by": "Unjuno",
-      "number": 318,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Update canary log policy collector status",
-      "updated_at": "2026-05-15T21:42:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/318"
-    },
-    {
-      "additions": 88,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Update `docs/usable-experiment-ops.md` from a manual-canary-only framing to the current canonical weekly default-on release-candidate framing.\n- Keep fixed-Issue/manual canary operations documented as controlled experiment paths.\n- Update the usable ops doc contract test to require the current default-on and post-default-on observation wording.\n\n## Scope\n- `docs/usable-experiment-ops.md`\n- `scripts/test_usable_experiment_ops_doc.py`\n\n## Non-goals\n- No workflow change.\n- No model setting change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 636,
-      "changed_files": 2,
-      "closed_at": "2026-05-15T21:34:03Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T21:33:05Z",
-      "deletions": 30,
-      "files": [
-        {
-          "additions": 70,
-          "deletions": 22,
-          "path": "docs/usable-experiment-ops.md"
+          "additions": 21,
+          "deletions": 1,
+          "path": "scripts/openai_lab_run.py"
         },
         {
-          "additions": 18,
-          "deletions": 8,
-          "path": "scripts/test_usable_experiment_ops_doc.py"
+          "additions": 12,
+          "deletions": 1,
+          "path": "scripts/test_openai_lab_run_legacy_contract.py"
         }
       ],
-      "head_ref_name": "update-usable-ops-current-status",
-      "head_ref_oid": "0bf0a1ce008a78888e0db7d4055665c19416d8ef",
+      "head_ref_name": "gate-legacy-openai-runner",
+      "head_ref_oid": "e6e0ba16d82341c26112d8528c4ea5ad4e12b72e",
       "labels": [],
-      "merge_commit_oid": "2cd2a7bc05dfbb70dfb83a93d67894f410fd8c6d",
-      "merged_at": "2026-05-15T21:34:03Z",
+      "merge_commit_oid": "339acb5a642368c11931fd63ddc18bab21c0795d",
+      "merged_at": "2026-05-16T08:38:56Z",
       "merged_by": "Unjuno",
-      "number": 317,
+      "number": 322,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Update usable ops current status",
-      "updated_at": "2026-05-15T21:35:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/317"
+      "title": "Gate legacy OpenAI runner weekly fallback",
+      "updated_at": "2026-05-18T07:56:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/322"
     },
     {
-      "additions": 7,
+      "additions": 78,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Fix the manual support unlock verification example so the ISO week id matches the date window.\n- Use the existing `2026-W19` window and output path consistently.\n- Mention the public support unlock privacy/schema test in the CI contract section.\n\n## Scope\n- `docs/support-unlock-automation.md`\n\n## Non-goals\n- No workflow change.\n- No support threshold change.\n- No generated snapshot edit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.",
-      "body_length": 469,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T20:51:39Z",
+      "body": "## Summary\n- Update `scripts/pages-smoke-check.py` to check the current landing-page baseline copy: `20-vote baseline`.\n- Remove the stale `20 virtual votes` expectation that caused the scheduled Pages smoke check to fail.\n- Add a small contract test documenting the smoke-check expectations and forbidding the stale phrase.\n\n## Why\nThe published root page still contains the intended Prompt Vote Lab and baseline messaging, but the scheduled smoke check was asserting an old LP phrase. The failure was therefore a stale smoke-test expectation, not a broken published page.\n\n## Scope\n- `scripts/pages-smoke-check.py`\n- `scripts/test_pages_smoke_check_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No workflow behavior change.\n- No generated snapshot edit.\n- No model/runner/policy change.\n- No legacy fallback change.\n- No auto-merge.\n\n## Note\nA direct `script-check.yml` wiring update was intentionally deferred because workflow full-file replacement was blocked by safety filtering. This PR still fixes the failing scheduled check path itself; the added contract test is available for explicit future wiring in a separate workflow PR if needed.",
+      "body_length": 1161,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T08:37:15Z",
       "comment_count": 0,
-      "created_at": "2026-05-15T20:42:29Z",
-      "deletions": 4,
+      "created_at": "2026-05-17T08:34:21Z",
+      "deletions": 3,
       "files": [
         {
-          "additions": 7,
-          "deletions": 4,
-          "path": "docs/support-unlock-automation.md"
+          "additions": 16,
+          "deletions": 3,
+          "path": "scripts/pages-smoke-check.py"
+        },
+        {
+          "additions": 62,
+          "deletions": 0,
+          "path": "scripts/test_pages_smoke_check_contract.py"
         }
       ],
-      "head_ref_name": "fix-support-unlock-example-week",
-      "head_ref_oid": "91a3782de6ff8dc39f98d4678d6fcc2701b886d8",
+      "head_ref_name": "fix-pages-smoke-baseline-copy",
+      "head_ref_oid": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
       "labels": [],
-      "merge_commit_oid": "748ef18eb72e5d22ad81473873977e8303d82ede",
-      "merged_at": "2026-05-15T20:51:39Z",
+      "merge_commit_oid": "028a124187b2d8474f63aa69897ac924774c4515",
+      "merged_at": "2026-05-17T08:37:15Z",
       "merged_by": "Unjuno",
-      "number": 316,
+      "number": 326,
       "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Fix support unlock example week",
-      "updated_at": "2026-05-15T20:51:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/316"
+      "title": "Fix Pages smoke baseline copy",
+      "updated_at": "2026-05-18T07:56:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/326"
     },
     {
-      "additions": 4,
+      "additions": 32,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Update `docs/automation-map.md` workflow status labels to match the current release state.\n- Clarify that `weekly-auto-run.yml` is canonical default-on with first ordinary post-default-on observation still pending.\n- Clarify that `support-unlock-export.yml` and `evidence-pipeline-dry-run.yml` now use hardened operator input handling.\n\n## Scope\n- `docs/automation-map.md`\n\n## Non-goals\n- No workflow change.\n- No source-of-truth status change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 581,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T20:39:25Z",
+      "body": "## Summary\n- Document that the legacy `scripts/openai_lab_run.py` weekly fallback now requires `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` for ordinary `week-*` runs.\n- Clarify that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone does not silently authorize a legacy API/SDK attempt.\n- Update contract tests so the downstream legacy runner gate remains documented.\n\n## Scope\n- `docs/current-codex-implementation-path.md`\n- `docs/workflow-family-map.md`\n- `scripts/test_current_codex_path_doc.py`\n- `scripts/test_workflow_family_map.py`\n\n## Why\nPR #322 added a downstream safety gate in `openai_lab_run.py`. The operator-facing docs should describe that gate so the legacy API/SDK fallback is not mistaken for an ordinary active weekly path.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1003,
+      "changed_files": 4,
+      "closed_at": "2026-05-16T12:10:20Z",
       "comment_count": 0,
-      "created_at": "2026-05-15T20:32:52Z",
-      "deletions": 4,
+      "created_at": "2026-05-16T11:49:23Z",
+      "deletions": 9,
       "files": [
+        {
+          "additions": 12,
+          "deletions": 4,
+          "path": "docs/current-codex-implementation-path.md"
+        },
+        {
+          "additions": 12,
+          "deletions": 3,
+          "path": "docs/workflow-family-map.md"
+        },
         {
           "additions": 4,
-          "deletions": 4,
-          "path": "docs/automation-map.md"
-        }
-      ],
-      "head_ref_name": "clarify-automation-map-current-status",
-      "head_ref_oid": "e155e0ce4eb12c690d78faf2016c4247f914a021",
-      "labels": [],
-      "merge_commit_oid": "7576cda1f505729e22c4177b9513a1fefdee0b1d",
-      "merged_at": "2026-05-15T20:39:25Z",
-      "merged_by": "Unjuno",
-      "number": 315,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Clarify automation map current workflow status",
-      "updated_at": "2026-05-15T20:39:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/315"
-    },
-    {
-      "additions": 140,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Pass Evidence Pipeline Dry Run manual inputs through job environment variables before shell steps consume them.\n- Add a workflow contract test that rejects direct workflow input interpolation inside `run:` blocks.\n- Register the new contract test in Script Check.\n\n## Scope\n- `.github/workflows/evidence-pipeline-dry-run.yml`\n- `.github/workflows/script-check.yml`\n- `scripts/test_evidence_pipeline_workflow_contract.py`\n\n## Risk reduction\nThis workflow is read-only and does not run Codex, but it still accepts manual workflow form input. The input handling now follows the same safer pattern used by other operator workflows:\n\n```text\nworkflow input -> job env -> shell reads env\n```\n\n## Non-goals\n- No write permission added.\n- No PR creation.\n- No generated snapshot commit.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 885,
-      "changed_files": 3,
-      "closed_at": "2026-05-15T20:18:37Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T20:07:13Z",
-      "deletions": 10,
-      "files": [
-        {
-          "additions": 14,
-          "deletions": 9,
-          "path": ".github/workflows/evidence-pipeline-dry-run.yml"
+          "deletions": 2,
+          "path": "scripts/test_current_codex_path_doc.py"
         },
         {
-          "additions": 5,
-          "deletions": 1,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 121,
+          "additions": 4,
           "deletions": 0,
-          "path": "scripts/test_evidence_pipeline_workflow_contract.py"
+          "path": "scripts/test_workflow_family_map.py"
         }
       ],
-      "head_ref_name": "harden-evidence-pipeline-inputs",
-      "head_ref_oid": "b06d6d8df7288cb67f80ca91bcfea1ccee739da1",
+      "head_ref_name": "document-legacy-openai-runner-gate",
+      "head_ref_oid": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
       "labels": [],
-      "merge_commit_oid": "7e29a340e172c05bf227a046239e654689b1f959",
-      "merged_at": "2026-05-15T20:18:37Z",
+      "merge_commit_oid": "b835e531bad9de36fdfc6d2c967f584faea39992",
+      "merged_at": "2026-05-16T12:10:20Z",
       "merged_by": "Unjuno",
-      "number": 314,
+      "number": 323,
       "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Harden evidence pipeline dry-run inputs",
-      "updated_at": "2026-05-15T20:18:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/314"
+      "title": "Document legacy OpenAI runner gate",
+      "updated_at": "2026-05-18T07:56:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/323"
     },
     {
-      "additions": 71,
+      "additions": 76,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Add an explicit repository-variable gate to weak historical Codex canary workflows.\n- Document that those workflows remain as historical evidence, but should not run accidentally before release.\n- Strengthen the workflow-family contract test so those weak historical canaries must stay gated.\n\n## Gate\n\n```text\nALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true\n```\n\n## Gated workflows\n- `.github/workflows/codex-first-canary-run.yml`\n- `.github/workflows/codex-isolated-3file-canary-run.yml`\n- `.github/workflows/codex-isolated-3file-relaxed-canary-run.yml`\n- `.github/workflows/codex-agent-observed-canary-run.yml`\n\n## Why\nThese workflows are historical evidence surfaces and should not be deleted, but they include older workspace-write or relaxed-sandbox experiments that are weaker than the current canonical selected-prompt boundary.\n\n## Fixes\n- Addresses #312 with Option C.\n\n## Non-goals\n- No workflow deletion.\n- No run record or generated evidence deletion.\n- No canonical weekly default-on change.\n- No lab implementation change.\n- No model call.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 1108,
-      "changed_files": 6,
-      "closed_at": "2026-05-15T18:59:48Z",
+      "body": "## Summary\n- Document that `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone must not spend a legacy API/SDK attempt.\n- Add the required downstream legacy fallback gate to weekly and operator docs: `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`.\n- Update rollback cleanup instructions to remove both temporary overrides.\n- Replace the old `MAX_OUTPUT_TOKENS` stabilization wording with the current `output_token_cap_enforced: false` status.\n- Update `scripts/test_weekly_operator_docs.py` to keep this wording fixed.\n\n## Scope\n- `docs/weekly-automation.md`\n- `docs/operator-runbook.md`\n- `scripts/test_weekly_operator_docs.py`\n\n## Why\nThe legacy OpenAI/API runner is now protected by a downstream gate. Operator-facing docs should not imply that the weekly feature flag alone authorizes a legacy API/SDK run, and should not treat old output-token cap wording as an active canonical runtime control.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No model change.\n- No retry change.\n- No fallback policy change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy runner removal.",
+      "body_length": 1156,
+      "changed_files": 3,
+      "closed_at": "2026-05-16T15:37:29Z",
       "comment_count": 0,
-      "created_at": "2026-05-15T18:58:47Z",
-      "deletions": 12,
+      "created_at": "2026-05-16T15:35:34Z",
+      "deletions": 22,
       "files": [
         {
-          "additions": 2,
-          "deletions": 1,
-          "path": ".github/workflows/codex-agent-observed-canary-run.yml"
+          "additions": 41,
+          "deletions": 18,
+          "path": "docs/operator-runbook.md"
         },
         {
-          "additions": 2,
-          "deletions": 1,
-          "path": ".github/workflows/codex-first-canary-run.yml"
+          "additions": 18,
+          "deletions": 3,
+          "path": "docs/weekly-automation.md"
         },
         {
-          "additions": 2,
+          "additions": 17,
           "deletions": 1,
-          "path": ".github/workflows/codex-isolated-3file-canary-run.yml"
+          "path": "scripts/test_weekly_operator_docs.py"
+        }
+      ],
+      "head_ref_name": "update-weekly-operator-legacy-gate-docs",
+      "head_ref_oid": "a2e755c6a260038de927f70f8eeab6d497c442b8",
+      "labels": [],
+      "merge_commit_oid": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
+      "merged_at": "2026-05-16T15:37:29Z",
+      "merged_by": "Unjuno",
+      "number": 324,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update weekly operator docs for legacy gate",
+      "updated_at": "2026-05-18T07:56:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/324"
+    },
+    {
+      "additions": 189,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Define the explicit legacy fallback removal gate before any deletion work.\n- Mark legacy fallback removal as not approved until the gate passes.\n- Add operator-facing removal criteria for `scripts/openai_lab_run.py`.\n- Extend contract tests so the gate, no-eligible observation requirements, manual review, auto-merge disabled state, rollback plan, and maintainer approval remain documented.\n\n## Scope\n- `docs/canonical-status-drift-check.md`\n- `docs/workflow-family-map.md`\n- `docs/operator-runbook.md`\n- `scripts/test_canonical_status_drift.py`\n- `scripts/test_workflow_family_map.py`\n- `scripts/test_weekly_operator_docs.py`\n\n## Non-goals\n- No legacy runner removal.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model, retry, fallback-policy, or token-cap change.\n- No auto-merge.\n\n## Removal gate fixed by this PR\nA later removal PR must record, at minimum:\n\n```text\nordinary default-on weekly no-eligible run observed\nvote summary PR created\nimplementation PR: none for the no-eligible run\nno implementation-agent attempt made for the no-eligible run\nno Codex/API call made for the no-eligible run\nlegacy API/SDK runner not reached for the no-eligible run\neligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan\ncanonical evidence artifacts remain verified\nmanual review remains required\nauto-merge remains disabled\nrollback plan exists\npublic docs no longer cite legacy fallback as an active requirement\nmaintainer explicitly approves removal\n```\n\n## Notes\nThis PR intentionally keeps `scripts/openai_lab_run.py` present, non-canonical, and gated. It only defines when a later removal PR may be considered.",
+      "body_length": 1745,
+      "changed_files": 6,
+      "closed_at": "2026-05-17T08:21:11Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T07:59:47Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 24,
+          "deletions": 0,
+          "path": "docs/canonical-status-drift-check.md"
         },
         {
-          "additions": 2,
-          "deletions": 1,
-          "path": ".github/workflows/codex-isolated-3file-relaxed-canary-run.yml"
+          "additions": 25,
+          "deletions": 0,
+          "path": "docs/operator-runbook.md"
         },
         {
-          "additions": 35,
-          "deletions": 6,
+          "additions": 43,
+          "deletions": 1,
           "path": "docs/workflow-family-map.md"
         },
         {
           "additions": 28,
-          "deletions": 2,
+          "deletions": 0,
+          "path": "scripts/test_canonical_status_drift.py"
+        },
+        {
+          "additions": 37,
+          "deletions": 0,
+          "path": "scripts/test_weekly_operator_docs.py"
+        },
+        {
+          "additions": 32,
+          "deletions": 1,
           "path": "scripts/test_workflow_family_map.py"
         }
       ],
-      "head_ref_name": "gate-weak-historical-canaries",
-      "head_ref_oid": "e0aea41e2c8bac82f1b31a57a6cd44408b2429d1",
+      "head_ref_name": "define-legacy-fallback-removal-gate",
+      "head_ref_oid": "ebf4f4b164a3b9ac80e3298b5cd1484ce8f33b5d",
       "labels": [],
-      "merge_commit_oid": "28cea6b6f3289874b39a117c0361f20fe5feb9fb",
-      "merged_at": "2026-05-15T18:59:48Z",
+      "merge_commit_oid": "94384a1eefd437581dfd6dda4ae00e127a935d3f",
+      "merged_at": "2026-05-17T08:21:11Z",
       "merged_by": "Unjuno",
-      "number": 313,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Gate weak historical canary workflows",
-      "updated_at": "2026-05-15T18:59:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/313"
-    },
-    {
-      "additions": 3,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Update `docs/experiment-model.md` from the historical `model-policy-v1.0` / `gpt-5-nano` reference to the active `model-policy-v1.1` / `gpt-5.4-nano` implementation condition.\n\n## Scope\n- `docs/experiment-model.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 397,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T17:55:25Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T17:52:54Z",
-      "deletions": 3,
-      "files": [
-        {
-          "additions": 3,
-          "deletions": 3,
-          "path": "docs/experiment-model.md"
-        }
-      ],
-      "head_ref_name": "update-experiment-model-active-model-policy",
-      "head_ref_oid": "d0213fe295e203ce98ddb72f173c0a003351596a",
-      "labels": [],
-      "merge_commit_oid": "31fca5c88d2f81e92bc059c1c71a122a6c0615bc",
-      "merged_at": "2026-05-15T17:55:25Z",
-      "merged_by": "Unjuno",
-      "number": 311,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Update experiment model active model policy reference",
-      "updated_at": "2026-05-15T17:55:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/311"
-    },
-    {
-      "additions": 2,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Update `rules/model-policy-v1.1.md` to match the current canonical weekly default-on status.\n- Replace the outdated eligible-path verification sentence with the current state: canonical selected-prompt canary passed, weekly canonical runner default-on, first ordinary post-default-on run still pending observation.\n\n## Scope\n- `rules/model-policy-v1.1.md`\n\n## Non-goals\n- No model setting change.\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No auto-merge.\n- No legacy runner removal.",
-      "body_length": 538,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T17:43:34Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T17:40:59Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": "rules/model-policy-v1.1.md"
-        }
-      ],
-      "head_ref_name": "clarify-model-policy-verification-status",
-      "head_ref_oid": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "labels": [],
-      "merge_commit_oid": "a9baa2cde04b158c72a9898ee5512ba7e08444d5",
-      "merged_at": "2026-05-15T17:43:34Z",
-      "merged_by": "Unjuno",
-      "number": 310,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Clarify model policy verification status",
-      "updated_at": "2026-05-15T17:43:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/310"
-    },
-    {
-      "additions": 2,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Align the root README with `rules/static-ui-v1.0.md` and `scripts/static-site-check.sh`.\n- Clarify that `eval` remains forbidden while controlled `new Function(...)` is allowed only for fixed repository-authored logic and must not use user-controlled input.\n- Restore the final newline removed by the previous README-only update.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.",
-      "body_length": 532,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T17:33:38Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T17:31:44Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 2,
-          "path": "README.md"
-        }
-      ],
-      "head_ref_name": "align-readme-static-ui-function-policy",
-      "head_ref_oid": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
-      "labels": [],
-      "merge_commit_oid": "e03cec7a9939265b86a649220f551d622561ad32",
-      "merged_at": "2026-05-15T17:33:38Z",
-      "merged_by": "Unjuno",
-      "number": 309,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Align root README with static UI function policy",
-      "updated_at": "2026-05-15T17:33:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/309"
-    },
-    {
-      "additions": 4,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Clarify the root README weekly automation status after canonical weekly default-on release.\n- Distinguish the verified canonical canary/default-on state from the still-pending ordinary post-default-on operational observation.\n\n## Scope\n- `README.md`\n\n## Non-goals\n- No workflow change.\n- No docs source-of-truth change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No auto-merge.\n\n## Reason\nThe root README still described the eligible implementation-agent PR path as needing live E2E verification without mentioning that the canonical selected-prompt canary has passed and weekly canonical execution is now default-on. The new wording points readers at the correct operational status while keeping the remaining ordinary-run observation explicit.",
-      "body_length": 796,
-      "changed_files": 1,
-      "closed_at": "2026-05-15T17:03:09Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T16:58:47Z",
-      "deletions": 2,
-      "files": [
-        {
-          "additions": 4,
-          "deletions": 2,
-          "path": "README.md"
-        }
-      ],
-      "head_ref_name": "clarify-root-readme-weekly-status",
-      "head_ref_oid": "973b414ebe99df6f4ec581552e29913778f8eaf0",
-      "labels": [],
-      "merge_commit_oid": "583b9606e50bff7b4fe59cb58b9db8d666a3fa8e",
-      "merged_at": "2026-05-15T17:03:09Z",
-      "merged_by": "Unjuno",
-      "number": 308,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Clarify root README weekly automation status",
-      "updated_at": "2026-05-15T17:03:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/308"
-    },
-    {
-      "additions": 110,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Pass Support Unlock Export manual inputs through step environment variables before Python reads them.\n- Pass Weekly Issue Finalizer manual inputs through step environment variables before shell/Python uses them.\n- Strengthen contract tests so workflow form inputs are not interpolated directly inside `run:` blocks.\n\n## Fixes\n- Fixes #305\n- Fixes #306\n\n## Scope\n- `.github/workflows/support-unlock-export.yml`\n- `.github/workflows/weekly-issue-finalizer.yml`\n- `scripts/test_support_unlock_workflow_contract.py`\n- `scripts/test_weekly_issue_finalizer_workflow_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No generated snapshot edit.\n- No model call.\n- No support threshold change.\n- No auto-merge.\n- No legacy runner removal.\n\n## Risk reduction\nManual workflow form inputs now follow the safer repository pattern:\n\n```text\nworkflow input -> step env -> script reads env\n```\n\nThis keeps operator-provided text out of executable script bodies while preserving existing behavior.",
-      "body_length": 1005,
-      "changed_files": 4,
-      "closed_at": "2026-05-15T16:51:09Z",
-      "comment_count": 0,
-      "created_at": "2026-05-15T16:49:03Z",
-      "deletions": 10,
-      "files": [
-        {
-          "additions": 9,
-          "deletions": 5,
-          "path": ".github/workflows/support-unlock-export.yml"
-        },
-        {
-          "additions": 5,
-          "deletions": 3,
-          "path": ".github/workflows/weekly-issue-finalizer.yml"
-        },
-        {
-          "additions": 49,
-          "deletions": 1,
-          "path": "scripts/test_support_unlock_workflow_contract.py"
-        },
-        {
-          "additions": 47,
-          "deletions": 1,
-          "path": "scripts/test_weekly_issue_finalizer_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "harden-operator-workflow-inputs",
-      "head_ref_oid": "172f5f091f395725394558a9c368765d314ce3d4",
-      "labels": [],
-      "merge_commit_oid": "c7baba344b28bccaeb2c70aaf86fc56d597c1f7f",
-      "merged_at": "2026-05-15T16:51:09Z",
-      "merged_by": "Unjuno",
-      "number": 307,
+      "number": 325,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Harden operator workflow input handling",
-      "updated_at": "2026-05-15T16:52:19Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/307"
+      "title": "Define legacy fallback removal gate",
+      "updated_at": "2026-05-18T07:56:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/325"
+    },
+    {
+      "additions": 34,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Extend the existing `scripts/test_script_check_workflow_contract.py` contract test to cover the Pages smoke check script and workflow.\n- Require the current landing-page baseline copy: `20-vote baseline`.\n- Forbid the stale `20 virtual votes` phrase in the Pages smoke script, workflow, and root landing page.\n\n## Why\nPR #326 fixed the scheduled Pages smoke check expectation, but the new standalone contract test was not wired into `script-check.yml`. Rather than changing the workflow, this PR folds the Pages smoke invariants into an existing contract test that already runs in Script Check.\n\n## Scope\n- `scripts/test_script_check_workflow_contract.py`\n\n## Non-goals\n- No workflow change.\n- No lab implementation change.\n- No generated snapshot edit.\n- No model/runner/policy change.\n- No legacy fallback change.\n- No auto-merge.",
+      "body_length": 845,
+      "changed_files": 1,
+      "closed_at": "2026-05-17T08:47:30Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T08:45:16Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 34,
+          "deletions": 0,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "wire-pages-smoke-contract-through-existing-test",
+      "head_ref_oid": "747dbc3993f30a8e350bd407874e0d3fe042d213",
+      "labels": [],
+      "merge_commit_oid": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
+      "merged_at": "2026-05-17T08:47:30Z",
+      "merged_by": "Unjuno",
+      "number": 327,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Cover Pages smoke copy in script-check contract",
+      "updated_at": "2026-05-18T07:56:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/327"
+    },
+    {
+      "additions": 332,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/release-readiness-review.md` as a release-facing static review of security posture, participant journey, and live preview status.\n- Link the new review from `docs/README.md`.\n- Record the current judgment: static security posture PASS with remaining operational observation, participant journey PASS, live preview PASS, and ordinary default-on weekly observation still pending.\n\n## Scope\n- `docs/release-readiness-review.md`\n- `docs/README.md`\n\n## Current review outcome\n- Security: static boundary is strong for the current public experiment, with ordinary weekly observation still pending.\n- User journey: root landing, participant guide, lab navigation, Issues, runs, history, and public results provide a coherent path.\n- Live preview: `/lab/`, comparison outputs, comparison dashboard, and history are linked from the lab page.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No auto-merge.\n- No legacy fallback removal.",
+      "body_length": 1027,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T11:48:56Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T11:45:30Z",
+      "deletions": 23,
+      "files": [
+        {
+          "additions": 43,
+          "deletions": 23,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 289,
+          "deletions": 0,
+          "path": "docs/release-readiness-review.md"
+        }
+      ],
+      "head_ref_name": "add-release-readiness-review-v2",
+      "head_ref_oid": "37346fa4a6ab760749314b236990dde90e869eb5",
+      "labels": [],
+      "merge_commit_oid": "d000221362332ae762fe1832e6df2ab412281ec9",
+      "merged_at": "2026-05-17T11:48:56Z",
+      "merged_by": "Unjuno",
+      "number": 328,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add release readiness review",
+      "updated_at": "2026-05-18T07:56:28Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/328"
+    },
+    {
+      "additions": 93,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/root-folder-audit.md` to classify root-level folders before cleanup.\n- Record that bulk cleanup is not recommended yet; cleanup should be staged by gates.\n- Add maintainer questions for historical workflows, docs, formal layer, live previews, run records, scripts, and fixtures.\n- Link the audit from `docs/README.md`.\n\n## Scope\n- `docs/root-folder-audit.md`\n- `docs/README.md`\n\n## Current finding\nNo top-level folder is obviously misplaced for the current static GitHub Pages experiment. The repository is evidence-heavy, not automatically messy. Cleanup should follow explicit gates rather than broad deletion.\n\n## Non-goals\n- No deletion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
+      "body_length": 805,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T12:24:33Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T12:21:29Z",
+      "deletions": 23,
+      "files": [
+        {
+          "additions": 26,
+          "deletions": 23,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 67,
+          "deletions": 0,
+          "path": "docs/root-folder-audit.md"
+        }
+      ],
+      "head_ref_name": "add-root-folder-audit-v2",
+      "head_ref_oid": "d475847855d639bf40fecf6fe43ab69aeba102ec",
+      "labels": [],
+      "merge_commit_oid": "b24bfa8c48dea854a827ea701a8d7ff63f832e57",
+      "merged_at": "2026-05-17T12:24:33Z",
+      "merged_by": "Unjuno",
+      "number": 329,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add root folder audit",
+      "updated_at": "2026-05-18T07:56:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/329"
+    },
+    {
+      "additions": 133,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/script-dependency-map.md` to classify important script families before cleanup.\n- Record active anchors for canonical runner, weekly selection, public evidence, issue safety, and legacy fallback.\n- Define retirement prerequisites for any future script cleanup.\n\n## Scope\n- `docs/script-dependency-map.md`\n\n## Current finding\nScript cleanup is not ready for broad retirement. The repository needs ordinary default-on weekly observation before legacy or historical helpers move toward retirement.\n\n## Non-goals\n- No script deletion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
+      "body_length": 694,
+      "changed_files": 1,
+      "closed_at": "2026-05-17T12:38:12Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T12:35:54Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 133,
+          "deletions": 0,
+          "path": "docs/script-dependency-map.md"
+        }
+      ],
+      "head_ref_name": "add-script-dependency-map-v2",
+      "head_ref_oid": "5a8b88d980de2b5d16ab34a5dcd48ab7d83aed7c",
+      "labels": [],
+      "merge_commit_oid": "97b3de605ba242878660fe300aa90401a6f7c783",
+      "merged_at": "2026-05-17T12:38:12Z",
+      "merged_by": "Unjuno",
+      "number": 330,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add script dependency map",
+      "updated_at": "2026-05-18T07:56:25Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/330"
+    },
+    {
+      "additions": 119,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add `docs/document-format-policy.md`.\n- Record the current decision: use `.md`, not `.mdx`, for participant-facing and maintainer-facing docs.\n- Require a separate build-system/security proposal before adopting MDX.\n\n## Why\nThe project is currently GitHub-native and static: GitHub-rendered Markdown, GitHub Pages static files, no docs build step, no React documentation runtime, and no MDX compiler. MDX would add build and security surface without addressing the current release blockers.\n\n## Scope\n- `docs/document-format-policy.md`\n\n## Non-goals\n- No conversion from `.md` to `.mdx`.\n- No docs build system.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
+      "body_length": 735,
+      "changed_files": 1,
+      "closed_at": "2026-05-17T13:18:32Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T13:13:35Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 119,
+          "deletions": 0,
+          "path": "docs/document-format-policy.md"
+        }
+      ],
+      "head_ref_name": "add-doc-format-policy-v2",
+      "head_ref_oid": "d05a3d8443aa70a0559168ed7f4a299a5f903a3f",
+      "labels": [],
+      "merge_commit_oid": "6a9d37c840dc85aef0022fe86fdedaba23ea9186",
+      "merged_at": "2026-05-17T13:18:32Z",
+      "merged_by": "Unjuno",
+      "number": 331,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add document format policy",
+      "updated_at": "2026-05-18T07:56:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/331"
+    },
+    {
+      "additions": 23,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Add related-document links to `docs/root-folder-audit.md`.\n- Add related-document links to `docs/script-dependency-map.md`.\n- Improve cleanup-doc reachability without updating the large docs index.\n\n## Why\n`docs/README.md` full updates have been brittle in this environment. This small PR improves discoverability of the new cleanup and document-format docs by linking the cleanup documents to each other.\n\n## Scope\n- `docs/root-folder-audit.md`\n- `docs/script-dependency-map.md`\n\n## Non-goals\n- No README rewrite.\n- No docs format conversion.\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.",
+      "body_length": 667,
+      "changed_files": 2,
+      "closed_at": "2026-05-17T13:32:08Z",
+      "comment_count": 0,
+      "created_at": "2026-05-17T13:30:36Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 12,
+          "deletions": 0,
+          "path": "docs/root-folder-audit.md"
+        },
+        {
+          "additions": 11,
+          "deletions": 0,
+          "path": "docs/script-dependency-map.md"
+        }
+      ],
+      "head_ref_name": "link-cleanup-docs-v2",
+      "head_ref_oid": "0459e8082fe885be4892202b1faf64c5f24e7cb3",
+      "labels": [],
+      "merge_commit_oid": "2d37d0bce8d03d5421c7a26bc5828b1f7a131d80",
+      "merged_at": "2026-05-17T13:32:08Z",
+      "merged_by": "Unjuno",
+      "number": 332,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Link cleanup documentation",
+      "updated_at": "2026-05-18T07:56:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/332"
+    },
+    {
+      "additions": 41,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": "2026-05-18T07:45:06Z",
+      "comment_count": 0,
+      "created_at": "2026-05-18T04:44:53Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 41,
+          "deletions": 0,
+          "path": "runs/week-2026-W20-vote-summary.md"
+        }
+      ],
+      "head_ref_name": "weekly-auto-summary-week-2026-W20-8",
+      "head_ref_oid": "e29210964fc501acaa2ab9894ba1356da9f80039",
+      "labels": [],
+      "merge_commit_oid": "9f689938ae718e36130f5316b7e5975f55b81546",
+      "merged_at": "2026-05-18T07:45:06Z",
+      "merged_by": "Unjuno",
+      "number": 333,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Record auto vote summary for week-2026-W20",
+      "updated_at": "2026-05-18T07:56:16Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/333"
     },
     {
       "additions": 14,
@@ -3509,208 +3753,6 @@
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/302"
     },
     {
-      "additions": 6,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the selected ranked prompt candidate with the implementation agent.\n\n## Candidate\n\n- Week: week-2026-W19\n- Rank: 1\n- Issue: #282\n- Votes: 1\n- Run reason: normal-weekly-run\n- Inherited lab base: `2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395`\n- Runner: `codex-cli-selected-prompt-packet-container`\n- Canonical selected-prompt runner: `true`\n- Implementation model: `gpt-5.4-nano`\n- Model policy: `rules/model-policy-v1.1.md`\n- Agent-run policy: `rules/agent-run-policy-v1.0.md`\n- Internal checks: `safety-check` and `static-site-check` passed before PR creation\n- Created by: `Weekly Auto Run`\n\n## Selected prompt\n\nAdd a tiny static note to the lab page saying the canonical weekly runner can be verified with public evidence. Keep the change minimal and accessible.\n\n## Implementation summary\n\nImplementation summary was not written.\n\n## Evidence\n\nWhen the canonical selected-prompt runner is enabled, weekly diagnostics and public bundles are uploaded as workflow artifacts.\n\n## Merge policy\n\nRank 1 is the default mainline candidate. Rank 2 and rank 3 are comparison candidates. Merge remains manual. Only merged PRs become the inherited lab state for later weeks.",
-      "body_length": 1172,
-      "changed_files": 2,
-      "closed_at": "2026-05-14T12:26:33Z",
-      "comment_count": 2,
-      "created_at": "2026-05-14T11:47:05Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 1,
-          "deletions": 0,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 5,
-          "deletions": 0,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "codex-lab-week-2026-W19-rank-1-7",
-      "head_ref_oid": "b300af776386079f89f417f94c160bc7b60c29bf",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 284,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Agent lab run for week-2026-W19 rank 1",
-      "updated_at": "2026-05-14T12:26:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/284"
-    },
-    {
-      "additions": 14,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
-      "body_length": 77,
-      "changed_files": 1,
-      "closed_at": "2026-05-14T12:18:28Z",
-      "comment_count": 1,
-      "created_at": "2026-05-14T11:44:44Z",
-      "deletions": 7,
-      "files": [
-        {
-          "additions": 14,
-          "deletions": 7,
-          "path": "runs/week-2026-W19-vote-summary.md"
-        }
-      ],
-      "head_ref_name": "weekly-auto-summary-week-2026-W19-7",
-      "head_ref_oid": "4674c5ae077ee71723172d5c7103c586fe2f9925",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 283,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Record auto vote summary for week-2026-W19",
-      "updated_at": "2026-05-14T12:18:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/283"
-    },
-    {
-      "additions": 4,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
-      "body_length": 77,
-      "changed_files": 1,
-      "closed_at": "2026-05-14T12:10:52Z",
-      "comment_count": 1,
-      "created_at": "2026-05-14T11:31:47Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 4,
-          "deletions": 0,
-          "path": "runs/week-2026-W19-vote-summary.md"
-        }
-      ],
-      "head_ref_name": "weekly-auto-summary-week-2026-W19-6",
-      "head_ref_oid": "bf3dce787b7965a325676c95b2c47821fd946819",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 281,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Record auto vote summary for week-2026-W19",
-      "updated_at": "2026-05-14T12:10:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/281"
-    },
-    {
-      "additions": 2,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `062e20bc8d6a06223c29a59e552608f0b60dcfc1`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Public evidence\n\n- Redacted public agent run bundle artifact: `codex-policy-agent-canary-public-bundle-11`\n- Public bundle content verification report: `public-agent-run-bundle-verification.json` inside diagnostics\n- Public bundle Gitleaks report: `public-agent-run-bundle-gitleaks.json` inside diagnostics\n- Uploaded public bundle verification report: `public-agent-run-bundle-uploaded-verification.json` inside diagnostics\n- Uploaded public bundle Gitleaks report: `public-agent-run-bundle-uploaded-gitleaks.json` inside diagnostics\n- Observation summary files: `observation-summary.md`, `observation-summary.json`\n- Sanitized diagnostic logs directory: `sanitized/`\n- Sanitized exposed reasoning / CoT-like trace directory: `reasoning-traces/`\n- Public run log artifact: `codex-policy-agent-canary-public-log-11`\n- Internal diagnostics artifact: `codex-policy-agent-canary-diagnostics-11`\n\n## Reasoning trace policy\n\nIf the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Diagnostics\n\nInternal diagnostics artifact is uploaded for mount, policy, Codex event, diff, public bundle pre-upload verification, public bundle Gitleaks scan, uploaded artifact verification, and uploaded artifact Gitleaks scan analysis. Public artifacts are redacted, sanitized, indexed, verified for required structure, scanned for secret-like strings, and include exposed reasoning traces when present.\n\n## Merge policy\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 2604,
-      "changed_files": 1,
-      "closed_at": "2026-05-12T11:19:31Z",
-      "comment_count": 1,
-      "created_at": "2026-05-12T09:17:12Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": "lab/index.html"
-        }
-      ],
-      "head_ref_name": "codex-policy-agent-canary-007-11",
-      "head_ref_oid": "ff170d5372fb87088ad805547e888e673fcc9c40",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 272,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Run Codex policy-enforced agent canary",
-      "updated_at": "2026-05-12T11:21:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/272"
-    },
-    {
-      "additions": 1,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements the seventh Codex implementation-agent canary.\n\n## Final disposition\n\nClosed as evidence-only. Not adopted into `main`.\n\nReason:\n\n```text\n- The canonical Docker/Codex canary path completed and produced this PR.\n- The PR changed only `lab/index.html` by adding one canary pill.\n- The public artifacts were uploaded.\n- After later evidence/publication fixes landed, this PR became stale relative to current `main`.\n- Force-updating the branch would weaken the original Codex-generated head commit evidence.\n- The visible canary pill is not needed in the accepted live lab.\n```\n\n## Purpose\n\nThis verifies Codex as a file-operating agent inside a Docker container that mounts only a prepared work directory containing the allowed lab files. The repository root is not mounted into the container.\n\n## Configuration\n\n- Week: first-canary-007\n- Rank: 1\n- Issue: #0\n- Votes: 0\n- Inherited lab base: `7f0a34f763b76a3a4ccb2a05890d1edcb7c0e643`\n- Provider: `openai-codex`\n- Runner: `codex-cli-policy-enforced-agent-container`\n- Sandbox mode: `docker-mounted-workdir-only`\n- Codex model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/index.html`, `lab/style.css`, `lab/app.js`\n\n## Changed files\n\nlab/index.html\n\n## Internal checks\n\n- policy-enforced container runner completed before PR creation\n- changed-file guard passed before PR creation\n- safety-check passed before PR creation\n- static-site-check passed before PR creation\n\n## Public evidence\n\n- Workflow run: `25670780249`\n- Redacted public agent run bundle artifact: `codex-policy-agent-canary-public-bundle-7`\n- Public bundle artifact id: `6918707781`\n- Observation summary files expected in bundle: `observation-summary.md`, `observation-summary.json`\n- Sanitized diagnostic logs directory expected in bundle: `sanitized/`\n- Sanitized exposed reasoning / CoT-like trace directory expected in bundle: `reasoning-traces/`\n- Public run log artifact: `codex-policy-agent-canary-public-log-7`\n- Public log artifact id: `6918708759`\n- Internal diagnostics artifact: `codex-policy-agent-canary-diagnostics-7`\n- Internal diagnostics artifact id: `6918708255`\n\n## Reasoning trace policy\n\nIf the run artifact exposes reasoning / CoT-like trace text, it is part of the public lab evidence after sanitizer replacement. Provider-private internals that are not exposed to the workflow are not claimed to be available.\n\n## Diagnostics limitation\n\nArtifact existence and metadata were verified. ZIP contents were not inspected in this review environment, so this PR does not claim that `observation-summary.md`, `sanitized/`, or `reasoning-traces/` contents were manually inspected.\n\n## Merge policy\n\nNot merged. Evidence-only canary result.",
-      "body_length": 2764,
-      "changed_files": 1,
-      "closed_at": "2026-05-11T13:16:25Z",
-      "comment_count": 1,
-      "created_at": "2026-05-11T12:43:25Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 1,
-          "deletions": 0,
-          "path": "lab/index.html"
-        }
-      ],
-      "head_ref_name": "codex-policy-agent-canary-007-7",
-      "head_ref_oid": "b00a5852d1d4972c0d0207dea4462644d72dab0a",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 263,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Run Codex policy-enforced agent canary",
-      "updated_at": "2026-05-11T13:16:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/263"
-    },
-    {
-      "additions": 27,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Closed intentionally.\n\nThis PR was created by the `First Canary Run` path, which uses the Python SDK / Responses API runner.\n\nThe canonical production implementation path for Prompt Vote Lab is now defined as:\n\n```text\nDocker-mounted workdir-only + Codex CLI\n```\n\nTherefore this PR is useful as evidence that the non-canonical API canary path can produce a small lab diff, but it must not be merged or counted as the canonical eligible implementation E2E verification.\n\nRequired next verification path:\n\n```text\nCodex Policy Agent Canary Run\n→ codex-cli-policy-enforced-agent-container\n→ docker-mounted-workdir-only\n→ lab/index.html, lab/style.css, lab/app.js only\n→ safety-check\n→ static-site-check\n→ PR creation\n```\n",
-      "body_length": 718,
-      "changed_files": 2,
-      "closed_at": "2026-05-11T10:34:14Z",
-      "comment_count": 0,
-      "created_at": "2026-05-11T10:21:30Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 5,
-          "deletions": 0,
-          "path": "lab/index.html"
-        },
-        {
-          "additions": 22,
-          "deletions": 0,
-          "path": "lab/style.css"
-        }
-      ],
-      "head_ref_name": "first-canary-001-2",
-      "head_ref_oid": "50a99900a0fafcfe0aa6fd3c11b8f3fc03fa8113",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 258,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Run fixed first canary",
-      "updated_at": "2026-05-11T10:34:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/258"
-    },
-    {
       "additions": 3,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -4889,38 +4931,6 @@
       "title": "Add timeouts to comparison runs",
       "updated_at": "2026-05-11T05:22:27Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/225"
-    },
-    {
-      "additions": 7,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a metadata-normalized comparison run request file for Issue #196 as rank 3.\n\n## Request\n\n```json\n{\n  \"week_id\": \"2026-W20\",\n  \"base_sha\": \"0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0\",\n  \"issue_number\": 196,\n  \"candidate_rank\": 3,\n  \"vote_count\": 0\n}\n```\n\n## Comparison base\n\nUses the same fixed comparison base as rank 2 so the outputs remain comparable.\n\n## Expected trigger\n\nThis PR should trigger `Codex Comparison Issue Run` through the request-file `pull_request` trigger.\n\nExpected generated output PR path:\n\n```text\nlab/comparisons/2026-W20/rank-3/\n```\n\n## Regression target\n\nThe generated rank-root page and app script should not retain stale copied metadata such as:\n\n```text\nIssue #191\nCandidate #1\n```\n\nThey should be normalized to:\n\n```text\nIssue #196\nCandidate #3\n```\n\n## Non-goals\n\n- No direct lab output changes in this request PR.\n- No auto-merge of generated comparison output.\n\n<!-- CURSOR_SUMMARY -->\n---\n\n> [!NOTE]\n> **Low Risk**\n> Low risk: adds a single comparison run request JSON file with no code or logic changes.\n> \n> **Overview**\n> Adds a new metadata-normalized comparison run request file, `run-requests/comparison/2026-W20-rank-3-issue-196-v2.json`, targeting **Issue #196** at **candidate rank 3** against base SHA `0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0`.\n> \n> <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 2926d4dcf8759bc98410dace5a4e74a1329138bd. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup>\n<!-- /CURSOR_SUMMARY -->",
-      "body_length": 1571,
-      "changed_files": 1,
-      "closed_at": "2026-05-09T18:04:56Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T17:34:57Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 7,
-          "deletions": 0,
-          "path": "run-requests/comparison/2026-W20-rank-3-issue-196-v2.json"
-        }
-      ],
-      "head_ref_name": "request-rank3-issue196-comparison-v2",
-      "head_ref_oid": "2926d4dcf8759bc98410dace5a4e74a1329138bd",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 223,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Request metadata-normalized comparison run for Issue 196 rank 3",
-      "updated_at": "2026-05-11T05:22:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/223"
     }
   ],
   "run_records": [
@@ -5076,14 +5086,70 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 83,
-    "open_issue_count": 3,
+    "merged_pr_count": 84,
+    "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
     "run_record_count": 23,
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-18T11:45:59Z",
+      "database_id": 26031482760,
+      "display_title": "Record W20 ordinary weekly observation pass",
+      "event": "pull_request",
+      "head_branch": "record-w20-observation-pass-v2",
+      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:46:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031482760",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T11:44:28Z",
+      "database_id": 26031410947,
+      "display_title": "Record W20 ordinary weekly observation pass",
+      "event": "pull_request",
+      "head_branch": "record-w20-observation-pass-v2",
+      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:44:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031410947",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T11:44:28Z",
+      "database_id": 26031410933,
+      "display_title": "Record W20 ordinary weekly observation pass",
+      "event": "pull_request",
+      "head_branch": "record-w20-observation-pass-v2",
+      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:44:38Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031410933",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T07:45:29Z",
+      "database_id": 26020358039,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a7706321d5417c1b6970957c992d19f5e3b6592e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:45:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26020358039",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-18T07:45:10Z",
@@ -5097,6 +5163,34 @@
       "updated_at": "2026-05-18T07:45:11Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26020344264",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T07:45:10Z",
+      "database_id": 26020344218,
+      "display_title": "Record auto vote summary for week-2026-W20",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "9f689938ae718e36130f5316b7e5975f55b81546",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:45:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26020344218",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-18T07:45:08Z",
+      "database_id": 26020342903,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9f689938ae718e36130f5316b7e5975f55b81546",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:45:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26020342903",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6370,90 +6464,6 @@
       "status": "completed",
       "updated_at": "2026-05-16T07:57:29Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721666",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:58:43Z",
-      "database_id": 25955583277,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "a144c279f59960eed7451dec81215cde4100091b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:59:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955583277",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T06:58:28Z",
-      "database_id": 25955577489,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "pull_request",
-      "head_branch": "mark-api-canary-docs-historical",
-      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:58:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577489",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:58:28Z",
-      "database_id": 25955577443,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "c5cfec3e386ccf481bc31296e33b3d8a19551e95",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:58:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577443",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-16T06:58:27Z",
-      "database_id": 25955577098,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "c5cfec3e386ccf481bc31296e33b3d8a19551e95",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:58:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955577098",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:56:31Z",
-      "database_id": 25955539776,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "pull_request",
-      "head_branch": "mark-api-canary-docs-historical",
-      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:56:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539776",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:56:31Z",
-      "database_id": 25955539755,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "pull_request",
-      "head_branch": "mark-api-canary-docs-historical",
-      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:57:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539755",
       "workflow_name": "Script Check"
     }
   ]
