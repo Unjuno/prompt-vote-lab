@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T12:04:07+00:00`
+Generated at: `2026-05-18T13:09:31+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -48,8 +48,9 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 336 | MERGED | 1 | 2/2 | Update docs README release readiness status |
+| 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
 | 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
+| 336 | MERGED | 1 | 2/2 | Update docs README release readiness status |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
@@ -77,13 +78,26 @@ This file is a raw results surface for participants. It does not score prompts o
 | 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
 | 328 | MERGED | 2 | 332/23 | Add release readiness review |
-| 329 | MERGED | 2 | 93/23 | Add root folder audit |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26035529751 | Terminal State Report | pull_request | completed | skipped | Clarify comparison output file sections |
+| 26035386717 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26035386710 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26035143494 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26035143433 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26035143407 | Safety Check | pull_request | completed | failure | Clarify comparison output file sections |
+| 26035143353 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26034722564 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26034722550 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26034722511 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
+| 26034722496 | Safety Check | pull_request | completed | failure | Clarify comparison output file sections |
+| 26032333751 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26032317866 | Public Results Export | push | completed | success | Update docs README release readiness status |
 | 26032317121 | Terminal State Report | pull_request | completed | skipped | Update docs README release readiness status |
+| 26032315883 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26032236686 | Lab PR Scope Check | pull_request | completed | success | Update docs README release readiness status |
 | 26032236655 | Pre-API Freeze Audit | pull_request | completed | success | Update docs README release readiness status |
 | 26032236643 | Static Site Check | pull_request | completed | success | Update docs README release readiness status |
@@ -99,20 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26020342903 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26019968000 | Issue Safety Scan | issues | completed | success | Investigate missing 2026-W20 scheduled weekly output |
 | 26018762551 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26018751741 | Public Results Export | schedule | completed | success | Public Results Export |
-| 26018655011 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 26014016068 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
-| 26013926744 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26013922785 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 25995598573 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
-| 25992289218 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25992282150 | Terminal State Report | pull_request | completed | skipped | Link cleanup documentation |
-| 25992282145 | Public Results Export | push | completed | success | Link cleanup documentation |
-| 25992281819 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25992246408 | Static Site Check | pull_request | completed | success | Link cleanup documentation |
-| 25992246378 | Lab PR Scope Check | pull_request | completed | success | Link cleanup documentation |
-| 25991980412 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25991974841 | Public Results Export | push | completed | success | Add document format policy |
 
 ## Raw JSON
 
