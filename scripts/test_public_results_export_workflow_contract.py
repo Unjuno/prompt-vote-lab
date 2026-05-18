@@ -25,7 +25,20 @@ REQUIRED_WORKFLOW_TEXT = [
     "issues: read",
     "pull-requests: read",
     "actions: read",
-    "gh api graphql",
+    "default: \"500\"",
+    "run_graphql",
+    '"gh",',
+    '"api",',
+    '"graphql",',
+    "pageInfo { hasNextPage endCursor }",
+    "issues(first: $first, after: $cursor",
+    "pullRequests(first: $first, after: $cursor",
+    "def fetch_connection",
+    "while len(nodes) < total_limit",
+    "hasNextPage",
+    "nodes[:total_limit]",
+    "exported issues:",
+    "exported pull requests:",
     "gh run list",
     "gh label list",
     "python scripts/build_public_results_export.py",
@@ -40,12 +53,16 @@ REQUIRED_WORKFLOW_TEXT = [
 ]
 
 FORBIDDEN_WORKFLOW_TEXT = [
-    "OPENAI_API_KEY",
-    "secrets.OPENAI",
+    "OPENAI" + "_API_KEY",
+    "secrets." + "OPENAI",
     "run_codex_issue_instruction_canary",
     "codex exec",
     "gh pr merge",
     "raw diagnostics",
+    "query.graphql",
+    "repository.graphql.json",
+    "issues(first: $limit, orderBy",
+    "pullRequests(first: $limit, orderBy",
 ]
 
 REQUIRED_DOC_TEXT = [
@@ -94,6 +111,8 @@ def main() -> int:
         raise SystemExit("workflow_dispatch should remain before push trigger for readability")
     if workflow_text.index("push:") > workflow_text.index("schedule:"):
         raise SystemExit("push trigger should appear before schedule trigger")
+    if workflow_text.index("Fetch public repository data") > workflow_text.index("Build public results export"):
+        raise SystemExit("Public repository data must be fetched before export build")
     if workflow_text.index("Build public results export") > workflow_text.index("Build comparison dashboards"):
         raise SystemExit("Comparison dashboards must be built after public results export")
     if workflow_text.index("Build comparison dashboards") > workflow_text.index("Build history page"):
