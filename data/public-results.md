@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-17T13:32:26+00:00`
+Generated at: `2026-05-18T07:06:40+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,9 +14,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 9 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 0 |
+| open_pr_count | 1 |
 | merged_pr_count | 82 |
-| workflow_run_count | 98 |
+| workflow_run_count | 99 |
 | run_record_count | 22 |
 
 ## Recent Issues
@@ -47,6 +47,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 333 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W20 |
 | 332 | MERGED | 2 | 23/0 | Link cleanup documentation |
 | 331 | MERGED | 1 | 119/0 | Add document format policy |
 | 330 | MERGED | 1 | 133/0 | Add script dependency map |
@@ -76,13 +77,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 266 | MERGED | 2 | 7/1 | Run Script Check for all run records |
 | 262 | MERGED | 4 | 317/25 | Publish sanitized reasoning trace evidence |
 | 265 | MERGED | 1 | 202/0 | Record first-canary-007 evidence-only result |
-| 267 | MERGED | 8 | 493/8 | Verify public agent run bundle contents |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26018655011 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 26014016068 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 26013926744 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26013922785 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 25995598573 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 25992289218 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25992282150 | Terminal State Report | pull_request | completed | skipped | Link cleanup documentation |
+| 25992282145 | Public Results Export | push | completed | success | Link cleanup documentation |
+| 25992281819 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 25992246408 | Static Site Check | pull_request | completed | success | Link cleanup documentation |
 | 25992246378 | Lab PR Scope Check | pull_request | completed | success | Link cleanup documentation |
 | 25991980412 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -104,14 +112,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25990701883 | Lab PR Scope Check | pull_request | completed | success | Add root folder audit |
 | 25990701869 | Static Site Check | pull_request | completed | success | Add root folder audit |
 | 25990701862 | Pre-API Freeze Audit | pull_request | completed | success | Add root folder audit |
-| 25989997560 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25989991241 | Public Results Export | push | completed | success | Add release readiness review |
-| 25989991204 | Terminal State Report | pull_request | completed | skipped | Add release readiness review |
-| 25989990795 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25989920059 | Pre-API Freeze Audit | pull_request | completed | success | Add release readiness review |
-| 25989920058 | Lab PR Scope Check | pull_request | completed | success | Add release readiness review |
-| 25989920056 | Static Site Check | pull_request | completed | success | Add release readiness review |
-| 25986269329 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
