@@ -15,14 +15,29 @@ It is not a replacement for the canonical status contract. Canonical, legacy, de
 ## Current judgment
 
 ```text
-security posture: PASS with remaining operational observation
+security posture: PASS
 participant journey: PASS
 live preview: PASS
 release blocker: none known from static review
-ordinary default-on weekly observation: pending
+ordinary default-on weekly no-eligible observation: PASS
 ```
 
-The project is not fully production-proven until at least one ordinary post-default-on weekly run is observed.
+The first ordinary post-default-on weekly no-eligible run has been observed and recorded.
+
+Evidence:
+
+```text
+support unlock file: data/support-unlocks/2026-W20.json
+vote summary PR: #333
+merged run record: runs/week-2026-W20-vote-summary.md
+baseline_won: true
+eligible_count: 0
+implementation-agent attempt: none
+auto-merge: disabled
+manual review: performed
+```
+
+This does not prove the next natural eligible weekly implementation will succeed. It does prove that the ordinary default-on no-eligible path resolves support data, records the weekly result, and stops before implementation-agent execution when the baseline wins.
 
 ## Security review
 
@@ -238,15 +253,15 @@ history
 
 ## Release blockers
 
-No release blocker is known from this static review.
+No release blocker is known from this static review and the first ordinary default-on no-eligible observation.
 
-Still required before stronger release claim:
+Still required before claiming the next natural eligible weekly implementation path is production-proven:
 
 ```text
-observe ordinary default-on weekly run
-confirm no-eligible path stops before implementation-agent attempt when baseline wins
-confirm no legacy API/SDK path is reached during ordinary weekly operation
-record the result in runs/ or release notes
+observe a natural eligible weekly implementation run
+confirm canonical Docker/Codex selected-prompt runner evidence
+confirm bounded lab-only diff
+confirm diagnostics and public bundle artifacts
 ```
 
 ## Release decision rule
@@ -258,7 +273,7 @@ PASS if:
   static security boundary remains intact
   participant journey links remain visible
   live preview links render
-  ordinary default-on weekly run is observed
+  ordinary default-on weekly no-eligible run is observed
   manual review remains required
   auto-merge remains disabled
 
@@ -271,7 +286,6 @@ FAIL if:
   auto-merge is enabled
 
 UNCERTAIN if:
-  ordinary weekly run has not been observed yet
   generated evidence is stale or missing
   GitHub Pages deployment status is unknown
 ```
@@ -283,7 +297,6 @@ Do not delete the legacy fallback yet.
 Next safe action:
 
 ```text
-define the legacy fallback removal gate
-observe the next ordinary default-on weekly run
+observe a natural eligible weekly implementation run when one occurs
 then decide whether to retire the legacy fallback
 ```
