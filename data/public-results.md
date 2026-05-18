@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T14:34:53+00:00`
+Generated at: `2026-05-18T15:06:01+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 86 |
+| merged_pr_count | 87 |
 | workflow_run_count | 98 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 341 | MERGED | 2 | 57/328 | Restore root lab minimal state |
 | 340 | MERGED | 1 | 0/21 | Restore minimal lab smoke contract |
 | 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
 | 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
@@ -77,13 +78,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
 | 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
 | 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
-| 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26041949300 | Terminal State Report | pull_request | completed | skipped | Restore root lab minimal state |
+| 26041860104 | Safety Check | pull_request | completed | success | Restore root lab minimal state |
+| 26041860080 | Static Site Check | pull_request | completed | success | Restore root lab minimal state |
+| 26041860072 | Lab PR Scope Check | pull_request | completed | success | Restore root lab minimal state |
+| 26040222966 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26040203257 | Public Results Export | push | completed | success | Restore minimal lab smoke contract |
 | 26040203101 | Terminal State Report | pull_request | completed | skipped | Restore minimal lab smoke contract |
+| 26040201600 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26038990764 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
 | 26038990368 | Static Site Check | pull_request | completed | success | Restore minimal lab smoke contract |
 | 26038990239 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
@@ -106,13 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26036323111 | Script Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
 | 26036323054 | Lab PR Scope Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
 | 26035548488 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26035529808 | Public Results Export | push | completed | success | Clarify comparison output file sections |
-| 26035529751 | Terminal State Report | pull_request | completed | skipped | Clarify comparison output file sections |
-| 26035528131 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26035386717 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26035386710 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26035143494 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26035143433 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
 
 ## Raw JSON
 

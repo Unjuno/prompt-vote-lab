@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-18T14:34:53+00:00",
+  "generated_at": "2026-05-18T15:06:01+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -732,6 +732,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 57,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Restore root `/lab/` to a small constrained implementation target.\n- Remove participant-docs/LP-style navigation, baseline/support explanation, live preview grids, and run-trail sections from the mutable root lab page.\n- Keep a minimal static experiment card with current state, allowed mutation, and runtime boundary.\n\n## Why\nThe root lab had drifted into a documentation/landing-page surface. That made it feel like a docs page rather than the mutable experiment target. Explanations, policies, comparisons, history, and public evidence should live outside root `/lab/`.\n\nThis PR restores the original design direction: `/lab/` is the current implementation target; comparison/history/evidence pages remain separate surfaces.\n\n## Scope\n- `lab/index.html`\n- `lab/style.css`\n\n## Non-goals\n- No scripts change.\n- No workflow change.\n- No runner code change.\n- No generated comparison/history update.\n- No participant policy change.\n- No legacy fallback removal.",
+      "body_length": 973,
+      "changed_files": 2,
+      "closed_at": "2026-05-18T15:05:39Z",
+      "comment_count": 0,
+      "created_at": "2026-05-18T15:04:06Z",
+      "deletions": 328,
+      "files": [
+        {
+          "additions": 23,
+          "deletions": 133,
+          "path": "lab/index.html"
+        },
+        {
+          "additions": 34,
+          "deletions": 195,
+          "path": "lab/style.css"
+        }
+      ],
+      "head_ref_name": "restore-root-lab-minimal-state-v2",
+      "head_ref_oid": "e2a6e027f116c1050db8af225ac9a3cdf13be63c",
+      "labels": [],
+      "merge_commit_oid": "de91f4fbb7f84ad953ff8a757eef48d1cb03814d",
+      "merged_at": "2026-05-18T15:05:39Z",
+      "merged_by": "Unjuno",
+      "number": 341,
+      "reaction_plus_one_count": 1,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Restore root lab minimal state",
+      "updated_at": "2026-05-18T15:05:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/341"
+    },
     {
       "additions": 0,
       "author": "Unjuno",
@@ -4839,48 +4876,6 @@
       "title": "Request comparison run for Issue 196 rank 3",
       "updated_at": "2026-05-11T05:22:50Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/215"
-    },
-    {
-      "additions": 672,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Implements a Prompt Vote Lab comparison candidate.\n\n## Configuration\n\n- Week: 2026-W20\n- Issue: #196\n- Issue title: [Prompt][Rank 3]: Add a participant decision card for weekly run review\n- Rank: 3\n- Votes: 0\n- Fixed comparison base: `0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0`\n- Output root: `lab/comparisons/2026-W20/rank-3`\n- Model: `gpt-5.4-nano`\n- Attempts: `1`\n- Retry policy: `none`\n- Fallback: `none`\n- Auto-merge: disabled\n- Final writable files: `lab/comparisons/2026-W20/rank-3/index.html`, `lab/comparisons/2026-W20/rank-3/style.css`, `lab/comparisons/2026-W20/rank-3/app.js`\n\n## Changed files\n\nlab/comparisons/2026-W20/rank-3/app.js,lab/comparisons/2026-W20/rank-3/index.html lab/comparisons/2026-W20/rank-3/style.css\n\n## Checks\n\n- runtime Issue safety scan passed\n- issue execution gate passed\n- root lab output copied into rank-specific comparison root\n- rank-root relative links normalized\n- root lab files restored before PR creation\n- changed-file guard passed\n- safety-check passed\n- static-site-check passed\n\nManual review is required. Do not auto-merge.\n",
-      "body_length": 1074,
-      "changed_files": 3,
-      "closed_at": "2026-05-09T13:50:55Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T12:56:41Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 136,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/app.js"
-        },
-        {
-          "additions": 126,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/index.html"
-        },
-        {
-          "additions": 410,
-          "deletions": 0,
-          "path": "lab/comparisons/2026-W20/rank-3/style.css"
-        }
-      ],
-      "head_ref_name": "codex-comparison-2026-W20-rank-3-7",
-      "head_ref_oid": "39e995be6106ea48d84913230d4713ed03812896",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 216,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Run Codex comparison issue rank 3",
-      "updated_at": "2026-05-11T05:22:45Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/216"
     }
   ],
   "run_records": [
@@ -5036,7 +5031,7 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 86,
+    "merged_pr_count": 87,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -5044,6 +5039,90 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-18T15:05:45Z",
+      "database_id": 26041949300,
+      "display_title": "Restore root lab minimal state",
+      "event": "pull_request",
+      "head_branch": "restore-root-lab-minimal-state-v2",
+      "head_sha": "e2a6e027f116c1050db8af225ac9a3cdf13be63c",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-18T15:05:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26041949300",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T15:04:11Z",
+      "database_id": 26041860104,
+      "display_title": "Restore root lab minimal state",
+      "event": "pull_request",
+      "head_branch": "restore-root-lab-minimal-state-v2",
+      "head_sha": "e2a6e027f116c1050db8af225ac9a3cdf13be63c",
+      "name": "Safety Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T15:04:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26041860104",
+      "workflow_name": "Safety Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T15:04:11Z",
+      "database_id": 26041860080,
+      "display_title": "Restore root lab minimal state",
+      "event": "pull_request",
+      "head_branch": "restore-root-lab-minimal-state-v2",
+      "head_sha": "e2a6e027f116c1050db8af225ac9a3cdf13be63c",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T15:04:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26041860080",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T15:04:11Z",
+      "database_id": 26041860072,
+      "display_title": "Restore root lab minimal state",
+      "event": "pull_request",
+      "head_branch": "restore-root-lab-minimal-state-v2",
+      "head_sha": "e2a6e027f116c1050db8af225ac9a3cdf13be63c",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T15:04:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26041860072",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T14:34:57Z",
+      "database_id": 26040222966,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9defc447427e7a6c2e20703ad4188be2a16e304d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T14:35:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26040222966",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T14:34:36Z",
+      "database_id": 26040203257,
+      "display_title": "Restore minimal lab smoke contract",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "ee94a27c89f5e631928e80240eca149cc1655504",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T14:34:59Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26040203257",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-18T14:34:35Z",
@@ -5057,6 +5136,20 @@
       "updated_at": "2026-05-18T14:34:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26040203101",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-18T14:34:34Z",
+      "database_id": 26040201600,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ee94a27c89f5e631928e80240eca149cc1655504",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T14:35:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26040201600",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6317,104 +6410,6 @@
       "updated_at": "2026-05-17T11:45:41Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920059",
       "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T11:45:33Z",
-      "database_id": 25989920058,
-      "display_title": "Add release readiness review",
-      "event": "pull_request",
-      "head_branch": "add-release-readiness-review-v2",
-      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T11:45:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920058",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T11:45:33Z",
-      "database_id": 25989920056,
-      "display_title": "Add release readiness review",
-      "event": "pull_request",
-      "head_branch": "add-release-readiness-review-v2",
-      "head_sha": "37346fa4a6ab760749314b236990dde90e869eb5",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T11:45:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25989920056",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:47:51Z",
-      "database_id": 25986269329,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9677f2ffc3258bc345c3862e4d485f1e660aaf1b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:48:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986269329",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-17T08:47:32Z",
-      "database_id": 25986263226,
-      "display_title": "Cover Pages smoke copy in script-check contract",
-      "event": "pull_request",
-      "head_branch": "wire-pages-smoke-contract-through-existing-test",
-      "head_sha": "747dbc3993f30a8e350bd407874e0d3fe042d213",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:47:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986263226",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:47:32Z",
-      "database_id": 25986263215,
-      "display_title": "Cover Pages smoke copy in script-check contract",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:47:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986263215",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-17T08:47:31Z",
-      "database_id": 25986262836,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "fdf11a33a23fea0cf812a92dfe4bbfaa4940a767",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:47:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986262836",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:45:19Z",
-      "database_id": 25986218978,
-      "display_title": "Cover Pages smoke copy in script-check contract",
-      "event": "pull_request",
-      "head_branch": "wire-pages-smoke-contract-through-existing-test",
-      "head_sha": "747dbc3993f30a8e350bd407874e0d3fe042d213",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:45:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986218978",
-      "workflow_name": "Script Check"
     }
   ]
 }
