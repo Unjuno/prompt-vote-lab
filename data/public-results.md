@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T11:46:14+00:00`
+Generated at: `2026-05-18T12:04:07+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 84 |
+| merged_pr_count | 85 |
 | workflow_run_count | 98 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 336 | MERGED | 1 | 2/2 | Update docs README release readiness status |
 | 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
 | 258 | CLOSED | 2 | 27/0 | Run fixed first canary |
@@ -77,13 +78,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
 | 328 | MERGED | 2 | 332/23 | Add release readiness review |
 | 329 | MERGED | 2 | 93/23 | Add root folder audit |
-| 330 | MERGED | 1 | 133/0 | Add script dependency map |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26032317121 | Terminal State Report | pull_request | completed | skipped | Update docs README release readiness status |
+| 26032236686 | Lab PR Scope Check | pull_request | completed | success | Update docs README release readiness status |
+| 26032236655 | Pre-API Freeze Audit | pull_request | completed | success | Update docs README release readiness status |
+| 26032236643 | Static Site Check | pull_request | completed | success | Update docs README release readiness status |
+| 26031496942 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26031482760 | Terminal State Report | pull_request | completed | skipped | Record W20 ordinary weekly observation pass |
+| 26031482494 | Public Results Export | push | completed | success | Record W20 ordinary weekly observation pass |
+| 26031481341 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26031410947 | Lab PR Scope Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
 | 26031410933 | Static Site Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
 | 26020358039 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -106,13 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25992246378 | Lab PR Scope Check | pull_request | completed | success | Link cleanup documentation |
 | 25991980412 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25991974841 | Public Results Export | push | completed | success | Add document format policy |
-| 25991974775 | Terminal State Report | pull_request | completed | skipped | Add document format policy |
-| 25991974472 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25991864934 | Static Site Check | pull_request | completed | success | Add document format policy |
-| 25991864922 | Lab PR Scope Check | pull_request | completed | success | Add document format policy |
-| 25991082426 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 25991074943 | Public Results Export | push | completed | success | Add script dependency map |
-| 25991074917 | Terminal State Report | pull_request | completed | skipped | Add script dependency map |
 
 ## Raw JSON
 

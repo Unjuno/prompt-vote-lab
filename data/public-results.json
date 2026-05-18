@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-18T11:46:14+00:00",
+  "generated_at": "2026-05-18T12:04:07+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -733,6 +733,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 2,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update `docs/README.md` so its release-readiness status matches `docs/release-readiness-review.md`.\n- Replace the stale `ordinary default-on weekly observation: pending` wording with `ordinary default-on weekly no-eligible observation: PASS`.\n\n## Scope\n- `docs/README.md`\n\n## Why\nPR #335 recorded the W20 ordinary default-on weekly no-eligible observation as PASS. The docs index still had the old pending status, which could mislead readers.\n\n## Non-goals\n- No workflow change.\n- No runner code change.\n- No lab implementation change.\n- No generated evidence change.\n- No legacy fallback removal.",
+      "body_length": 610,
+      "changed_files": 1,
+      "closed_at": "2026-05-18T12:03:45Z",
+      "comment_count": 0,
+      "created_at": "2026-05-18T12:01:59Z",
+      "deletions": 2,
+      "files": [
+        {
+          "additions": 2,
+          "deletions": 2,
+          "path": "docs/README.md"
+        }
+      ],
+      "head_ref_name": "update-docs-readme-w20-status-v2",
+      "head_ref_oid": "dd203949dc055bbdec80ab3a4544061374eeb3c5",
+      "labels": [],
+      "merge_commit_oid": "71eb0f1e05c289a083f9d7db9880891cb98d35fa",
+      "merged_at": "2026-05-18T12:03:44Z",
+      "merged_by": "Unjuno",
+      "number": 336,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Update docs README release readiness status",
+      "updated_at": "2026-05-18T12:03:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/336"
+    },
+    {
       "additions": 46,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -767,7 +799,7 @@
       "merged_at": "2026-05-18T11:45:55Z",
       "merged_by": "Unjuno",
       "number": 335,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Record W20 ordinary weekly observation pass",
@@ -4894,43 +4926,6 @@
       "title": "Add history page generator",
       "updated_at": "2026-05-11T05:22:32Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/200"
-    },
-    {
-      "additions": 5,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds explicit timeouts to the comparison-run workflow so Codex runner stalls fail deterministically instead of blocking the queue indefinitely.\n\n## Change\n\n```text\n.github/workflows/codex-comparison-issue-run.yml\n```\n\nAdds:\n\n```yaml\njobs:\n  codex-comparison-issue-run:\n    timeout-minutes: 30\n\nsteps:\n  - name: Run existing fixed-Issue runner\n    timeout-minutes: 20\n```\n\nAlso updates:\n\n```text\nscripts/test_comparison_issue_run_workflow_contract.py\n```\n\nto require those timeout settings.\n\n## Why\n\nSeveral comparison runs spend most of their time in:\n\n```text\nRun existing fixed-Issue runner\n```\n\nWithout a timeout, a stuck model/API/container invocation can block operational progress and leave only manual cancellation as the recovery path.\n\n## Non-goals\n\n- Does not change model, prompt, fixed base, retry policy, or fallback policy.\n- Does not alter generated comparison artifacts.\n- Does not affect the currently running #223 workflow run; it only applies to future runs.\n\n<!-- CURSOR_SUMMARY -->\n---\n\n> [!NOTE]\n> **Low Risk**\n> Low risk: CI-only change that adds job/step time limits; main behavior change is that long-running/stuck comparison runs will now fail instead of hanging.\n> \n> **Overview**\n> Adds explicit timeouts to the `codex-comparison-issue-run` GitHub Actions workflow: a **30-minute cap** for the job and a **20-minute cap** for the `Run existing fixed-Issue runner` step to prevent stalled runs from blocking the queue.\n> \n> Updates the workflow contract test (`scripts/test_comparison_issue_run_workflow_contract.py`) to require these timeout settings so regressions are caught in CI.\n> \n> <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup>\n<!-- /CURSOR_SUMMARY -->",
-      "body_length": 1889,
-      "changed_files": 2,
-      "closed_at": "2026-05-09T18:26:10Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T17:54:24Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 2,
-          "deletions": 0,
-          "path": ".github/workflows/codex-comparison-issue-run.yml"
-        },
-        {
-          "additions": 3,
-          "deletions": 0,
-          "path": "scripts/test_comparison_issue_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "add-comparison-run-timeouts-v2",
-      "head_ref_oid": "829fc5e150a61ff7eaeb7968413b6ef0c3fd4daa",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 225,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Add timeouts to comparison runs",
-      "updated_at": "2026-05-11T05:22:27Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/225"
     }
   ],
   "run_records": [
@@ -5086,7 +5081,7 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 84,
+    "merged_pr_count": 85,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -5094,6 +5089,76 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-18T12:03:49Z",
+      "database_id": 26032317121,
+      "display_title": "Update docs README release readiness status",
+      "event": "pull_request",
+      "head_branch": "update-docs-readme-w20-status-v2",
+      "head_sha": "dd203949dc055bbdec80ab3a4544061374eeb3c5",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-18T12:03:50Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26032317121",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T12:02:04Z",
+      "database_id": 26032236686,
+      "display_title": "Update docs README release readiness status",
+      "event": "pull_request",
+      "head_branch": "update-docs-readme-w20-status-v2",
+      "head_sha": "dd203949dc055bbdec80ab3a4544061374eeb3c5",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T12:02:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26032236686",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T12:02:04Z",
+      "database_id": 26032236655,
+      "display_title": "Update docs README release readiness status",
+      "event": "pull_request",
+      "head_branch": "update-docs-readme-w20-status-v2",
+      "head_sha": "dd203949dc055bbdec80ab3a4544061374eeb3c5",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-18T12:02:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26032236655",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T12:02:04Z",
+      "database_id": 26032236643,
+      "display_title": "Update docs README release readiness status",
+      "event": "pull_request",
+      "head_branch": "update-docs-readme-w20-status-v2",
+      "head_sha": "dd203949dc055bbdec80ab3a4544061374eeb3c5",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T12:02:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26032236643",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T11:46:17Z",
+      "database_id": 26031496942,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "4919be9c5b7a3bd5ecd8126e6f226ba2c1309ec7",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:46:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031496942",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-18T11:45:59Z",
@@ -5107,6 +5172,34 @@
       "updated_at": "2026-05-18T11:46:00Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031482760",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T11:45:58Z",
+      "database_id": 26031482494,
+      "display_title": "Record W20 ordinary weekly observation pass",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "8bb17299257fa7928e5aef93fcffa7097ebabfdd",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:46:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031482494",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-18T11:45:57Z",
+      "database_id": 26031481341,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8bb17299257fa7928e5aef93fcffa7097ebabfdd",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T11:46:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031481341",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6366,104 +6459,6 @@
       "status": "completed",
       "updated_at": "2026-05-16T08:34:23Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957428012",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T08:13:33Z",
-      "database_id": 25957043141,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "1589f25f308c5d131364084954d1e95d8cba666b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T08:13:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957043141",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T08:13:15Z",
-      "database_id": 25957037111,
-      "display_title": "Gate legacy first API canary workflow",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-first-api-canary",
-      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T08:13:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957037111",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T08:13:15Z",
-      "database_id": 25957037092,
-      "display_title": "Gate legacy first API canary workflow",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "f91d433b35160ba9683bc877cdec3e5e3597a93d",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T08:13:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957037092",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T08:13:14Z",
-      "database_id": 25957036773,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "f91d433b35160ba9683bc877cdec3e5e3597a93d",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T08:13:35Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25957036773",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T07:56:58Z",
-      "database_id": 25956721699,
-      "display_title": "Gate legacy first API canary workflow",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-first-api-canary",
-      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T07:57:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721699",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T07:56:58Z",
-      "database_id": 25956721668,
-      "display_title": "Gate legacy first API canary workflow",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-first-api-canary",
-      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-16T07:57:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721668",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T07:56:58Z",
-      "database_id": 25956721666,
-      "display_title": "Gate legacy first API canary workflow",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-first-api-canary",
-      "head_sha": "67c9fe6b789dedb575facd8b02d47baed185cb1c",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T07:57:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25956721666",
       "workflow_name": "Script Check"
     }
   ]
