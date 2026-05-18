@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T22:43:57+00:00`
+Generated at: `2026-05-18T23:28:59+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,10 +13,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 100 |
+| pr_count | 324 |
 | open_pr_count | 0 |
-| merged_pr_count | 88 |
-| workflow_run_count | 98 |
+| merged_pr_count | 262 |
+| workflow_run_count | 499 |
 | run_record_count | 23 |
 
 ## Recent Issues
@@ -48,13 +48,14 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 343 | MERGED | 3 | 216/1 | Define release week numbering policy |
-| 342 | MERGED | 1 | 41/3 | Fix W20 comparison dashboard lab evidence |
-| 341 | MERGED | 2 | 57/328 | Restore root lab minimal state |
-| 340 | MERGED | 1 | 0/21 | Restore minimal lab smoke contract |
+| 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
 | 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
 | 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
 | 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
+| 340 | MERGED | 1 | 0/21 | Restore minimal lab smoke contract |
+| 341 | MERGED | 2 | 57/328 | Restore root lab minimal state |
+| 342 | MERGED | 1 | 41/3 | Fix W20 comparison dashboard lab evidence |
+| 343 | MERGED | 3 | 216/1 | Define release week numbering policy |
 | 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
 | 336 | MERGED | 1 | 2/2 | Update docs README release readiness status |
 | 263 | CLOSED | 1 | 1/0 | Run Codex policy-enforced agent canary |
@@ -77,13 +78,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
 | 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
 | 320 | MERGED | 6 | 205/100 | Mark legacy API canary docs as historical |
-| 322 | MERGED | 2 | 33/2 | Gate legacy OpenAI runner weekly fallback |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26066439747 | Terminal State Report | pull_request | completed | skipped | Paginate public results export inputs |
+| 26066439068 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26066341650 | Lab PR Scope Check | pull_request | completed | success | Paginate public results export inputs |
+| 26066341646 | Script Check | pull_request | completed | success | Paginate public results export inputs |
+| 26066189990 | Script Check | pull_request | completed | failure | Paginate public results export inputs |
+| 26066189977 | Lab PR Scope Check | pull_request | completed | success | Paginate public results export inputs |
+| 26064762107 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26064749182 | Terminal State Report | pull_request | completed | skipped | Define release week numbering policy |
+| 26064749163 | Public Results Export | push | completed | success | Define release week numbering policy |
+| 26064748317 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26048045426 | Static Site Check | pull_request | completed | success | Define release week numbering policy |
 | 26048045374 | Lab PR Scope Check | pull_request | completed | success | Define release week numbering policy |
 | 26048045314 | Pre-API Freeze Audit | pull_request | completed | success | Define release week numbering policy |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26040222966 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26040203257 | Public Results Export | push | completed | success | Restore minimal lab smoke contract |
 | 26040203101 | Terminal State Report | pull_request | completed | skipped | Restore minimal lab smoke contract |
-| 26040201600 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26038990764 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038990368 | Static Site Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038990239 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038683204 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038683114 | Static Site Check | pull_request | completed | failure | Restore minimal lab smoke contract |
-| 26038683108 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038444781 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
-| 26038444751 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
 
 ## Raw JSON
 
