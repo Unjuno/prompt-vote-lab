@@ -40,6 +40,7 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 28. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
 29. [Report policy](./report-policy.md) — weekly report draft policy.
 30. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
+31. [Release week numbering](./release-week-numbering.md) — public Release Week 1/2/3 labels versus internal ISO week evidence IDs.
 
 ## Current reputation status
 
@@ -71,6 +72,14 @@ participant journey: PASS
 live preview: PASS
 ordinary default-on weekly no-eligible observation: PASS
 ```
+
+## Release week status
+
+Public release numbering starts at `Release Week 1` after launch.
+
+Pre-release evidence such as `2026-W20` remains preserved under its internal ISO week ID and should not be presented as Release Week 1.
+
+See [Release week numbering](./release-week-numbering.md).
 
 ## Repository cleanup status
 
