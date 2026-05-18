@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T07:06:40+00:00`
+Generated at: `2026-05-18T07:45:25+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -8,21 +8,22 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | metric | value |
 | --- | --- |
-| issue_count | 19 |
-| open_issue_count | 2 |
+| issue_count | 20 |
+| open_issue_count | 3 |
 | blocked_issue_count | 5 |
-| clear_issue_count | 9 |
+| clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
-| open_pr_count | 1 |
-| merged_pr_count | 82 |
-| workflow_run_count | 99 |
-| run_record_count | 22 |
+| open_pr_count | 0 |
+| merged_pr_count | 83 |
+| workflow_run_count | 98 |
+| run_record_count | 23 |
 
 ## Recent Issues
 
 | # | state | +1 | labels | title |
 | --- | --- | --- | --- | --- |
+| 334 | OPEN | 0 | issue-safety:clear, issue-safety:submission-detected, maintenance | Investigate missing 2026-W20 scheduled weekly output |
 | 312 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Decide whether to gate historical Codex canary workflows before release |
 | 306 | CLOSED | 0 | issue-safety:clear, issue-safety:submission-detected | Review Weekly Issue Finalizer manual input handling before release |
 | 305 | CLOSED | 0 | issue-safety:blocked, issue-safety:review, issue-safety:submission-detected | Review Support Unlock Export input handling before release |
@@ -47,7 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 333 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W20 |
+| 333 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W20 |
 | 332 | MERGED | 2 | 23/0 | Link cleanup documentation |
 | 331 | MERGED | 1 | 119/0 | Add document format policy |
 | 330 | MERGED | 1 | 133/0 | Add script dependency map |
@@ -82,6 +83,10 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26020344264 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W20 |
+| 26019968000 | Issue Safety Scan | issues | completed | success | Investigate missing 2026-W20 scheduled weekly output |
+| 26018762551 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26018751741 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26018655011 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26014016068 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 26013926744 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -108,10 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 25990775144 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 25990768614 | Terminal State Report | pull_request | completed | skipped | Add root folder audit |
 | 25990768599 | Public Results Export | push | completed | success | Add root folder audit |
-| 25990768238 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 25990701883 | Lab PR Scope Check | pull_request | completed | success | Add root folder audit |
-| 25990701869 | Static Site Check | pull_request | completed | success | Add root folder audit |
-| 25990701862 | Pre-API Freeze Audit | pull_request | completed | success | Add root folder audit |
 
 ## Raw JSON
 

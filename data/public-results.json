@@ -1,6 +1,34 @@
 {
-  "generated_at": "2026-05-18T07:06:40+00:00",
+  "generated_at": "2026-05-18T07:45:25+00:00",
   "issues": [
+    {
+      "author": "Unjuno",
+      "body": "## Observation\n\nAs of the post-schedule check, no new scheduled `week-2026-W20` weekly output is visible through repository artifacts.\n\nObserved missing outputs:\n\n```text\ndata/support-unlocks/2026-W20.json\nRecord auto vote summary for week-2026-W20\nweekly-auto-summary-week-2026-W20-* branch\ncodex-lab-week-2026-W20-* branch\n```\n\nObserved existing prior evidence:\n\n```text\ndata/support-unlocks/2026-W19.json exists\nRecord auto vote summary for week-2026-W19 exists\ncanonical weekly selected-prompt evidence exists for run 25858202166 / PR #284\n```\n\n## Expected schedule\n\n```text\nSupport Unlock Export: 00:17 UTC / 09:17 JST\nWeekly Auto Run: 00:23 UTC / 09:23 JST\n```\n\nFor the 2026-05-18 scheduled path, support export should normally produce the previous completed UTC ISO week support file:\n\n```text\ndata/support-unlocks/2026-W20.json\n```\n\nThen Weekly Auto Run should resolve that support unlock file and either:\n\n```text\ncreate only a vote summary PR when no prompt beats the baseline\n```\n\nor:\n\n```text\ncreate canonical selected-prompt implementation evidence when eligible candidates exist\n```\n\n## Safety note\n\nThe current workflow design requires the support unlock file before vote collection. If the file is missing on a scheduled run, the weekly workflow should fail before candidate selection and before any implementation-agent attempt.\n\nThat means the likely failure mode is a missing observation/output, not an unexpected Codex/API spend.\n\n## Checks to perform\n\n```text\n1. Open Actions -> Support Unlock Export and inspect the 2026-05-18 scheduled run.\n2. Confirm whether it ran, skipped, failed, or produced no commit.\n3. Open Actions -> Weekly Auto Run and inspect the 2026-05-18 scheduled run.\n4. Confirm whether it failed at Resolve automated support unlocks.\n5. If support export failed, inspect token or workflow logs.\n6. If support export did not run, inspect repository Actions schedule status.\n7. If support export succeeded with no commit, verify why data/support-unlocks/2026-W20.json was not created.\n8. Do not trigger legacy API/SDK fallback while investigating.\n```\n\n## Pass criteria\n\n```text\ndata/support-unlocks/2026-W20.json exists\nWeekly Auto Run creates a week-2026-W20 vote summary PR\nno-eligible path stops before implementation-agent attempt when baseline wins\neligible path uses Runner: codex-cli-selected-prompt-packet-container\nCanonical selected-prompt runner: true\nauto-merge remains disabled\n```\n\n## Current status\n\n```text\nstatus: needs Actions UI/log inspection\nrelease readiness impact: ordinary default-on weekly observation remains pending\n```",
+      "body_length": 2587,
+      "closed_at": null,
+      "comment_count": 1,
+      "created_at": "2026-05-18T07:36:17Z",
+      "labels": [
+        "issue-safety:clear",
+        "issue-safety:submission-detected",
+        "maintenance"
+      ],
+      "number": 334,
+      "reaction_minus_one_count": 0,
+      "reaction_plus_one_count": 0,
+      "safety": {
+        "authorized_canary": false,
+        "blocked": false,
+        "clear": true,
+        "review": false,
+        "runtime_detected": false,
+        "submission_detected": true
+      },
+      "state": "OPEN",
+      "title": "Investigate missing 2026-W20 scheduled weekly output",
+      "updated_at": "2026-05-18T07:36:34Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/issues/334"
+    },
     {
       "author": "Unjuno",
       "body": "## Finding\n\nFile-by-file review found that several historical Codex canary workflows remain manually runnable with `workflow_dispatch` and repository write / PR creation permissions.\n\nThis is not an immediate canonical-runner blocker because:\n\n```text\n- they are manual only\n- they do not auto-merge\n- they create PRs rather than merging\n- they have changed-file guards for lab/index.html, lab/style.css, lab/app.js\n- current weekly default-on path uses the canonical selected-prompt runner instead\n```\n\nHowever, some old canary workflows are intentionally weaker than the current canonical boundary, including old workspace-write or relaxed-sandbox experiments.\n\n## Workflows reviewed in this group\n\n```text\n.github/workflows/codex-first-canary-run.yml\n.github/workflows/codex-isolated-3file-canary-run.yml\n.github/workflows/codex-isolated-3file-relaxed-canary-run.yml\n.github/workflows/codex-writeback-canary-run.yml\n.github/workflows/codex-offline-json-canary-run.yml\n.github/workflows/codex-agent-observed-canary-run.yml\n.github/workflows/codex-policy-agent-canary-run.yml\n.github/workflows/codex-task-packet-canary-run.yml\n.github/workflows/canary-007-policy-feasibility.yml\n```\n\n## Candidate release hardening options\n\nChoose one before public release:\n\n### Option A: Documentation-only\n\nKeep workflows runnable, but clearly document that historical canary workflows are not the normal release path.\n\n### Option B: Explicit repository variable gate\n\nRequire a repository variable such as:\n\n```text\nALLOW_HISTORICAL_CANARY_WORKFLOWS=true\n```\n\nfor older historical canary workflows to run.\n\nThis preserves the workflows as evidence surfaces while reducing accidental execution.\n\n### Option C: Disable only weaker canaries\n\nGate only the old workspace-write / relaxed-sandbox canaries, while leaving read-only feasibility and canonical selected-prompt smoke workflows available.\n\n## Non-goals\n\n- Do not delete historical canary workflows in this issue.\n- Do not remove run records or generated evidence.\n- Do not change the canonical weekly selected-prompt default-on path.\n- Do not enable auto-merge.\n\n## Current recommendation\n\nUse Option B or C if release hardening prioritizes accidental-run prevention.\n\nUse Option A if preserving easy rerun access to historical experiments is more important.",
@@ -696,6 +724,11 @@
       "color": "ededed",
       "description": "",
       "name": "weekly-auto-run"
+    },
+    {
+      "color": "ededed",
+      "description": "",
+      "name": "maintenance"
     }
   ],
   "pull_requests": [
@@ -706,7 +739,7 @@
       "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
       "body_length": 77,
       "changed_files": 1,
-      "closed_at": null,
+      "closed_at": "2026-05-18T07:45:06Z",
       "comment_count": 0,
       "created_at": "2026-05-18T04:44:53Z",
       "deletions": 0,
@@ -720,15 +753,15 @@
       "head_ref_name": "weekly-auto-summary-week-2026-W20-8",
       "head_ref_oid": "e29210964fc501acaa2ab9894ba1356da9f80039",
       "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
+      "merge_commit_oid": "9f689938ae718e36130f5316b7e5975f55b81546",
+      "merged_at": "2026-05-18T07:45:06Z",
+      "merged_by": "Unjuno",
       "number": 333,
       "reaction_plus_one_count": 0,
       "review_decision": null,
-      "state": "OPEN",
+      "state": "MERGED",
       "title": "Record auto vote summary for week-2026-W20",
-      "updated_at": "2026-05-18T04:44:53Z",
+      "updated_at": "2026-05-18T07:45:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/333"
     },
     {
@@ -5022,6 +5055,12 @@
       "path": "runs/week-2026-W19-vote-summary.md",
       "size_bytes": 867,
       "title": "Weekly vote summary: week-2026-W19"
+    },
+    {
+      "content": "# Weekly vote summary: week-2026-W20\n\nVotes are counted from 👍 reactions on open `prompt-proposal` issues.\nA virtual no-change baseline candidate is inserted every week with 20 votes.\nIf the baseline ranks first, no implementation run should be created.\n\n| Rank | Candidate | Type | 👍 votes | Title |\n|---:|---|---|---:|---|\n| 1 | baseline | no-change-baseline | 20 | [Baseline]: No change this week |\n\n## Weekly support total\n\n0.0 USD\n\n## Support unlock source\n\n2026-W20 / data/support-unlocks/2026-W20.json / rank2=false / rank3=false\n\n## No-change baseline\n\n20 virtual votes\n\n## Canonical selected-prompt runner\n\ntrue\n\n## Eligible implementation ranks\n\n- no implementation-agent attempt: no prompt beat the no-change baseline\n\n## Selection metadata\n\n```json\n{\n  \"baseline_won\": true,\n  \"eligible_count\": 0,\n  \"eligible_ranks\": [],\n  \"support_usd\": 0.0,\n  \"support_source\": \"support-unlock-file\"\n}\n```\n",
+      "path": "runs/week-2026-W20-vote-summary.md",
+      "size_bytes": 910,
+      "title": "Weekly vote summary: week-2026-W20"
     }
   ],
   "schema_version": "prompt-vote-lab-public-results-export-v1",
@@ -5035,16 +5074,72 @@
   "summary": {
     "authorized_canary_issue_count": 1,
     "blocked_issue_count": 5,
-    "clear_issue_count": 9,
-    "issue_count": 19,
-    "merged_pr_count": 82,
-    "open_issue_count": 2,
-    "open_pr_count": 1,
+    "clear_issue_count": 10,
+    "issue_count": 20,
+    "merged_pr_count": 83,
+    "open_issue_count": 3,
+    "open_pr_count": 0,
     "pr_count": 100,
-    "run_record_count": 22,
-    "workflow_run_count": 99
+    "run_record_count": 23,
+    "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-18T07:45:10Z",
+      "database_id": 26020344264,
+      "display_title": "Record auto vote summary for week-2026-W20",
+      "event": "pull_request",
+      "head_branch": "weekly-auto-summary-week-2026-W20-8",
+      "head_sha": "e29210964fc501acaa2ab9894ba1356da9f80039",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:45:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26020344264",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T07:36:21Z",
+      "database_id": 26019968000,
+      "display_title": "Investigate missing 2026-W20 scheduled weekly output",
+      "event": "issues",
+      "head_branch": "main",
+      "head_sha": "da3297d1b6aea43fa15cbdd39be5a425a56719e8",
+      "name": "Issue Safety Scan",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:36:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26019968000",
+      "workflow_name": "Issue Safety Scan"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T07:06:43Z",
+      "database_id": 26018762551,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "da3297d1b6aea43fa15cbdd39be5a425a56719e8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:07:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26018762551",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T07:06:26Z",
+      "database_id": 26018751741,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "989151c0bf75f595eac6b7a3bbd51dd8269400ec",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T07:06:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26018751741",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-05-18T07:03:58Z",
@@ -6360,76 +6455,6 @@
       "updated_at": "2026-05-16T06:57:09Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539755",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:56:31Z",
-      "database_id": 25955539753,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "pull_request",
-      "head_branch": "mark-api-canary-docs-historical",
-      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:56:41Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539753",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:56:31Z",
-      "database_id": 25955539750,
-      "display_title": "Mark legacy API canary docs as historical",
-      "event": "pull_request",
-      "head_branch": "mark-api-canary-docs-historical",
-      "head_sha": "80356e3077263470198c58add71e3add38f5f19c",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:56:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25955539750",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:24:22Z",
-      "database_id": 25954923538,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "f838b81a9d6fe83abd54428d59308a49c47cc692",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:24:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954923538",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T06:24:01Z",
-      "database_id": 25954917009,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "pull_request",
-      "head_branch": "remove-api-output-token-cap",
-      "head_sha": "20bbb61ee6b1faba298b4e72b6f22ee4a9d2552c",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:24:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954917009",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T06:24:01Z",
-      "database_id": 25954916987,
-      "display_title": "Remove API-era output token cap from active policy",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "22d62b39f1c3c42e9413d43f585e17474d0b1472",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T06:24:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25954916987",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
