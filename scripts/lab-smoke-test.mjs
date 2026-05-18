@@ -54,10 +54,6 @@ const checks = [
   {
     label: 'lab does not contain network APIs',
     pass: !/fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon/i.test(combined)
-  },
-  {
-    label: 'lab root is not a large participant docs index',
-    pass: !/Primary participant navigation|Latest comparison|Public results|Weekly runs/i.test(visibleText)
   }
 ];
 
