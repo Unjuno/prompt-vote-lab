@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-18T13:09:31+00:00",
+  "generated_at": "2026-05-18T13:27:09+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -732,6 +732,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 90,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Update the comparison dashboard generator so it prefers implementation PRs that actually touch the rank output/root lab files.\n- Avoid choosing later script-only maintenance PRs for the same Issue as the dashboard's implementation PR.\n- Extend the comparison dashboard test with same-Issue follow-up PR fixtures so the dashboard keeps selecting the implementation PR.\n\n## Why\nThe W20 dashboard exposed a subtle evidence confusion risk: a later script-only PR for the same Issue could be selected over the actual implementation PR because the previous selection logic preferred state and PR number. That made the dashboard show the wrong PR number and changed-file list for a rank output.\n\nThe dashboard should distinguish:\n\n```text\nImplementation PR changed files\nLive output snapshot files\n```\n\nand its implementation PR should be the PR that produced the relevant live output/root lab files.\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nRegenerate `lab/comparisons/2026-W20/index.html` in a separate generated-evidence-only PR after this generator/test PR is green and merged.\n\n## Non-goals\n- No root lab implementation change.\n- No workflow change.\n- No runner code change.\n- No generated dashboard update in this PR.\n- No generated rank output snapshot change.\n- No history page change.\n- No legacy fallback removal.",
+      "body_length": 1401,
+      "changed_files": 2,
+      "closed_at": "2026-05-18T13:26:48Z",
+      "comment_count": 0,
+      "created_at": "2026-05-18T13:24:28Z",
+      "deletions": 24,
+      "files": [
+        {
+          "additions": 52,
+          "deletions": 23,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 38,
+          "deletions": 1,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "prefer-implementation-prs-in-dashboard",
+      "head_ref_oid": "916089e7519078a50b0f622ed2b6cefdfc9ad826",
+      "labels": [],
+      "merge_commit_oid": "d3c0f5d925f6f0f914f3520efbb813fa10795901",
+      "merged_at": "2026-05-18T13:26:48Z",
+      "merged_by": "Unjuno",
+      "number": 338,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Prefer implementation PRs in comparison dashboard",
+      "updated_at": "2026-05-18T13:26:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/338"
+    },
     {
       "additions": 35,
       "author": "Unjuno",
@@ -4879,38 +4916,6 @@
       "title": "Require support unlock data before weekly runs",
       "updated_at": "2026-05-11T05:22:38Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/236"
-    },
-    {
-      "additions": 7,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n\nAdds a metadata-normalized comparison run request file for Issue #195 as rank 2.\n\n## Request\n\n```json\n{\n  \"week_id\": \"2026-W20\",\n  \"base_sha\": \"0c1a1e55a6e4d5ef59d6fcc0e2220d2f2dad0dc0\",\n  \"issue_number\": 195,\n  \"candidate_rank\": 2,\n  \"vote_count\": 0\n}\n```\n\n## Comparison base\n\nUses the same fixed comparison base as the previous rank2/rank3 runs so the outputs remain comparable.\n\n## Expected trigger\n\nThis PR should trigger `Codex Comparison Issue Run` through the request-file `pull_request` trigger.\n\nExpected generated output PR path:\n\n```text\nlab/comparisons/2026-W20/rank-2/\n```\n\n## Regression target\n\nThe generated rank-root page and app script should not retain stale copied metadata such as:\n\n```text\nIssue #191\nCandidate #1\n```\n\nThey should be normalized to:\n\n```text\nIssue #195\nCandidate #2\n```\n\n## Non-goals\n\n- No direct lab output changes in this request PR.\n- No auto-merge of generated comparison output.",
-      "body_length": 932,
-      "changed_files": 1,
-      "closed_at": "2026-05-09T15:29:38Z",
-      "comment_count": 1,
-      "created_at": "2026-05-09T14:02:21Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 7,
-          "deletions": 0,
-          "path": "run-requests/comparison/2026-W20-rank-2-issue-195-v5.json"
-        }
-      ],
-      "head_ref_name": "request-rank2-issue195-comparison-v5",
-      "head_ref_oid": "fd4f2d1b20d458802d760867f64e668d8d56aa05",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 218,
-      "reaction_plus_one_count": 1,
-      "review_decision": null,
-      "state": "CLOSED",
-      "title": "Request metadata-normalized comparison run for Issue 195 rank 2",
-      "updated_at": "2026-05-11T05:22:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/218"
     }
   ],
   "run_records": [
@@ -5066,7 +5071,7 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 85,
+    "merged_pr_count": 86,
     "open_issue_count": 0,
     "open_pr_count": 0,
     "pr_count": 100,
@@ -5074,6 +5079,76 @@
     "workflow_run_count": 98
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-18T13:26:53Z",
+      "database_id": 26036444800,
+      "display_title": "Prefer implementation PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "prefer-implementation-prs-in-dashboard",
+      "head_sha": "916089e7519078a50b0f622ed2b6cefdfc9ad826",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:26:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26036444800",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T13:24:34Z",
+      "database_id": 26036323111,
+      "display_title": "Prefer implementation PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "prefer-implementation-prs-in-dashboard",
+      "head_sha": "916089e7519078a50b0f622ed2b6cefdfc9ad826",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:25:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26036323111",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T13:24:34Z",
+      "database_id": 26036323054,
+      "display_title": "Prefer implementation PRs in comparison dashboard",
+      "event": "pull_request",
+      "head_branch": "prefer-implementation-prs-in-dashboard",
+      "head_sha": "916089e7519078a50b0f622ed2b6cefdfc9ad826",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:24:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26036323054",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T13:09:35Z",
+      "database_id": 26035548488,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "62ce4dfa9743ead9fa0c255847f2eeca2d4ce106",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:10:09Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26035548488",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T13:09:12Z",
+      "database_id": 26035529808,
+      "display_title": "Clarify comparison output file sections",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "780e2cb5aea451cd342a71af84edc4fbbd075767",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:09:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26035529808",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-18T13:09:12Z",
@@ -5087,6 +5162,20 @@
       "updated_at": "2026-05-18T13:09:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26035529751",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "cancelled",
+      "created_at": "2026-05-18T13:09:10Z",
+      "database_id": 26035528131,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "780e2cb5aea451cd342a71af84edc4fbbd075767",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T13:09:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26035528131",
+      "workflow_name": "pages-build-deployment"
     },
     {
       "conclusion": "success",
@@ -6361,90 +6450,6 @@
       "updated_at": "2026-05-17T04:31:58Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25981378124",
       "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:37:47Z",
-      "database_id": 25965918113,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0a5f234821c633f4b444cf4029e63250612242e6",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:38:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965918113",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:37:32Z",
-      "database_id": 25965912741,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912741",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T15:37:32Z",
-      "database_id": 25965912683,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912683",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-16T15:37:31Z",
-      "database_id": 25965912408,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912408",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:35:38Z",
-      "database_id": 25965871253,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:36:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871253",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:35:38Z",
-      "database_id": 25965871252,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:35:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871252",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }

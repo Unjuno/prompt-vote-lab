@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T13:09:31+00:00`
+Generated at: `2026-05-18T13:27:09+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -15,7 +15,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | authorized_canary_issue_count | 1 |
 | pr_count | 100 |
 | open_pr_count | 0 |
-| merged_pr_count | 85 |
+| merged_pr_count | 86 |
 | workflow_run_count | 98 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
 | 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
 | 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
 | 336 | MERGED | 1 | 2/2 | Update docs README release readiness status |
@@ -77,13 +78,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
 | 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
 | 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
-| 328 | MERGED | 2 | 332/23 | Add release readiness review |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26036444800 | Terminal State Report | pull_request | completed | skipped | Prefer implementation PRs in comparison dashboard |
+| 26036323111 | Script Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
+| 26036323054 | Lab PR Scope Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
+| 26035548488 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26035529808 | Public Results Export | push | completed | success | Clarify comparison output file sections |
 | 26035529751 | Terminal State Report | pull_request | completed | skipped | Clarify comparison output file sections |
+| 26035528131 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26035386717 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
 | 26035386710 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
 | 26035143494 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
@@ -107,12 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26031481341 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26031410947 | Lab PR Scope Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
 | 26031410933 | Static Site Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
-| 26020358039 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26020344264 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W20 |
-| 26020344218 | Public Results Export | push | completed | success | Record auto vote summary for week-2026-W20 |
-| 26020342903 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26019968000 | Issue Safety Scan | issues | completed | success | Investigate missing 2026-W20 scheduled weekly output |
-| 26018762551 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
