@@ -9,7 +9,7 @@ static security posture: acceptable
 participant journey: present
 live preview: present
 bulk cleanup: not recommended yet
-ordinary default-on weekly observation: pending
+ordinary default-on weekly no-eligible observation: PASS
 ```
 
 ## Related cleanup documents
@@ -46,13 +46,13 @@ repository-cleanup-inventory.md -> protected evidence and cleanup candidates
 1. No top-level surface is obviously misplaced for the current static GitHub Pages experiment.
 2. The repository is evidence-heavy, not automatically messy.
 3. Historical and legacy surfaces must stay clearly labeled.
-4. The largest remaining release condition is ordinary default-on weekly observation.
+4. The ordinary default-on weekly no-eligible path has been observed and recorded for 2026-W20.
 5. Cleanup should be staged by gates, not performed as a broad sweep.
 
 ## Questions before cleanup
 
 ```text
-Q1. Should historical canary workflows stay until after ordinary default-on weekly observation?
+Q1. Should historical canary workflows stay until after a natural eligible weekly implementation run is observed?
 Q2. Should old canary docs later move under an archive index?
 Q3. Should the Lean formal layer remain active after release?
 Q4. Should live previews use a generated latest-comparison pointer?
@@ -64,9 +64,9 @@ Q7. Should fixture ownership be documented if fixtures grow?
 ## Recommended order
 
 ```text
-1. Define legacy fallback removal gate.
-2. Observe ordinary default-on weekly run.
-3. Add script dependency map if script cleanup is desired.
+1. Keep the legacy fallback removal gate in force.
+2. Observe a natural eligible weekly implementation run when one occurs.
+3. Add script dependency map if deeper script cleanup is desired.
 4. Add workflow retirement plan if old canary workflows are retired.
 5. Add archive indexes for historical docs or rules if desired.
 6. Change only items whose gate is satisfied.
