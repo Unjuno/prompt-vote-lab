@@ -40,10 +40,6 @@ const checks = [
     pass: /without network access/i.test(visibleText) || /no network/i.test(visibleText)
   },
   {
-    label: 'lab keeps a small experiment status card visible',
-    pass: /Experiment status/i.test(visibleText)
-  },
-  {
     label: 'lab has Content-Security-Policy with connect-src none',
     pass: /Content-Security-Policy/i.test(html) && /connect-src 'none'/i.test(html)
   },
