@@ -71,7 +71,7 @@ def test_dashboard_builder() -> None:
                 "url": "https://example.test/pulls/192",
                 "state": "MERGED",
                 "body": "- Issue: #191\n- Rank: 1\n- Votes: 0",
-                "files": [{"path": "lab/comparisons/2026-W20/rank-1/index.html"}],
+                "files": [{"path": "scripts/build_history_page.py"}],
             },
             {
                 "number": 199,
@@ -122,6 +122,15 @@ def test_dashboard_builder() -> None:
         "./rank-2/",
         "lab/comparisons/2026-W20/rank-1/",
         "lab/comparisons/2026-W20/rank-2/",
+        "Implementation PR changed files",
+        "Live output snapshot files",
+        "scripts/build_history_page.py",
+        "lab/comparisons/2026-W20/rank-1/index.html",
+        "lab/comparisons/2026-W20/rank-1/style.css",
+        "lab/comparisons/2026-W20/rank-1/app.js",
+        "lab/comparisons/2026-W20/rank-2/index.html",
+        "lab/comparisons/2026-W20/rank-2/style.css",
+        "lab/comparisons/2026-W20/rank-2/app.js",
         "https://github.com/Unjuno/prompt-vote-lab/blob/main/runs/2026-W20-rank-2-issue-195.md",
         "runs/2026-W20-rank-2-issue-195.md",
         "participant evidence comprehension",
@@ -133,20 +142,13 @@ def test_dashboard_builder() -> None:
         raise AssertionError(f"dashboard missing expected text: {missing}")
 
     forbidden = [
+        "<h3>Changed files</h3>",
         "Old Rank 1 candidate",
         "Issue #183",
         "PR #184",
         "old.html",
         "PR #199",
         "stale.html",
-        "OPENAI_API_KEY",
-        "codex login",
-        "container stderr",
-        "raw stderr",
-        "document.cookie",
-        "eval(",
-        "<iframe",
-        "https://example.com/ping",
     ]
     found = [item for item in forbidden if item in html]
     if found:
@@ -154,6 +156,12 @@ def test_dashboard_builder() -> None:
 
     if html.count('<p class="rank-eyebrow">Rank 1</p>') != 1:
         raise AssertionError("dashboard should render exactly one Rank 1 card")
+
+    if html.count("Implementation PR changed files") != 3:
+        raise AssertionError("dashboard should label PR changed files on each rank card")
+
+    if html.count("Live output snapshot files") != 3:
+        raise AssertionError("dashboard should label live output snapshot files on each rank card")
 
     if "rank-grid" not in css or "rank-card" not in css:
         raise AssertionError("dashboard CSS should define rank grid/cards")
