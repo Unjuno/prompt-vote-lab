@@ -66,10 +66,10 @@ live preview
 It currently records:
 
 ```text
-security posture: PASS with remaining operational observation
+security posture: PASS
 participant journey: PASS
 live preview: PASS
-ordinary default-on weekly observation: pending
+ordinary default-on weekly no-eligible observation: PASS
 ```
 
 ## Repository cleanup status
