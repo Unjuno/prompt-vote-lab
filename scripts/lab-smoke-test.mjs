@@ -39,26 +39,9 @@ const checks = [
     label: 'lab keeps a no-network expectation visible',
     pass: /without network access/i.test(visibleText) || /no network/i.test(visibleText)
   },
-  // Protect the participant-facing baseline/support selection rule shown in lab/index.html.
   {
-    label: 'lab explains the no-change baseline has 20 votes',
-    pass: /no-change baseline/i.test(visibleText) && /20 votes/i.test(visibleText)
-  },
-  {
-    label: 'lab explains support does not override a baseline win',
-    pass: /baseline ranks first/i.test(visibleText) && /no implementation candidate/i.test(visibleText) && /even when support exists/i.test(visibleText)
-  },
-  {
-    label: 'lab explains rank 1 eligibility after baseline pass',
-    pass: /real prompt ranks first/i.test(visibleText) && /Rank 1 is eligible/i.test(visibleText)
-  },
-  {
-    label: 'lab explains support can unlock rank 2 and rank 3 comparison runs',
-    pass: /5 USD weekly support/i.test(visibleText) && /Rank 2/i.test(visibleText) && /10 USD weekly support/i.test(visibleText) && /Rank 3/i.test(visibleText)
-  },
-  {
-    label: 'lab explains rank 2 and rank 3 do not need independent 20+ votes after rank 1 beats baseline',
-    pass: /Rank 2 and Rank 3 do not independently need 20\+ votes after Rank 1 beats the baseline/i.test(visibleText)
+    label: 'lab keeps a small experiment status card visible',
+    pass: /Experiment status/i.test(visibleText)
   },
   {
     label: 'lab has Content-Security-Policy with connect-src none',
@@ -71,6 +54,10 @@ const checks = [
   {
     label: 'lab does not contain network APIs',
     pass: !/fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon/i.test(combined)
+  },
+  {
+    label: 'lab root is not a large participant docs index',
+    pass: !/Primary participant navigation|Latest comparison|Public results|Weekly runs/i.test(visibleText)
   }
 ];
 
