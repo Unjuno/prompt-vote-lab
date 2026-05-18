@@ -9,10 +9,15 @@ from typing import Any
 
 SAFE_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';"
 ROOT_LAB_FILES = {"lab/index.html", "lab/style.css", "lab/app.js"}
+REQUIRED_CANDIDATE_LABELS = {"prompt-proposal", "normal-candidate"}
 
 
 def labels(item: dict[str, Any]) -> set[str]:
     return {str(x) for x in item.get('labels', [])}
+
+
+def is_comparison_candidate(issue_labels: set[str], week_id: str) -> bool:
+    return f'week:{week_id}' in issue_labels and REQUIRED_CANDIDATE_LABELS.issubset(issue_labels)
 
 
 def rank_from_issue(issue: dict[str, Any]) -> int | None:
@@ -156,7 +161,8 @@ def rows(data: dict[str, Any], week_id: str) -> list[dict[str, Any]]:
     prs = list(data.get('pull_requests', []))
     best_by_rank: dict[int, dict[str, Any]] = {}
     for issue in data.get('issues', []):
-        if f'week:{week_id}' not in labels(issue):
+        issue_labels = labels(issue)
+        if not is_comparison_candidate(issue_labels, week_id):
             continue
         rank = rank_from_issue(issue)
         issue_no = int(issue.get('number'))
@@ -168,7 +174,6 @@ def rows(data: dict[str, Any], week_id: str) -> list[dict[str, Any]]:
         if rank is None:
             continue
         pr = best_pr_for_issue(prs, issue_no, week_id, rank)
-        issue_labels = labels(issue)
         row = {
             'rank': rank,
             'issue_no': issue_no,
