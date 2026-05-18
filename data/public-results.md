@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-18T13:27:09+00:00`
+Generated at: `2026-05-18T14:34:53+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -48,6 +48,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 340 | MERGED | 1 | 0/21 | Restore minimal lab smoke contract |
+| 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
 | 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
 | 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
 | 335 | MERGED | 3 | 46/22 | Record W20 ordinary weekly observation pass |
@@ -76,14 +78,31 @@ This file is a raw results surface for participants. It does not score prompts o
 | 326 | MERGED | 2 | 78/3 | Fix Pages smoke baseline copy |
 | 323 | MERGED | 4 | 32/9 | Document legacy OpenAI runner gate |
 | 324 | MERGED | 3 | 76/22 | Update weekly operator docs for legacy gate |
-| 325 | MERGED | 6 | 189/2 | Define legacy fallback removal gate |
-| 327 | MERGED | 1 | 34/0 | Cover Pages smoke copy in script-check contract |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26040203101 | Terminal State Report | pull_request | completed | skipped | Restore minimal lab smoke contract |
+| 26038990764 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038990368 | Static Site Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038990239 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038683204 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038683114 | Static Site Check | pull_request | completed | failure | Restore minimal lab smoke contract |
+| 26038683108 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038444781 | Script Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038444751 | Lab PR Scope Check | pull_request | completed | success | Restore minimal lab smoke contract |
+| 26038444696 | Static Site Check | pull_request | completed | failure | Restore minimal lab smoke contract |
+| 26037238064 | Terminal State Report | pull_request | completed | skipped | Regenerate W20 comparison dashboard PR links |
+| 26037236130 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26037080442 | Safety Check | pull_request | completed | success | Regenerate W20 comparison dashboard PR links |
+| 26037080440 | Script Check | pull_request | completed | success | Regenerate W20 comparison dashboard PR links |
+| 26037079615 | Static Site Check | pull_request | completed | success | Regenerate W20 comparison dashboard PR links |
+| 26037079583 | Lab PR Scope Check | pull_request | completed | success | Regenerate W20 comparison dashboard PR links |
+| 26036462617 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26036444800 | Terminal State Report | pull_request | completed | skipped | Prefer implementation PRs in comparison dashboard |
+| 26036444583 | Public Results Export | push | completed | success | Prefer implementation PRs in comparison dashboard |
+| 26036442485 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 26036323111 | Script Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
 | 26036323054 | Lab PR Scope Check | pull_request | completed | success | Prefer implementation PRs in comparison dashboard |
 | 26035548488 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
@@ -94,25 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26035386710 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
 | 26035143494 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
 | 26035143433 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26035143407 | Safety Check | pull_request | completed | failure | Clarify comparison output file sections |
-| 26035143353 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26034722564 | Script Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26034722550 | Static Site Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26034722511 | Lab PR Scope Check | pull_request | completed | success | Clarify comparison output file sections |
-| 26034722496 | Safety Check | pull_request | completed | failure | Clarify comparison output file sections |
-| 26032333751 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26032317866 | Public Results Export | push | completed | success | Update docs README release readiness status |
-| 26032317121 | Terminal State Report | pull_request | completed | skipped | Update docs README release readiness status |
-| 26032315883 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26032236686 | Lab PR Scope Check | pull_request | completed | success | Update docs README release readiness status |
-| 26032236655 | Pre-API Freeze Audit | pull_request | completed | success | Update docs README release readiness status |
-| 26032236643 | Static Site Check | pull_request | completed | success | Update docs README release readiness status |
-| 26031496942 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26031482760 | Terminal State Report | pull_request | completed | skipped | Record W20 ordinary weekly observation pass |
-| 26031482494 | Public Results Export | push | completed | success | Record W20 ordinary weekly observation pass |
-| 26031481341 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26031410947 | Lab PR Scope Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
-| 26031410933 | Static Site Check | pull_request | completed | success | Record W20 ordinary weekly observation pass |
 
 ## Raw JSON
 
