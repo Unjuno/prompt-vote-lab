@@ -218,6 +218,32 @@ week-2026-W20 -> 2026-W20
 
 The weekly workflow requires the matching support unlock file for its resolved `RUN_WEEK`.
 
+## Release week numbering caveat
+
+Automation uses UTC ISO week IDs for evidence stability.
+
+Public release numbering is separate and starts at:
+
+```text
+Release Week 1
+```
+
+Pre-release evidence such as `2026-W20` remains preserved under its internal ISO week ID. It should not be described as Release Week 1.
+
+Use both labels after release when a public label exists:
+
+```text
+Release Week 1 · internal ID 2026-Wxx
+```
+
+Use pre-release wording before launch:
+
+```text
+Pre-release · internal ID 2026-W20
+```
+
+The numbering policy is defined in [Release week numbering](./release-week-numbering.md).
+
 ## Manual verification
 
 The live no-eligible path has been verified.
@@ -320,3 +346,20 @@ Still not automated:
 
 - removal of the legacy fallback
 - auto-merge
+- publishing outside GitHub
+
+## When the weekly run creates PRs
+
+A successful no-eligible weekly run creates only a vote summary PR.
+
+A successful eligible weekly run creates:
+
+```text
+vote summary PR
+one implementation PR per eligible rank
+canonical diagnostics artifact
+canonical public bundle artifact
+uploaded bundle verification artifact
+```
+
+No PR should be merged without maintainer review.
