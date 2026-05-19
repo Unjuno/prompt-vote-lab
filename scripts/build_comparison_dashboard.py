@@ -220,9 +220,29 @@ def link(url: str, label: str) -> str:
     return f'<a href="{html.escape(url, quote=True)}">{label}</a>' if url else label
 
 
-def run_record_url(week_id: str, rank: int, issue_no: int) -> str:
-    record = f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
-    return f"https://github.com/Unjuno/prompt-vote-lab/blob/main/{record}"
+def github_blob_url(path: str) -> str:
+    return f"https://github.com/Unjuno/prompt-vote-lab/blob/main/{path}"
+
+
+def run_record_path(week_id: str, rank: int, issue_no: int) -> str:
+    return f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
+
+
+def find_run_record(data: dict[str, Any], week_id: str, rank: int, issue_no: int) -> dict[str, Any] | None:
+    expected_path = run_record_path(week_id, rank, issue_no)
+    for record in data.get('run_records', []):
+        if str(record.get('path', '')) == expected_path:
+            return record
+    return None
+
+
+def render_run_record(data: dict[str, Any], week_id: str, rank: int, issue_no: int) -> str:
+    expected_path = run_record_path(week_id, rank, issue_no)
+    record = find_run_record(data, week_id, rank, issue_no)
+    if not record:
+        return f'not recorded in <code>runs/</code> · expected <code>{html.escape(expected_path)}</code>'
+    path = str(record.get('path') or expected_path)
+    return f'<a href="{html.escape(github_blob_url(path), quote=True)}"><code>{html.escape(path)}</code></a>'
 
 
 def render_dashboard(data: dict[str, Any], week_id: str) -> str:
@@ -231,7 +251,7 @@ def render_dashboard(data: dict[str, Any], week_id: str) -> str:
         rank = int(row['rank'])
         issue_no = int(row['issue_no'])
         output_root = f"lab/comparisons/{week_id}/rank-{rank}/"
-        record_path = f"runs/{week_id}-rank-{rank}-issue-{issue_no}.md"
+        run_record_html = render_run_record(data, week_id, rank, issue_no)
         pr_changed_files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in row['files']) or '<li>not run yet</li>'
         snapshot_files = ''.join(f'<li><code>{html.escape(name)}</code></li>' for name in live_output_files(week_id, rank))
         pr_label = f"PR #{row['pr_no']}" if row['pr_no'] else 'not run yet'
@@ -246,7 +266,7 @@ def render_dashboard(data: dict[str, Any], week_id: str) -> str:
           <div><dt>Runtime scan</dt><dd>{'detected' if row['runtime'] else 'not recorded'}</dd></div>
           <div><dt>Implementation PR</dt><dd>{link(row['pr_url'], pr_label)} · {html.escape(row['pr_state'])}</dd></div>
           <div><dt>Live output</dt><dd><a href="./rank-{rank}/">Open rank {rank} output</a> · <code>{html.escape(output_root)}</code></dd></div>
-          <div><dt>Run record</dt><dd><a href="{html.escape(run_record_url(week_id, rank, issue_no), quote=True)}"><code>{html.escape(record_path)}</code></a></dd></div>
+          <div><dt>Run record</dt><dd>{run_record_html}</dd></div>
           <div><dt>Decision</dt><dd>{html.escape(row['decision'])}</dd></div>
         </dl>
         <h3>Implementation PR changed files</h3>

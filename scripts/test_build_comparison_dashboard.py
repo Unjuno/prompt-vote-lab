@@ -14,6 +14,14 @@ SCRIPT = ROOT / "scripts" / "build_comparison_dashboard.py"
 def test_dashboard_builder() -> None:
     data = {
         "generated_at": "2026-05-08T00:00:00+00:00",
+        "run_records": [
+            {
+                "path": "runs/2026-W20-rank-2-issue-195.md",
+                "title": "Rank 2 run record",
+                "size_bytes": 123,
+                "content": "# Rank 2 run record\n",
+            }
+        ],
         "issues": [
             {
                 "number": 183,
@@ -181,6 +189,9 @@ def test_dashboard_builder() -> None:
         "lab/comparisons/2026-W20/rank-3/app.js",
         "https://github.com/Unjuno/prompt-vote-lab/blob/main/runs/2026-W20-rank-2-issue-195.md",
         "runs/2026-W20-rank-2-issue-195.md",
+        "not recorded in <code>runs/</code>",
+        "expected <code>runs/2026-W20-rank-1-issue-191.md</code>",
+        "expected <code>runs/2026-W20-rank-3-issue-196.md</code>",
         "participant evidence comprehension",
         "data/public-results.json",
         "connect-src 'none'",
@@ -200,6 +211,8 @@ def test_dashboard_builder() -> None:
         "PR #216",
         "PR #256",
         "scripts/build_history_page.py",
+        "href=\"https://github.com/Unjuno/prompt-vote-lab/blob/main/runs/2026-W20-rank-1-issue-191.md\"",
+        "href=\"https://github.com/Unjuno/prompt-vote-lab/blob/main/runs/2026-W20-rank-3-issue-196.md\"",
     ]
     found = [item for item in forbidden if item in html]
     if found:
