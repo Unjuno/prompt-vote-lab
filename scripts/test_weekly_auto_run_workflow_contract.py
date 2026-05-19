@@ -7,13 +7,9 @@ ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "weekly-auto-run.yml"
 
 CANONICAL_RUNNER_CALL = "display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}'"
-PUBLIC_BUNDLE_BUILD_CALL = "                  build_public_bundle(rank, issue)"
-DIAGNOSTICS_COPY_CALL = "                  copy_rank_diagnostics(rank)"
-ALWAYS_CANONICAL_ARTIFACT_CONDITION = "always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true'"
-LEGACY_GATE_VAR = "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN"
-LEGACY_GATE_FAILURE = "Legacy weekly runner requested, but PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN is not true."
-LEGACY_PIP_GATE = "steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical != 'true' && steps.weekly-vars.outputs.allow_legacy == 'true'"
-LEGACY_RUNTIME_GATE = "if not allow_legacy:"
+PUBLIC_BUNDLE_BUILD_CALL = "              build_public_bundle(rank, issue)"
+DIAGNOSTICS_COPY_CALL = "              copy_rank_diagnostics(rank)"
+ALWAYS_CANONICAL_ARTIFACT_CONDITION = "always() && steps.eligibility.outputs.has_eligible == 'true'"
 
 REQUIRED_TEXT = [
     "name: Weekly Auto Run",
@@ -22,26 +18,8 @@ REQUIRED_TEXT = [
     "contents: write",
     "pull-requests: write",
     "issues: read",
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"true\"",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
-    LEGACY_GATE_VAR,
-    "allow_legacy=\"${PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN:-false}\"",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN must be true or false",
-    LEGACY_GATE_FAILURE,
-    "ALLOW_LEGACY_OPENAI_LAB_RUN=$allow_legacy",
-    "allow_legacy=$allow_legacy",
-    "USE_CANONICAL_SELECTED_PROMPT_RUNNER=$use_canonical",
-    "use_canonical=$use_canonical",
     "Canonical selected-prompt runner",
-    "Legacy OpenAI lab-run fallback",
-    LEGACY_PIP_GATE,
-    "scripts/openai_lab_run.py",
-    "steps.weekly-vars.outputs.use_canonical == 'true'",
-    ALWAYS_CANONICAL_ARTIFACT_CONDITION,
-    "if use_canonical:",
-    "else:",
-    LEGACY_RUNTIME_GATE,
-    "Legacy OpenAI lab-run fallback is disabled.",
+    "true",
     "scripts/run_codex_selected_prompt.sh",
     "--prompt-file",
     CANONICAL_RUNNER_CALL,
@@ -61,18 +39,27 @@ REQUIRED_TEXT = [
     "public-agent-run-bundle-uploaded-verification.json",
     "public-agent-run-bundle-uploaded-gitleaks.json",
     "public-agent-run-bundle-uploaded-gitleaks-findings.json",
-    "Canonical selected-prompt runner: `",
     "gh', 'pr', 'create'",
 ]
 
 FORBIDDEN_TEXT = [
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
+    "PROMPT_VOTE_LAB_ALLOW_LEGACY",
+    "ALLOW_LEGACY",
+    "Legacy",
+    "legacy-",
+    "_lab_run.py",
+    "python -m pip install",
+    "use_canonical",
+    "allow_legacy",
+    "if use_canonical:",
+    "else:",
     "MAX_OUTPUT_TOKENS",
     "--max-output-tokens",
-    "steps.weekly-vars.outputs.use_canonical != 'true' }}\n        run: |\n          python -m pip install openai",
     "gh pr merge",
     "auto-merge",
-    "--prompt-body",  # weekly canonical path should avoid command-argument prompt bodies
+    "--prompt-body",
 ]
 
 
@@ -112,45 +99,9 @@ def main() -> int:
 
     require_block_order(
         text,
-        "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"true\"",
         "Prepare weekly variables",
-        "canonical selected-prompt runner default should be declared before weekly variables",
-    )
-    require_block_order(
-        text,
-        "allow_legacy=\"${PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN:-false}\"",
-        LEGACY_GATE_FAILURE,
-        "legacy fallback gate should be resolved before failure check",
-    )
-    require_block_order(
-        text,
-        LEGACY_GATE_FAILURE,
         "Resolve automated support unlocks",
-        "legacy fallback gate should run before weekly work begins",
-    )
-    require_block_order(
-        text,
-        LEGACY_PIP_GATE,
-        "python -m pip install openai",
-        "legacy OpenAI dependency install should be explicitly gated before the install command",
-    )
-    require_block_order(
-        text,
-        "if use_canonical:",
-        "scripts/run_codex_selected_prompt.sh",
-        "canonical runner invocation should be inside the feature-flag branch",
-    )
-    require_block_order(
-        text,
-        "else:",
-        LEGACY_RUNTIME_GATE,
-        "legacy runtime gate should be inside the non-canonical branch",
-    )
-    require_block_order(
-        text,
-        LEGACY_RUNTIME_GATE,
-        "scripts/openai_lab_run.py",
-        "legacy runner invocation should remain behind the explicit legacy gate",
+        "weekly variables should resolve before weekly work begins",
     )
     require_block_order(
         text,
