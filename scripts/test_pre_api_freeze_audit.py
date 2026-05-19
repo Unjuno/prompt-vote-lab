@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> int:
     run_case("current repo passes", expect_pass=True, mutate=None)
     run_case("reject retry relaxation", expect_pass=False, mutate=mutate_retry_relaxation, expected="SDK_MAX_RETRIES")
-    run_case("reject missing eligible guard", expect_pass=False, mutate=mutate_missing_guard, expected="step lacks eligible guard")
+    run_case("reject missing eligible guard", expect_pass=False, mutate=mutate_missing_guard, expected="missing guard")
     run_case("reject missing artifact review boundary", expect_pass=False, mutate=mutate_review_boundary, expected="missing required text")
     run_case("reject missing required doc", expect_pass=False, mutate=mutate_missing_required_doc, expected="missing required file")
     print("pre-API freeze audit self-test passed")

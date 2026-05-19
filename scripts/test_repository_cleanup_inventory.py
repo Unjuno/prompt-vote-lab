@@ -8,22 +8,40 @@ DOC = ROOT / "docs" / "repository-cleanup-inventory.md"
 README = ROOT / "docs" / "README.md"
 POLICY = ROOT / "docs" / "repository-5s-and-language-policy.md"
 
+REMOVED_LEGACY_LAUNCH_FILES = [
+    ROOT / ".github" / "workflows" / "first-canary-run.yml",
+    ROOT / "scripts" / "create_first_canary_candidate.py",
+]
+
 REQUIRED_DOC_TEXT = [
     "# Repository cleanup inventory",
     "It is intentionally conservative.",
     "No file should be deleted only because it looks old.",
     "Protected evidence",
     "Canonical active",
-    "Legacy fallback",
+    "Legacy script",
     "Historical archive evidence",
     "Generated snapshot",
+    "Retired legacy launch scaffolding",
     "Cleanup candidate",
     "Not-yet-removable",
     "They should not be deleted in cleanup PRs:",
     "scripts/run_codex_selected_prompt.sh",
     ".github/workflows/codex-selected-prompt-run.yml",
     "scripts/openai_lab_run.py",
-    "Keep until the release plan explicitly removes it through a separate legacy-removal gate",
+    "Keep until a separate legacy-removal gate explicitly removes it",
+    "Weekly Auto Run no longer has a legacy API/SDK branch.",
+    "Do not reintroduce a weekly legacy override during cleanup.",
+    "## Retired legacy first API canary workflow",
+    ".github/workflows/first-canary-run.yml",
+    "scripts/create_first_canary_candidate.py",
+    "protected evidence removed: no",
+    "generated snapshots touched: no",
+    "run records touched: no",
+    "protected evidence check: PASS",
+    "canonical/legacy check: not canonical, not active weekly path",
+    "generated snapshot check: untouched",
+    "rollback path: restore from git history only through explicit rollback PR",
     "## Historical archive evidence",
     "Historical archive evidence explains past canary decisions, model-policy transitions, run records, and migration boundaries.",
     "It is not active canonical status.",
@@ -44,14 +62,14 @@ REQUIRED_DOC_TEXT = [
     "Affected contract tests:",
     "Generated snapshots are not source-of-truth policy.",
     "These are candidates for future cleanup work. They are not deletion instructions.",
-    "First ordinary scheduled canonical default-on run is verified, rollback need is reviewed, and a separate legacy-removal PR updates docs/tests",
+    "Legacy script removal gate in `docs/workflow-family-map.md` passes and a separate PR updates docs/tests",
     "Protected evidence check:",
     "Canonical/legacy check:",
     "Generated snapshot check:",
     "Removal gate:",
     "Rollback path:",
-    "Verify the first ordinary scheduled canonical default-on weekly run.",
-    "Avoid deleting evidence or fallback code until a separate legacy-removal gate is recorded.",
+    "Keep scripts/openai_lab_run.py labeled as non-canonical manual diagnostic / historical fallback.",
+    "Avoid deleting protected evidence, generated snapshots, run records, or fallback code without a separate removal gate.",
 ]
 
 REQUIRED_README_TEXT = [
@@ -70,6 +88,8 @@ FORBIDDEN_DOC_TEXT = [
     "auto-delete",
     "bulk delete",
     "rename all canary evidence",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
 ]
 
 
@@ -85,6 +105,12 @@ def reject_all(text: str, forbidden: list[str], label: str) -> None:
         raise SystemExit(f"Forbidden {label} text found: {found}")
 
 
+def require_removed_legacy_launch_files() -> None:
+    existing = [str(path.relative_to(ROOT)) for path in REMOVED_LEGACY_LAUNCH_FILES if path.exists()]
+    if existing:
+        raise SystemExit(f"Retired legacy launch files still exist: {existing}")
+
+
 def main() -> int:
     doc = DOC.read_text(encoding="utf-8")
     readme = README.read_text(encoding="utf-8")
@@ -94,13 +120,16 @@ def main() -> int:
     reject_all(doc, FORBIDDEN_DOC_TEXT, "repository cleanup inventory")
     require_all(readme, REQUIRED_README_TEXT, "docs README")
     require_all(policy, REQUIRED_POLICY_TEXT, "repository 5S policy")
+    require_removed_legacy_launch_files()
 
     if doc.index("## Protected evidence") > doc.index("## Canonical active surfaces"):
         raise SystemExit("protected evidence should be listed before active surfaces")
-    if doc.index("## Canonical active surfaces") > doc.index("## Legacy fallback surfaces"):
-        raise SystemExit("legacy fallback should follow canonical active surfaces")
-    if doc.index("## Legacy fallback surfaces") > doc.index("## Historical archive evidence"):
-        raise SystemExit("historical archive evidence should follow legacy fallback surfaces")
+    if doc.index("## Canonical active surfaces") > doc.index("## Legacy script surfaces"):
+        raise SystemExit("legacy script should follow canonical active surfaces")
+    if doc.index("## Legacy script surfaces") > doc.index("## Retired legacy first API canary workflow"):
+        raise SystemExit("retired legacy workflow should follow legacy script surfaces")
+    if doc.index("## Retired legacy first API canary workflow") > doc.index("## Historical archive evidence"):
+        raise SystemExit("historical archive evidence should follow retired legacy workflow")
     if doc.index("## Cleanup candidates") > doc.index("## Not-yet-removable items"):
         raise SystemExit("not-yet-removable items should follow cleanup candidates")
 

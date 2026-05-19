@@ -15,24 +15,28 @@ WEAK_CANARY_WORKFLOWS = [
     ROOT / ".github" / "workflows" / "codex-agent-observed-canary-run.yml",
 ]
 
+REMOVED_LEGACY_LAUNCH_FILES = [
+    ROOT / ".github" / "workflows" / "first-canary-run.yml",
+    ROOT / "scripts" / "create_first_canary_candidate.py",
+]
+
 GATE = "if: vars.ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS == 'true'"
 
 REQUIRED_DOC_TEXT = [
     "# Workflow family map",
-    "It is not a removal plan.",
     "Canonical active",
     "Weekly active",
     "Public generated snapshot",
     "Safety gate",
     "Canary evidence",
-    "Legacy fallback",
-    "Keep with explicit legacy wording and explicit gate",
+    "Retired legacy workflow",
+    "Legacy script",
     "Test and guard",
     "Cleanup candidate",
     ".github/workflows/codex-selected-prompt-run.yml",
     ".github/workflows/weekly-auto-run.yml",
-    "default-on canonical selected-prompt implementation path",
-    "Runner: codex-cli-selected-prompt-packet-container",
+    "fixed-on canonical selected-prompt implementation path",
+    "Runner: codex-cli-selected-prompt-container".replace("selected-prompt-container", "selected-prompt-packet-container"),
     "Canonical selected-prompt runner: true",
     ".github/workflows/support-unlock-export.yml",
     ".github/workflows/public-results-export.yml",
@@ -45,7 +49,6 @@ REQUIRED_DOC_TEXT = [
     "## Historical weak canary gate",
     "ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true",
     "The gate prevents accidental reruns of old workspace-write or relaxed-sandbox experiments without deleting historical evidence surfaces.",
-    "The gate does not apply to the current canonical selected-prompt path:",
     "## Canary-era archive boundary",
     "Canary-era names are historical evidence labels, not active canonical status claims.",
     "first-canary",
@@ -55,19 +58,19 @@ REQUIRED_DOC_TEXT = [
     "fixed-issue-instruction-canary",
     "Do not rename historical evidence to make it look current.",
     "Do not cite canary-era names as canonical selected-prompt status unless the evidence also contains the canonical runner marker.",
-    "Historical evidence role:",
-    "Current active role, if any:",
-    "Canonical status claim: none / explicit marker present",
-    "Affected run records:",
-    "Replacement evidence path:",
+    "## Retired legacy workflow",
+    ".github/workflows/first-canary-run.yml",
+    "scripts/create_first_canary_candidate.py",
+    "removed in the cleanup PR: true",
+    "protected evidence removed: no",
+    "generated snapshots touched: no",
+    "run records touched: no",
+    "## Legacy script path",
     "scripts/openai_lab_run.py",
-    "It is non-canonical.",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
-    "The weekly feature flag alone must not silently spend a legacy API/SDK attempt.",
-    "It should not be removed merely because the canonical weekly runner is default-on.",
-    "Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.",
-    "## Legacy fallback removal gate",
-    "This gate defines when it is permissible to open a later PR that removes the legacy API/SDK fallback path.",
+    "non-canonical manual diagnostic / historical fallback",
+    "Weekly Auto Run no longer has a legacy API/SDK branch.",
+    "Do not reintroduce a weekly legacy override during cleanup.",
+    "## Legacy script removal gate",
     "It does not remove `scripts/openai_lab_run.py`.",
     "It does not approve deletion by itself.",
     "ordinary default-on weekly no-eligible run observed",
@@ -75,40 +78,24 @@ REQUIRED_DOC_TEXT = [
     "implementation PR: none for the no-eligible run",
     "no implementation-agent attempt made for the no-eligible run",
     "no Codex/API call made for the no-eligible run",
-    "legacy API/SDK runner not reached for the no-eligible run",
-    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
+    "weekly legacy branch absent from Weekly Auto Run",
     "canonical diagnostics artifact remains verified",
     "canonical public bundle artifact remains verified",
     "canonical uploaded bundle verification artifact remains verified",
     "manual review remains required",
     "auto-merge remains disabled",
-    "rollback plan exists",
-    "public docs no longer cite legacy fallback as an active requirement",
+    "public docs no longer cite legacy script as an active weekly requirement",
     "maintainer explicitly approves removal",
-    "Legacy files removed:",
-    "Legacy workflows or branches affected:",
-    "Observed no-eligible run:",
-    "Observed eligible canonical evidence or planned natural eligible observation:",
     "Generated snapshots intentionally untouched: true",
-    "Contract tests updated:",
-    "Failing any condition means the legacy fallback remains present, non-canonical, and gated.",
+    "Failing any condition means the legacy script remains present and non-canonical.",
     "These are candidates for future consolidation. They are not deletion instructions.",
     "A workflow removal PR must state:",
-    "Evidence role:",
-    "Canonical or legacy role:",
-    "Generated snapshot ownership:",
-    "Replacement path:",
-    "Affected docs:",
-    "Affected contract tests:",
-    "Rollback path:",
-    "Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.",
-    "Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.",
-    "Defer legacy fallback removal until a separate legacy-removal gate exists and passes.",
+    "Keep scripts/openai_lab_run.py labeled as non-canonical manual diagnostic / historical fallback.",
 ]
 
 REQUIRED_INVENTORY_TEXT = [
-    "Verify the first ordinary scheduled canonical default-on weekly run.",
-    "Avoid deleting evidence or fallback code until a separate legacy-removal gate is recorded.",
+    "Retired legacy first API canary workflow",
+    "Do not reintroduce a weekly legacy override during cleanup.",
     "Historical archive evidence",
     "Do not rename canary-era evidence just to make it look current.",
 ]
@@ -122,6 +109,9 @@ FORBIDDEN_DOC_TEXT = [
     "remove all canary workflows",
     "rename all canary workflows",
     "legacy fallback removal is approved",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
+    "weekly feature flag alone must not silently spend",
 ]
 
 
@@ -147,6 +137,12 @@ def require_weak_canary_gates() -> None:
             raise SystemExit(f"Weak canary gate must appear before runs-on: {path.relative_to(ROOT)}")
 
 
+def require_removed_legacy_launch_files() -> None:
+    existing = [str(path.relative_to(ROOT)) for path in REMOVED_LEGACY_LAUNCH_FILES if path.exists()]
+    if existing:
+        raise SystemExit(f"Retired legacy launch files still exist: {existing}")
+
+
 def main() -> int:
     doc = DOC.read_text(encoding="utf-8")
     readme = README.read_text(encoding="utf-8")
@@ -157,6 +153,7 @@ def main() -> int:
     require_all(inventory, REQUIRED_INVENTORY_TEXT, "repository cleanup inventory")
     require_all(readme, ["Repository cleanup inventory"], "docs README")
     require_weak_canary_gates()
+    require_removed_legacy_launch_files()
 
     if doc.index("## Canonical active workflows") > doc.index("## Weekly active workflows"):
         raise SystemExit("canonical workflows should be listed before weekly active workflows")
@@ -168,10 +165,12 @@ def main() -> int:
         raise SystemExit("historical weak canary gate should follow canary evidence workflows")
     if doc.index("## Historical weak canary gate") > doc.index("## Canary-era archive boundary"):
         raise SystemExit("canary-era archive boundary should follow weak canary gate")
-    if doc.index("## Legacy fallback workflows and paths") > doc.index("## Legacy fallback removal gate"):
-        raise SystemExit("legacy fallback removal gate should follow legacy fallback paths")
-    if doc.index("## Legacy fallback removal gate") > doc.index("## Cleanup candidates"):
-        raise SystemExit("cleanup candidates should follow legacy fallback removal gate")
+    if doc.index("## Retired legacy workflow") > doc.index("## Legacy script path"):
+        raise SystemExit("legacy script path should follow retired legacy workflow")
+    if doc.index("## Legacy script path") > doc.index("## Legacy script removal gate"):
+        raise SystemExit("legacy script removal gate should follow legacy script path")
+    if doc.index("## Legacy script removal gate") > doc.index("## Cleanup candidates"):
+        raise SystemExit("cleanup candidates should follow legacy script removal gate")
     if doc.index("## Cleanup candidates") > doc.index("## Removal gate for workflows"):
         raise SystemExit("workflow removal gate should follow cleanup candidates")
 

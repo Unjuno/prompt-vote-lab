@@ -30,19 +30,21 @@ GUIDE_REQUIRED_TEXT = [
     "public bundle verification: ok",
     "uploaded bundle verification: ok",
     "Gitleaks finding count: 0",
-    "The legacy `scripts/openai_lab_run.py` path may still exist as a migration fallback.",
-    "It is non-canonical.",
+    "The legacy `scripts/openai_lab_run.py` path may still exist as a non-canonical manual diagnostic / historical fallback.",
+    "It is not part of `Weekly Auto Run`.",
+    "It does not satisfy the selected-prompt canonical runner requirement",
     "workflow run: 25858202166",
     "selected Issue: #282",
     "summary PR: #283",
     "implementation PR: #284",
     "manual selected-prompt smoke: PASS",
-    "weekly feature-flag canary with eligible candidate: PASS",
+    "weekly selected-prompt canary with eligible candidate: PASS",
+    "ordinary default-on weekly no-eligible observation: PASS",
     "participant evidence guide published",
     "manual review remains required",
     "auto-merge remains disabled",
-    "weekly canonical default-on release: approved",
-    "The weekly canonical selected-prompt runner is default-on after the release gate passed:",
+    "weekly canonical fixed-on release: approved",
+    "The weekly canonical selected-prompt runner is fixed-on after the release gate passed:",
     "It does not automatically prove:",
     "The run should be merged.",
 ]
@@ -54,6 +56,9 @@ GUIDE_FORBIDDEN_TEXT = [
     "public bundle verification is optional",
     "uploaded bundle verification is optional",
     "Do not flip the weekly canonical selected-prompt runner to default-on",
+    "migration fallback",
+    "weekly feature-flag canary",
+    "weekly canonical default-on release",
 ]
 
 INDEX_REQUIRED_TEXT = [
@@ -65,13 +70,14 @@ INDEX_REQUIRED_TEXT = [
     "current status contract -> docs/canonical-status-drift-check.md",
     "weekly workflow operation -> docs/weekly-automation.md",
     "canonical evidence decision rule -> docs/canonical-runner-evidence-guide.md",
-    "Broad default-on canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.",
+    "Canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.",
 ]
 
 INDEX_FORBIDDEN_TEXT = [
     "Weekly Auto Run -> run 25858202166",
     "artifacts present: diagnostics, public bundle, uploaded bundle verification",
     "Broad default-on canonical weekly execution is not approved yet.",
+    "Broad default-on canonical weekly execution is approved",
 ]
 
 
@@ -101,11 +107,11 @@ def main() -> int:
     if guide.index("Expected artifacts") > guide.index("What each artifact proves"):
         raise SystemExit("artifact names should appear before artifact interpretation")
 
-    if guide.index("Non-canonical fallback") > guide.index("Verified weekly canary"):
-        raise SystemExit("legacy fallback warning should appear before the canary example")
+    if guide.index("Non-canonical legacy script") > guide.index("Verified weekly evidence"):
+        raise SystemExit("legacy script warning should appear before the verified evidence example")
 
-    if guide.index("Verified weekly canary") > guide.index("Release status"):
-        raise SystemExit("release status should follow the verified canary example")
+    if guide.index("Verified weekly evidence") > guide.index("Release status"):
+        raise SystemExit("release status should follow the verified evidence example")
 
     print("canonical runner evidence guide test passed")
     return 0

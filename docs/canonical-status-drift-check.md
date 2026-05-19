@@ -2,25 +2,27 @@
 
 ## Purpose
 
-This document defines the repository-wide status language for the selected-prompt runner migration.
+This document defines the repository-wide status language for the selected-prompt runner, weekly automation, legacy API surfaces, and cleanup boundaries.
 
 It prevents documentation drift between participant docs, operator docs, workflow docs, and implementation path docs.
 
 ## Stable status contract
 
-All maintainer-authored docs should preserve these facts until a later release PR deliberately changes them:
+All maintainer-authored docs should preserve these facts until a later PR deliberately changes them:
 
 ```text
 canonical selected-prompt runner: Docker/Codex selected-prompt task-packet runner
 canonical runner script: scripts/run_codex_selected_prompt.sh
 canonical runner name: codex-cli-selected-prompt-packet-container
 canonical evidence marker: Canonical selected-prompt runner: true
+weekly default status: canonical selected-prompt runner fixed-on
+weekly feature flag override: removed
+weekly legacy override: removed from Weekly Auto Run
 legacy fallback script: scripts/openai_lab_run.py
-legacy fallback status: non-canonical migration fallback
+legacy fallback status: non-canonical manual diagnostic / historical fallback
 legacy fallback removal status: not approved until the explicit legacy fallback removal gate passes
-weekly default status: canonical selected-prompt runner default-on
-weekly feature flag override: PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
-current default constant: DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+ordinary default-on weekly no-eligible observation: PASS
+workflow deletion status: obsolete Legacy First API Canary Run retired
 auto-merge status: disabled
 manual review status: required
 final write scope: lab/index.html, lab/style.css, lab/app.js
@@ -28,11 +30,9 @@ final write scope: lab/index.html, lab/style.css, lab/app.js
 
 ## Source-of-truth map
 
-Use this map before adding or editing status text.
-
 | Topic | Source of truth | Pointer docs |
 |---|---|---|
-| Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status | `docs/canonical-status-drift-check.md` | `docs/README.md`, `docs/weekly-automation.md`, `docs/operator-runbook.md` |
+| Repository-wide canonical, legacy, fixed-on weekly, auto-merge, manual-review, and release-gate status | `docs/canonical-status-drift-check.md` | `docs/README.md`, `docs/weekly-automation.md`, `docs/operator-runbook.md` |
 | Technical implementation boundary | `docs/current-codex-implementation-path.md` | `docs/canonical-runner-evidence-guide.md`, `docs/workflow-family-map.md` |
 | Participant/reviewer evidence decision rule | `docs/canonical-runner-evidence-guide.md` | `docs/README.md`, `docs/operator-runbook.md`, `docs/weekly-automation.md` |
 | Weekly workflow operation | `docs/weekly-automation.md` | `docs/operator-runbook.md` |
@@ -48,8 +48,8 @@ Pointer docs may summarize status, but they should not become a second source of
 | `docs/README.md` | Short public status and navigation |
 | `docs/current-codex-implementation-path.md` | Full canonical and legacy path definition |
 | `docs/canonical-runner-evidence-guide.md` | Participant/reviewer evidence decision rule |
-| `docs/weekly-automation.md` | Weekly feature flag, default, and evidence artifact status |
-| `docs/operator-runbook.md` | Maintainer operating and cleanup instructions |
+| `docs/weekly-automation.md` | Weekly schedule, support unlock prerequisite, and fixed canonical runner operation |
+| `docs/operator-runbook.md` | Maintainer operation and cleanup instructions |
 | `docs/workflow-family-map.md` | Workflow-family classification and deletion boundary |
 | `docs/repository-cleanup-inventory.md` | Cleanup protection and not-yet-removable inventory |
 
@@ -59,12 +59,13 @@ Docs may use different wording, but they must not contradict these rules:
 
 ```text
 1. Do not call scripts/openai_lab_run.py canonical.
-2. Do not imply the weekly canonical selected-prompt runner is still default-off.
+2. Do not imply the weekly canonical selected-prompt runner is default-off or feature-flagged.
 3. Do not say auto-merge is enabled.
 4. Do not omit the canonical evidence marker from evidence-facing docs.
 5. Do not treat a useful lab diff as sufficient canonical evidence.
-6. Do not describe workflow or legacy runner deletion as safe without a separate removal gate.
+6. Do not reintroduce a weekly legacy override without an explicit rollback PR.
 7. Do not describe legacy fallback removal as approved before the explicit legacy fallback removal gate passes.
+8. Do not delete protected evidence, generated snapshots, run records, or comparison output during cleanup.
 ```
 
 ## Required canonical evidence marker
@@ -82,30 +83,32 @@ Reason:
 Participants and maintainers need one grep-able marker that distinguishes canonical Docker/Codex selected-prompt evidence from legacy or historical runs.
 ```
 
-## Required legacy fallback language
+## Required legacy script language
 
-Docs that mention `scripts/openai_lab_run.py` should also identify it as:
+Docs that mention `scripts/openai_lab_run.py` should identify it as:
 
 ```text
 non-canonical
-fallback
-legacy or migration fallback
+manual diagnostic / historical fallback
+not reachable from Weekly Auto Run
+not selected-prompt canonical evidence
 ```
 
 Reason:
 
 ```text
-The script may still exist and may still produce useful lab diffs, but those facts do not make it canonical selected-prompt evidence.
+The script may remain useful for manual diagnosis or historical comparison, but the active weekly workflow no longer branches to it.
 ```
 
-## Required default status language
+## Required weekly status language
 
-Weekly-operation docs should preserve the default-on release state:
+Weekly-operation docs should preserve the current fixed canonical status:
 
 ```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
-DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
-Canonical weekly default is default-on
+weekly default status: canonical selected-prompt runner fixed-on
+weekly feature flag override: removed
+weekly legacy override: removed from Weekly Auto Run
+Weekly Auto Run no longer has a legacy API/SDK branch.
 ```
 
 A future rollback PR may change this status only if it also updates:
@@ -116,6 +119,8 @@ docs/operator-runbook.md
 docs/current-codex-implementation-path.md
 docs/canonical-runner-evidence-guide.md
 docs/README.md
+docs/workflow-family-map.md
+docs/repository-cleanup-inventory.md
 scripts/test_canonical_status_drift.py
 ```
 
@@ -125,16 +130,17 @@ Docs should preserve the release-gate result:
 
 ```text
 manual selected-prompt smoke: PASS
-weekly feature-flag canary with eligible candidate: PASS
+weekly selected-prompt canary with eligible candidate: PASS
 weekly diagnostics artifact: present
 weekly public bundle artifact: present
 weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
-legacy fallback documented as non-canonical
-operator runbook feature-flag cleanup documented
+ordinary default-on weekly no-eligible observation: PASS
+legacy script documented as non-canonical manual diagnostic / historical fallback
+obsolete Legacy First API Canary Run workflow retired
 manual review remains required
 auto-merge remains disabled
-weekly canonical default-on release: approved
+weekly canonical fixed-on release: approved
 ```
 
 ## Current release status
@@ -144,10 +150,12 @@ Current status is:
 ```text
 manual selected-prompt workflow: verified
 weekly canonical selected-prompt canary: verified
-canonical weekly default: default-on
-legacy fallback: present and non-canonical
-legacy fallback removal: not approved until the explicit legacy fallback removal gate passes
-workflow deletion: not approved
+ordinary default-on weekly no-eligible observation: PASS
+canonical weekly runner: fixed-on
+weekly legacy branch: removed
+legacy script: present and non-canonical
+legacy script removal: not approved until the explicit legacy fallback removal gate passes
+obsolete Legacy First API Canary Run workflow: retired
 auto-merge: disabled
 manual review: required
 ```
@@ -163,19 +171,32 @@ ordinary default-on weekly no-eligible run observed
 vote summary PR created
 no implementation-agent attempt made for no-eligible run
 no Codex/API call made for no-eligible run
-legacy API/SDK runner not reached for no-eligible run
+weekly legacy branch absent from Weekly Auto Run
 eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan
 canonical evidence artifacts remain verified
 rollback plan exists
-public docs no longer cite legacy fallback as an active requirement
+public docs no longer cite legacy script as an active weekly requirement
 maintainer explicitly approves removal
 ```
 
-Until those conditions are recorded, `scripts/openai_lab_run.py` and related legacy API/SDK references remain present, non-canonical, and gated.
+Until those conditions are deliberately recorded for removal, `scripts/openai_lab_run.py` remains present and non-canonical.
+
+## Retired cleanup record
+
+This cleanup retired only the obsolete legacy first API canary launch path:
+
+```text
+removed workflow: .github/workflows/first-canary-run.yml
+removed helper: scripts/create_first_canary_candidate.py
+protected evidence removed: no
+generated snapshots touched: no
+run records touched: no
+scripts/openai_lab_run.py removed: no
+```
 
 ## Change discipline
 
-A PR that changes any canonical/legacy/default status should state:
+A PR that changes any canonical, legacy, fixed weekly, or cleanup status should state:
 
 ```text
 Status changed:

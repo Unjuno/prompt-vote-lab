@@ -103,17 +103,15 @@ Gitleaks finding count: 0
 
 Redaction is a publication guard, not a mathematical proof that secrets are impossible. If a token-like secret appears in any public artifact, rotate the token and treat it as an incident.
 
-## Non-canonical fallback
+## Non-canonical legacy script
 
-The legacy `scripts/openai_lab_run.py` path may still exist as a migration fallback.
+The legacy `scripts/openai_lab_run.py` path may still exist as a non-canonical manual diagnostic / historical fallback.
 
-It is non-canonical.
+It is not part of `Weekly Auto Run`.
 
 It does not satisfy the selected-prompt canonical runner requirement, even if it produces a useful lab diff.
 
-The fallback should be used only through an explicit rollback or diagnostic override, not as the normal weekly default.
-
-## Verified weekly canary
+## Verified weekly evidence
 
 The first verified weekly canonical selected-prompt canary used:
 
@@ -131,27 +129,35 @@ artifacts:
 result: PASS
 ```
 
-The canary PRs were closed without merge because they were evidence-only canary artifacts, not product changes.
+The first ordinary default-on weekly no-eligible observation also passed:
+
+```text
+support unlock file: data/support-unlocks/2026-W20.json
+vote summary PR: #333
+merged run record: runs/week-2026-W20-vote-summary.md
+baseline_won: true
+eligible_count: 0
+implementation-agent attempt: none
+```
 
 ## Release status
 
-The weekly canonical selected-prompt runner is default-on after the release gate passed:
+The weekly canonical selected-prompt runner is fixed-on after the release gate passed:
 
 ```text
 manual selected-prompt smoke: PASS
-weekly feature-flag canary with eligible candidate: PASS
+weekly selected-prompt canary with eligible candidate: PASS
 weekly diagnostics artifact: present
 weekly public bundle artifact: present
 weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
-legacy fallback documented as non-canonical
+ordinary default-on weekly no-eligible observation: PASS
+legacy script documented as non-canonical manual diagnostic / historical fallback
 participant evidence guide published
 manual review remains required
 auto-merge remains disabled
-weekly canonical default-on release: approved
+weekly canonical fixed-on release: approved
 ```
-
-A future rollback may set `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false`, but that run is non-canonical unless its evidence still shows the canonical marker.
 
 ## What participants should conclude
 

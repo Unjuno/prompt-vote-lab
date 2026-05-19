@@ -9,6 +9,11 @@ OPENAI_WORD = "Open" + "AI"
 MAX_OUTPUT_TOKENS = "MAX_OUTPUT" + "_TOKENS"
 MAX_OUTPUT_TOKENS_FLAG = "--max-output" + "-tokens"
 
+REMOVED = [
+    "scripts/create_first_canary_candidate.py",
+    ".github/workflows/first-canary-run.yml",
+]
+
 REQUIRED = {
     "formal/Canary.lean": [
         "scope := Scope.labOnly",
@@ -57,6 +62,24 @@ REQUIRED = {
         "max continuation runs per candidate: 1",
         "must not be cited as proof that the active canonical weekly path uses the API/SDK runner",
     ],
+    "docs/workflow-family-map.md": [
+        "Retired legacy workflow",
+        ".github/workflows/first-canary-run.yml",
+        "scripts/create_first_canary_candidate.py",
+        "removed in the cleanup PR: true",
+        "protected evidence removed: no",
+        "generated snapshots touched: no",
+        "scripts/openai_lab_run.py",
+        "non-canonical manual diagnostic / historical fallback",
+    ],
+    "docs/repository-cleanup-inventory.md": [
+        "Retired legacy first API canary workflow",
+        ".github/workflows/first-canary-run.yml",
+        "scripts/create_first_canary_candidate.py",
+        "protected evidence removed: no",
+        "generated snapshots touched: no",
+        "run records touched: no",
+    ],
     "scripts/preflight_implementation_agent.py": [
         f"ALLOWED_MODELS = {{\"{ACTIVE_MODEL}\"}}",
         "if sdk_max_retries != 0",
@@ -71,44 +94,13 @@ REQUIRED = {
         "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
         ACTIVE_MODEL,
     ],
-    "scripts/create_first_canary_candidate.py": [
-        "docs/first-canary-prompt.md",
-        "Fixed prompt",
-        "eligible-candidates.json",
-        "first_canary",
-        "fixed_prompt_source",
-    ],
     ".github/workflows/weekly-auto-run.yml": [
         f"AUTO_IMPLEMENTATION_MODEL: \"{ACTIVE_MODEL}\"",
         f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
         "SDK_MAX_RETRIES: \"0\"",
         "--api-call-limit-per-candidate 1",
+        "scripts/run_codex_selected_prompt.sh",
         "gh pr create",
-    ],
-    ".github/workflows/first-canary-run.yml": [
-        "name: Legacy First API Canary Run",
-        "confirm_legacy_api_canary",
-        "RUN_LEGACY_API_CANARY",
-        "LEGACY_API_CANARY_CONFIRMATION",
-        "Confirm legacy API canary intent",
-        "This is a legacy non-canonical API/SDK canary workflow.",
-        "Use the canonical selected-prompt runner for normal weekly operation.",
-        "workflow_dispatch",
-        f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
-        f"{MAX_OUTPUT_TOKENS}: \"5000\"",
-        "SDK_MAX_RETRIES: \"0\"",
-        "RUN_WEEK: first-canary-001",
-        "python scripts/create_first_canary_candidate.py",
-        "python scripts/preflight_implementation_agent.py",
-        "--api-call-limit-per-candidate 1",
-        "python scripts/openai_lab_run.py",
-        "bash scripts/safety-check.sh origin/main HEAD",
-        "bash scripts/static-site-check.sh",
-        "Forbidden first-canary changed file",
-        "Canonical selected-prompt runner: \\`false\\`",
-        "Legacy runner: \\`true\\`",
-        "gh pr create",
-        "Manual review is required. Do not auto-merge.",
     ],
 }
 
@@ -157,22 +149,18 @@ FORBIDDEN = {
         "SDK_MAX_RETRIES: \"2\"",
         "enable-auto-merge",
         "gh pr merge --auto",
-    ],
-    ".github/workflows/first-canary-run.yml": [
-        "IMPLEMENTATION_MODEL: gpt-5-nano",
-        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
-        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
-        f"{MAX_OUTPUT_TOKENS}: \"12000\"",
-        "SDK_MAX_RETRIES: \"1\"",
-        "SDK_MAX_RETRIES: \"2\"",
-        "enable-auto-merge",
-        "gh pr merge --auto",
+        "scripts/openai_lab_run.py",
+        "create_first_canary_candidate.py",
     ],
 }
 
 
 def main() -> int:
     failures: list[str] = []
+
+    for rel in REMOVED:
+        if (ROOT / rel).exists():
+            failures.append(f"retired legacy canary launch file still exists: {rel}")
 
     for rel, needles in REQUIRED.items():
         text = read(rel, failures)

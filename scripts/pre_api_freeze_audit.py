@@ -26,13 +26,23 @@ REQUIRED_FILES = [
     ".github/workflows/evidence-pipeline-dry-run.yml",
 ]
 
+REMOVED_FILES = [
+    ".github/workflows/first-canary-run.yml",
+    "scripts/create_first_canary_candidate.py",
+]
+
 REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     "docs/current-features.md": [
         "no-eligible production workflow path: verified",
         "Support Unlock Export live path: verified",
         "canonical selected-prompt canary: verified",
-        "canonical weekly default-on: approved",
-        "ordinary post-default-on weekly observation: pending",
+        "canonical weekly fixed-on: approved",
+        "ordinary post-default-on weekly observation: PASS",
+        "weekly legacy API/SDK fallback branch",
+        "removed workflow: .github/workflows/first-canary-run.yml",
+        "removed helper: scripts/create_first_canary_candidate.py",
+        "protected evidence removed: no",
+        "generated snapshots touched: no",
         ACTIVE_MODEL,
         "Evidence Pipeline Dry Run",
         "source=live",
@@ -164,11 +174,27 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "api_call_performed\": True",
         "sdk_max_retries != 1",
     ],
+    "docs/current-features.md": [
+        "ordinary post-default-on weekly observation: pending",
+        "Observe the next ordinary weekly run.",
+    ],
 }
 
 
 def read_text(rel: str) -> str:
     return (ROOT / rel).read_text(encoding="utf-8")
+
+
+def require_if_guard(workflow: str, step_name: str, expected_guard: str, failures: list[str]) -> None:
+    step = f"      - name: {step_name}\n"
+    start = workflow.find(step)
+    if start < 0:
+        failures.append(f"{WEEKLY_WORKFLOW}: missing step: {step_name}")
+        return
+    next_step = workflow.find("\n      - name:", start + len(step))
+    block = workflow[start:next_step if next_step >= 0 else len(workflow)]
+    if expected_guard not in block:
+        failures.append(f"{WEEKLY_WORKFLOW}: step {step_name!r} missing guard {expected_guard!r}")
 
 
 def main() -> int:
@@ -177,6 +203,10 @@ def main() -> int:
     for rel in REQUIRED_FILES:
         if not (ROOT / rel).is_file():
             failures.append(f"missing required file: {rel}")
+
+    for rel in REMOVED_FILES:
+        if (ROOT / rel).exists():
+            failures.append(f"retired legacy launch file still exists: {rel}")
 
     if failures:
         for failure in failures:
@@ -222,18 +252,6 @@ def main() -> int:
 
     print("pre-API freeze audit passed")
     return 0
-
-
-def require_if_guard(text: str, step_name: str, expected_guard: str, failures: list[str]) -> None:
-    marker = f"- name: {step_name}"
-    index = text.find(marker)
-    if index < 0:
-        failures.append(f"weekly-auto-run.yml: missing step: {step_name}")
-        return
-    next_index = text.find("\n      - name:", index + len(marker))
-    block = text[index: next_index if next_index >= 0 else len(text)]
-    if expected_guard not in block:
-        failures.append(f"weekly-auto-run.yml: step lacks eligible guard: {step_name}")
 
 
 if __name__ == "__main__":

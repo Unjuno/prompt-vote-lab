@@ -4,12 +4,10 @@
 
 This map classifies GitHub Actions workflows before cleanup or deletion work.
 
-It is not a removal plan.
-
 It answers one question first:
 
 ```text
-Which workflows are evidence-bearing, and which workflows are historical scaffolding?
+Which workflows are active, which are evidence-bearing, and which are obsolete launch scaffolding?
 ```
 
 ## Family states
@@ -21,7 +19,8 @@ Which workflows are evidence-bearing, and which workflows are historical scaffol
 | Public generated snapshot | Owns generated public data or pages evidence | Keep; edit through owning generator |
 | Safety gate | Blocks unsafe or out-of-scope execution | Keep |
 | Canary evidence | Historical or controlled canary path with evidence value | Keep until replacement evidence is documented |
-| Legacy fallback | Non-canonical migration fallback | Keep with explicit legacy wording and explicit gate |
+| Retired legacy workflow | Obsolete launch scaffolding already replaced by canonical evidence | Remove only with docs/tests updated |
+| Legacy script | Non-canonical manual diagnostic / historical fallback script | Keep unless a separate removal gate passes |
 | Test and guard | CI guard, scope guard, or contract verification | Keep |
 | Cleanup candidate | Candidate for later consolidation or retirement | Do not delete until a removal gate is recorded |
 
@@ -30,9 +29,19 @@ Which workflows are evidence-bearing, and which workflows are historical scaffol
 | Workflow | Path | Reason |
 |---|---|---|
 | Codex Selected Prompt Run | `.github/workflows/codex-selected-prompt-run.yml` | Manual canonical selected-prompt Docker/Codex runner smoke path |
-| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and default-on canonical selected-prompt implementation path |
+| Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and fixed-on canonical selected-prompt implementation path |
 
-Canonical evidence requires the selected-prompt Docker/Codex runner evidence:
+Current weekly status:
+
+```text
+weekly default status: canonical selected-prompt runner fixed-on
+weekly feature flag override: removed
+weekly legacy override: removed from Weekly Auto Run
+```
+
+Weekly Auto Run no longer has a legacy API/SDK branch.
+
+Canonical evidence requires:
 
 ```text
 Runner: codex-cli-selected-prompt-packet-container
@@ -161,39 +170,66 @@ Replacement evidence path:
 Rollback path:
 ```
 
-Retirement is allowed only after a release record says the historical evidence remains reachable through docs or run records and the canonical replacement is documented.
+## Retired legacy workflow
 
-## Legacy fallback workflows and paths
+The obsolete legacy first API canary launch workflow has been retired.
 
-The legacy fallback is primarily a script path, not a separate workflow family:
+```text
+removed workflow: .github/workflows/first-canary-run.yml
+removed helper: scripts/create_first_canary_candidate.py
+removed in the cleanup PR: true
+protected evidence removed: no
+generated snapshots touched: no
+run records touched: no
+```
+
+Reason:
+
+```text
+The canonical Docker/Codex selected-prompt runner is verified and fixed-on for Weekly Auto Run.
+The old first API canary launch workflow was not an active weekly path.
+Keeping it runnable increased operator confusion without adding current release evidence.
+```
+
+Rollback path:
+
+```text
+restore the removed workflow and helper from git history only through an explicit rollback PR
+state why the canonical selected-prompt path is insufficient
+update docs and contract tests in the same PR
+```
+
+## Legacy script path
+
+The remaining legacy path is a script, not an active weekly workflow branch:
 
 ```text
 scripts/openai_lab_run.py
 ```
 
-It may still be reachable through weekly override behavior when `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` is set for emergency rollback or controlled diagnosis.
-
-It is non-canonical.
-
-For ordinary `week-*` runs, the legacy script has a downstream gate and refuses to proceed unless this explicit override is present:
+Current classification:
 
 ```text
-PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+status: non-canonical manual diagnostic / historical fallback
+weekly reachability: none
+canonical evidence status: invalid
 ```
 
-This second gate is intentional. The weekly feature flag alone must not silently spend a legacy API/SDK attempt.
+`Weekly Auto Run` no longer has a legacy API/SDK branch.
 
-It should not be removed merely because the canonical weekly runner is default-on. Removal requires a separate legacy-removal gate after ordinary default-on operation is verified.
+Do not reintroduce a weekly legacy override during cleanup.
 
-## Legacy fallback removal gate
+It should not be removed merely because the canonical weekly runner is fixed-on. Removal requires a separate legacy-removal gate.
 
-This gate defines when it is permissible to open a later PR that removes the legacy API/SDK fallback path.
+## Legacy script removal gate
+
+This gate defines when it is permissible to open a later PR that removes the legacy API/SDK script path.
 
 It does not remove `scripts/openai_lab_run.py`.
 
 It does not approve deletion by itself.
 
-A future legacy fallback removal PR must record all of these conditions:
+A future legacy script removal PR must record all of these conditions:
 
 ```text
 ordinary default-on weekly no-eligible run observed
@@ -201,7 +237,7 @@ vote summary PR created
 implementation PR: none for the no-eligible run
 no implementation-agent attempt made for the no-eligible run
 no Codex/API call made for the no-eligible run
-legacy API/SDK runner not reached for the no-eligible run
+weekly legacy branch absent from Weekly Auto Run
 eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan
 canonical diagnostics artifact remains verified
 canonical public bundle artifact remains verified
@@ -209,7 +245,7 @@ canonical uploaded bundle verification artifact remains verified
 manual review remains required
 auto-merge remains disabled
 rollback plan exists
-public docs no longer cite legacy fallback as an active requirement
+public docs no longer cite legacy script as an active weekly requirement
 maintainer explicitly approves removal
 ```
 
@@ -225,7 +261,7 @@ Rollback path:
 Contract tests updated:
 ```
 
-Failing any condition means the legacy fallback remains present, non-canonical, and gated.
+Failing any condition means the legacy script remains present and non-canonical.
 
 ## Cleanup candidates
 
@@ -233,9 +269,9 @@ These are candidates for future consolidation. They are not deletion instruction
 
 | Candidate | Why it may be cleaned later | Required removal gate |
 |---|---|---|
-| Older canary workflow family | Many historical canary workflows make the active path harder to see | Replacement evidence map exists and release record approves retirement |
-| Offline JSON canary workflow | Non-canonical path can be confused with canonical evidence | Legacy fallback policy is finalized and references are updated |
-| First canary workflow family | Superseded by Docker/Codex selected-prompt task-packet evidence | Historical evidence remains linked from docs and run records |
+| Older canary workflow family | Many historical canary workflows make the canonical path harder to see | Replacement evidence map exists and release record approves retirement |
+| Offline JSON canary workflow | Non-canonical path can be confused with canonical evidence | Legacy script policy is finalized and references are updated |
+| Historical canary docs | Some docs describe one-off historical launch steps | Archive map exists and public evidence remains reachable |
 
 ## Removal gate for workflows
 
@@ -258,10 +294,9 @@ A workflow should not be removed if any public doc still lists it as required ac
 The next safe cleanup work is:
 
 ```text
-1. Verify the first ordinary scheduled default-on weekly run.
-2. Keep scripts/openai_lab_run.py labeled as legacy and non-canonical.
-3. Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.
-4. Keep the legacy weekly fallback gated by PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true unless a separate removal PR retires it.
-5. Defer legacy fallback removal until a separate legacy-removal gate exists and passes.
-6. Defer workflow deletion until a release readiness record approves it.
+1. Keep scripts/openai_lab_run.py labeled as non-canonical manual diagnostic / historical fallback.
+2. Keep weak historical canary workflows gated unless a maintainer intentionally enables ALLOW_HISTORICAL_WEAK_CANARY_WORKFLOWS=true.
+3. Do not reintroduce a weekly legacy override during cleanup.
+4. Defer legacy script removal until a separate legacy-removal gate passes.
+5. Defer generated snapshot deletion indefinitely unless the owning generator changes the evidence policy.
 ```

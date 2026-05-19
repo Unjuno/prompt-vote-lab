@@ -2,11 +2,11 @@
 
 This document explains what runs automatically, when it runs, and what must exist before each weekly run can proceed.
 
-Repository-wide canonical, legacy, default-on, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This page is the weekly workflow operation detail, not a second status source of truth.
+Repository-wide canonical, legacy, fixed-on weekly runner, auto-merge, manual-review, and release-gate status is governed by [Canonical status drift check](./canonical-status-drift-check.md). This page is the weekly workflow operation detail, not a second status source of truth.
 
 ## Short answer
 
-Yes. `Weekly Auto Run` is scheduled to run every week.
+`Weekly Auto Run` is scheduled to run every week.
 
 ```text
 .github/workflows/weekly-auto-run.yml
@@ -24,7 +24,7 @@ It can also be started manually with `workflow_dispatch`.
 
 ## Related scheduled workflow
 
-Support unlock aggregation is a separate workflow.
+Support unlock aggregation is separate.
 
 ```text
 .github/workflows/support-unlock-export.yml
@@ -44,7 +44,7 @@ The support export workflow writes the anonymized aggregate file used by the wee
 data/support-unlocks/<week-id>.json
 ```
 
-On scheduled runs, support export defaults to the previous UTC ISO week. Manual `workflow_dispatch` inputs can still override `week_id`, `since`, and `until` for verification or backfill.
+The weekly workflow requires the matching support unlock file before vote collection. Missing support data is not treated as 0 USD.
 
 ## Weekly run order
 
@@ -61,48 +61,57 @@ On scheduled runs, support export defaults to the previous UTC ISO week. Manual 
 8. write weekly vote summary PR
 9. if eligible candidates exist, require implementation secret
 10. preflight the implementation run
-11. create implementation PRs for eligible candidates
-12. upload canonical weekly diagnostics and public evidence for canonical runs
+11. create implementation PRs for eligible candidates through the canonical runner
+12. upload canonical weekly diagnostics and public evidence
 13. reverify uploaded canonical public bundles
 ```
 
-The support unlock file is required before vote collection and rank selection.
+If no candidate beats the no-change baseline, the workflow records a vote summary PR and stops before any implementation-agent attempt.
 
-If the file is missing, the weekly workflow fails before selecting eligible ranks. It must not silently treat missing support data as 0 USD.
+## Canonical weekly runner status
 
-## Canonical selected-prompt default
-
-The weekly selected-prompt path now defaults to the canonical Docker/Codex runner:
+Current weekly status:
 
 ```text
-DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true
+weekly default status: canonical selected-prompt runner fixed-on
+weekly feature flag override: removed
+weekly legacy override: removed from Weekly Auto Run
+Weekly Auto Run no longer has a legacy API/SDK branch.
 ```
 
-The repository variable can still override the default for an explicit rollback or diagnostic run:
-
-```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER
-```
-
-When the variable is unset, `Weekly Auto Run` uses the canonical Docker/Codex selected-prompt runner for eligible implementation candidates:
+Eligible selected prompts are routed through:
 
 ```text
 scripts/run_codex_selected_prompt.sh
+runner: codex-cli-selected-prompt-packet-container
+sandbox_mode: docker-workdir-plus-readonly-selected-prompt-packet
+prompt_transport: --prompt-file
+repo_root_mounted: false
+final_writable_files: lab/index.html, lab/style.css, lab/app.js
+auto_merge_policy: disabled
+manual_review: required
+```
+
+Canonical evidence must include:
+
+```text
 Runner: codex-cli-selected-prompt-packet-container
 Canonical selected-prompt runner: true
 ```
 
-When the variable is explicitly set to `true`, the same canonical path is used.
+## Legacy script status
 
-When the variable is explicitly set to `false`, `Weekly Auto Run` can reach the legacy fallback path for emergency rollback or controlled diagnosis only. That feature flag alone must not silently authorize a legacy API/SDK attempt.
+`scripts/openai_lab_run.py` still exists, but it is not part of `Weekly Auto Run`.
 
-For ordinary `week-*` runs, the legacy `scripts/openai_lab_run.py` path also requires this downstream gate:
+Current classification:
 
 ```text
-PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
+scripts/openai_lab_run.py: non-canonical manual diagnostic / historical fallback
+weekly reachability: none
+canonical evidence status: invalid
 ```
 
-The legacy `scripts/openai_lab_run.py` path is non-canonical and does not satisfy the selected-prompt canonical runner requirement.
+Do not reintroduce a weekly legacy override during cleanup. A future rollback would need an explicit PR that updates workflow code, docs, and contract tests together.
 
 ## Canonical weekly evidence artifacts
 
@@ -114,7 +123,7 @@ weekly-selected-prompt-public-bundles-<run_number>
 weekly-selected-prompt-uploaded-bundle-verification-<run_number>
 ```
 
-The evidence chain must include:
+The evidence chain should include:
 
 ```text
 public bundle verification: ok
@@ -125,241 +134,84 @@ repo_root_mounted: false
 OPENAI_API_KEY present before codex exec: no
 ```
 
-## Override and rollback settings
+## Observed no-eligible production evidence
 
-A controlled diagnostic run may temporarily set:
-
-```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false
-```
-
-For an ordinary `week-*` run to proceed through the legacy API/SDK runner, a maintainer must also explicitly set:
+The first ordinary default-on weekly no-eligible observation has passed.
 
 ```text
-PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true
-```
-
-After the diagnostic run, remove both overrides or set them back to:
-
-```text
-PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset
-PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN unset
-```
-
-A controlled canary may temporarily set:
-
-```text
-PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0
-```
-
-After the canary, reset or remove it:
-
-```text
-PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset
-```
-
-Leaving `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` changes selection behavior and is not acceptable for normal scheduled operation.
-
-Leaving `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is not acceptable for normal scheduled operation.
-
-## Why support export is separate
-
-Support aggregation and prompt implementation are different jobs.
-
-Support export:
-
-- reads GitHub Sponsors activity
-- writes only anonymized weekly aggregate data
-- validates public JSON before commit
-- must not call the implementation model
-- must not modify `lab/`
-
-Weekly auto run:
-
-- reads prompt Issues and reactions
-- reads the weekly support unlock file
-- creates vote summary PRs
-- creates implementation PRs only when candidates are eligible
-- uses the canonical Docker/Codex selected-prompt runner by default
-- may reach the legacy fallback only through an explicit rollback override plus `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`
-- must not merge PRs automatically
-
-## Time-window caveat
-
-The scheduled production path should process the UTC ISO week that just ended, not the week that has just started.
-
-`Support Unlock Export` scheduled runs therefore default to:
-
-```text
-target = current UTC time - 7 days
-```
-
-This writes the previous ISO week by default.
-
-`Weekly Auto Run` resolves the support unlock file before vote collection. When a previous-week support unlock file exists, the resolver writes this resolved week back into the job environment as:
-
-```text
-RUN_WEEK=week-<previous-ISO-year>-W<previous-ISO-week>
-```
-
-This prevents the Monday morning run from recording the newly started week by mistake.
-
-`Support Unlock Export` writes:
-
-```text
-data/support-unlocks/<ISO-year>-W<ISO-week>.json
-```
-
-The resolver normalizes these two forms:
-
-```text
-week-2026-W20 -> 2026-W20
-```
-
-The weekly workflow requires the matching support unlock file for its resolved `RUN_WEEK`.
-
-## Release week numbering caveat
-
-Automation uses UTC ISO week IDs for evidence stability.
-
-Public release numbering is separate and starts at:
-
-```text
-Release Week 1
-```
-
-Pre-release evidence such as `2026-W20` remains preserved under its internal ISO week ID. It should not be described as Release Week 1.
-
-Use both labels after release when a public label exists:
-
-```text
-Release Week 1 · internal ID 2026-Wxx
-```
-
-Use pre-release wording before launch:
-
-```text
-Pre-release · internal ID 2026-W20
-```
-
-The numbering policy is defined in [Release week numbering](./release-week-numbering.md).
-
-## Manual verification
-
-The live no-eligible path has been verified.
-
-Verified support export evidence:
-
-```text
-Support Unlock Export: PASS
-data/support-unlocks/2026-W19.json
-support_total_usd: 0.0
-rank_2_unlocked: false
-rank_3_unlocked: false
-privacy flags: all false
-```
-
-Verified no-eligible weekly automation evidence:
-
-```text
-Weekly Auto Run: PASS
-runs/week-2026-W19-vote-summary.md
-PR #243 merged
+ordinary default-on weekly no-eligible observation: PASS
+support unlock file: data/support-unlocks/2026-W20.json
+vote summary PR: #333
+merged run record: runs/week-2026-W20-vote-summary.md
 baseline_won: true
 eligible_count: 0
-implementation PR: none
-```
-
-Verified canonical weekly selected-prompt canary evidence:
-
-```text
-Weekly Auto Run: PASS
-run: 25858202166
-selected Issue: #282
-summary PR: #283
-implementation PR: #284
-Runner: codex-cli-selected-prompt-packet-container
-Canonical selected-prompt runner: true
-artifacts:
-  - weekly-selected-prompt-diagnostics-7
-  - weekly-selected-prompt-public-bundles-7
-  - weekly-selected-prompt-uploaded-bundle-verification-7
-bounded lab diff: PASS
+implementation-agent attempt: none
 auto-merge: disabled
+manual review: performed
 ```
 
-The canary Issue and PRs were closed without merge because they were evidence-only artifacts, not product changes.
-
-Manual verification is still useful after token rotation, workflow changes, backfills, or changes to the canonical runner boundary.
-
-Example support export input:
-
-```text
-week_id: 2026-W19
-since: 2026-05-04T00:00:00Z
-until: 2026-05-11T00:00:00Z
-```
-
-Expected public output:
-
-```text
-data/support-unlocks/2026-W19.json
-```
-
-Then run `Weekly Auto Run` manually and confirm that it reads the support unlock file before vote collection.
-
-## Merge policy
-
-Automation may create PRs, but it must not merge them.
-
-`main` merge remains manual.
+This proves the ordinary no-eligible path resolves support data, records the weekly result, and stops before implementation-agent execution when the baseline wins. It does not prove that a future natural eligible implementation will succeed.
 
 ## Default-on release status
 
 The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).
 
-Weekly workflow default-on release result:
+Weekly workflow release result:
 
 ```text
-weekly feature-flag canary with eligible candidate: PASS
+manual selected-prompt smoke: PASS
+weekly selected-prompt canary with eligible candidate: PASS
 weekly diagnostics artifact: present
 weekly public bundle artifact: present
 weekly uploaded bundle verification artifact: present
 bounded lab diff: PASS
+ordinary default-on weekly no-eligible observation: PASS
 manual review remains required
 auto-merge remains disabled
-weekly canonical default-on release: approved
+weekly canonical fixed-on release: approved
 ```
 
-## Current production status
+## Manual weekly run verification
 
-Implemented and live-verified:
-
-- `SPONSORS_GRAPHQL_TOKEN` can read support activity for the export path.
-- `Support Unlock Export` can generate and validate an anonymized support unlock file.
-- `Weekly Auto Run` can read that unlock file and create a no-eligible vote summary PR.
-- The no-change baseline path can complete without creating an implementation PR.
-- The weekly canonical selected-prompt path can create a bounded lab-only implementation PR with diagnostics, public bundle, and uploaded bundle reverification artifacts.
-- Canonical weekly execution is now default-on for eligible candidates.
-
-Still not automated:
-
-- removal of the legacy fallback
-- auto-merge
-- publishing outside GitHub
-
-## When the weekly run creates PRs
-
-A successful no-eligible weekly run creates only a vote summary PR.
-
-A successful eligible weekly run creates:
+Expected no-eligible result:
 
 ```text
-vote summary PR
-one implementation PR per eligible rank
-canonical diagnostics artifact
-canonical public bundle artifact
-uploaded bundle verification artifact
+vote summary PR is created
+support unlock file is referenced
+baseline_won: true
+eligible_count: 0
+implementation PR: none
+implementation-agent attempt: none
 ```
 
-No PR should be merged without maintainer review.
+Expected canonical eligible result:
+
+```text
+vote summary PR is created
+implementation PR is created
+Runner: codex-cli-selected-prompt-packet-container
+Canonical selected-prompt runner: true
+weekly-selected-prompt-diagnostics-<run_number> artifact is present
+weekly-selected-prompt-public-bundles-<run_number> artifact is present
+weekly-selected-prompt-uploaded-bundle-verification-<run_number> artifact is present
+changed files are only lab/index.html, lab/style.css, and/or lab/app.js
+auto-merge does not occur
+```
+
+## Cleanup boundary
+
+Do not delete public evidence casually.
+
+Protected public evidence includes:
+
+```text
+data/public-results.json
+data/public-results.md
+data/support-unlocks/*.json
+runs/*.md
+lab/comparisons/**
+lab/history/**
+merged PRs and Issues
+```
+
+Cleanup PRs should not touch generated snapshots unless they are explicitly generated snapshot PRs.
