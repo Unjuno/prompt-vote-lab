@@ -66,8 +66,9 @@ def reject_all(text: str, forbidden: list[str], label: str) -> None:
 
 def require_marker_pair(text: str, label: str) -> None:
     require_all(text, CANONICAL_MARKER, label)
-    if text.index(CANONICAL_MARKER[0]) > text.index(CANONICAL_MARKER[1]):
-        raise SystemExit(f"Canonical marker order is wrong in {label}")
+    pair = CANONICAL_MARKER[0] + "\n" + CANONICAL_MARKER[1]
+    if pair not in text:
+        raise SystemExit(f"Canonical marker pair is missing in {label}")
 
 
 def main() -> int:
