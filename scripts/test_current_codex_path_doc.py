@@ -23,7 +23,7 @@ REQUIRED_TEXT = [
     "weekly default status: canonical selected-prompt runner fixed-on",
     "weekly feature flag override: removed",
     "weekly legacy override: removed from Weekly Auto Run",
-    "Weekly Auto Run no longer has a legacy branch.",
+    "Weekly Auto Run no longer has a legacy API/SDK branch.",
     "scripts/run_codex_selected_prompt.sh",
     "prompt_transport: --prompt-file",
     "summary_pr: #283",
