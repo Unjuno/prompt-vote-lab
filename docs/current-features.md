@@ -82,7 +82,7 @@ Implemented:
 - model-free weekly report draft PR
 - no-eligible summary PR path
 - canonical selected-prompt implementation PR path for eligible candidates
-- implementation-agent preflight before implementation dependency install
+- implementation-agent preflight before implementation execution
 
 Verified:
 
@@ -94,7 +94,11 @@ Verified:
 - `eligible_ranks` was empty.
 - No implementation PR was created during that no-eligible run.
 - Weekly canonical selected-prompt canary passed with the Docker/Codex task-packet runner.
-- Canonical weekly execution is default-on for eligible candidates.
+- Canonical weekly execution is fixed-on for eligible candidates.
+- ordinary post-default-on weekly observation: PASS.
+- `data/support-unlocks/2026-W20.json` was used for the first ordinary default-on no-eligible observation.
+- Vote summary PR #333 recorded `runs/week-2026-W20-vote-summary.md`.
+- The observed no-eligible run made no implementation-agent attempt.
 - Earlier no-eligible evidence also exists in PR #81, before the support-unlock prerequisite was added.
 
 Not implemented:
@@ -104,6 +108,7 @@ Not implemented:
 - automatic external publishing
 - automatic selection of fallback model
 - automatic retry after model failure
+- weekly legacy API/SDK fallback branch
 
 ## Implementation-agent path
 
@@ -120,14 +125,35 @@ output_token_cap_enforced: false
 editable files: lab/index.html, lab/style.css, lab/app.js
 ```
 
-The legacy API/SDK path remains present for historical evidence and emergency diagnosis, but it is non-canonical.
+The legacy API/SDK script remains present as a non-canonical manual diagnostic / historical fallback:
+
+```text
+scripts/openai_lab_run.py
+```
+
+It is not part of `Weekly Auto Run` and does not satisfy the selected-prompt canonical runner requirement.
 
 Legacy API-era settings such as `max_output_tokens: 5000` must not be cited as active canonical runner enforcement unless a future runner contract proves runtime enforcement.
 
 Still needing ordinary operational observation:
 
-- first ordinary post-default-on scheduled no-eligible weekly run
 - first natural eligible canonical implementation PR after release
+
+## Cleanup status
+
+Retired obsolete launch scaffolding:
+
+```text
+removed workflow: .github/workflows/first-canary-run.yml
+removed helper: scripts/create_first_canary_candidate.py
+protected evidence removed: no
+generated snapshots touched: no
+run records touched: no
+```
+
+Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.
+
+Do not reintroduce a weekly legacy override during cleanup.
 
 ## Lab runtime boundary
 
@@ -190,7 +216,6 @@ Currently proven:
 baselineWon candidates = true -> selectEligible candidates support = []
 baseline candidate is not individually eligible
 other candidate is not individually eligible
-first canary policy satisfies the closed canary safety predicate
 safe canary implies lab-only scope, one attempt, no SDK retry, one API call, no fallback, no auto-merge, and no external publishing
 ```
 
@@ -242,7 +267,7 @@ Implemented:
 Current policy:
 
 ```text
-The canonical selected-prompt runner is default-on.
+The canonical selected-prompt runner is fixed-on for Weekly Auto Run.
 Legacy API/SDK canary paths are non-canonical and should not be treated as active release gates.
 ```
 
@@ -259,11 +284,12 @@ fixture evidence dry-run path: verified
 live evidence dry-run path: verified
 canonical selected-prompt canary: verified
 canonical weekly default-on: approved
-ordinary post-default-on weekly observation: pending
+canonical weekly fixed-on: approved
+ordinary post-default-on weekly observation: PASS
 manual review: required
 auto-merge: disabled
 ```
 
 Operational recommendation:
 
-Observe the next ordinary weekly run. If the no-change baseline wins, confirm that it creates a vote summary PR and stops before any implementation-agent attempt.
+Observe the next natural eligible weekly implementation run. If one occurs, confirm that it uses the canonical Docker/Codex selected-prompt runner, creates bounded lab-only changes, uploads diagnostics and public bundles, and still requires manual review.
