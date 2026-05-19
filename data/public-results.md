@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T00:34:14+00:00`
+Generated at: `2026-05-19T04:07:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 325 |
+| pr_count | 326 |
 | open_pr_count | 0 |
-| merged_pr_count | 263 |
+| merged_pr_count | 264 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 346 | MERGED | 2 | 38/9 | Make comparison rank extraction explicit |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
 | 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
@@ -77,13 +78,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 | 317 | MERGED | 2 | 88/30 | Update usable ops current status |
 | 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
-| 321 | MERGED | 3 | 44/5 | Gate legacy first API canary workflow |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26075552019 | Terminal State Report | pull_request | completed | skipped | Make comparison rank extraction explicit |
+| 26075551498 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26075464333 | Lab PR Scope Check | pull_request | completed | success | Make comparison rank extraction explicit |
+| 26075464312 | Script Check | pull_request | completed | success | Make comparison rank extraction explicit |
+| 26068774312 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26068750691 | Terminal State Report | pull_request | completed | skipped | Filter comparison dashboard candidates |
+| 26068750689 | Public Results Export | push | completed | success | Filter comparison dashboard candidates |
 | 26068750114 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26067721450 | Lab PR Scope Check | pull_request | completed | success | Filter comparison dashboard candidates |
 | 26067721421 | Script Check | pull_request | completed | success | Filter comparison dashboard candidates |
@@ -107,12 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26043759547 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26043551434 | Static Site Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
 | 26043551286 | Lab PR Scope Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
-| 26043551276 | Safety Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
-| 26043551161 | Script Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
-| 26041969162 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26041949300 | Terminal State Report | pull_request | completed | skipped | Restore root lab minimal state |
-| 26041947970 | Public Results Export | push | completed | success | Restore root lab minimal state |
-| 26041945721 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
