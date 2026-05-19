@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T06:58:14+00:00`
+Generated at: `2026-05-19T08:09:48+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 329 |
+| pr_count | 330 |
 | open_pr_count | 0 |
-| merged_pr_count | 267 |
+| merged_pr_count | 268 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
 | 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
 | 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
@@ -77,42 +78,41 @@ This file is a raw results surface for participants. It does not score prompts o
 | 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
 | 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
 | 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
-| 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26084702514 | Terminal State Report | pull_request | completed | skipped | Simplify weekly workflow |
+| 26084699980 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26084051633 | Implementation Preflight Test | pull_request | completed | success | Simplify weekly workflow |
+| 26084051632 | Pre-API Freeze Audit | pull_request | completed | success | Simplify weekly workflow |
+| 26084051631 | Lab PR Scope Check | pull_request | completed | success | Simplify weekly workflow |
+| 26084051629 | Script Check | pull_request | completed | success | Simplify weekly workflow |
+| 26084051624 | Select Eligible Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083762738 | Implementation Preflight Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083762678 | Select Eligible Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083762676 | Lab PR Scope Check | pull_request | completed | success | Simplify weekly workflow |
+| 26083762668 | Pre-API Freeze Audit | pull_request | completed | success | Simplify weekly workflow |
+| 26083762646 | Script Check | pull_request | completed | failure | Simplify weekly workflow |
+| 26083426173 | Script Check | pull_request | completed | failure | Simplify weekly workflow |
+| 26083426112 | Implementation Preflight Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083426089 | Lab PR Scope Check | pull_request | completed | success | Simplify weekly workflow |
+| 26083426079 | Pre-API Freeze Audit | pull_request | completed | success | Simplify weekly workflow |
+| 26083426074 | Select Eligible Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083071814 | Script Check | pull_request | completed | failure | Simplify weekly workflow |
+| 26083071802 | Select Eligible Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083071789 | Lab PR Scope Check | pull_request | completed | success | Simplify weekly workflow |
+| 26083071774 | Implementation Preflight Test | pull_request | completed | success | Simplify weekly workflow |
+| 26083071772 | Pre-API Freeze Audit | pull_request | completed | failure | Simplify weekly workflow |
+| 26081561841 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26081531525 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26081440164 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26081043217 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26081014177 | Terminal State Report | pull_request | completed | skipped | Remove unused token cap preflight input |
 | 26081014154 | Public Results Export | push | completed | success | Remove unused token cap preflight input |
 | 26081013497 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26080787440 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080787407 | Pre-API Freeze Audit | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080787400 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080787394 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080787389 | Script Check | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080095314 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080095309 | Script Check | pull_request | completed | failure | Remove unused token cap preflight input |
-| 26080095308 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080095306 | Pre-API Freeze Audit | pull_request | completed | success | Remove unused token cap preflight input |
-| 26080095300 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26079830445 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26079830412 | Pre-API Freeze Audit | pull_request | completed | failure | Remove unused token cap preflight input |
-| 26079830411 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
-| 26079830394 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
-| 26079830390 | Script Check | pull_request | completed | failure | Remove unused token cap preflight input |
-| 26078323764 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26078301375 | Terminal State Report | pull_request | completed | skipped | Gate legacy weekly runner explicitly |
-| 26078301354 | Public Results Export | push | completed | success | Gate legacy weekly runner explicitly |
-| 26078300758 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26078072493 | Implementation Preflight Test | pull_request | completed | success | Gate legacy weekly runner explicitly |
-| 26078072490 | Script Check | pull_request | completed | success | Gate legacy weekly runner explicitly |
-| 26078072476 | Lab PR Scope Check | pull_request | completed | success | Gate legacy weekly runner explicitly |
-| 26078072464 | Select Eligible Test | pull_request | completed | success | Gate legacy weekly runner explicitly |
-| 26078072455 | Pre-API Freeze Audit | pull_request | completed | success | Gate legacy weekly runner explicitly |
-| 26076533598 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
