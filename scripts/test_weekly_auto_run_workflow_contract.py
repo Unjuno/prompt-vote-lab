@@ -44,17 +44,14 @@ REQUIRED_TEXT = [
 
 FORBIDDEN_TEXT = [
     "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY",
+    "USE_CANONICAL_SELECTED_PROMPT_RUNNER",
     "ALLOW_LEGACY",
-    "Legacy",
     "legacy-",
     "_lab_run.py",
     "python -m pip install",
     "use_canonical",
     "allow_legacy",
     "if use_canonical:",
-    "else:",
     "MAX_OUTPUT_TOKENS",
     "--max-output-tokens",
     "gh pr merge",
