@@ -17,6 +17,8 @@ manual selected-prompt workflow smoke -> PASS
 weekly canonical selected-prompt canary -> run 25858202166 -> PASS
 ordinary default-on weekly no-eligible observation -> PR #333 -> PASS
 canonical weekly fixed-on release -> approved
+manual review remains required
+auto-merge remains disabled
 ```
 
 Canonical selected-prompt implementation is verified and fixed-on for eligible weekly implementation candidates:
