@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T05:32:20+00:00`
+Generated at: `2026-05-19T06:45:39+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 328 |
+| pr_count | 329 |
 | open_pr_count | 0 |
-| merged_pr_count | 266 |
+| merged_pr_count | 267 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
 | 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
@@ -77,13 +78,31 @@ This file is a raw results surface for participants. It does not score prompts o
 | 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
 | 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
-| 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26081014177 | Terminal State Report | pull_request | completed | skipped | Remove unused token cap preflight input |
+| 26081013497 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26080787440 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080787407 | Pre-API Freeze Audit | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080787400 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080787394 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080787389 | Script Check | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080095314 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080095309 | Script Check | pull_request | completed | failure | Remove unused token cap preflight input |
+| 26080095308 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080095306 | Pre-API Freeze Audit | pull_request | completed | success | Remove unused token cap preflight input |
+| 26080095300 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26079830445 | Implementation Preflight Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26079830412 | Pre-API Freeze Audit | pull_request | completed | failure | Remove unused token cap preflight input |
+| 26079830411 | Select Eligible Test | pull_request | completed | success | Remove unused token cap preflight input |
+| 26079830394 | Lab PR Scope Check | pull_request | completed | success | Remove unused token cap preflight input |
+| 26079830390 | Script Check | pull_request | completed | failure | Remove unused token cap preflight input |
+| 26078323764 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26078301375 | Terminal State Report | pull_request | completed | skipped | Gate legacy weekly runner explicitly |
+| 26078301354 | Public Results Export | push | completed | success | Gate legacy weekly runner explicitly |
 | 26078300758 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26078072493 | Implementation Preflight Test | pull_request | completed | success | Gate legacy weekly runner explicitly |
 | 26078072490 | Script Check | pull_request | completed | success | Gate legacy weekly runner explicitly |
@@ -94,25 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26076513377 | Terminal State Report | pull_request | completed | skipped | Avoid missing run record links in comparison dashboard |
 | 26076513374 | Public Results Export | push | completed | success | Avoid missing run record links in comparison dashboard |
 | 26076512886 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26076424743 | Lab PR Scope Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
-| 26076424719 | Script Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
-| 26076386104 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26076381197 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26075574435 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26075552031 | Public Results Export | push | completed | success | Make comparison rank extraction explicit |
-| 26075552019 | Terminal State Report | pull_request | completed | skipped | Make comparison rank extraction explicit |
-| 26075551498 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26075464333 | Lab PR Scope Check | pull_request | completed | success | Make comparison rank extraction explicit |
-| 26075464312 | Script Check | pull_request | completed | success | Make comparison rank extraction explicit |
-| 26068774312 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26068750691 | Terminal State Report | pull_request | completed | skipped | Filter comparison dashboard candidates |
-| 26068750689 | Public Results Export | push | completed | success | Filter comparison dashboard candidates |
-| 26068750114 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26067721450 | Lab PR Scope Check | pull_request | completed | success | Filter comparison dashboard candidates |
-| 26067721421 | Script Check | pull_request | completed | success | Filter comparison dashboard candidates |
-| 26066465798 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26066439758 | Public Results Export | push | completed | success | Paginate public results export inputs |
-| 26066439747 | Terminal State Report | pull_request | completed | skipped | Paginate public results export inputs |
 
 ## Raw JSON
 
