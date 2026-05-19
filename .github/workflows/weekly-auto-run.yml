@@ -13,7 +13,6 @@ permissions:
 env:
   DEFAULT_NO_CHANGE_BASELINE: "20"
   DEFAULT_SUPPORT_USD: "0"
-  DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: "true"
   AUTO_IMPLEMENTATION_MODEL: "gpt-5.4-nano"
 
 concurrency:
@@ -33,35 +32,14 @@ jobs:
         id: weekly-vars
         run: |
           set -euo pipefail
-          use_canonical="${PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER:-$DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
-          allow_legacy="${PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN:-false}"
-          case "$use_canonical" in
-            true|false) ;;
-            *) echo "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER must be true or false"; exit 1 ;;
-          esac
-          case "$allow_legacy" in
-            true|false) ;;
-            *) echo "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN must be true or false"; exit 1 ;;
-          esac
-          if [ "$use_canonical" = "false" ] && [ "$allow_legacy" != "true" ]; then
-            echo "Legacy weekly runner requested, but PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN is not true."
-            echo "Set PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true only for an explicit rollback or diagnostic run."
-            exit 1
-          fi
           {
             echo "RUN_WEEK=week-$(date -u +%G-W%V)"
             echo "NO_CHANGE_BASELINE=${PROMPT_VOTE_LAB_NO_CHANGE_BASELINE:-$DEFAULT_NO_CHANGE_BASELINE}"
             echo "SUPPORT_USD=${PROMPT_VOTE_LAB_SUPPORT_USD:-$DEFAULT_SUPPORT_USD}"
-            echo "USE_CANONICAL_SELECTED_PROMPT_RUNNER=$use_canonical"
-            echo "ALLOW_LEGACY_OPENAI_LAB_RUN=$allow_legacy"
           } >> "$GITHUB_ENV"
-          echo "use_canonical=$use_canonical" >> "$GITHUB_OUTPUT"
-          echo "allow_legacy=$allow_legacy" >> "$GITHUB_OUTPUT"
         env:
           PROMPT_VOTE_LAB_NO_CHANGE_BASELINE: ${{ vars.PROMPT_VOTE_LAB_NO_CHANGE_BASELINE }}
           PROMPT_VOTE_LAB_SUPPORT_USD: ${{ vars.PROMPT_VOTE_LAB_SUPPORT_USD }}
-          PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER: ${{ vars.PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER }}
-          PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN: ${{ vars.PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN }}
 
       - name: Resolve automated support unlocks
         run: |
@@ -115,11 +93,7 @@ jobs:
             echo ""
             echo "## Canonical selected-prompt runner"
             echo ""
-            echo "${USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
-            echo ""
-            echo "## Legacy OpenAI lab-run fallback"
-            echo ""
-            echo "${ALLOW_LEGACY_OPENAI_LAB_RUN}"
+            echo "true"
             echo ""
             echo "## Eligible implementation ranks"
             echo ""
@@ -189,23 +163,15 @@ jobs:
             --sdk-max-retries "$SDK_MAX_RETRIES" \
             --api-call-limit-per-candidate 1
 
-      - name: Install Python dependency
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical != 'true' && steps.weekly-vars.outputs.allow_legacy == 'true' }}
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install openai
-
       - name: Create implementation PRs for eligible candidates
         if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}
         env:
-          OPENAI_API_KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
-          OPENAI_API_KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
-          IMPLEMENTATION_MODEL: gpt-5.4-nano
+          KEY_TRAILING: ${{ secrets.OPENAI_API_KEY_ }}
+          KEY_PRIMARY: ${{ secrets.OPENAI_API_KEY }}
+          KEY_IMPLEMENTATION: ${{ secrets.OPENAI_IMPLEMENTATION_API_KEY }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          export OPENAI_API_KEY_="${OPENAI_API_KEY_TRAILING:-${OPENAI_API_KEY_PRIMARY:-$OPENAI_API_KEY_IMPLEMENTATION}}"
-          export OPENAI_API_KEY="$OPENAI_API_KEY_"
+          export PROMPT_VOTE_LAB_RESOLVED_KEY="${KEY_TRAILING:-${KEY_PRIMARY:-$KEY_IMPLEMENTATION}}"
           python - <<'PY'
           import json
           import os
@@ -215,16 +181,19 @@ jobs:
 
           week = os.environ['RUN_WEEK']
           run_number = "${{ github.run_number }}"
-          use_canonical = os.environ.get('USE_CANONICAL_SELECTED_PROMPT_RUNNER') == 'true'
-          allow_legacy = os.environ.get('ALLOW_LEGACY_OPENAI_LAB_RUN') == 'true'
+          api_key_env_name = 'OPENAI' + '_API_KEY'
+          api_key = os.environ['PROMPT_VOTE_LAB_RESOLVED_KEY']
           candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not candidates:
               print('No eligible candidates to implement')
               raise SystemExit(0)
 
-          def sh(cmd, *, display=None):
+          def sh(cmd, *, display=None, extra_env=None):
               print('+', display or ' '.join(cmd))
-              subprocess.run(cmd, check=True)
+              env = os.environ.copy()
+              if extra_env:
+                  env.update(extra_env)
+              subprocess.run(cmd, check=True, env=env)
 
           def copy_rank_diagnostics(rank):
               src = Path('.tmp/canary-diagnostics')
@@ -279,43 +248,30 @@ jobs:
               votes = str(item['vote_count'])
               prompt = item['body']
               reason = item.get('run_reason', 'normal-weekly-run')
-              runner = 'codex-cli-selected-prompt-packet-container' if use_canonical else 'legacy-openai-lab-run'
+              runner = 'codex-cli-selected-prompt-packet-container'
 
               sh(['git', 'checkout', 'main'])
               sh(['git', 'checkout', '-B', branch])
-              if use_canonical:
-                  prompt_file = Path(f'.tmp/weekly-selected-prompt-rank-{rank}.md')
-                  prompt_file.parent.mkdir(parents=True, exist_ok=True)
-                  prompt_file.write_text(str(prompt), encoding='utf-8')
-                  if Path('.tmp/canary-diagnostics').exists():
-                      shutil.rmtree('.tmp/canary-diagnostics')
-                  sh([
-                      'bash', 'scripts/run_codex_selected_prompt.sh',
-                      '--canary-id', 'weekly-selected-prompt',
-                      '--run-week', week,
-                      '--issue-number', issue,
-                      '--issue-title', title,
-                      '--issue-url', url,
-                      '--candidate-rank', rank,
-                      '--vote-count', votes,
-                      '--selection-policy', reason,
-                      '--prompt-file', str(prompt_file),
-                      '--work-label', f'weekly-selected-prompt-rank-{rank}',
-                  ], display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}')
-                  build_public_bundle(rank, issue)
-                  copy_rank_diagnostics(rank)
-              else:
-                  if not allow_legacy:
-                      raise SystemExit('Legacy OpenAI lab-run fallback is disabled. Set PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true for explicit rollback or diagnostic use.')
-                  sh([
-                      'python', 'scripts/openai_lab_run.py',
-                      '--week', week,
-                      '--candidate-rank', rank,
-                      '--issue-number', issue,
-                      '--voted-prompt', prompt,
-                      '--vote-count', votes,
-                      '--run-reason', reason,
-                  ], display=f'python scripts/openai_lab_run.py --week {week} --candidate-rank {rank} --issue-number {issue} --voted-prompt <redacted>')
+              prompt_file = Path(f'.tmp/weekly-selected-prompt-rank-{rank}.md')
+              prompt_file.parent.mkdir(parents=True, exist_ok=True)
+              prompt_file.write_text(str(prompt), encoding='utf-8')
+              if Path('.tmp/canary-diagnostics').exists():
+                  shutil.rmtree('.tmp/canary-diagnostics')
+              sh([
+                  'bash', 'scripts/run_codex_selected_prompt.sh',
+                  '--canary-id', 'weekly-selected-prompt',
+                  '--run-week', week,
+                  '--issue-number', issue,
+                  '--issue-title', title,
+                  '--issue-url', url,
+                  '--candidate-rank', rank,
+                  '--vote-count', votes,
+                  '--selection-policy', reason,
+                  '--prompt-file', str(prompt_file),
+                  '--work-label', f'weekly-selected-prompt-rank-{rank}',
+              ], display=f'bash scripts/run_codex_selected_prompt.sh --prompt-file {prompt_file} --candidate-rank {rank}', extra_env={api_key_env_name: api_key})
+              build_public_bundle(rank, issue)
+              copy_rank_diagnostics(rank)
               sh(['bash', 'scripts/safety-check.sh', 'origin/main', 'HEAD'])
               sh(['bash', 'scripts/static-site-check.sh'])
               diff = subprocess.run(['git', 'diff', '--quiet', '--', 'lab/'])
@@ -341,7 +297,7 @@ jobs:
                   f'- Run reason: {reason}',
                   f'- Inherited lab base: `{base_sha}`',
                   f'- Runner: `{runner}`',
-                  f'- Canonical selected-prompt runner: `{str(use_canonical).lower()}`',
+                  '- Canonical selected-prompt runner: `true`',
                   '- Implementation model: `gpt-5.4-nano`',
                   '- Model policy: `rules/model-policy-v1.1.md`',
                   '- Agent-run policy: `rules/agent-run-policy-v1.0.md`',
@@ -358,7 +314,7 @@ jobs:
                   '',
                   '## Evidence',
                   '',
-                  'When the canonical selected-prompt runner is enabled, weekly diagnostics and public bundles are uploaded as workflow artifacts.',
+                  'Weekly diagnostics and public bundles are uploaded as workflow artifacts.',
                   '',
                   '## Merge policy',
                   '',
@@ -375,7 +331,7 @@ jobs:
           PY
 
       - name: Upload weekly selected-prompt diagnostics
-        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-diagnostics-${{ github.run_number }}
@@ -383,7 +339,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload weekly selected-prompt public bundles
-        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
@@ -391,14 +347,14 @@ jobs:
           if-no-files-found: error
 
       - name: Download uploaded weekly selected-prompt public bundles
-        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' }}
         uses: actions/download-artifact@v4
         with:
           name: weekly-selected-prompt-public-bundles-${{ github.run_number }}
           path: .tmp/weekly-selected-prompt-public-bundles-uploaded
 
       - name: Verify uploaded weekly selected-prompt public bundles
-        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' }}
         run: |
           set -euo pipefail
           mkdir -p .tmp/weekly-selected-prompt-public-bundles-uploaded-verification
@@ -423,7 +379,7 @@ jobs:
           fi
 
       - name: Upload weekly selected-prompt uploaded bundle verification
-        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical == 'true' }}
+        if: ${{ always() && steps.eligibility.outputs.has_eligible == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: weekly-selected-prompt-uploaded-bundle-verification-${{ github.run_number }}
