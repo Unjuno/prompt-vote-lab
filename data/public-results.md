@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T04:07:32+00:00`
+Generated at: `2026-05-19T04:38:15+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 326 |
+| pr_count | 327 |
 | open_pr_count | 0 |
-| merged_pr_count | 264 |
+| merged_pr_count | 265 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
 | 346 | MERGED | 2 | 38/9 | Make comparison rank extraction explicit |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
@@ -77,12 +78,19 @@ This file is a raw results surface for participants. It does not score prompts o
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
 | 317 | MERGED | 2 | 88/30 | Update usable ops current status |
-| 319 | MERGED | 6 | 58/48 | Remove API-era output token cap from active policy |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26076513377 | Terminal State Report | pull_request | completed | skipped | Avoid missing run record links in comparison dashboard |
+| 26076512886 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26076424743 | Lab PR Scope Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
+| 26076424719 | Script Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
+| 26076386104 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26076381197 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 26075574435 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26075552031 | Public Results Export | push | completed | success | Make comparison rank extraction explicit |
 | 26075552019 | Terminal State Report | pull_request | completed | skipped | Make comparison rank extraction explicit |
 | 26075551498 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26075464333 | Lab PR Scope Check | pull_request | completed | success | Make comparison rank extraction explicit |
@@ -105,14 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26064749182 | Terminal State Report | pull_request | completed | skipped | Define release week numbering policy |
 | 26064749163 | Public Results Export | push | completed | success | Define release week numbering policy |
 | 26064748317 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
-| 26048045426 | Static Site Check | pull_request | completed | success | Define release week numbering policy |
-| 26048045374 | Lab PR Scope Check | pull_request | completed | success | Define release week numbering policy |
-| 26048045314 | Pre-API Freeze Audit | pull_request | completed | success | Define release week numbering policy |
-| 26048045253 | Script Check | pull_request | completed | success | Define release week numbering policy |
-| 26043766066 | Terminal State Report | pull_request | completed | skipped | Fix W20 comparison dashboard lab evidence |
-| 26043759547 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26043551434 | Static Site Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
-| 26043551286 | Lab PR Scope Check | pull_request | completed | success | Fix W20 comparison dashboard lab evidence |
 
 ## Raw JSON
 
