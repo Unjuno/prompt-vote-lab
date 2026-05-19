@@ -14,12 +14,12 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 2. [Experiment model](./experiment-model.md) — game model and boundaries.
 3. [How to participate](./how-to-participate.md) — submit, vote, and review.
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
-5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy, default-on, auto-merge, and release-gate status contract.
+5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy script, fixed weekly runner, auto-merge, and release-gate status contract.
 6. [Release readiness review](./release-readiness-review.md) — security posture, participant journey, live preview, and release decision review.
 7. [Root folder audit](./root-folder-audit.md) — top-level folder roles, cleanup posture, and maintainer questions before cleanup.
 8. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
-9. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy fallbacks, generated snapshots, and cleanup candidates.
-10. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, legacy, and test workflow classification.
+9. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy script status, generated snapshots, retired scaffolding, and cleanup candidates.
+10. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, retired legacy, legacy script, and test workflow classification.
 11. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
 12. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
 13. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
@@ -27,20 +27,18 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 15. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
 16. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
 17. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-18. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, and E2E status.
+18. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, fixed canonical runner, and E2E status.
 19. [Automation map](./automation-map.md) — workflow boundaries.
 20. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
 21. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-22. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and pre-canary cleanup.
-23. [Fixed first canary prompt](./first-canary-prompt.md) — the only allowed first real canary prompt.
-24. [First canary readiness checklist](./first-canary-readiness.md) — final check before running the first real canary.
-25. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-26. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-27. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-28. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-29. [Report policy](./report-policy.md) — weekly report draft policy.
-30. [Pre-API freeze checklist](./pre-api-freeze.md) — gates before paid agent runs.
-31. [Release week numbering](./release-week-numbering.md) — public Release Week 1/2/3 labels versus internal ISO week evidence IDs.
+22. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and cleanup checks.
+23. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+24. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+25. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+26. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+27. [Report policy](./report-policy.md) — weekly report draft policy.
+28. [Pre-API freeze checklist](./pre-api-freeze.md) — historical guardrail record for the earlier API/SDK path.
+29. [Release week numbering](./release-week-numbering.md) — public Release Week 1/2/3 labels versus internal ISO week evidence IDs.
 
 ## Current reputation status
 
@@ -89,17 +87,17 @@ The [Repository 5S and language policy](./repository-5s-and-language-policy.md) 
 
 The [Root folder audit](./root-folder-audit.md) records top-level folder roles, cleanup posture, and maintainer questions before broad cleanup.
 
-The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy fallbacks, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
+The [Repository cleanup inventory](./repository-cleanup-inventory.md) classifies protected evidence, canonical active surfaces, legacy script surfaces, retired launch scaffolding, generated snapshots, cleanup candidates, and not-yet-removable items before any deletion work.
 
 The [Workflow family map](./workflow-family-map.md) classifies workflows before consolidation or deletion work so historical scaffolding is not mistaken for active canonical evidence.
 
-The [Canonical status drift check](./canonical-status-drift-check.md) keeps canonical runner, legacy fallback, default-on, auto-merge, and release-gate wording aligned across maintainer-authored docs.
+The [Canonical status drift check](./canonical-status-drift-check.md) keeps canonical runner, legacy script, fixed weekly runner, auto-merge, and release-gate wording aligned across maintainer-authored docs.
 
 Generated public result snapshots and raw external evidence are treated separately because they may contain user-provided text.
 
 ## Canonical runner evidence status
 
-The selected-prompt Docker/Codex runner is the canonical evidence path for default weekly eligible implementation runs when the PR/run evidence says:
+The selected-prompt Docker/Codex runner is the canonical evidence path for weekly eligible implementation runs when the PR/run evidence says:
 
 ```text
 Runner: codex-cli-selected-prompt-packet-container
@@ -154,9 +152,9 @@ Closed Issues remain visible. They are not deleted.
 
 ## Current usable experiment status
 
-The repository has scheduled weekly automation, support-unlock gates, and a verified canonical selected-prompt path enabled by default for eligible weekly implementation runs.
+The repository has scheduled weekly automation, support-unlock gates, and a verified canonical selected-prompt path fixed on for eligible weekly implementation runs.
 
-Broad default-on canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.
+Canonical weekly execution is approved; manual review remains required and auto-merge remains disabled.
 
 Status ownership:
 
@@ -173,7 +171,7 @@ Manual canary experiments and comparison operations remain available through [Us
 
 Paid implementation-agent runs remain governed by preflight, bounded-run evidence, public bundle verification, and manual review.
 
-The project should prefer extra offline verification over debugging after paid API calls begin.
+The project should prefer extra offline verification over debugging after paid model calls begin.
 
 ## Rule documents
 
