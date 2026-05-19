@@ -39,6 +39,8 @@ weekly feature flag override: removed
 weekly legacy override: removed from Weekly Auto Run
 ```
 
+Weekly Auto Run no longer has a legacy API/SDK branch.
+
 Canonical evidence requires:
 
 ```text
