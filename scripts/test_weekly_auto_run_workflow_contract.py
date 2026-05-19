@@ -67,6 +67,8 @@ REQUIRED_TEXT = [
 
 FORBIDDEN_TEXT = [
     "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER: \"false\"",
+    "MAX_OUTPUT_TOKENS",
+    "--max-output-tokens",
     "steps.weekly-vars.outputs.use_canonical != 'true' }}\n        run: |\n          python -m pip install openai",
     "gh pr merge",
     "auto-merge",

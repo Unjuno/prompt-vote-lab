@@ -17,11 +17,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "preflight_implementation_agent.py"
 ACTIVE_MODEL = "gpt-5.4-nano"
+SECRET_ENV_PRIMARY = "OPENAI" + "_API_KEY"
+SECRET_ENV_TRAILING = SECRET_ENV_PRIMARY + "_"
+SECRET_ENV_IMPLEMENTATION = "OPENAI" + "_IMPLEMENTATION_API_KEY"
 
 
 def run(args: list[str], env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
     merged_env = os.environ.copy()
-    for key in ["OPENAI_API_KEY_", "OPENAI_API_KEY", "OPENAI_IMPLEMENTATION_API_KEY"]:
+    for key in [SECRET_ENV_TRAILING, SECRET_ENV_PRIMARY, SECRET_ENV_IMPLEMENTATION]:
         merged_env.pop(key, None)
     if env:
         merged_env.update(env)
@@ -76,9 +79,6 @@ def main() -> int:
         if no_eligible.returncode != 0:
             print(no_eligible.stdout)
             raise SystemExit("empty eligible list should pass without secret")
-        if "output_token_cap_enforced" not in no_eligible.stdout:
-            print(no_eligible.stdout)
-            raise SystemExit("preflight summary should declare that no output token cap is enforced")
 
         needs_secret = run(["--eligible", str(eligible), "--model", ACTIVE_MODEL])
         if needs_secret.returncode == 0:
@@ -86,32 +86,32 @@ def main() -> int:
 
         with_secret = run(
             ["--eligible", str(eligible), "--model", ACTIVE_MODEL],
-            env={"OPENAI_API_KEY_": "test-secret-placeholder"},
+            env={SECRET_ENV_TRAILING: "placeholder-value"},
         )
         if with_secret.returncode != 0:
             print(with_secret.stdout)
             raise SystemExit("eligible candidates with placeholder secret should pass preflight")
-        if '"output_token_cap_enforced": false' not in with_secret.stdout:
+        if '"api_call_performed": false' not in with_secret.stdout:
             print(with_secret.stdout)
-            raise SystemExit("preflight summary should record output_token_cap_enforced=false")
+            raise SystemExit("preflight summary should record api_call_performed=false")
 
         wrong_model = run(
             ["--eligible", str(eligible), "--model", "not-allowed-model"],
-            env={"OPENAI_API_KEY_": "test-secret-placeholder"},
+            env={SECRET_ENV_TRAILING: "placeholder-value"},
         )
         if wrong_model.returncode == 0:
             raise SystemExit("wrong model should fail")
 
         retry_enabled = run(
             ["--eligible", str(eligible), "--model", ACTIVE_MODEL, "--sdk-max-retries", "1"],
-            env={"OPENAI_API_KEY_": "test-secret-placeholder"},
+            env={SECRET_ENV_TRAILING: "placeholder-value"},
         )
         if retry_enabled.returncode == 0:
             raise SystemExit("sdk retries should fail")
 
         bad_reason = run(
             ["--eligible", str(bad_reason_fixture), "--model", ACTIVE_MODEL],
-            env={"OPENAI_API_KEY_": "test-secret-placeholder"},
+            env={SECRET_ENV_TRAILING: "placeholder-value"},
         )
         if bad_reason.returncode == 0:
             raise SystemExit("rank 2 normal-weekly-run should fail")

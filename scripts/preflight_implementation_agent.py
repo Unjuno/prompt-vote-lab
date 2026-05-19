@@ -69,7 +69,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--eligible", default=".tmp/eligible-candidates.json")
     parser.add_argument("--model", default=os.getenv("IMPLEMENTATION_MODEL", "gpt-5.4-nano"))
-    parser.add_argument("--max-output-tokens", default=os.getenv("MAX_OUTPUT_TOKENS", ""))
     parser.add_argument("--sdk-max-retries", default=os.getenv("SDK_MAX_RETRIES", "0"))
     parser.add_argument("--api-call-limit-per-candidate", default="1")
     args = parser.parse_args()
@@ -107,8 +106,6 @@ def main() -> int:
         "sdk_max_retries": sdk_max_retries,
         "api_call_limit_per_candidate": api_call_limit,
         "api_call_performed": False,
-        "output_token_cap_enforced": False,
-        "legacy_max_output_tokens_input_present": bool(str(args.max_output_tokens).strip()),
     }
     print(json.dumps(summary, indent=2))
     return 0
