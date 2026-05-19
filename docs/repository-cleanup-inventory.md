@@ -8,6 +8,8 @@ It is intentionally conservative. It classifies files before deletion.
 
 No file should be deleted only because it looks old. Deletion requires a protected-evidence check, a canonical/legacy check, and a passing cleanup PR.
 
+Do not delete protected public evidence casually.
+
 ## Inventory states
 
 | State | Meaning | Default action |
