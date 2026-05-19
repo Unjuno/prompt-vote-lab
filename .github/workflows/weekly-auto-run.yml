@@ -34,21 +34,34 @@ jobs:
         run: |
           set -euo pipefail
           use_canonical="${PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER:-$DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
+          allow_legacy="${PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN:-false}"
           case "$use_canonical" in
             true|false) ;;
             *) echo "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER must be true or false"; exit 1 ;;
           esac
+          case "$allow_legacy" in
+            true|false) ;;
+            *) echo "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN must be true or false"; exit 1 ;;
+          esac
+          if [ "$use_canonical" = "false" ] && [ "$allow_legacy" != "true" ]; then
+            echo "Legacy weekly runner requested, but PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN is not true."
+            echo "Set PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true only for an explicit rollback or diagnostic run."
+            exit 1
+          fi
           {
             echo "RUN_WEEK=week-$(date -u +%G-W%V)"
             echo "NO_CHANGE_BASELINE=${PROMPT_VOTE_LAB_NO_CHANGE_BASELINE:-$DEFAULT_NO_CHANGE_BASELINE}"
             echo "SUPPORT_USD=${PROMPT_VOTE_LAB_SUPPORT_USD:-$DEFAULT_SUPPORT_USD}"
             echo "USE_CANONICAL_SELECTED_PROMPT_RUNNER=$use_canonical"
+            echo "ALLOW_LEGACY_OPENAI_LAB_RUN=$allow_legacy"
           } >> "$GITHUB_ENV"
           echo "use_canonical=$use_canonical" >> "$GITHUB_OUTPUT"
+          echo "allow_legacy=$allow_legacy" >> "$GITHUB_OUTPUT"
         env:
           PROMPT_VOTE_LAB_NO_CHANGE_BASELINE: ${{ vars.PROMPT_VOTE_LAB_NO_CHANGE_BASELINE }}
           PROMPT_VOTE_LAB_SUPPORT_USD: ${{ vars.PROMPT_VOTE_LAB_SUPPORT_USD }}
           PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER: ${{ vars.PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER }}
+          PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN: ${{ vars.PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN }}
 
       - name: Resolve automated support unlocks
         run: |
@@ -103,6 +116,10 @@ jobs:
             echo "## Canonical selected-prompt runner"
             echo ""
             echo "${USE_CANONICAL_SELECTED_PROMPT_RUNNER}"
+            echo ""
+            echo "## Legacy OpenAI lab-run fallback"
+            echo ""
+            echo "${ALLOW_LEGACY_OPENAI_LAB_RUN}"
             echo ""
             echo "## Eligible implementation ranks"
             echo ""
@@ -175,7 +192,7 @@ jobs:
             --api-call-limit-per-candidate 1
 
       - name: Install Python dependency
-        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical != 'true' }}
+        if: ${{ steps.eligibility.outputs.has_eligible == 'true' && steps.weekly-vars.outputs.use_canonical != 'true' && steps.weekly-vars.outputs.allow_legacy == 'true' }}
         run: |
           python -m pip install --upgrade pip
           python -m pip install openai
@@ -202,6 +219,7 @@ jobs:
           week = os.environ['RUN_WEEK']
           run_number = "${{ github.run_number }}"
           use_canonical = os.environ.get('USE_CANONICAL_SELECTED_PROMPT_RUNNER') == 'true'
+          allow_legacy = os.environ.get('ALLOW_LEGACY_OPENAI_LAB_RUN') == 'true'
           candidates = json.loads(Path('.tmp/eligible-candidates.json').read_text())
           if not candidates:
               print('No eligible candidates to implement')
@@ -290,6 +308,8 @@ jobs:
                   build_public_bundle(rank, issue)
                   copy_rank_diagnostics(rank)
               else:
+                  if not allow_legacy:
+                      raise SystemExit('Legacy OpenAI lab-run fallback is disabled. Set PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true for explicit rollback or diagnostic use.')
                   sh([
                       'python', 'scripts/openai_lab_run.py',
                       '--week', week,
