@@ -61,10 +61,10 @@ def mutate_retry_relaxation(repo: Path) -> None:
 def mutate_missing_guard(repo: Path) -> None:
     path = repo / ".github/workflows/weekly-auto-run.yml"
     text = path.read_text(encoding="utf-8")
-    step = "      - name: Install Python dependency\n"
+    step = "      - name: Create implementation PRs for eligible candidates\n"
     start = text.find(step)
     if start < 0:
-        raise SystemExit("test fixture could not find install step")
+        raise SystemExit("test fixture could not find implementation step")
     next_step = text.find("\n      - name:", start + len(step))
     end = next_step if next_step >= 0 else len(text)
     block = text[start:end]
@@ -81,7 +81,7 @@ def mutate_review_boundary(repo: Path) -> None:
 
 
 def mutate_missing_required_doc(repo: Path) -> None:
-    path = repo / "docs/canary-policy.md"
+    path = repo / "docs/weekly-ops-doctrine.md"
     path.unlink()
 
 

@@ -4,15 +4,11 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+ACTIVE_MODEL = "gpt-5.4-nano"
+WEEKLY_WORKFLOW = ".github/workflows/weekly-auto-run.yml"
 
 REQUIRED_FILES = [
-    "docs/pre-api-freeze.md",
     "docs/current-features.md",
-    "docs/canary-policy.md",
-    "docs/first-canary-prompt.md",
-    "docs/first-canary-readiness.md",
-    "docs/canary-report-template.md",
-    "docs/stop-rules.md",
     "docs/weekly-ops-doctrine.md",
     "docs/evidence-artifact-review.md",
     "runs/evidence-review-template.md",
@@ -21,91 +17,16 @@ REQUIRED_FILES = [
     "lean-toolchain",
     "scripts/select_eligible.py",
     "scripts/preflight_implementation_agent.py",
-    "scripts/openai_lab_run.py",
-    "scripts/create_first_canary_candidate.py",
     "scripts/create-weekly-snapshot.mjs",
     "scripts/create-snapshot-summary.mjs",
     "scripts/create-public-briefing.mjs",
     "scripts/run-evidence-artifact-smoke.mjs",
     "scripts/validate-evidence-artifact.mjs",
-    ".github/workflows/weekly-auto-run.yml",
-    ".github/workflows/first-canary-run.yml",
+    WEEKLY_WORKFLOW,
     ".github/workflows/evidence-pipeline-dry-run.yml",
 ]
 
-ACTIVE_MODEL = "gpt-5.4-nano"
-
 REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
-    "docs/pre-api-freeze.md": [
-        "historical guardrail record",
-        "legacy API/SDK runner: present, non-canonical",
-        "no automatic merge",
-        "no hidden retry",
-        "no fallback model",
-        "Weekly Auto Run no-eligible workflow",
-        "Evidence Pipeline Dry Run with `source=live`",
-        "Support Unlock Export live path",
-        "PR #243",
-        ACTIVE_MODEL,
-        "legacy max output tokens: 5000",
-        "output_token_cap_enforced: false",
-        "workflow attempts to auto-merge",
-        "not the release gate for the current canonical weekly selected-prompt runner",
-    ],
-    "docs/canary-policy.md": [
-        "# Legacy API canary policy",
-        "legacy API/SDK path",
-        f"model: {ACTIVE_MODEL}",
-        "attempts per candidate: 1",
-        "SDK max_retries: 0",
-        "fallback model: none",
-        "legacy max_output_tokens: 5000",
-        "output_token_cap_enforced: false",
-        "automatic merge: no",
-        "max continuation runs per candidate: 1",
-        "must not be cited as proof that the active canonical weekly path uses the API/SDK runner",
-    ],
-    "docs/first-canary-prompt.md": [
-        "Fixed First Canary Prompt",
-        "Do not expand this prompt during the first canary.",
-        "Add a small static canary panel inside lab/ explaining that this is the first bounded implementation-agent canary.",
-        "Edit only lab/index.html, lab/style.css, and/or lab/app.js.",
-        "Do not edit workflows, scripts, docs, rules, formal proofs, or run records.",
-        "Do not add external network calls.",
-        "Do not add external scripts.",
-        "Do not add cookies, analytics, login, payment behavior, or new dependencies.",
-        "Do not use eval.",
-        "no persona route UI",
-        "one implementation PR is created",
-        "changed files are inside lab/",
-    ],
-    "docs/first-canary-readiness.md": [
-        "# Legacy first API canary readiness checklist",
-        "not the active readiness checklist for the current canonical weekly selected-prompt runner",
-        "open PRs: 0",
-        "remote branches: main only",
-        f"model: {ACTIVE_MODEL}",
-        "SDK max_retries: 0",
-        "API call limit per candidate: 1",
-        "legacy max output tokens: 5000",
-        "output_token_cap_enforced: false",
-        "fallback model: none",
-        "auto-merge: disabled",
-        "Add a small static canary panel inside lab/ explaining that this is the first bounded implementation-agent canary.",
-        "Allowed changed files:",
-        "lab/index.html",
-        "lab/style.css",
-        "lab/app.js",
-        "workflow attempts to auto-merge",
-        "not a current release checklist",
-    ],
-    "docs/stop-rules.md": [
-        "more than one implementation-agent attempt for a single candidate",
-        "SDK retry is enabled or triggered",
-        "fallback model is used",
-        "implementation runs when eligible_count = 0",
-        "workflow attempts auto-merge",
-    ],
     "docs/current-features.md": [
         "no-eligible production workflow path: verified",
         "Support Unlock Export live path: verified",
@@ -113,8 +34,6 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "canonical weekly default-on: approved",
         "ordinary post-default-on weekly observation: pending",
         ACTIVE_MODEL,
-        "output_token_cap_enforced: false",
-        "Legacy API-era settings such as `max_output_tokens: 5000` must not be cited as active canonical runner enforcement",
         "Evidence Pipeline Dry Run",
         "source=live",
     ],
@@ -143,8 +62,6 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
     ],
     "formal/Canary.lean": [
         "def safeCanary",
-        "def firstCanaryPolicy",
-        "first_canary_policy_is_safe",
         "safe_canary_scope_lab_only",
         "safe_canary_one_attempt",
         "safe_canary_no_sdk_retry",
@@ -160,23 +77,6 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "validate_env_secret(len(candidates))",
         "api_call_performed",
         "False",
-    ],
-    "scripts/openai_lab_run.py": [
-        "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
-        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
-        "MAX_OUTPUT_TOKENS",
-        "5000",
-        "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
-        f"gpt-5.4-nano",
-        "This is one bounded implementation-agent attempt.",
-        "Do not create additional files.",
-    ],
-    "scripts/create_first_canary_candidate.py": [
-        "docs/first-canary-prompt.md",
-        "Fixed prompt",
-        "eligible-candidates.json",
-        "first_canary",
-        "fixed_prompt_source",
     ],
     "scripts/create-weekly-snapshot.mjs": [
         "snapshot-v1.2",
@@ -212,40 +112,16 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
         "weekly_snapshot_finished",
         "no_change_baseline_candidate",
     ],
-    ".github/workflows/weekly-auto-run.yml": [
+    WEEKLY_WORKFLOW: [
         f"AUTO_IMPLEMENTATION_MODEL: \"{ACTIVE_MODEL}\"",
         f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
         "SDK_MAX_RETRIES: \"0\"",
         "--api-call-limit-per-candidate 1",
         "if: ${{ steps.eligibility.outputs.has_eligible == 'true' }}",
         "No eligible candidates. No implementation-agent attempt will be made.",
-        "python -m pip install openai",
+        "scripts/run_codex_selected_prompt.sh",
+        "--prompt-file",
         "gh pr create",
-    ],
-    ".github/workflows/first-canary-run.yml": [
-        "name: Legacy First API Canary Run",
-        "confirm_legacy_api_canary",
-        "RUN_LEGACY_API_CANARY",
-        "LEGACY_API_CANARY_CONFIRMATION",
-        "Confirm legacy API canary intent",
-        "This is a legacy non-canonical API/SDK canary workflow.",
-        "Use the canonical selected-prompt runner for normal weekly operation.",
-        "workflow_dispatch",
-        f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
-        "MAX_OUTPUT_TOKENS: \"5000\"",
-        "SDK_MAX_RETRIES: \"0\"",
-        "RUN_WEEK: first-canary-001",
-        "python scripts/create_first_canary_candidate.py",
-        "python scripts/preflight_implementation_agent.py",
-        "--api-call-limit-per-candidate 1",
-        "python scripts/openai_lab_run.py",
-        "bash scripts/safety-check.sh origin/main HEAD",
-        "bash scripts/static-site-check.sh",
-        "Forbidden first-canary changed file",
-        "Canonical selected-prompt runner: \\`false\\`",
-        "Legacy runner: \\`true\\`",
-        "gh pr create",
-        "Manual review is required. Do not auto-merge.",
     ],
     ".github/workflows/evidence-pipeline-dry-run.yml": [
         "Generate public briefing",
@@ -258,26 +134,24 @@ REQUIRED_SUBSTRINGS: dict[str, list[str]] = {
 }
 
 FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
-    ".github/workflows/weekly-auto-run.yml": [
+    WEEKLY_WORKFLOW: [
         "enable-auto-merge",
         "gh pr merge --auto",
         "MAX_OUTPUT_TOKENS",
         "--max-output-tokens",
+        "Install Python dependency",
+        "python -m pip install",
+        "use_canonical",
+        "allow_legacy",
+        "ALLOW_LEGACY",
+        "PROMPT_VOTE_LAB_ALLOW_LEGACY",
+        "legacy-",
+        "_lab_run.py",
         "SDK_MAX_RETRIES: \"1\"",
         "SDK_MAX_RETRIES: \"2\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
-    ],
-    ".github/workflows/first-canary-run.yml": [
-        "enable-auto-merge",
-        "gh pr merge --auto",
-        "MAX_OUTPUT_TOKENS: \"12000\"",
-        "SDK_MAX_RETRIES: \"1\"",
-        "SDK_MAX_RETRIES: \"2\"",
-        "IMPLEMENTATION_MODEL: gpt-5-nano",
-        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
-        "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
     ],
     "scripts/preflight_implementation_agent.py": [
         "ALLOWED_MODELS = {\"gpt-5\"}",
@@ -289,15 +163,6 @@ FORBIDDEN_SUBSTRINGS: dict[str, list[str]] = {
         "legacy_max_output_tokens_input_present",
         "api_call_performed\": True",
         "sdk_max_retries != 1",
-    ],
-    "scripts/openai_lab_run.py": [
-        "os.getenv(\"IMPLEMENTATION_MODEL\", \"gpt-5-nano\")",
-        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
-        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
-        "args.max_output_tokens > 12000",
-        "max_output_tokens above 12000",
-        "max_retries=1",
-        "max_retries=2",
     ],
 }
 
@@ -330,7 +195,7 @@ def main() -> int:
             if needle in text:
                 failures.append(f"{rel}: forbidden text present: {needle}")
 
-    weekly_auto = read_text(".github/workflows/weekly-auto-run.yml")
+    weekly_auto = read_text(WEEKLY_WORKFLOW)
     require_if_guard(
         weekly_auto,
         "Require implementation secret only if candidates are eligible",
@@ -340,12 +205,6 @@ def main() -> int:
     require_if_guard(
         weekly_auto,
         "Preflight implementation-agent run",
-        "steps.eligibility.outputs.has_eligible == 'true'",
-        failures,
-    )
-    require_if_guard(
-        weekly_auto,
-        "Install Python dependency",
         "steps.eligibility.outputs.has_eligible == 'true'",
         failures,
     )
