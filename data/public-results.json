@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-18T23:28:59+00:00",
+  "generated_at": "2026-05-19T00:34:14+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -732,6 +732,43 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 10,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Restrict generated comparison dashboard rows to Issues that carry both `prompt-proposal` and `normal-candidate` labels for the requested week.\n- Keep older non-prompt implemented Issues out of the weekly comparison dashboard.\n- Update the comparison dashboard test so a week-labeled non-prompt Issue does not displace the intended prompt comparison set.\n\n## Why\nAfter PR #344 fixed public-results pagination, older `week:2026-W20` Issues re-entered `data/public-results.json`. That exposed a second bug: the dashboard generator treated every week-labeled implemented Issue as a comparison candidate.\n\nFor W20, Issue #183 is week-labeled and implemented but is not a prompt proposal. It should not replace the intended W20 comparison set:\n\n```text\nRank 1: Issue #191 / PR #192\nRank 2: Issue #195 / PR #214\nRank 3: Issue #196 / PR #224\n```\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nAfter this is merged, allow `Public Results Export` to regenerate generated evidence and verify `lab/comparisons/2026-W20/` shows Rank 1/2/3 correctly.\n\n## Non-goals\n- No generated evidence update in this PR.\n- No root lab change.\n- No workflow change.\n- No runner change.\n- No historical evidence rename.\n- No release tag.",
+      "body_length": 1287,
+      "changed_files": 2,
+      "closed_at": "2026-05-19T00:33:33Z",
+      "comment_count": 0,
+      "created_at": "2026-05-19T00:03:29Z",
+      "deletions": 5,
+      "files": [
+        {
+          "additions": 7,
+          "deletions": 2,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 3,
+          "deletions": 3,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "filter-comparison-dashboard-candidates",
+      "head_ref_oid": "244e1eb79594d2812e3815f5464b0e4365f2eaad",
+      "labels": [],
+      "merge_commit_oid": "616ad699584cb9588c68a667e288e7a78090b907",
+      "merged_at": "2026-05-19T00:33:33Z",
+      "merged_by": "Unjuno",
+      "number": 345,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Filter comparison dashboard candidates",
+      "updated_at": "2026-05-19T00:33:33Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/345"
+    },
     {
       "additions": 98,
       "author": "Unjuno",
@@ -13768,14 +13805,98 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 262,
+    "merged_pr_count": 263,
     "open_issue_count": 0,
     "open_pr_count": 0,
-    "pr_count": 324,
+    "pr_count": 325,
     "run_record_count": 23,
     "workflow_run_count": 499
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-19T00:33:35Z",
+      "database_id": 26068750691,
+      "display_title": "Filter comparison dashboard candidates",
+      "event": "pull_request",
+      "head_branch": "filter-comparison-dashboard-candidates",
+      "head_sha": "244e1eb79594d2812e3815f5464b0e4365f2eaad",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-19T00:33:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26068750691",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T00:33:34Z",
+      "database_id": 26068750114,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "616ad699584cb9588c68a667e288e7a78090b907",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-19T00:33:58Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26068750114",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T00:03:33Z",
+      "database_id": 26067721450,
+      "display_title": "Filter comparison dashboard candidates",
+      "event": "pull_request",
+      "head_branch": "filter-comparison-dashboard-candidates",
+      "head_sha": "244e1eb79594d2812e3815f5464b0e4365f2eaad",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-19T00:03:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26067721450",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T00:03:33Z",
+      "database_id": 26067721421,
+      "display_title": "Filter comparison dashboard candidates",
+      "event": "pull_request",
+      "head_branch": "filter-comparison-dashboard-candidates",
+      "head_sha": "244e1eb79594d2812e3815f5464b0e4365f2eaad",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-19T00:04:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26067721421",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T23:29:03Z",
+      "database_id": 26066465798,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "3ed01aa1fe8f92b2b6b39ed60b8a4e93a42cd4ff",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-18T23:29:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26066465798",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-18T23:28:20Z",
+      "database_id": 26066439758,
+      "display_title": "Paginate public results export inputs",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "38440289fd7b56f77a1f663875c73e077491d4c4",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-18T23:29:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26066439758",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-18T23:28:20Z",
@@ -20677,90 +20798,6 @@
       "updated_at": "2026-05-14T09:08:54Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851780221",
       "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:08:46Z",
-      "database_id": 25851780210,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "b7fd0435f390e3d174aab984b386c80c43c122d5",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:08:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851780210",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T09:08:46Z",
-      "database_id": 25851780206,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "b7fd0435f390e3d174aab984b386c80c43c122d5",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:09:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851780206",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:08:46Z",
-      "database_id": 25851780191,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "b7fd0435f390e3d174aab984b386c80c43c122d5",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:08:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851780191",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:01:31Z",
-      "database_id": 25851468413,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "4e2bb327f041c8d6a0b8dd7184efdb4a7621b0cc",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851468413",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:01:30Z",
-      "database_id": 25851468299,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "4e2bb327f041c8d6a0b8dd7184efdb4a7621b0cc",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851468299",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T09:01:30Z",
-      "database_id": 25851468281,
-      "display_title": "Add weekly canonical selected-prompt runner feature flag",
-      "event": "pull_request",
-      "head_branch": "add-weekly-canonical-runner-feature-flag",
-      "head_sha": "4e2bb327f041c8d6a0b8dd7184efdb4a7621b0cc",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T09:01:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25851468281",
-      "workflow_name": "Implementation Preflight Test"
     }
   ]
 }
