@@ -31,6 +31,14 @@ Which workflows are active, which are evidence-bearing, and which are obsolete l
 | Codex Selected Prompt Run | `.github/workflows/codex-selected-prompt-run.yml` | Manual canonical selected-prompt Docker/Codex runner smoke path |
 | Weekly Auto Run | `.github/workflows/weekly-auto-run.yml` | Weekly vote summary and fixed-on canonical selected-prompt implementation path |
 
+Current weekly status:
+
+```text
+weekly default status: canonical selected-prompt runner fixed-on
+weekly feature flag override: removed
+weekly legacy override: removed from Weekly Auto Run
+```
+
 Canonical evidence requires:
 
 ```text
