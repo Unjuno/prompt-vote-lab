@@ -4,12 +4,19 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 from pathlib import Path
 from typing import Any
 
 SAFE_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';"
 ROOT_LAB_FILES = {"lab/index.html", "lab/style.css", "lab/app.js"}
 REQUIRED_CANDIDATE_LABELS = {"prompt-proposal", "normal-candidate"}
+ISSUE_RANK_PATTERNS = [
+    re.compile(r"intended comparison rank\s*:\s*([1-3])", re.IGNORECASE),
+    re.compile(r"\[rank\s*([1-3])\]", re.IGNORECASE),
+    re.compile(r"^\s*-\s*rank\s*:\s*([1-3])\s*$", re.IGNORECASE | re.MULTILINE),
+    re.compile(r"^\s*candidate_rank\s*:\s*([1-3])\s*$", re.IGNORECASE | re.MULTILINE),
+]
 
 
 def labels(item: dict[str, Any]) -> set[str]:
@@ -20,12 +27,18 @@ def is_comparison_candidate(issue_labels: set[str], week_id: str) -> bool:
     return f'week:{week_id}' in issue_labels and REQUIRED_CANDIDATE_LABELS.issubset(issue_labels)
 
 
-def rank_from_issue(issue: dict[str, Any]) -> int | None:
-    text = f"{issue.get('title', '')}\n{issue.get('body', '')}".lower()
-    for n in (1, 2, 3):
-        if f'rank {n}' in text or f'rank-{n}' in text or f'rank:{n}' in text:
-            return n
+def explicit_rank(text: str) -> int | None:
+    for pattern in ISSUE_RANK_PATTERNS:
+        match = pattern.search(text)
+        if match:
+            return int(match.group(1))
     return None
+
+
+def rank_from_issue(issue: dict[str, Any]) -> int | None:
+    title = str(issue.get('title', ''))
+    body = str(issue.get('body', ''))
+    return explicit_rank(body) or explicit_rank(title)
 
 
 def pr_rank(pr: dict[str, Any]) -> int | None:
