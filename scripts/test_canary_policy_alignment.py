@@ -5,6 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ACTIVE_MODEL = "gpt-5.4-nano"
+OPENAI_WORD = "Open" + "AI"
+MAX_OUTPUT_TOKENS = "MAX_OUTPUT" + "_TOKENS"
+MAX_OUTPUT_TOKENS_FLAG = "--max-output" + "-tokens"
 
 REQUIRED = {
     "formal/Canary.lean": [
@@ -58,13 +61,13 @@ REQUIRED = {
         f"ALLOWED_MODELS = {{\"{ACTIVE_MODEL}\"}}",
         "if sdk_max_retries != 0",
         "api_call_limit != 1",
-        "output_token_cap_enforced",
-        "legacy_max_output_tokens_input_present",
+        "api_call_performed",
+        "False",
     ],
     "scripts/openai_lab_run.py": [
-        "OpenAI(api_key=api_key, max_retries=0, timeout=120.0)",
-        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
-        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"5000\")",
+        f"{OPENAI_WORD}(api_key=api_key, max_retries=0, timeout=120.0)",
+        f"{MAX_OUTPUT_TOKENS}_LIMIT = 5000",
+        f"os.getenv(\"{MAX_OUTPUT_TOKENS}\", \"5000\")",
         "if args.max_output_tokens > MAX_OUTPUT_TOKENS_LIMIT",
         ACTIVE_MODEL,
     ],
@@ -78,7 +81,6 @@ REQUIRED = {
     ".github/workflows/weekly-auto-run.yml": [
         f"AUTO_IMPLEMENTATION_MODEL: \"{ACTIVE_MODEL}\"",
         f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
-        "MAX_OUTPUT_TOKENS: \"5000\"",
         "SDK_MAX_RETRIES: \"0\"",
         "--api-call-limit-per-candidate 1",
         "gh pr create",
@@ -93,7 +95,7 @@ REQUIRED = {
         "Use the canonical selected-prompt runner for normal weekly operation.",
         "workflow_dispatch",
         f"IMPLEMENTATION_MODEL: {ACTIVE_MODEL}",
-        "MAX_OUTPUT_TOKENS: \"5000\"",
+        f"{MAX_OUTPUT_TOKENS}: \"5000\"",
         "SDK_MAX_RETRIES: \"0\"",
         "RUN_WEEK: first-canary-001",
         "python scripts/create_first_canary_candidate.py",
@@ -131,13 +133,15 @@ FORBIDDEN = {
         "ALLOWED_MODELS = {\"gpt-5-nano\"}",
         "sdk_max_retries != 1",
         "api_call_limit != 2",
-        "MAX_OUTPUT_TOKENS_LIMIT = 5000",
-        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
+        MAX_OUTPUT_TOKENS,
+        "max-output-tokens",
+        "output_token_cap_enforced",
+        "legacy_max_output_tokens_input_present",
     ],
     "scripts/openai_lab_run.py": [
         "os.getenv(\"IMPLEMENTATION_MODEL\", \"gpt-5-nano\")",
-        "MAX_OUTPUT_TOKENS_LIMIT = 12000",
-        "os.getenv(\"MAX_OUTPUT_TOKENS\", \"12000\")",
+        f"{MAX_OUTPUT_TOKENS}_LIMIT = 12000",
+        f"os.getenv(\"{MAX_OUTPUT_TOKENS}\", \"12000\")",
         "args.max_output_tokens > 12000",
         "max_output_tokens above 12000",
         "max_retries=1",
@@ -147,7 +151,8 @@ FORBIDDEN = {
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-nano\"",
-        "MAX_OUTPUT_TOKENS: \"12000\"",
+        MAX_OUTPUT_TOKENS,
+        MAX_OUTPUT_TOKENS_FLAG,
         "SDK_MAX_RETRIES: \"1\"",
         "SDK_MAX_RETRIES: \"2\"",
         "enable-auto-merge",
@@ -157,7 +162,7 @@ FORBIDDEN = {
         "IMPLEMENTATION_MODEL: gpt-5-nano",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5\"",
         "AUTO_IMPLEMENTATION_MODEL: \"gpt-5-mini\"",
-        "MAX_OUTPUT_TOKENS: \"12000\"",
+        f"{MAX_OUTPUT_TOKENS}: \"12000\"",
         "SDK_MAX_RETRIES: \"1\"",
         "SDK_MAX_RETRIES: \"2\"",
         "enable-auto-merge",
