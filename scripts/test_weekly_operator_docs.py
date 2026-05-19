@@ -12,75 +12,56 @@ RUNBOOK_REQUIRED_TEXT = [
     "# Operator runbook",
     "manual selected-prompt workflow smoke -> PASS",
     "weekly canonical selected-prompt canary -> run 25858202166 -> PASS",
-    "canonical weekly default-on release -> approved",
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
-    "runner: codex-cli-selected-prompt-packet-container",
-    "weekly-selected-prompt-diagnostics-7",
-    "weekly-selected-prompt-public-bundles-7",
-    "weekly-selected-prompt-uploaded-bundle-verification-7",
-    "## Canonical weekly default policy",
-    "The legacy `scripts/openai_lab_run.py` path is non-canonical.",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
-    "For ordinary `week-*` runs, `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` alone must not spend a legacy API/SDK attempt.",
-    "Runner: codex-cli-selected-prompt-packet-container",
-    "Canonical selected-prompt runner: true",
-    "## Temporary override policy",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN unset",
-    "Never leave `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` after a diagnostic run.",
-    "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0",
-    "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset",
-    "Never leave `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` after a canary.",
-    "Never leave `PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false` unintentionally after a diagnostic run.",
-    "## Default-on release status",
-    "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
-    "Operator release result:",
-    "operator runbook feature-flag cleanup documented",
+    "ordinary default-on weekly no-eligible observation -> PR #333 -> PASS",
+    "canonical weekly fixed-on release -> approved",
     "manual review remains required",
     "auto-merge remains disabled",
-    "weekly canonical default-on release: approved",
-    "Expected canonical eligible result under the default runner:",
-    "Expected legacy diagnostic result only when both overrides are intentionally set:",
-    "legacy API/SDK runner refused",
+    "weekly default status: canonical selected-prompt runner fixed-on",
+    "weekly feature flag override: removed",
+    "weekly legacy override: removed from Weekly Auto Run",
+    "runner: codex-cli-selected-prompt-packet-container",
+    "Runner: codex-cli-selected-prompt-packet-container",
+    "Canonical selected-prompt runner: true",
+    "## Weekly runner policy",
+    "Weekly Auto Run` no longer has a legacy API/SDK branch.",
+    "Do not reintroduce a weekly legacy override during cleanup.",
+    "## Legacy script status",
+    "Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.",
+    "status: non-canonical manual diagnostic / historical fallback",
+    "weekly reachability: none",
+    "canonical evidence status: invalid",
+    "Expected no-eligible result:",
+    "implementation-agent attempt: none",
+    "Expected canonical eligible result:",
+    "weekly-selected-prompt-diagnostics-<run_number> artifact is present",
+    "weekly-selected-prompt-public-bundles-<run_number> artifact is present",
+    "weekly-selected-prompt-uploaded-bundle-verification-<run_number> artifact is present",
     "## Output cap status",
     "The old API-era `MAX_OUTPUT_TOKENS` value is not an active canonical Codex runner control.",
     "output_token_cap_enforced: false",
-    "## Legacy fallback removal gate",
-    "Do not remove `scripts/openai_lab_run.py` during ordinary cleanup.",
-    "A future legacy fallback removal PR may be opened only after the explicit legacy fallback removal gate in [Workflow family map](./workflow-family-map.md) passes.",
-    "ordinary default-on weekly no-eligible run observed",
-    "vote summary PR created",
-    "implementation PR: none for the no-eligible run",
-    "no implementation-agent attempt made for the no-eligible run",
-    "no Codex/API call made for the no-eligible run",
-    "legacy API/SDK runner not reached for the no-eligible run",
-    "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
-    "canonical evidence artifacts remain verified",
-    "manual review remains required",
-    "auto-merge remains disabled",
-    "rollback plan exists",
-    "maintainer explicitly approves removal",
-    "If any item is missing, keep the legacy fallback present, non-canonical, and gated.",
-    "canonical evidence artifacts are missing for a canonical run",
+    "## Cleanup boundary",
+    "Do not delete public evidence casually.",
+    "A later PR may remove the legacy script only after the explicit removal gate in [Workflow family map](./workflow-family-map.md) passes.",
     "OPENAI_API_KEY present before codex exec: no",
 ]
 
 WEEKLY_REQUIRED_TEXT = [
     "# Weekly automation",
-    "upload canonical weekly diagnostics and public evidence for canonical runs",
+    "upload canonical weekly diagnostics and public evidence",
     "reverify uploaded canonical public bundles",
-    "## Canonical selected-prompt default",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER",
-    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
+    "## Canonical weekly runner status",
+    "weekly default status: canonical selected-prompt runner fixed-on",
+    "weekly feature flag override: removed",
+    "weekly legacy override: removed from Weekly Auto Run",
+    "Weekly Auto Run no longer has a legacy API/SDK branch.",
     "scripts/run_codex_selected_prompt.sh",
+    "runner: codex-cli-selected-prompt-packet-container",
     "Runner: codex-cli-selected-prompt-packet-container",
     "Canonical selected-prompt runner: true",
-    "The legacy `scripts/openai_lab_run.py` path is non-canonical",
-    "When the variable is explicitly set to `false`, `Weekly Auto Run` can reach the legacy fallback path for emergency rollback or controlled diagnosis only.",
-    "That feature flag alone must not silently authorize a legacy API/SDK attempt.",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
-    "Leaving `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` is not acceptable for normal scheduled operation.",
+    "## Legacy script status",
+    "scripts/openai_lab_run.py: non-canonical manual diagnostic / historical fallback",
+    "weekly reachability: none",
+    "canonical evidence status: invalid",
     "## Canonical weekly evidence artifacts",
     "weekly-selected-prompt-diagnostics-<run_number>",
     "weekly-selected-prompt-public-bundles-<run_number>",
@@ -90,81 +71,59 @@ WEEKLY_REQUIRED_TEXT = [
     "Gitleaks finding count: 0",
     "repo_root_mounted: false",
     "OPENAI_API_KEY present before codex exec: no",
-    "## Override and rollback settings",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
-    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true or unset",
-    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN unset",
-    "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0",
-    "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=20 or unset",
-    "Leaving `PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0` changes selection behavior",
-    "may reach the legacy fallback only through an explicit rollback override plus `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true`",
-    "Verified canonical weekly selected-prompt canary evidence:",
-    "run: 25858202166",
-    "selected Issue: #282",
-    "summary PR: #283",
-    "implementation PR: #284",
-    "bounded lab diff: PASS",
-    "auto-merge: disabled",
+    "## Observed no-eligible production evidence",
+    "ordinary default-on weekly no-eligible observation: PASS",
+    "support unlock file: data/support-unlocks/2026-W20.json",
+    "vote summary PR: #333",
+    "merged run record: runs/week-2026-W20-vote-summary.md",
+    "implementation-agent attempt: none",
     "## Default-on release status",
     "The complete release-gate checklist is owned by [Canonical status drift check](./canonical-status-drift-check.md).",
-    "Weekly workflow default-on release result:",
-    "weekly feature-flag canary with eligible candidate: PASS",
-    "weekly diagnostics artifact: present",
-    "weekly public bundle artifact: present",
-    "weekly uploaded bundle verification artifact: present",
-    "bounded lab diff: PASS",
-    "manual review remains required",
-    "auto-merge remains disabled",
-    "weekly canonical default-on release: approved",
+    "weekly canonical fixed-on release: approved",
+    "## Cleanup boundary",
+    "Do not delete public evidence casually.",
 ]
 
 DRIFT_REQUIRED_TEXT = [
     "## Required release gate language",
     "manual selected-prompt smoke: PASS",
-    "weekly feature-flag canary with eligible candidate: PASS",
+    "weekly selected-prompt canary with eligible candidate: PASS",
     "weekly diagnostics artifact: present",
     "weekly public bundle artifact: present",
     "weekly uploaded bundle verification artifact: present",
     "bounded lab diff: PASS",
-    "legacy fallback documented as non-canonical",
-    "operator runbook feature-flag cleanup documented",
+    "ordinary default-on weekly no-eligible observation: PASS",
+    "legacy script documented as non-canonical manual diagnostic / historical fallback",
+    "obsolete Legacy First API Canary Run workflow retired",
     "manual review remains required",
     "auto-merge remains disabled",
-    "weekly canonical default-on release: approved",
+    "weekly canonical fixed-on release: approved",
     "## Required legacy fallback removal gate",
     "The legacy fallback removal gate is a deletion-prevention gate, not a deletion approval by itself.",
     "ordinary default-on weekly no-eligible run observed",
     "vote summary PR created",
     "no implementation-agent attempt made for no-eligible run",
     "no Codex/API call made for no-eligible run",
-    "legacy API/SDK runner not reached for no-eligible run",
+    "weekly legacy branch absent from Weekly Auto Run",
     "eligible canonical run has selected-prompt canary evidence or a next natural eligible-run observation plan",
     "canonical evidence artifacts remain verified",
     "rollback plan exists",
-    "public docs no longer cite legacy fallback as an active requirement",
+    "public docs no longer cite legacy script as an active weekly requirement",
     "maintainer explicitly approves removal",
 ]
 
 FORBIDDEN_TEXT = [
-    "eligible prompt -> implementation-agent preflight -> implementation-agent run -> lab-only implementation PR\n```\n\n## Weekly operating loop",
-    "implementation-agent PR generation still needs a live eligible-candidate E2E verification",
     "legacy `scripts/openai_lab_run.py` path is canonical",
     "auto-merge may be enabled",
-    "PROMPT_VOTE_LAB_NO_CHANGE_BASELINE=0 is acceptable for normal scheduled operation",
     "Still not default-on",
     "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
-    "MAX_OUTPUT_TOKENS remains at the current configured limit until the system is complete.",
+    "DEFAULT_USE_CANONICAL_SELECTED_PROMPT_RUNNER=true",
+    "PROMPT_VOTE_LAB_USE_CANONICAL_SELECTED_PROMPT_RUNNER=false",
+    "PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true",
     "safe to delete legacy fallback now",
     "legacy fallback removal is approved",
-]
-
-RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT = [
-    "Do not make the canonical weekly runner default-on until all of these are true:\n\n```text\nmanual selected-prompt smoke: PASS",
-]
-
-WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT = [
-    "Do not make the canonical selected-prompt runner the weekly default until all of these remain true:\n\n```text\nmanual selected-prompt smoke: PASS",
-    "participant evidence guide published\noperator runbook feature-flag cleanup documented",
+    "weekly feature-flag canary",
+    "operator runbook feature-flag cleanup documented",
 ]
 
 
@@ -191,29 +150,24 @@ def main() -> int:
     reject_all(runbook, FORBIDDEN_TEXT, "operator runbook")
     reject_all(weekly, FORBIDDEN_TEXT, "weekly automation doc")
     reject_all(drift, FORBIDDEN_TEXT, "canonical status drift doc")
-    reject_all(runbook, RUNBOOK_RELEASE_GATE_FORBIDDEN_TEXT, "operator runbook release gate duplication")
-    reject_all(weekly, WEEKLY_RELEASE_GATE_FORBIDDEN_TEXT, "weekly automation release gate duplication")
 
-    if runbook.index("Canonical weekly default policy") > runbook.index("Temporary override policy"):
-        raise SystemExit("runbook should define the default policy before override policy")
+    if runbook.index("Weekly runner policy") > runbook.index("Legacy script status"):
+        raise SystemExit("runbook should define weekly runner policy before legacy script status")
 
-    if runbook.index("Temporary override policy") > runbook.index("Default-on release status"):
-        raise SystemExit("runbook override policy should precede the default-on release status")
+    if runbook.index("Legacy script status") > runbook.index("Manual weekly run verification"):
+        raise SystemExit("runbook should define legacy script status before manual verification")
 
-    if runbook.index("Output cap status") > runbook.index("Legacy fallback removal gate"):
-        raise SystemExit("runbook legacy fallback removal gate should follow output cap status")
+    if runbook.index("Output cap status") > runbook.index("Cleanup boundary"):
+        raise SystemExit("runbook cleanup boundary should follow output cap status")
 
-    if runbook.index("Legacy fallback removal gate") > runbook.index("Reset and cleanup policy"):
-        raise SystemExit("runbook cleanup policy should follow legacy fallback removal gate")
+    if weekly.index("Canonical weekly runner status") > weekly.index("Legacy script status"):
+        raise SystemExit("weekly doc should define canonical runner status before legacy script status")
 
-    if weekly.index("Canonical selected-prompt default") > weekly.index("Canonical weekly evidence artifacts"):
-        raise SystemExit("weekly doc should define the default before evidence artifacts")
+    if weekly.index("Canonical weekly evidence artifacts") > weekly.index("Observed no-eligible production evidence"):
+        raise SystemExit("weekly doc should define evidence artifacts before observed no-eligible evidence")
 
-    if weekly.index("Override and rollback settings") > weekly.index("Manual verification"):
-        raise SystemExit("weekly doc should define rollback cleanup before manual verification")
-
-    if weekly.index("Merge policy") > weekly.index("Default-on release status"):
-        raise SystemExit("weekly merge policy should precede the default-on release status")
+    if weekly.index("Default-on release status") > weekly.index("Manual weekly run verification"):
+        raise SystemExit("weekly manual verification should follow release status")
 
     print("weekly operator docs test passed")
     return 0
