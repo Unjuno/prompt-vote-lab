@@ -43,7 +43,14 @@ def test_dashboard_builder() -> None:
                 "labels": ["week:2026-W20", "prompt-proposal", "normal-candidate", "issue-safety:clear", "issue-safety:submission-detected"],
                 "reaction_plus_one_count": 4,
                 "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": True},
-                "body": "## Comparison metadata\n\n- Intended comparison rank: 2",
+                "body": (
+                    "## Comparison metadata\n\n"
+                    "- Intended comparison rank: 2\n\n"
+                    "## Optional context\n\n"
+                    "This is a rank-2 comparison candidate. It should be run with the same "
+                    "model policy, retry policy, fallback policy, and file-scope constraints "
+                    "as rank 1 and rank 3."
+                ),
             },
             {
                 "number": 196,
@@ -53,7 +60,14 @@ def test_dashboard_builder() -> None:
                 "labels": ["week:2026-W20", "prompt-proposal", "normal-candidate", "issue-safety:clear", "issue-safety:submission-detected"],
                 "reaction_plus_one_count": 2,
                 "safety": {"clear": True, "blocked": False, "review": False, "runtime_detected": False},
-                "body": "## Comparison metadata\n\n- Intended comparison rank: 3",
+                "body": (
+                    "## Comparison metadata\n\n"
+                    "- Intended comparison rank: 3\n\n"
+                    "## Optional context\n\n"
+                    "This is a rank-3 comparison candidate. It should be run with the same "
+                    "model policy, retry policy, fallback policy, and file-scope constraints "
+                    "as rank 1 and rank 2."
+                ),
             },
         ],
         "pull_requests": [
@@ -191,8 +205,10 @@ def test_dashboard_builder() -> None:
     if found:
         raise AssertionError(f"dashboard leaked forbidden text: {found}")
 
-    if html.count('<p class="rank-eyebrow">Rank 1</p>') != 1:
-        raise AssertionError("dashboard should render exactly one Rank 1 card")
+    for rank in (1, 2, 3):
+        marker = f'<p class="rank-eyebrow">Rank {rank}</p>'
+        if html.count(marker) != 1:
+            raise AssertionError(f"dashboard should render exactly one Rank {rank} card")
 
     if html.count("Implementation PR changed files") != 3:
         raise AssertionError("dashboard should label PR changed files on each rank card")
