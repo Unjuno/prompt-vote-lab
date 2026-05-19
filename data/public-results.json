@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T04:38:15+00:00",
+  "generated_at": "2026-05-19T05:32:20+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -733,78 +733,41 @@
   ],
   "pull_requests": [
     {
-      "additions": 38,
+      "additions": 57,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n- Link only run records that actually exist in `data/public-results.json`.\n- Show a non-link `not recorded in runs/` message when the expected run record is absent.\n- Add a regression fixture so generated comparison dashboards do not emit links to missing `runs/*.md` files.\n\n## Why\nThe W20 comparison dashboard displayed run record links for Rank 1, Rank 2, and Rank 3, but the corresponding files were not necessarily present in `runs/`. A generated dashboard should not create 404 evidence links.\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nAfter merge, let Public Results Export regenerate the comparison dashboard and verify W20 no longer links to missing run record files.\n\n## Non-goals\n- No generated evidence update in this PR.\n- No root lab change.\n- No workflow change.\n- No runner change.\n- No release tag.",
-      "body_length": 897,
+      "body": "## Summary\n- Require `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` before the weekly workflow can use the legacy OpenAI lab-run fallback.\n- Record the legacy fallback gate value in the weekly vote summary.\n- Update the weekly workflow contract test so `USE_CANONICAL=false` alone is not enough to reach the legacy runner.\n\n## Why\nDocs already state that the legacy fallback requires an explicit downstream gate. The workflow implementation still allowed the legacy path when the canonical runner flag was set to false. This PR aligns the active workflow with the documented safety contract.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No generated evidence update.\n- No runner rewrite.\n- No release tag.",
+      "body_length": 818,
       "changed_files": 2,
-      "closed_at": "2026-05-19T04:37:39Z",
+      "closed_at": "2026-05-19T05:31:43Z",
       "comment_count": 0,
-      "created_at": "2026-05-19T04:34:49Z",
+      "created_at": "2026-05-19T05:25:09Z",
       "deletions": 5,
       "files": [
         {
-          "additions": 25,
-          "deletions": 5,
-          "path": "scripts/build_comparison_dashboard.py"
+          "additions": 21,
+          "deletions": 1,
+          "path": ".github/workflows/weekly-auto-run.yml"
         },
         {
-          "additions": 13,
-          "deletions": 0,
-          "path": "scripts/test_build_comparison_dashboard.py"
-        }
-      ],
-      "head_ref_name": "avoid-missing-run-record-links",
-      "head_ref_oid": "a51bb0dece04c4853339e29d4167f7083e22b8eb",
-      "labels": [],
-      "merge_commit_oid": "b252c428e60b44d716ac4338670c922c0fe55066",
-      "merged_at": "2026-05-19T04:37:39Z",
-      "merged_by": "Unjuno",
-      "number": 347,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Avoid missing run record links in comparison dashboard",
-      "updated_at": "2026-05-19T04:37:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/347"
-    },
-    {
-      "additions": 38,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Parse Issue comparison rank from explicit comparison metadata or title rank tags.\n- Avoid using incidental prose in Issue bodies as rank metadata.\n- Add a regression fixture based on the W20 Rank 2 and Rank 3 body shape.\n\n## Why\nThe W20 comparison dashboard can lose Rank 2 and Rank 3 because the previous parser searched the whole Issue body for rank words in order. Optional context can mention other ranks and cause misclassification.\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nAfter merge, let Public Results Export regenerate the generated dashboard and verify W20 shows Rank 1, Rank 2, and Rank 3.\n\n## Non-goals\n- No generated evidence update in this PR.\n- No root lab change.\n- No workflow change.\n- No runner change.\n- No release tag.",
-      "body_length": 825,
-      "changed_files": 2,
-      "closed_at": "2026-05-19T04:06:48Z",
-      "comment_count": 0,
-      "created_at": "2026-05-19T04:03:50Z",
-      "deletions": 9,
-      "files": [
-        {
-          "additions": 18,
-          "deletions": 5,
-          "path": "scripts/build_comparison_dashboard.py"
-        },
-        {
-          "additions": 20,
+          "additions": 36,
           "deletions": 4,
-          "path": "scripts/test_build_comparison_dashboard.py"
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
         }
       ],
-      "head_ref_name": "fix-comparison-rank-extraction",
-      "head_ref_oid": "f33517fe946d8206670bdd92213793f28adb0584",
+      "head_ref_name": "gate-legacy-weekly-runner",
+      "head_ref_oid": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
       "labels": [],
-      "merge_commit_oid": "0d1255338d4147ddf7067c403c95a7d06eeec60e",
-      "merged_at": "2026-05-19T04:06:48Z",
+      "merge_commit_oid": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
+      "merged_at": "2026-05-19T05:31:43Z",
       "merged_by": "Unjuno",
-      "number": 346,
+      "number": 348,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Make comparison rank extraction explicit",
-      "updated_at": "2026-05-19T04:06:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/346"
+      "title": "Gate legacy weekly runner explicitly",
+      "updated_at": "2026-05-19T05:31:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/348"
     },
     {
       "additions": 10,
@@ -840,7 +803,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Filter comparison dashboard candidates",
-      "updated_at": "2026-05-19T00:33:33Z",
+      "updated_at": "2026-05-19T05:00:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/345"
     },
     {
@@ -877,8 +840,82 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Paginate public results export inputs",
-      "updated_at": "2026-05-18T23:28:17Z",
+      "updated_at": "2026-05-19T05:00:15Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/344"
+    },
+    {
+      "additions": 38,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Link only run records that actually exist in `data/public-results.json`.\n- Show a non-link `not recorded in runs/` message when the expected run record is absent.\n- Add a regression fixture so generated comparison dashboards do not emit links to missing `runs/*.md` files.\n\n## Why\nThe W20 comparison dashboard displayed run record links for Rank 1, Rank 2, and Rank 3, but the corresponding files were not necessarily present in `runs/`. A generated dashboard should not create 404 evidence links.\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nAfter merge, let Public Results Export regenerate the comparison dashboard and verify W20 no longer links to missing run record files.\n\n## Non-goals\n- No generated evidence update in this PR.\n- No root lab change.\n- No workflow change.\n- No runner change.\n- No release tag.",
+      "body_length": 897,
+      "changed_files": 2,
+      "closed_at": "2026-05-19T04:37:39Z",
+      "comment_count": 0,
+      "created_at": "2026-05-19T04:34:49Z",
+      "deletions": 5,
+      "files": [
+        {
+          "additions": 25,
+          "deletions": 5,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 13,
+          "deletions": 0,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "avoid-missing-run-record-links",
+      "head_ref_oid": "a51bb0dece04c4853339e29d4167f7083e22b8eb",
+      "labels": [],
+      "merge_commit_oid": "b252c428e60b44d716ac4338670c922c0fe55066",
+      "merged_at": "2026-05-19T04:37:39Z",
+      "merged_by": "Unjuno",
+      "number": 347,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Avoid missing run record links in comparison dashboard",
+      "updated_at": "2026-05-19T05:00:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/347"
+    },
+    {
+      "additions": 38,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Parse Issue comparison rank from explicit comparison metadata or title rank tags.\n- Avoid using incidental prose in Issue bodies as rank metadata.\n- Add a regression fixture based on the W20 Rank 2 and Rank 3 body shape.\n\n## Why\nThe W20 comparison dashboard can lose Rank 2 and Rank 3 because the previous parser searched the whole Issue body for rank words in order. Optional context can mention other ranks and cause misclassification.\n\n## Scope\n- `scripts/build_comparison_dashboard.py`\n- `scripts/test_build_comparison_dashboard.py`\n\n## Follow-up\nAfter merge, let Public Results Export regenerate the generated dashboard and verify W20 shows Rank 1, Rank 2, and Rank 3.\n\n## Non-goals\n- No generated evidence update in this PR.\n- No root lab change.\n- No workflow change.\n- No runner change.\n- No release tag.",
+      "body_length": 825,
+      "changed_files": 2,
+      "closed_at": "2026-05-19T04:06:48Z",
+      "comment_count": 0,
+      "created_at": "2026-05-19T04:03:50Z",
+      "deletions": 9,
+      "files": [
+        {
+          "additions": 18,
+          "deletions": 5,
+          "path": "scripts/build_comparison_dashboard.py"
+        },
+        {
+          "additions": 20,
+          "deletions": 4,
+          "path": "scripts/test_build_comparison_dashboard.py"
+        }
+      ],
+      "head_ref_name": "fix-comparison-rank-extraction",
+      "head_ref_oid": "f33517fe946d8206670bdd92213793f28adb0584",
+      "labels": [],
+      "merge_commit_oid": "0d1255338d4147ddf7067c403c95a7d06eeec60e",
+      "merged_at": "2026-05-19T04:06:48Z",
+      "merged_by": "Unjuno",
+      "number": 346,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Make comparison rank extraction explicit",
+      "updated_at": "2026-05-19T05:00:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/346"
     },
     {
       "additions": 41,
@@ -13879,14 +13916,126 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 265,
+    "merged_pr_count": 266,
     "open_issue_count": 0,
     "open_pr_count": 0,
-    "pr_count": 327,
+    "pr_count": 328,
     "run_record_count": 23,
     "workflow_run_count": 499
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-19T05:31:46Z",
+      "database_id": 26078301375,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:31:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078301375",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:31:44Z",
+      "database_id": 26078300758,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:32:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078300758",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:25:13Z",
+      "database_id": 26078072493,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Implementation Preflight Test",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:25:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072493",
+      "workflow_name": "Implementation Preflight Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:25:13Z",
+      "database_id": 26078072490,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:25:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072490",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:25:13Z",
+      "database_id": 26078072476,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:25:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072476",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:25:13Z",
+      "database_id": 26078072464,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Select Eligible Test",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:25:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072464",
+      "workflow_name": "Select Eligible Test"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T05:25:13Z",
+      "database_id": 26078072455,
+      "display_title": "Gate legacy weekly runner explicitly",
+      "event": "pull_request",
+      "head_branch": "gate-legacy-weekly-runner",
+      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-19T05:25:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072455",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T04:38:19Z",
+      "database_id": 26076533598,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ade9355a0f888245d4a0a2454c42ae51a41ae993",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-19T04:38:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076533598",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-19T04:37:42Z",
@@ -13900,6 +14049,20 @@
       "updated_at": "2026-05-19T04:37:43Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076513377",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T04:37:42Z",
+      "database_id": 26076513374,
+      "display_title": "Avoid missing run record links in comparison dashboard",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "b252c428e60b44d716ac4338670c922c0fe55066",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-19T04:38:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076513374",
+      "workflow_name": "Public Results Export"
     },
     {
       "conclusion": "success",
@@ -20746,132 +20909,6 @@
       "updated_at": "2026-05-14T11:39:37Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25857992969",
       "workflow_name": "Issue Safety Scan"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T11:31:34Z",
-      "database_id": 25857688875,
-      "display_title": "Weekly Auto Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
-      "name": "Weekly Auto Run",
-      "status": "completed",
-      "updated_at": "2026-05-14T11:31:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25857688875",
-      "workflow_name": "Weekly Auto Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:44:41Z",
-      "database_id": 25855778352,
-      "display_title": "Codex Selected Prompt Run",
-      "event": "workflow_dispatch",
-      "head_branch": "main",
-      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
-      "name": "Codex Selected Prompt Run",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:46:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855778352",
-      "workflow_name": "Codex Selected Prompt Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:29:06Z",
-      "database_id": 25855142477,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "2b51645b9b166cfa947d13eb9b6a2f0c9ee5b395",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:29:37Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855142477",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:28:43Z",
-      "database_id": 25855126699,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "5ee225601f4fc71761af553a7ad2b0989695f018",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:29:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126699",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T10:28:43Z",
-      "database_id": 25855126635,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:28:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126635",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-14T10:28:42Z",
-      "database_id": 25855126094,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "5ee225601f4fc71761af553a7ad2b0989695f018",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:29:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25855126094",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872249,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872249",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872163,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:22:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872163",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T10:22:28Z",
-      "database_id": 25854872144,
-      "display_title": "Harden weekly canonical evidence artifacts on failure paths",
-      "event": "pull_request",
-      "head_branch": "harden-weekly-canonical-evidence-artifacts",
-      "head_sha": "1347a74cb17c51364b00d7cfb5999a53ba0a0669",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T10:23:04Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25854872144",
-      "workflow_name": "Script Check"
     }
   ]
 }

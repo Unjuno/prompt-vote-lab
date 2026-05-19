@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T04:38:15+00:00`
+Generated at: `2026-05-19T05:32:20+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 327 |
+| pr_count | 328 |
 | open_pr_count | 0 |
-| merged_pr_count | 265 |
+| merged_pr_count | 266 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,10 +48,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
-| 346 | MERGED | 2 | 38/9 | Make comparison rank extraction explicit |
+| 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
+| 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
+| 346 | MERGED | 2 | 38/9 | Make comparison rank extraction explicit |
 | 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
 | 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
 | 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
@@ -77,13 +78,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 315 | MERGED | 1 | 4/4 | Clarify automation map current workflow status |
 | 316 | MERGED | 1 | 7/4 | Fix support unlock example week |
 | 318 | MERGED | 1 | 10/2 | Update canary log policy collector status |
-| 317 | MERGED | 2 | 88/30 | Update usable ops current status |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26078301375 | Terminal State Report | pull_request | completed | skipped | Gate legacy weekly runner explicitly |
+| 26078300758 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26078072493 | Implementation Preflight Test | pull_request | completed | success | Gate legacy weekly runner explicitly |
+| 26078072490 | Script Check | pull_request | completed | success | Gate legacy weekly runner explicitly |
+| 26078072476 | Lab PR Scope Check | pull_request | completed | success | Gate legacy weekly runner explicitly |
+| 26078072464 | Select Eligible Test | pull_request | completed | success | Gate legacy weekly runner explicitly |
+| 26078072455 | Pre-API Freeze Audit | pull_request | completed | success | Gate legacy weekly runner explicitly |
+| 26076533598 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26076513377 | Terminal State Report | pull_request | completed | skipped | Avoid missing run record links in comparison dashboard |
+| 26076513374 | Public Results Export | push | completed | success | Avoid missing run record links in comparison dashboard |
 | 26076512886 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26076424743 | Lab PR Scope Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
 | 26076424719 | Script Check | pull_request | completed | success | Avoid missing run record links in comparison dashboard |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26066465798 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26066439758 | Public Results Export | push | completed | success | Paginate public results export inputs |
 | 26066439747 | Terminal State Report | pull_request | completed | skipped | Paginate public results export inputs |
-| 26066439068 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26066341650 | Lab PR Scope Check | pull_request | completed | success | Paginate public results export inputs |
-| 26066341646 | Script Check | pull_request | completed | success | Paginate public results export inputs |
-| 26066189990 | Script Check | pull_request | completed | failure | Paginate public results export inputs |
-| 26066189977 | Lab PR Scope Check | pull_request | completed | success | Paginate public results export inputs |
-| 26064762107 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26064749182 | Terminal State Report | pull_request | completed | skipped | Define release week numbering policy |
-| 26064749163 | Public Results Export | push | completed | success | Define release week numbering policy |
-| 26064748317 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 
 ## Raw JSON
 
