@@ -79,7 +79,7 @@ They are not canonical selected-prompt evidence, but they may still be useful du
 
 Legacy paths must stay labeled as non-canonical when referenced from public docs.
 
-`Weekly Auto Run` no longer has a legacy API/SDK branch.
+Weekly Auto Run no longer has a legacy API/SDK branch.
 
 Do not reintroduce a weekly legacy override during cleanup.
 
