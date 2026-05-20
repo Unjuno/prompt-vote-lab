@@ -41,6 +41,7 @@ on:
       - "docs/repository-cleanup-inventory.md"
       - "docs/workflow-family-map.md"
       - "docs/canary-archive-inventory.md"
+      - "docs/local-release-verification.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
       - "docs/for-participants.md"
@@ -169,6 +170,9 @@ jobs:
 
       - name: Run canary archive inventory test
         run: python scripts/test_canary_archive_inventory.py
+
+      - name: Run local release verification test
+        run: python scripts/test_local_release_verification.py
 
       - name: Run OpenAI lab runner legacy contract test
         run: python scripts/test_openai_lab_run_legacy_contract.py
