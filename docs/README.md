@@ -16,30 +16,31 @@ Prompt Vote Lab is a prompt game and experiment. Players compete by writing prom
 4. [Canonical runner evidence guide](./canonical-runner-evidence-guide.md) — how to verify Docker/Codex selected-prompt evidence.
 5. [Canonical status drift check](./canonical-status-drift-check.md) — canonical, legacy script, fixed weekly runner, auto-merge, and release-gate status contract.
 6. [Release readiness review](./release-readiness-review.md) — security posture, participant journey, live preview, and release decision review.
-7. [Root folder audit](./root-folder-audit.md) — top-level folder roles, cleanup posture, and maintainer questions before cleanup.
-8. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
-9. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy script status, generated snapshots, retired scaffolding, and cleanup candidates.
-10. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, retired legacy, legacy script, and test workflow classification.
-11. [Canary archive inventory](./canary-archive-inventory.md) — historical canary workflow/doc classification before further cleanup.
-12. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
-13. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
-14. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
-15. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
-16. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
-17. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
-18. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
-19. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, fixed canonical runner, and E2E status.
-20. [Automation map](./automation-map.md) — workflow boundaries.
-21. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
-22. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
-23. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and cleanup checks.
-24. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
-25. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
-26. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
-27. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
-28. [Report policy](./report-policy.md) — weekly report draft policy.
-29. [Pre-API freeze checklist](./pre-api-freeze.md) — historical guardrail record for the earlier API/SDK path.
-30. [Release week numbering](./release-week-numbering.md) — public Release Week 1/2/3 labels versus internal ISO week evidence IDs.
+7. [Local release verification](./local-release-verification.md) — local clone, contract checks, GitHub Actions, GitHub Pages, and soft-release gate.
+8. [Root folder audit](./root-folder-audit.md) — top-level folder roles, cleanup posture, and maintainer questions before cleanup.
+9. [Repository 5S and language policy](./repository-5s-and-language-policy.md) — cleanup, English-only, and sustain rules.
+10. [Repository cleanup inventory](./repository-cleanup-inventory.md) — protected evidence, canonical surfaces, legacy script status, generated snapshots, retired scaffolding, and cleanup candidates.
+11. [Workflow family map](./workflow-family-map.md) — canonical, weekly, generated, safety, canary, retired legacy, legacy script, and test workflow classification.
+12. [Canary archive inventory](./canary-archive-inventory.md) — historical canary workflow/doc classification before further cleanup.
+13. [Usable experiment operations](./usable-experiment-ops.md) — current manual canary and comparison-run operations.
+14. [Operator runbook](./operator-runbook.md) — maintainer checklist for weekly operation, failures, merge decisions, tokens, and cleanup boundaries.
+15. [Public results export](./public-results-export.md) — raw public data snapshots for participant analysis.
+16. [Public agent run bundle](./public-agent-run-bundle.md) — redacted raw agent-run evidence; summaries are not primary evidence.
+17. [Issue lifecycle](./issue-lifecycle.md) — weekly close policy; Issues are closed, not deleted.
+18. [Persona routes](./persona-routes.md) — role-specific paths for writers, voters, spectators, supporters, and reviewers.
+19. [No-change baseline](./no-change-baseline.md) — the 20-vote baseline.
+20. [Weekly automation](./weekly-automation.md) — weekly schedule, support unlock prerequisite, fixed canonical runner, and E2E status.
+21. [Automation map](./automation-map.md) — workflow boundaries.
+22. [Weekly operations doctrine](./weekly-ops-doctrine.md) — weekly evidence-to-action loop.
+23. [Evidence artifact review](./evidence-artifact-review.md) — dry-run artifact checks.
+24. [Repository cleanup checklist](./repository-cleanup.md) — stale branch and cleanup checks.
+25. [Codex path comparison](./codex-path-005-vs-007.md) — prompt selection layer versus 005/007/008/009 execution paths.
+26. [Canary 008 task packet design](./canary-008-selected-prompt-task-packet.md) — selected prompt packet, `/task:ro`, and credential hygiene design.
+27. [Canary 009 selected Issue instruction design](./canary-009-selected-issue-instructions.md) — fixed GitHub Issue ingestion into a bounded instruction packet.
+28. [Support policy](./support-policy.md) — support boundaries and comparison-run thresholds.
+29. [Report policy](./report-policy.md) — weekly report draft policy.
+30. [Pre-API freeze checklist](./pre-api-freeze.md) — historical guardrail record for the earlier API/SDK path.
+31. [Release week numbering](./release-week-numbering.md) — public Release Week 1/2/3 labels versus internal ISO week evidence IDs.
 
 ## Current reputation status
 
@@ -71,6 +72,8 @@ participant journey: PASS
 live preview: PASS
 ordinary default-on weekly no-eligible observation: PASS
 ```
+
+[Local release verification](./local-release-verification.md) defines the local clone, contract checks, GitHub Actions, GitHub Pages, and soft-release gate that must be checked before announcing the project.
 
 ## Release week status
 
