@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-19T23:40:49+00:00`
+Generated at: `2026-05-20T00:29:49+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 331 |
+| pr_count | 332 |
 | open_pr_count | 0 |
-| merged_pr_count | 269 |
+| merged_pr_count | 270 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 352 | MERGED | 5 | 280/24 | Add canary archive inventory |
 | 351 | MERGED | 20 | 728/1333 | Retire obsolete legacy first API canary launcher |
 | 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
 | 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
@@ -77,13 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 | 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
 | 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
-| 314 | MERGED | 3 | 140/10 | Harden evidence pipeline dry-run inputs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26133716534 | Terminal State Report | pull_request | completed | skipped | Add canary archive inventory |
+| 26133715935 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26133423358 | Lab PR Scope Check | pull_request | completed | success | Add canary archive inventory |
+| 26133423316 | Static Site Check | pull_request | completed | success | Add canary archive inventory |
+| 26133423288 | Pre-API Freeze Audit | pull_request | completed | success | Add canary archive inventory |
+| 26133423287 | Script Check | pull_request | completed | success | Add canary archive inventory |
+| 26132019870 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26131991935 | Terminal State Report | pull_request | completed | skipped | Retire obsolete legacy first API canary launcher |
+| 26131991921 | Public Results Export | push | completed | success | Retire obsolete legacy first API canary launcher |
 | 26131991193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26131318875 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 | 26131318837 | Script Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
@@ -105,14 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26092444036 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 | 26092444025 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
 | 26092444019 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092292421 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092292420 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092292418 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092292406 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
-| 26090199305 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26090199227 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
-| 26090199219 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26090199208 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 
 ## Raw JSON
 

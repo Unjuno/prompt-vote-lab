@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T23:40:49+00:00",
+  "generated_at": "2026-05-20T00:29:49+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -732,6 +732,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 280,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\n- Add `docs/canary-archive-inventory.md` to classify historical canary workflows and canary-era docs before further cleanup.\n- Link the new inventory from `docs/README.md`.\n- Add `scripts/test_canary_archive_inventory.py` and wire it into `Script Check`.\n- Update the `script-check` workflow contract so the new inventory remains monitored.\n\n## Cleanup stance\n\nThis PR does **not** delete any historical canary workflow, canary doc, generated snapshot, run record, public bundle, or lab file.\n\nIt creates a deletion-prevention map so later cleanup can distinguish:\n\n```text\ncanonical active\nhistorical gated evidence\nhistorical evidence\nboundary evidence\nnon-canonical compatibility evidence\ncleanup candidate\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no `runs/`, `data/`, `lab/comparisons/`, `lab/history/`, or public bundle output touched.\nCanonical/legacy check: PASS — no active canonical workflow removed; no legacy script removed.\nGenerated snapshot check: PASS — generated snapshots intentionally untouched.\nRemoval gate: N/A — this PR classifies only and removes nothing.\nRollback path: remove the new inventory doc, test, README link, and Script Check wiring.\n```\n\n## Non-goals\n\n- No workflow deletion.\n- No generated output update.\n- No `lab/` change.\n- No run-record rewrite.\n- No removal of `scripts/openai_lab_run.py`.\n\n## Expected checks\n\n```text\npython scripts/test_canary_archive_inventory.py\npython scripts/test_script_check_workflow_contract.py\n```\n\nCI should be the source of truth for the full Script Check suite.",
+      "body_length": 1578,
+      "changed_files": 5,
+      "closed_at": "2026-05-20T00:29:11Z",
+      "comment_count": 0,
+      "created_at": "2026-05-20T00:20:35Z",
+      "deletions": 24,
+      "files": [
+        {
+          "additions": 5,
+          "deletions": 1,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 22,
+          "deletions": 19,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 125,
+          "deletions": 0,
+          "path": "docs/canary-archive-inventory.md"
+        },
+        {
+          "additions": 115,
+          "deletions": 0,
+          "path": "scripts/test_canary_archive_inventory.py"
+        },
+        {
+          "additions": 13,
+          "deletions": 4,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "audit-canary-archive-inventory",
+      "head_ref_oid": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "labels": [],
+      "merge_commit_oid": "415820af61644a5dca6e03806a0ab174a6432420",
+      "merged_at": "2026-05-20T00:29:11Z",
+      "merged_by": "Unjuno",
+      "number": 352,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add canary archive inventory",
+      "updated_at": "2026-05-20T00:29:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/352"
+    },
     {
       "additions": 728,
       "author": "Unjuno",
@@ -14147,14 +14199,112 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 269,
+    "merged_pr_count": 270,
     "open_issue_count": 0,
     "open_pr_count": 0,
-    "pr_count": 331,
+    "pr_count": 332,
     "run_record_count": 23,
     "workflow_run_count": 499
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-20T00:29:14Z",
+      "database_id": 26133716534,
+      "display_title": "Add canary archive inventory",
+      "event": "pull_request",
+      "head_branch": "audit-canary-archive-inventory",
+      "head_sha": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:29:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133716534",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T00:29:13Z",
+      "database_id": 26133715935,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "415820af61644a5dca6e03806a0ab174a6432420",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:29:36Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133715935",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T00:20:38Z",
+      "database_id": 26133423358,
+      "display_title": "Add canary archive inventory",
+      "event": "pull_request",
+      "head_branch": "audit-canary-archive-inventory",
+      "head_sha": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:20:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133423358",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T00:20:38Z",
+      "database_id": 26133423316,
+      "display_title": "Add canary archive inventory",
+      "event": "pull_request",
+      "head_branch": "audit-canary-archive-inventory",
+      "head_sha": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:20:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133423316",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T00:20:38Z",
+      "database_id": 26133423288,
+      "display_title": "Add canary archive inventory",
+      "event": "pull_request",
+      "head_branch": "audit-canary-archive-inventory",
+      "head_sha": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:20:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133423288",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T00:20:38Z",
+      "database_id": 26133423287,
+      "display_title": "Add canary archive inventory",
+      "event": "pull_request",
+      "head_branch": "audit-canary-archive-inventory",
+      "head_sha": "446cc1896ab9fec18ebd0b9506582dc615393a60",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T00:21:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26133423287",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T23:40:53Z",
+      "database_id": 26132019870,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "0ec3980960ce8c15efa9b33d6c503db96f466c99",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-19T23:41:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26132019870",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-19T23:40:07Z",
@@ -14168,6 +14318,20 @@
       "updated_at": "2026-05-19T23:40:08Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26131991935",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-19T23:40:07Z",
+      "database_id": 26131991921,
+      "display_title": "Retire obsolete legacy first API canary launcher",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "dcc78b6a32c2248afd09a932003e01e94f3573e4",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-19T23:40:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26131991921",
+      "workflow_name": "Public Results Export"
     },
     {
       "conclusion": "success",
@@ -21028,118 +21192,6 @@
       "updated_at": "2026-05-14T20:55:11Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172048",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T20:54:57Z",
-      "database_id": 25885172023,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "450040acbbd9df199cb2462daa584fc51278fa9c",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:55:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172023",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:54:57Z",
-      "database_id": 25885172019,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "450040acbbd9df199cb2462daa584fc51278fa9c",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:55:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885172019",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225605,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:35:47Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225605",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225593,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:36:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225593",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T20:35:37Z",
-      "database_id": 25884225589,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "1cc1ed70e5e445174cee4ce740bf3f3c22de4df9",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T20:35:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25884225589",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T19:11:25Z",
-      "database_id": 25880062807,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "282c420c987b489a84de6be4e55a02e7b7582f83",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T19:11:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25880062807",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T19:11:07Z",
-      "database_id": 25880048404,
-      "display_title": "Shorten operator default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-operator-release-gate",
-      "head_sha": "ef4b6e2bd428b5623756ebe551bb6af23ebc60fb",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T19:11:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25880048404",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T19:11:07Z",
-      "database_id": 25880048163,
-      "display_title": "Shorten operator default-on release gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "f67126f89d2faf9c17de6ba3602fac29c561f00f",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T19:11:26Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25880048163",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
