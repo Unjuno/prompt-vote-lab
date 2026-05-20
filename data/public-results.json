@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-20T06:58:19+00:00",
+  "generated_at": "2026-05-20T14:50:01+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -732,6 +732,58 @@
     }
   ],
   "pull_requests": [
+    {
+      "additions": 448,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\n- Add `docs/local-release-verification.md` for clone/pull, local syntax checks, contract checks, static preview, participant route check, operator route check, GitHub Actions, GitHub Pages, and soft-release/public-release gates.\n- Link the new release verification doc from `docs/README.md`.\n- Add `scripts/test_local_release_verification.py` to protect the release checklist contract.\n- Wire the new doc/test into `Script Check` and its workflow contract.\n\n## Release stance\n\nLocal verification is useful but not sufficient. The checklist requires:\n\n```text\nlocal checks pass\nGitHub Actions pass\nGitHub Pages renders correctly\nmanual review remains required\nauto-merge remains disabled\nsoft release before broader public release\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no `runs/`, `data/`, `lab/comparisons/`, `lab/history/`, public bundle output, or generated snapshots touched.\nCanonical/legacy check: PASS — no active canonical workflow removed; no legacy script removed.\nGenerated snapshot check: PASS — generated snapshots intentionally untouched.\nRemoval gate: N/A — this PR adds release verification docs/tests only and removes nothing.\nRollback path: remove the new release verification doc, test, README link, and Script Check wiring.\n```\n\n## Non-goals\n\n- No `lab/` change.\n- No workflow deletion.\n- No generated output update.\n- No run-record rewrite.\n- No release tag creation.\n- No external publishing.\n- No removal of `scripts/openai_lab_run.py`.\n\n## Expected checks\n\n```text\npython scripts/test_local_release_verification.py\npython scripts/test_script_check_workflow_contract.py\n```\n\nCI should be the source of truth for the full Script Check suite.",
+      "body_length": 1711,
+      "changed_files": 5,
+      "closed_at": "2026-05-20T14:48:53Z",
+      "comment_count": 0,
+      "created_at": "2026-05-20T14:44:03Z",
+      "deletions": 28,
+      "files": [
+        {
+          "additions": 4,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
+        },
+        {
+          "additions": 27,
+          "deletions": 24,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 283,
+          "deletions": 0,
+          "path": "docs/local-release-verification.md"
+        },
+        {
+          "additions": 121,
+          "deletions": 0,
+          "path": "scripts/test_local_release_verification.py"
+        },
+        {
+          "additions": 13,
+          "deletions": 4,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "add-local-release-verification",
+      "head_ref_oid": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "labels": [],
+      "merge_commit_oid": "1f98541bceab39f07041943209da4bd6280a0e11",
+      "merged_at": "2026-05-20T14:48:53Z",
+      "merged_by": "Unjuno",
+      "number": 353,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add local release verification checklist",
+      "updated_at": "2026-05-20T14:48:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/353"
+    },
     {
       "additions": 280,
       "author": "Unjuno",
@@ -14199,14 +14251,112 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 270,
+    "merged_pr_count": 271,
     "open_issue_count": 0,
     "open_pr_count": 0,
-    "pr_count": 332,
+    "pr_count": 333,
     "run_record_count": 23,
-    "workflow_run_count": 499
+    "workflow_run_count": 498
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-20T14:49:03Z",
+      "database_id": 26170365251,
+      "display_title": "Add local release verification checklist",
+      "event": "pull_request",
+      "head_branch": "add-local-release-verification",
+      "head_sha": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-20T14:49:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26170365251",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T14:44:31Z",
+      "database_id": 26170096061,
+      "display_title": "Add local release verification checklist",
+      "event": "pull_request",
+      "head_branch": "add-local-release-verification",
+      "head_sha": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T14:44:47Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26170096061",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T14:44:31Z",
+      "database_id": 26170095740,
+      "display_title": "Add local release verification checklist",
+      "event": "pull_request",
+      "head_branch": "add-local-release-verification",
+      "head_sha": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "name": "Pre-API Freeze Audit",
+      "status": "completed",
+      "updated_at": "2026-05-20T14:44:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26170095740",
+      "workflow_name": "Pre-API Freeze Audit"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T14:44:31Z",
+      "database_id": 26170095594,
+      "display_title": "Add local release verification checklist",
+      "event": "pull_request",
+      "head_branch": "add-local-release-verification",
+      "head_sha": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "name": "Script Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T14:45:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26170095594",
+      "workflow_name": "Script Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T14:44:31Z",
+      "database_id": 26170095550,
+      "display_title": "Add local release verification checklist",
+      "event": "pull_request",
+      "head_branch": "add-local-release-verification",
+      "head_sha": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-20T14:44:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26170095550",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T06:58:23Z",
+      "database_id": 26146738853,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "fd5339da6be7103a36d6a6b814730cd25fc68896",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-20T06:58:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26146738853",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-20T06:57:37Z",
+      "database_id": 26146706663,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "cc910b6fb92315367b5d5cd31aa2738720cad91e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-20T06:58:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26146706663",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "success",
       "created_at": "2026-05-20T06:55:42Z",
@@ -21080,118 +21230,6 @@
       "updated_at": "2026-05-14T21:45:33Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491158",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:45:23Z",
-      "database_id": 25887491148,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "fdfafd53fd5a28efe1197dc76598aee9ae407401",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:45:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887491148",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115023,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115023",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115017,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115017",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115015,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:37:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115015",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-14T21:37:04Z",
-      "database_id": 25887115000,
-      "display_title": "Shorten README status entry",
-      "event": "pull_request",
-      "head_branch": "shorten-readme-status-entry",
-      "head_sha": "384480d3971f2c7234b73ffce53da3369c7c2072",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:38:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25887115000",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:03:12Z",
-      "database_id": 25885564074,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0c5bd2dcb19f76c617eb948350f05e3de0823ec2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:03:44Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885564074",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-14T21:02:50Z",
-      "database_id": 25885547824,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "466ed188c9401971d60ebc6a362dcfff4e0e143d",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:03:14Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885547824",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-14T21:02:50Z",
-      "database_id": 25885547821,
-      "display_title": "Shorten weekly default-on release gate",
-      "event": "pull_request",
-      "head_branch": "shorten-weekly-release-gate",
-      "head_sha": "725e9fe70ff1e2b788e5fb7437b2a6d67f9f6015",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-14T21:02:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25885547821",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }

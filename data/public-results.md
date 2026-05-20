@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-20T06:58:19+00:00`
+Generated at: `2026-05-20T14:50:01+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,10 +13,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 332 |
+| pr_count | 333 |
 | open_pr_count | 0 |
-| merged_pr_count | 270 |
-| workflow_run_count | 499 |
+| merged_pr_count | 271 |
+| workflow_run_count | 498 |
 | run_record_count | 23 |
 
 ## Recent Issues
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 353 | MERGED | 5 | 448/28 | Add local release verification checklist |
 | 352 | MERGED | 5 | 280/24 | Add canary archive inventory |
 | 351 | MERGED | 20 | 728/1333 | Retire obsolete legacy first API canary launcher |
 | 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
@@ -77,12 +78,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 | 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
-| 311 | MERGED | 1 | 3/3 | Update experiment model active model policy reference |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26170365251 | Terminal State Report | pull_request | completed | skipped | Add local release verification checklist |
+| 26170096061 | Lab PR Scope Check | pull_request | completed | success | Add local release verification checklist |
+| 26170095740 | Pre-API Freeze Audit | pull_request | completed | success | Add local release verification checklist |
+| 26170095594 | Script Check | pull_request | completed | success | Add local release verification checklist |
+| 26170095550 | Static Site Check | pull_request | completed | success | Add local release verification checklist |
+| 26146738853 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26146706663 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26146624975 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26141579959 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26141574829 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -106,13 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26131016582 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 | 26131016575 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
 | 26131016551 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26093277573 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26093277569 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26093277561 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
-| 26093277539 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092620261 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092620244 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26092620243 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 
 ## Raw JSON
 
