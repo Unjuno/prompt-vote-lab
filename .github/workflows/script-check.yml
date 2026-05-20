@@ -40,6 +40,7 @@ on:
       - "docs/repository-5s-and-language-policy.md"
       - "docs/repository-cleanup-inventory.md"
       - "docs/workflow-family-map.md"
+      - "docs/canary-archive-inventory.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
       - "docs/for-participants.md"
@@ -165,6 +166,9 @@ jobs:
 
       - name: Run workflow family map test
         run: python scripts/test_workflow_family_map.py
+
+      - name: Run canary archive inventory test
+        run: python scripts/test_canary_archive_inventory.py
 
       - name: Run OpenAI lab runner legacy contract test
         run: python scripts/test_openai_lab_run_legacy_contract.py
