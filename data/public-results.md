@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-20T14:50:01+00:00`
+Generated at: `2026-05-21T07:02:56+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 333 |
 | open_pr_count | 0 |
 | merged_pr_count | 271 |
-| workflow_run_count | 498 |
+| workflow_run_count | 499 |
 | run_record_count | 23 |
 
 ## Recent Issues
@@ -83,7 +83,13 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26210712694 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 26205924112 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26205919583 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 26170429897 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26170371204 | Public Results Export | push | completed | success | Add local release verification checklist |
 | 26170365251 | Terminal State Report | pull_request | completed | skipped | Add local release verification checklist |
+| 26170357782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26170096061 | Lab PR Scope Check | pull_request | completed | success | Add local release verification checklist |
 | 26170095740 | Pre-API Freeze Audit | pull_request | completed | success | Add local release verification checklist |
 | 26170095594 | Script Check | pull_request | completed | success | Add local release verification checklist |
@@ -107,12 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26131991193 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26131318875 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 | 26131318837 | Script Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26131318817 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26131318789 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26131016607 | Lab PR Scope Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26131016582 | Static Site Check | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
-| 26131016575 | Script Check | pull_request | completed | failure | Retire obsolete legacy first API canary launcher |
-| 26131016551 | Pre-API Freeze Audit | pull_request | completed | success | Retire obsolete legacy first API canary launcher |
 
 ## Raw JSON
 
