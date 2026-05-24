@@ -42,6 +42,7 @@ on:
       - "docs/workflow-family-map.md"
       - "docs/canary-archive-inventory.md"
       - "docs/local-release-verification.md"
+      - "docs/README.md"
       - "docs/operator-runbook.md"
       - "docs/weekly-automation.md"
       - "docs/for-participants.md"
