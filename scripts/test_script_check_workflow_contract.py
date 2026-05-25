@@ -23,6 +23,7 @@ REQUIRED_TEXT = [
     "docs/workflow-family-map.md",
     "docs/canary-archive-inventory.md",
     "docs/local-release-verification.md",
+    "docs/README.md",
     "docs/operator-runbook.md",
     "docs/weekly-automation.md",
     "docs/for-participants.md",
@@ -170,6 +171,9 @@ def main() -> int:
 
     if text.index("docs/canary-archive-inventory.md") > text.index("docs/local-release-verification.md"):
         raise SystemExit("local release verification should be tracked after the canary archive inventory")
+
+    if text.index("docs/local-release-verification.md") > text.index("docs/README.md"):
+        raise SystemExit("docs README should be tracked after local release verification")
 
     if text.index("docs/local-release-verification.md") > text.index("docs/operator-runbook.md"):
         raise SystemExit("operator runbook should be tracked after local release verification")
