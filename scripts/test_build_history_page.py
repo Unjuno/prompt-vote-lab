@@ -62,7 +62,7 @@ def test_history_builder() -> None:
         tmp_path = Path(tmp)
         source = tmp_path / "public-results.json"
         runs_dir = tmp_path / "runs"
-        out_dir = tmp_path / "history"
+        out_dir = tmp_path / "lab" / "history"
         source.write_text(json.dumps(data), encoding="utf-8")
         runs_dir.mkdir()
         (runs_dir / "week-2026-W21-vote-summary.md").write_text(
@@ -85,6 +85,7 @@ def test_history_builder() -> None:
         )
         html = (out_dir / "index.html").read_text(encoding="utf-8")
         css = (out_dir / "style.css").read_text(encoding="utf-8")
+        baseline_html = (tmp_path / "lab" / "weeks" / "2026-W21" / "index.html").read_text(encoding="utf-8")
 
     required = [
         "Prompt Vote Lab history",
@@ -97,8 +98,8 @@ def test_history_builder() -> None:
         "finalizer close",
         "live rank output pages remain the source of truth",
         "Open weekly comparison",
-        "Open run record",
-        "../../runs/week-2026-W21-vote-summary.md",
+        "Open weekly summary",
+        "../weeks/2026-W21/",
         "../comparisons/2026-W20/",
         "../comparisons/2026-W19/",
         "<dt>Adopted</dt><dd>no change</dd>",
@@ -110,6 +111,22 @@ def test_history_builder() -> None:
     if missing:
         raise AssertionError(f"history page missing expected text: {missing}")
 
+    baseline_required = [
+        "2026-W21 no-change summary",
+        "The no-change baseline won this week.",
+        "No prompt beat the 20-vote baseline",
+        "No implementation-agent attempt was created.",
+        "<dt>Baseline votes</dt><dd>20</dd>",
+        "<dt>Adopted</dt><dd>no change</dd>",
+        "../../../runs/week-2026-W21-vote-summary.md",
+        "Back to history",
+        "../../history/",
+        "connect-src 'none'",
+    ]
+    missing_baseline = [item for item in baseline_required if item not in baseline_html]
+    if missing_baseline:
+        raise AssertionError(f"baseline week page missing expected text: {missing_baseline}")
+
     forbidden = [
         "OPENAI_API_KEY",
         "codex login",
@@ -120,7 +137,7 @@ def test_history_builder() -> None:
         "<iframe",
         "https://example.com/ping",
     ]
-    found = [item for item in forbidden if item in html]
+    found = [item for item in forbidden if item in html or item in baseline_html]
     if found:
         raise AssertionError(f"history page leaked forbidden text: {found}")
 
