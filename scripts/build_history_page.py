@@ -27,6 +27,7 @@ class WeekSummary:
     adopted_rank: str
     link_href: str
     link_text: str
+    is_run_record_only: bool
 
 
 def _labels(item: dict[str, Any]) -> set[str]:
@@ -140,8 +141,8 @@ def build_week_summaries(public_results: dict[str, Any], runs_dir: Path = Path("
         has_run_record = week_id in run_record_week_ids
         is_run_record_only = has_run_record and not week_issues
         adopted_rank = "no change" if is_run_record_only else f"rank {min(adopted_ranks)}" if adopted_ranks else "not decided"
-        link_href = f"../../runs/week-{week_id}-vote-summary.md" if is_run_record_only else f"../comparisons/{week_id}/"
-        link_text = "Open run record" if is_run_record_only else "Open weekly comparison"
+        link_href = f"../weeks/{week_id}/" if is_run_record_only else f"../comparisons/{week_id}/"
+        link_text = "Open weekly summary" if is_run_record_only else "Open weekly comparison"
         summaries.append(
             WeekSummary(
                 week_id=week_id,
@@ -156,6 +157,7 @@ def build_week_summaries(public_results: dict[str, Any], runs_dir: Path = Path("
                 adopted_rank=adopted_rank,
                 link_href=link_href,
                 link_text=link_text,
+                is_run_record_only=is_run_record_only,
             )
         )
     return summaries
@@ -218,6 +220,40 @@ def render_history(public_results: dict[str, Any], runs_dir: Path = Path("runs")
     </section>
     <section class="week-grid" aria-label="Weekly experiment history">
 {cards_html}
+    </section>
+  </main>
+</body>
+</html>
+"""
+
+
+def render_baseline_week(summary: WeekSummary) -> str:
+    week = html.escape(summary.week_id)
+    run_href = html.escape(f"../../../runs/week-{summary.week_id}-vote-summary.md", quote=True)
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{week} no-change summary · Prompt Vote Lab</title>
+  <link rel="stylesheet" href="../../history/style.css">
+  <meta http-equiv="Content-Security-Policy" content="{SAFE_CSP}">
+</head>
+<body>
+  <main class="history-root" aria-labelledby="week-title">
+    <p class="status">Weekly summary · no-change baseline</p>
+    <h1 id="week-title">{week}</h1>
+    <p class="note">The no-change baseline won this week. No prompt beat the 20-vote baseline, so no implementation-agent attempt was created.</p>
+    <section class="method" aria-labelledby="summary-title">
+      <h2 id="summary-title">Outcome</h2>
+      <dl class="facts">
+        <div><dt>Candidates</dt><dd>0</dd></div>
+        <div><dt>Baseline votes</dt><dd>20</dd></div>
+        <div><dt>Implemented</dt><dd>0</dd></div>
+        <div><dt>Adopted</dt><dd>no change</dd></div>
+      </dl>
+      <p class="week-link"><a href="{run_href}">Open run record</a></p>
+      <p class="week-link"><a href="../../history/">Back to history</a></p>
     </section>
   </main>
 </body>
@@ -305,10 +341,18 @@ def main() -> int:
     args = parser.parse_args()
 
     public_results = json.loads(Path(args.public_results).read_text(encoding="utf-8"))
+    runs_dir = Path(args.runs_dir)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "index.html").write_text(render_history(public_results, Path(args.runs_dir)), encoding="utf-8")
+    summaries = build_week_summaries(public_results, runs_dir)
+    (out_dir / "index.html").write_text(render_history(public_results, runs_dir), encoding="utf-8")
     (out_dir / "style.css").write_text(render_css(), encoding="utf-8")
+    weeks_dir = out_dir.parent / "weeks"
+    for summary in summaries:
+        if summary.is_run_record_only:
+            week_dir = weeks_dir / summary.week_id
+            week_dir.mkdir(parents=True, exist_ok=True)
+            (week_dir / "index.html").write_text(render_baseline_week(summary), encoding="utf-8")
     return 0
 
 

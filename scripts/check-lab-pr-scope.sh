@@ -29,7 +29,7 @@ for file in "${changed_files[@]}"; do
     lab/index.html|lab/style.css|lab/app.js)
       root_lab_changed=true
       ;;
-    lab/comparisons/*|lab/history/*)
+    lab/comparisons/*|lab/history/*|lab/weeks/*)
       generated_evidence_changed=true
       ;;
     lab/*)
@@ -50,6 +50,7 @@ if [ "${#invalid_lab_changes[@]}" -gt 0 ]; then
   echo "Allowed generated evidence paths:"
   echo "  - lab/comparisons/**"
   echo "  - lab/history/**"
+  echo "  - lab/weeks/**"
   echo "Invalid lab path changes:"
   printf '  - %s\n' "${invalid_lab_changes[@]}"
   exit 1

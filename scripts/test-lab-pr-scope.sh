@@ -92,6 +92,14 @@ mutate_generated_history_only() {
   git -C "$repo_dir" commit -q -m "change generated history only"
 }
 
+mutate_generated_week_only() {
+  local repo_dir="$1"
+  mkdir -p "$repo_dir/lab/weeks/2099-W01"
+  printf '<!doctype html>\n<title>week scope test</title>\n' > "$repo_dir/lab/weeks/2099-W01/index.html"
+  git -C "$repo_dir" add lab/weeks/2099-W01/index.html
+  git -C "$repo_dir" commit -q -m "change generated week only"
+}
+
 mutate_root_lab_and_docs() {
   local repo_dir="$1"
   printf '\n<!-- scope test mixed -->\n' >> "$repo_dir/lab/index.html"
@@ -120,6 +128,7 @@ run_case "root-lab-only" "pass" mutate_root_lab_only
 run_case "docs-only" "pass" mutate_docs_only
 run_case "generated-comparison-only" "pass" mutate_generated_comparison_only
 run_case "generated-history-only" "pass" mutate_generated_history_only
+run_case "generated-week-only" "pass" mutate_generated_week_only
 run_case "root-lab-and-docs" "fail" mutate_root_lab_and_docs
 run_case "root-lab-and-generated-evidence" "fail" mutate_root_lab_and_generated_evidence
 run_case "extra-lab-file" "fail" mutate_extra_lab_file
