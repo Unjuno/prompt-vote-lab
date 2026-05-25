@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T03:32:18+00:00",
+  "generated_at": "2026-05-25T06:10:18+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -733,93 +733,209 @@
   ],
   "pull_requests": [
     {
-      "additions": 5,
+      "additions": 19,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n\n- Add `docs/README.md` to `Script Check` pull_request paths.\n- Add `docs/README.md` to the Script Check workflow contract test.\n- Preserve the release verification guard so docs README-only PRs cannot bypass the relevant contract checks.\n\n## Checks\n\n```text\npython scripts/test_script_check_workflow_contract.py\npython scripts/test_local_release_verification.py\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no runs/, data/, lab/comparisons/, lab/history/, public bundles, or generated snapshots touched.\nCanonical/legacy check: PASS — no canonical runner or legacy script behavior changed.\nGenerated snapshot check: PASS — generated snapshots untouched.\nRemoval gate: N/A — no removal.\nRollback path: revert this workflow/test wiring change.\n```\n\n## Non-goals\n\n- No lab implementation change.\n- No generated evidence update.\n- No release tag.\n- No auto-merge.\n",
-      "body_length": 902,
-      "changed_files": 2,
-      "closed_at": "2026-05-25T03:31:33Z",
+      "body": "## Summary\n\n- Soften release-facing landing copy for first-time participants.\n- Clarify submit/vote flow: submit through GitHub Issues, vote with 👍 / +1 reactions, comments do not count.\n- Clarify the 20-vote no-change baseline, one bounded agent attempt, `/lab/` as the implementation target, editable lab files, and manual review requirement.\n\n## Checks\n\n```text\npython scripts/test_repository_language_policy.py\npython scripts/test_script_check_workflow_contract.py\npython scripts/test_local_release_verification.py\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no runs/, data/, lab/comparisons/, lab/history/, public bundles, or generated snapshots touched.\nCanonical/legacy check: PASS — no canonical runner or legacy script behavior changed.\nGenerated snapshot check: PASS — generated snapshots untouched.\nLanguage policy check: PASS — maintainer-authored copy remains English-only.\nRemoval gate: N/A — no removal.\nRollback path: revert this landing-copy-only PR.\n```\n\n## Non-goals\n\n* No `/lab/` implementation change.\n* No Issue template change.\n* No workflow change.\n* No script change.\n* No generated evidence update.\n* No release tag.\n* No auto-merge.\n",
+      "body_length": 1191,
+      "changed_files": 1,
+      "closed_at": "2026-05-25T06:09:31Z",
       "comment_count": 0,
-      "created_at": "2026-05-24T09:29:26Z",
+      "created_at": "2026-05-25T03:50:06Z",
+      "deletions": 19,
+      "files": [
+        {
+          "additions": 19,
+          "deletions": 19,
+          "path": "index.html"
+        }
+      ],
+      "head_ref_name": "reset-release-landing-copy",
+      "head_ref_oid": "8e861f6df39e8ddb74a22fa6f5e0635fd1b6f92a",
+      "labels": [],
+      "merge_commit_oid": "178f3328aabbf65f069c47c6c0e7c8740dfc24be",
+      "merged_at": "2026-05-25T06:09:31Z",
+      "merged_by": "Unjuno",
+      "number": 355,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Reset landing copy for soft release",
+      "updated_at": "2026-05-25T06:09:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/355"
+    },
+    {
+      "additions": 41,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": null,
+      "comment_count": 0,
+      "created_at": "2026-05-25T04:55:40Z",
       "deletions": 0,
       "files": [
         {
-          "additions": 1,
+          "additions": 41,
           "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
-        },
-        {
-          "additions": 4,
-          "deletions": 0,
-          "path": "scripts/test_script_check_workflow_contract.py"
+          "path": "runs/week-2026-W21-vote-summary.md"
         }
       ],
-      "head_ref_name": "fix-script-check-docs-readme-path",
-      "head_ref_oid": "f7a231b5e025409b2f8501fed7099d72fc00e8ae",
+      "head_ref_name": "weekly-auto-summary-week-2026-W21-9",
+      "head_ref_oid": "45488f458b5d52022c350873f8911f0afd0531d2",
       "labels": [],
-      "merge_commit_oid": "6e26149a9af51371404e06c396ea0a0eb5929f83",
-      "merged_at": "2026-05-25T03:31:33Z",
-      "merged_by": "Unjuno",
-      "number": 354,
+      "merge_commit_oid": null,
+      "merged_at": null,
+      "merged_by": null,
+      "number": 356,
       "reaction_plus_one_count": 0,
       "review_decision": null,
-      "state": "MERGED",
-      "title": "[codex] Track docs README in Script Check",
-      "updated_at": "2026-05-25T03:31:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/354"
+      "state": "OPEN",
+      "title": "Record auto vote summary for week-2026-W21",
+      "updated_at": "2026-05-25T04:55:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/356"
     },
     {
-      "additions": 448,
+      "additions": 57,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "## Summary\n\n- Add `docs/local-release-verification.md` for clone/pull, local syntax checks, contract checks, static preview, participant route check, operator route check, GitHub Actions, GitHub Pages, and soft-release/public-release gates.\n- Link the new release verification doc from `docs/README.md`.\n- Add `scripts/test_local_release_verification.py` to protect the release checklist contract.\n- Wire the new doc/test into `Script Check` and its workflow contract.\n\n## Release stance\n\nLocal verification is useful but not sufficient. The checklist requires:\n\n```text\nlocal checks pass\nGitHub Actions pass\nGitHub Pages renders correctly\nmanual review remains required\nauto-merge remains disabled\nsoft release before broader public release\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no `runs/`, `data/`, `lab/comparisons/`, `lab/history/`, public bundle output, or generated snapshots touched.\nCanonical/legacy check: PASS — no active canonical workflow removed; no legacy script removed.\nGenerated snapshot check: PASS — generated snapshots intentionally untouched.\nRemoval gate: N/A — this PR adds release verification docs/tests only and removes nothing.\nRollback path: remove the new release verification doc, test, README link, and Script Check wiring.\n```\n\n## Non-goals\n\n- No `lab/` change.\n- No workflow deletion.\n- No generated output update.\n- No run-record rewrite.\n- No release tag creation.\n- No external publishing.\n- No removal of `scripts/openai_lab_run.py`.\n\n## Expected checks\n\n```text\npython scripts/test_local_release_verification.py\npython scripts/test_script_check_workflow_contract.py\n```\n\nCI should be the source of truth for the full Script Check suite.",
-      "body_length": 1711,
-      "changed_files": 5,
-      "closed_at": "2026-05-20T14:48:53Z",
+      "body": "## Summary\n- Require `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` before the weekly workflow can use the legacy OpenAI lab-run fallback.\n- Record the legacy fallback gate value in the weekly vote summary.\n- Update the weekly workflow contract test so `USE_CANONICAL=false` alone is not enough to reach the legacy runner.\n\n## Why\nDocs already state that the legacy fallback requires an explicit downstream gate. The workflow implementation still allowed the legacy path when the canonical runner flag was set to false. This PR aligns the active workflow with the documented safety contract.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No generated evidence update.\n- No runner rewrite.\n- No release tag.",
+      "body_length": 818,
+      "changed_files": 2,
+      "closed_at": "2026-05-19T05:31:43Z",
       "comment_count": 0,
-      "created_at": "2026-05-20T14:44:03Z",
-      "deletions": 28,
+      "created_at": "2026-05-19T05:25:09Z",
+      "deletions": 5,
       "files": [
         {
-          "additions": 4,
-          "deletions": 0,
-          "path": ".github/workflows/script-check.yml"
+          "additions": 21,
+          "deletions": 1,
+          "path": ".github/workflows/weekly-auto-run.yml"
         },
         {
-          "additions": 27,
-          "deletions": 24,
-          "path": "docs/README.md"
-        },
-        {
-          "additions": 283,
-          "deletions": 0,
-          "path": "docs/local-release-verification.md"
-        },
-        {
-          "additions": 121,
-          "deletions": 0,
-          "path": "scripts/test_local_release_verification.py"
-        },
-        {
-          "additions": 13,
+          "additions": 36,
           "deletions": 4,
-          "path": "scripts/test_script_check_workflow_contract.py"
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
         }
       ],
-      "head_ref_name": "add-local-release-verification",
-      "head_ref_oid": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "head_ref_name": "gate-legacy-weekly-runner",
+      "head_ref_oid": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
       "labels": [],
-      "merge_commit_oid": "1f98541bceab39f07041943209da4bd6280a0e11",
-      "merged_at": "2026-05-20T14:48:53Z",
+      "merge_commit_oid": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
+      "merged_at": "2026-05-19T05:31:43Z",
       "merged_by": "Unjuno",
-      "number": 353,
+      "number": 348,
       "reaction_plus_one_count": 0,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Add local release verification checklist",
-      "updated_at": "2026-05-20T14:48:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/353"
+      "title": "Gate legacy weekly runner explicitly",
+      "updated_at": "2026-05-25T04:02:15Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/348"
+    },
+    {
+      "additions": 36,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n- Remove the unused `MAX_OUTPUT_TOKENS` environment variable from the weekly workflow.\n- Remove the unused `--max-output-tokens` preflight argument.\n- Remove preflight summary fields and tests that only reported a non-enforced token cap.\n- Add a workflow contract guard so the unused token cap does not return.\n\n## Impact check\nKept intact:\n- fixed implementation model check\n- SDK retry limit check\n- one API call per candidate check\n- eligible candidate validation\n- implementation secret preflight\n- canonical runner and legacy runner gate behavior\n\n## Why\nThe token cap setting was API-path residue. It did not enforce a cap in the canonical Docker/Codex path and preflight explicitly reported the cap as not enforced. Keeping it suggested a safety boundary that did not exist.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/preflight_implementation_agent.py`\n- `scripts/test_preflight_implementation_agent.py`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Non-goals\n- No lab change.\n- No generated evidence update.\n- No model change.\n- No runner rewrite.\n- No release tag.",
+      "body_length": 1116,
+      "changed_files": 6,
+      "closed_at": "2026-05-19T06:44:57Z",
+      "comment_count": 0,
+      "created_at": "2026-05-19T06:14:43Z",
+      "deletions": 35,
+      "files": [
+        {
+          "additions": 0,
+          "deletions": 3,
+          "path": ".github/workflows/weekly-auto-run.yml"
+        },
+        {
+          "additions": 6,
+          "deletions": 6,
+          "path": "scripts/pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 0,
+          "deletions": 3,
+          "path": "scripts/preflight_implementation_agent.py"
+        },
+        {
+          "additions": 18,
+          "deletions": 13,
+          "path": "scripts/test_canary_policy_alignment.py"
+        },
+        {
+          "additions": 10,
+          "deletions": 10,
+          "path": "scripts/test_preflight_implementation_agent.py"
+        },
+        {
+          "additions": 2,
+          "deletions": 0,
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "remove-unused-token-cap-preflight",
+      "head_ref_oid": "42b451cbc2ed992b6f3d6c504c552ab8550a32fc",
+      "labels": [],
+      "merge_commit_oid": "2d3b5461880c8f55f91e362aa40ed966eb007ef8",
+      "merged_at": "2026-05-19T06:44:57Z",
+      "merged_by": "Unjuno",
+      "number": 349,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Remove unused token cap preflight input",
+      "updated_at": "2026-05-25T04:02:14Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/349"
+    },
+    {
+      "additions": 75,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "Simplify the weekly workflow and update matching checks.",
+      "body_length": 56,
+      "changed_files": 4,
+      "closed_at": "2026-05-19T08:09:05Z",
+      "comment_count": 0,
+      "created_at": "2026-05-19T07:33:11Z",
+      "deletions": 312,
+      "files": [
+        {
+          "additions": 40,
+          "deletions": 84,
+          "path": ".github/workflows/weekly-auto-run.yml"
+        },
+        {
+          "additions": 16,
+          "deletions": 157,
+          "path": "scripts/pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 4,
+          "deletions": 4,
+          "path": "scripts/test_pre_api_freeze_audit.py"
+        },
+        {
+          "additions": 15,
+          "deletions": 67,
+          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "remove-weekly-legacy-api-path",
+      "head_ref_oid": "f76366280b6f3ec28b8cfdb783fe180777eead11",
+      "labels": [],
+      "merge_commit_oid": "9ed7838c53877a5873d200d30302eab195da0f0d",
+      "merged_at": "2026-05-19T08:09:05Z",
+      "merged_by": "Unjuno",
+      "number": 350,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Simplify weekly workflow",
+      "updated_at": "2026-05-25T04:02:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/350"
     },
     {
       "additions": 280,
@@ -870,7 +986,7 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Add canary archive inventory",
-      "updated_at": "2026-05-20T00:29:12Z",
+      "updated_at": "2026-05-25T04:02:03Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/352"
     },
     {
@@ -997,149 +1113,97 @@
       "review_decision": null,
       "state": "MERGED",
       "title": "Retire obsolete legacy first API canary launcher",
-      "updated_at": "2026-05-19T23:40:04Z",
+      "updated_at": "2026-05-25T04:02:03Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/351"
     },
     {
-      "additions": 75,
+      "additions": 448,
       "author": "Unjuno",
       "base_ref_name": "main",
-      "body": "Simplify the weekly workflow and update matching checks.",
-      "body_length": 56,
-      "changed_files": 4,
-      "closed_at": "2026-05-19T08:09:05Z",
+      "body": "## Summary\n\n- Add `docs/local-release-verification.md` for clone/pull, local syntax checks, contract checks, static preview, participant route check, operator route check, GitHub Actions, GitHub Pages, and soft-release/public-release gates.\n- Link the new release verification doc from `docs/README.md`.\n- Add `scripts/test_local_release_verification.py` to protect the release checklist contract.\n- Wire the new doc/test into `Script Check` and its workflow contract.\n\n## Release stance\n\nLocal verification is useful but not sufficient. The checklist requires:\n\n```text\nlocal checks pass\nGitHub Actions pass\nGitHub Pages renders correctly\nmanual review remains required\nauto-merge remains disabled\nsoft release before broader public release\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no `runs/`, `data/`, `lab/comparisons/`, `lab/history/`, public bundle output, or generated snapshots touched.\nCanonical/legacy check: PASS — no active canonical workflow removed; no legacy script removed.\nGenerated snapshot check: PASS — generated snapshots intentionally untouched.\nRemoval gate: N/A — this PR adds release verification docs/tests only and removes nothing.\nRollback path: remove the new release verification doc, test, README link, and Script Check wiring.\n```\n\n## Non-goals\n\n- No `lab/` change.\n- No workflow deletion.\n- No generated output update.\n- No run-record rewrite.\n- No release tag creation.\n- No external publishing.\n- No removal of `scripts/openai_lab_run.py`.\n\n## Expected checks\n\n```text\npython scripts/test_local_release_verification.py\npython scripts/test_script_check_workflow_contract.py\n```\n\nCI should be the source of truth for the full Script Check suite.",
+      "body_length": 1711,
+      "changed_files": 5,
+      "closed_at": "2026-05-20T14:48:53Z",
       "comment_count": 0,
-      "created_at": "2026-05-19T07:33:11Z",
-      "deletions": 312,
+      "created_at": "2026-05-20T14:44:03Z",
+      "deletions": 28,
       "files": [
         {
-          "additions": 40,
-          "deletions": 84,
-          "path": ".github/workflows/weekly-auto-run.yml"
+          "additions": 4,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
         },
         {
-          "additions": 16,
-          "deletions": 157,
-          "path": "scripts/pre_api_freeze_audit.py"
+          "additions": 27,
+          "deletions": 24,
+          "path": "docs/README.md"
+        },
+        {
+          "additions": 283,
+          "deletions": 0,
+          "path": "docs/local-release-verification.md"
+        },
+        {
+          "additions": 121,
+          "deletions": 0,
+          "path": "scripts/test_local_release_verification.py"
+        },
+        {
+          "additions": 13,
+          "deletions": 4,
+          "path": "scripts/test_script_check_workflow_contract.py"
+        }
+      ],
+      "head_ref_name": "add-local-release-verification",
+      "head_ref_oid": "2ce3bdce3e8717b5c208653c57c1479a9e9a57b1",
+      "labels": [],
+      "merge_commit_oid": "1f98541bceab39f07041943209da4bd6280a0e11",
+      "merged_at": "2026-05-20T14:48:53Z",
+      "merged_by": "Unjuno",
+      "number": 353,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Add local release verification checklist",
+      "updated_at": "2026-05-25T04:02:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/353"
+    },
+    {
+      "additions": 5,
+      "author": "Unjuno",
+      "base_ref_name": "main",
+      "body": "## Summary\n\n- Add `docs/README.md` to `Script Check` pull_request paths.\n- Add `docs/README.md` to the Script Check workflow contract test.\n- Preserve the release verification guard so docs README-only PRs cannot bypass the relevant contract checks.\n\n## Checks\n\n```text\npython scripts/test_script_check_workflow_contract.py\npython scripts/test_local_release_verification.py\n```\n\n## Protected evidence check\n\n```text\nProtected evidence check: PASS — no runs/, data/, lab/comparisons/, lab/history/, public bundles, or generated snapshots touched.\nCanonical/legacy check: PASS — no canonical runner or legacy script behavior changed.\nGenerated snapshot check: PASS — generated snapshots untouched.\nRemoval gate: N/A — no removal.\nRollback path: revert this workflow/test wiring change.\n```\n\n## Non-goals\n\n- No lab implementation change.\n- No generated evidence update.\n- No release tag.\n- No auto-merge.\n",
+      "body_length": 902,
+      "changed_files": 2,
+      "closed_at": "2026-05-25T03:31:33Z",
+      "comment_count": 0,
+      "created_at": "2026-05-24T09:29:26Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 1,
+          "deletions": 0,
+          "path": ".github/workflows/script-check.yml"
         },
         {
           "additions": 4,
-          "deletions": 4,
-          "path": "scripts/test_pre_api_freeze_audit.py"
-        },
-        {
-          "additions": 15,
-          "deletions": 67,
-          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "remove-weekly-legacy-api-path",
-      "head_ref_oid": "f76366280b6f3ec28b8cfdb783fe180777eead11",
-      "labels": [],
-      "merge_commit_oid": "9ed7838c53877a5873d200d30302eab195da0f0d",
-      "merged_at": "2026-05-19T08:09:05Z",
-      "merged_by": "Unjuno",
-      "number": 350,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Simplify weekly workflow",
-      "updated_at": "2026-05-19T08:09:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/350"
-    },
-    {
-      "additions": 36,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Remove the unused `MAX_OUTPUT_TOKENS` environment variable from the weekly workflow.\n- Remove the unused `--max-output-tokens` preflight argument.\n- Remove preflight summary fields and tests that only reported a non-enforced token cap.\n- Add a workflow contract guard so the unused token cap does not return.\n\n## Impact check\nKept intact:\n- fixed implementation model check\n- SDK retry limit check\n- one API call per candidate check\n- eligible candidate validation\n- implementation secret preflight\n- canonical runner and legacy runner gate behavior\n\n## Why\nThe token cap setting was API-path residue. It did not enforce a cap in the canonical Docker/Codex path and preflight explicitly reported the cap as not enforced. Keeping it suggested a safety boundary that did not exist.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/preflight_implementation_agent.py`\n- `scripts/test_preflight_implementation_agent.py`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Non-goals\n- No lab change.\n- No generated evidence update.\n- No model change.\n- No runner rewrite.\n- No release tag.",
-      "body_length": 1116,
-      "changed_files": 6,
-      "closed_at": "2026-05-19T06:44:57Z",
-      "comment_count": 0,
-      "created_at": "2026-05-19T06:14:43Z",
-      "deletions": 35,
-      "files": [
-        {
-          "additions": 0,
-          "deletions": 3,
-          "path": ".github/workflows/weekly-auto-run.yml"
-        },
-        {
-          "additions": 6,
-          "deletions": 6,
-          "path": "scripts/pre_api_freeze_audit.py"
-        },
-        {
-          "additions": 0,
-          "deletions": 3,
-          "path": "scripts/preflight_implementation_agent.py"
-        },
-        {
-          "additions": 18,
-          "deletions": 13,
-          "path": "scripts/test_canary_policy_alignment.py"
-        },
-        {
-          "additions": 10,
-          "deletions": 10,
-          "path": "scripts/test_preflight_implementation_agent.py"
-        },
-        {
-          "additions": 2,
           "deletions": 0,
-          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
+          "path": "scripts/test_script_check_workflow_contract.py"
         }
       ],
-      "head_ref_name": "remove-unused-token-cap-preflight",
-      "head_ref_oid": "42b451cbc2ed992b6f3d6c504c552ab8550a32fc",
+      "head_ref_name": "fix-script-check-docs-readme-path",
+      "head_ref_oid": "f7a231b5e025409b2f8501fed7099d72fc00e8ae",
       "labels": [],
-      "merge_commit_oid": "2d3b5461880c8f55f91e362aa40ed966eb007ef8",
-      "merged_at": "2026-05-19T06:44:57Z",
+      "merge_commit_oid": "6e26149a9af51371404e06c396ea0a0eb5929f83",
+      "merged_at": "2026-05-25T03:31:33Z",
       "merged_by": "Unjuno",
-      "number": 349,
-      "reaction_plus_one_count": 0,
+      "number": 354,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
-      "title": "Remove unused token cap preflight input",
-      "updated_at": "2026-05-19T06:44:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/349"
-    },
-    {
-      "additions": 57,
-      "author": "Unjuno",
-      "base_ref_name": "main",
-      "body": "## Summary\n- Require `PROMPT_VOTE_LAB_ALLOW_LEGACY_OPENAI_LAB_RUN=true` before the weekly workflow can use the legacy OpenAI lab-run fallback.\n- Record the legacy fallback gate value in the weekly vote summary.\n- Update the weekly workflow contract test so `USE_CANONICAL=false` alone is not enough to reach the legacy runner.\n\n## Why\nDocs already state that the legacy fallback requires an explicit downstream gate. The workflow implementation still allowed the legacy path when the canonical runner flag was set to false. This PR aligns the active workflow with the documented safety contract.\n\n## Scope\n- `.github/workflows/weekly-auto-run.yml`\n- `scripts/test_weekly_auto_run_workflow_contract.py`\n\n## Non-goals\n- No lab implementation change.\n- No generated evidence update.\n- No runner rewrite.\n- No release tag.",
-      "body_length": 818,
-      "changed_files": 2,
-      "closed_at": "2026-05-19T05:31:43Z",
-      "comment_count": 0,
-      "created_at": "2026-05-19T05:25:09Z",
-      "deletions": 5,
-      "files": [
-        {
-          "additions": 21,
-          "deletions": 1,
-          "path": ".github/workflows/weekly-auto-run.yml"
-        },
-        {
-          "additions": 36,
-          "deletions": 4,
-          "path": "scripts/test_weekly_auto_run_workflow_contract.py"
-        }
-      ],
-      "head_ref_name": "gate-legacy-weekly-runner",
-      "head_ref_oid": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "labels": [],
-      "merge_commit_oid": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
-      "merged_at": "2026-05-19T05:31:43Z",
-      "merged_by": "Unjuno",
-      "number": 348,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "MERGED",
-      "title": "Gate legacy weekly runner explicitly",
-      "updated_at": "2026-05-19T05:31:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/348"
+      "title": "[codex] Track docs README in Script Check",
+      "updated_at": "2026-05-25T04:02:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/354"
     },
     {
       "additions": 10,
@@ -14288,14 +14352,126 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 272,
+    "merged_pr_count": 273,
     "open_issue_count": 0,
-    "open_pr_count": 0,
-    "pr_count": 334,
+    "open_pr_count": 1,
+    "pr_count": 336,
     "run_record_count": 23,
     "workflow_run_count": 499
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-25T06:09:34Z",
+      "database_id": 26386171072,
+      "display_title": "Reset landing copy for soft release",
+      "event": "pull_request",
+      "head_branch": "reset-release-landing-copy",
+      "head_sha": "8e861f6df39e8ddb74a22fa6f5e0635fd1b6f92a",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:09:35Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386171072",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T06:09:33Z",
+      "database_id": 26386170501,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "178f3328aabbf65f069c47c6c0e7c8740dfc24be",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:09:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386170501",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T04:55:30Z",
+      "database_id": 26383953865,
+      "display_title": "Weekly Auto Run",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "737de1ed997cf0bfdc1caa371196d12bd1965b07",
+      "name": "Weekly Auto Run",
+      "status": "completed",
+      "updated_at": "2026-05-25T04:55:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26383953865",
+      "workflow_name": "Weekly Auto Run"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T04:50:57Z",
+      "database_id": 26383827293,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "737de1ed997cf0bfdc1caa371196d12bd1965b07",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-25T04:51:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26383827293",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T04:50:48Z",
+      "database_id": 26383823186,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "77683584ee81df230d9fa4425100d90a6d302ae8",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-05-25T04:51:00Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26383823186",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T03:50:10Z",
+      "database_id": 26382197287,
+      "display_title": "Reset landing copy for soft release",
+      "event": "pull_request",
+      "head_branch": "reset-release-landing-copy",
+      "head_sha": "8e861f6df39e8ddb74a22fa6f5e0635fd1b6f92a",
+      "name": "Lab PR Scope Check",
+      "status": "completed",
+      "updated_at": "2026-05-25T03:50:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26382197287",
+      "workflow_name": "Lab PR Scope Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T03:50:10Z",
+      "database_id": 26382197278,
+      "display_title": "Reset landing copy for soft release",
+      "event": "pull_request",
+      "head_branch": "reset-release-landing-copy",
+      "head_sha": "8e861f6df39e8ddb74a22fa6f5e0635fd1b6f92a",
+      "name": "Static Site Check",
+      "status": "completed",
+      "updated_at": "2026-05-25T03:50:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26382197278",
+      "workflow_name": "Static Site Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T03:32:21Z",
+      "database_id": 26381720972,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "77683584ee81df230d9fa4425100d90a6d302ae8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-25T03:32:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26381720972",
+      "workflow_name": "pages-build-deployment"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-25T03:31:36Z",
@@ -14309,6 +14485,20 @@
       "updated_at": "2026-05-25T03:31:36Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26381701119",
       "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T03:31:36Z",
+      "database_id": 26381701091,
+      "display_title": "Track docs README in Script Check",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "6e26149a9af51371404e06c396ea0a0eb5929f83",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-25T03:32:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26381701091",
+      "workflow_name": "Public Results Export"
     },
     {
       "conclusion": "success",
@@ -21154,132 +21344,6 @@
       "status": "completed",
       "updated_at": "2026-05-15T04:42:07Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642624",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T04:41:50Z",
-      "database_id": 25900642176,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "2568b8ca0651e724f390b66b821242c9a36e5ee2",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:42:10Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642176",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404970,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:34:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404970",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404953,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:33:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404953",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:33:46Z",
-      "database_id": 25900404939,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:33:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900404939",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:17:33Z",
-      "database_id": 25899942249,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9824b669d8f42ab25f230c5b6c3598edca0db0c5",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:17:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899942249",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:17:25Z",
-      "database_id": 25899938576,
-      "display_title": "Support Unlock Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
-      "name": "Support Unlock Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:17:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25899938576",
-      "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T03:00:53Z",
-      "database_id": 25897827518,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "9e7558838b2102b3212d23d8903bbff7dbe45548",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T03:02:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897827518",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T02:59:11Z",
-      "database_id": 25897795526,
-      "display_title": "Clarify support rank baseline policy",
-      "event": "pull_request",
-      "head_branch": "clarify-support-rank-baseline-policy",
-      "head_sha": "213c832b2e292db253916742001685101e31f1b4",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T02:59:12Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795526",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T02:59:11Z",
-      "database_id": 25897795516,
-      "display_title": "Clarify support rank baseline policy",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "cf927b006063a434a4e3e4ba971dcd9a682ff077",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T03:00:55Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25897795516",
       "workflow_name": "Public Results Export"
     }
   ]

@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-25T03:32:18+00:00`
+Generated at: `2026-05-25T06:10:18+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 334 |
-| open_pr_count | 0 |
-| merged_pr_count | 272 |
+| pr_count | 336 |
+| open_pr_count | 1 |
+| merged_pr_count | 273 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,13 +48,15 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 354 | MERGED | 2 | 5/0 | [codex] Track docs README in Script Check |
-| 353 | MERGED | 5 | 448/28 | Add local release verification checklist |
+| 355 | MERGED | 1 | 19/19 | Reset landing copy for soft release |
+| 356 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
+| 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
+| 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
+| 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
 | 352 | MERGED | 5 | 280/24 | Add canary archive inventory |
 | 351 | MERGED | 20 | 728/1333 | Retire obsolete legacy first API canary launcher |
-| 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
-| 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
-| 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
+| 353 | MERGED | 5 | 448/28 | Add local release verification checklist |
+| 354 | MERGED | 2 | 5/0 | [codex] Track docs README in Script Check |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
 | 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
@@ -76,14 +78,21 @@ This file is a raw results surface for participants. It does not score prompts o
 | 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
 | 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
-| 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
-| 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26386171072 | Terminal State Report | pull_request | completed | skipped | Reset landing copy for soft release |
+| 26386170501 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26383953865 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 26383827293 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26383823186 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 26382197287 | Lab PR Scope Check | pull_request | completed | success | Reset landing copy for soft release |
+| 26382197278 | Static Site Check | pull_request | completed | success | Reset landing copy for soft release |
+| 26381720972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26381701119 | Terminal State Report | pull_request | completed | skipped | [codex] Track docs README in Script Check |
+| 26381701091 | Public Results Export | push | completed | success | Track docs README in Script Check |
 | 26381700676 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26365941046 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
 | 26357601641 | Lab PR Scope Check | pull_request | completed | success | [codex] Track docs README in Script Check |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26268631008 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 26210854391 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26210817742 | Public Results Export | schedule | completed | success | Public Results Export |
-| 26210712694 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 26205924112 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26205919583 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26170429897 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26170371204 | Public Results Export | push | completed | success | Add local release verification checklist |
-| 26170365251 | Terminal State Report | pull_request | completed | skipped | Add local release verification checklist |
-| 26170357782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26170096061 | Lab PR Scope Check | pull_request | completed | success | Add local release verification checklist |
-| 26170095740 | Pre-API Freeze Audit | pull_request | completed | success | Add local release verification checklist |
 
 ## Raw JSON
 
