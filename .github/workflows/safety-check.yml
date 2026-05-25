@@ -4,7 +4,9 @@ on:
   pull_request:
     branches: ["main"]
     paths:
-      - "lab/**"
+      - "lab/index.html"
+      - "lab/style.css"
+      - "lab/app.js"
 
 permissions:
   contents: read
