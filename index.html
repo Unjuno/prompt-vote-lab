@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prompt Vote Lab</title>
-  <meta name="description" content="Prompt Vote Lab is a public prompt game where players compete to write prompts that beat a 20-vote baseline and survive a constrained AI coding agent run.">
+  <meta name="description" content="Prompt Vote Lab is a public prompt game where participants submit prompts through GitHub Issues, vote with reactions, and watch a constrained AI coding agent attempt accepted runs.">
   <style>
     :root {
       color-scheme: light;
@@ -118,9 +118,9 @@
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Competitive prompt game</p>
-        <h1 id="page-title">Write the prompt people dare to trust.</h1>
+        <h1 id="page-title">Submit prompts. Vote with 👍. Watch what the agent can actually change.</h1>
         <p class="lead">
-          Players compete by submitting prompts. The crowd votes. If a prompt beats the 20-vote baseline, a constrained AI coding agent gets one bounded attempt. A popular prompt can still fail in public.
+          Participants submit prompts through GitHub Issues. The crowd votes with 👍 / +1 reactions. If a prompt beats the 20-vote no-change baseline, a constrained AI coding agent gets one bounded attempt against <code>/lab/</code>.
         </p>
         <div class="actions" aria-label="Primary actions">
           <a class="button primary" href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">Submit a prompt</a>
@@ -132,16 +132,16 @@
 
       <aside class="gate-card" aria-labelledby="gate-title">
         <div class="gate-top">
-          <p class="gate-kicker">The weekly boss</p>
+          <p class="gate-kicker">Weekly baseline</p>
           <span class="gate-number">20</span>
           <h2 id="gate-title" class="gate-title">baseline votes against doing nothing</h2>
           <p>A real prompt must beat the 20-vote no-change baseline. Miss it, the lab does not move.</p>
         </div>
         <div class="gate-bottom">
           <div class="flow" aria-label="Prompt Vote Lab flow">
-            <div class="flow-item"><strong>Submit</strong><span>Your prompt enters the board.</span></div>
+            <div class="flow-item"><strong>Submit</strong><span>Your prompt enters the GitHub Issues board.</span></div>
             <div class="flow-item"><strong>Win votes</strong><span>Beat the 20-vote baseline.</span></div>
-            <div class="flow-item"><strong>Risk trust</strong><span>The agent may fail.</span></div>
+            <div class="flow-item"><strong>See the outcome</strong><span>The agent attempt still needs review.</span></div>
           </div>
         </div>
       </aside>
@@ -154,22 +154,22 @@
       </div>
       <div>
         <p>
-          This is an experiment, but it is also a game. The skill is not merely writing a flashy prompt. The skill is writing a prompt that other players trust, the agent can act on, and the lab can absorb.
+          This is an experiment, but it is also a game. The skill is not merely writing a flashy prompt. The skill is writing a prompt that other players understand, the agent can act on, and the lab can absorb.
         </p>
         <p>
-          Votes are not proof of quality. A crowd favorite can produce a weak agent PR. If that happens repeatedly, players should learn not to trust that prompt style, author, or promise next time.
+          Votes are not proof of quality. A crowd favorite can produce a weak agent PR. Past outcomes help players decide what prompt styles, authors, and promises to trust next time.
         </p>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="loop-title">
       <p class="eyebrow">Game loop</p>
-      <h2 id="loop-title">Win attention. Risk reputation. Shape the lab.</h2>
+      <h2 id="loop-title">Submit an idea. Gather votes. See the outcome.</h2>
       <div class="steps">
         <article class="step"><h3>Submit</h3><p>Write a concrete prompt with a visible expected result.</p></article>
-        <article class="step"><h3>Persuade</h3><p>Players vote for prompts they think deserve the next agent attempt.</p></article>
+        <article class="step"><h3>Persuade</h3><p>Players vote with 👍 / +1 reactions for prompts they think deserve the next agent attempt.</p></article>
         <article class="step"><h3>Resolve</h3><p>The winning prompt meets the constrained agent. The result may hit, miss, overbuild, or fail.</p></article>
-        <article class="step"><h3>Remember</h3><p>Good judgment earns trust. Bad promises make future votes harder.</p></article>
+        <article class="step"><h3>Remember</h3><p>Past outcomes help players decide what to trust next.</p></article>
       </div>
     </section>
 
@@ -179,9 +179,9 @@
       <p>The real score is whether the prompt survives implementation without wasting the lab.</p>
       <div class="metrics">
         <article class="metric"><span class="metric-number">20</span><p>baseline votes to beat</p></article>
-        <article class="metric"><span class="metric-number">3</span><p>editable lab files</p></article>
+        <article class="metric"><span class="metric-number">3</span><p>editable files: <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code></p></article>
         <article class="metric"><span class="metric-number">1</span><p>bounded agent attempt</p></article>
-        <article class="metric"><span class="metric-number">∞</span><p>reputation carried forward</p></article>
+        <article class="metric"><span class="metric-number">∞</span><p>public outcomes carried forward</p></article>
       </div>
       <div class="rules">
         <article class="card"><h3>Hit</h3><p>The prompt was trusted, implemented, and improved the inherited lab state.</p></article>
@@ -193,18 +193,18 @@
     <section class="panel" aria-labelledby="constraints-title">
       <p class="eyebrow">Board limits</p>
       <h2 id="constraints-title">The small box makes the game legible.</h2>
-      <p>Only the static lab can change. No external scripts, network calls, cookies, trackers, login, payment behavior, or automatic merges.</p>
+      <p><code>/lab/</code> is the implementation target, not the voting page. Accepted runs may edit only <code>lab/index.html</code>, <code>lab/style.css</code>, and <code>lab/app.js</code>. No external scripts, network calls, cookies, trackers, login, payment behavior, or automatic merges.</p>
       <div class="rules">
         <article class="card"><h3>Allowed</h3><p>Static HTML, CSS, vanilla JavaScript, helper functions, local state, and local JSON import/export.</p></article>
         <article class="card"><h3>Blocked</h3><p>External runtime dependencies, hidden calls, identity systems, payment flows, and unsafe dynamic code.</p></article>
-        <article class="card"><h3>Inherited</h3><p>Only merged lab PRs become the base state for future weekly prompts.</p></article>
+        <article class="card"><h3>Inherited</h3><p>Only reviewed and merged lab PRs become the base state for future weekly prompts.</p></article>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="support-title">
       <p class="eyebrow">Support</p>
       <h2 id="support-title">Support unlocks comparison runs only.</h2>
-      <p>Support can add comparison attempts for rank 2 and rank 3 after the normal baseline rule is satisfied. It does not buy votes, success, review, delivery, merge, or control.</p>
+      <p>Support can add comparison attempts for rank 2 and rank 3 after the normal baseline rule is satisfied. It does not buy votes, success, delivery, merge, or control. Manual review remains required.</p>
       <div class="support-grid">
         <article class="card"><h3>$5 — Rank 2 comparison</h3><p>May open an additional rank-2 comparison run when the weekly threshold is reached.</p></article>
         <article class="card"><h3>$10 — Rank 3 comparison</h3><p>May open rank-2 and rank-3 comparison runs when the weekly threshold is reached.</p></article>
@@ -218,8 +218,8 @@
     <section class="panel final-cta" aria-labelledby="final-title">
       <div>
         <p class="eyebrow">Next round</p>
-        <h2 id="final-title">Can your prompt survive the agent?</h2>
-        <p>Submit carefully. Popularity opens the gate; implementation decides whether trust was deserved.</p>
+        <h2 id="final-title">Can your prompt guide one bounded agent attempt?</h2>
+        <p>Submit carefully. Popularity opens the gate; manual review decides whether any result is merged.</p>
       </div>
       <div class="actions" aria-label="Final actions">
         <a class="button primary" href="https://github.com/Unjuno/prompt-vote-lab/issues/new?template=prompt.yml">Submit a prompt</a>
@@ -228,7 +228,7 @@
     </section>
 
     <footer>
-      <p><a href="./lab/">Lab</a> changes over time. The game remembers what worked.</p>
+      <p><a href="./lab/">Lab</a> changes over time. The public record shows what worked.</p>
     </footer>
   </main>
 </body>
