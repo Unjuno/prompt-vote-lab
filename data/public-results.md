@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-25T06:53:45+00:00`
+Generated at: `2026-05-25T07:28:53+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 337 |
+| pr_count | 338 |
 | open_pr_count | 0 |
-| merged_pr_count | 275 |
+| merged_pr_count | 276 |
 | workflow_run_count | 499 |
 | run_record_count | 24 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 358 | MERGED | 6 | 109/10 | Add W21 weekly summary page |
 | 357 | MERGED | 4 | 73/11 | Show baseline-only weeks in history |
 | 356 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
 | 355 | MERGED | 1 | 19/19 | Reset landing copy for soft release |
@@ -77,12 +78,25 @@ This file is a raw results surface for participants. It does not score prompts o
 | 283 | CLOSED | 1 | 14/7 | Record auto vote summary for week-2026-W19 |
 | 281 | CLOSED | 1 | 4/0 | Record auto vote summary for week-2026-W19 |
 | 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
-| 307 | MERGED | 4 | 110/10 | Harden operator workflow input handling |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26388886327 | Terminal State Report | pull_request | completed | skipped | Add W21 weekly summary page |
+| 26388885644 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26388662551 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 26388466336 | Script Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388466334 | Static Site Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388466333 | Lab PR Scope Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388383037 | Lab PR Scope Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388383020 | Static Site Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388383019 | Script Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388321199 | Static Site Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26388321166 | Lab PR Scope Check | pull_request | completed | failure | Add W21 weekly summary page |
+| 26388321140 | Script Check | pull_request | completed | success | Add W21 weekly summary page |
+| 26387653542 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26387628851 | Public Results Export | push | completed | success | Show baseline-only weeks in history |
 | 26387628783 | Terminal State Report | pull_request | completed | skipped | Show baseline-only weeks in history |
 | 26387628253 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26387401026 | Lab PR Scope Check | pull_request | completed | success | Show baseline-only weeks in history |
@@ -99,20 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26386196098 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26386171088 | Public Results Export | push | completed | success | Reset landing copy for soft release |
 | 26386171072 | Terminal State Report | pull_request | completed | skipped | Reset landing copy for soft release |
-| 26386170501 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26383953865 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
-| 26383827293 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26383823186 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26382197287 | Lab PR Scope Check | pull_request | completed | success | Reset landing copy for soft release |
-| 26382197278 | Static Site Check | pull_request | completed | success | Reset landing copy for soft release |
-| 26381720972 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26381701119 | Terminal State Report | pull_request | completed | skipped | [codex] Track docs README in Script Check |
-| 26381701091 | Public Results Export | push | completed | success | Track docs README in Script Check |
-| 26381700676 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26365941046 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
-| 26357601641 | Lab PR Scope Check | pull_request | completed | success | [codex] Track docs README in Script Check |
-| 26357601629 | Script Check | pull_request | completed | success | [codex] Track docs README in Script Check |
-| 26356772314 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
