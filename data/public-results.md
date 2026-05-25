@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-24T08:49:13+00:00`
+Generated at: `2026-05-25T03:32:18+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,9 +13,9 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 333 |
+| pr_count | 334 |
 | open_pr_count | 0 |
-| merged_pr_count | 271 |
+| merged_pr_count | 272 |
 | workflow_run_count | 499 |
 | run_record_count | 23 |
 
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 354 | MERGED | 2 | 5/0 | [codex] Track docs README in Script Check |
 | 353 | MERGED | 5 | 448/28 | Add local release verification checklist |
 | 352 | MERGED | 5 | 280/24 | Add canary archive inventory |
 | 351 | MERGED | 20 | 728/1333 | Retire obsolete legacy first API canary launcher |
@@ -77,12 +78,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 309 | MERGED | 1 | 2/2 | Align root README with static UI function policy |
 | 308 | MERGED | 1 | 4/2 | Clarify root README weekly automation status |
 | 310 | MERGED | 1 | 2/2 | Clarify model policy verification status |
-| 313 | MERGED | 6 | 71/12 | Gate weak historical canary workflows |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26381701119 | Terminal State Report | pull_request | completed | skipped | [codex] Track docs README in Script Check |
+| 26381700676 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26365941046 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 26357601641 | Lab PR Scope Check | pull_request | completed | success | [codex] Track docs README in Script Check |
+| 26357601629 | Script Check | pull_request | completed | success | [codex] Track docs README in Script Check |
+| 26356772314 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26354371646 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26354325477 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26353576387 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26352054047 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -106,13 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26170357782 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26170096061 | Lab PR Scope Check | pull_request | completed | success | Add local release verification checklist |
 | 26170095740 | Pre-API Freeze Audit | pull_request | completed | success | Add local release verification checklist |
-| 26170095594 | Script Check | pull_request | completed | success | Add local release verification checklist |
-| 26170095550 | Static Site Check | pull_request | completed | success | Add local release verification checklist |
-| 26146738853 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26146706663 | Public Results Export | schedule | completed | success | Public Results Export |
-| 26146624975 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 26141579959 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26141574829 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 
 ## Raw JSON
 
