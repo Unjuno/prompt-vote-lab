@@ -61,10 +61,25 @@ def test_history_builder() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
         source = tmp_path / "public-results.json"
+        runs_dir = tmp_path / "runs"
         out_dir = tmp_path / "history"
         source.write_text(json.dumps(data), encoding="utf-8")
+        runs_dir.mkdir()
+        (runs_dir / "week-2026-W21-vote-summary.md").write_text(
+            "# Weekly vote summary: week-2026-W21\n\nbaseline_won: true\neligible_count: 0\n",
+            encoding="utf-8",
+        )
         subprocess.run(
-            [sys.executable, str(SCRIPT), "--public-results", str(source), "--out-dir", str(out_dir)],
+            [
+                sys.executable,
+                str(SCRIPT),
+                "--public-results",
+                str(source),
+                "--runs-dir",
+                str(runs_dir),
+                "--out-dir",
+                str(out_dir),
+            ],
             check=True,
             cwd=ROOT,
         )
@@ -73,6 +88,7 @@ def test_history_builder() -> None:
 
     required = [
         "Prompt Vote Lab history",
+        "2026-W21",
         "2026-W20",
         "2026-W19",
         "Candidate state flow",
@@ -81,8 +97,11 @@ def test_history_builder() -> None:
         "finalizer close",
         "live rank output pages remain the source of truth",
         "Open weekly comparison",
+        "Open run record",
+        "../../runs/week-2026-W21-vote-summary.md",
         "../comparisons/2026-W20/",
         "../comparisons/2026-W19/",
+        "<dt>Adopted</dt><dd>no change</dd>",
         "<dt>Adopted</dt><dd>rank 1</dd>",
         "Generated from <code>data/public-results.json</code>",
         "connect-src 'none'",

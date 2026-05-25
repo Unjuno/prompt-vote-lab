@@ -4,11 +4,13 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 SAFE_CSP = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';"
+RUN_RECORD_RE = re.compile(r"^week-(?P<week_id>\d{4}-W\d{2})-vote-summary\.md$")
 
 
 @dataclass(frozen=True)
@@ -23,7 +25,8 @@ class WeekSummary:
     not_selected_count: int
     open_count: int
     adopted_rank: str
-    comparison_href: str
+    link_href: str
+    link_text: str
 
 
 def _labels(item: dict[str, Any]) -> set[str]:
@@ -32,6 +35,17 @@ def _labels(item: dict[str, Any]) -> set[str]:
 
 def _week_labels(issue: dict[str, Any]) -> set[str]:
     return {label.split(":", 1)[1] for label in _labels(issue) if label.startswith("week:")}
+
+
+def _run_record_weeks(runs_dir: Path) -> set[str]:
+    if not runs_dir.exists():
+        return set()
+    weeks: set[str] = set()
+    for path in runs_dir.glob("week-*-vote-summary.md"):
+        match = RUN_RECORD_RE.match(path.name)
+        if match:
+            weeks.add(match.group("week_id"))
+    return weeks
 
 
 def _rank_from_text_blob(text: str) -> int | None:
@@ -82,10 +96,12 @@ def _merged_pr_rank_by_issue(public_results: dict[str, Any]) -> dict[int, int]:
     return ranks
 
 
-def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
+def build_week_summaries(public_results: dict[str, Any], runs_dir: Path = Path("runs")) -> list[WeekSummary]:
     issues = list(public_results.get("issues", []))
     pr_rank_by_issue = _merged_pr_rank_by_issue(public_results)
-    week_ids = sorted({week for issue in issues for week in _week_labels(issue)}, reverse=True)
+    issue_week_ids = {week for issue in issues for week in _week_labels(issue)}
+    run_record_week_ids = _run_record_weeks(runs_dir)
+    week_ids = sorted(issue_week_ids | run_record_week_ids, reverse=True)
     summaries: list[WeekSummary] = []
 
     for week_id in week_ids:
@@ -121,7 +137,11 @@ def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
             if str(issue.get("state", "")).upper() == "OPEN":
                 open_count += 1
 
-        adopted_rank = f"rank {min(adopted_ranks)}" if adopted_ranks else "not decided"
+        has_run_record = week_id in run_record_week_ids
+        is_run_record_only = has_run_record and not week_issues
+        adopted_rank = "no change" if is_run_record_only else f"rank {min(adopted_ranks)}" if adopted_ranks else "not decided"
+        link_href = f"../../runs/week-{week_id}-vote-summary.md" if is_run_record_only else f"../comparisons/{week_id}/"
+        link_text = "Open run record" if is_run_record_only else "Open weekly comparison"
         summaries.append(
             WeekSummary(
                 week_id=week_id,
@@ -134,14 +154,15 @@ def build_week_summaries(public_results: dict[str, Any]) -> list[WeekSummary]:
                 not_selected_count=not_selected_count,
                 open_count=open_count,
                 adopted_rank=adopted_rank,
-                comparison_href=f"../comparisons/{week_id}/",
+                link_href=link_href,
+                link_text=link_text,
             )
         )
     return summaries
 
 
-def render_history(public_results: dict[str, Any]) -> str:
-    summaries = build_week_summaries(public_results)
+def render_history(public_results: dict[str, Any], runs_dir: Path = Path("runs")) -> str:
+    summaries = build_week_summaries(public_results, runs_dir)
     generated_at = html.escape(str(public_results.get("generated_at", "unknown")))
     cards: list[str] = []
     for summary in summaries:
@@ -163,7 +184,7 @@ def render_history(public_results: dict[str, Any]) -> str:
           <div><dt>Open</dt><dd>{summary.open_count}</dd></div>
           <div><dt>Adopted</dt><dd>{html.escape(summary.adopted_rank)}</dd></div>
         </dl>
-        <p class="week-link"><a href="{html.escape(summary.comparison_href, quote=True)}">Open weekly comparison</a></p>
+        <p class="week-link"><a href="{html.escape(summary.link_href, quote=True)}">{html.escape(summary.link_text)}</a></p>
       </article>"""
         )
     cards_html = "\n".join(cards) if cards else "<p>No week records found yet.</p>"
@@ -279,13 +300,14 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--public-results", default="data/public-results.json")
+    parser.add_argument("--runs-dir", default="runs")
     parser.add_argument("--out-dir", required=True)
     args = parser.parse_args()
 
     public_results = json.loads(Path(args.public_results).read_text(encoding="utf-8"))
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "index.html").write_text(render_history(public_results), encoding="utf-8")
+    (out_dir / "index.html").write_text(render_history(public_results, Path(args.runs_dir)), encoding="utf-8")
     (out_dir / "style.css").write_text(render_css(), encoding="utf-8")
     return 0
 
