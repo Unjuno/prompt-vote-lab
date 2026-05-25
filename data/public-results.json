@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T06:10:18+00:00",
+  "generated_at": "2026-05-25T06:19:28+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -733,6 +733,38 @@
   ],
   "pull_requests": [
     {
+      "additions": 41,
+      "author": "github-actions",
+      "base_ref_name": "main",
+      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
+      "body_length": 77,
+      "changed_files": 1,
+      "closed_at": "2026-05-25T06:18:48Z",
+      "comment_count": 0,
+      "created_at": "2026-05-25T04:55:40Z",
+      "deletions": 0,
+      "files": [
+        {
+          "additions": 41,
+          "deletions": 0,
+          "path": "runs/week-2026-W21-vote-summary.md"
+        }
+      ],
+      "head_ref_name": "weekly-auto-summary-week-2026-W21-9",
+      "head_ref_oid": "45488f458b5d52022c350873f8911f0afd0531d2",
+      "labels": [],
+      "merge_commit_oid": "d212c3fa44a369cd6a77e17b59ae84c2f962b5ee",
+      "merged_at": "2026-05-25T06:18:48Z",
+      "merged_by": "Unjuno",
+      "number": 356,
+      "reaction_plus_one_count": 0,
+      "review_decision": null,
+      "state": "MERGED",
+      "title": "Record auto vote summary for week-2026-W21",
+      "updated_at": "2026-05-25T06:18:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/356"
+    },
+    {
       "additions": 19,
       "author": "Unjuno",
       "base_ref_name": "main",
@@ -757,44 +789,12 @@
       "merged_at": "2026-05-25T06:09:31Z",
       "merged_by": "Unjuno",
       "number": 355,
-      "reaction_plus_one_count": 0,
+      "reaction_plus_one_count": 1,
       "review_decision": null,
       "state": "MERGED",
       "title": "Reset landing copy for soft release",
-      "updated_at": "2026-05-25T06:09:31Z",
+      "updated_at": "2026-05-25T06:10:27Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/pull/355"
-    },
-    {
-      "additions": 41,
-      "author": "github-actions",
-      "base_ref_name": "main",
-      "body": "Automated weekly vote summary. This PR does not run the implementation agent.",
-      "body_length": 77,
-      "changed_files": 1,
-      "closed_at": null,
-      "comment_count": 0,
-      "created_at": "2026-05-25T04:55:40Z",
-      "deletions": 0,
-      "files": [
-        {
-          "additions": 41,
-          "deletions": 0,
-          "path": "runs/week-2026-W21-vote-summary.md"
-        }
-      ],
-      "head_ref_name": "weekly-auto-summary-week-2026-W21-9",
-      "head_ref_oid": "45488f458b5d52022c350873f8911f0afd0531d2",
-      "labels": [],
-      "merge_commit_oid": null,
-      "merged_at": null,
-      "merged_by": null,
-      "number": 356,
-      "reaction_plus_one_count": 0,
-      "review_decision": null,
-      "state": "OPEN",
-      "title": "Record auto vote summary for week-2026-W21",
-      "updated_at": "2026-05-25T04:55:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/pull/356"
     },
     {
       "additions": 57,
@@ -14337,6 +14337,12 @@
       "path": "runs/week-2026-W20-vote-summary.md",
       "size_bytes": 910,
       "title": "Weekly vote summary: week-2026-W20"
+    },
+    {
+      "content": "# Weekly vote summary: week-2026-W21\n\nVotes are counted from 👍 reactions on open `prompt-proposal` issues.\nA virtual no-change baseline candidate is inserted every week with 20 votes.\nIf the baseline ranks first, no implementation run should be created.\n\n| Rank | Candidate | Type | 👍 votes | Title |\n|---:|---|---|---:|---|\n| 1 | baseline | no-change-baseline | 20 | [Baseline]: No change this week |\n\n## Weekly support total\n\n0.0 USD\n\n## Support unlock source\n\n2026-W21 / data/support-unlocks/2026-W21.json / rank2=false / rank3=false\n\n## No-change baseline\n\n20 virtual votes\n\n## Canonical selected-prompt runner\n\ntrue\n\n## Eligible implementation ranks\n\n- no implementation-agent attempt: no prompt beat the no-change baseline\n\n## Selection metadata\n\n```json\n{\n  \"baseline_won\": true,\n  \"eligible_count\": 0,\n  \"eligible_ranks\": [],\n  \"support_usd\": 0.0,\n  \"support_source\": \"support-unlock-file\"\n}\n```\n",
+      "path": "runs/week-2026-W21-vote-summary.md",
+      "size_bytes": 910,
+      "title": "Weekly vote summary: week-2026-W21"
     }
   ],
   "schema_version": "prompt-vote-lab-public-results-export-v1",
@@ -14352,14 +14358,70 @@
     "blocked_issue_count": 5,
     "clear_issue_count": 10,
     "issue_count": 20,
-    "merged_pr_count": 273,
+    "merged_pr_count": 274,
     "open_issue_count": 0,
-    "open_pr_count": 1,
+    "open_pr_count": 0,
     "pr_count": 336,
-    "run_record_count": 23,
+    "run_record_count": 24,
     "workflow_run_count": 499
   },
   "workflow_runs": [
+    {
+      "conclusion": "skipped",
+      "created_at": "2026-05-25T06:18:50Z",
+      "database_id": 26386458640,
+      "display_title": "Record auto vote summary for week-2026-W21",
+      "event": "pull_request",
+      "head_branch": "weekly-auto-summary-week-2026-W21-9",
+      "head_sha": "45488f458b5d52022c350873f8911f0afd0531d2",
+      "name": "Terminal State Report",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:18:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386458640",
+      "workflow_name": "Terminal State Report"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T06:18:50Z",
+      "database_id": 26386458179,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "d212c3fa44a369cd6a77e17b59ae84c2f962b5ee",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:19:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386458179",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T06:10:21Z",
+      "database_id": 26386196098,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "5225c94ea810860976d77df537368936ebaf97e6",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:10:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386196098",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-25T06:09:34Z",
+      "database_id": 26386171088,
+      "display_title": "Reset landing copy for soft release",
+      "event": "push",
+      "head_branch": "main",
+      "head_sha": "178f3328aabbf65f069c47c6c0e7c8740dfc24be",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-25T06:10:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26386171088",
+      "workflow_name": "Public Results Export"
+    },
     {
       "conclusion": "skipped",
       "created_at": "2026-05-25T06:09:34Z",
@@ -21289,62 +21351,6 @@
       "updated_at": "2026-05-15T05:28:01Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25901992736",
       "workflow_name": "Safety Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-15T05:27:54Z",
-      "database_id": 25901992735,
-      "display_title": "Clarify lab support baseline rule",
-      "event": "pull_request",
-      "head_branch": "clarify-lab-support-baseline",
-      "head_sha": "2348dd71e2edd241787fb5c06936aef75c2c636a",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T05:28:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25901992735",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:42:07Z",
-      "database_id": 25900650074,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "36cd0d8d670f94289d27134ef1a85e2918e3ba16",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:42:34Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900650074",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T04:41:51Z",
-      "database_id": 25900642634,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "pull_request",
-      "head_branch": "clarify-participant-support-baseline",
-      "head_sha": "24e9a6dcb6a57d99e3f4828fda10e87da5ccdd31",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:41:52Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642634",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T04:41:51Z",
-      "database_id": 25900642624,
-      "display_title": "Clarify participant support baseline docs",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "2568b8ca0651e724f390b66b821242c9a36e5ee2",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T04:42:07Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25900642624",
-      "workflow_name": "Public Results Export"
     }
   ]
 }

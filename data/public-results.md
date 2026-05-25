@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-25T06:10:18+00:00`
+Generated at: `2026-05-25T06:19:28+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,10 +14,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 336 |
-| open_pr_count | 1 |
-| merged_pr_count | 273 |
+| open_pr_count | 0 |
+| merged_pr_count | 274 |
 | workflow_run_count | 499 |
-| run_record_count | 23 |
+| run_record_count | 24 |
 
 ## Recent Issues
 
@@ -48,8 +48,8 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 356 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
 | 355 | MERGED | 1 | 19/19 | Reset landing copy for soft release |
-| 356 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
 | 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
 | 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
 | 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
@@ -83,6 +83,10 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26386458640 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W21 |
+| 26386458179 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26386196098 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26386171088 | Public Results Export | push | completed | success | Reset landing copy for soft release |
 | 26386171072 | Terminal State Report | pull_request | completed | skipped | Reset landing copy for soft release |
 | 26386170501 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26383953865 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
@@ -109,10 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26273335462 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26273304494 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26273224679 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 26268635557 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26268631008 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26210854391 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26210817742 | Public Results Export | schedule | completed | success | Public Results Export |
 
 ## Raw JSON
 
