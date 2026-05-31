@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-30T06:31:58+00:00",
+  "generated_at": "2026-05-31T07:07:40+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14472,6 +14472,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-05-31T07:04:41Z",
+      "database_id": 26706059814,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "44e3794f3d340e9cf05bd70174ba5f141a766e06",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-05-31T07:04:48Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26706059814",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-31T04:51:10Z",
+      "database_id": 26703609884,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "44e3794f3d340e9cf05bd70174ba5f141a766e06",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-31T04:51:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26703609884",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-31T04:51:01Z",
+      "database_id": 26703606999,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "9159e368451075b6ba08fe1e8aa16c3dacbc53f1",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-05-31T04:51:13Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26703606999",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-30T06:32:02Z",
+      "database_id": 26676961655,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "9159e368451075b6ba08fe1e8aa16c3dacbc53f1",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-05-30T06:32:23Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26676961655",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-05-30T06:31:15Z",
+      "database_id": 26676946106,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "ba018d993dd9f11dbf38ad22cea51c569b5adb10",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-05-30T06:32:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26676946106",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-05-30T06:29:24Z",
       "database_id": 26676906296,
       "display_title": "GitHub Pages Smoke Check",
@@ -21385,76 +21455,6 @@
       "updated_at": "2026-05-15T17:41:13Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392870",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:41:03Z",
-      "database_id": 25932392838,
-      "display_title": "Clarify model policy verification status",
-      "event": "pull_request",
-      "head_branch": "clarify-model-policy-verification-status",
-      "head_sha": "a5146dffb76f362ad420f8d22cb95d25bca4a097",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:41:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932392838",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:33:58Z",
-      "database_id": 25932062139,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "80509899b078df9986b06198e5a088053bbe1efa",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:34:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932062139",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-15T17:33:41Z",
-      "database_id": 25932049534,
-      "display_title": "Align root README with static UI function policy",
-      "event": "pull_request",
-      "head_branch": "align-readme-static-ui-function-policy",
-      "head_sha": "d0f750d6b2ff44812cbba0b34fc13f959e538ce7",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:33:42Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049534",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T17:33:41Z",
-      "database_id": 25932049481,
-      "display_title": "Align root README with static UI function policy",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:33:59Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932049481",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T17:33:40Z",
-      "database_id": 25932048525,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "e03cec7a9939265b86a649220f551d622561ad32",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T17:34:06Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25932048525",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
