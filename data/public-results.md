@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-05-31T07:07:40+00:00`
+Generated at: `2026-06-01T08:46:00+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 338 |
-| open_pr_count | 0 |
+| pr_count | 339 |
+| open_pr_count | 1 |
 | merged_pr_count | 276 |
 | workflow_run_count | 499 |
 | run_record_count | 24 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 359 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W22 |
 | 358 | MERGED | 6 | 109/10 | Add W21 weekly summary page |
 | 357 | MERGED | 4 | 73/11 | Show baseline-only weeks in history |
 | 356 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
@@ -77,12 +78,18 @@ This file is a raw results surface for participants. It does not score prompts o
 | 272 | CLOSED | 1 | 2/0 | Run Codex policy-enforced agent canary |
 | 283 | CLOSED | 1 | 14/7 | Record auto vote summary for week-2026-W19 |
 | 281 | CLOSED | 1 | 4/0 | Record auto vote summary for week-2026-W19 |
-| 284 | CLOSED | 2 | 6/0 | Agent lab run for week-2026-W19 rank 1 |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 26744497582 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 26736658190 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 26736568452 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26736564043 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 26717489332 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 26706117997 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 26706104297 | Public Results Export | schedule | completed | success | Public Results Export |
 | 26706059814 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26703609884 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26703606999 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -106,13 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 26496576681 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 26491398912 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 26491394913 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26437323064 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26437293019 | Public Results Export | schedule | completed | success | Public Results Export |
-| 26437219251 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 26432450545 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26432445975 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 26390075918 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 26390045878 | Public Results Export | schedule | completed | success | Public Results Export |
 
 ## Raw JSON
 
