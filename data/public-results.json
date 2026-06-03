@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-02T08:08:00+00:00",
+  "generated_at": "2026-06-03T08:30:12+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14504,6 +14504,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-06-03T08:26:47Z",
+      "database_id": 26872940219,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "554390cb28a6a7ff034b3bba2eb723939e0e8e16",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-06-03T08:26:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26872940219",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-03T05:16:18Z",
+      "database_id": 26865234953,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "554390cb28a6a7ff034b3bba2eb723939e0e8e16",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-03T05:16:41Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26865234953",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-03T05:16:08Z",
+      "database_id": 26865230103,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "1695ac5feaa2661befdf8a0b505106a6ef2a2c81",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-06-03T05:16:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26865230103",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-02T08:08:03Z",
+      "database_id": 26806999047,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "1695ac5feaa2661befdf8a0b505106a6ef2a2c81",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-02T08:08:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26806999047",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-02T08:07:09Z",
+      "database_id": 26806957092,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "3cc4eb3723d9da434d0d174d6183ede547bda24c",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-06-02T08:08:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26806957092",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-06-02T08:03:45Z",
       "database_id": 26806800187,
       "display_title": "GitHub Pages Smoke Check",
@@ -21417,76 +21487,6 @@
       "updated_at": "2026-05-15T18:59:51Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935949333",
       "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-15T18:59:49Z",
-      "database_id": 25935948660,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "28cea6b6f3289874b39a117c0361f20fe5feb9fb",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-15T19:00:13Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935948660",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T18:58:51Z",
-      "database_id": 25935907251,
-      "display_title": "Gate weak historical canary workflows",
-      "event": "pull_request",
-      "head_branch": "gate-weak-historical-canaries",
-      "head_sha": "e0aea41e2c8bac82f1b31a57a6cd44408b2429d1",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T18:59:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935907251",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T18:58:51Z",
-      "database_id": 25935907229,
-      "display_title": "Gate weak historical canary workflows",
-      "event": "pull_request",
-      "head_branch": "gate-weak-historical-canaries",
-      "head_sha": "e0aea41e2c8bac82f1b31a57a6cd44408b2429d1",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T18:59:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935907229",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T18:58:51Z",
-      "database_id": 25935907217,
-      "display_title": "Gate weak historical canary workflows",
-      "event": "pull_request",
-      "head_branch": "gate-weak-historical-canaries",
-      "head_sha": "e0aea41e2c8bac82f1b31a57a6cd44408b2429d1",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-15T18:59:02Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25935907217",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-15T18:00:03Z",
-      "database_id": 25933263913,
-      "display_title": "Decide whether to gate historical Codex canary workflows before release",
-      "event": "issues",
-      "head_branch": "main",
-      "head_sha": "413345366d4cc410fa87a0dbd8c599995c6003f8",
-      "name": "Issue Safety Scan",
-      "status": "completed",
-      "updated_at": "2026-05-15T18:00:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25933263913",
-      "workflow_name": "Issue Safety Scan"
     }
   ]
 }
