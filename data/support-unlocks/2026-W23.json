@@ -1,0 +1,26 @@
+{
+  "counted_event_count": 0,
+  "generated_at": "2026-06-08T05:01:00Z",
+  "ignored_event_count": 0,
+  "privacy": {
+    "event_level_amounts_included": false,
+    "raw_sponsor_emails_included": false,
+    "raw_sponsor_logins_included": false,
+    "sponsor_identity_included": false
+  },
+  "rank_2_unlocked": false,
+  "rank_3_unlocked": false,
+  "schema_version": "support-unlock.v1",
+  "source": "github-sponsors-graphql",
+  "support_total_cents": 0,
+  "support_total_usd": 0.0,
+  "thresholds": {
+    "rank_2_cents": 500,
+    "rank_3_cents": 1000
+  },
+  "week_id": "2026-W23",
+  "window": {
+    "since": "2026-06-01T00:00:00Z",
+    "until": "2026-06-08T00:00:00Z"
+  }
+}
