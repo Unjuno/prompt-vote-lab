@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-19T08:41:50+00:00",
+  "generated_at": "2026-06-20T07:09:52+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14568,6 +14568,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-06-20T07:07:06Z",
+      "database_id": 27863774187,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "7df56ccbd5ba9209fa1c7939ccebff0e47a483b7",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-06-20T07:07:17Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27863774187",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-20T04:40:28Z",
+      "database_id": 27860452410,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7df56ccbd5ba9209fa1c7939ccebff0e47a483b7",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-20T04:40:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27860452410",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-20T04:40:21Z",
+      "database_id": 27860449292,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "92a04d1ee120d79a82fc5ad34c124b7e7371ee17",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-06-20T04:40:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27860449292",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-19T08:41:54Z",
+      "database_id": 27815281541,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "92a04d1ee120d79a82fc5ad34c124b7e7371ee17",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-19T08:42:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27815281541",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-19T08:41:00Z",
+      "database_id": 27815240413,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "ba372d693bcdbb0e7ee79542e984e9b37d9538bf",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-06-19T08:41:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27815240413",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-06-19T08:39:05Z",
       "database_id": 27815151721,
       "display_title": "GitHub Pages Smoke Check",
@@ -21481,76 +21551,6 @@
       "updated_at": "2026-05-16T15:36:22Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871253",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:35:38Z",
-      "database_id": 25965871252,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:35:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871252",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:35:38Z",
-      "database_id": 25965871250,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:35:50Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871250",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T12:10:39Z",
-      "database_id": 25961586414,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "13333a7ab32a515636d70fed9c3daad7010a8484",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T12:11:05Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961586414",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T12:10:22Z",
-      "database_id": 25961581134,
-      "display_title": "Document legacy OpenAI runner gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "b835e531bad9de36fdfc6d2c967f584faea39992",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T12:10:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961581134",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T12:10:22Z",
-      "database_id": 25961581082,
-      "display_title": "Document legacy OpenAI runner gate",
-      "event": "pull_request",
-      "head_branch": "document-legacy-openai-runner-gate",
-      "head_sha": "50840ab4ab5b6a1740ab3fae2dabf6f98ae61074",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T12:10:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25961581082",
-      "workflow_name": "Terminal State Report"
     }
   ]
 }

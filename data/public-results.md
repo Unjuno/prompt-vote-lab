@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-06-19T08:41:50+00:00`
+Generated at: `2026-06-20T07:09:52+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -83,6 +83,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 27863774187 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 27860452410 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 27860449292 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 27815281541 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 27815240413 | Public Results Export | schedule | completed | success | Public Results Export |
 | 27815151721 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 27807232571 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 27807228330 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -108,11 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 27526067954 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 27525987955 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 27525978316 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 27504801820 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
-| 27492582480 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 27492566385 | Public Results Export | schedule | completed | success | Public Results Export |
-| 27492518815 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 27489025361 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
