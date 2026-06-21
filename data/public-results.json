@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-20T07:09:52+00:00",
+  "generated_at": "2026-06-21T08:11:59+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14568,6 +14568,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-06-21T08:07:51Z",
+      "database_id": 27898191372,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "99f06fce7808a93af940cafe2da4504c9ec5961d",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-06-21T08:08:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27898191372",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-21T05:17:48Z",
+      "database_id": 27894495605,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7a69c51d200504ef8efdf5c6888973941dfa34b4",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-21T05:18:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27894495605",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-21T05:17:39Z",
+      "database_id": 27894492471,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "7a69c51d200504ef8efdf5c6888973941dfa34b4",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-06-21T05:17:51Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27894492471",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-20T07:09:55Z",
+      "database_id": 27863834476,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7df56ccbd5ba9209fa1c7939ccebff0e47a483b7",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-20T07:10:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27863834476",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-20T07:09:08Z",
+      "database_id": 27863817777,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "7df56ccbd5ba9209fa1c7939ccebff0e47a483b7",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-06-20T07:09:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27863817777",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-06-20T07:07:06Z",
       "database_id": 27863774187,
       "display_title": "GitHub Pages Smoke Check",
@@ -21481,76 +21551,6 @@
       "updated_at": "2026-05-17T04:31:58Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25981378124",
       "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:37:47Z",
-      "database_id": 25965918113,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "0a5f234821c633f4b444cf4029e63250612242e6",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:38:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965918113",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:37:32Z",
-      "database_id": 25965912741,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:49Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912741",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-16T15:37:32Z",
-      "database_id": 25965912683,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912683",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-16T15:37:31Z",
-      "database_id": 25965912408,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "48c69f43de8cc1711ef73d0b09aa5704ba9d88fa",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:37:51Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965912408",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-16T15:35:38Z",
-      "database_id": 25965871253,
-      "display_title": "Update weekly operator docs for legacy gate",
-      "event": "pull_request",
-      "head_branch": "update-weekly-operator-legacy-gate-docs",
-      "head_sha": "a2e755c6a260038de927f70f8eeab6d497c442b8",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-16T15:36:22Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25965871253",
-      "workflow_name": "Script Check"
     }
   ]
 }
