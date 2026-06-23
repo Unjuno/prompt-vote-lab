@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T09:23:48+00:00",
+  "generated_at": "2026-06-23T07:00:39+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14600,6 +14600,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-06-23T06:57:45Z",
+      "database_id": 28008247409,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "90e75f37d7d8f3a788e56fe55ecbf527650b96dc",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-06-23T06:57:56Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28008247409",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-23T04:20:00Z",
+      "database_id": 28001910570,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "4147489904aa993428a51f95444a56dd448fcc2f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-23T04:20:24Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28001910570",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-23T04:19:51Z",
+      "database_id": 28001905690,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "4147489904aa993428a51f95444a56dd448fcc2f",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-06-23T04:20:04Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28001905690",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-22T09:23:53Z",
+      "database_id": 27942733638,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "4147489904aa993428a51f95444a56dd448fcc2f",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-22T09:24:26Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27942733638",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-22T09:22:53Z",
+      "database_id": 27942674706,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "b5da1f3494c32bc8b25bddbd5d5bb2b672c98281",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-06-22T09:23:55Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27942674706",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-06-22T09:19:19Z",
       "database_id": 27942465424,
       "display_title": "GitHub Pages Smoke Check",
@@ -21513,76 +21583,6 @@
       "updated_at": "2026-05-17T08:37:40Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986054715",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:34:24Z",
-      "database_id": 25985995344,
-      "display_title": "Fix Pages smoke baseline copy",
-      "event": "pull_request",
-      "head_branch": "fix-pages-smoke-baseline-copy",
-      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:34:32Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985995344",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:34:24Z",
-      "database_id": 25985995337,
-      "display_title": "Fix Pages smoke baseline copy",
-      "event": "pull_request",
-      "head_branch": "fix-pages-smoke-baseline-copy",
-      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:34:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985995337",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:21:29Z",
-      "database_id": 25985730089,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "05a6fa3d44025258076eaed9fc97171af659c7ea",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:21:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985730089",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-17T08:21:14Z",
-      "database_id": 25985725026,
-      "display_title": "Define legacy fallback removal gate",
-      "event": "pull_request",
-      "head_branch": "define-legacy-fallback-removal-gate",
-      "head_sha": "ebf4f4b164a3b9ac80e3298b5cd1484ce8f33b5d",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:21:15Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985725026",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:21:14Z",
-      "database_id": 25985725010,
-      "display_title": "Define legacy fallback removal gate",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "94384a1eefd437581dfd6dda4ae00e127a935d3f",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:21:30Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25985725010",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
