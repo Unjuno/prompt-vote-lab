@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-23T07:00:39+00:00",
+  "generated_at": "2026-06-24T06:58:00+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14600,6 +14600,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-06-24T06:55:21Z",
+      "database_id": 28080926875,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "bbfdabece9b7bfd007d5a81a83f5d01e2ac0905b",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-06-24T06:55:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28080926875",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-24T04:35:15Z",
+      "database_id": 28075418690,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "bbfdabece9b7bfd007d5a81a83f5d01e2ac0905b",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-24T04:35:40Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28075418690",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-24T04:35:05Z",
+      "database_id": 28075412232,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "437c06015e6c5455494edd69e5567819b2076894",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-06-24T04:35:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28075412232",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-23T07:00:42Z",
+      "database_id": 28008389132,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "437c06015e6c5455494edd69e5567819b2076894",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-06-23T07:01:20Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28008389132",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-06-23T06:59:49Z",
+      "database_id": 28008341872,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "90e75f37d7d8f3a788e56fe55ecbf527650b96dc",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-06-23T07:00:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28008341872",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-06-23T06:57:45Z",
       "database_id": 28008247409,
       "display_title": "GitHub Pages Smoke Check",
@@ -21513,76 +21583,6 @@
       "updated_at": "2026-05-17T08:45:42Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986218978",
       "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:45:19Z",
-      "database_id": 25986218971,
-      "display_title": "Cover Pages smoke copy in script-check contract",
-      "event": "pull_request",
-      "head_branch": "wire-pages-smoke-contract-through-existing-test",
-      "head_sha": "747dbc3993f30a8e350bd407874e0d3fe042d213",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:45:28Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986218971",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:37:36Z",
-      "database_id": 25986062041,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "158d60a5fdfa1903ccf75c2ef4f4b3f471eb12a4",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:38:01Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986062041",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-17T08:37:17Z",
-      "database_id": 25986055188,
-      "display_title": "Fix Pages smoke baseline copy",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "028a124187b2d8474f63aa69897ac924774c4515",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:37:39Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986055188",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-17T08:37:17Z",
-      "database_id": 25986055152,
-      "display_title": "Fix Pages smoke baseline copy",
-      "event": "pull_request",
-      "head_branch": "fix-pages-smoke-baseline-copy",
-      "head_sha": "2b0fff62316ae4370a1899e33dbea4fa8d12eb92",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:37:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986055152",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-17T08:37:16Z",
-      "database_id": 25986054715,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "028a124187b2d8474f63aa69897ac924774c4515",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-17T08:37:40Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/25986054715",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
