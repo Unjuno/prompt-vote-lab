@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-03T06:43:33+00:00",
+  "generated_at": "2026-07-04T06:29:46+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14632,6 +14632,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-07-04T06:27:04Z",
+      "database_id": 28697685266,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "7a611bd20bc45ff06024c7428d389b1d9ff053b8",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-07-04T06:27:11Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28697685266",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-04T04:00:42Z",
+      "database_id": 28694268409,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "7a611bd20bc45ff06024c7428d389b1d9ff053b8",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-04T04:01:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28694268409",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-04T04:00:35Z",
+      "database_id": 28694264631,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "209008617919f94940dd3b7e40e22cf04fcf7122",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-07-04T04:00:44Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28694264631",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-03T06:43:37Z",
+      "database_id": 28643454699,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "209008617919f94940dd3b7e40e22cf04fcf7122",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-03T06:44:02Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28643454699",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-03T06:42:47Z",
+      "database_id": 28643417697,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "a07e2556bea89769717db6a9ece60b5324acae32",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-07-03T06:43:39Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28643417697",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-07-03T06:40:20Z",
       "database_id": 28643312039,
       "display_title": "GitHub Pages Smoke Check",
@@ -21545,76 +21615,6 @@
       "updated_at": "2026-05-18T11:46:55Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031496942",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-18T11:45:59Z",
-      "database_id": 26031482760,
-      "display_title": "Record W20 ordinary weekly observation pass",
-      "event": "pull_request",
-      "head_branch": "record-w20-observation-pass-v2",
-      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-18T11:46:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031482760",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T11:45:58Z",
-      "database_id": 26031482494,
-      "display_title": "Record W20 ordinary weekly observation pass",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "8bb17299257fa7928e5aef93fcffa7097ebabfdd",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-18T11:46:18Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031482494",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "cancelled",
-      "created_at": "2026-05-18T11:45:57Z",
-      "database_id": 26031481341,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "8bb17299257fa7928e5aef93fcffa7097ebabfdd",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-18T11:46:29Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031481341",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T11:44:28Z",
-      "database_id": 26031410947,
-      "display_title": "Record W20 ordinary weekly observation pass",
-      "event": "pull_request",
-      "head_branch": "record-w20-observation-pass-v2",
-      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-18T11:44:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031410947",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T11:44:28Z",
-      "database_id": 26031410933,
-      "display_title": "Record W20 ordinary weekly observation pass",
-      "event": "pull_request",
-      "head_branch": "record-w20-observation-pass-v2",
-      "head_sha": "2cb1cd60aeba02080f12dca1639cead634ffcbdf",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-18T11:44:38Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26031410933",
-      "workflow_name": "Static Site Check"
     }
   ]
 }
