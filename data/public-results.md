@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-07-13T06:31:37+00:00`
+Generated at: `2026-07-13T09:04:16+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,10 +14,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 345 |
-| open_pr_count | 7 |
-| merged_pr_count | 276 |
+| open_pr_count | 6 |
+| merged_pr_count | 277 |
 | workflow_run_count | 499 |
-| run_record_count | 24 |
+| run_record_count | 25 |
 
 ## Recent Issues
 
@@ -48,7 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 365 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W28 |
+| 365 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W28 |
 | 364 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W27 |
 | 363 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W26 |
 | 362 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W25 |
@@ -83,9 +83,13 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 29237629898 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W28 |
+| 29237628344 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 29229257649 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 29229219247 | Public Results Export | schedule | completed | success | Public Results Export |
 | 29229075314 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 29223029359 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W28 |
-| 29223029355 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W28 |
+| 29223029359 | Script Check | pull_request | completed | success | Record auto vote summary for week-2026-W28 |
+| 29223029355 | Lab PR Scope Check | pull_request | completed | success | Record auto vote summary for week-2026-W28 |
 | 29223020938 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 29222852311 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 29222846712 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -109,10 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 28999962418 | Public Results Export | schedule | completed | success | Public Results Export |
 | 28999861274 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 28993510678 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 28993505417 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 28921499061 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 28921461995 | Public Results Export | schedule | completed | success | Public Results Export |
-| 28921370550 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
