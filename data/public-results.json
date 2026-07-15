@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-14T05:41:24+00:00",
+  "generated_at": "2026-07-15T05:42:30+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14702,6 +14702,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-07-15T05:39:56Z",
+      "database_id": 29392033221,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "6ed6421f41e0cb6d83dd1ba382d6104a1c27715d",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-07-15T05:40:06Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29392033221",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-15T03:33:17Z",
+      "database_id": 29386811837,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "6ed6421f41e0cb6d83dd1ba382d6104a1c27715d",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-15T03:33:43Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29386811837",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-15T03:33:07Z",
+      "database_id": 29386803792,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "76532b38f9bcc4db94111df602bdc46719fb2cd3",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-07-15T03:33:21Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29386803792",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-14T05:41:28Z",
+      "database_id": 29309189344,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "76532b38f9bcc4db94111df602bdc46719fb2cd3",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-14T05:41:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29309189344",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-14T05:40:39Z",
+      "database_id": 29309154233,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "5665991079d5d2ae42c0a4645c3a7bb403d8a046",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-07-14T05:41:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29309154233",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-07-14T05:38:36Z",
       "database_id": 29309066021,
       "display_title": "GitHub Pages Smoke Check",
@@ -16995,34 +17065,6 @@
       "updated_at": "2026-06-15T09:32:33Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27537106327",
       "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-06-15T05:30:33Z",
-      "database_id": 27526074701,
-      "display_title": "Record auto vote summary for week-2026-W24",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W24-12",
-      "head_sha": "616199333baa66979c712e75fa941c690560b2d3",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-06-15T05:30:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27526074701",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-06-15T05:30:33Z",
-      "database_id": 27526074697,
-      "display_title": "Record auto vote summary for week-2026-W24",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W24-12",
-      "head_sha": "616199333baa66979c712e75fa941c690560b2d3",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-06-15T05:30:33Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27526074697",
-      "workflow_name": "Script Check"
     },
     {
       "conclusion": "success",
@@ -21643,48 +21685,6 @@
       "updated_at": "2026-05-18T22:44:06Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26064748317",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T17:01:07Z",
-      "database_id": 26048045426,
-      "display_title": "Define release week numbering policy",
-      "event": "pull_request",
-      "head_branch": "define-release-week-numbering",
-      "head_sha": "c94a66e16ae4791d87e5af2970fe4d267de8a2ba",
-      "name": "Static Site Check",
-      "status": "completed",
-      "updated_at": "2026-05-18T17:01:17Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26048045426",
-      "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T17:01:07Z",
-      "database_id": 26048045374,
-      "display_title": "Define release week numbering policy",
-      "event": "pull_request",
-      "head_branch": "define-release-week-numbering",
-      "head_sha": "c94a66e16ae4791d87e5af2970fe4d267de8a2ba",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-18T17:01:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26048045374",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-18T17:01:07Z",
-      "database_id": 26048045314,
-      "display_title": "Define release week numbering policy",
-      "event": "pull_request",
-      "head_branch": "define-release-week-numbering",
-      "head_sha": "c94a66e16ae4791d87e5af2970fe4d267de8a2ba",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-18T17:01:16Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26048045314",
-      "workflow_name": "Pre-API Freeze Audit"
     }
   ]
 }
