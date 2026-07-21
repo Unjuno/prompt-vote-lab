@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T06:27:13+00:00",
+  "generated_at": "2026-07-21T06:06:59+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14734,6 +14734,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-07-21T06:04:13Z",
+      "database_id": 29805881551,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "f961f8167d548e558a7e9931b803dd0ebf770d73",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-07-21T06:04:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29805881551",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-21T03:43:58Z",
+      "database_id": 29799297326,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "f961f8167d548e558a7e9931b803dd0ebf770d73",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-21T03:44:29Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29799297326",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-21T03:43:48Z",
+      "database_id": 29799290044,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "c17f866b93a166d21cf88279d6b47053fc7eb462",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-07-21T03:44:01Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29799290044",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-20T06:27:16Z",
+      "database_id": 29721733551,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c17f866b93a166d21cf88279d6b47053fc7eb462",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-20T06:27:49Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29721733551",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-20T06:26:21Z",
+      "database_id": 29721690278,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "7a23b48605dc48cee3172bdfb4ac7c429e25e43e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-07-20T06:27:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29721690278",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-07-20T06:24:24Z",
       "database_id": 29721593439,
       "display_title": "GitHub Pages Smoke Check",
@@ -21647,76 +21717,6 @@
       "updated_at": "2026-05-19T05:25:21Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072476",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:25:13Z",
-      "database_id": 26078072464,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Select Eligible Test",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:25:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072464",
-      "workflow_name": "Select Eligible Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:25:13Z",
-      "database_id": 26078072455,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:25:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072455",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T04:38:19Z",
-      "database_id": 26076533598,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "ade9355a0f888245d4a0a2454c42ae51a41ae993",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-19T04:38:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076533598",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-19T04:37:42Z",
-      "database_id": 26076513377,
-      "display_title": "Avoid missing run record links in comparison dashboard",
-      "event": "pull_request",
-      "head_branch": "avoid-missing-run-record-links",
-      "head_sha": "a51bb0dece04c4853339e29d4167f7083e22b8eb",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-19T04:37:43Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076513377",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T04:37:42Z",
-      "database_id": 26076513374,
-      "display_title": "Avoid missing run record links in comparison dashboard",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "b252c428e60b44d716ac4338670c922c0fe55066",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-19T04:38:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26076513374",
-      "workflow_name": "Public Results Export"
     }
   ]
 }
