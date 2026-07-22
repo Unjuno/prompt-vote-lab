@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T06:06:59+00:00",
+  "generated_at": "2026-07-22T06:06:00+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14734,6 +14734,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-07-22T06:03:02Z",
+      "database_id": 29895542405,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "511b4172001db98c693192529ab812d1c021295e",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-07-22T06:03:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29895542405",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-22T03:45:19Z",
+      "database_id": 29889259770,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "511b4172001db98c693192529ab812d1c021295e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-22T03:45:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29889259770",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-22T03:45:09Z",
+      "database_id": 29889251497,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "54a68c93a1063e81f92b1f5ad1d90b05baab9d16",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-07-22T03:45:22Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29889251497",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-21T06:07:03Z",
+      "database_id": 29806032576,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "54a68c93a1063e81f92b1f5ad1d90b05baab9d16",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-21T06:07:32Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29806032576",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-21T06:06:09Z",
+      "database_id": 29805983649,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "f961f8167d548e558a7e9931b803dd0ebf770d73",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-07-21T06:07:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29805983649",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-07-21T06:04:13Z",
       "database_id": 29805881551,
       "display_title": "GitHub Pages Smoke Check",
@@ -17041,34 +17111,6 @@
       "updated_at": "2026-06-22T09:19:31Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27942465424",
       "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-06-22T05:33:36Z",
-      "database_id": 27931804525,
-      "display_title": "Record auto vote summary for week-2026-W25",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W25-13",
-      "head_sha": "ac9cd6b08415f4b855434beece6180456e175f4d",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-06-22T05:33:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27931804525",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-06-22T05:33:36Z",
-      "database_id": 27931804483,
-      "display_title": "Record auto vote summary for week-2026-W25",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W25-13",
-      "head_sha": "ac9cd6b08415f4b855434beece6180456e175f4d",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-06-22T05:33:36Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/27931804483",
-      "workflow_name": "Script Check"
     },
     {
       "conclusion": "success",
@@ -21675,48 +21717,6 @@
       "updated_at": "2026-05-19T05:32:08Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078300758",
       "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:25:13Z",
-      "database_id": 26078072493,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Implementation Preflight Test",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:25:20Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072493",
-      "workflow_name": "Implementation Preflight Test"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:25:13Z",
-      "database_id": 26078072490,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:25:56Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072490",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:25:13Z",
-      "database_id": 26078072476,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:25:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078072476",
-      "workflow_name": "Lab PR Scope Check"
     }
   ]
 }
