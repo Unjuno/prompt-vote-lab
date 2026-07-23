@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T06:06:00+00:00",
+  "generated_at": "2026-07-23T06:11:32+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14734,6 +14734,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-07-23T06:08:11Z",
+      "database_id": 29984125254,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "a52ea2e33d3e38c5b90853c8a2ad0c59b0821825",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-07-23T06:08:18Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29984125254",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-23T03:43:51Z",
+      "database_id": 29977737947,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "a52ea2e33d3e38c5b90853c8a2ad0c59b0821825",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-23T03:44:12Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29977737947",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-23T03:43:39Z",
+      "database_id": 29977729234,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "ebf7d3b1229913d7a6d4cff73f4e34d862c586d9",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-07-23T03:43:54Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29977729234",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-22T06:06:04Z",
+      "database_id": 29895703521,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "ebf7d3b1229913d7a6d4cff73f4e34d862c586d9",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-07-22T06:06:31Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29895703521",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-07-22T06:05:10Z",
+      "database_id": 29895656297,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "511b4172001db98c693192529ab812d1c021295e",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-07-22T06:06:05Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/29895656297",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-07-22T06:03:02Z",
       "database_id": 29895542405,
       "display_title": "GitHub Pages Smoke Check",
@@ -21647,76 +21717,6 @@
       "updated_at": "2026-05-19T06:14:56Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26079830394",
       "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-19T06:14:47Z",
-      "database_id": 26079830390,
-      "display_title": "Remove unused token cap preflight input",
-      "event": "pull_request",
-      "head_branch": "remove-unused-token-cap-preflight",
-      "head_sha": "c710ebe4499491818eda004ca216572d7edc9be6",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-19T06:15:10Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26079830390",
-      "workflow_name": "Script Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:32:24Z",
-      "database_id": 26078323764,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "fd30f1af41a07e1a7f6601af79a0d4da1cbb75ac",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:32:53Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078323764",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "skipped",
-      "created_at": "2026-05-19T05:31:46Z",
-      "database_id": 26078301375,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "pull_request",
-      "head_branch": "gate-legacy-weekly-runner",
-      "head_sha": "1c7f291d6fd66991deb81dc5c64e370c1fc25219",
-      "name": "Terminal State Report",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:31:46Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078301375",
-      "workflow_name": "Terminal State Report"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:31:45Z",
-      "database_id": 26078301354,
-      "display_title": "Gate legacy weekly runner explicitly",
-      "event": "push",
-      "head_branch": "main",
-      "head_sha": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
-      "name": "Public Results Export",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:32:25Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078301354",
-      "workflow_name": "Public Results Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T05:31:44Z",
-      "database_id": 26078300758,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "8a15163e2caded6fd2a46bff39adba1d9d411a9b",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-05-19T05:32:08Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26078300758",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
