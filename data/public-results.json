@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T06:05:39+00:00",
+  "generated_at": "2026-08-05T06:02:28+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -14798,6 +14798,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-08-05T05:58:59Z",
+      "database_id": 30979808827,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "c944e53724f0313d0fa25c12dbe56f86f378d183",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-08-05T05:59:10Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/30979808827",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-08-05T03:31:25Z",
+      "database_id": 30972502564,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "c944e53724f0313d0fa25c12dbe56f86f378d183",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-08-05T03:31:52Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/30972502564",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-08-05T03:31:17Z",
+      "database_id": 30972496136,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "8c6fe58ed2109a2e077ddb0e5a90be51eeda9a9e",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-08-05T03:31:27Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/30972496136",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-08-04T06:05:43Z",
+      "database_id": 30882811104,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "8c6fe58ed2109a2e077ddb0e5a90be51eeda9a9e",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-08-04T06:06:08Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/30882811104",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-08-04T06:04:41Z",
+      "database_id": 30882749406,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "6485201a537a0398165393f5bd6fbeb94ad03632",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-08-04T06:05:45Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/30882749406",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-08-04T06:02:30Z",
       "database_id": 30882620561,
       "display_title": "GitHub Pages Smoke Check",
@@ -17091,34 +17161,6 @@
       "updated_at": "2026-07-06T07:21:24Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28774772188",
       "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-07-06T04:44:09Z",
-      "database_id": 28768369221,
-      "display_title": "Record auto vote summary for week-2026-W27",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W27-15",
-      "head_sha": "35e589498636a5e7f768793a83f552c9da735818",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-07-06T04:44:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28768369221",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "action_required",
-      "created_at": "2026-07-06T04:44:09Z",
-      "database_id": 28768369023,
-      "display_title": "Record auto vote summary for week-2026-W27",
-      "event": "pull_request",
-      "head_branch": "weekly-auto-summary-week-2026-W27-15",
-      "head_sha": "35e589498636a5e7f768793a83f552c9da735818",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-07-06T04:44:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28768369023",
-      "workflow_name": "Script Check"
     },
     {
       "conclusion": "success",
@@ -21739,48 +21781,6 @@
       "updated_at": "2026-05-19T10:46:58Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26092292421",
       "workflow_name": "Static Site Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T10:46:49Z",
-      "database_id": 26092292420,
-      "display_title": "Retire obsolete legacy first API canary launcher",
-      "event": "pull_request",
-      "head_branch": "cleanup-remove-obsolete-legacy-api-canary",
-      "head_sha": "d6ae6fefb0b8e3b307aa509878ff80ee6d08deda",
-      "name": "Lab PR Scope Check",
-      "status": "completed",
-      "updated_at": "2026-05-19T10:47:00Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26092292420",
-      "workflow_name": "Lab PR Scope Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-05-19T10:46:49Z",
-      "database_id": 26092292418,
-      "display_title": "Retire obsolete legacy first API canary launcher",
-      "event": "pull_request",
-      "head_branch": "cleanup-remove-obsolete-legacy-api-canary",
-      "head_sha": "d6ae6fefb0b8e3b307aa509878ff80ee6d08deda",
-      "name": "Pre-API Freeze Audit",
-      "status": "completed",
-      "updated_at": "2026-05-19T10:46:58Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26092292418",
-      "workflow_name": "Pre-API Freeze Audit"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-05-19T10:46:49Z",
-      "database_id": 26092292406,
-      "display_title": "Retire obsolete legacy first API canary launcher",
-      "event": "pull_request",
-      "head_branch": "cleanup-remove-obsolete-legacy-api-canary",
-      "head_sha": "d6ae6fefb0b8e3b307aa509878ff80ee6d08deda",
-      "name": "Script Check",
-      "status": "completed",
-      "updated_at": "2026-05-19T10:47:11Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/26092292406",
-      "workflow_name": "Script Check"
     }
   ]
 }
