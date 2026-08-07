@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-08-06T10:48:37+00:00`
+Generated at: `2026-08-07T05:04:08+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -16,7 +16,7 @@ This file is a raw results surface for participants. It does not score prompts o
 | pr_count | 348 |
 | open_pr_count | 8 |
 | merged_pr_count | 278 |
-| workflow_run_count | 498 |
+| workflow_run_count | 499 |
 | run_record_count | 26 |
 
 ## Recent Issues
@@ -83,7 +83,13 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 31149197870 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 31143733751 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31143722901 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 31094728872 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31094679153 | Public Results Export | push | completed | success | Merge pull request #368 from Unjuno/weekly-auto-summary-week-2026-W31-19 |
 | 31094678751 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W31 |
+| 31094677831 | pages-build-deployment | dynamic | completed | cancelled | pages build and deployment |
 | 31076151993 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31076106470 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31075973121 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
@@ -107,12 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 30783151165 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 30782919907 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 30782912535 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 30755504177 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
-| 30735509902 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30735481014 | Public Results Export | schedule | completed | success | Public Results Export |
-| 30735408484 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 30731351182 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30731347248 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 
 ## Raw JSON
 
