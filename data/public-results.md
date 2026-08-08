@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-08-07T05:04:08+00:00`
+Generated at: `2026-08-08T04:29:59+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -83,6 +83,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 31239161731 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 31234742886 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31234731754 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 31149386124 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31149337640 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31149197870 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 31143733751 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31143722901 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -108,11 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 30790820580 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 30790768162 | Public Results Export | schedule | completed | success | Public Results Export |
 | 30790508754 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 30783159988 | Lab PR Scope Check | pull_request | completed | success | Record auto vote summary for week-2026-W31 |
-| 30783159966 | Script Check | pull_request | completed | success | Record auto vote summary for week-2026-W31 |
-| 30783151165 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
-| 30782919907 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30782912535 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 
 ## Raw JSON
 
