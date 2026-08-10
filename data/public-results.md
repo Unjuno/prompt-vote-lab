@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-08-09T04:38:18+00:00`
+Generated at: `2026-08-10T04:55:47+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 348 |
-| open_pr_count | 8 |
+| pr_count | 349 |
+| open_pr_count | 9 |
 | merged_pr_count | 278 |
 | workflow_run_count | 499 |
 | run_record_count | 26 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 369 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W32 |
 | 368 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W31 |
 | 367 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W30 |
 | 366 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W29 |
@@ -77,12 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 338 | MERGED | 2 | 90/24 | Prefer implementation PRs in comparison dashboard |
 | 337 | MERGED | 2 | 35/15 | Clarify comparison output file sections |
 | 340 | MERGED | 1 | 0/21 | Restore minimal lab smoke contract |
-| 341 | MERGED | 2 | 57/328 | Restore root lab minimal state |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 31356773977 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 31350271443 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W32 |
+| 31350271429 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W32 |
+| 31350262389 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 31350120940 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31350112191 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 31321064971 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 31294991581 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31294961979 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31294838673 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 31290377379 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31290371251 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 31076106470 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31075973121 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 31068852560 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 31068839461 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 30980015142 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30979964091 | Public Results Export | schedule | completed | success | Public Results Export |
-| 30979808827 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 30972502564 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30972496136 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 30882811104 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 30882749406 | Public Results Export | schedule | completed | success | Public Results Export |
-| 30882620561 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
