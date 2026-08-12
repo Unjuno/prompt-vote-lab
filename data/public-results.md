@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-08-11T04:41:46+00:00`
+Generated at: `2026-08-12T05:04:56+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -14,10 +14,10 @@ This file is a raw results surface for participants. It does not score prompts o
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
 | pr_count | 349 |
-| open_pr_count | 9 |
-| merged_pr_count | 278 |
+| open_pr_count | 8 |
+| merged_pr_count | 279 |
 | workflow_run_count | 499 |
-| run_record_count | 26 |
+| run_record_count | 27 |
 
 ## Recent Issues
 
@@ -48,7 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
-| 369 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W32 |
+| 369 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W32 |
 | 368 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W31 |
 | 367 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W30 |
 | 366 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W29 |
@@ -83,14 +83,22 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 31565027509 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 31557764793 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31557754765 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 31496916302 | Public Results Export | push | completed | failure | Merge pull request #369 from Unjuno/weekly-auto-summary-week-2026-W32-20 |
+| 31496916205 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W32 |
+| 31496914992 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31459286091 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 31459237535 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31459043876 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 31452382382 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31452368887 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 31357020561 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31356980288 | Public Results Export | schedule | completed | success | Public Results Export |
 | 31356773977 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 31350271443 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W32 |
-| 31350271429 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W32 |
+| 31350271443 | Script Check | pull_request | completed | success | Record auto vote summary for week-2026-W32 |
+| 31350271429 | Lab PR Scope Check | pull_request | completed | success | Record auto vote summary for week-2026-W32 |
 | 31350262389 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 31350120940 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31350112191 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -105,14 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 31239161731 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 31234742886 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 31234731754 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 31149386124 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 31149337640 | Public Results Export | schedule | completed | success | Public Results Export |
-| 31149197870 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 31143733751 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 31143722901 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 31094728872 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 31094679153 | Public Results Export | push | completed | success | Merge pull request #368 from Unjuno/weekly-auto-summary-week-2026-W31-19 |
-| 31094678751 | Terminal State Report | pull_request | completed | skipped | Record auto vote summary for week-2026-W31 |
 
 ## Raw JSON
 
