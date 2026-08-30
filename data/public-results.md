@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-08-29T10:08:39+00:00`
+Generated at: `2026-08-30T09:16:57+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -83,6 +83,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 33303380365 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 33294586146 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 33294580666 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 33247127672 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 33247096883 | Public Results Export | schedule | completed | success | Public Results Export |
 | 33246756257 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 33239941586 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 33239934856 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -108,11 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 32688792038 | Public Results Export | schedule | completed | success | Public Results Export |
 | 32688534998 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 32681567272 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W34 |
-| 32681567212 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W34 |
-| 32681553677 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
-| 32681413453 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 32681406196 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 32648053366 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
 
 ## Raw JSON
 
