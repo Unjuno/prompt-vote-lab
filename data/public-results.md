@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-09-06T07:56:46+00:00`
+Generated at: `2026-09-07T08:22:12+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 352 |
-| open_pr_count | 11 |
+| pr_count | 353 |
+| open_pr_count | 12 |
 | merged_pr_count | 279 |
 | workflow_run_count | 499 |
 | run_record_count | 27 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 373 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W36 |
 | 372 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W35 |
 | 371 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W34 |
 | 370 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W33 |
@@ -77,12 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
 | 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
 | 346 | MERGED | 2 | 38/9 | Make comparison rank extraction explicit |
-| 339 | MERGED | 1 | 41/3 | Regenerate W20 comparison dashboard PR links |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 34099447348 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 34084597546 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W36 |
+| 34084597481 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W36 |
+| 34084584923 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 34083949982 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 34083941708 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 34048676180 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 34020493554 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 34020459954 | Public Results Export | schedule | completed | success | Public Results Export |
 | 34020262379 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 34011979395 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 34011971271 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 33605710857 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 33591197465 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 33591184601 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 33488404684 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 33488323002 | Public Results Export | schedule | completed | success | Public Results Export |
-| 33487776377 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 33472353000 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 33472343048 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 33379535664 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 33379467353 | Public Results Export | schedule | completed | success | Public Results Export |
-| 33378739691 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 33361574246 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W35 |
 
 ## Raw JSON
 
