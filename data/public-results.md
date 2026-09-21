@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-09-20T08:38:19+00:00`
+Generated at: `2026-09-21T09:00:48+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 354 |
-| open_pr_count | 13 |
+| pr_count | 355 |
+| open_pr_count | 14 |
 | merged_pr_count | 279 |
 | workflow_run_count | 499 |
 | run_record_count | 27 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 375 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W38 |
 | 374 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W37 |
 | 373 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W36 |
 | 372 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W35 |
@@ -77,12 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 354 | MERGED | 2 | 5/0 | [codex] Track docs README in Script Check |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
 | 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
-| 347 | MERGED | 2 | 38/5 | Avoid missing run record links in comparison dashboard |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 35580104899 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 35563355504 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W38 |
+| 35563355496 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W38 |
+| 35563196173 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 35562629121 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 35562621049 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 35527321036 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 35500102617 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 35500073021 | Public Results Export | schedule | completed | success | Public Results Export |
 | 35499790259 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 35490260182 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 35490253300 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 35074823907 | Public Results Export | schedule | completed | success | Public Results Export |
 | 35074221272 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 35057018167 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 35057003372 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 34948600573 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 34948512693 | Public Results Export | schedule | completed | success | Public Results Export |
-| 34947936667 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 34930569682 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 34930560734 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 34825528747 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 34825456032 | Public Results Export | schedule | completed | success | Public Results Export |
-| 34824728368 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
