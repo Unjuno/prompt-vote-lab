@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-09-27T09:19:00+00:00`
+Generated at: `2026-09-28T09:51:15+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 355 |
-| open_pr_count | 14 |
+| pr_count | 356 |
+| open_pr_count | 15 |
 | merged_pr_count | 279 |
 | workflow_run_count | 499 |
 | run_record_count | 27 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 376 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W39 |
 | 375 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W38 |
 | 374 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W37 |
 | 373 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W36 |
@@ -77,12 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 353 | MERGED | 5 | 448/28 | Add local release verification checklist |
 | 354 | MERGED | 2 | 5/0 | [codex] Track docs README in Script Check |
 | 345 | MERGED | 2 | 10/5 | Filter comparison dashboard candidates |
-| 344 | MERGED | 2 | 98/27 | Paginate public results export inputs |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 36405016089 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 36382306097 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W39 |
+| 36382306043 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W39 |
+| 36382287561 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 36381649496 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 36381636990 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 36342187726 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 36308978840 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 36308935661 | Public Results Export | schedule | completed | success | Public Results Export |
 | 36308571241 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 36296781081 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 36296773082 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 35838232683 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 35838148716 | Public Results Export | schedule | completed | success | Public Results Export |
 | 35837539006 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 35819544184 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 35819533969 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 35705687072 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 35705594371 | Public Results Export | schedule | completed | success | Public Results Export |
-| 35704997130 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 35688682287 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 35688671794 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 35580916777 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 35580826378 | Public Results Export | schedule | completed | success | Public Results Export |
 
 ## Raw JSON
 
