@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-03T09:12:51+00:00",
+  "generated_at": "2026-10-04T09:51:43+00:00",
   "issues": [
     {
       "author": "Unjuno",
@@ -15066,6 +15066,76 @@
   "workflow_runs": [
     {
       "conclusion": "success",
+      "created_at": "2026-10-04T09:42:38Z",
+      "database_id": 37193022061,
+      "display_title": "GitHub Pages Smoke Check",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "cd23d82c3218bf05f14bc127b2fad07c504fc7aa",
+      "name": "GitHub Pages Smoke Check",
+      "status": "completed",
+      "updated_at": "2026-10-04T09:42:53Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/37193022061",
+      "workflow_name": "GitHub Pages Smoke Check"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-04T05:51:17Z",
+      "database_id": 37181074171,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "cd23d82c3218bf05f14bc127b2fad07c504fc7aa",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-10-04T05:51:46Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/37181074171",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-04T05:51:10Z",
+      "database_id": 37181067796,
+      "display_title": "Support Unlock Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "14caded4d837e096de84a014e687f3e4484f0f36",
+      "name": "Support Unlock Export",
+      "status": "completed",
+      "updated_at": "2026-10-04T05:51:19Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/37181067796",
+      "workflow_name": "Support Unlock Export"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-03T09:12:55Z",
+      "database_id": 37112289432,
+      "display_title": "pages build and deployment",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "14caded4d837e096de84a014e687f3e4484f0f36",
+      "name": "pages build and deployment",
+      "status": "completed",
+      "updated_at": "2026-10-03T09:13:30Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/37112289432",
+      "workflow_name": "pages-build-deployment"
+    },
+    {
+      "conclusion": "success",
+      "created_at": "2026-10-03T09:12:05Z",
+      "database_id": 37112241816,
+      "display_title": "Public Results Export",
+      "event": "schedule",
+      "head_branch": "main",
+      "head_sha": "250d1456157d7d2da5036dc683a507d032618d7d",
+      "name": "Public Results Export",
+      "status": "completed",
+      "updated_at": "2026-10-03T09:12:57Z",
+      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/37112241816",
+      "workflow_name": "Public Results Export"
+    },
+    {
+      "conclusion": "success",
       "created_at": "2026-10-03T09:05:18Z",
       "database_id": 37111862824,
       "display_title": "GitHub Pages Smoke Check",
@@ -21979,76 +22049,6 @@
       "updated_at": "2026-07-06T07:21:24Z",
       "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28774772188",
       "workflow_name": "GitHub Pages Smoke Check"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-07-06T04:43:53Z",
-      "database_id": 28768359588,
-      "display_title": "Weekly Auto Run",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "fc78a8549e2b96c651645b9af67653fbb4b57b2c",
-      "name": "Weekly Auto Run",
-      "status": "completed",
-      "updated_at": "2026-07-06T04:44:09Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28768359588",
-      "workflow_name": "Weekly Auto Run"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-07-06T04:38:23Z",
-      "database_id": 28768177637,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "fc78a8549e2b96c651645b9af67653fbb4b57b2c",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-07-06T04:38:48Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28768177637",
-      "workflow_name": "pages-build-deployment"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-07-06T04:38:15Z",
-      "database_id": 28768173546,
-      "display_title": "Support Unlock Export",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "26987c04053fa937d5137673f1a7e65fd8473297",
-      "name": "Support Unlock Export",
-      "status": "completed",
-      "updated_at": "2026-07-06T04:38:24Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28768173546",
-      "workflow_name": "Support Unlock Export"
-    },
-    {
-      "conclusion": "success",
-      "created_at": "2026-07-05T16:03:08Z",
-      "database_id": 28746657807,
-      "display_title": "Weekly Vote Snapshot",
-      "event": "schedule",
-      "head_branch": "main",
-      "head_sha": "26987c04053fa937d5137673f1a7e65fd8473297",
-      "name": "Weekly Vote Snapshot",
-      "status": "completed",
-      "updated_at": "2026-07-05T16:03:21Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28746657807",
-      "workflow_name": "Weekly Vote Snapshot"
-    },
-    {
-      "conclusion": "failure",
-      "created_at": "2026-07-05T06:51:34Z",
-      "database_id": 28732509016,
-      "display_title": "pages build and deployment",
-      "event": "dynamic",
-      "head_branch": "main",
-      "head_sha": "26987c04053fa937d5137673f1a7e65fd8473297",
-      "name": "pages build and deployment",
-      "status": "completed",
-      "updated_at": "2026-07-05T06:51:57Z",
-      "url": "https://github.com/Unjuno/prompt-vote-lab/actions/runs/28732509016",
-      "workflow_name": "pages-build-deployment"
     }
   ]
 }
