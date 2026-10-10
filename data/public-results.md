@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-10-09T10:38:14+00:00`
+Generated at: `2026-10-10T09:54:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -83,6 +83,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 38042515750 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 38028934413 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 38028923725 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 37918819275 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 37918731797 | Public Results Export | schedule | completed | success | Public Results Export |
 | 37917768377 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 37891914351 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 37891899646 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -108,11 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 37269530243 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W40 |
 | 37269513390 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
 | 37268683885 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 37268674520 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 37224678437 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
-| 37193501660 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 37193459219 | Public Results Export | schedule | completed | success | Public Results Export |
-| 37193022061 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
