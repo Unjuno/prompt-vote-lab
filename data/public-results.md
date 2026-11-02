@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-11-01T10:31:22+00:00`
+Generated at: `2026-11-02T11:15:12+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 360 |
-| open_pr_count | 19 |
+| pr_count | 361 |
+| open_pr_count | 20 |
 | merged_pr_count | 279 |
 | workflow_run_count | 499 |
 | run_record_count | 27 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 381 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W44 |
 | 380 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W43 |
 | 379 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W42 |
 | 378 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W41 |
@@ -77,12 +78,20 @@ This file is a raw results surface for participants. It does not score prompts o
 | 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
 | 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
 | 350 | MERGED | 4 | 75/312 | Simplify weekly workflow |
-| 352 | MERGED | 5 | 280/24 | Add canary archive inventory |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 41432735365 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 41399222079 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W44 |
+| 41399222050 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W44 |
+| 41399198570 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 41397224411 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 41397209800 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 41341165189 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 41297856693 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 41297789546 | Public Results Export | schedule | completed | success | Public Results Export |
 | 41297232186 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 41279147379 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 41279137492 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -104,15 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 40666449133 | Public Results Export | schedule | completed | failure | Public Results Export |
 | 40665277050 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 40639397878 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 40639378111 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 40477983679 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 40477872932 | Public Results Export | schedule | completed | success | Public Results Export |
-| 40476786700 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 40453079695 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 40453066265 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 40296288143 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 40296165405 | Public Results Export | schedule | completed | success | Public Results Export |
-| 40294846670 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
