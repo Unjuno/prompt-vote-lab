@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-11-07T10:16:47+00:00`
+Generated at: `2026-11-08T10:27:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -83,6 +83,11 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 42470481260 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 42452855263 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 42452845936 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 42363277652 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 42363218058 | Public Results Export | schedule | completed | success | Public Results Export |
 | 42362001455 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 42344846218 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 42344836879 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -108,11 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 41591906796 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
 | 41435331424 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 41435175797 | Public Results Export | schedule | completed | success | Public Results Export |
-| 41432735365 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 41399222079 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W44 |
-| 41399222050 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W44 |
-| 41399198570 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
-| 41397224411 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 
 ## Raw JSON
 
