@@ -1,6 +1,6 @@
 # Prompt Vote Lab public results export
 
-Generated at: `2026-11-15T10:59:39+00:00`
+Generated at: `2026-11-18T11:48:32+00:00`
 
 This file is a raw results surface for participants. It does not score prompts or recommend improvements.
 
@@ -13,8 +13,8 @@ This file is a raw results surface for participants. It does not score prompts o
 | blocked_issue_count | 5 |
 | clear_issue_count | 10 |
 | authorized_canary_issue_count | 1 |
-| pr_count | 362 |
-| open_pr_count | 21 |
+| pr_count | 363 |
+| open_pr_count | 22 |
 | merged_pr_count | 279 |
 | workflow_run_count | 499 |
 | run_record_count | 27 |
@@ -48,6 +48,7 @@ This file is a raw results surface for participants. It does not score prompts o
 
 | # | state | changed | +/- | title |
 | --- | --- | --- | --- | --- |
+| 383 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W46 |
 | 382 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W45 |
 | 381 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W44 |
 | 380 | OPEN | 1 | 41/0 | Record auto vote summary for week-2026-W43 |
@@ -77,12 +78,28 @@ This file is a raw results surface for participants. It does not score prompts o
 | 356 | MERGED | 1 | 41/0 | Record auto vote summary for week-2026-W21 |
 | 355 | MERGED | 1 | 19/19 | Reset landing copy for soft release |
 | 348 | MERGED | 2 | 57/5 | Gate legacy weekly runner explicitly |
-| 349 | MERGED | 6 | 36/35 | Remove unused token cap preflight input |
 
 ## Recent Workflow Runs
 
 | id | workflow | event | status | conclusion | title |
 | --- | --- | --- | --- | --- | --- |
+| 44295670730 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 44258924696 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 44258904426 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 44078454183 | Public Results Export | schedule | completed | failure | Public Results Export |
+| 44076779282 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 44042182530 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 44042160679 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 43857857882 | Public Results Export | schedule | completed | failure | Public Results Export |
+| 43854674840 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
+| 43818749180 | Lab PR Scope Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W46 |
+| 43818749174 | Script Check | pull_request | completed | action_required | Record auto vote summary for week-2026-W46 |
+| 43818700787 | Weekly Auto Run | schedule | completed | success | Weekly Auto Run |
+| 43816747563 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 43816731193 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
+| 43756057467 | Weekly Vote Snapshot | schedule | completed | success | Weekly Vote Snapshot |
+| 43706722083 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
+| 43706657972 | Public Results Export | schedule | completed | success | Public Results Export |
 | 43705616148 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 43685633058 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 43685618358 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
@@ -96,23 +113,6 @@ This file is a raw results surface for participants. It does not score prompts o
 | 43412573329 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 | 43380699605 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
 | 43380683534 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 43208166494 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 43208037943 | Public Results Export | schedule | completed | success | Public Results Export |
-| 43205055199 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 43173015369 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 43172997621 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 43008585791 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 43008455285 | Public Results Export | schedule | completed | success | Public Results Export |
-| 43006826142 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 42971248802 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 42971228638 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 42806050921 | Public Results Export | schedule | completed | failure | Public Results Export |
-| 42804402849 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
-| 42774137472 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 42774120201 | Support Unlock Export | schedule | completed | success | Support Unlock Export |
-| 42610695095 | pages-build-deployment | dynamic | completed | success | pages build and deployment |
-| 42610580857 | Public Results Export | schedule | completed | success | Public Results Export |
-| 42608772909 | GitHub Pages Smoke Check | schedule | completed | success | GitHub Pages Smoke Check |
 
 ## Raw JSON
 
